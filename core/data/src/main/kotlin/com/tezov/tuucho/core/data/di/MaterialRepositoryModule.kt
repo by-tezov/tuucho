@@ -1,0 +1,61 @@
+package com.tezov.tuucho.core.data.di
+
+import com.tezov.tuucho.core.data.cache.database.Database
+import com.tezov.tuucho.core.data.cache.parser.decoder.MaterialModelDomainDecoder
+import com.tezov.tuucho.core.data.cache.repository.MaterialCacheRepository
+import com.tezov.tuucho.core.data.network.response.JsonResponse
+import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
+import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
+import com.tezov.tuucho.core.data.parser.encoder.MaterialSchemaDataEncoder
+import com.tezov.tuucho.core.data.parser.rectifier.MaterialSchemaDataRectifier
+import com.tezov.tuucho.core.data.proxy.repository.ProxyMaterialRepositoryImpl
+import com.tezov.tuucho.core.domain.repository.MaterialRepository
+import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
+import org.koin.dsl.module
+import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
+
+object MaterialRepositoryModule {
+
+    internal operator fun invoke() = module {
+        single<OkHttpClient> {
+            OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
+                .build()
+        }
+
+        single<Retrofit> {
+            Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:3000/")
+                .addCallAdapterFactory(JsonResponse.CallAdapterFactory())
+                .client(get<OkHttpClient>())
+                .build()
+        }
+
+        single<MaterialNetworkService> {
+            MaterialNetworkService(
+                materialNetworkHttpRequest = get<Retrofit>().create(MaterialNetworkHttpRequest::class.java),
+                materialSchemaDataRectifier = get<MaterialSchemaDataRectifier>(),
+                jsonConverter = get<Json>()
+            )
+        }
+
+        single<MaterialCacheRepository> {
+            MaterialCacheRepository(
+                database = get<Database>(),
+                materialSchemaDataEncoder = get<MaterialSchemaDataEncoder>(),
+                materialModelDomainDecoder = get<MaterialModelDomainDecoder>()
+            )
+        }
+
+        single<MaterialRepository> {
+            ProxyMaterialRepositoryImpl(
+                materialNetworkService = get<MaterialNetworkService>(),
+                materialCacheRepository = get<MaterialCacheRepository>(),
+            )
+        }
+    }
+}
