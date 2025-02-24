@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -11,6 +12,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -21,6 +23,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "tuucho"
 include(":app")
-include(":data")
-include(":build-logic")
-include(":domain")
+file("core").listFiles()
+    ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
+    ?.forEach { include(":core:${it.name}") }
