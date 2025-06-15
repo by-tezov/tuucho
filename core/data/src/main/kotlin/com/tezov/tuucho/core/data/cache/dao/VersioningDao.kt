@@ -12,7 +12,6 @@ interface VersioningDao {
     @Query("SELECT * FROM table_versioning")
     suspend fun selectAll(): List<VersioningEntity>
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdate(value: VersioningEntity)
 

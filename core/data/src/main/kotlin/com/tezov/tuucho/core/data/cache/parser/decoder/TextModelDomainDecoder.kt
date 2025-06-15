@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.data.cache.parser.decoder
 
 import com.tezov.tuucho.core.data.cache.database.Database
-import com.tezov.tuucho.core.data.cache.parser.decoder._system.resolveIdRef
 import com.tezov.tuucho.core.domain.model._system.SymbolDomain
 import com.tezov.tuucho.core.domain.model._system.stringOrNull
 import com.tezov.tuucho.core.domain.model.material.TextModelDomain
@@ -32,25 +31,25 @@ class TextModelDomainDecoder(
     ): List<JsonElement> {
         val entries = mutableListOf(this)
         var currentEntry = this
-        do {
-            val idRef = resolveIdRef(
-//                currentEntry.jsonObject[HeaderIdsModelDomain.Name.id].stringOrNull,
-//                currentEntry.jsonObject[HeaderIdsModelDomain.Name.idFrom].stringOrNull,
-                null, null
-            )
-            val entity = idRef?.let { ref ->
-
-                val id = "common"
-                val key = ref
-
-                database.jsonKeyValue().find(type = type, url = url, id = id, key = key)
-                    ?: database.jsonKeyValue().findShared(type = type, id = id, key = key)
-            }
-            if (entity != null) {
-                currentEntry = entity.jsonElement
-                entries.add(currentEntry)
-            }
-        } while (idRef != null && entity != null)
+//        do {
+//            val idRef = resolveIdRef(
+////                currentEntry.jsonObject[HeaderIdsModelDomain.Name.id].stringOrNull,
+////                currentEntry.jsonObject[HeaderIdsModelDomain.Name.idFrom].stringOrNull,
+//                null, null
+//            )
+//            val entity = idRef?.let { ref ->
+//
+//                val id = "common"
+//                val key = ref
+//
+//                database.jsonKeyValue().find(type = type, url = url, id = id, key = key)
+//                    ?: database.jsonKeyValue().findShared(type = type, id = id, key = key)
+//            }
+//            if (entity != null) {
+//                currentEntry = entity.jsonElement
+//                entries.add(currentEntry)
+//            }
+//        } while (idRef != null && entity != null)
         return entries
     }
 

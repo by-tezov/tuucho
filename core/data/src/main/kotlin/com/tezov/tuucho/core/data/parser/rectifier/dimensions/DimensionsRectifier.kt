@@ -1,0 +1,97 @@
+package com.tezov.tuucho.core.data.parser.rectifier.dimensions
+
+import android.util.MalformedJsonException
+import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
+import com.tezov.tuucho.core.data.parser._schema.DimensionSchema
+import com.tezov.tuucho.core.data.parser._schema.DimensionSchema.Companion.defaultPut
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idAddGroup
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idIsRef
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idPutObject
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idPutPrimitive
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idRawOrNull
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idSourceOrNull
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idValueOrNull
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema.Companion.typePut
+import com.tezov.tuucho.core.data.parser._system.JsonElementPath
+import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.Rectifier
+import com.tezov.tuucho.core.data.parser._system.find
+import com.tezov.tuucho.core.data.parser.rectifier.RectifierBase
+import com.tezov.tuucho.core.domain.model._system.string
+import com.tezov.tuucho.core.domain.model._system.stringOrNull
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
+import org.koin.core.component.inject
+
+object DimensionsRectifier : RectifierBase() {
+
+    override val matchers: List<Matcher> by inject(
+        Name.Matcher.DIMENSIONS
+    )
+
+    override val childProcessors: List<Rectifier> by inject(
+        Name.Processor.DIMENSIONS
+    )
+
+    override fun beforeAlterObject(
+        path: JsonElementPath,
+        element: JsonElement
+    ): JsonArray {
+        val output = mutableListOf<JsonObject>()
+        element.find(path).jsonObject.forEach { (group, dimensions) ->
+            dimensions.jsonObject.forEach { (key, dimension) ->
+                when (dimension) {
+                    is JsonPrimitive -> alterPrimitiveDimension(key, group, dimension.string)
+                    is JsonObject -> alterObjectDimension(key, group, dimension)
+                    else -> throw MalformedJsonException("type not managed")
+                }.let(output::add)
+            }
+        }
+        return JsonArray(output)
+    }
+
+    private fun alterPrimitiveDimension(
+        key: String,
+        group: String,
+        dimension: String
+    ) = mutableMapOf<String, JsonElement>()
+        .apply {
+            typePut(DimensionSchema.Default.type)
+            idPutPrimitive(key.idAddGroup(group))
+            defaultPut(dimension)
+        }
+        .let(::JsonObject)
+
+    private fun alterObjectDimension(
+        key: String,
+        group: String,
+        dimension: JsonObject
+    ) = dimension.toMutableMap().apply {
+        typePut(DimensionSchema.Default.type)
+        when (val _id = idRawOrNull) {
+            is JsonNull, null -> idPutPrimitive(key.idAddGroup(group))
+
+            is JsonPrimitive -> idPutObject(
+                key.idAddGroup(group), _id.stringOrNull?.requireIsRef()
+            )
+
+            is JsonObject -> idPutObject(
+                key.idAddGroup(group), (idSourceOrNull ?: idValueOrNull?.requireIsRef())
+            )
+
+            else -> throw MalformedJsonException("type not managed")
+        }
+    }.let(::JsonObject)
+
+    private fun String.requireIsRef(): String {
+        if (!idIsRef) {
+            throw MalformedJsonException("should start with *")
+        }
+        return this
+    }
+
+}

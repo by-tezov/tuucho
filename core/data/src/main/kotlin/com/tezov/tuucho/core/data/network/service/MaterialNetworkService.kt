@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.network.service
 
-import com.tezov.tuucho.core.data.parser.rectifier.MaterialSchemaDataRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.domain.model._system.ConfigModelDomain
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
@@ -11,7 +11,7 @@ import okio.IOException
 
 class MaterialNetworkService(
     private val materialNetworkHttpRequest: MaterialNetworkHttpRequest,
-    private val materialSchemaDataRectifier: MaterialSchemaDataRectifier,
+    private val materialRectifier: MaterialRectifier,
     private val jsonConverter: Json
 ) {
 
@@ -28,6 +28,6 @@ class MaterialNetworkService(
             deserializer = MapSerializer(String.serializer(), JsonElement.serializer()),
             string = data
         )
-        return materialSchemaDataRectifier.rectify(JsonObject(materialElement))
+        return materialRectifier.rectify(JsonObject(materialElement))
     }
 }

@@ -1,25 +1,25 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.parser.SchemaDataMatcher
-import com.tezov.tuucho.core.data.parser.SchemaDataRectifier
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
-import com.tezov.tuucho.core.data.parser.rectifier.ComponentSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.ContentSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.MaterialSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.OptionSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.StyleSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._elements.button.TextButtonContentSchemaDataMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._elements.label.TextLabelContentSchemaDataMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._elements.layout.linear.LayoutLinearComponentSchemaDataMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._elements.layout.linear.LayoutLinearContentSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.id.IdSchemaDataMatcher
-import com.tezov.tuucho.core.data.parser.rectifier.id.IdSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.texts.TextSchemaDataRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsSchemaDataRectifier
+import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._elements.button.TextButtonContentMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._elements.label.TextLabelContentMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._elements.layout.linear.LayoutLinearComponentMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._elements.layout.linear.LayoutLinearContentRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.id.IdMatcher
+import com.tezov.tuucho.core.data.parser.rectifier.id.IdRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.texts.TextRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -61,179 +61,175 @@ object MaterialRectifierModule {
             IdGenerator
         }
 
-        single<MaterialSchemaDataRectifier> {
-            MaterialSchemaDataRectifier()
+        single<MaterialRectifier> {
+            MaterialRectifier()
         }
 
         // Id
-        single<IdSchemaDataRectifier> {
-            IdSchemaDataRectifier
+        single<IdRectifier> {
+            IdRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.ID) {
-            IdSchemaDataMatcher.lists
+        single<List<Matcher>>(Name.Matcher.ID) {
+            IdMatcher.lists
         }
 
         // Component
-        single<ComponentSchemaDataRectifier> {
-            ComponentSchemaDataRectifier
+        single<ComponentRectifier> {
+            ComponentRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.COMPONENT) {
+        single<List<Matcher>>(Name.Matcher.COMPONENT) {
             listOf(
-                LayoutLinearComponentSchemaDataMatcher
+                LayoutLinearComponentMatcher
             )
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.COMPONENT) {
+        single<List<Rectifier>>(Name.Processor.COMPONENT) {
             listOf(
-                get<IdSchemaDataRectifier>(),
-                get<StyleSchemaDataRectifier>(),
-                get<OptionSchemaDataRectifier>(),
-                get<ContentSchemaDataRectifier>(),
-                LayoutLinearContentSchemaDataRectifier
+                get<IdRectifier>(),
+                get<StyleRectifier>(),
+                get<OptionRectifier>(),
+                get<ContentRectifier>(),
+                LayoutLinearContentRectifier
             )
         }
 
         // Content
-        single<ContentSchemaDataRectifier> {
-            ContentSchemaDataRectifier
+        single<ContentRectifier> {
+            ContentRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.CONTENT) {
+        single<List<Matcher>>(Name.Matcher.CONTENT) {
             emptyList()
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.CONTENT) {
+        single<List<Rectifier>>(Name.Processor.CONTENT) {
             listOf(
-                get<IdSchemaDataRectifier>(),
-                get<ComponentSchemaDataRectifier>(),
-                get<TextSchemaDataRectifier>(),
+                get<IdRectifier>(),
+                get<ComponentRectifier>(),
+                get<TextRectifier>(),
             )
         }
 
         // Style
-        single<StyleSchemaDataRectifier> {
-            StyleSchemaDataRectifier
+        single<StyleRectifier> {
+            StyleRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.STYLE) {
+        single<List<Matcher>>(Name.Matcher.STYLE) {
             emptyList()
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.STYLE) {
+        single<List<Rectifier>>(Name.Processor.STYLE) {
             listOf(
-                get<IdSchemaDataRectifier>()
+                get<IdRectifier>()
             )
         }
 
         // Option
-        single<OptionSchemaDataRectifier> {
-            OptionSchemaDataRectifier
+        single<OptionRectifier> {
+            OptionRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.OPTION) {
+        single<List<Matcher>>(Name.Matcher.OPTION) {
             emptyList()
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.OPTION) {
+        single<List<Rectifier>>(Name.Processor.OPTION) {
             listOf(
-                get<IdSchemaDataRectifier>(),
+                get<IdRectifier>(),
             )
         }
 
         // Texts
-        single<TextsSchemaDataRectifier> {
-            TextsSchemaDataRectifier
+        single<TextsRectifier> {
+            TextsRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.TEXTS) {
+        single<List<Matcher>>(Name.Matcher.TEXTS) {
             emptyList()
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.TEXTS) {
+        single<List<Rectifier>>(Name.Processor.TEXTS) {
             listOf(
-                get<TextSchemaDataRectifier>(),
+                get<TextRectifier>(),
             )
         }
 
-        single<TextSchemaDataRectifier> {
-            TextSchemaDataRectifier
+        single<TextRectifier> {
+            TextRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.TEXT) {
+        single<List<Matcher>>(Name.Matcher.TEXT) {
             listOf(
-                TextLabelContentSchemaDataMatcher,
-                TextButtonContentSchemaDataMatcher
+                TextLabelContentMatcher,
+                TextButtonContentMatcher
             )
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.TEXT) {
+        single<List<Rectifier>>(Name.Processor.TEXT) {
             listOf(
-                get<IdSchemaDataRectifier>(),
+                get<IdRectifier>(),
             )
         }
 
         // Colors
-        single<ColorsSchemaDataRectifier> {
-            ColorsSchemaDataRectifier
+        single<ColorsRectifier> {
+            ColorsRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.COLORS) {
+        single<List<Matcher>>(Name.Matcher.COLORS) {
             emptyList()
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.COLORS) {
+        single<List<Rectifier>>(Name.Processor.COLORS) {
             listOf(
-                get<ColorSchemaDataRectifier>(),
+                get<ColorRectifier>(),
             )
         }
 
-        single<ColorSchemaDataRectifier> {
-            ColorSchemaDataRectifier
+        single<ColorRectifier> {
+            ColorRectifier
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.COLOR) {
+        single<List<Rectifier>>(Name.Processor.COLOR) {
             listOf(
-                get<IdSchemaDataRectifier>(),
+                get<IdRectifier>(),
             )
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.COLOR) {
-            listOf(
-
-            )
+        single<List<Matcher>>(Name.Matcher.COLOR) {
+            emptyList()
         }
 
         // Dimensions
-        single<DimensionsSchemaDataRectifier> {
-            DimensionsSchemaDataRectifier
+        single<DimensionsRectifier> {
+            DimensionsRectifier
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.DIMENSIONS) {
+        single<List<Matcher>>(Name.Matcher.DIMENSIONS) {
             emptyList()
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.DIMENSIONS) {
+        single<List<Rectifier>>(Name.Processor.DIMENSIONS) {
             listOf(
-                get<DimensionSchemaDataRectifier>(),
+                get<DimensionRectifier>(),
             )
         }
 
-        single<DimensionSchemaDataRectifier> {
-            DimensionSchemaDataRectifier
+        single<DimensionRectifier> {
+            DimensionRectifier
         }
 
-        single<List<SchemaDataRectifier>>(Name.Processor.DIMENSION) {
+        single<List<Rectifier>>(Name.Processor.DIMENSION) {
             listOf(
-                get<IdSchemaDataRectifier>(),
+                get<IdRectifier>(),
             )
         }
 
-        single<List<SchemaDataMatcher>>(Name.Matcher.DIMENSION) {
-            listOf(
-
-            )
+        single<List<Matcher>>(Name.Matcher.DIMENSION) {
+            emptyList()
         }
 
     } //TODO clean as multiple private function

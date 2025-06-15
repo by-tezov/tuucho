@@ -2,6 +2,8 @@
 
 - refactor -> encoder with jsonElement
     - Linear Layout
+  
+
     - Button, Label
     - Texts / Colors / Dimenions
     - Check all conform, check what is not done is no subset then do decoder

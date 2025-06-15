@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.parser._system
 
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchemaData.Companion.idExist
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderSubsetSchemaData
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchemaData
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idExist
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderSubsetSchema
+import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -11,8 +11,8 @@ val JsonElement.isRef
         val jsonObject = this as? JsonObject ?: return false
         if (!idExist) return false
         return (jsonObject
-                - HeaderTypeSchemaData.Name.type
-                - HeaderSubsetSchemaData.Name.subset
+                - HeaderTypeSchema.Name.type
+                - HeaderSubsetSchema.Name.subset
                 ).size == 1
     }
 

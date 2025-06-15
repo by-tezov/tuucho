@@ -1,18 +1,19 @@
 package com.tezov.tuucho.core.data.cache.repository
 
 import com.tezov.tuucho.core.data.cache.database.Database
-import com.tezov.tuucho.core.data.cache.entity.JsonEntity
-import com.tezov.tuucho.core.data.cache.entity.JsonKeyValueEntity
+import com.tezov.tuucho.core.data.cache.entity.VersioningEntity
 import com.tezov.tuucho.core.data.cache.parser.decoder.DecoderConfig
 import com.tezov.tuucho.core.data.cache.parser.decoder.MaterialModelDomainDecoder
-import com.tezov.tuucho.core.data.parser.encoder.EncoderConfig
-import com.tezov.tuucho.core.data.parser.encoder.MaterialSchemaDataEncoder
+import com.tezov.tuucho.core.data.parser._system.flatten
+import com.tezov.tuucho.core.data.parser._system.jsonEntityObject
+import com.tezov.tuucho.core.data.parser.breaker.ExtraDataBreaker
+import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.domain.model.material.MaterialModelDomain
 import kotlinx.serialization.json.JsonObject
 
 class MaterialCacheRepository(
     private val database: Database,
-    private val materialSchemaDataEncoder: MaterialSchemaDataEncoder,
+    private val materialBreaker: MaterialBreaker,
     private val materialModelDomainDecoder: MaterialModelDomainDecoder
 ) {
 
@@ -24,57 +25,37 @@ class MaterialCacheRepository(
     }
 
     suspend fun refreshCache(
-        config: EncoderConfig,
+        config: ExtraDataBreaker,
         materialElement: JsonObject
     ) {
         //TODO auto purge obsolete entry
-//        println(config.url)
-//        println(material)
-
-        val parts = materialSchemaDataEncoder.encode(materialElement, config)
-
-
-
-
-//        with(parts) {
-//            jsonKeyValueEntities.forEach { entry ->
-//                processIdValueEntity(entry)
-//            }
-//            jsonObjectEntities.forEach { entry ->
-//                processJsonEntity(entry)
-//            }
-//            val primaryKey = rootJsonObjectEntity?.let { entry ->
-//                processJsonEntity(entry)
-//            }
-////            VersioningEntity(
-////                url = config.url,
-////                version = config.version,
-////                rootPrimaryKey = primaryKey,
-////                isShared = config.isShared,
-////            ).also {
-//////                println(it)
-////
-////                database.versioning().insertOrUpdate(it)
-////            }
-//        }
-    }
-
-    private suspend fun processIdValueEntity(entry: JsonKeyValueEntity): Long {
-//        println(entry)
-
-        return 0
-//        return database.jsonKeyValue().insertOrUpdate(entry)
-    }
-
-    private suspend fun processJsonEntity(entry: JsonEntity): Long {
-//        println(entry)
-
-//        val primaryKey = database.jsonObject().insertOrUpdate(entry)
-//        entry.children?.forEach { child ->
-//            processJsonEntity(child)
-//        }
-//        return primaryKey
-        return 0
+        val parts = materialBreaker.encode(materialElement, config)
+        with(parts) {
+            val rootPrimaryKey = rootJsonEntity?.let { root ->
+                database.jsonEntity()
+                    .insertOrUpdate(root.jsonEntityObject.content)
+            }
+            VersioningEntity(
+                url = config.url,
+                version = config.version,
+                rootPrimaryKey = rootPrimaryKey,
+                isShared = config.isShared,
+            ).also { database.versioning().insertOrUpdate(it) }
+            rootJsonEntity?.let { root ->
+                root.flatten()
+                    .asSequence()
+                    .filter { it != root }
+                    .map { it.content }
+                    .forEach {
+                        database.jsonEntity().insertOrUpdate(it)
+                    }
+            }
+            jsonEntityElement
+                .asSequence()
+                .flatMap { it.flatten() }
+                .map { it.content }
+                .forEach { database.jsonEntity().insertOrUpdate(it) }
+        }
     }
 
     suspend fun retrieve(config: DecoderConfig): MaterialModelDomain {
