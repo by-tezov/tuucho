@@ -6,8 +6,8 @@ import com.tezov.tuucho.core.data.cache.repository.MaterialCacheRepository
 import com.tezov.tuucho.core.data.network.response.JsonResponse
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
-import com.tezov.tuucho.core.data.parser.encoder.MaterialSchemaDataEncoder
-import com.tezov.tuucho.core.data.parser.rectifier.MaterialSchemaDataRectifier
+import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
+import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.proxy.repository.ProxyMaterialRepositoryImpl
 import com.tezov.tuucho.core.domain.repository.MaterialRepository
 import kotlinx.serialization.json.Json
@@ -38,7 +38,7 @@ object MaterialRepositoryModule {
         single<MaterialNetworkService> {
             MaterialNetworkService(
                 materialNetworkHttpRequest = get<Retrofit>().create(MaterialNetworkHttpRequest::class.java),
-                materialSchemaDataRectifier = get<MaterialSchemaDataRectifier>(),
+                materialRectifier = get<MaterialRectifier>(),
                 jsonConverter = get<Json>()
             )
         }
@@ -46,7 +46,7 @@ object MaterialRepositoryModule {
         single<MaterialCacheRepository> {
             MaterialCacheRepository(
                 database = get<Database>(),
-                materialSchemaDataEncoder = get<MaterialSchemaDataEncoder>(),
+                materialBreaker = get<MaterialBreaker>(),
                 materialModelDomainDecoder = get<MaterialModelDomainDecoder>()
             )
         }
