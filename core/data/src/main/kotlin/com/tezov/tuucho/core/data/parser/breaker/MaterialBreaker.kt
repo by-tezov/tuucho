@@ -13,7 +13,6 @@ class MaterialBreaker : KoinComponent {
     private val dimensionBreaker: DimensionBreaker by inject()
     private val textBreaker: TextBreaker by inject()
 
-    private val optionBreaker: OptionBreaker by inject()
     private val styleBreaker: StyleBreaker by inject()
     private val contentBreaker: ContentBreaker by inject()
     private val componentBreaker: ComponentBreaker by inject()
@@ -23,7 +22,7 @@ class MaterialBreaker : KoinComponent {
         val jsonEntityElement: MutableList<JsonEntityElement> = mutableListOf()
     )
 
-    fun encode(
+    fun process(
         material: JsonObject,
         config: ExtraDataBreaker,
     ) = Parts().apply {
@@ -41,10 +40,6 @@ class MaterialBreaker : KoinComponent {
             textBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
 
-        mutableMap[MaterialSchema.Name.options]?.let {
-            optionBreaker.process("".toPath(), it, config)
-        }?.also(jsonEntityElement::add)
-
         mutableMap[MaterialSchema.Name.styles]?.let {
             styleBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
@@ -60,6 +55,7 @@ class MaterialBreaker : KoinComponent {
         mutableMap[MaterialSchema.Name.root]?.let { component ->
             componentBreaker.process("".toPath(), component, config)
         }?.also { rootJsonEntity = it }
+
     }
 
 }

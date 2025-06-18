@@ -2,18 +2,13 @@ package com.tezov.tuucho.core.data.parser.breaker
 
 import com.tezov.tuucho.core.data.di.MaterialBreakerModule.Name
 import com.tezov.tuucho.core.data.parser._schema.TextSchema
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema
-import com.tezov.tuucho.core.data.parser._system.Breaker
 import com.tezov.tuucho.core.data.parser._system.JsonElementPath
 import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.find
-import com.tezov.tuucho.core.domain.model._system.stringOrNull
+import com.tezov.tuucho.core.data.parser._system.Matcher.Companion.isTypeOf
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-object TextBreaker : BreakerBase(), KoinComponent {
+class TextBreaker : BreakerBase() {
 
     override val matchers: List<Matcher> by inject(
         Name.Matcher.TEXT
@@ -23,15 +18,8 @@ object TextBreaker : BreakerBase(), KoinComponent {
         Name.Processor.TEXT
     )
 
-    private fun isText(
-        path: JsonElementPath, element: JsonElement
-    ) = (element.find(path) as? JsonObject)
-        ?.get(HeaderTypeSchema.Name.type)
-        ?.let { it.stringOrNull == TextSchema.Default.type }
-        ?: false
-
     override fun accept(
         path: JsonElementPath, element: JsonElement
-    ) = isText(path, element) || super.accept(path, element)
+    ) = path.isTypeOf(element, TextSchema.Default.type) || super.accept(path, element)
 
 }

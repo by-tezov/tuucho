@@ -55,6 +55,6 @@ fun JsonEntityElement.flatten(): List<JsonEntityObject> {
 }
 
 fun JsonEntityElement.toJsonElement(): JsonElement = when (this) {
-    is JsonEntityObject -> this.content.jsonElement
+    is JsonEntityObject -> this.content.jsonObject
     is JsonEntityArray -> JsonArray(this.map { it.toJsonElement() })
 }

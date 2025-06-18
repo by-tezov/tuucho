@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.cache.database.Database
-import com.tezov.tuucho.core.data.cache.parser.decoder.MaterialModelDomainDecoder
 import com.tezov.tuucho.core.data.cache.repository.MaterialCacheRepository
 import com.tezov.tuucho.core.data.network.response.JsonResponse
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
+import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.proxy.repository.ProxyMaterialRepositoryImpl
@@ -47,7 +47,7 @@ object MaterialRepositoryModule {
             MaterialCacheRepository(
                 database = get<Database>(),
                 materialBreaker = get<MaterialBreaker>(),
-                materialModelDomainDecoder = get<MaterialModelDomainDecoder>()
+                materialAssembler = get<MaterialAssembler>()
             )
         }
 

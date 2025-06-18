@@ -7,7 +7,6 @@ object MaterialSchema {
         const val dimensions = "dimensions"
         const val colors = "colors"
         const val texts = "texts"
-        const val options = "options"
         const val styles = "styles"
         const val contents = "contents"
         const val components = "components"

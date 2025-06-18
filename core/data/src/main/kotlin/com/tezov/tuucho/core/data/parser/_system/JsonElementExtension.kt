@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.parser._system
 
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idExist
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderSubsetSchema
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idExist
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderSubsetSchema
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderTypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -25,7 +25,7 @@ fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? {
 }
 
 fun JsonElement.find(path: JsonElementPath): JsonElement =
-    this.findOrNull(path) ?: throw NullPointerException("element could not be found $path")
+    this.findOrNull(path) ?: throw NullPointerException("element could not be found at path $path inside $this")
 
 fun JsonElement.replace(path: JsonElementPath, newElement: JsonElement): JsonElement {
     if (path.isEmpty()) return newElement

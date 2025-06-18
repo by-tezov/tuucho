@@ -2,11 +2,10 @@ package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser._schema.ComponentSchema
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idPutNullIfMissing
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema.Companion.typePut
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idPutNullIfMissing
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderTypeSchema.Companion.typePut
 import com.tezov.tuucho.core.data.parser._system.JsonElementPath
 import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.Rectifier
 import com.tezov.tuucho.core.data.parser._system.find
 import com.tezov.tuucho.core.data.parser._system.toPath
 import kotlinx.serialization.json.JsonArray
@@ -16,7 +15,7 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-object ComponentRectifier : RectifierBase() {
+class ComponentRectifier : RectifierBase() {
 
     override val matchers: List<Matcher> by inject(
         Name.Matcher.COMPONENT

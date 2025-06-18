@@ -2,18 +2,13 @@ package com.tezov.tuucho.core.data.parser.breaker
 
 import com.tezov.tuucho.core.data.di.MaterialBreakerModule.Name
 import com.tezov.tuucho.core.data.parser._schema.DimensionSchema
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema
-import com.tezov.tuucho.core.data.parser._system.Breaker
 import com.tezov.tuucho.core.data.parser._system.JsonElementPath
 import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.find
-import com.tezov.tuucho.core.domain.model._system.stringOrNull
+import com.tezov.tuucho.core.data.parser._system.Matcher.Companion.isTypeOf
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-object DimensionBreaker: BreakerBase(), KoinComponent {
+class DimensionBreaker: BreakerBase() {
 
     override val matchers: List<Matcher> by inject(
         Name.Matcher.DIMENSION
@@ -23,16 +18,8 @@ object DimensionBreaker: BreakerBase(), KoinComponent {
         Name.Processor.DIMENSION
     )
 
-    private fun isDimension(
-        path: JsonElementPath, element: JsonElement
-    ) = (element.find(path) as? JsonObject)
-        ?.get(HeaderTypeSchema.Name.type)
-        ?.let { it.stringOrNull == DimensionSchema.Default.type }
-        ?: false
-
-
     override fun accept(
         path: JsonElementPath, element: JsonElement
-    ) = isDimension(path, element) || super.accept(path, element)
+    ) = path.isTypeOf(element, DimensionSchema.Default.type) || super.accept(path, element)
 
 }
