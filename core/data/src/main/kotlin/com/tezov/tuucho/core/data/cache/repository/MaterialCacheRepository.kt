@@ -2,10 +2,10 @@ package com.tezov.tuucho.core.data.cache.repository
 
 import com.tezov.tuucho.core.data.cache.database.Database
 import com.tezov.tuucho.core.data.cache.entity.VersioningEntity
-import com.tezov.tuucho.core.data.cache.parser.decoder.DecoderConfig
-import com.tezov.tuucho.core.data.cache.parser.decoder.MaterialModelDomainDecoder
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser._system.jsonEntityObject
+import com.tezov.tuucho.core.data.parser.assembler.ExtraDataAssembler
+import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.breaker.ExtraDataBreaker
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.domain.model.material.MaterialModelDomain
@@ -14,7 +14,7 @@ import kotlinx.serialization.json.JsonObject
 class MaterialCacheRepository(
     private val database: Database,
     private val materialBreaker: MaterialBreaker,
-    private val materialModelDomainDecoder: MaterialModelDomainDecoder
+    private val materialAssembler: MaterialAssembler
 ) {
 
     suspend fun shouldRefresh(url: String, version: String): Boolean {
@@ -29,7 +29,7 @@ class MaterialCacheRepository(
         materialElement: JsonObject
     ) {
         //TODO auto purge obsolete entry
-        val parts = materialBreaker.encode(materialElement, config)
+        val parts = materialBreaker.process(materialElement, config)
         with(parts) {
             val rootPrimaryKey = rootJsonEntity?.let { root ->
                 database.jsonEntity()
@@ -58,8 +58,8 @@ class MaterialCacheRepository(
         }
     }
 
-    suspend fun retrieve(config: DecoderConfig): MaterialModelDomain {
-        return materialModelDomainDecoder.decode(config) ?: throw TODO()
+    suspend fun retrieve(config: ExtraDataAssembler): MaterialModelDomain {
+        return materialAssembler.decode(config) ?: throw TODO()
     }
 
 }

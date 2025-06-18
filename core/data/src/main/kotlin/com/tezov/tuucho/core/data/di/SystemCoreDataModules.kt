@@ -5,7 +5,7 @@ object SystemCoreDataModules {
     operator fun invoke() = listOf(
         MaterialRectifierModule(),
         MaterialBreakerModule(),
-        MaterialDecoderModule(),
+        MaterialAssemblerModule(),
         MaterialRepositoryModule(),
         DatabaseRepositoryModule()
     )

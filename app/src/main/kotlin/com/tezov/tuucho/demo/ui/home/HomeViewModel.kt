@@ -24,7 +24,9 @@ class HomeViewModel(
             delay(500)
 
             refreshCacheMaterials("config")
-            getMaterials("page-home")
+//            getMaterials("page-home")
+            getMaterials("page-credit")
+//            getMaterials("page-template")
         }
     }
 

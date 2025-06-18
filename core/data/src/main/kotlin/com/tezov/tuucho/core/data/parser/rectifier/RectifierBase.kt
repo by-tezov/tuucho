@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.data.parser.rectifier
 import android.util.MalformedJsonException
 import com.tezov.tuucho.core.data.parser._system.JsonElementPath
 import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.Rectifier
 import com.tezov.tuucho.core.data.parser._system.find
 import com.tezov.tuucho.core.data.parser._system.replace
 import kotlinx.serialization.json.JsonArray
@@ -12,7 +11,6 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
-
 
 abstract class RectifierBase : Rectifier {
     override val matchers: List<Matcher> = emptyList()
@@ -79,9 +77,7 @@ abstract class RectifierBase : Rectifier {
             is JsonPrimitive, is JsonArray -> {
                 childProcessors.asSequence()
                     .filter { it.accept(path, _element) }
-                    .forEach {
-                        _element = it.process(path, _element)
-                    }
+                    .forEach { _element = it.process(path, _element) }
             }
 
             is JsonObject -> {
@@ -89,9 +85,7 @@ abstract class RectifierBase : Rectifier {
                     val childPath = path.child(childKey)
                     childProcessors.asSequence()
                         .filter { it.accept(childPath, _element) }
-                        .forEach {
-                            _element = it.process(childPath, _element)
-                        }
+                        .forEach { _element = it.process(childPath, _element) }
                 }
             }
 

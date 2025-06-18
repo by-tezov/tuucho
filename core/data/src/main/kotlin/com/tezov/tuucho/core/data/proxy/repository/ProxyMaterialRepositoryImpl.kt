@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.proxy.repository
 
-import com.tezov.tuucho.core.data.cache.parser.decoder.DecoderConfig
 import com.tezov.tuucho.core.data.cache.repository.MaterialCacheRepository
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
+import com.tezov.tuucho.core.data.parser.assembler.ExtraDataAssembler
 import com.tezov.tuucho.core.domain.model.material.MaterialModelDomain
 import com.tezov.tuucho.core.domain.repository.MaterialRepository
 
@@ -42,6 +42,6 @@ class ProxyMaterialRepositoryImpl(
     }
 
     override suspend fun retrieve(url: String): MaterialModelDomain {
-        return materialCacheRepository.retrieve(DecoderConfig(url = url))
+        return materialCacheRepository.retrieve(ExtraDataAssembler(url = url))
     }
 }

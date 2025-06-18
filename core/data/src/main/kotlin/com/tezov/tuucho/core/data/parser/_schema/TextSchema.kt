@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser._schema
 
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderTypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
 

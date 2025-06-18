@@ -28,6 +28,6 @@ class MaterialNetworkService(
             deserializer = MapSerializer(String.serializer(), JsonElement.serializer()),
             string = data
         )
-        return materialRectifier.rectify(JsonObject(materialElement))
+        return materialRectifier.process(JsonObject(materialElement))
     }
 }

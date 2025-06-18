@@ -4,18 +4,17 @@ import android.util.MalformedJsonException
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser._schema.DimensionSchema
 import com.tezov.tuucho.core.data.parser._schema.DimensionSchema.Companion.defaultPut
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idAddGroup
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idIsRef
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idPutObject
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idPutPrimitive
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idRawOrNull
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idSourceOrNull
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderIdSchema.Companion.idValueOrNull
-import com.tezov.tuucho.core.data.parser._schema._common.header.HeaderTypeSchema.Companion.typePut
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idAddGroup
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idIsRef
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idPutObject
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idPutPrimitive
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idRawOrNull
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idSourceOrNull
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idValueOrNull
+import com.tezov.tuucho.core.data.parser._schema.header.HeaderTypeSchema.Companion.typePut
 import com.tezov.tuucho.core.data.parser._system.JsonElementPath
-import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.Rectifier
 import com.tezov.tuucho.core.data.parser._system.find
+import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.RectifierBase
 import com.tezov.tuucho.core.domain.model._system.string
 import com.tezov.tuucho.core.domain.model._system.stringOrNull
@@ -27,11 +26,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-object DimensionsRectifier : RectifierBase() {
-
-    override val matchers: List<Matcher> by inject(
-        Name.Matcher.DIMENSIONS
-    )
+class DimensionsRectifier : RectifierBase() {
 
     override val childProcessors: List<Rectifier> by inject(
         Name.Processor.DIMENSIONS

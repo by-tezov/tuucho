@@ -15,13 +15,13 @@ class MaterialRectifier : KoinComponent {
     private val dimensionsRectifier: DimensionsRectifier by inject()
     private val textsRectifier: TextsRectifier by inject()
 
-    private val optionRectifier: OptionRectifier by inject()
     private val styleRectifier: StyleRectifier by inject()
     private val contentRectifier: ContentRectifier by inject()
     private val componentRectifier: ComponentRectifier by inject()
 
-    fun rectify(materialElement: JsonObject): JsonObject {
-        val materialElementMap = materialElement.toMutableMap()
+    fun process(material: JsonObject): JsonObject {
+        //println("**************************************************************************************************************")
+        val materialElementMap = material.toMutableMap()
 
         materialElementMap[MaterialSchema.Name.colors]?.let {
             materialElementMap[MaterialSchema.Name.colors] = colorsRectifier.process("".toPath(), it)
@@ -33,9 +33,6 @@ class MaterialRectifier : KoinComponent {
             materialElementMap[MaterialSchema.Name.texts] = textsRectifier.process("".toPath(), it)
         }
 
-        materialElementMap[MaterialSchema.Name.options]?.let {
-            materialElementMap[MaterialSchema.Name.options] = optionRectifier.process("".toPath(), it)
-        }
         materialElementMap[MaterialSchema.Name.styles]?.let {
             materialElementMap[MaterialSchema.Name.styles] = styleRectifier.process("".toPath(), it)
         }
