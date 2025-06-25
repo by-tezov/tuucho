@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser._system
 
-import com.tezov.tuucho.core.data.cache.entity.JsonEntity
+import com.tezov.tuucho.core.data.database.entity.JsonEntity
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 

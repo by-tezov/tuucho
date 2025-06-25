@@ -67,6 +67,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 #convention
 convention-application = { id = "com.tezov.tuucho.convention.application", version = "unspecified" }
 convention-library = { id = "com.tezov.tuucho.convention.library", version = "unspecified" }
+convention-library-ui = { id = "com.tezov.tuucho.convention.library-ui", version = "unspecified" }
 #project
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }

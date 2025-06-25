@@ -1,46 +1,31 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
-import com.tezov.tuucho.core.data.cache.database.Database
-import com.tezov.tuucho.core.data.parser._system.toPath
-import com.tezov.tuucho.core.domain.model.material.MaterialModelDomain
+import com.tezov.tuucho.core.data.database.Database
+import com.tezov.tuucho.core.domain._system.toPath
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MaterialAssembler(
     private val database: Database,
-    private val json: Json
+    private val jsonConverter: Json
 ) : KoinComponent {
 
     private val componentAssembler: ComponentAssembler by inject()
 
-    suspend fun decode(
+    suspend fun process(
         config: ExtraDataAssembler
-    ): MaterialModelDomain? {
+    ): JsonObject? {
         val versioning = database.versioning()
             .find(url = config.url) ?: return null
         versioning.rootPrimaryKey ?: return null
         val entity = database.jsonEntity().find(versioning.rootPrimaryKey) ?: return null
-
-//        database.jsonEntity().selectAll().filter { it.type == "text" }.forEach {
-//            println(it)
-//        }
-//        println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-
-
-        println(entity.jsonObject)
-        val jsonElementDecoded = componentAssembler
-            .process(
-                path = "".toPath(),
-                element = entity.jsonObject,
-                extraData = config
-            )
-        println(jsonElementDecoded)
-
-//        val componentDecoded = json.decodeFromJsonElement(
-//            ComponentModelDomain.PolymorphicSerializer,
-//            jsonElementDecoded
-//        )
-        return MaterialModelDomain(root = TODO())
+        val jsonElementAssembled = componentAssembler.process(
+            path = "".toPath(),
+            element = entity.jsonObject,
+            extraData = config
+        )
+        return jsonElementAssembled as? JsonObject
     }
 }

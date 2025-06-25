@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.data.parser.breaker.DimensionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.parser.breaker.TextBreaker
-import com.tezov.tuucho.core.data.parser.breaker.layout.linear.LayoutLinearContentMatcher
+import com.tezov.tuucho.core.data.parser.breaker._element.layout.linear.LayoutLinearContentMatcher
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

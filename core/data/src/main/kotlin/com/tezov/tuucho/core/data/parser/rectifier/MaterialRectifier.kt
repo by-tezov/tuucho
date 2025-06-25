@@ -1,10 +1,10 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
-import com.tezov.tuucho.core.data.parser._schema.MaterialSchema
-import com.tezov.tuucho.core.data.parser._system.toPath
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
+import com.tezov.tuucho.core.domain._system.toPath
+import com.tezov.tuucho.core.domain.schema.MaterialSchema
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,32 +20,31 @@ class MaterialRectifier : KoinComponent {
     private val componentRectifier: ComponentRectifier by inject()
 
     fun process(material: JsonObject): JsonObject {
-        //println("**************************************************************************************************************")
         val materialElementMap = material.toMutableMap()
 
-        materialElementMap[MaterialSchema.Name.colors]?.let {
-            materialElementMap[MaterialSchema.Name.colors] = colorsRectifier.process("".toPath(), it)
+        materialElementMap[MaterialSchema.Key.colors]?.let {
+            materialElementMap[MaterialSchema.Key.colors] = colorsRectifier.process("".toPath(), it)
         }
-        materialElementMap[MaterialSchema.Name.dimensions]?.let {
-            materialElementMap[MaterialSchema.Name.dimensions] = dimensionsRectifier.process("".toPath(), it)
+        materialElementMap[MaterialSchema.Key.dimensions]?.let {
+            materialElementMap[MaterialSchema.Key.dimensions] = dimensionsRectifier.process("".toPath(), it)
         }
-        materialElementMap[MaterialSchema.Name.texts]?.let {
-            materialElementMap[MaterialSchema.Name.texts] = textsRectifier.process("".toPath(), it)
-        }
-
-        materialElementMap[MaterialSchema.Name.styles]?.let {
-            materialElementMap[MaterialSchema.Name.styles] = styleRectifier.process("".toPath(), it)
-        }
-        materialElementMap[MaterialSchema.Name.contents]?.let {
-            materialElementMap[MaterialSchema.Name.contents] = contentRectifier.process("".toPath(), it)
+        materialElementMap[MaterialSchema.Key.texts]?.let {
+            materialElementMap[MaterialSchema.Key.texts] = textsRectifier.process("".toPath(), it)
         }
 
-        materialElementMap[MaterialSchema.Name.components]?.let {
-            materialElementMap[MaterialSchema.Name.components] = componentRectifier.process("".toPath(), it)
+        materialElementMap[MaterialSchema.Key.styles]?.let {
+            materialElementMap[MaterialSchema.Key.styles] = styleRectifier.process("".toPath(), it)
+        }
+        materialElementMap[MaterialSchema.Key.contents]?.let {
+            materialElementMap[MaterialSchema.Key.contents] = contentRectifier.process("".toPath(), it)
         }
 
-        materialElementMap[MaterialSchema.Name.root]?.let { component ->
-            materialElementMap[MaterialSchema.Name.root] = componentRectifier.process("".toPath(), component)
+        materialElementMap[MaterialSchema.Key.components]?.let {
+            materialElementMap[MaterialSchema.Key.components] = componentRectifier.process("".toPath(), it)
+        }
+
+        materialElementMap[MaterialSchema.Key.root]?.let { component ->
+            materialElementMap[MaterialSchema.Key.root] = componentRectifier.process("".toPath(), component)
         }
 
         return JsonObject(materialElementMap)

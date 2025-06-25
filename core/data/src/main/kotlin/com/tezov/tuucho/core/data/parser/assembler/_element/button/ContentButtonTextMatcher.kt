@@ -1,0 +1,22 @@
+package com.tezov.tuucho.core.data.parser.assembler._element.button
+
+import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.isSubsetOf
+import com.tezov.tuucho.core.data.parser._system.isTypeOf
+import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
+import com.tezov.tuucho.core.domain._system.JsonElementPath
+import com.tezov.tuucho.core.domain._system.find
+import com.tezov.tuucho.core.domain.schema.common.TypeSchema
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+
+class ContentButtonTextMatcher : Matcher {
+
+    override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
+        if (!path.lastSegmentIs(com.tezov.tuucho.core.domain.schema._element.button.ButtonSchema.Key.value)) return false
+        val parent = element.find(path.parent()) as? JsonObject
+        return parent.isSubsetOf(com.tezov.tuucho.core.domain.schema._element.button.ButtonSchema.Value.subset)
+                && parent.isTypeOf(TypeSchema.Value.Type.content)
+    }
+
+}

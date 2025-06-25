@@ -1,8 +1,7 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
-import com.tezov.tuucho.core.data.parser._schema.MaterialSchema
 import com.tezov.tuucho.core.data.parser._system.JsonEntityElement
-import com.tezov.tuucho.core.data.parser._system.toPath
+import com.tezov.tuucho.core.domain._system.toPath
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -28,31 +27,31 @@ class MaterialBreaker : KoinComponent {
     ) = Parts().apply {
         val mutableMap = material.toMutableMap()
 
-        mutableMap[MaterialSchema.Name.colors]?.let {
+        mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.colors]?.let {
             colorBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
 
-        mutableMap[MaterialSchema.Name.dimensions]?.let {
+        mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.dimensions]?.let {
             dimensionBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
 
-        mutableMap[MaterialSchema.Name.texts]?.let {
+        mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.texts]?.let {
             textBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
 
-        mutableMap[MaterialSchema.Name.styles]?.let {
+        mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.styles]?.let {
             styleBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
 
-        mutableMap[MaterialSchema.Name.contents]?.let {
+        mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.contents]?.let {
             contentBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
 
-        mutableMap[MaterialSchema.Name.components]?.let {
+        mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.components]?.let {
             componentBreaker.process("".toPath(), it, config)
         }?.also(jsonEntityElement::add)
 
-        mutableMap[MaterialSchema.Name.root]?.let { component ->
+        mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.root]?.let { component ->
             componentBreaker.process("".toPath(), component, config)
         }?.also { rootJsonEntity = it }
 

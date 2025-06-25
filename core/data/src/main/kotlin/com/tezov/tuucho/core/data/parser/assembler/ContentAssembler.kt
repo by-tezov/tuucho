@@ -1,30 +1,30 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
-import com.tezov.tuucho.core.data.parser._schema.ContentSchema
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderSubsetSchema
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderSubsetSchema.Companion.subset
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderSubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderSubsetSchema.Companion.subsetPut
-import com.tezov.tuucho.core.data.parser._system.JsonElementPath
 import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.Matcher.Companion.isTypeOf
-import com.tezov.tuucho.core.data.parser._system.find
-import com.tezov.tuucho.core.data.parser._system.toPath
+import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
+import com.tezov.tuucho.core.domain._system.JsonElementPath
+import com.tezov.tuucho.core.domain._system.find
+import com.tezov.tuucho.core.domain._system.toPath
+import com.tezov.tuucho.core.domain.schema.common.SubsetSchema
+import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subset
+import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
+import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetPut
+import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
-class ContentAssembler : AssemblerBase() {
+class ContentAssembler : Assembler() {
 
-    override val dataBaseType: String = ContentSchema.Default.type
+    override val dataBaseType: String = TypeSchema.Value.Type.content
 
     override val matchers: List<Matcher> by inject(
         Name.Matcher.CONTENT
     )
 
-    override val childProcessors: List<AssemblerBase> by inject(
+    override val childProcessors: List<Assembler> by inject(
         Name.Processor.CONTENT
     )
 
@@ -32,17 +32,17 @@ class ContentAssembler : AssemblerBase() {
 
     override fun accept(
         path: JsonElementPath, element: JsonElement
-    ) = path.isTypeOf(element, ContentSchema.Default.type) || super.accept(path, element)
+    ) = path.isTypeOf(element, TypeSchema.Value.Type.content) || super.accept(path, element)
 
     override fun List<JsonObject>.rectify(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler
     ): List<JsonObject> {
-        if (!any { it.subsetOrNull == HeaderSubsetSchema.Default.subset }) return this
+        if (!any { it.subsetOrNull == SubsetSchema.Value.subset }) return this
         val parentSubset = (element.find(path.parent()) as JsonObject).subset
         return map { current ->
-            if (current.subsetOrNull == HeaderSubsetSchema.Default.subset) {
+            if (current.subsetOrNull == SubsetSchema.Value.subset) {
                 val altered = current.toMutableMap().apply {
                     subsetPut(parentSubset)
                 }.let(::JsonObject)
