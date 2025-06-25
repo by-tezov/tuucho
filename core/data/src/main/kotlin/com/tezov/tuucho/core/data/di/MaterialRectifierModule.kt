@@ -7,9 +7,9 @@ import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._elements.button.ContentButtonTextMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._elements.label.ContentLabelTextMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._elements.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.ContentButtonTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.label.ContentLabelTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier

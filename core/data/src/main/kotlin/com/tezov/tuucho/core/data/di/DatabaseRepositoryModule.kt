@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.di
 
 import androidx.room.Room
-import com.tezov.tuucho.core.data.cache.database.Database
+import com.tezov.tuucho.core.data.database.Database
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

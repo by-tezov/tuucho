@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.network.service
 
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
-import com.tezov.tuucho.core.domain.model._system.ConfigModelDomain
+import com.tezov.tuucho.core.domain.model.ConfigModelDomain
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json

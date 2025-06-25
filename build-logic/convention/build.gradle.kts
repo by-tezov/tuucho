@@ -32,5 +32,9 @@ gradlePlugin {
             id = "${group}.library"
             implementationClass = "${group}.${name}"
         }
+        register("ConventionLibraryUiPlugin") {
+            id = "${group}.library-ui"
+            implementationClass = "${group}.${name}"
+        }
     }
 }

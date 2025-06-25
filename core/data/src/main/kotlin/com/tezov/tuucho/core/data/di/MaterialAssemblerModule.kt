@@ -9,9 +9,9 @@ import com.tezov.tuucho.core.data.parser.assembler.DimensionAssembler
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
-import com.tezov.tuucho.core.data.parser.assembler._elements.button.ContentButtonTextMatcher
-import com.tezov.tuucho.core.data.parser.assembler._elements.label.ContentLabelTextMatcher
-import com.tezov.tuucho.core.data.parser.assembler._elements.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonTextMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.label.ContentLabelTextMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -42,7 +42,7 @@ object MaterialAssemblerModule {
         single<MaterialAssembler> {
             MaterialAssembler(
                 database = get(),
-                json = get()
+                jsonConverter = get()
             )
         }
         componentModule()

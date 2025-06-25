@@ -1,22 +1,22 @@
 package com.tezov.tuucho.core.data.parser.rectifier.id
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idPut
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idSourceOrNull
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idValueOrNull
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
-import com.tezov.tuucho.core.data.parser._system.JsonElementPath
 import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.find
-import com.tezov.tuucho.core.data.parser.rectifier.RectifierBase
-import com.tezov.tuucho.core.domain.model._system.SymbolDomain
-import com.tezov.tuucho.core.domain.model._system.stringOrNull
+import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.domain._system.JsonElementPath
+import com.tezov.tuucho.core.domain._system.find
+import com.tezov.tuucho.core.domain._system.stringOrNull
+import com.tezov.tuucho.core.domain.schema.SymbolData
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idPut
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idSourceOrNull
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idValueOrNull
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class IdRectifier : RectifierBase() {
+class IdRectifier : Rectifier() {
 
     private val idGenerator: IdGenerator by inject()
 
@@ -45,13 +45,13 @@ class IdRectifier : RectifierBase() {
         }.let(::JsonObject)
 
     private fun rectifyIds(id: String?, idFrom: String?): Triple<String, String?, Boolean> {
-        if (id == null || id.startsWith(SymbolDomain.ID_REF_INDICATOR)) {
+        if (id == null || id.startsWith(SymbolData.ID_REF_INDICATOR)) {
             return Triple(
                 idGenerator.generate(),
-                id?.removePrefix(SymbolDomain.ID_REF_INDICATOR),
+                id?.removePrefix(SymbolData.ID_REF_INDICATOR),
                 true
             )
         }
-        return Triple(id, idFrom?.removePrefix(SymbolDomain.ID_REF_INDICATOR), false)
+        return Triple(id, idFrom?.removePrefix(SymbolData.ID_REF_INDICATOR), false)
     }
 }

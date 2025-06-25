@@ -1,14 +1,7 @@
 ## In progress
 
-- refactor -> assembler
-  - Check all conform - all page
-  - clean isStuff to be reused to avoid duplicate matcher and co
-  - define the roadmap (still need to do font, dimension, color resolved...)
+- make action navigation work
 
-- quick button / label
-
-- do one ui page
-- add the bottom bar + some element
 
 - replace retrofit with KTOR and pure kotlin lib
 - add behavior 

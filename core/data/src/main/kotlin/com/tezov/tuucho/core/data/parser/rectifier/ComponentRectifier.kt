@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.parser._schema.ComponentSchema
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderIdSchema.Companion.idPutNullIfMissing
-import com.tezov.tuucho.core.data.parser._schema.header.HeaderTypeSchema.Companion.typePut
-import com.tezov.tuucho.core.data.parser._system.JsonElementPath
 import com.tezov.tuucho.core.data.parser._system.Matcher
-import com.tezov.tuucho.core.data.parser._system.find
-import com.tezov.tuucho.core.data.parser._system.toPath
+import com.tezov.tuucho.core.domain._system.JsonElementPath
+import com.tezov.tuucho.core.domain._system.find
+import com.tezov.tuucho.core.domain._system.toPath
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idPutNullIfMissing
+import com.tezov.tuucho.core.domain.schema.common.TypeSchema
+import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typePut
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -15,7 +15,7 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class ComponentRectifier : RectifierBase() {
+class ComponentRectifier : Rectifier() {
 
     override val matchers: List<Matcher> by inject(
         Name.Matcher.COMPONENT
@@ -27,7 +27,7 @@ class ComponentRectifier : RectifierBase() {
     override fun beforeAlterObject(path: JsonElementPath, element: JsonElement) =
         element.find(path).jsonObject.toMutableMap().apply {
             idPutNullIfMissing()
-            typePut(ComponentSchema.Default.type)
+            typePut(TypeSchema.Value.Type.component)
         }.let(::JsonObject)
 
     override fun beforeAlterArray(path: JsonElementPath, element: JsonElement) =
