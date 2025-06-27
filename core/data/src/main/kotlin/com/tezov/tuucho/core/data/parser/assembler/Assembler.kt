@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replace
@@ -21,12 +21,12 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class Assembler : Matcher, KoinComponent {
+abstract class Assembler : MatcherProtocol, KoinComponent {
     abstract val dataBaseType: String
 
     protected val database: Database by inject()
 
-    protected open val matchers: List<Matcher> = emptyList()
+    protected open val matchers: List<MatcherProtocol> = emptyList()
     protected open val childProcessors: List<Assembler> = emptyList()
 
     override fun accept(

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser.breaker._element.layout.linear
 
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-class LayoutLinearContentMatcher : Matcher {
+class LayoutLinearContentMatcher : MatcherProtocol {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
         if (!path.lastSegmentIs(com.tezov.tuucho.core.domain.schema._element.layout.LayoutLinearSchema.Key.items)) return false

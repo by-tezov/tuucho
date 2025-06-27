@@ -15,16 +15,16 @@ class MaterialAssembler(
     private val componentAssembler: ComponentAssembler by inject()
 
     suspend fun process(
-        config: ExtraDataAssembler
+        extraData: ExtraDataAssembler
     ): JsonObject? {
         val versioning = database.versioning()
-            .find(url = config.url) ?: return null
+            .find(url = extraData.url) ?: return null
         versioning.rootPrimaryKey ?: return null
         val entity = database.jsonEntity().find(versioning.rootPrimaryKey) ?: return null
         val jsonElementAssembled = componentAssembler.process(
             path = "".toPath(),
             element = entity.jsonObject,
-            extraData = config
+            extraData = extraData
         )
         return jsonElementAssembled as? JsonObject
     }

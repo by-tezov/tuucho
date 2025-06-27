@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser.assembler.Assembler
 import com.tezov.tuucho.core.data.parser.assembler.ColorAssembler
 import com.tezov.tuucho.core.data.parser.assembler.ComponentAssembler
@@ -56,7 +56,7 @@ object MaterialAssemblerModule {
     private fun Module.componentModule() {
         single<ComponentAssembler> { ComponentAssembler() }
 
-        single<List<Matcher>>(Name.Matcher.COMPONENT) {
+        single<List<MatcherProtocol>>(Name.Matcher.COMPONENT) {
             listOf(
                 ContentLayoutLinearItemsMatcher()
             )
@@ -73,7 +73,7 @@ object MaterialAssemblerModule {
     private fun Module.contentModule() {
         single<ContentAssembler> { ContentAssembler() }
 
-        single<List<Matcher>>(Name.Matcher.CONTENT) {
+        single<List<MatcherProtocol>>(Name.Matcher.CONTENT) {
             emptyList()
         }
 
@@ -88,7 +88,7 @@ object MaterialAssemblerModule {
     private fun Module.styleModule() {
         single<StyleAssembler> { StyleAssembler() }
 
-        single<List<Matcher>>(Name.Matcher.STYLE) {
+        single<List<MatcherProtocol>>(Name.Matcher.STYLE) {
             emptyList()
         }
 
@@ -100,7 +100,7 @@ object MaterialAssemblerModule {
     private fun Module.textModule() {
         single<TextAssembler> { TextAssembler() }
 
-        single<List<Matcher>>(Name.Matcher.TEXT) {
+        single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
             listOf(
                 ContentLabelTextMatcher(),
                 ContentButtonTextMatcher(),
@@ -115,7 +115,7 @@ object MaterialAssemblerModule {
     private fun Module.colorModule() {
         single<ColorAssembler> { ColorAssembler() }
 
-        single<List<Matcher>>(Name.Matcher.COLOR) {
+        single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
             emptyList()
         }
 
@@ -127,7 +127,7 @@ object MaterialAssemblerModule {
     private fun Module.dimensionModule() {
         single<DimensionAssembler> { DimensionAssembler() }
 
-        single<List<Matcher>>(Name.Matcher.DIMENSION) {
+        single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
             emptyList()
         }
 

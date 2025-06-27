@@ -11,7 +11,7 @@ object DatabaseRepositoryModule {
         single<Database> {
             val databaseName = "database.db"
 
-            //TODO remove and used migration when done
+            //TODO remove and use migration when done
             val context = androidContext()
             val dbFile = context.getDatabasePath(databaseName)
             if (dbFile.exists()) {

@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.database.entity.JsonEntity
 import com.tezov.tuucho.core.data.parser._system.JsonEntityArray
 import com.tezov.tuucho.core.data.parser._system.JsonEntityElement
 import com.tezov.tuucho.core.data.parser._system.JsonEntityObject
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.toJsonEntityArray
 import com.tezov.tuucho.core.data.parser._system.toJsonEntityObject
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -23,9 +23,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class Breaker : Matcher, KoinComponent {
+abstract class Breaker : MatcherProtocol, KoinComponent {
 
-    protected open val matchers: List<Matcher> = emptyList()
+    protected open val matchers: List<MatcherProtocol> = emptyList()
     protected open val childProcessors: List<Breaker> = emptyList()
 
     override fun accept(

@@ -23,36 +23,36 @@ class MaterialBreaker : KoinComponent {
 
     fun process(
         material: JsonObject,
-        config: ExtraDataBreaker,
+        extraData: ExtraDataBreaker,
     ) = Parts().apply {
         val mutableMap = material.toMutableMap()
 
         mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.colors]?.let {
-            colorBreaker.process("".toPath(), it, config)
+            colorBreaker.process("".toPath(), it, extraData)
         }?.also(jsonEntityElement::add)
 
         mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.dimensions]?.let {
-            dimensionBreaker.process("".toPath(), it, config)
+            dimensionBreaker.process("".toPath(), it, extraData)
         }?.also(jsonEntityElement::add)
 
         mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.texts]?.let {
-            textBreaker.process("".toPath(), it, config)
+            textBreaker.process("".toPath(), it, extraData)
         }?.also(jsonEntityElement::add)
 
         mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.styles]?.let {
-            styleBreaker.process("".toPath(), it, config)
+            styleBreaker.process("".toPath(), it, extraData)
         }?.also(jsonEntityElement::add)
 
         mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.contents]?.let {
-            contentBreaker.process("".toPath(), it, config)
+            contentBreaker.process("".toPath(), it, extraData)
         }?.also(jsonEntityElement::add)
 
         mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.components]?.let {
-            componentBreaker.process("".toPath(), it, config)
+            componentBreaker.process("".toPath(), it, extraData)
         }?.also(jsonEntityElement::add)
 
         mutableMap[com.tezov.tuucho.core.domain.schema.MaterialSchema.Key.root]?.let { component ->
-            componentBreaker.process("".toPath(), component, config)
+            componentBreaker.process("".toPath(), component, extraData)
         }?.also { rootJsonEntity = it }
 
     }

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
@@ -12,7 +12,7 @@ class TextAssembler : Assembler() {
 
     override val dataBaseType: String = TypeSchema.Value.Type.text
 
-    override val matchers: List<Matcher> by inject(
+    override val matchers: List<MatcherProtocol> by inject(
         Name.Matcher.TEXT
     )
 

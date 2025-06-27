@@ -1,19 +1,20 @@
 package com.tezov.tuucho.core.ui.renderer
 
+import com.tezov.tuucho.core.domain.protocol.ScreenProtocol
+import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
 import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idObject
 import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idValue
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subset
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.type
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreen
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
-class MaterialRenderer(
+class ComponentRenderer(
     private val renderers: List<Renderer>
-) : KoinComponent {
+) : ScreenRendererProtocol, KoinComponent {
 
-    fun process(component: JsonObject): ComposableScreen? {
+    override fun process(component: JsonObject): ScreenProtocol? {
         if(component.type != TypeSchema.Value.Type.component) {
             throw IllegalStateException("object is not a component $component")
         }
