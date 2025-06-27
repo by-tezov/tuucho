@@ -1,6 +1,8 @@
 ## In progress
 
 - make action navigation work
+- do the style properly
+- refactor to accept behavior
 
 
 - replace retrofit with KTOR and pure kotlin lib
