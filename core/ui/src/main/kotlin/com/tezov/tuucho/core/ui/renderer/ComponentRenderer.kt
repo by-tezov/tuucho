@@ -2,8 +2,7 @@ package com.tezov.tuucho.core.ui.renderer
 
 import com.tezov.tuucho.core.domain.protocol.ScreenProtocol
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idObject
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idValue
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.id
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subset
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.type
@@ -22,7 +21,7 @@ class ComponentRenderer(
             .filter { it.accept(component) }
             .also {
                 if (it.size > 1) {
-                    throw IllegalStateException("Only one renderer can accept the object ${component.idObject.idValue} ${component.subset}")
+                    throw IllegalStateException("Only one renderer can accept the object ${component.id} ${component.subset}")
                 }
             }
             .firstOrNull()

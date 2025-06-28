@@ -7,8 +7,7 @@ import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain.schema.ComponentSchema
 import com.tezov.tuucho.core.domain.schema.TextSchema
 import com.tezov.tuucho.core.domain.schema._element.button.ButtonSchema
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idObject
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idValue
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.id
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
@@ -34,10 +33,9 @@ class ButtonRendered : Renderer() {
         val value = content[ButtonSchema.Key.value]!!.jsonObject
         val text = value[TextSchema.Key.default].string
         val action = content[ButtonSchema.Key.action].string
-
         return ButtonScreen(
             text = text,
-            action = { actionHandler.invoke(content.idObject.idValue, action) }
+            action = { actionHandler.invoke(content.id, action) }
         )
     }
 }
