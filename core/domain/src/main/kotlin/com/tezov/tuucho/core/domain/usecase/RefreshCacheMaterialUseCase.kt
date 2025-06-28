@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.domain.usecase
 
-import com.tezov.tuucho.core.domain.repository.MaterialRepository
+import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
 
-class RefreshCacheMaterialUseCase(private val repository: MaterialRepository) {
+class RefreshCacheMaterialUseCase(private val repository: MaterialRepositoryProtocol) {
 
-    suspend operator fun invoke(url: String) = repository.refreshCache(url)
+    suspend fun invoke(url: String) = repository.refreshCache(url)
 
 }

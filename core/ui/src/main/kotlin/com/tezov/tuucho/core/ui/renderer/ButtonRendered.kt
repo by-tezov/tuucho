@@ -7,24 +7,27 @@ import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain.schema.ComponentSchema
 import com.tezov.tuucho.core.domain.schema.TextSchema
 import com.tezov.tuucho.core.domain.schema._element.button.ButtonSchema
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idObject
+import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idValue
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreen
+import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
 class ButtonRendered : Renderer() {
 
-    private val renderer: MaterialRenderer by inject()
+    private val actionHandler: ActionHandlerUseCase by inject()
 
     override fun accept(jsonObject: JsonObject): Boolean {
         return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
                 jsonObject.subsetOrNull == ButtonSchema.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreen {
+    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
         val content = jsonObject[ComponentSchema.Key.content]!!.jsonObject
         val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
 
@@ -34,22 +37,21 @@ class ButtonRendered : Renderer() {
 
         return ButtonScreen(
             text = text,
-            action = action
+            action = { actionHandler.invoke(content.idObject.idValue, action) }
         )
     }
 }
 
 class ButtonScreen(
     var text: String,
-    var action: String
-) : ComposableScreen {
+    var action: () -> Unit
+) : ComposableScreenProtocol() {
 
     @Composable
-    override fun Any.show() {
-        Button(onClick = {
-            println(action)
-        }) {
-            Text(text = text)
-        }
+    override fun show(scope: Any?) {
+        Button(
+            onClick = action,
+            content = { Text(text = text) }
+        )
     }
 }

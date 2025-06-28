@@ -4,7 +4,6 @@ object SystemCoreUiModules {
 
     operator fun invoke() = listOf(
         MaterialRendererModule(),
-        UseCaseModule(),
     )
 
 }

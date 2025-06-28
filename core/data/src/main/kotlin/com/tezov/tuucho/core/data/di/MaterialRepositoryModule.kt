@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.MaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.MaterialRepositoryImpl
-import com.tezov.tuucho.core.domain.repository.MaterialRepository
+import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -51,7 +51,7 @@ object MaterialRepositoryModule {
             )
         }
 
-        single<MaterialRepository> {
+        single<MaterialRepositoryProtocol> {
             MaterialRepositoryImpl(
                 materialNetworkService = get<MaterialNetworkService>(),
                 materialCacheRepository = get<MaterialCacheRepository>(),

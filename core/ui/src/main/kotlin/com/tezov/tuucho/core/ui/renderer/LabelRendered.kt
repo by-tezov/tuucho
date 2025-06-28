@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.domain.schema._element.label.LabelSchema
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreen
+import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
@@ -20,7 +20,7 @@ class LabelRendered : Renderer() {
                 jsonObject.subsetOrNull == LabelSchema.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreen {
+    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
         val content = jsonObject[ComponentSchema.Key.content]!!.jsonObject
         val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
 
@@ -35,10 +35,10 @@ class LabelRendered : Renderer() {
 
 class LabelScreen(
     var text: String
-) : ComposableScreen {
+) : ComposableScreenProtocol() {
 
     @Composable
-    override fun Any.show() {
+    override fun show(scope: Any?) {
         Text(text = text)
     }
 }

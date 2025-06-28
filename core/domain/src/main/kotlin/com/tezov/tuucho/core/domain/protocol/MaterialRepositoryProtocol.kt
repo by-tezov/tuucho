@@ -1,8 +1,8 @@
-package com.tezov.tuucho.core.domain.repository
+package com.tezov.tuucho.core.domain.protocol
 
 import kotlinx.serialization.json.JsonObject
 
-interface MaterialRepository {
+interface MaterialRepositoryProtocol {
 
     suspend fun refreshCache(url: String)
 

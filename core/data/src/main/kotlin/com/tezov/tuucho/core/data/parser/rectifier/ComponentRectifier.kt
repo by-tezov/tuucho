@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.toPath
@@ -17,7 +17,7 @@ import org.koin.core.component.inject
 
 class ComponentRectifier : Rectifier() {
 
-    override val matchers: List<Matcher> by inject(
+    override val matchers: List<MatcherProtocol> by inject(
         Name.Matcher.COMPONENT
     )
     override val childProcessors: List<Rectifier> by inject(

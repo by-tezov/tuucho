@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser.rectifier.id
 
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -11,7 +11,7 @@ import org.koin.core.component.KoinComponent
 
 object IdMatcher {
 
-    val lists: List<Matcher>
+    val lists: List<MatcherProtocol>
         get() = listOf(
             Component,
             Style,
@@ -23,42 +23,42 @@ object IdMatcher {
 
     private fun JsonElementPath.isId() = lastSegmentIs(IdSchema.Key.id)
 
-    object Component : Matcher, KoinComponent {
+    object Component : MatcherProtocol, KoinComponent {
 
         override fun accept(
             path: JsonElementPath, element: JsonElement
         ) = path.isId() && path.parentIsTypeOf(element, TypeSchema.Value.Type.component)
     }
 
-    object Style : Matcher, KoinComponent {
+    object Style : MatcherProtocol, KoinComponent {
 
         override fun accept(
             path: JsonElementPath, element: JsonElement
         ) = path.isId() && path.parentIsTypeOf(element, TypeSchema.Value.Type.style)
     }
 
-    object Content : Matcher, KoinComponent {
+    object Content : MatcherProtocol, KoinComponent {
 
         override fun accept(
             path: JsonElementPath, element: JsonElement
         ) = path.isId() && path.parentIsTypeOf(element, TypeSchema.Value.Type.content)
     }
 
-    object Text : Matcher, KoinComponent {
+    object Text : MatcherProtocol, KoinComponent {
 
         override fun accept(
             path: JsonElementPath, element: JsonElement
         ) = path.isId() && path.parentIsTypeOf(element, TypeSchema.Value.Type.text)
     }
 
-    object Color : Matcher, KoinComponent {
+    object Color : MatcherProtocol, KoinComponent {
 
         override fun accept(
             path: JsonElementPath, element: JsonElement
         ) = path.isId() && path.parentIsTypeOf(element, TypeSchema.Value.Type.color)
     }
 
-    object Dimension : Matcher, KoinComponent {
+    object Dimension : MatcherProtocol, KoinComponent {
 
         override fun accept(
             path: JsonElementPath, element: JsonElement

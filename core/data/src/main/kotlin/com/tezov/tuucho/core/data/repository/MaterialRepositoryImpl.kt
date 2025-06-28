@@ -1,14 +1,15 @@
 package com.tezov.tuucho.core.data.repository
 
+import com.tezov.tuucho.core.data.mapping.toExtraDataBreaker
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
 import com.tezov.tuucho.core.data.parser.assembler.ExtraDataAssembler
-import com.tezov.tuucho.core.domain.repository.MaterialRepository
+import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 
 class MaterialRepositoryImpl(
     private val materialNetworkService: MaterialNetworkService,
     private val materialCacheRepository: MaterialCacheRepository,
-) : MaterialRepository {
+) : MaterialRepositoryProtocol {
 
     override suspend fun refreshCache(url: String) {
         val configModelDomain = materialNetworkService.retrieveConfig(url)
@@ -16,31 +17,32 @@ class MaterialRepositoryImpl(
             subs
                 .filter { materialCacheRepository.shouldRefresh(it.url, it.version) }
                 .forEach { config ->
-                    val adapterConfig = config.toAdapterConfig( true)
+                    val extraData = config.toExtraDataBreaker(true)
                     materialNetworkService.retrieve(config.url).let { materialElement ->
-                        materialCacheRepository.refreshCache(adapterConfig, materialElement)
+                        materialCacheRepository.refreshCache(extraData, materialElement)
                     }
                 }
             templates
                 .filter { materialCacheRepository.shouldRefresh(it.url, it.version) }
                 .forEach { config ->
-                    val adapterConfig = config.toAdapterConfig(true)
+                    val extraData = config.toExtraDataBreaker(true)
                     materialNetworkService.retrieve(config.url).let { materialElement ->
-                        materialCacheRepository.refreshCache(adapterConfig, materialElement)
+                        materialCacheRepository.refreshCache(extraData, materialElement)
                     }
                 }
             pages
                 .filter { materialCacheRepository.shouldRefresh(it.url, it.version) }
                 .forEach { config ->
-                    val adapterConfig = config.toAdapterConfig(false)
+                    val extraData = config.toExtraDataBreaker(false)
                     materialNetworkService.retrieve(config.url).let { materialElement ->
-                        materialCacheRepository.refreshCache(adapterConfig, materialElement)
+                        materialCacheRepository.refreshCache(extraData, materialElement)
                     }
                 }
         }
     }
 
     override suspend fun retrieve(url: String): JsonObject {
-        return materialCacheRepository.retrieve(ExtraDataAssembler(url = url))
+        val extraData = ExtraDataAssembler(url = url)
+        return materialCacheRepository.retrieve(extraData)
     }
 }

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
@@ -65,7 +65,7 @@ object MaterialRectifierModule {
 
         single<IdRectifier> { IdRectifier() }
 
-        single<List<Matcher>>(Name.Matcher.ID) {
+        single<List<MatcherProtocol>>(Name.Matcher.ID) {
             IdMatcher.lists
         }
     }
@@ -73,7 +73,7 @@ object MaterialRectifierModule {
     private fun Module.componentModule() {
         single<ComponentRectifier> { ComponentRectifier() }
 
-        single<List<Matcher>>(Name.Matcher.COMPONENT) {
+        single<List<MatcherProtocol>>(Name.Matcher.COMPONENT) {
             listOf(ContentLayoutLinearItemsMatcher())
         }
 
@@ -89,7 +89,7 @@ object MaterialRectifierModule {
     private fun Module.contentModule() {
         single<ContentRectifier> { ContentRectifier() }
 
-        single<List<Matcher>>(Name.Matcher.CONTENT) {
+        single<List<MatcherProtocol>>(Name.Matcher.CONTENT) {
             emptyList()
         }
 
@@ -105,7 +105,7 @@ object MaterialRectifierModule {
     private fun Module.styleModule() {
         single<StyleRectifier> { StyleRectifier() }
 
-        single<List<Matcher>>(Name.Matcher.STYLE) {
+        single<List<MatcherProtocol>>(Name.Matcher.STYLE) {
             emptyList()
         }
 
@@ -123,7 +123,7 @@ object MaterialRectifierModule {
             listOf(get<TextRectifier>())
         }
 
-        single<List<Matcher>>(Name.Matcher.TEXT) {
+        single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
             listOf(
                 ContentLabelTextMatcher(),
                 ContentButtonTextMatcher()
@@ -144,7 +144,7 @@ object MaterialRectifierModule {
             listOf(get<ColorRectifier>())
         }
 
-        single<List<Matcher>>(Name.Matcher.COLOR) {
+        single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
             emptyList()
         }
 
@@ -162,7 +162,7 @@ object MaterialRectifierModule {
             listOf(get<DimensionRectifier>())
         }
 
-        single<List<Matcher>>(Name.Matcher.DIMENSION) {
+        single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
             emptyList()
         }
 

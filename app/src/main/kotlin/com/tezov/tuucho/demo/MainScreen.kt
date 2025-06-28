@@ -10,8 +10,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
 import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
-import com.tezov.tuucho.core.ui.userCase.ComponentRenderUseCase
+import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import com.tezov.tuucho.demo.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
@@ -35,24 +36,27 @@ class MainScreen : ComponentActivity() {
             }
             /* end hack */
 
-
             if (!ready) {
                 Text("Not ready...")
             } else {
-                AppTheme {
-                    StartEngineScreen()
-                }
+                AppTheme { StartEngineScreen() }
             }
+
         }
+    }
+
+    @Composable
+    fun StartEngineScreen(
+        viewModel: MainViewModel = koinViewModel()
+    ) {
+        var screen by remember { mutableStateOf<ComposableScreenProtocol?>(null) }
+        val renderer = koinInject<ComponentRenderUseCase>()
+
+        LaunchedEffect(Unit) { viewModel.init() }
+        LaunchedEffect(viewModel.url.value) {
+            screen = renderer.invoke(viewModel.url.value) as? ComposableScreenProtocol
+        }
+        screen?.show(null)
     }
 }
 
-@Composable
-fun StartEngineScreen(
-    viewModel: MainViewModel = koinViewModel()
-) {
-    koinInject<ComponentRenderUseCase>()
-        .invoke(viewModel.url, loadingView = {
-            Text("Loading...")
-        })
-}

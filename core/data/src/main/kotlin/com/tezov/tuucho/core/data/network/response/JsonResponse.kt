@@ -1,7 +1,9 @@
 package com.tezov.tuucho.core.data.network.response
 
 import com.tezov.tuucho.core.data.network.response.JsonResponse.CallAdapterFactory.Callback.Companion.toMaterialsResponse
+import okhttp3.Request
 import okhttp3.ResponseBody
+import okio.Timeout
 import retrofit2.CallAdapter
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -59,9 +61,9 @@ data class JsonResponse(
 
             override fun cancel() = call.cancel()
 
-            override fun request() = call.request()
+            override fun request(): Request = call.request()
 
-            override fun timeout() = call.timeout()
+            override fun timeout(): Timeout = call.timeout()
 
             override fun isExecuted() = call.isExecuted
 

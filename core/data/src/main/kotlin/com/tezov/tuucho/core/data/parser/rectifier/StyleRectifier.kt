@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -20,7 +20,7 @@ import org.koin.core.component.inject
 
 class StyleRectifier : Rectifier() {
 
-    override val matchers: List<Matcher> by inject(
+    override val matchers: List<MatcherProtocol> by inject(
         Name.Matcher.STYLE
     )
 

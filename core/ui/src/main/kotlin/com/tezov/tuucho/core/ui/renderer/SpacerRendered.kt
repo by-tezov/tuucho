@@ -18,7 +18,7 @@ import com.tezov.tuucho.core.domain.schema._element.spacer.SpacerSchema
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreen
+import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
@@ -29,7 +29,7 @@ class SpacerRendered : Renderer() {
                 jsonObject.subsetOrNull == SpacerSchema.Default.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreen {
+    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
         val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
         val width = style[StyleSchema.Key.width].stringOrNull?.toIntOrNull()?.dp
         val height = style[StyleSchema.Key.height].stringOrNull?.toIntOrNull()?.dp
@@ -46,40 +46,25 @@ class SpacerScreen(
     val width: Dp?,
     val height: Dp?,
     val weight: Float?
-) : ComposableScreen {
+) : ComposableScreenProtocol() {
 
     @Composable
-    override fun Any.show() {
+    override fun show(scope: Any?) {
         var modifier: Modifier = Modifier
         if (weight != null) {
-            if (this is ColumnScope) {
-                modifier = modifier
-                    .weight(weight)
-//                    .fillMaxWidth()
+            scope.apply {
+                when (this) {
+                    is ColumnScope -> modifier = modifier.weight(weight)
+                    is RowScope -> modifier = modifier.weight(weight)
+                }
             }
-            if (this is RowScope) {
-                modifier = modifier
-                    .weight(weight)
-//                    .fillMaxHeight()
-            }
-        }
-        else {
-            modifier = if (width != null) {
-                modifier.width(width)
-            } else {
-                //modifier.fillMaxWidth()
-                modifier
-            }
-            modifier = if (height != null) {
-                modifier.height(height)
-            } else {
-//                modifier.fillMaxHeight()
-                modifier
-            }
+        } else {
+            if (width != null) modifier = modifier.width(width)
+            if (height != null) modifier = modifier.height(height)
         }
         Spacer(
             modifier = modifier
-                .background(color = Color.Blue)
+                .background(color = Color.Gray)
         )
     }
 }

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier.colors
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -32,7 +32,7 @@ import org.koin.core.component.inject
 
 class ColorRectifier : Rectifier() {
 
-    override val matchers: List<Matcher> by inject(
+    override val matchers: List<MatcherProtocol> by inject(
         Name.Matcher.COLOR
     )
     override val childProcessors: List<Rectifier> by inject(

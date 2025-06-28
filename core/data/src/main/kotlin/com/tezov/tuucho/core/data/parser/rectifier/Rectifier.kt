@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
 import android.util.MalformedJsonException
-import com.tezov.tuucho.core.data.parser._system.Matcher
+import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replace
@@ -13,8 +13,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class Rectifier : Matcher, KoinComponent {
-    protected open val matchers: List<Matcher> = emptyList()
+abstract class Rectifier : MatcherProtocol, KoinComponent {
+    protected open val matchers: List<MatcherProtocol> = emptyList()
     protected open val childProcessors: List<Rectifier> = emptyList()
 
     override fun accept(
