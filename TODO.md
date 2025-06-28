@@ -7,6 +7,7 @@
 - replace retrofit with KTOR and pure kotlin lib
 - ttl + purge versioning (config et page si pas en cache)
 - test upgrade version of server json
+- test dynamic loading
 
 ## Improve
 - Make it extensible by module feature
