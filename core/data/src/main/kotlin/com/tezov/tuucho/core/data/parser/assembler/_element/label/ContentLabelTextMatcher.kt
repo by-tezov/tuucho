@@ -14,9 +14,9 @@ import kotlinx.serialization.json.JsonObject
 class ContentLabelTextMatcher : MatcherProtocol {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
-        if (!path.lastSegmentIs(LabelSchema.Name.Key)) return false
+        if (!path.lastSegmentIs(LabelSchema.Content.Key.value)) return false
         val parent = element.find(path.parent()) as? JsonObject
-        return parent.isSubsetOf(LabelSchema.Value.subset)
+        return parent.isSubsetOf(LabelSchema.Component.Value.subset)
                 && parent.isTypeOf(TypeSchema.Value.Type.content)
     }
 

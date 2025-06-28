@@ -11,6 +11,8 @@ import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
 import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonTextMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.label.ContentLabelTextMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.label.StyleLabelColorMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.label.StyleLabelDimensionMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -93,7 +95,10 @@ object MaterialAssemblerModule {
         }
 
         single<List<Assembler>>(Name.Processor.STYLE) {
-            emptyList()
+            listOf(
+                get<ColorAssembler>(),
+                get<DimensionAssembler>()
+            )
         }
     }
 
@@ -116,7 +121,9 @@ object MaterialAssemblerModule {
         single<ColorAssembler> { ColorAssembler() }
 
         single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
-            emptyList()
+            listOf(
+                StyleLabelColorMatcher()
+            )
         }
 
         single<List<Assembler>>(Name.Processor.COLOR) {
@@ -128,7 +135,9 @@ object MaterialAssemblerModule {
         single<DimensionAssembler> { DimensionAssembler() }
 
         single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
-            emptyList()
+            listOf(
+                StyleLabelDimensionMatcher()
+            )
         }
 
         single<List<Assembler>>(Name.Processor.DIMENSION) {

@@ -14,4 +14,6 @@ interface ComponentSchema :
         const val style = "style"
     }
 
+    object Value
+
 }

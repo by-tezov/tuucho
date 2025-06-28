@@ -17,7 +17,9 @@ interface SubsetSchema {
     }
 
     object Value {
-        const val subset = "unknown"
+        object Subset {
+            const val unknown = "unknown"
+        }
     }
 
     companion object {
@@ -36,7 +38,7 @@ interface SubsetSchema {
                 this[Key.subset] = it
             } ?:run {
                 if((element.find(path) as? JsonObject)?.isRef != true) {
-                    this[Key.subset] = JsonPrimitive(Value.subset)
+                    this[Key.subset] = JsonPrimitive(Value.Subset.unknown)
                 }
             }
         }

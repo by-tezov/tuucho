@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replace
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.schema.SymbolData
+import com.tezov.tuucho.core.domain.schema.common.IdSchema
 import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idObject
 import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idObjectOrNull
 import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idPutPrimitive
@@ -17,6 +17,7 @@ import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.isIdAutoGen
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -41,7 +42,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         when (this) {
             is JsonArray -> processArray(path, element, extraData)
             is JsonObject -> processObject(path, element, extraData)
-            else -> throw IllegalStateException("primitive can't be resolved")
+            is JsonPrimitive -> processPrimitive(path, element, extraData)
         }
     }
 
@@ -62,6 +63,12 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         extraData: ExtraDataAssembler
     ) = assembleObject(path, element, extraData)
 
+    private suspend fun JsonPrimitive.processPrimitive(
+        path: JsonElementPath,
+        element: JsonElement,
+        extraData: ExtraDataAssembler
+    ) = null
+
     private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
         if (size > 1)
             throw IllegalStateException("Only one child processor can accept the element at path $path")
@@ -72,24 +79,39 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler
-    ): List<JsonObject> = this
+    ): List<JsonObject>? = null
+
+    protected open fun JsonObject.rectify(
+        path: JsonElementPath,
+        element: JsonElement,
+        extraData: ExtraDataAssembler
+    ): JsonObject? = null
 
     private suspend fun JsonObject.assembleObject(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler
     ): JsonElement {
-        val resolvedRefs = retrieveAllRef(extraData.url, dataBaseType)
-            .rectify(path, element, extraData)
-        val mergedRef = resolvedRefs.merge()
-        var _element = element.replace(path, mergedRef)
+        var current = retrieveAllRef(extraData.url, dataBaseType)?.let { refs ->
+            (refs.rectify(path, element, extraData) ?: refs).merge()
+        } ?: run {
+            rectify(path, element, extraData)
+        } ?: this
+
+        current = current.toMutableMap().apply {
+            // remove the source since all has been resolved and make id a primitive value
+            idPutPrimitive(current.idObjectOrNull?.idValueOrNull)
+        }.let(::JsonObject)
+
+        var _element = element.replace(path, current)
         if (childProcessors.isNotEmpty()) {
-            mergedRef.keys.forEach { childKey ->
+            current.keys.forEach { childKey ->
                 val childPath = path.child(childKey)
                 childProcessors
                     .filter { it.accept(childPath, _element) }
                     .singleOrThrow(path)
-                    ?.let { _element = it.process(childPath, _element, extraData) }
+                    ?.process(childPath, _element, extraData)
+                    ?.also { _element = it }
             }
         }
         return _element
@@ -98,15 +120,12 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
     private suspend fun JsonObject.retrieveAllRef(
         url: String,
         type: String
-    ): List<JsonObject> {
-        //TODO could be improved, if current doesn't have a source ref, just skip and return null
+    ): List<JsonObject>? {
+        if (idObject.idSourceOrNull == null) return null
         var currentEntry = this
         val entries = mutableListOf(currentEntry)
         do {
-            val idRef = resolveIdRef(
-                currentEntry.idObject.idValueOrNull,
-                currentEntry.idObject.idSourceOrNull
-            )
+            val idRef = currentEntry.idObject.idSourceOrNull
             val entity = idRef?.let { ref ->
                 database.jsonEntity().find(type = type, url = url, id = ref)
                     ?: database.jsonEntity().findShared(type = type, id = ref)
@@ -119,34 +138,16 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         return entries
     }
 
-    private fun resolveIdRef(id: String?, idFrom: String?) = when {
-        id?.startsWith(SymbolData.ID_REF_INDICATOR) == true -> {
-            id.removePrefix(SymbolData.ID_REF_INDICATOR)
-        }
+    private fun List<JsonObject>.merge() = when (this.size) {
+        1 -> first()
 
-        idFrom != null -> {
-            idFrom.removePrefix(SymbolData.ID_REF_INDICATOR)
-        }
-
-        else -> null
-    }
-
-    private fun List<JsonObject>.merge(): JsonObject {
-        val mergedRef = when (this.size) {
-            1 -> first()
-
-            else -> {
-                val mergedMap = mutableMapOf<String, JsonElement>()
-                for (entry in this.asReversed()) {
-                    mergedMap.merge(entry)
-                }
-                mergedMap.let(::JsonObject)
+        else -> {
+            val mergedMap = mutableMapOf<String, JsonElement>()
+            for (entry in this.asReversed()) {
+                mergedMap.merge(entry)
             }
+            mergedMap.let(::JsonObject)
         }
-        return mergedRef.toMutableMap().apply {
-            // remove the source since all has been resolved and make id a simple value
-            idPutPrimitive(mergedRef.idObjectOrNull?.idValueOrNull)
-        }.let(::JsonObject)
     }
 
     private fun MutableMap<String, JsonElement>.merge(other: Map<String, JsonElement>) {
@@ -156,7 +157,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
                 currentValue is JsonObject && value is JsonObject -> {
                     val merged = currentValue.toMutableMap()
                     when {
-                        key == com.tezov.tuucho.core.domain.schema.common.IdSchema.Key.id -> merged.mergeId(value)
+                        key == IdSchema.Key.id -> merged.mergeId(value)
                         else -> merged.merge(value)
                     }
                     JsonObject(merged)

@@ -34,19 +34,35 @@ class StyleAssembler : Assembler() {
         path: JsonElementPath, element: JsonElement
     ) = path.isTypeOf(element, TypeSchema.Value.Type.style) || super.accept(path, element)
 
+    private fun JsonObject.rectify(
+        parentSubset: String
+    ): JsonObject {
+        val altered = toMutableMap().apply {
+            subsetPut(parentSubset)
+        }.let(::JsonObject)
+        return rectifier.process("".toPath(), altered) as JsonObject
+    }
+
+    override fun JsonObject.rectify(
+        path: JsonElementPath,
+        element: JsonElement,
+        extraData: ExtraDataAssembler
+    ): JsonObject? {
+        if (subsetOrNull != SubsetSchema.Value.Subset.unknown) return null
+        val parentSubset = (element.find(path.parent()) as JsonObject).subset
+        return rectify(parentSubset)
+    }
+
     override fun List<JsonObject>.rectify(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler
-    ): List<JsonObject> {
-        if (!any { it.subsetOrNull == SubsetSchema.Value.subset }) return this
+    ): List<JsonObject>? {
+        if (!any { it.subsetOrNull == SubsetSchema.Value.Subset.unknown }) return null
         val parentSubset = (element.find(path.parent()) as JsonObject).subset
         return map { current ->
-            if (current.subsetOrNull == SubsetSchema.Value.subset) {
-                val altered = current.toMutableMap().apply {
-                    subsetPut(parentSubset)
-                }.let(::JsonObject)
-                rectifier.process("".toPath(), altered) as JsonObject
+            if (current.subsetOrNull == SubsetSchema.Value.Subset.unknown) {
+                current.rectify(parentSubset)
             } else current
         }
     }

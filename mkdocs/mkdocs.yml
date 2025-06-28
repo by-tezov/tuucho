@@ -1,0 +1,31 @@
+site_name: TUUCHO -ตู้โชว์ - Rendering engine
+site_url: https://by-tezov.github.io/tuucho/
+repo_url: https://github.com/by-tezov/tuucho
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+    - toc.integrate
+    - versioning
+
+plugins:
+  - search
+  - mike
+
+nav:
+  - Home: index.md
+  - Object Definition:
+      - Overview: object-definition/index.md
+      - Component: object-definition/component.md
+      - Style: object-definition/style.md
+      - Content: object-definition/content.md
+      - Texts: object-definition/texts.md
+      - Colors: object-definition/colors.md
+      - Dimensions: object-definition/dimensions.md
+  - Components Definition:
+      - Overview: components-definition/index.md
+      - LayoutLinear: components-definition/layout-linear.md
+      - Label: components-definition/label.md
+      - Button: components-definition/button.md
+      - Spacer: components-definition/spacer.md
