@@ -28,7 +28,7 @@ class LayoutLinearRendered : Renderer() {
         val content = jsonObject[ComponentSchema.Key.content]!!.jsonObject
         val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
 
-        val children = content[LayoutLinearSchema.Content.Key.items]!!.jsonArray
+        val items = content[LayoutLinearSchema.Content.Key.items]!!.jsonArray
             .mapNotNull {
                 renderer.process(it.jsonObject) as? ComposableScreenProtocol
             }
@@ -37,11 +37,11 @@ class LayoutLinearRendered : Renderer() {
 
         return when (orientation) {
             LayoutLinearSchema.Style.Value.Orientation.horizontal -> LayoutLinearScreen.Horizontal(
-                children = children
+                item = items
             )
 
             else -> LayoutLinearScreen.Vertical(
-                children = children
+                item = items
             )
         }
 
@@ -53,8 +53,8 @@ sealed class LayoutLinearScreen(
 ) : ComposableScreenProtocol() {
 
     class Vertical(
-        children: List<ComposableScreenProtocol>
-    ) : LayoutLinearScreen(children) {
+        item: List<ComposableScreenProtocol>
+    ) : LayoutLinearScreen(item) {
 
         @Composable
         override fun show(scope: Any?) {
@@ -65,8 +65,8 @@ sealed class LayoutLinearScreen(
     }
 
     class Horizontal(
-        children: List<ComposableScreenProtocol>
-    ) : LayoutLinearScreen(children) {
+        item: List<ComposableScreenProtocol>
+    ) : LayoutLinearScreen(item) {
 
         @Composable
         override fun show(scope: Any?) {

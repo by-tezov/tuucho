@@ -34,26 +34,25 @@ fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? {
 }
 
 fun JsonElement.find(path: JsonElementPath): JsonElement =
-    this.findOrNull(path) ?: throw NullPointerException("element could not be found at path $path inside $this")
+    this.findOrNull(path)
+        ?: throw NullPointerException("element could not be found at path $path inside $this")
 
 fun JsonElement.replace(path: JsonElementPath, newElement: JsonElement): JsonElement {
     if (path.isEmpty()) return newElement
-    val linkedElement = LinkedHashMap<String, JsonObject>()
-    var currentElement: JsonElement = this
+    val stack = mutableListOf<Pair<String, JsonObject>>()
+    var current = this
     for (key in path) {
-        require(currentElement is JsonObject) { "invalid path: $key is not an object" }
-        linkedElement[key] = currentElement
-        currentElement = currentElement[key]
+        require(current is JsonObject) { "invalid path: $key is not an object" }
+        stack.add(key to current)
+        current = current[key]
             ?: throw IllegalArgumentException("path not found: $path")
     }
-
-    var updatedElement = newElement
-    for ((key, element) in linkedElement.entries.reversed()) {
-        updatedElement = element
+    var updated = newElement
+    for ((key, parent) in stack.asReversed()) {
+        updated = parent
             .toMutableMap()
-            .apply { this[key] = updatedElement }
+            .apply { this[key] = updated }
             .let(::JsonObject)
     }
-    return updatedElement
+    return updated
 }
-

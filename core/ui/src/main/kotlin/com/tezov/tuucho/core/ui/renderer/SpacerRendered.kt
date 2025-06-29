@@ -31,14 +31,14 @@ class SpacerRendered : Renderer() {
     override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
         val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
 
-        val width = style[SpacerSchema.Style.Key.width].stringOrNull?.toIntOrNull()?.dp
-        val height = style[SpacerSchema.Style.Key.height].stringOrNull?.toIntOrNull()?.dp
-        val weight = style[SpacerSchema.Style.Key.weight].stringOrNull?.toFloatOrNull()
+        val width = style[SpacerSchema.Style.Key.width].stringOrNull
+        val height = style[SpacerSchema.Style.Key.height].stringOrNull
+        val weight = style[SpacerSchema.Style.Key.weight].stringOrNull
 
         return SpacerScreen(
-            width = width,
-            height = height,
-            weight = weight
+            width = width?.toIntOrNull()?.dp,
+            height = height?.toIntOrNull()?.dp,
+            weight = weight?.toFloatOrNull()
         )
     }
 }

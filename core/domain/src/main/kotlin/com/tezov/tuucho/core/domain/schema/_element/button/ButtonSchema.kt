@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.schema._element.button
 
 import com.tezov.tuucho.core.domain.schema.ContentSchema
+import com.tezov.tuucho.core.domain.schema._element.label.LabelSchema
 
 
 object ButtonSchema : ContentSchema {
@@ -15,7 +16,7 @@ object ButtonSchema : ContentSchema {
 
     object Content {
         object Key {
-            const val value = "value"
+            const val label = LabelSchema.Component.Value.subset
             const val action = "action"
         }
 
@@ -23,9 +24,7 @@ object ButtonSchema : ContentSchema {
     }
 
     object Style {
-        object Key {
-            const val label = "label"
-        }
+        object Key
 
         object Value
     }

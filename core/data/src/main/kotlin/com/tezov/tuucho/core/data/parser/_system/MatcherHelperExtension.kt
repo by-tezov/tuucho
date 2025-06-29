@@ -12,6 +12,10 @@ fun JsonElementPath.lastSegmentIs(
     value: String
 ) = lastSegment() == value
 
+fun JsonElementPath.lastSegmentStartWith(
+    value: String
+) = lastSegment()?.startsWith(value) == true
+
 fun JsonElementPath.isTypeOf(
     element: JsonElement, value: String
 ) = (element.find(this) as? JsonObject)

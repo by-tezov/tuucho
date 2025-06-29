@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.data.parser.assembler.DimensionAssembler
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
-import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonTextMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.label.ContentLabelTextMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.label.StyleLabelColorMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.label.StyleLabelDimensionMatcher
@@ -60,7 +60,8 @@ object MaterialAssemblerModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.COMPONENT) {
             listOf(
-                ContentLayoutLinearItemsMatcher()
+                ContentLayoutLinearItemsMatcher(),
+                ContentButtonLabelMatcher()
             )
         }
 
@@ -81,8 +82,8 @@ object MaterialAssemblerModule {
 
         single<List<Assembler>>(Name.Processor.CONTENT) {
             listOf(
-                get<ComponentAssembler>(),
-                get<TextAssembler>()
+                get<TextAssembler>(),
+                get<ComponentAssembler>()
             )
         }
     }
@@ -107,8 +108,7 @@ object MaterialAssemblerModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
             listOf(
-                ContentLabelTextMatcher(),
-                ContentButtonTextMatcher(),
+                ContentLabelTextMatcher()
             )
         }
 
