@@ -16,8 +16,8 @@ class StyleLabelDimensionMatcher : MatcherProtocol {
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
         if (!path.lastSegmentIs(LabelSchema.Style.Key.fontSize)) return false
         val parent = element.find(path.parent()) as? JsonObject
-        return parent.isSubsetOf(LabelSchema.Component.Value.subset)
-                && parent.isTypeOf(TypeSchema.Value.Type.style)
+        return parent.isTypeOf(TypeSchema.Value.Type.style)
+                && parent.isSubsetOf(LabelSchema.Component.Value.subset)
     }
 
 }

@@ -14,7 +14,6 @@ import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
 import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import com.tezov.tuucho.demo.ui.theme.AppTheme
-import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -31,7 +30,6 @@ class MainScreen : ComponentActivity() {
             val refreshCacheMaterial: RefreshCacheMaterialUseCase = koinInject()
             LaunchedEffect(Unit) {
                 refreshCacheMaterial.invoke("config")
-                delay(2000)
                 ready = true
             }
             /* end hack */

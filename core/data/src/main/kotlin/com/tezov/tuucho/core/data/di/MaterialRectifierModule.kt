@@ -7,7 +7,8 @@ import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.button.ContentButtonTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.ContentButtonLabelMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.ContentButtonLabelRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.ContentLabelTextMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.StyleLabelColorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.StyleLabelDimensionMatcher
@@ -63,7 +64,7 @@ object MaterialRectifierModule {
     }
 
     private fun Module.idModule() {
-        single<IdGenerator> { IdGenerator }
+        single<IdGenerator> { IdGenerator() }
 
         single<IdRectifier> { IdRectifier() }
 
@@ -78,7 +79,10 @@ object MaterialRectifierModule {
         single<ComponentRectifier> { ComponentRectifier() }
 
         single<List<MatcherProtocol>>(Name.Matcher.COMPONENT) {
-            listOf(ContentLayoutLinearItemsMatcher())
+            listOf(
+                ContentLayoutLinearItemsMatcher(),
+                ContentButtonLabelMatcher(),
+            )
         }
 
         single<List<Rectifier>>(Name.Processor.COMPONENT) {
@@ -100,8 +104,9 @@ object MaterialRectifierModule {
         single<List<Rectifier>>(Name.Processor.CONTENT) {
             listOf(
                 get<IdRectifier>(),
+                ContentButtonLabelRectifier(),
+                get<TextRectifier>(),
                 get<ComponentRectifier>(),
-                get<TextRectifier>()
             )
         }
     }
@@ -133,8 +138,7 @@ object MaterialRectifierModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
             listOf(
-                ContentLabelTextMatcher(),
-                ContentButtonTextMatcher()
+                ContentLabelTextMatcher()
             )
         }
 
