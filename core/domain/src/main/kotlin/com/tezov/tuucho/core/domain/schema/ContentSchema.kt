@@ -7,4 +7,10 @@ import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 interface ContentSchema :
     TypeSchema,
     IdSchema,
-    SubsetSchema
+    SubsetSchema {
+
+    object Key
+
+    object Value
+
+}

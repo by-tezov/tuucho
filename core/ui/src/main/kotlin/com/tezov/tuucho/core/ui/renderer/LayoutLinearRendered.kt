@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.domain._system.stringOrNull
 import com.tezov.tuucho.core.domain.schema.ComponentSchema
-import com.tezov.tuucho.core.domain.schema.StyleSchema
 import com.tezov.tuucho.core.domain.schema._element.layout.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
@@ -22,20 +21,22 @@ class LayoutLinearRendered : Renderer() {
 
     override fun accept(jsonObject: JsonObject): Boolean {
         return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == LayoutLinearSchema.Default.subset
+                jsonObject.subsetOrNull == LayoutLinearSchema.Component.Value.subset
     }
 
     override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
         val content = jsonObject[ComponentSchema.Key.content]!!.jsonObject
-        val children = content[LayoutLinearSchema.Key.items]!!.jsonArray
+        val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
+
+        val children = content[LayoutLinearSchema.Content.Key.items]!!.jsonArray
             .mapNotNull {
                 renderer.process(it.jsonObject) as? ComposableScreenProtocol
             }
 
-        val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
-        val orientation = style[StyleSchema.Key.orientation].stringOrNull
+        val orientation = style[LayoutLinearSchema.Style.Key.orientation].stringOrNull
+
         return when (orientation) {
-            StyleSchema.Value.Orientation.horizontal -> LayoutLinearScreen.Horizontal(
+            LayoutLinearSchema.Style.Value.Orientation.horizontal -> LayoutLinearScreen.Horizontal(
                 children = children
             )
 

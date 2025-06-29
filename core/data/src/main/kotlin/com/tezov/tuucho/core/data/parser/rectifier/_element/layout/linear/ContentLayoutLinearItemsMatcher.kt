@@ -14,9 +14,9 @@ import kotlinx.serialization.json.JsonObject
 class ContentLayoutLinearItemsMatcher : MatcherProtocol {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
-        if (!path.lastSegmentIs(LayoutLinearSchema.Key.items)) return false
+        if (!path.lastSegmentIs(LayoutLinearSchema.Content.Key.items)) return false
         val parent = element.find(path.parent()) as? JsonObject
-        return parent.isSubsetOf(LayoutLinearSchema.Default.subset)
+        return parent.isSubsetOf(LayoutLinearSchema.Component.Value.subset)
                 && parent.isTypeOf(TypeSchema.Value.Type.content)
     }
 

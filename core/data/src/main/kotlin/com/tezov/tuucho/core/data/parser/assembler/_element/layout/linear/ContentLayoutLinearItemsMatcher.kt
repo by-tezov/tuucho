@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
+import com.tezov.tuucho.core.domain.schema._element.layout.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -13,9 +14,9 @@ import kotlinx.serialization.json.JsonObject
 class ContentLayoutLinearItemsMatcher : MatcherProtocol {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
-        if (!path.lastSegmentIs(com.tezov.tuucho.core.domain.schema._element.layout.LayoutLinearSchema.Key.items)) return false
+        if (!path.lastSegmentIs(LayoutLinearSchema.Content.Key.items)) return false
         val parent = element.find(path.parent()) as? JsonObject
-        return parent.isSubsetOf(com.tezov.tuucho.core.domain.schema._element.layout.LayoutLinearSchema.Default.subset)
+        return parent.isSubsetOf(LayoutLinearSchema.Component.Value.subset)
                 && parent.isTypeOf(TypeSchema.Value.Type.content)
     }
 

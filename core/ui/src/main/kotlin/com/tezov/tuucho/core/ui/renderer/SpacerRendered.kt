@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain._system.stringOrNull
 import com.tezov.tuucho.core.domain.schema.ComponentSchema
-import com.tezov.tuucho.core.domain.schema.StyleSchema
 import com.tezov.tuucho.core.domain.schema._element.spacer.SpacerSchema
 import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.common.TypeSchema
@@ -26,14 +25,16 @@ class SpacerRendered : Renderer() {
 
     override fun accept(jsonObject: JsonObject): Boolean {
         return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == SpacerSchema.Default.subset
+                jsonObject.subsetOrNull == SpacerSchema.Component.Value.subset
     }
 
     override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
         val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
-        val width = style[StyleSchema.Key.width].stringOrNull?.toIntOrNull()?.dp
-        val height = style[StyleSchema.Key.height].stringOrNull?.toIntOrNull()?.dp
-        val weight = style[StyleSchema.Key.weight].stringOrNull?.toFloatOrNull()
+
+        val width = style[SpacerSchema.Style.Key.width].stringOrNull?.toIntOrNull()?.dp
+        val height = style[SpacerSchema.Style.Key.height].stringOrNull?.toIntOrNull()?.dp
+        val weight = style[SpacerSchema.Style.Key.weight].stringOrNull?.toFloatOrNull()
+
         return SpacerScreen(
             width = width,
             height = height,
@@ -50,6 +51,9 @@ class SpacerScreen(
 
     @Composable
     override fun show(scope: Any?) {
+
+        //TODO do much better than that
+
         var modifier: Modifier = Modifier
         if (weight != null) {
             scope.apply {

@@ -5,12 +5,29 @@ import com.tezov.tuucho.core.domain.schema.ContentSchema
 
 object ButtonSchema : ContentSchema {
 
-    object Key {
-        const val value = "value"
-        const val action = "action"
+    object Component {
+        object Key
+
+        object Value {
+            const val subset = "button"
+        }
     }
 
-    object Value {
-        const val subset = "button"
+    object Content {
+        object Key {
+            const val value = "value"
+            const val action = "action"
+        }
+
+        object Value
     }
+
+    object Style {
+        object Key {
+            const val label = "label"
+        }
+
+        object Value
+    }
+
 }

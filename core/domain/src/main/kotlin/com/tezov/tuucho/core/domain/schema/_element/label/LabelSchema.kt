@@ -4,11 +4,29 @@ import com.tezov.tuucho.core.domain.schema.ContentSchema
 
 object LabelSchema : ContentSchema {
 
-    object Name {
-        const val Key = "value"
+    object Component {
+        object Key
+
+        object Value {
+            const val subset = "label"
+        }
     }
 
-    object Value {
-        const val subset = "label"
+    object Content {
+        object Key {
+            const val value = "value"
+        }
+
+        object Value
     }
+
+    object Style {
+        object Key {
+            const val fontColor = "font-color"
+            const val fontSize = "font-size"
+        }
+
+        object Value
+    }
+
 }

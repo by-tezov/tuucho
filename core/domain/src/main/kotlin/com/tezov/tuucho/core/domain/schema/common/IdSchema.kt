@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.domain.schema.common
 import com.tezov.tuucho.core.domain._system.booleanOrNull
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.SymbolData.ID_PATH_SEPARATOR
+import com.tezov.tuucho.core.domain.schema.SymbolData.ID_GROUP_SEPARATOR
 import com.tezov.tuucho.core.domain.schema.SymbolData.ID_REF_INDICATOR
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -26,20 +26,16 @@ interface IdSchema {
     companion object {
 
         val String.idIsRef get() = startsWith(ID_REF_INDICATOR)
+
         fun String.idAddGroup(value: String): String {
             return if (idIsRef) {
-                "$ID_REF_INDICATOR$value$ID_PATH_SEPARATOR${substring(ID_REF_INDICATOR.length)}"
+                "$ID_REF_INDICATOR$value$ID_GROUP_SEPARATOR${substring(ID_REF_INDICATOR.length)}"
             } else {
-                "$value$ID_PATH_SEPARATOR$this"
+                "$value$ID_GROUP_SEPARATOR$this"
             }
         }
 
-        fun String.idHasGroup() = count { it == '/' } == 1
-        fun String.idGroupOrNull(): String? {
-            val parts = removePrefix(ID_REF_INDICATOR)
-                .split(ID_PATH_SEPARATOR, limit = 2)
-            return if (parts.size == 2) parts[0] else null
-        }
+        fun String.idHasGroup() = contains(ID_GROUP_SEPARATOR)
 
         val Map<String, JsonElement>.idRaw get() = this[Key.id]!!
         val Map<String, JsonElement>.idRawOrNull get() = this[Key.id]

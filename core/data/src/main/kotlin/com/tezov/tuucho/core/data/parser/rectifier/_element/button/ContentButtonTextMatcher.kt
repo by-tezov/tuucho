@@ -14,9 +14,9 @@ import kotlinx.serialization.json.JsonObject
 class ContentButtonTextMatcher : MatcherProtocol {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
-        if (!path.lastSegmentIs(ButtonSchema.Key.value)) return false
+        if (!path.lastSegmentIs(ButtonSchema.Content.Key.value)) return false
         val parent = element.find(path.parent()) as? JsonObject
-        return parent.isSubsetOf(ButtonSchema.Value.subset)
+        return parent.isSubsetOf(ButtonSchema.Component.Value.subset)
                 && parent.isTypeOf(TypeSchema.Value.Type.content)
     }
 

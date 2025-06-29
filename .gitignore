@@ -1,7 +1,8 @@
+.DS_Store
 *.iml
-.gradle
+.gradle/
 /local.properties
 /.idea/
-.DS_Store
 /build
-local.properties
+/.venv/
+/mkdocs/site/
