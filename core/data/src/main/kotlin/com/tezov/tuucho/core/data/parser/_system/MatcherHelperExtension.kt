@@ -3,14 +3,18 @@ package com.tezov.tuucho.core.data.parser._system
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.findOrNull
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 fun JsonElementPath.lastSegmentIs(
     value: String
 ) = lastSegment() == value
+
+fun JsonElementPath.lastSegmentIsAny(
+    values: List<String>
+) = lastSegment().let { lastSegment -> values.any { it == lastSegment } }
 
 fun JsonElementPath.lastSegmentStartWith(
     value: String

@@ -3,21 +3,24 @@ package com.tezov.tuucho.core.ui.renderer
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
-import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.ComponentSchema
-import com.tezov.tuucho.core.domain.schema._element.layout.LayoutLinearSchema
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
+import com.tezov.tuucho.core.domain.schema.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema._element.LayoutLinearSchema
+import com.tezov.tuucho.core.domain.schema._element.LayoutLinearSchema.Content.itemsArray
+import com.tezov.tuucho.core.domain.schema._element.LayoutLinearSchema.Style.Value.Orientation
+import com.tezov.tuucho.core.domain.schema._element.LayoutLinearSchema.Style.orientation
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
 class LayoutLinearRendered : Renderer() {
 
-    private val renderer: ComponentRenderer by inject()
+    private val renderer: ScreenRendererProtocol by inject()
 
     override fun accept(jsonObject: JsonObject): Boolean {
         return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
@@ -25,18 +28,16 @@ class LayoutLinearRendered : Renderer() {
     }
 
     override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val content = jsonObject[ComponentSchema.Key.content]!!.jsonObject
-        val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
+        val content = jsonObject.contentObject
+        val style = jsonObject.styleObject
 
-        val items = content[LayoutLinearSchema.Content.Key.items]!!.jsonArray
+        val items = content.itemsArray
             .mapNotNull {
                 renderer.process(it.jsonObject) as? ComposableScreenProtocol
             }
 
-        val orientation = style[LayoutLinearSchema.Style.Key.orientation].stringOrNull
-
-        return when (orientation) {
-            LayoutLinearSchema.Style.Value.Orientation.horizontal -> LayoutLinearScreen.Horizontal(
+        return when (style.orientation) {
+            Orientation.horizontal -> LayoutLinearScreen.Horizontal(
                 item = items
             )
 
@@ -44,7 +45,6 @@ class LayoutLinearRendered : Renderer() {
                 item = items
             )
         }
-
     }
 }
 

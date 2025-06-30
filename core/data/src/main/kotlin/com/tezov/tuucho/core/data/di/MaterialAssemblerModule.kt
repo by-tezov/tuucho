@@ -10,9 +10,10 @@ import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
 import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonLabelMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.label.ContentLabelTextMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.label.StyleLabelColorMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.label.StyleLabelDimensionMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.field.ContentFieldTextMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.label.content.ContentLabelTextMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.label.style.StyleLabelColorMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.label.style.StyleLabelDimensionMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -108,7 +109,8 @@ object MaterialAssemblerModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
             listOf(
-                ContentLabelTextMatcher()
+                ContentLabelTextMatcher(),
+                ContentFieldTextMatcher(),
             )
         }
 

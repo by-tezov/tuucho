@@ -58,8 +58,8 @@ class MaterialCacheRepository(
         }
     }
 
-    suspend fun retrieve(config: ExtraDataAssembler): JsonObject {
-        return materialAssembler.process(config) ?: TODO("error management")
+    suspend fun retrieve(config: ExtraDataAssembler): JsonObject? {
+        return materialAssembler.process(config)
     }
 
 }

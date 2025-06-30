@@ -8,4 +8,5 @@ interface MaterialRepositoryProtocol {
 
     suspend fun retrieve(url: String): JsonObject
 
+    suspend fun send(url: String, data: JsonObject): JsonObject?
 }

@@ -10,8 +10,8 @@ interface ActionHandlerProtocol {
 
     val priority: Int
 
-    fun accept(id: String, action: String): Boolean
+    fun accept(id: String, action: String, params: Map<String, String>?): Boolean
 
-    fun process(id: String, action: String): Boolean
+    suspend fun process(id: String, action: String, params: Map<String, String>?): Boolean
 
 }

@@ -7,11 +7,11 @@ import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subset
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetPut
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
+import com.tezov.tuucho.core.domain.schema.SubsetSchema
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subset
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetPut
+import com.tezov.tuucho.core.domain.schema.TypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject

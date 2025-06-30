@@ -1,9 +1,11 @@
 ## In progress
 
-- do the nested style, example label inside button
-- add input send to server
+- add input send to server -> do the action handler -> ho to manage the error ??? + model domain is possible
+
 - add some elements + correct renderer (scaffold, dialog, bottomsheet)
- 
+- do a real demo with a better ui
+
+
 - refactor to integrate behavior
 - replace retrofit with KTOR and pure kotlin lib
 - ttl + purge versioning (config et page si pas en cache)
@@ -14,4 +16,5 @@
 - Make it extensible by module feature
 - add comprehensible warning and error why the json parsing is not correct
 - remove JsonElement from domain
+- improve efficiency of the parser
 

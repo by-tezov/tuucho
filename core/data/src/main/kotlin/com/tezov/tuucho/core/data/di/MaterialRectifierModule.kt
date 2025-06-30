@@ -7,11 +7,13 @@ import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.button.ContentButtonLabelMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._element.button.ContentButtonLabelRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.label.ContentLabelTextMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._element.label.StyleLabelColorMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._element.label.StyleLabelDimensionMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ContentButtonActionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.field.ContentFieldTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.label.content.ContentLabelTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelColorMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelDimensionMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
@@ -105,6 +107,7 @@ object MaterialRectifierModule {
             listOf(
                 get<IdRectifier>(),
                 ContentButtonLabelRectifier(),
+                ContentButtonActionRectifier(),
                 get<TextRectifier>(),
                 get<ComponentRectifier>(),
             )
@@ -138,7 +141,8 @@ object MaterialRectifierModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
             listOf(
-                ContentLabelTextMatcher()
+                ContentLabelTextMatcher(),
+                ContentFieldTextMatcher(),
             )
         }
 

@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain._system
 
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idExist
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idExist
+import com.tezov.tuucho.core.domain.schema.SubsetSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.boolean
@@ -15,11 +15,10 @@ val JsonElement?.string get() = this!!.jsonPrimitive.content
 val JsonElement?.booleanOrNull: Boolean? get() = this?.jsonPrimitive?.boolean
 val JsonElement?.boolean get() = this!!.jsonPrimitive.boolean
 
-val JsonElement.isRef
+val JsonObject.isRef
     get():Boolean {
-        val jsonObject = this as? JsonObject ?: return false
         if (!idExist) return false
-        return (jsonObject
+        return (this
                 - TypeSchema.Key.type
                 - SubsetSchema.Key.subset
                 ).size == 1
