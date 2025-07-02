@@ -66,7 +66,7 @@ class DimensionsRectifier : Rectifier() {
         dimension: JsonObject
     ) = dimension.toMutableMap().apply {
         typePut(TypeSchema.Value.Type.dimension)
-        when (val _id = idRawOrNull) {
+        when (val _id = JsonObject(this).idRawOrNull) {
             is JsonNull, null -> idPutPrimitive(key.idAddGroup(group))
 
             is JsonPrimitive -> idPutObject(
@@ -74,7 +74,7 @@ class DimensionsRectifier : Rectifier() {
             )
 
             is JsonObject -> idPutObject(
-                key.idAddGroup(group), (idSourceOrNull ?: idValueOrNull?.requireIsRef())
+                key.idAddGroup(group), (JsonObject(this).idSourceOrNull ?: JsonObject(this).idValueOrNull?.requireIsRef())
             )
 
             else -> throw MalformedJsonException("type not managed")

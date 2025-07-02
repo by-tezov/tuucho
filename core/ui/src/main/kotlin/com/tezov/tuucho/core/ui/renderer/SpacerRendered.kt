@@ -20,17 +20,17 @@ import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
 import com.tezov.tuucho.core.domain.schema._element.SpacerSchema
 import com.tezov.tuucho.core.domain.schema._element.SpacerSchema.Style.weightOrNull
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 
 class SpacerRendered : Renderer() {
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == SpacerSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == SpacerSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val style = jsonObject.styleObject
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val style = materialElement.styleObject
 
         return SpacerScreen(
             width = style.widthOrNull?.toIntOrNull()?.dp,

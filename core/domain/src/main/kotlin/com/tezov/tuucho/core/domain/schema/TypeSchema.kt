@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
 
 interface TypeSchema {
 
@@ -24,8 +25,8 @@ interface TypeSchema {
 
     companion object {
 
-        val Map<String, JsonElement>.type get() = this[Key.type].string
-        val Map<String, JsonElement>.typeOrNull get() = this[Key.type].stringOrNull
+        val JsonElement.type get() = this.jsonObject[Key.type].string
+        val JsonElement.typeOrNull get() = this.jsonObject[Key.type].stringOrNull
 
         fun MutableMap<String, JsonElement>.typePut(value: String) {
             put(Key.type, JsonPrimitive(value))

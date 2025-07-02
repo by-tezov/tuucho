@@ -23,14 +23,14 @@ interface ActionSchema {
 
     companion object {
 
-        val Map<String, JsonElement>.actionObject get() = this[Content.Key.action]!!.jsonObject
-        val Map<String, JsonElement>.actionObjectOrNull get() = this[Content.Key.action] as? JsonObject
+        val JsonElement.actionObject get() = this.jsonObject[Content.Key.action]!!.jsonObject
+        val JsonElement.actionObjectOrNull get() = this.jsonObject[Content.Key.action] as? JsonObject
 
-        val Map<String, JsonElement>.value get() = this[Key.Action.value].string
-        val Map<String, JsonElement>.valueOrNull get() = this[Key.Action.value].stringOrNull
+        val JsonElement.value get() = this.jsonObject[Key.Action.value].string
+        val JsonElement.valueOrNull get() = this.jsonObject[Key.Action.value].stringOrNull
 
-        val Map<String, JsonElement>.params get() = this[Key.Action.params]!!.jsonObject
-        val Map<String, JsonElement>.paramsOrNull get() = this[Key.Action.params] as? JsonObject
+        val JsonElement.params get() = this.jsonObject[Key.Action.params]!!.jsonObject
+        val JsonElement.paramsOrNull get() = this.jsonObject[Key.Action.params] as? JsonObject
 
         fun MutableMap<String, JsonElement>.actionPutObject(
             value: String?,

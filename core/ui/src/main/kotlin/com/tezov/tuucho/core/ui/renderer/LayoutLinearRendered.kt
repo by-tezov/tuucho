@@ -14,7 +14,7 @@ import com.tezov.tuucho.core.domain.schema._element.LayoutLinearSchema.Content.i
 import com.tezov.tuucho.core.domain.schema._element.LayoutLinearSchema.Style.Value.Orientation
 import com.tezov.tuucho.core.domain.schema._element.LayoutLinearSchema.Style.orientation
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
@@ -22,14 +22,14 @@ class LayoutLinearRendered : Renderer() {
 
     private val renderer: ScreenRendererProtocol by inject()
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == LayoutLinearSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == LayoutLinearSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val content = jsonObject.contentObject
-        val style = jsonObject.styleObject
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val content = materialElement.contentObject
+        val style = materialElement.styleObject
 
         val items = content.itemsArray
             .mapNotNull {

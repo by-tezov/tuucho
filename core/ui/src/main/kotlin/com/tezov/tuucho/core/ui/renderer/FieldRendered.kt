@@ -17,21 +17,21 @@ import com.tezov.tuucho.core.domain.schema._element.FieldSchema
 import com.tezov.tuucho.core.domain.schema._element.FieldSchema.Content.placeholderObject
 import com.tezov.tuucho.core.domain.schema._element.FieldSchema.Content.titleObject
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 import com.tezov.tuucho.core.domain.schema.TextSchema.default as defaultText
 
 class FieldRendered(
     private val materialState: MaterialStateProtocol
 ) : Renderer() {
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == FieldSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == FieldSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val content = jsonObject.contentObject
-        val style = jsonObject.contentObject
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val content = materialElement.contentObject
+        val style = materialElement.contentObject
 
         return FieldScreen(
             title = content.titleObject.defaultText,
@@ -40,7 +40,7 @@ class FieldRendered(
                 materialState
                     .form()
                     .fieldsState()
-                    .addOrUpdateField(jsonObject.id, newValue)
+                    .addOrUpdateField(materialElement.id, newValue)
                 newValue
             }
         )

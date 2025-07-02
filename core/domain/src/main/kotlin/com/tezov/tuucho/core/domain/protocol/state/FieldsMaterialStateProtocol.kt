@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.protocol.state
 
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 
 interface FieldsMaterialStateProtocol {
 
@@ -16,5 +16,5 @@ interface FieldsMaterialStateProtocol {
 
     fun isValid(id: String): Boolean?
 
-    fun data(): JsonObject
+    fun data(): JsonElement
 }

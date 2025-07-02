@@ -17,21 +17,21 @@ import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Content.valueObj
 import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontColorOrNull
 import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontSizeOrNull
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 import com.tezov.tuucho.core.domain.schema.ColorSchema.defaultOrNull as defaultColorOrNull
 import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultOrNull as defaultDimensionOrNull
 import com.tezov.tuucho.core.domain.schema.TextSchema.default as defaultText
 
 class LabelRendered : Renderer() {
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == LabelSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == LabelSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val content = jsonObject.contentObject
-        val style = jsonObject.styleObject
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val content = materialElement.contentObject
+        val style = materialElement.styleObject
 
         return LabelScreen(
             text = content.valueObject.defaultText,

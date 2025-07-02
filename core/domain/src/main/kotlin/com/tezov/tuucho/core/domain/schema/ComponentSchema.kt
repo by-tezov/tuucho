@@ -17,10 +17,10 @@ interface ComponentSchema :
     object Value
 
     companion object {
-        val Map<String, JsonElement>.contentObject get() = this[Key.content]!!.jsonObject
-        val Map<String, JsonElement>.contentObjectOrNull get() = this[Key.content] as? JsonObject
+        val JsonElement.contentObject get() = this.jsonObject[Key.content]!!.jsonObject
+        val JsonElement.contentObjectOrNull get() = this.jsonObject[Key.content] as? JsonObject
 
-        val Map<String, JsonElement>.styleObject get() = this[Key.style]!!.jsonObject
-        val Map<String, JsonElement>.styleObjectOrNull get() = this[Key.style] as? JsonObject
+        val JsonElement.styleObject get() = this.jsonObject[Key.style]!!.jsonObject
+        val JsonElement.styleObjectOrNull get() = this.jsonObject[Key.style] as? JsonObject
     }
 }

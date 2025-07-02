@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
 
 object ColorSchema :
     TypeSchema,
@@ -20,8 +21,8 @@ object ColorSchema :
         }
     }
 
-    val Map<String, JsonElement>.default get() = this[Key.default].string
-    val Map<String, JsonElement>.defaultOrNull get() = this[Key.default].stringOrNull
+    val JsonElement.default get() = this.jsonObject[Key.default].string
+    val JsonElement.defaultOrNull get() = this.jsonObject[Key.default].stringOrNull
 
     fun MutableMap<String, JsonElement>.defaultPut(value: String) {
         put(Key.default, JsonPrimitive(value))

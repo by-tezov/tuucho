@@ -19,7 +19,7 @@ class FormMaterialState(
         TODO("Not yet implemented")
     }
 
-    override fun data() = mutableMapOf<String, JsonElement>() .apply {
+    override fun data() = mutableMapOf<String, JsonElement>().apply {
         put("fields", fieldsMaterialState.data())
     }.let(::JsonObject)
 

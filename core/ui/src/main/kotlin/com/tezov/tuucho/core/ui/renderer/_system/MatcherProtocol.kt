@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.ui.renderer._system
 
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 
 interface MatcherProtocol {
-    fun accept( jsonObject: JsonObject): Boolean
+    fun accept(materialElement: JsonElement): Boolean
 }
 

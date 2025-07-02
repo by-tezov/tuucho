@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain._system.stringOrNull
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
 
 interface SubsetSchema {
 
@@ -23,8 +24,8 @@ interface SubsetSchema {
     }
 
     companion object {
-        val Map<String, JsonElement>.subset get() = this[Key.subset].string
-        val Map<String, JsonElement>.subsetOrNull get() = this[Key.subset].stringOrNull
+        val JsonElement.subset get() = this.jsonObject[Key.subset].string
+        val JsonElement.subsetOrNull get() = this.jsonObject[Key.subset].stringOrNull
 
         fun MutableMap<String, JsonElement>.subsetPut(value: String) {
             put(Key.subset, JsonPrimitive(value))

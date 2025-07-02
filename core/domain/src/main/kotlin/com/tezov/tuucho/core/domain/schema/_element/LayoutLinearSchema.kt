@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.schema.StyleSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 
 object LayoutLinearSchema : ContentSchema {
 
@@ -26,8 +27,8 @@ object LayoutLinearSchema : ContentSchema {
 
         object Value
 
-        val Map<String, JsonElement>.itemsArray get() = this[Key.items]!!.jsonArray
-        val Map<String, JsonElement>.itemsArrayOrNull get() = this[Key.items] as? JsonArray
+        val JsonElement.itemsArray get() = this.jsonObject[Key.items]!!.jsonArray
+        val JsonElement.itemsArrayOrNull get() = this.jsonObject[Key.items] as? JsonArray
     }
 
     object Style: StyleSchema {
@@ -42,8 +43,8 @@ object LayoutLinearSchema : ContentSchema {
             }
         }
 
-        val Map<String, JsonElement>.orientation get() = this[Key.orientation].string
-        val Map<String, JsonElement>.orientationOrNull get() = this[Key.orientation].stringOrNull
+        val JsonElement.orientation get() = this.jsonObject[Key.orientation].string
+        val JsonElement.orientationOrNull get() = this.jsonObject[Key.orientation].stringOrNull
     }
 
 }

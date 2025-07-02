@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.domain.schema
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonObject
 
 interface StyleSchema :
     TypeSchema,
@@ -17,11 +18,11 @@ interface StyleSchema :
     object Value
     
     companion object {
-        val Map<String, JsonElement>.height get() = this[Key.height].string
-        val Map<String, JsonElement>.heightOrNull get() = this[Key.height].stringOrNull
+        val JsonElement.height get() = this.jsonObject[Key.height].string
+        val JsonElement.heightOrNull get() = this.jsonObject[Key.height].stringOrNull
 
-        val Map<String, JsonElement>.width get() = this[Key.width].string
-        val Map<String, JsonElement>.widthOrNull get() = this[Key.width].stringOrNull
+        val JsonElement.width get() = this.jsonObject[Key.width].string
+        val JsonElement.widthOrNull get() = this.jsonObject[Key.width].stringOrNull
     }
 }
 

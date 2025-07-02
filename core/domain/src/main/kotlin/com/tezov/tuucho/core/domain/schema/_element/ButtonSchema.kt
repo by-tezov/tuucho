@@ -25,8 +25,8 @@ object ButtonSchema : ContentSchema {
 
         object Value
 
-        val Map<String, JsonElement>.labelObject get() = this[Key.label]!!.jsonObject
-        val Map<String, JsonElement>.labelObjectOrNull get() = this[Key.label] as? JsonObject
+        val JsonElement.labelObject get() = this.jsonObject[Key.label]!!.jsonObject
+        val JsonElement.labelObjectOrNull get() = this.jsonObject[Key.label] as? JsonObject
 
     }
 

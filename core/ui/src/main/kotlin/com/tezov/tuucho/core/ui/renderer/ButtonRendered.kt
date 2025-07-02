@@ -25,7 +25,9 @@ import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontColorO
 import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontSizeOrNull
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 import com.tezov.tuucho.core.domain.schema.ColorSchema.defaultOrNull as defaultColorOrNull
 import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultOrNull as defaultDimensionOrNull
@@ -35,14 +37,14 @@ class ButtonRendered : Renderer() {
 
     private val actionHandler: ActionHandlerUseCase by inject()
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == ButtonSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == ButtonSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val content = jsonObject.contentObject
-        val style = jsonObject.styleObject
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val content = materialElement.contentObject
+        val style = materialElement.styleObject
 
         val labelComponent = content.labelObject
         val labelContent = labelComponent.contentObject
@@ -60,7 +62,7 @@ class ButtonRendered : Renderer() {
                 actionHandler.invoke(
                     content.id,
                     action.value,
-                    action.paramsOrNull?.mapValues { it.value.string },
+                    action.paramsOrNull?.mapValues { JsonPrimitive(it.value.string) }?.let(::JsonObject),
                 )
             }
         )

@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
 import com.tezov.tuucho.core.data.parser.assembler.ExtraDataAssembler
 import com.tezov.tuucho.core.data.parser.breaker.ExtraDataBreaker
 import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 
 class MaterialRepository(
     private val materialNetworkService: MaterialNetworkService,
@@ -42,7 +42,7 @@ class MaterialRepository(
         }
     }
 
-    override suspend fun retrieve(url: String): JsonObject {
+    override suspend fun retrieve(url: String): JsonElement {
         val extraDataAssembler = ExtraDataAssembler(url = url)
         return materialCacheRepository.retrieve(extraDataAssembler) ?: run {
             val extraDataBreaker = ExtraDataBreaker(url, version = "", false)
@@ -53,7 +53,7 @@ class MaterialRepository(
         }
     }
 
-    override suspend fun send(url: String, data: JsonObject): JsonObject? {
+    override suspend fun send(url: String, data: JsonElement): JsonElement? {
         return materialNetworkService.send(url, data)
     }
 }

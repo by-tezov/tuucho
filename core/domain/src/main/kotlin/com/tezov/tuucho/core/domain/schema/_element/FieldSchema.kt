@@ -26,11 +26,11 @@ object FieldSchema : ContentSchema {
 
         object Value
 
-        val Map<String, JsonElement>.titleObject get() = this[Key.title]!!.jsonObject
-        val Map<String, JsonElement>.titleObjectOrNull get() = this[Key.title] as? JsonObject
+        val JsonElement.titleObject get() = this.jsonObject[Key.title]!!.jsonObject
+        val JsonElement.titleObjectOrNull get() = this.jsonObject[Key.title] as? JsonObject
 
-        val Map<String, JsonElement>.placeholderObject get() = this[Key.placeholder]!!.jsonObject
-        val Map<String, JsonElement>.placeholderObjectOrNull get() = this[Key.placeholder] as? JsonObject
+        val JsonElement.placeholderObject get() = this.jsonObject[Key.placeholder]!!.jsonObject
+        val JsonElement.placeholderObjectOrNull get() = this.jsonObject[Key.placeholder] as? JsonObject
     }
 
     object Style: StyleSchema {

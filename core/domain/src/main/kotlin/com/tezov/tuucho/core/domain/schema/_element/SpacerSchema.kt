@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.schema.ComponentSchema
 import com.tezov.tuucho.core.domain.schema.ContentSchema
 import com.tezov.tuucho.core.domain.schema.StyleSchema
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonObject
 
 object SpacerSchema : ContentSchema {
 
@@ -30,8 +31,8 @@ object SpacerSchema : ContentSchema {
 
         object Value
 
-        val Map<String, JsonElement>.weight get() = this[Key.weight].string
-        val Map<String, JsonElement>.weightOrNull get() = this[Key.weight].stringOrNull
+        val JsonElement.weight get() = this.jsonObject[Key.weight].string
+        val JsonElement.weightOrNull get() = this.jsonObject[Key.weight].stringOrNull
 
     }
 }

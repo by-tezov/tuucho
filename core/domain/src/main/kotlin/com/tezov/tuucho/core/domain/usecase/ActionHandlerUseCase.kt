@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.protocol.ActionHandlerProtocol
 import com.tezov.tuucho.core.domain.protocol.CoroutineDispatchersProtocol
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonElement
 
 class ActionHandlerUseCase(
     coroutineDispatchers: CoroutineDispatchersProtocol,
@@ -11,7 +12,7 @@ class ActionHandlerUseCase(
 ) {
     private val coroutineScope = CoroutineScope(coroutineDispatchers.default)
 
-    fun invoke(id: String, action: String, params: Map<String, String>? = null) {
+    fun invoke(id: String, action: String, params: JsonElement? = null) {
         handlers
             .asSequence()
             .filter { it.accept(id, action, params) }
