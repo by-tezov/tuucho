@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.di.MaterialBreakerModule.Name
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 

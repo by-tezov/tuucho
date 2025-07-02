@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.parser.assembler.ExtraDataAssembler
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.breaker.ExtraDataBreaker
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 
 class MaterialCacheRepository(
     private val database: Database,
@@ -26,7 +26,7 @@ class MaterialCacheRepository(
 
     suspend fun refreshCache(
         config: ExtraDataBreaker,
-        materialElement: JsonObject
+        materialElement: JsonElement
     ) {
         //TODO auto purge obsolete entry
         val parts = materialBreaker.process(materialElement, config)
@@ -58,8 +58,8 @@ class MaterialCacheRepository(
         }
     }
 
-    suspend fun retrieve(config: ExtraDataAssembler): JsonObject {
-        return materialAssembler.process(config) ?: TODO("error management")
+    suspend fun retrieve(config: ExtraDataAssembler): JsonElement? {
+        return materialAssembler.process(config)
     }
 
 }

@@ -7,46 +7,38 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
-import com.tezov.tuucho.core.domain._system.string
-import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.ColorSchema
-import com.tezov.tuucho.core.domain.schema.ComponentSchema
-import com.tezov.tuucho.core.domain.schema.DimensionSchema
-import com.tezov.tuucho.core.domain.schema.TextSchema
-import com.tezov.tuucho.core.domain.schema._element.label.LabelSchema
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
+import com.tezov.tuucho.core.domain.schema.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema._element.LabelSchema
+import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Content.valueObject
+import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontColorOrNull
+import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontSizeOrNull
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.JsonElement
+import com.tezov.tuucho.core.domain.schema.ColorSchema.defaultOrNull as defaultColorOrNull
+import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultOrNull as defaultDimensionOrNull
+import com.tezov.tuucho.core.domain.schema.TextSchema.default as defaultText
 
 class LabelRendered : Renderer() {
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == LabelSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == LabelSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val content = jsonObject[ComponentSchema.Key.content]!!.jsonObject
-        val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
-
-        val value = content[LabelSchema.Content.Key.value]!!.jsonObject
-        val valueDefault = value[TextSchema.Key.default].string
-
-        val fontColor = style[LabelSchema.Style.Key.fontColor] as? JsonObject
-        val fontColorDefault = fontColor?.get(ColorSchema.Key.default)?.stringOrNull
-
-        val fontSize = style[LabelSchema.Style.Key.fontSize] as? JsonObject
-        val fontSizeDefault = fontSize?.get(DimensionSchema.Key.default)?.stringOrNull
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val content = materialElement.contentObject
+        val style = materialElement.styleObject
 
         return LabelScreen(
-            text = valueDefault,
-            fontColor = fontColorDefault
+            text = content.valueObject.defaultText,
+            fontColor = style.fontColorOrNull?.defaultColorOrNull
                 ?.runCatching { toColorInt().let(::Color) }
                 ?.getOrNull(),
-            fontSize = fontSizeDefault
+            fontSize = style.fontSizeOrNull?.defaultDimensionOrNull
                 ?.toFloatOrNull()?.sp
         )
     }
@@ -73,4 +65,5 @@ class LabelScreen(
             style = textStyle
         )
     }
+
 }

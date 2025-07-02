@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.parser.assembler
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.domain._system.toPath
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -16,7 +16,7 @@ class MaterialAssembler(
 
     suspend fun process(
         extraData: ExtraDataAssembler
-    ): JsonObject? {
+    ): JsonElement? {
         val versioning = database.versioning()
             .find(url = extraData.url) ?: return null
         versioning.rootPrimaryKey ?: return null
@@ -26,6 +26,6 @@ class MaterialAssembler(
             element = entity.jsonObject,
             extraData = extraData
         )
-        return jsonElementAssembled as? JsonObject
+        return jsonElementAssembled
     }
 }

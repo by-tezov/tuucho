@@ -1,12 +1,10 @@
 package com.tezov.tuucho.core.data.network.service
 
+import com.tezov.tuucho.core.data.network._system.JsonRequestBody
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.domain.model.ConfigModelDomain
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 import okio.IOException
 
 class MaterialNetworkService(
@@ -21,13 +19,28 @@ class MaterialNetworkService(
         return jsonConverter.decodeFromString(data)
     }
 
-    suspend fun retrieve(url: String): JsonObject {
+    suspend fun retrieve(url: String): JsonElement {
         val response = materialNetworkHttpRequest.retrieve(url)
         val data = response.json ?: throw IOException("failed to retrieve the url")
-        val materialElement = jsonConverter.decodeFromString(
-            deserializer = MapSerializer(String.serializer(), JsonElement.serializer()),
+        val jsonElement = jsonConverter.decodeFromString(
+            deserializer = JsonElement.serializer(),
             string = data
         )
-        return materialRectifier.process(JsonObject(materialElement))
+        return materialRectifier.process(jsonElement)
+    }
+
+    suspend fun send(url: String, data: JsonElement): JsonElement? {
+        val json = jsonConverter.encodeToString(
+            serializer = JsonElement.serializer(),
+            value = data
+        )
+        val response = materialNetworkHttpRequest.send(url, JsonRequestBody(json))
+        return response?.json?.let {
+            val jsonElement = jsonConverter.decodeFromString(
+                deserializer = JsonElement.serializer(),
+                string = it
+            )
+            return jsonElement
+        }
     }
 }

@@ -9,63 +9,62 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import com.tezov.tuucho.core.domain._system.string
-import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.ColorSchema
-import com.tezov.tuucho.core.domain.schema.ComponentSchema
-import com.tezov.tuucho.core.domain.schema.DimensionSchema
-import com.tezov.tuucho.core.domain.schema.TextSchema
-import com.tezov.tuucho.core.domain.schema._element.button.ButtonSchema
-import com.tezov.tuucho.core.domain.schema._element.label.LabelSchema
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.id
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.actionObject
+import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.paramsOrNull
+import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.value
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.id
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
+import com.tezov.tuucho.core.domain.schema.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema._element.ButtonSchema
+import com.tezov.tuucho.core.domain.schema._element.ButtonSchema.Content.labelObject
+import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Content.valueObject
+import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontColorOrNull
+import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontSizeOrNull
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
+import com.tezov.tuucho.core.domain.schema.ColorSchema.defaultOrNull as defaultColorOrNull
+import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultOrNull as defaultDimensionOrNull
+import com.tezov.tuucho.core.domain.schema.TextSchema.default as defaultText
 
 class ButtonRendered : Renderer() {
 
     private val actionHandler: ActionHandlerUseCase by inject()
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == ButtonSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == ButtonSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val content = jsonObject[ComponentSchema.Key.content]!!.jsonObject
-        val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val content = materialElement.contentObject
+        val style = materialElement.styleObject
 
-        val labelComponent = content[ButtonSchema.Content.Key.label]!!.jsonObject
-        val labelContent = labelComponent[ComponentSchema.Key.content]!!.jsonObject
-        val labelStyle = labelComponent[ComponentSchema.Key.style]!!.jsonObject
-
-        val labelValue = labelContent[LabelSchema.Content.Key.value]!!.jsonObject
-        val labelValueDefault = labelValue[TextSchema.Key.default].string
-
-        println(labelStyle)
-
-
-        val fontColor = labelStyle[LabelSchema.Style.Key.fontColor] as? JsonObject
-        val fontColorDefault = fontColor?.get(ColorSchema.Key.default)?.stringOrNull
-
-        val fontSize = labelStyle[LabelSchema.Style.Key.fontSize] as? JsonObject
-        val fontSizeDefault = fontSize?.get(DimensionSchema.Key.default)?.stringOrNull
-
-
-        val action = content[ButtonSchema.Content.Key.action].string
+        val labelComponent = content.labelObject
+        val labelContent = labelComponent.contentObject
+        val labelStyle = labelComponent.styleObject
 
         return ButtonScreen(
-            text = labelValueDefault,
-            fontColor = fontColorDefault
+            text = labelContent.valueObject.defaultText,
+            fontColor = labelStyle.fontColorOrNull?.defaultColorOrNull
                 ?.runCatching { toColorInt().let(::Color) }
                 ?.getOrNull(),
-            fontSize = fontSizeDefault
+            fontSize = labelStyle.fontSizeOrNull?.defaultDimensionOrNull
                 ?.toFloatOrNull()?.sp,
-            action = { actionHandler.invoke(content.id, action) }
+            action = {
+                val action = content.actionObject
+                actionHandler.invoke(
+                    content.id,
+                    action.value,
+                    action.paramsOrNull?.mapValues { JsonPrimitive(it.value.string) }?.let(::JsonObject),
+                )
+            }
         )
     }
 }

@@ -7,16 +7,16 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.DimensionSchema.Companion.defaultPut
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idAddGroup
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idIsRef
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idPutObject
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idPutPrimitive
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idRawOrNull
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idSourceOrNull
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.idValueOrNull
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typePut
+import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultPut
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idAddGroup
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idIsRef
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idPutObject
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idPutPrimitive
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idRawOrNull
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idSourceOrNull
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idValueOrNull
+import com.tezov.tuucho.core.domain.schema.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typePut
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -66,7 +66,7 @@ class DimensionsRectifier : Rectifier() {
         dimension: JsonObject
     ) = dimension.toMutableMap().apply {
         typePut(TypeSchema.Value.Type.dimension)
-        when (val _id = idRawOrNull) {
+        when (val _id = JsonObject(this).idRawOrNull) {
             is JsonNull, null -> idPutPrimitive(key.idAddGroup(group))
 
             is JsonPrimitive -> idPutObject(
@@ -74,7 +74,7 @@ class DimensionsRectifier : Rectifier() {
             )
 
             is JsonObject -> idPutObject(
-                key.idAddGroup(group), (idSourceOrNull ?: idValueOrNull?.requireIsRef())
+                key.idAddGroup(group), (JsonObject(this).idSourceOrNull ?: JsonObject(this).idValueOrNull?.requireIsRef())
             )
 
             else -> throw MalformedJsonException("type not managed")

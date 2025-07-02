@@ -11,34 +11,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.ComponentSchema
-import com.tezov.tuucho.core.domain.schema._element.spacer.SpacerSchema
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
+import com.tezov.tuucho.core.domain.schema.StyleSchema.Companion.heightOrNull
+import com.tezov.tuucho.core.domain.schema.StyleSchema.Companion.widthOrNull
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
+import com.tezov.tuucho.core.domain.schema.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema._element.SpacerSchema
+import com.tezov.tuucho.core.domain.schema._element.SpacerSchema.Style.weightOrNull
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.JsonElement
 
 class SpacerRendered : Renderer() {
 
-    override fun accept(jsonObject: JsonObject): Boolean {
-        return jsonObject.typeOrNull == TypeSchema.Value.Type.component &&
-                jsonObject.subsetOrNull == SpacerSchema.Component.Value.subset
+    override fun accept(materialElement: JsonElement): Boolean {
+        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
+                materialElement.subsetOrNull == SpacerSchema.Component.Value.subset
     }
 
-    override fun process(jsonObject: JsonObject): ComposableScreenProtocol {
-        val style = jsonObject[ComponentSchema.Key.style]!!.jsonObject
-
-        val width = style[SpacerSchema.Style.Key.width].stringOrNull
-        val height = style[SpacerSchema.Style.Key.height].stringOrNull
-        val weight = style[SpacerSchema.Style.Key.weight].stringOrNull
+    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
+        val style = materialElement.styleObject
 
         return SpacerScreen(
-            width = width?.toIntOrNull()?.dp,
-            height = height?.toIntOrNull()?.dp,
-            weight = weight?.toFloatOrNull()
+            width = style.widthOrNull?.toIntOrNull()?.dp,
+            height = style.heightOrNull?.toIntOrNull()?.dp,
+            weight = style.weightOrNull?.toFloatOrNull()
         )
     }
 }

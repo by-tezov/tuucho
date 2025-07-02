@@ -5,7 +5,9 @@ import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifie
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
 import com.tezov.tuucho.core.domain._system.toPath
 import com.tezov.tuucho.core.domain.schema.MaterialSchema
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -19,8 +21,8 @@ class MaterialRectifier : KoinComponent {
     private val contentRectifier: ContentRectifier by inject()
     private val componentRectifier: ComponentRectifier by inject()
 
-    fun process(material: JsonObject): JsonObject {
-        val materialElementMap = material.toMutableMap()
+    fun process(material: JsonElement): JsonElement {
+        val materialElementMap = material.jsonObject.toMutableMap()
 
         materialElementMap[MaterialSchema.Key.colors]?.let {
             materialElementMap[MaterialSchema.Key.colors] = colorsRectifier.process("".toPath(), it)

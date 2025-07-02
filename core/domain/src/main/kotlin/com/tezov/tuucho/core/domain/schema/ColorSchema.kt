@@ -1,11 +1,15 @@
 package com.tezov.tuucho.core.domain.schema
 
+import com.tezov.tuucho.core.domain._system.string
+import com.tezov.tuucho.core.domain._system.stringOrNull
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
 
-interface ColorSchema :
-    com.tezov.tuucho.core.domain.schema.common.TypeSchema,
-    com.tezov.tuucho.core.domain.schema.common.IdSchema {
+object ColorSchema :
+    TypeSchema,
+    IdSchema {
 
     object Key {
         const val default = "default"
@@ -18,10 +22,11 @@ interface ColorSchema :
         }
     }
 
-    companion object {
-        fun MutableMap<String, JsonElement>.defaultPut(value: String) {
-            put(Key.default, JsonPrimitive(value))
-        }
+    val JsonElement.default get() = this.jsonObject[Key.default].string
+    val JsonElement.defaultOrNull get() = (this as? JsonObject)?.get(Key.default).stringOrNull
+
+    fun MutableMap<String, JsonElement>.defaultPut(value: String) {
+        put(Key.default, JsonPrimitive(value))
     }
 
 }

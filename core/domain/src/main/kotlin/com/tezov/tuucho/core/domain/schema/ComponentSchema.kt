@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.schema
 
-import com.tezov.tuucho.core.domain.schema.common.IdSchema
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 
 interface ComponentSchema :
     TypeSchema,
@@ -16,4 +16,11 @@ interface ComponentSchema :
 
     object Value
 
+    companion object {
+        val JsonElement.contentObject get() = this.jsonObject[Key.content]!!.jsonObject
+        val JsonElement.contentObjectOrNull get() = (this as? JsonObject)?.get(Key.content) as? JsonObject
+
+        val JsonElement.styleObject get() = this.jsonObject[Key.style]!!.jsonObject
+        val JsonElement.styleObjectOrNull get() = (this as? JsonObject)?.get(Key.style) as? JsonObject
+    }
 }

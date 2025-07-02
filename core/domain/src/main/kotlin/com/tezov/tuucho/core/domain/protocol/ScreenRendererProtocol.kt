@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.domain.protocol
 
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 
 interface ScreenProtocol {
-    fun display()
+    fun show()
 }
 
 interface ScreenRendererProtocol {
-    fun process(component: JsonObject): ScreenProtocol?
+    fun process(component: JsonElement): ScreenProtocol?
 }

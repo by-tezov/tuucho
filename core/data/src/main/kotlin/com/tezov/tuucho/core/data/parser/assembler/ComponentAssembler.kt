@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema
 import org.koin.core.component.inject
 
 class ComponentAssembler : Assembler() {

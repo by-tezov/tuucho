@@ -4,9 +4,9 @@ import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.findOrNull
-import com.tezov.tuucho.core.domain.schema.common.IdSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.typeOrNull
+import com.tezov.tuucho.core.domain.schema.IdSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent

@@ -2,18 +2,18 @@ package com.tezov.tuucho.core.ui.renderer
 
 import com.tezov.tuucho.core.domain.protocol.ScreenProtocol
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.schema.common.IdSchema.Companion.id
-import com.tezov.tuucho.core.domain.schema.common.SubsetSchema.Companion.subset
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema
-import com.tezov.tuucho.core.domain.schema.common.TypeSchema.Companion.type
-import kotlinx.serialization.json.JsonObject
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.id
+import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subset
+import com.tezov.tuucho.core.domain.schema.TypeSchema
+import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.type
+import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.KoinComponent
 
 class ComponentRenderer(
     private val renderers: List<Renderer>
 ) : ScreenRendererProtocol, KoinComponent {
 
-    override fun process(component: JsonObject): ScreenProtocol? {
+    override fun process(component: JsonElement): ScreenProtocol? {
         if(component.type != TypeSchema.Value.Type.component) {
             throw IllegalStateException("object is not a component $component")
         }

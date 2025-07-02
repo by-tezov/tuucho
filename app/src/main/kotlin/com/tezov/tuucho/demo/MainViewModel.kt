@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     coroutineDispatchers: CoroutineDispatchersProtocol,
-    private val registerNavigationUrlEvent: RegisterNavigationUrlEventUseCase
+    private val registerNavigationUrlEvent: RegisterNavigationUrlEventUseCase,
 ) : ViewModel() {
 
     private val coroutineScope = CoroutineScope(coroutineDispatchers.main)

@@ -1,14 +1,15 @@
 package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.network.response.JsonResponse
+import com.tezov.tuucho.core.data.network._system.JsonRequestBody
+import com.tezov.tuucho.core.data.network._system.JsonResponse
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.MaterialCacheRepository
-import com.tezov.tuucho.core.data.repository.MaterialRepositoryImpl
+import com.tezov.tuucho.core.data.repository.MaterialRepository
 import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
@@ -31,6 +32,7 @@ object MaterialRepositoryModule {
             Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:3000/")
                 .addCallAdapterFactory(JsonResponse.CallAdapterFactory())
+                .addConverterFactory(JsonRequestBody.ConverterFactory())
                 .client(get<OkHttpClient>())
                 .build()
         }
@@ -52,10 +54,12 @@ object MaterialRepositoryModule {
         }
 
         single<MaterialRepositoryProtocol> {
-            MaterialRepositoryImpl(
+            MaterialRepository(
                 materialNetworkService = get<MaterialNetworkService>(),
                 materialCacheRepository = get<MaterialCacheRepository>(),
             )
         }
+
+
     }
 }
