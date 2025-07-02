@@ -18,9 +18,9 @@ interface ComponentSchema :
 
     companion object {
         val JsonElement.contentObject get() = this.jsonObject[Key.content]!!.jsonObject
-        val JsonElement.contentObjectOrNull get() = this.jsonObject[Key.content] as? JsonObject
+        val JsonElement.contentObjectOrNull get() = (this as? JsonObject)?.get(Key.content) as? JsonObject
 
         val JsonElement.styleObject get() = this.jsonObject[Key.style]!!.jsonObject
-        val JsonElement.styleObjectOrNull get() = this.jsonObject[Key.style] as? JsonObject
+        val JsonElement.styleObjectOrNull get() = (this as? JsonObject)?.get(Key.style) as? JsonObject
     }
 }

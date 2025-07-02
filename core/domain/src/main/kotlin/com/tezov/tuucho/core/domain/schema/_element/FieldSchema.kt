@@ -27,10 +27,10 @@ object FieldSchema : ContentSchema {
         object Value
 
         val JsonElement.titleObject get() = this.jsonObject[Key.title]!!.jsonObject
-        val JsonElement.titleObjectOrNull get() = this.jsonObject[Key.title] as? JsonObject
+        val JsonElement.titleObjectOrNull get() = (this as? JsonObject)?.get(Key.title) as? JsonObject
 
         val JsonElement.placeholderObject get() = this.jsonObject[Key.placeholder]!!.jsonObject
-        val JsonElement.placeholderObjectOrNull get() = this.jsonObject[Key.placeholder] as? JsonObject
+        val JsonElement.placeholderObjectOrNull get() = (this as? JsonObject)?.get(Key.placeholder) as? JsonObject
     }
 
     object Style: StyleSchema {

@@ -25,7 +25,7 @@ object LabelSchema : ContentSchema {
         object Value
 
         val JsonElement.valueObject get() = this.jsonObject[Key.value]!!.jsonObject
-        val JsonElement.valueObjectOrNull get() = this.jsonObject[Key.value] as? JsonObject
+        val JsonElement.valueObjectOrNull get() = (this as? JsonObject)?.get(Key.value) as? JsonObject
     }
 
     object Style: StyleSchema {
@@ -37,11 +37,11 @@ object LabelSchema : ContentSchema {
         object Value
 
         val JsonElement.fontColor get() = this.jsonObject[Key.fontColor]!!.jsonObject
-        val JsonElement.fontColorOrNull get() = this.jsonObject[Key.fontColor] as? JsonObject
+        val JsonElement.fontColorOrNull get() =(this as? JsonObject)?.get(Key.fontColor) as? JsonObject
 
 
         val JsonElement.fontSize get() = this.jsonObject[Key.fontSize]!!.jsonObject
-        val JsonElement.fontSizeOrNull get() = this.jsonObject[Key.fontSize] as? JsonObject
+        val JsonElement.fontSizeOrNull get() = (this as? JsonObject)?.get(Key.fontSize) as? JsonObject
     }
 
 }

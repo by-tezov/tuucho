@@ -25,7 +25,7 @@ interface SubsetSchema {
 
     companion object {
         val JsonElement.subset get() = this.jsonObject[Key.subset].string
-        val JsonElement.subsetOrNull get() = this.jsonObject[Key.subset].stringOrNull
+        val JsonElement.subsetOrNull get() = (this as? JsonObject)?.get(Key.subset).stringOrNull
 
         fun MutableMap<String, JsonElement>.subsetPut(value: String) {
             put(Key.subset, JsonPrimitive(value))
