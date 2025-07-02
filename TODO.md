@@ -1,7 +1,8 @@
 ## In progress
 
 - add input send to server -> 
-  - do the validator for input + update the screen when there are error
+  - do the validator for input + update the screen when there are error **
+  
 - add some elements + correct renderer (scaffold, dialog, bottomsheet)
 - do a real demo with a better ui (improve style)
 
