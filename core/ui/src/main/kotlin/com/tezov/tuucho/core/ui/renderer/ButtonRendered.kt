@@ -13,8 +13,10 @@ import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.actionObject
 import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.paramsOrNull
 import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.value
 import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObjectOrNull
 import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.id
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObjectOrNull
+import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idOrNull
 import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.TypeSchema
 import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
@@ -43,27 +45,29 @@ class ButtonRendered : Renderer() {
     }
 
     override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val content = materialElement.contentObject
-        val style = materialElement.styleObject
+        val content = materialElement.contentObjectOrNull
+        val style = materialElement.styleObjectOrNull
 
-        val labelComponent = content.labelObject
-        val labelContent = labelComponent.contentObject
-        val labelStyle = labelComponent.styleObject
+        val labelComponent = content?.labelObject
+        val labelContent = labelComponent?.contentObject
+        val labelStyle = labelComponent?.styleObject
 
         return ButtonScreen(
-            text = labelContent.valueObject.defaultText,
-            fontColor = labelStyle.fontColorOrNull?.defaultColorOrNull
+            text = labelContent?.valueObject?.defaultText ?: "",
+            fontColor = labelStyle?.fontColorOrNull?.defaultColorOrNull
                 ?.runCatching { toColorInt().let(::Color) }
                 ?.getOrNull(),
-            fontSize = labelStyle.fontSizeOrNull?.defaultDimensionOrNull
+            fontSize = labelStyle?.fontSizeOrNull?.defaultDimensionOrNull
                 ?.toFloatOrNull()?.sp,
             action = {
-                val action = content.actionObject
-                actionHandler.invoke(
-                    content.id,
-                    action.value,
-                    action.paramsOrNull?.mapValues { JsonPrimitive(it.value.string) }?.let(::JsonObject),
-                )
+                val action = content?.actionObject
+                action?.value?.let { value ->
+                    actionHandler.invoke(
+                        content.idOrNull,
+                        value,
+                        action.paramsOrNull?.mapValues { JsonPrimitive(it.value.string) }?.let(::JsonObject),
+                    )
+                }
             }
         )
     }

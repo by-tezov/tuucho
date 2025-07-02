@@ -56,10 +56,7 @@ object MaterialBreakerModule {
         }
 
         single<List<Breaker>>(Name.Processor.COMPONENT) {
-            listOf(
-                get<ContentBreaker>(),
-                get<StyleBreaker>(),
-            )
+            emptyList()
         }
     }
 

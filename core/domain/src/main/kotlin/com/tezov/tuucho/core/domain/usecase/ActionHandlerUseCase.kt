@@ -12,7 +12,7 @@ class ActionHandlerUseCase(
 ) {
     private val coroutineScope = CoroutineScope(coroutineDispatchers.default)
 
-    fun invoke(id: String, action: String, params: JsonElement? = null) {
+    fun invoke(id: String?, action: String, params: JsonElement? = null) {
         handlers
             .asSequence()
             .filter { it.accept(id, action, params) }

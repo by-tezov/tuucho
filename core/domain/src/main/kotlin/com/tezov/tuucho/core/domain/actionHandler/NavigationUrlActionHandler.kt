@@ -14,11 +14,11 @@ class NavigationUrlActionHandler : ActionHandlerProtocol {
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: String, params: JsonElement?): Boolean {
+    override fun accept(id: String?, action: String, params: JsonElement?): Boolean {
         return action.command() == "navigate" && action.authority() == "url"
     }
 
-    override suspend fun process(id: String, action: String, params: JsonElement?): Boolean {
+    override suspend fun process(id: String?, action: String, params: JsonElement?): Boolean {
         withContext(Dispatchers.Main) {
             _events.emit(action.target())
         }

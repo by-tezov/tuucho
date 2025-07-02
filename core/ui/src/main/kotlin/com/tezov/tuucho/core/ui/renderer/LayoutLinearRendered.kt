@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObjectOrNull
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObjectOrNull
 import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.TypeSchema
 import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
@@ -28,15 +28,15 @@ class LayoutLinearRendered : Renderer() {
     }
 
     override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val content = materialElement.contentObject
-        val style = materialElement.styleObject
+        val content = materialElement.contentObjectOrNull
+        val style = materialElement.styleObjectOrNull
 
-        val items = content.itemsArray
-            .mapNotNull {
+        val items = content?.itemsArray
+            ?.mapNotNull {
                 renderer.process(it.jsonObject) as? ComposableScreenProtocol
-            }
+            }?: emptyList()
 
-        return when (style.orientation) {
+        return when (style?.orientation) {
             Orientation.horizontal -> LayoutLinearScreen.Horizontal(
                 item = items
             )

@@ -22,12 +22,12 @@ class SendFormUrlActionHandler(
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: String, params: JsonElement?): Boolean {
+    override fun accept(id: String?, action: String, params: JsonElement?): Boolean {
         return action.command() == "send-form" && action.authority() == "url"
     }
 
     override suspend fun process(
-        id: String,
+        id: String?,
         action: String,
         params: JsonElement?
     ): Boolean {
@@ -48,11 +48,11 @@ class SendFormUrlActionHandler(
         return true
     }
 
-    private fun JsonElement.actionValidated(id: String) = this.jsonObject["action-validated"]
+    private fun JsonElement.actionValidated(id: String?) = this.jsonObject["action-validated"]
         ?.let { actionHandler.invoke(id, it.string) }
 
     private fun actionDenied(
-        id: String,
+        id: String?,
         reasons: Map<String, JsonElement>?
     ) {
         //TODO: reasons passed + do the update-form handler

@@ -12,8 +12,8 @@ interface ActionHandlerProtocol {
 
     val priority: Int
 
-    fun accept(id: String, action: String, params: JsonElement?): Boolean
+    fun accept(id: String?, action: String, params: JsonElement?): Boolean
 
-    suspend fun process(id: String, action: String, params: JsonElement?): Boolean
+    suspend fun process(id: String?, action: String, params: JsonElement?): Boolean
 
 }

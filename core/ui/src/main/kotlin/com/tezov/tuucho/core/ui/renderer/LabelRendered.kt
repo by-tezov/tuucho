@@ -7,8 +7,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObjectOrNull
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObjectOrNull
 import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.TypeSchema
 import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
@@ -30,15 +30,15 @@ class LabelRendered : Renderer() {
     }
 
     override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val content = materialElement.contentObject
-        val style = materialElement.styleObject
+        val content = materialElement.contentObjectOrNull
+        val style = materialElement.styleObjectOrNull
 
         return LabelScreen(
-            text = content.valueObject.defaultText,
-            fontColor = style.fontColorOrNull?.defaultColorOrNull
+            text = content?.valueObject?.defaultText?: "",
+            fontColor = style?.fontColorOrNull?.defaultColorOrNull
                 ?.runCatching { toColorInt().let(::Color) }
                 ?.getOrNull(),
-            fontSize = style.fontSizeOrNull?.defaultDimensionOrNull
+            fontSize = style?.fontSizeOrNull?.defaultDimensionOrNull
                 ?.toFloatOrNull()?.sp
         )
     }

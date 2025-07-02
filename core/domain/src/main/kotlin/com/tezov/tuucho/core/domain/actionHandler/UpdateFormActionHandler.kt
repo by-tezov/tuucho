@@ -12,16 +12,18 @@ class UpdateFormActionHandler(
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: String, params: JsonElement?): Boolean {
+    override fun accept(id: String?, action: String, params: JsonElement?): Boolean {
         return action.command() == "update-form"
     }
 
     override suspend fun process(
-        id: String,
+        id: String?,
         action: String,
         params: JsonElement?
     ): Boolean {
         //TODO
+
+
         return false
     }
 

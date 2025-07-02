@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
 import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonLabelMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.field.ContentFieldTextErrorMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.field.ContentFieldTextMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.label.content.ContentLabelTextMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.label.style.StyleLabelColorMatcher
@@ -111,6 +112,7 @@ object MaterialAssemblerModule {
             listOf(
                 ContentLabelTextMatcher(),
                 ContentFieldTextMatcher(),
+                ContentFieldTextErrorMatcher(),
             )
         }
 

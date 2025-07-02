@@ -8,7 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObjectOrNull
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObjectOrNull
 import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.id
 import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
 import com.tezov.tuucho.core.domain.schema.TypeSchema
@@ -30,12 +31,14 @@ class FieldRendered(
     }
 
     override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val content = materialElement.contentObject
-        val style = materialElement.contentObject
+        val content = materialElement.contentObjectOrNull
+        val style = materialElement.styleObjectOrNull
+
+//        val option = materialElement.optionObjectOrNull //TODO
 
         return FieldScreen(
-            title = content.titleObject.defaultText,
-            placeholder = content.placeholderObject.defaultText,
+            title = content?.titleObject?.defaultText ?: "",
+            placeholder = content?.placeholderObject?.defaultText ?: "",
             onValueChanged = { _, newValue ->
                 materialState
                     .form()

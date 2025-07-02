@@ -2,14 +2,17 @@ package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+import com.tezov.tuucho.core.data.parser.rectifier.ActionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ContentButtonActionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.field.ContentFieldTextErrorMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.field.ContentFieldTextErrorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.field.ContentFieldTextMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.content.ContentLabelTextMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelColorMatcher
@@ -41,6 +44,7 @@ object MaterialRectifierModule {
             val COLOR = named("MaterialRectifierModule.Name.Processor.COLOR")
             val DIMENSIONS = named("MaterialRectifierModule.Name.Processor.DIMENSIONS")
             val DIMENSION = named("MaterialRectifierModule.Name.Processor.DIMENSION")
+            val ACTION = named("MaterialRectifierModule.Name.Processor.ACTION")
         }
 
         object Matcher {
@@ -51,6 +55,7 @@ object MaterialRectifierModule {
             val TEXT = named("MaterialRectifierModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialRectifierModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialRectifierModule.Name.Matcher.DIMENSION")
+            val ACTION = named("MaterialRectifierModule.Name.Matcher.ACTION")
         }
     }
 
@@ -63,6 +68,7 @@ object MaterialRectifierModule {
         textModule()
         colorModule()
         dimensionModule()
+        actionModule()
     }
 
     private fun Module.idModule() {
@@ -107,7 +113,8 @@ object MaterialRectifierModule {
             listOf(
                 get<IdRectifier>(),
                 ContentButtonLabelRectifier(),
-                ContentButtonActionRectifier(),
+                ContentFieldTextErrorRectifier(),
+                ActionRectifier(),
                 get<TextRectifier>(),
                 get<ComponentRectifier>(),
             )
@@ -133,16 +140,17 @@ object MaterialRectifierModule {
     private fun Module.textModule() {
         single<TextsRectifier> { TextsRectifier() }
 
-        single<TextRectifier> { TextRectifier() }
-
         single<List<Rectifier>>(Name.Processor.TEXTS) {
             listOf(get<TextRectifier>())
         }
+
+        single<TextRectifier> { TextRectifier() }
 
         single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
             listOf(
                 ContentLabelTextMatcher(),
                 ContentFieldTextMatcher(),
+                ContentFieldTextErrorMatcher(),
             )
         }
 
@@ -154,11 +162,11 @@ object MaterialRectifierModule {
     private fun Module.colorModule() {
         single<ColorsRectifier> { ColorsRectifier() }
 
-        single<ColorRectifier> { ColorRectifier() }
-
         single<List<Rectifier>>(Name.Processor.COLORS) {
             listOf(get<ColorRectifier>())
         }
+
+        single<ColorRectifier> { ColorRectifier() }
 
         single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
             listOf(
@@ -174,11 +182,11 @@ object MaterialRectifierModule {
     private fun Module.dimensionModule() {
         single<DimensionsRectifier> { DimensionsRectifier() }
 
-        single<DimensionRectifier> { DimensionRectifier() }
-
         single<List<Rectifier>>(Name.Processor.DIMENSIONS) {
             listOf(get<DimensionRectifier>())
         }
+
+        single<DimensionRectifier> { DimensionRectifier() }
 
         single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
             listOf(
@@ -188,6 +196,20 @@ object MaterialRectifierModule {
 
         single<List<Rectifier>>(Name.Processor.DIMENSION) {
             listOf(get<IdRectifier>())
+        }
+    }
+
+    private fun Module.actionModule() {
+        single<ActionRectifier> { ActionRectifier() }
+
+        single<List<MatcherProtocol>>(Name.Matcher.ACTION) {
+            listOf(
+                ActionButtonRectifier()
+            )
+        }
+
+        single<List<Rectifier>>(Name.Processor.ACTION) {
+            emptyList()
         }
     }
 

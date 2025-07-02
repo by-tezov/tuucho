@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
+import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObjectOrNull
 import com.tezov.tuucho.core.domain.schema.StyleSchema.Companion.heightOrNull
 import com.tezov.tuucho.core.domain.schema.StyleSchema.Companion.widthOrNull
 import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
@@ -30,12 +30,12 @@ class SpacerRendered : Renderer() {
     }
 
     override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val style = materialElement.styleObject
+        val style = materialElement.styleObjectOrNull
 
         return SpacerScreen(
-            width = style.widthOrNull?.toIntOrNull()?.dp,
-            height = style.heightOrNull?.toIntOrNull()?.dp,
-            weight = style.weightOrNull?.toFloatOrNull()
+            width = style?.widthOrNull?.toIntOrNull()?.dp,
+            height = style?.heightOrNull?.toIntOrNull()?.dp,
+            weight = style?.weightOrNull?.toFloatOrNull()
         )
     }
 }
