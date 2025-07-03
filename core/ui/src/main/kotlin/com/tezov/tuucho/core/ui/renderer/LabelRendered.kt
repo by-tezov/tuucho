@@ -7,47 +7,55 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObjectOrNull
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObjectOrNull
-import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.TypeSchema
-import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
-import com.tezov.tuucho.core.domain.schema._element.LabelSchema
-import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Content.valueObject
-import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontColorOrNull
-import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontSizeOrNull
+import com.tezov.tuucho.core.domain._system.string
+import com.tezov.tuucho.core.domain.config.Language
+import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
+import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
+import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.model.schema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonElement
-import com.tezov.tuucho.core.domain.schema.ColorSchema.defaultOrNull as defaultColorOrNull
-import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultOrNull as defaultDimensionOrNull
-import com.tezov.tuucho.core.domain.schema.TextSchema.default as defaultText
+import kotlinx.serialization.json.JsonObject
 
-class LabelRendered : Renderer() {
+class LabelRendered(
+    private val getLanguage: GetLanguageUseCase
+) : Renderer() {
 
-    override fun accept(materialElement: JsonElement): Boolean {
-        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
-                materialElement.subsetOrNull == LabelSchema.Component.Value.subset
-    }
+    override fun accept(element: JsonElement) = element.schema()
+        .let {
+            it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
+            it.withScope(SubsetSchema::Scope).self == LabelSchema.Component.Value.subset
+        }
 
-    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val content = materialElement.contentObjectOrNull
-        val style = materialElement.styleObjectOrNull
+    override fun process(element: JsonElement): ComposableScreenProtocol {
+        val schema = element.schema()
+        val content = schema.onScope(LabelSchema.Content::Scope)
+        val style = schema.onScope(LabelSchema.Style::Scope)
+
+        val fontColor = style.fontColor?.schema()
+            ?.withScope(ColorSchema::Scope)?.default //TODO manage "selector",not only default
+        val fontSize = style.fontSize?.schema()
+            ?.withScope(DimensionSchema::Scope)?.default //TODO manage "selector",not only default
 
         return LabelScreen(
-            text = content?.valueObject?.defaultText?: "",
-            fontColor = style?.fontColorOrNull?.defaultColorOrNull
+            text = content.value,
+            language = getLanguage.invoke(),
+            fontColor = fontColor
                 ?.runCatching { toColorInt().let(::Color) }
                 ?.getOrNull(),
-            fontSize = style?.fontSizeOrNull?.defaultDimensionOrNull
-                ?.toFloatOrNull()?.sp
+            fontSize = fontSize?.toFloatOrNull()?.sp
         )
     }
 }
 
 class LabelScreen(
-    var text: String,
+    var text: JsonObject?,
+    var language: Language,
     var fontColor: Color?,
-    var fontSize: TextUnit?
+    var fontSize: TextUnit?,
 ) : ComposableScreenProtocol() {
 
     @Composable
@@ -61,7 +69,7 @@ class LabelScreen(
             )
         }
         Text(
-            text = text,
+            text = text?.get(language.code)?.string ?: "",
             style = textStyle
         )
     }

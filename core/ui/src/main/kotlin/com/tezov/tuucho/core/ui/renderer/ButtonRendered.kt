@@ -1,72 +1,47 @@
 package com.tezov.tuucho.core.ui.renderer
 
 import androidx.compose.material3.Button
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
-import com.tezov.tuucho.core.domain._system.string
-import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.actionObject
-import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.paramsOrNull
-import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.value
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObject
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.contentObjectOrNull
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObjectOrNull
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idOrNull
-import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.TypeSchema
-import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
-import com.tezov.tuucho.core.domain.schema._element.ButtonSchema
-import com.tezov.tuucho.core.domain.schema._element.ButtonSchema.Content.labelObject
-import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Content.valueObject
-import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontColorOrNull
-import com.tezov.tuucho.core.domain.schema._element.LabelSchema.Style.fontSizeOrNull
+import com.tezov.tuucho.core.domain._system.stringOrNull
+import com.tezov.tuucho.core.domain.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema.material.ActionSchema
+import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.model.schema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
-import com.tezov.tuucho.core.domain.schema.ColorSchema.defaultOrNull as defaultColorOrNull
-import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultOrNull as defaultDimensionOrNull
-import com.tezov.tuucho.core.domain.schema.TextSchema.default as defaultText
 
 class ButtonRendered : Renderer() {
 
+    private val labelRendered: LabelRendered by inject()
     private val actionHandler: ActionHandlerUseCase by inject()
 
-    override fun accept(materialElement: JsonElement): Boolean {
-        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
-                materialElement.subsetOrNull == ButtonSchema.Component.Value.subset
-    }
+    override fun accept(element: JsonElement) = element.schema()
+        .let {
+            it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
+                    it.withScope(SubsetSchema::Scope).self == ButtonSchema.Component.Value.subset
+        }
 
-    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val content = materialElement.contentObjectOrNull
-        val style = materialElement.styleObjectOrNull
+    override fun process(element: JsonElement): ComposableScreenProtocol {
+        val schema = element.schema()
+        val id = schema.withScope(IdSchema::Scope).self.stringOrNull
+        val content = schema.onScope(ButtonSchema.Content::Scope)
 
-        val labelComponent = content?.labelObject
-        val labelContent = labelComponent?.contentObject
-        val labelStyle = labelComponent?.styleObject
+        val label =  content.label?.let { labelRendered.process(it) }
+
+        val actionScope = content.action?.schema()?.withScope(ActionSchema::Scope)
+        val actionValue = actionScope?.value
+        val actionParams = actionScope?.params
 
         return ButtonScreen(
-            text = labelContent?.valueObject?.defaultText ?: "",
-            fontColor = labelStyle?.fontColorOrNull?.defaultColorOrNull
-                ?.runCatching { toColorInt().let(::Color) }
-                ?.getOrNull(),
-            fontSize = labelStyle?.fontSizeOrNull?.defaultDimensionOrNull
-                ?.toFloatOrNull()?.sp,
+            label = label,
             action = {
-                val action = content?.actionObject
-                action?.value?.let { value ->
-                    actionHandler.invoke(
-                        content.idOrNull,
-                        value,
-                        action.paramsOrNull?.mapValues { JsonPrimitive(it.value.string) }?.let(::JsonObject),
-                    )
+                actionValue?.let { value ->
+                    actionHandler.invoke(id, ActionModelDomain.Companion.from(value), actionParams)
                 }
             }
         )
@@ -74,30 +49,15 @@ class ButtonRendered : Renderer() {
 }
 
 class ButtonScreen(
-    var text: String,
-    var fontColor: Color?,
-    var fontSize: TextUnit?,
-    var action: () -> Unit
+    var label: ComposableScreenProtocol?,
+    var action: () -> Unit,
 ) : ComposableScreenProtocol() {
 
     @Composable
     override fun show(scope: Any?) {
-        val textStyle = LocalTextStyle.current.let { current ->
-            current.copy(
-                color = if (fontColor != null) fontColor!!
-                else current.color,
-                fontSize = if (fontSize != null) fontSize!!
-                else current.fontSize,
-            )
-        }
         Button(
             onClick = action,
-            content = {
-                Text(
-                    text = text,
-                    style = textStyle
-                )
-            }
+            content = { label?.show(this) }
         )
     }
 }

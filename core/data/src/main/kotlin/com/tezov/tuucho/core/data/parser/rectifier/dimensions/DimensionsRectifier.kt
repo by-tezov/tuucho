@@ -7,16 +7,12 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.DimensionSchema.defaultPut
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idAddGroup
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idIsRef
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idPutObject
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idPutPrimitive
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idRawOrNull
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idSourceOrNull
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idValueOrNull
-import com.tezov.tuucho.core.domain.schema.TypeSchema
-import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typePut
+import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
+import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.addGroup
+import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.requireIsRef
+import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -33,13 +29,13 @@ class DimensionsRectifier : Rectifier() {
 
     override fun beforeAlterObject(
         path: JsonElementPath,
-        element: JsonElement
+        element: JsonElement,
     ): JsonArray {
         val output = mutableListOf<JsonObject>()
         element.find(path).jsonObject.forEach { (group, dimensions) ->
             dimensions.jsonObject.forEach { (key, dimension) ->
                 when (dimension) {
-                    is JsonPrimitive -> alterPrimitiveDimension(key, group, dimension.string)
+                    is JsonPrimitive -> alterPrimitiveDimension(key, group, dimension)
                     is JsonObject -> alterObjectDimension(key, group, dimension)
                     else -> throw MalformedJsonException("type not managed")
                 }.let(output::add)
@@ -51,41 +47,38 @@ class DimensionsRectifier : Rectifier() {
     private fun alterPrimitiveDimension(
         key: String,
         group: String,
-        dimension: String
-    ) = mutableMapOf<String, JsonElement>()
-        .apply {
-            typePut(TypeSchema.Value.Type.dimension)
-            idPutPrimitive(key.idAddGroup(group))
-            defaultPut(dimension)
-        }
-        .let(::JsonObject)
+        dimension: JsonPrimitive,
+    ) = dimension.schema().withScope(DimensionSchema::Scope).apply {
+        type = TypeSchema.Value.dimension
+        id = onScope(IdSchema::Scope).apply {
+            value = key.addGroup(group)
+        }.collect()
+        default = this.element.string
+    }.collect()
 
     private fun alterObjectDimension(
         key: String,
         group: String,
-        dimension: JsonObject
-    ) = dimension.toMutableMap().apply {
-        typePut(TypeSchema.Value.Type.dimension)
-        when (val _id = JsonObject(this).idRawOrNull) {
-            is JsonNull, null -> idPutPrimitive(key.idAddGroup(group))
+        dimension: JsonObject,
+    ) = dimension.schema().withScope(DimensionSchema::Scope).apply {
+        type = TypeSchema.Value.dimension
+        id = onScope(IdSchema::Scope).apply {
+            when (val id = id) {
+                is JsonNull, null -> value = key.addGroup(group)
 
-            is JsonPrimitive -> idPutObject(
-                key.idAddGroup(group), _id.stringOrNull?.requireIsRef()
-            )
+                is JsonPrimitive -> {
+                    source = id.stringOrNull?.requireIsRef()
+                    value = key.addGroup(group)
+                }
 
-            is JsonObject -> idPutObject(
-                key.idAddGroup(group), (JsonObject(this).idSourceOrNull ?: JsonObject(this).idValueOrNull?.requireIsRef())
-            )
+                is JsonObject -> {
+                    source ?: run { source = value?.requireIsRef() }
+                    value = key.addGroup(group)
+                }
 
-            else -> throw MalformedJsonException("type not managed")
-        }
-    }.let(::JsonObject)
-
-    private fun String.requireIsRef(): String {
-        if (!idIsRef) {
-            throw MalformedJsonException("should start with *")
-        }
-        return this
-    }
+                else -> throw MalformedJsonException("type not managed")
+            }
+        }.collect()
+    }.collect()
 
 }

@@ -4,10 +4,10 @@ import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.schema.ActionSchema.Companion.actionPutObject
+import com.tezov.tuucho.core.domain._system.string
+import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema.material.ActionSchema
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 class ActionRectifier : Rectifier() {
@@ -16,15 +16,11 @@ class ActionRectifier : Rectifier() {
         Name.Matcher.ACTION
     )
 
-    override val childProcessors: List<Rectifier> by inject(
-        Name.Processor.ACTION
-    )
-
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
-        element: JsonElement
-    ) = JsonObject(mutableMapOf<String, JsonElement>().apply {
-        actionPutObject(element.find(path).stringOrNull, null)
-    })
+        element: JsonElement,
+    ) = element.find(path).schema().withScope(ActionSchema::Scope).apply {
+        value = this.element.string
+    }.collect()
 
 }

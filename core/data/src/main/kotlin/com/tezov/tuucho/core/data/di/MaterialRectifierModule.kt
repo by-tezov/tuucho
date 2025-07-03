@@ -6,18 +6,22 @@ import com.tezov.tuucho.core.data.parser.rectifier.ActionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.ValidatorRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.field.ContentFieldTextErrorMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._element.field.ContentFieldTextErrorRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.field.ContentFieldTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.field.content.ContentFieldTextErrorMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.field.content.ContentFieldTextErrorRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.field.content.ContentFieldTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.field.option.OptionFieldValidatorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.content.ContentLabelTextMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelColorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelDimensionMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.spacer.StyleSpacerDimensionMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
@@ -38,6 +42,7 @@ object MaterialRectifierModule {
             val COMPONENT = named("MaterialRectifierModule.Name.Processor.COMPONENT")
             val CONTENT = named("MaterialRectifierModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Processor.STYLE")
+            val OPTION = named("MaterialRectifierModule.Name.Processor.OPTION")
             val TEXTS = named("MaterialRectifierModule.Name.Processor.TEXTS")
             val TEXT = named("MaterialRectifierModule.Name.Processor.TEXT")
             val COLORS = named("MaterialRectifierModule.Name.Processor.COLORS")
@@ -45,6 +50,7 @@ object MaterialRectifierModule {
             val DIMENSIONS = named("MaterialRectifierModule.Name.Processor.DIMENSIONS")
             val DIMENSION = named("MaterialRectifierModule.Name.Processor.DIMENSION")
             val ACTION = named("MaterialRectifierModule.Name.Processor.ACTION")
+            val VALIDATOR = named("MaterialRectifierModule.Name.Processor.VALIDATOR")
         }
 
         object Matcher {
@@ -52,10 +58,12 @@ object MaterialRectifierModule {
             val COMPONENT = named("MaterialRectifierModule.Name.Matcher.COMPONENT")
             val CONTENT = named("MaterialRectifierModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Matcher.STYLE")
+            val OPTION = named("MaterialRectifierModule.Name.Matcher.OPTION")
             val TEXT = named("MaterialRectifierModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialRectifierModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialRectifierModule.Name.Matcher.DIMENSION")
             val ACTION = named("MaterialRectifierModule.Name.Matcher.ACTION")
+            val VALIDATOR = named("MaterialRectifierModule.Name.Matcher.VALIDATOR")
         }
     }
 
@@ -65,10 +73,12 @@ object MaterialRectifierModule {
         componentModule()
         contentModule()
         styleModule()
+        optionModule()
         textModule()
         colorModule()
         dimensionModule()
         actionModule()
+        validatorModule()
     }
 
     private fun Module.idModule() {
@@ -77,9 +87,7 @@ object MaterialRectifierModule {
         single<IdRectifier> { IdRectifier() }
 
         single<List<MatcherProtocol>>(Name.Matcher.ID) {
-            listOf(
-                IdMatcher()
-            )
+            listOf(IdMatcher())
         }
     }
 
@@ -98,6 +106,7 @@ object MaterialRectifierModule {
                 get<IdRectifier>(),
                 get<ContentRectifier>(),
                 get<StyleRectifier>(),
+                get<OptionRectifier>(),
             )
         }
     }
@@ -133,6 +142,21 @@ object MaterialRectifierModule {
                 get<IdRectifier>(),
                 get<ColorRectifier>(),
                 get<DimensionRectifier>()
+            )
+        }
+    }
+
+    private fun Module.optionModule() {
+        single<OptionRectifier> { OptionRectifier() }
+
+        single<List<MatcherProtocol>>(Name.Matcher.OPTION) {
+            emptyList()
+        }
+
+        single<List<Rectifier>>(Name.Processor.OPTION) {
+            listOf(
+                get<IdRectifier>(),
+                get<ValidatorRectifier>(),
             )
         }
     }
@@ -190,7 +214,8 @@ object MaterialRectifierModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
             listOf(
-                StyleLabelDimensionMatcher()
+                StyleLabelDimensionMatcher(),
+                StyleSpacerDimensionMatcher(),
             )
         }
 
@@ -204,11 +229,25 @@ object MaterialRectifierModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.ACTION) {
             listOf(
-                ActionButtonRectifier()
+                ActionButtonMatcher()
             )
         }
 
         single<List<Rectifier>>(Name.Processor.ACTION) {
+            emptyList()
+        }
+    }
+
+    private fun Module.validatorModule() {
+        single<ValidatorRectifier> { ValidatorRectifier() }
+
+        single<List<MatcherProtocol>>(Name.Matcher.VALIDATOR) {
+            listOf(
+                OptionFieldValidatorMatcher()
+            )
+        }
+
+        single<List<Rectifier>>(Name.Processor.VALIDATOR) {
             emptyList()
         }
     }

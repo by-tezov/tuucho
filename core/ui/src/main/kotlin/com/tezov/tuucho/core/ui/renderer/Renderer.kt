@@ -7,6 +7,6 @@ import org.koin.core.component.KoinComponent
 
 abstract class Renderer : MatcherProtocol, KoinComponent {
 
-    abstract fun process(materialElement: JsonElement): ComposableScreenProtocol
+    abstract fun process(element: JsonElement): ComposableScreenProtocol
 
 }

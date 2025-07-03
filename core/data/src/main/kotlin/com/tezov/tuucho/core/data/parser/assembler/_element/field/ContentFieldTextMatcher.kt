@@ -6,8 +6,8 @@ import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIsAny
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain.schema.TypeSchema
-import com.tezov.tuucho.core.domain.schema._element.FieldSchema
+import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.model.schema.material._element.FieldSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -22,7 +22,7 @@ class ContentFieldTextMatcher : MatcherProtocol {
         if (!path.lastSegmentIsAny(segments)) return false
         val parent = element.find(path.parent()) as? JsonObject
         return parent.isSubsetOf(FieldSchema.Component.Value.subset)
-                && parent.isTypeOf(TypeSchema.Value.Type.content)
+                && parent.isTypeOf(TypeSchema.Value.content)
     }
 
 }

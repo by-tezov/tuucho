@@ -2,14 +2,12 @@ package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.domain._system.toPath
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MaterialAssembler(
-    private val database: Database,
-    private val jsonConverter: Json
+    private val database: Database
 ) : KoinComponent {
 
     private val componentAssembler: ComponentAssembler by inject()
