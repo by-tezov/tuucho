@@ -12,6 +12,7 @@ import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
 import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterNavigationUrlEventUseCase
 import com.tezov.tuucho.core.domain.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
 import org.koin.dsl.module
 
 object UseCaseModule {
@@ -46,7 +47,8 @@ object UseCaseModule {
 
         factory { SendDataUseCase(get<MaterialRepositoryProtocol>()) }
 
-        factory { UpdateFormActionHandler(get<MaterialStateProtocol>()) }
+        factory { ValidatorFactoryUseCase() }
+
     }
 
 }

@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.data.parser.rectifier.ActionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonRectifier
@@ -38,6 +39,7 @@ object MaterialRectifierModule {
             val COMPONENT = named("MaterialRectifierModule.Name.Processor.COMPONENT")
             val CONTENT = named("MaterialRectifierModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Processor.STYLE")
+            val OPTION = named("MaterialRectifierModule.Name.Processor.OPTION")
             val TEXTS = named("MaterialRectifierModule.Name.Processor.TEXTS")
             val TEXT = named("MaterialRectifierModule.Name.Processor.TEXT")
             val COLORS = named("MaterialRectifierModule.Name.Processor.COLORS")
@@ -52,6 +54,7 @@ object MaterialRectifierModule {
             val COMPONENT = named("MaterialRectifierModule.Name.Matcher.COMPONENT")
             val CONTENT = named("MaterialRectifierModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Matcher.STYLE")
+            val OPTION = named("MaterialRectifierModule.Name.Matcher.OPTION")
             val TEXT = named("MaterialRectifierModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialRectifierModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialRectifierModule.Name.Matcher.DIMENSION")
@@ -65,6 +68,7 @@ object MaterialRectifierModule {
         componentModule()
         contentModule()
         styleModule()
+        optionModule()
         textModule()
         colorModule()
         dimensionModule()
@@ -77,9 +81,7 @@ object MaterialRectifierModule {
         single<IdRectifier> { IdRectifier() }
 
         single<List<MatcherProtocol>>(Name.Matcher.ID) {
-            listOf(
-                IdMatcher()
-            )
+            listOf(IdMatcher())
         }
     }
 
@@ -98,6 +100,7 @@ object MaterialRectifierModule {
                 get<IdRectifier>(),
                 get<ContentRectifier>(),
                 get<StyleRectifier>(),
+                get<OptionRectifier>(),
             )
         }
     }
@@ -133,6 +136,20 @@ object MaterialRectifierModule {
                 get<IdRectifier>(),
                 get<ColorRectifier>(),
                 get<DimensionRectifier>()
+            )
+        }
+    }
+
+    private fun Module.optionModule() {
+        single<OptionRectifier> { OptionRectifier() }
+
+        single<List<MatcherProtocol>>(Name.Matcher.OPTION) {
+            emptyList()
+        }
+
+        single<List<Rectifier>>(Name.Processor.OPTION) {
+            listOf(
+                get<IdRectifier>(),
             )
         }
     }

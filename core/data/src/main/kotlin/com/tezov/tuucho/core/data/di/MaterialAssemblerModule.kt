@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.data.parser.assembler.ComponentAssembler
 import com.tezov.tuucho.core.data.parser.assembler.ContentAssembler
 import com.tezov.tuucho.core.data.parser.assembler.DimensionAssembler
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
+import com.tezov.tuucho.core.data.parser.assembler.OptionAssembler
 import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
 import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonLabelMatcher
@@ -27,6 +28,7 @@ object MaterialAssemblerModule {
             val COMPONENT = named("MaterialAssemblerModule.Name.Processor.COMPONENT")
             val CONTENT = named("MaterialAssemblerModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialAssemblerModule.Name.Processor.STYLE")
+            val OPTION = named("MaterialAssemblerModule.Name.Processor.OPTION")
             val TEXT = named("MaterialAssemblerModule.Name.Processor.TEXT")
             val COLOR = named("MaterialAssemblerModule.Name.Processor.COLOR")
             val DIMENSION = named("MaterialAssemblerModule.Name.Processor.DIMENSION")
@@ -36,6 +38,7 @@ object MaterialAssemblerModule {
             val COMPONENT = named("MaterialAssemblerModule.Name.Matcher.COMPONENT")
             val CONTENT = named("MaterialAssemblerModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialAssemblerModule.Name.Matcher.STYLE")
+            val OPTION = named("MaterialAssemblerModule.Name.Matcher.OPTION")
             val TEXT = named("MaterialAssemblerModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialAssemblerModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialAssemblerModule.Name.Matcher.DIMENSION")
@@ -52,6 +55,7 @@ object MaterialAssemblerModule {
         componentModule()
         contentModule()
         styleModule()
+        optionModule()
         textModule()
         colorModule()
         dimensionModule()
@@ -102,6 +106,18 @@ object MaterialAssemblerModule {
                 get<ColorAssembler>(),
                 get<DimensionAssembler>()
             )
+        }
+    }
+
+    private fun Module.optionModule() {
+        single<OptionAssembler> { OptionAssembler() }
+
+        single<List<MatcherProtocol>>(Name.Matcher.OPTION) {
+            emptyList()
+        }
+
+        single<List<Assembler>>(Name.Processor.OPTION) {
+            emptyList()
         }
     }
 

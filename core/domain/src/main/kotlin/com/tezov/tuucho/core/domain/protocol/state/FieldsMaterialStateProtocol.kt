@@ -1,16 +1,21 @@
 package com.tezov.tuucho.core.domain.protocol.state
 
+import com.tezov.tuucho.core.domain.protocol.ValidatorProtocol
 import kotlinx.serialization.json.JsonElement
 
 interface FieldsMaterialStateProtocol {
 
     fun clear()
 
-    fun addOrUpdateField(id: String, value: String)
+    fun addField(
+        id: String,
+        initialValue: String = "",
+        validators: List<ValidatorProtocol<String>>? = null
+    )
+
+    fun updateField(id: String, value: String)
 
     fun getFieldOrNull(id: String): String?
-
-    fun getFields(): Map<String, String>
 
     fun isAllValid(): Boolean
 

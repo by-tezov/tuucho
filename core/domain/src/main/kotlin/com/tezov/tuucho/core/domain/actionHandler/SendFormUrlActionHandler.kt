@@ -55,8 +55,7 @@ class SendFormUrlActionHandler(
         id: String?,
         reasons: Map<String, JsonElement>?
     ) {
-        //TODO: reasons passed + do the update-form handler
-        actionHandler.invoke(id, "update-form://error", null)
+        actionHandler.invoke(id, "update-form://error", reasons?.let(::JsonObject))
     }
 
 }

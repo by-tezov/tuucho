@@ -23,6 +23,8 @@ class UpdateFormActionHandler(
     ): Boolean {
         //TODO
 
+        // if params is null, should update with the error message of validator
+        // else from the server ???
 
         return false
     }

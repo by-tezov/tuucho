@@ -1,9 +1,10 @@
 ## In progress
 
 - add input send to server -> 
-  1 - do the option for ButtonRendered
-  2 - rectify and assemble validator
-  3- Render the validator and do the UpdateFormActionHandler and SendFormUrlActionHandler raison
+
+TODO: inside renderer -> should solve the issue Key inside type for example, same action and validator... Need to fix Schema before to go on
+
+ 3- Render the validator and do the UpdateFormActionHandler and SendFormUrlActionHandler raison
 
   
   

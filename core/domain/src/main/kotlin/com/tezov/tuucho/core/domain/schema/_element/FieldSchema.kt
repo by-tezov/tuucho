@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.domain.schema._element
 import com.tezov.tuucho.core.domain.schema.ComponentSchema
 import com.tezov.tuucho.core.domain.schema.ContentSchema
 import com.tezov.tuucho.core.domain.schema.StyleSchema
+import com.tezov.tuucho.core.domain.schema.ValidatorSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -34,6 +35,12 @@ object FieldSchema : ContentSchema {
     }
 
     object Style: StyleSchema {
+        object Key
+
+        object Value
+    }
+
+    object Option: ValidatorSchema {
         object Key
 
         object Value

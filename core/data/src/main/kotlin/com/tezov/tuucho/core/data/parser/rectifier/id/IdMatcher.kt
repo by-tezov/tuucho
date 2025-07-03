@@ -15,8 +15,9 @@ class IdMatcher : MatcherProtocol, KoinComponent {
 
     private val types = listOf(
         TypeSchema.Value.Type.component,
-        TypeSchema.Value.Type.style,
         TypeSchema.Value.Type.content,
+        TypeSchema.Value.Type.style,
+        TypeSchema.Value.Type.option,
         TypeSchema.Value.Type.text,
         TypeSchema.Value.Type.color,
         TypeSchema.Value.Type.dimension

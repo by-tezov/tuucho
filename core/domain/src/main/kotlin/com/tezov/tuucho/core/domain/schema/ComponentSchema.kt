@@ -12,6 +12,7 @@ interface ComponentSchema :
     object Key {
         const val content = "content"
         const val style = "style"
+        const val option = "option"
     }
 
     object Value
@@ -22,5 +23,8 @@ interface ComponentSchema :
 
         val JsonElement.styleObject get() = this.jsonObject[Key.style]!!.jsonObject
         val JsonElement.styleObjectOrNull get() = (this as? JsonObject)?.get(Key.style) as? JsonObject
+
+        val JsonElement.optionObject get() = this.jsonObject[Key.option]!!.jsonObject
+        val JsonElement.optionObjectOrNull get() = (this as? JsonObject)?.get(Key.option) as? JsonObject
     }
 }

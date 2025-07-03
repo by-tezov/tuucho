@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
 import com.tezov.tuucho.core.domain.protocol.state.FieldsMaterialStateProtocol
 import com.tezov.tuucho.core.domain.protocol.state.FormMaterialStateProtocol
 import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
+import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
 import com.tezov.tuucho.core.ui.renderer.ButtonRendered
 import com.tezov.tuucho.core.ui.renderer.ComponentRenderer
 import com.tezov.tuucho.core.ui.renderer.FieldRendered
@@ -39,7 +40,10 @@ object MaterialRendererModule {
             ComponentRenderer(listOf(
                 LayoutLinearRendered(),
                 LabelRendered(),
-                FieldRendered(get<MaterialStateProtocol>()),
+                FieldRendered(
+                    get<MaterialStateProtocol>(),
+                    get<ValidatorFactoryUseCase>()
+                ),
                 ButtonRendered(),
                 SpacerRendered(),
             ))
