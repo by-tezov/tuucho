@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.model.schema.material.ContentSchema
 import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
 
 object LayoutLinearSchema {
 
@@ -28,6 +29,9 @@ object LayoutLinearSchema {
     object Style {
         object Key {
             const val orientation = "orientation"
+            const val backgroundColor = "background-color"
+            const val fillMaxSize = "fill-max-size"
+            const val fillMaxWidth = "fill-max-width"
         }
 
         object Value {
@@ -40,6 +44,9 @@ object LayoutLinearSchema {
         class Scope : StyleSchema.OpenScope<Scope>() {
 
             var orientation by delegate<String?>(Key.orientation)
+            var backgroundColor by delegate<JsonObject?>(Key.backgroundColor)
+            var fillMaxSize by delegate<Boolean?>(Key.fillMaxSize)
+            var fillMaxWidth by delegate<Boolean?>(Key.fillMaxWidth)
 
         }
     }

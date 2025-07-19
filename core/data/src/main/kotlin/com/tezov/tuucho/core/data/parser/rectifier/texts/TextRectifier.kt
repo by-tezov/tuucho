@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.toPath
 import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.SymbolData
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.hasGroup
@@ -17,6 +18,7 @@ import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
@@ -36,12 +38,21 @@ class TextRectifier : Rectifier() {
             element is JsonArray &&
             element.all { it.isTypeOf(TypeSchema.Value.text) }) || super.accept(path, element)
 
-    override fun beforeAlterArray(
+    override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = with(element.find(path).jsonArray) {
-        JsonArray(this.map { process("".toPath(), it) })
-    }
+    ) = element.find(path).schema().withScope(TextSchema::Scope).apply {
+        type = TypeSchema.Value.text
+        val value = this.element.string
+        //TODO add escaper on "ID_REF_INDICATOR" to allow string user content to start with it
+        if(value.startsWith(SymbolData.ID_REF_INDICATOR)) {
+            id = JsonPrimitive(value)
+        }
+        else {
+            id = JsonNull
+            default = value
+        }
+    }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
@@ -51,14 +62,12 @@ class TextRectifier : Rectifier() {
         id ?: run { id = JsonNull }
     }.collect()
 
-    override fun beforeAlterPrimitive(
+    override fun beforeAlterArray(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).schema().withScope(TextSchema::Scope).apply {
-        type = TypeSchema.Value.text
-        id ?: run { id = JsonNull }
-        default = this.element.string
-    }.collect()
+    ) = with(element.find(path).jsonArray) {
+        JsonArray(this.map { process("".toPath(), it) })
+    }
 
     override fun afterAlterObject(
         path: JsonElementPath,

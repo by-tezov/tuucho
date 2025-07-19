@@ -100,8 +100,8 @@ class FieldRendered(
         return validators?.mapNotNull { validator ->
             val validatorPrototype = validator.schema().withScope(ValidatorSchema::Scope).apply {
                 this.messageError = messagesErrorIdMapped
-                    ?.firstOrNull { it.first == idMessageError }?.second
-                    ?: error("Missing message error for validator $type")
+                    ?.firstOrNull { it.first == idMessageError || validators.size == 1 }?.second
+                    ?: error("Missing message error for validator")
             }.collect()
 
             @Suppress("UNCHECKED_CAST")

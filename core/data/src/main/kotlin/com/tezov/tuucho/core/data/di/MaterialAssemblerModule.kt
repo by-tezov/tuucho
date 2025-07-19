@@ -17,6 +17,7 @@ import com.tezov.tuucho.core.data.parser.assembler._element.label.content.Conten
 import com.tezov.tuucho.core.data.parser.assembler._element.label.style.StyleLabelColorMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.label.style.StyleLabelDimensionMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.parser.assembler._element.layout.linear.StyleLayoutLinearColorMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.spacer.StyleSpacerDimensionMatcher
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -142,7 +143,8 @@ object MaterialAssemblerModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
             listOf(
-                StyleLabelColorMatcher()
+                StyleLabelColorMatcher(),
+                StyleLayoutLinearColorMatcher()
             )
         }
 

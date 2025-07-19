@@ -9,9 +9,11 @@ object ValidatorSchema {
 
     object Key {
         const val type = "type"
-        const val length = "length"
         const val idMessageError = "id-message-error"
         const val messageError = "message-error"
+
+        const val length = "length"
+        const val value = "value"
     }
 
     object Value {
@@ -19,6 +21,11 @@ object ValidatorSchema {
             const val stringMinLength = "string-min-length"
             const val stringMaxLength = "string-max-length"
             const val stringMinDigitLength = "string-min-digit-length"
+            const val stringOnlyDigits = "string-only-digits"
+            const val stringEmail = "string-email"
+            const val stringNotNull = "string-not-null"
+            const val stringMinValue = "string-min-value"
+            const val stringMaxValue = "string-max-value"
         }
     }
 
@@ -26,9 +33,11 @@ object ValidatorSchema {
         override val root = ValidatorSchema.root
 
         var type by delegate<String?>(Key.type)
-        var length by delegate<String?>(Key.length)
         var idMessageError by delegate<String?>(Key.idMessageError)
         var messageError by delegate<JsonObject?>(Key.messageError)
+
+        var length by delegate<String?>(Key.length)
+        var value by delegate<String?>(Key.value)
     }
 
 }

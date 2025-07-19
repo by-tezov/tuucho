@@ -21,6 +21,8 @@ import com.tezov.tuucho.core.data.parser.rectifier._element.label.content.Conten
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelColorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelDimensionMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.StyleLayoutLinearColorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.spacer.StyleSpacerDimensionMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
@@ -121,6 +123,7 @@ object MaterialRectifierModule {
         single<List<Rectifier>>(Name.Processor.CONTENT) {
             listOf(
                 get<IdRectifier>(),
+                ContentLayoutLinearItemsRectifier(),
                 ContentButtonLabelRectifier(),
                 ContentFieldTextErrorRectifier(),
                 ActionRectifier(),
@@ -194,7 +197,8 @@ object MaterialRectifierModule {
 
         single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
             listOf(
-                StyleLabelColorMatcher()
+                StyleLabelColorMatcher(),
+                StyleLayoutLinearColorMatcher()
             )
         }
 

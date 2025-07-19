@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.toPath
 import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.SymbolData
 import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.addGroup
@@ -17,6 +18,7 @@ import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
@@ -35,12 +37,20 @@ class ColorRectifier : Rectifier() {
             element is JsonArray &&
             element.all { it.isTypeOf(TypeSchema.Value.color) }) || super.accept(path, element)
 
-    override fun beforeAlterArray(
+    override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement
-    ): JsonElement {
-        return JsonArray(element.find(path).jsonArray.map { process("".toPath(), it) })
-    }
+    ) = element.find(path).schema().withScope(ColorSchema::Scope).apply {
+        type = TypeSchema.Value.color
+        val value = this.element.string
+        if(value.startsWith(SymbolData.ID_REF_INDICATOR)) {
+            id = JsonPrimitive(value)
+        }
+        else {
+            id = JsonNull
+            default = value
+        }
+    }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
@@ -50,14 +60,12 @@ class ColorRectifier : Rectifier() {
         id ?: run { id = JsonNull }
     }.collect()
 
-    override fun beforeAlterPrimitive(
+    override fun beforeAlterArray(
         path: JsonElementPath,
         element: JsonElement
-    ) = element.find(path).schema().withScope(ColorSchema::Scope).apply {
-        type = TypeSchema.Value.color
-        id ?: run { id = JsonNull }
-        default = this.element.string
-    }.collect()
+    ): JsonElement {
+        return JsonArray(element.find(path).jsonArray.map { process("".toPath(), it) })
+    }
 
     override fun afterAlterObject(
         path: JsonElementPath,

@@ -11,3 +11,4 @@ mike deploy vxxx
 mike set-default v2
 mike serve -a 127.0.0.1:8001
 
+ffmpeg -i input.flv output.mp4

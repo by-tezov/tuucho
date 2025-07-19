@@ -5,16 +5,14 @@ import com.tezov.tuucho.core.domain.config.Language
 import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
 import kotlinx.serialization.json.JsonObject
 
-class StringMinDigitLengthFieldValidator(
-    private val length: Int,
+class StringEmailValidator(
     private val errorMessages: JsonObject,
 ) : FieldValidatorProtocol<String> {
 
     private var isValid = false
 
     override fun updateValidity(value: String) {
-        val digitCount = value.count { it.isDigit() }
-        isValid = digitCount >= length
+        isValid = value.isEmpty() || value.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
     }
 
     override fun isValid() = isValid

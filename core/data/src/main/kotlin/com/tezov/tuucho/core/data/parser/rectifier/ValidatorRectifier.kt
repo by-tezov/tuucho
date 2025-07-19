@@ -56,9 +56,7 @@ class ValidatorRectifier : Rectifier() {
                 it.schema().withScope(ValidatorSchema::Scope).apply {
                     type = this.element.string
                 }.collect()
-            } else {
-                it.jsonObject
-            }
+            } else it
         })
     }
 

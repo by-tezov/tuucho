@@ -10,7 +10,7 @@ class StringMinLengthFieldValidator(
     private val errorMessages: JsonObject,
 ) : FieldValidatorProtocol<String> {
 
-    private var isValid = true
+    private var isValid = false
 
     override fun updateValidity(value: String) {
         isValid = value.length >= length
