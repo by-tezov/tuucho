@@ -11,14 +11,13 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replace
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idObject
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idPutObject
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idSourceOrNull
-import com.tezov.tuucho.core.domain.schema.IdSchema.Companion.idValue
-import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.type
-import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typePut
+import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
+import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
@@ -30,25 +29,25 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
 
     override fun accept(
         path: JsonElementPath,
-        element: JsonElement
+        element: JsonElement,
     ) = matchers.any { it.accept(path, element) }
 
     fun process(
         path: JsonElementPath,
         element: JsonElement,
-        extraData: ExtraDataBreaker
+        extraData: ExtraDataBreaker,
     ): JsonEntityElement = with(element.find(path)) {
         when (this) {
             is JsonArray -> processArray(path, element, extraData)
             is JsonObject -> processObject(path, element, extraData)
-            else -> throw IllegalStateException("primitive to JsonEntity is not allowed by design")
+            else -> error("primitive to JsonEntity is not allowed by design")
         }
     }
 
     private fun JsonArray.processArray(
         path: JsonElementPath,
         element: JsonElement,
-        extraData: ExtraDataBreaker
+        extraData: ExtraDataBreaker,
     ) = childProcessors
         .takeIf { it.isNotEmpty() }
         ?.filter { it.accept(path, element) }
@@ -59,7 +58,7 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
     private fun JsonObject.processObject(
         path: JsonElementPath,
         element: JsonElement,
-        extraData: ExtraDataBreaker
+        extraData: ExtraDataBreaker,
     ): JsonEntityObject {
         if (childProcessors.isEmpty()) {
             return toJsonObjectEntity(extraData)
@@ -78,39 +77,49 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
     }
 
     private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
-        if (size > 1)
-            throw IllegalStateException("Only one child processor can accept the element at path $path")
+        if (size > 1) error("Only one child processor can accept the element at path $path")
         return firstOrNull()
     }
 
     private fun JsonArray.toJsonEntityArray(
-        extraData: ExtraDataBreaker
+        extraData: ExtraDataBreaker,
     ) = map { entry ->
         (entry as? JsonObject)?.toJsonObjectEntity(extraData)
-            ?: throw IllegalStateException("by design element inside array must be object")
+            ?: error("by design element inside array must be object")
     }.toJsonEntityArray()
 
     private fun JsonObject.toJsonObjectEntity(
-        extraData: ExtraDataBreaker
-    ): JsonEntityObject = JsonEntity(
-        type = type,
-        url = extraData.url,
-        id = idObject.idValue,
-        idFrom = idObject.idSourceOrNull,
-        jsonObject = this
-    ).toJsonEntityObject()
-
-    private fun JsonEntityObject.toJsonObjectRef(): JsonObject {
-        val content = content
-        return JsonObject(mutableMapOf<String, JsonElement>().apply {
-            idPutObject(null, content.id)
-            typePut(content.type)
-        })
+        extraData: ExtraDataBreaker,
+    ): JsonEntityObject {
+        val schema = schema()
+        val type = schema.withScope(TypeSchema::Scope).self
+        val (id, idFrom) = schema.onScope(IdSchema::Scope)
+            .let { it.value to it.source }
+        return JsonEntity(
+            type = type
+                ?: error("Should not be possible, so there is surely something missing in the rectifier"),
+            url = extraData.url,
+            id = id
+                ?: error("Should not be possible, so there is surely something missing in the rectifier"),
+            idFrom = idFrom,
+            jsonObject = this@toJsonObjectEntity
+        ).toJsonEntityObject()
     }
+
+    private fun JsonEntityObject.toJsonObjectRef() = JsonNull.schema().withScope(::SchemaScope).apply {
+        withScope(TypeSchema::Scope).apply {
+            self = content.type
+        }
+        withScope(IdSchema::Scope).apply {
+            self = onScope(IdSchema::Scope).apply {
+                source = content.id
+            }.collect()
+        }
+    }.collect()
 
     private fun JsonObject.toJsonObjectEntity(
         map: Map<String, JsonEntityElement>,
-        extraData: ExtraDataBreaker
+        extraData: ExtraDataBreaker,
     ): JsonEntityObject {
         if (map.isEmpty()) {
             return toJsonObjectEntity(extraData)
@@ -123,8 +132,7 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
                     (entry as? JsonEntityObject)?.let {
                         output.add(entry)
                         entry.toJsonObjectRef()
-                    }
-                        ?: throw IllegalStateException("by design element inside array must be object")
+                    } ?: error("by design element inside array must be object")
                 }.let(::JsonArray)
 
                 is JsonEntityObject -> {

@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.domain.actionHandler
 
+import com.tezov.tuucho.core.domain.model.Action
+import com.tezov.tuucho.core.domain.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.protocol.ActionHandlerProtocol
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,15 +16,16 @@ class NavigationUrlActionHandler : ActionHandlerProtocol {
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: String, params: JsonElement?): Boolean {
-        return action.command() == "navigate" && action.authority() == "url"
+    override fun accept(id: String?, action: ActionModelDomain, params: JsonElement?): Boolean {
+        return action.command == Action.Navigate.command && action.authority == Action.Navigate.Authority.url
     }
 
-    override suspend fun process(id: String, action: String, params: JsonElement?): Boolean {
-        withContext(Dispatchers.Main) {
-            _events.emit(action.target())
+    override suspend fun process(id: String?, action: ActionModelDomain, params: JsonElement?) {
+        action.target?.let {
+            withContext(Dispatchers.Main) {
+                _events.emit(it)
+            }
         }
-        return true
     }
 
 }

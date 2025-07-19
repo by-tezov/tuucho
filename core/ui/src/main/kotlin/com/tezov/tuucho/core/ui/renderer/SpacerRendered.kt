@@ -11,31 +11,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.schema.ComponentSchema.Companion.styleObject
-import com.tezov.tuucho.core.domain.schema.StyleSchema.Companion.heightOrNull
-import com.tezov.tuucho.core.domain.schema.StyleSchema.Companion.widthOrNull
-import com.tezov.tuucho.core.domain.schema.SubsetSchema.Companion.subsetOrNull
-import com.tezov.tuucho.core.domain.schema.TypeSchema
-import com.tezov.tuucho.core.domain.schema.TypeSchema.Companion.typeOrNull
-import com.tezov.tuucho.core.domain.schema._element.SpacerSchema
-import com.tezov.tuucho.core.domain.schema._element.SpacerSchema.Style.weightOrNull
+import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
+import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.model.schema.material._element.SpacerSchema
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonElement
 
 class SpacerRendered : Renderer() {
 
-    override fun accept(materialElement: JsonElement): Boolean {
-        return materialElement.typeOrNull == TypeSchema.Value.Type.component &&
-                materialElement.subsetOrNull == SpacerSchema.Component.Value.subset
-    }
+    override fun accept(element: JsonElement) = element.schema()
+        .let {
+            it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
+            it.withScope(SubsetSchema::Scope).self == SpacerSchema.Component.Value.subset
+        }
 
-    override fun process(materialElement: JsonElement): ComposableScreenProtocol {
-        val style = materialElement.styleObject
+    override fun process(element: JsonElement): ComposableScreenProtocol {
+        val schema = element.schema()
+        val style = schema.onScope(SpacerSchema.Style::Scope)
+
+        val width = style.width?.schema()
+            ?.withScope(DimensionSchema::Scope)?.default
+        val height = style.height?.schema()
+            ?.withScope(DimensionSchema::Scope)?.default
+        val weight = style.weight?.schema()
+            ?.withScope(DimensionSchema::Scope)?.default
 
         return SpacerScreen(
-            width = style.widthOrNull?.toIntOrNull()?.dp,
-            height = style.heightOrNull?.toIntOrNull()?.dp,
-            weight = style.weightOrNull?.toFloatOrNull()
+            width = width?.toIntOrNull()?.dp,
+            height = height?.toIntOrNull()?.dp,
+            weight = weight?.toFloatOrNull()
         )
     }
 }

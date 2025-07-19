@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.ui.state
 
+import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
 import com.tezov.tuucho.core.domain.protocol.state.FieldsMaterialStateProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -7,32 +8,68 @@ import kotlinx.serialization.json.JsonPrimitive
 
 class FieldsMaterialState : FieldsMaterialStateProtocol {
 
-    private val fields = mutableMapOf<String, String>()
+    private data class Entry(
+        var value: String,
+        val validators: List<FieldValidatorProtocol<String>>?,
+    )
+
+    private val fields = mutableMapOf<String, Entry>()
 
     @Synchronized
     override fun clear() {
         fields.clear()
     }
 
-    override fun addOrUpdateField(id: String, value: String) {
-        fields[id] = value
+    override fun addField(
+        id: String,
+        initialValue: String,
+        validators: List<FieldValidatorProtocol<String>>?,
+    ) {
+        if (fields.containsKey(id)) {
+            throw IllegalStateException("id $id already exist")
+        }
+        fields[id] = Entry(initialValue, validators)
     }
 
-    override fun getFieldOrNull(id: String) = fields[id]
-
-    override fun getFields() = fields.toMap()
-
-    override fun isAllValid(): Boolean {
-        return true //TODO
+    override fun updateField(id: String, value: String) {
+        fields[id]!!.value = value
     }
 
-    override fun isValid(id: String): Boolean? {
-        TODO("Not yet implemented")
+    override fun getFieldOrNull(id: String) = fields[id]?.value
+
+    override fun updateAllValidity() {
+        fields.forEach { entry ->
+            entry.value.updateValidity()
+        }
     }
 
-    override fun data() = mutableMapOf<String, JsonElement>() .apply {
+    override fun isAllValid() = fields.all { entry ->
+        entry.value.isValid()
+    }
+
+    override fun updateValidity(id: String) {
+        fields[id]?.updateValidity()
+    }
+
+    override fun isValid(id: String) = fields[id]?.isValid()
+
+    override fun getAllValidityResult() = mutableListOf<Pair<String, Boolean>>().apply {
+        fields.forEach { entry ->
+            add(Pair(entry.key, entry.value.isValid()))
+        }
+    }
+
+    private fun Entry.updateValidity() {
+        validators?.forEach {
+            it.updateValidity(value)
+        }
+    }
+
+    private fun Entry.isValid() = validators?.all { it.isValid() } ?: true
+
+    override fun data() = mutableMapOf<String, JsonElement>().apply {
         fields.forEach { (key, value) ->
-            this[key] = JsonPrimitive(value)
+            value.value.let { this[key] = JsonPrimitive(it) }
         }
     }.let(::JsonObject)
 

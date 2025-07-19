@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.data.parser.breaker.ComponentBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ContentBreaker
 import com.tezov.tuucho.core.data.parser.breaker.DimensionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
+import com.tezov.tuucho.core.data.parser.breaker.OptionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.parser.breaker.TextBreaker
 import com.tezov.tuucho.core.data.parser.breaker._element.layout.linear.ContentLayoutLinearMatcher
@@ -21,6 +22,7 @@ object MaterialBreakerModule {
             val COMPONENT = named("MaterialBreakerModule.Name.Processor.COMPONENT")
             val CONTENT = named("MaterialBreakerModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialBreakerModule.Name.Processor.STYLE")
+            val OPTION = named("MaterialBreakerModule.Name.Processor.OPTION")
             val TEXT = named("MaterialBreakerModule.Name.Processor.TEXT")
             val COLOR = named("MaterialBreakerModule.Name.Processor.COLOR")
             val DIMENSION = named("MaterialBreakerModule.Name.Processor.DIMENSION")
@@ -30,6 +32,7 @@ object MaterialBreakerModule {
             val COMPONENT = named("MaterialBreakerModule.Name.Matcher.COMPONENT")
             val CONTENT = named("MaterialBreakerModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialBreakerModule.Name.Matcher.STYLE")
+            val OPTION = named("MaterialBreakerModule.Name.Matcher.OPTION")
             val TEXT = named("MaterialBreakerModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialBreakerModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialBreakerModule.Name.Matcher.DIMENSION")
@@ -41,6 +44,7 @@ object MaterialBreakerModule {
         componentModule()
         contentModule()
         styleModule()
+        optionModule()
         textModule()
         colorModule()
         dimensionModule()
@@ -56,10 +60,7 @@ object MaterialBreakerModule {
         }
 
         single<List<Breaker>>(Name.Processor.COMPONENT) {
-            listOf(
-                get<ContentBreaker>(),
-                get<StyleBreaker>(),
-            )
+            emptyList()
         }
     }
 
@@ -85,6 +86,18 @@ object MaterialBreakerModule {
         }
 
         single<List<Breaker>>(Name.Processor.STYLE) {
+            emptyList()
+        }
+    }
+
+    private fun Module.optionModule() {
+        single<OptionBreaker> { OptionBreaker() }
+
+        single<List<MatcherProtocol>>(Name.Matcher.OPTION) {
+            emptyList()
+        }
+
+        single<List<Breaker>>(Name.Processor.OPTION) {
             emptyList()
         }
     }

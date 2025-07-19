@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.protocol
 
+import com.tezov.tuucho.core.domain.model.ActionModelDomain
 import kotlinx.serialization.json.JsonElement
 
 interface ActionHandlerProtocol {
@@ -12,8 +13,8 @@ interface ActionHandlerProtocol {
 
     val priority: Int
 
-    fun accept(id: String, action: String, params: JsonElement?): Boolean
+    fun accept(id: String?, action: ActionModelDomain, params: JsonElement?): Boolean
 
-    suspend fun process(id: String, action: String, params: JsonElement?): Boolean
+    suspend fun process(id: String?, action: ActionModelDomain, params: JsonElement?)
 
 }

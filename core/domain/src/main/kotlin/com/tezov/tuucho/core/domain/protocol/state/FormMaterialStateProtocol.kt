@@ -10,9 +10,15 @@ interface FormMaterialStateProtocol {
 
     fun fieldsState(): FieldsMaterialStateProtocol
 
+    fun updateAllValidity()
+
     fun isAllValid(): Boolean
 
+    fun updateValidity(id: String)
+
     fun isValid(id: String): Boolean?
+
+    fun getAllValidityResult(): List<Pair<String, Boolean>>
 
     fun data(): JsonElement
 }

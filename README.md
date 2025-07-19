@@ -1,5 +1,3 @@
-## REDACTION WIP
-
 # TUUCHO -ตู้โชว์ - Rendering engine
 
 Application renderer by parsing a json that describe the application.
@@ -10,4 +8,8 @@ What is possible now:
 - Label
 - Spacer vertical or horizontal
 
-Check the full documentation: https://by-tezov.github.io/tuucho/v0.0.0/
+Check the full documentation : https://by-tezov.github.io/tuucho/v0.0.0/
+
+
+backend dev repo : https://github.com/by-tezov/tuucho-backend
+

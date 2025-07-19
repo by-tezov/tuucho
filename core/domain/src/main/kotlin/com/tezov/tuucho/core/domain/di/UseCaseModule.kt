@@ -1,17 +1,20 @@
 package com.tezov.tuucho.core.domain.di
 
+import com.tezov.tuucho.core.domain.actionHandler.FormSendUrlActionHandler
+import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.NavigationUrlActionHandler
-import com.tezov.tuucho.core.domain.actionHandler.SendFormUrlActionHandler
-import com.tezov.tuucho.core.domain.actionHandler.UpdateFormActionHandler
 import com.tezov.tuucho.core.domain.protocol.CoroutineDispatchersProtocol
 import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
 import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
+import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterNavigationUrlEventUseCase
+import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
 import com.tezov.tuucho.core.domain.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
 import org.koin.dsl.module
 
 object UseCaseModule {
@@ -22,8 +25,8 @@ object UseCaseModule {
                 get<CoroutineDispatchersProtocol>(),
                 listOf(
                     get<NavigationUrlActionHandler>(),
-                    get<SendFormUrlActionHandler>(),
-                    get<UpdateFormActionHandler>(),
+                    get<FormSendUrlActionHandler>(),
+                    get<FormUpdateActionHandler>(),
                 )
             )
         }
@@ -38,7 +41,15 @@ object UseCaseModule {
 
         factory {
             RegisterNavigationUrlEventUseCase(
-                get<NavigationUrlActionHandler>()
+                get<NavigationUrlActionHandler>(),
+                get<CoroutineDispatchersProtocol>()
+            )
+        }
+
+        factory {
+            RegisterUpdateFormEventUseCase(
+                get<FormUpdateActionHandler>(),
+                get<CoroutineDispatchersProtocol>()
             )
         }
 
@@ -46,7 +57,10 @@ object UseCaseModule {
 
         factory { SendDataUseCase(get<MaterialRepositoryProtocol>()) }
 
-        factory { UpdateFormActionHandler(get<MaterialStateProtocol>()) }
+        factory { ValidatorFactoryUseCase() }
+
+        factory { GetLanguageUseCase() }
+
     }
 
 }
