@@ -28,6 +28,10 @@ abstract class ConventionPlugin : Plugin<Project> {
             extensions.findByType(CommonExtension::class.java)!!.apply {
                 compileSdk = version("compileSdk").toInt()
 
+                buildFeatures {
+                    buildConfig = true
+                }
+
                 defaultConfig {
                     minSdk = version("minSdk").toInt()
                 }
