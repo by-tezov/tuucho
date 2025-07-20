@@ -1,8 +1,7 @@
 package com.tezov.tuucho.core.data.di
 
+import com.tezov.tuucho.core.data.BuildConfig
 import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.network._system.JsonRequestBody
-import com.tezov.tuucho.core.data.network._system.JsonResponse
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
@@ -11,35 +10,58 @@ import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.MaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.MaterialRepository
 import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.ResponseException
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import okhttp3.OkHttpClient
 import org.koin.dsl.module
-import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 object MaterialRepositoryModule {
 
     internal operator fun invoke() = module {
-        single<OkHttpClient> {
-            OkHttpClient.Builder()
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
-                .build()
+        single<HttpClient> {
+            HttpClient(OkHttp) {
+                install(ContentNegotiation) {
+                    json(get<Json>())
+                }
+                install(HttpTimeout) {
+                    connectTimeoutMillis = TimeUnit.MILLISECONDS.convert(5, TimeUnit.SECONDS)
+                    socketTimeoutMillis = TimeUnit.MILLISECONDS.convert(5, TimeUnit.SECONDS)
+                }
+                HttpResponseValidator {
+                    validateResponse { response ->
+                        val statusCode = response.status.value
+                        if (statusCode !in 200..299) {
+                            throw ResponseException(response, "HTTP ${response.status} received")
+                        }
+                    }
+                    handleResponseExceptionWithRequest { cause, _ -> throw cause }
+                }
+                if (BuildConfig.DEBUG) {
+                    install(Logging) {
+                        level = LogLevel.BODY
+                    }
+                }
+            }
         }
 
-        single<Retrofit> {
-            Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000/")
-                .addCallAdapterFactory(JsonResponse.CallAdapterFactory())
-                .addConverterFactory(JsonRequestBody.ConverterFactory())
-                .client(get<OkHttpClient>())
-                .build()
+        single<MaterialNetworkHttpRequest> {
+            MaterialNetworkHttpRequest(
+                client = get<HttpClient>(),
+                baseUrl = "http://10.0.2.2:3000" //TODO
+            )
         }
 
         single<MaterialNetworkService> {
             MaterialNetworkService(
-                materialNetworkHttpRequest = get<Retrofit>().create(MaterialNetworkHttpRequest::class.java),
+                materialNetworkHttpRequest = get<MaterialNetworkHttpRequest>(),
                 materialRectifier = get<MaterialRectifier>(),
                 jsonConverter = get<Json>()
             )

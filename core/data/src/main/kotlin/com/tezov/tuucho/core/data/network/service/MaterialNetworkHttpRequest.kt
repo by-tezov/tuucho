@@ -2,17 +2,43 @@ package com.tezov.tuucho.core.data.network.service
 
 import com.tezov.tuucho.core.data.network._system.JsonRequestBody
 import com.tezov.tuucho.core.data.network._system.JsonResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.request
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 
-interface MaterialNetworkHttpRequest {
+class MaterialNetworkHttpRequest(
+    private val client: HttpClient,
+    private val baseUrl: String
+) {
+    suspend fun retrieve(name: String): JsonResponse {
+        val response = client.get("$baseUrl/resource") {
+            parameter("version", "v1")
+            parameter("name", name)
+        }
+        return JsonResponse(
+            url = response.request.url.toString(),
+            code = response.status.value,
+            json = response.bodyAsText()
+        )
+    }
 
-    @GET("resource?version=v1")
-    suspend fun retrieve(@Query("name") url: String): JsonResponse
-
-    @POST("send?version=v1")
-    suspend fun send(@Query("name") url: String, @Body jsonRequestBody: JsonRequestBody): JsonResponse?
-
+    suspend fun send(name: String, jsonRequestBody: JsonRequestBody): JsonResponse {
+        val response = client.post("$baseUrl/send") {
+            parameter("version", "v1")
+            parameter("name", name)
+            contentType(ContentType.Application.Json)
+            setBody(jsonRequestBody.json)
+        }
+        return JsonResponse(
+            url = response.request.url.toString(),
+            code = response.status.value,
+            json = response.bodyAsText()
+        )
+    }
 }

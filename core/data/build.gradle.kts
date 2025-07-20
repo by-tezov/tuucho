@@ -31,8 +31,11 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
-    implementation(libs.okhttp)
-    implementation(libs.retrofit)
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.okhttp)
+    implementation(libs.ktor.cio)
+    implementation(libs.ktor.serialization)
+    debugImplementation(libs.ktor.logging)
 
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
