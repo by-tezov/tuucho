@@ -1,0 +1,23 @@
+selectAll:
+SELECT * FROM jsonObjectEntry;
+
+insert:
+INSERT INTO jsonObjectEntry(type, url, id, idFrom, jsonObject)
+VALUES (?, ?, ?, ?, ?);
+
+lastInsertedId:
+SELECT last_insert_rowid();
+
+update:
+UPDATE jsonObjectEntry
+SET type = ?, url = ?, id = ?, idFrom = ?, jsonObject = ?
+WHERE primaryKey = ?;
+
+findByPrimaryKey:
+SELECT * FROM jsonObjectEntry WHERE primaryKey = ?;
+
+findByTypeUrlId:
+SELECT * FROM jsonObjectEntry WHERE type = ? AND url = ? AND id = ?;
+
+findShared:
+SELECT * FROM sharedJsonObjects WHERE type = ? AND id = ?;

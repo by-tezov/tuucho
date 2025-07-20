@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.database.Database
+import com.tezov.tuucho.core.data.database.dao.jsonObject
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.booleanOrNull
@@ -31,7 +32,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         element: JsonElement,
     ) = matchers.any { it.accept(path, element) }
 
-    suspend fun process(
+    fun process(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler,
@@ -43,7 +44,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         }
     }
 
-    private suspend fun JsonArray.processArray(
+    private fun JsonArray.processArray(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler,
@@ -54,13 +55,13 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         }.let(::JsonArray)
     )
 
-    private suspend fun JsonObject.processObject(
+    private fun JsonObject.processObject(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler,
     ) = assembleObject(path, element, extraData)
 
-    private suspend fun JsonPrimitive.processPrimitive(
+    private fun JsonPrimitive.processPrimitive(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler,
@@ -83,7 +84,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         extraData: ExtraDataAssembler,
     ): JsonObject? = null
 
-    private suspend fun JsonObject.assembleObject(
+    private fun JsonObject.assembleObject(
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler,
@@ -109,7 +110,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         return _element
     }
 
-    private suspend fun JsonObject.retrieveAllRef(
+    private fun JsonObject.retrieveAllRef(
         url: String,
         type: String,
     ): List<JsonObject>? {
@@ -119,8 +120,8 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         do {
             val idRef = currentEntry.schema().onScope(IdSchema::Scope).source
             val entity = idRef?.let { ref ->
-                database.jsonEntity().find(type = type, url = url, id = ref)
-                    ?: database.jsonEntity().findShared(type = type, id = ref)
+                database.jsonObject().find(type = type, url = url, id = ref)
+                    ?: database.jsonObject().findShared(type = type, id = ref)
             }
             if (entity != null) {
                 currentEntry = entity.jsonObject

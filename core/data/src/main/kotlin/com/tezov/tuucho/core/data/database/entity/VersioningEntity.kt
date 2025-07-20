@@ -1,13 +1,19 @@
 package com.tezov.tuucho.core.data.database.entity
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.tezov.tuucho.core.data.database.table.VersioningEntry
 
-@Entity(tableName = "table_versioning")
 data class VersioningEntity(
-    @PrimaryKey val url: String,
+    val primaryKey: Long? = null,
+    val url: String,
     val version: String,
     val rootPrimaryKey: Long?,
     val isShared: Boolean,
 )
 
+fun VersioningEntry.toEntity() = VersioningEntity(
+    primaryKey = primaryKey,
+    url = url,
+    version = version,
+    rootPrimaryKey = rootPrimaryKey,
+    isShared = isShared
+)

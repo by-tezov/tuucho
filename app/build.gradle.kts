@@ -52,9 +52,9 @@ dependencies {
     implementation(libs.ktor.serialization)
     debugImplementation(libs.ktor.logging)
 
-    implementation(libs.room.runtime)
-    ksp(libs.room.compiler)
-    implementation(libs.room.ktx)
+    implementation(libs.sql.delight.runtime)
+    implementation(libs.sql.delight.driver)
+    implementation(libs.sql.delight.coroutines)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

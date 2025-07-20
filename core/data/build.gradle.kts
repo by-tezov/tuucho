@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.sql.delight)
 }
 
 android {
@@ -22,6 +23,14 @@ android {
     }
 }
 
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("${android.namespace}.database")
+        }
+    }
+}
+
 dependencies {
     implementation(project(":core:domain"))
 
@@ -37,9 +46,9 @@ dependencies {
     implementation(libs.ktor.serialization)
     debugImplementation(libs.ktor.logging)
 
-    implementation(libs.room.runtime)
-    ksp(libs.room.compiler)
-    implementation(libs.room.ktx)
+    implementation(libs.sql.delight.runtime)
+    implementation(libs.sql.delight.driver)
+    implementation(libs.sql.delight.coroutines)
 
     testImplementation(libs.junit)
 }

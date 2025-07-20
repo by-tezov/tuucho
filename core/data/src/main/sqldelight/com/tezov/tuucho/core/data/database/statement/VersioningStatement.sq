@@ -1,0 +1,23 @@
+selectAll:
+SELECT * FROM versioningEntry;
+
+insert:
+INSERT INTO versioningEntry(url, version, rootPrimaryKey, isShared)
+VALUES ( ?, ?, ?, ?);
+
+lastInsertedId:
+SELECT last_insert_rowid();
+
+existWithUrl:
+SELECT EXISTS(SELECT 1 FROM versioningEntry WHERE url = ?) AS exist;
+
+updateByUrl:
+UPDATE versioningEntry
+SET  version = ?, rootPrimaryKey = ?, isShared = ?
+WHERE url = ?;
+
+version:
+SELECT version FROM versioningEntry WHERE url = ?;
+
+find:
+SELECT * FROM versioningEntry WHERE url = ?;

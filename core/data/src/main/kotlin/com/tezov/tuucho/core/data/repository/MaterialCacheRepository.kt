@@ -1,9 +1,11 @@
 package com.tezov.tuucho.core.data.repository
 
 import com.tezov.tuucho.core.data.database.Database
+import com.tezov.tuucho.core.data.database.dao.jsonObject
+import com.tezov.tuucho.core.data.database.dao.versioning
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.parser._system.flatten
-import com.tezov.tuucho.core.data.parser._system.jsonEntityObject
+import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser.assembler.ExtraDataAssembler
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.breaker.ExtraDataBreaker
@@ -13,7 +15,7 @@ import kotlinx.serialization.json.JsonElement
 class MaterialCacheRepository(
     private val database: Database,
     private val materialBreaker: MaterialBreaker,
-    private val materialAssembler: MaterialAssembler
+    private val materialAssembler: MaterialAssembler,
 ) {
 
     suspend fun shouldRefresh(url: String, version: String): Boolean {
@@ -24,37 +26,37 @@ class MaterialCacheRepository(
         return true
     }
 
-    suspend fun refreshCache(
+    fun refreshCache(
         config: ExtraDataBreaker,
-        materialElement: JsonElement
+        materialElement: JsonElement,
     ) {
         //TODO auto purge obsolete entry
         val parts = materialBreaker.process(materialElement, config)
         with(parts) {
             val rootPrimaryKey = rootJsonEntity?.let { root ->
-                database.jsonEntity()
-                    .insertOrUpdate(root.jsonEntityObject.content)
+                database.jsonObject()
+                    .insertOrUpdate(root.jsonEntityObjectTree.content)
             }
             VersioningEntity(
                 url = config.url,
                 version = config.version,
                 rootPrimaryKey = rootPrimaryKey,
-                isShared = config.isShared,
+                isShared = config.isShared
             ).also { database.versioning().insertOrUpdate(it) }
             rootJsonEntity?.let { root ->
                 root.flatten()
                     .asSequence()
-                    .filter { it != root }
+                    .filter { it !== root }
                     .map { it.content }
                     .forEach {
-                        database.jsonEntity().insertOrUpdate(it)
+                        database.jsonObject().insertOrUpdate(it)
                     }
             }
-            jsonEntityElement
+            jsonElementTree
                 .asSequence()
                 .flatMap { it.flatten() }
                 .map { it.content }
-                .forEach { database.jsonEntity().insertOrUpdate(it) }
+                .forEach { database.jsonObject().insertOrUpdate(it) }
         }
     }
 
