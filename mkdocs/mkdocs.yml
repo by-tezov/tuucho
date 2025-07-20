@@ -21,7 +21,6 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed
   - pymdownx.details
   - pymdownx.snippets
@@ -35,18 +34,38 @@ markdown_extensions:
   - attr_list
 
 nav:
-  - Home: index.md
+  - Home:
+    - index.md
+    - roadmap.md
+    - changelog.md
   - Object Definition:
       - Overview: object-definition/index.md
+      - Id: object-definition/id.md
       - Component: object-definition/component.md
+      - Option: object-definition/option.md
       - Style: object-definition/style.md
       - Content: object-definition/content.md
-      - Texts: object-definition/texts.md
-      - Colors: object-definition/colors.md
-      - Dimensions: object-definition/dimensions.md
+      - Text: object-definition/text.md
+      - Color: object-definition/color.md
+      - Dimension: object-definition/dimension.md
+      - Action: object-definition/action.md
+      - Validator: object-definition/validator.md
   - Components Definition:
       - Overview: components-definition/index.md
       - LayoutLinear: components-definition/layout-linear.md
       - Label: components-definition/label.md
+      - Field: components-definition/field.md
       - Button: components-definition/button.md
       - Spacer: components-definition/spacer.md
+  - Subs:
+      - Overview: subs/index.md
+      - Components: subs/components.md
+      - Options: subs/options.md
+      - Styles: subs/styles.md
+      - Contents: subs/contents.md
+      - Texts: subs/texts.md
+      - Colors: subs/colors.md
+      - Dimensions: subs/dimensions.md
+  - Pages:
+      - Overview: pages/index.md
+
