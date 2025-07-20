@@ -1,44 +1,52 @@
-# TUUCHO - ตู้โชว์ - Rendering Engine
+# TUUCHO - ตู้โชว์
 
-# Documentation writing in progress (Just initiated)
+> **Documentation in Progress** — Early stage of development
+
 
 ## Overview
 
-Application renderer by parsing a JSON that describes the UI layout. A "smart" json is supplied to engine which render the whole application.
-Parts can be declare with id as shared object in order to allow to lighte weight Json by just using the id of the object. It works for contents, style, texts and more.
-The engine use cache and instead of retrieving again and again the Json, it use cached object. Request on the network are done only if needed.
+TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interprets a "smart" JSON structure describing the entire UI, behaviors and renders the application interface accordingly.
 
-What is possible now:
-  - Linear Layout, Vertical or Horizontal
-  - Button
-    - navigation action
-    - send form action
-  - Label
-  - Input Field
-  - Spacer
+Key features include:
 
-You can look at the [Roadmap](roadmap.md) to get more detail where this project is going. Spoil alert, KMM is part on it.
+- Definable components with unique IDs allowing shared references to reduce JSON payload size. This applies to content, styles, text, and more.
+- Intelligent caching: JSON objects are cached locally to minimize repeated network requests. Content is fetched over the network only when necessary.
 
-## Process Chart
+### Supported Components
+
+- **Linear Layout** (vertical or horizontal orientation)
+- **Button** with built-in actions:
+    - Navigation
+    - Form submission
+- **Label**
+- **Input Field** (form element)
+- **Spacer**
+
+For detailed future plans and roadmap, see [Roadmap](roadmap.md). Spoiler alert: KMM integration is on the horizon.
+
+---
+
+## Processing Workflow
 
 1. **Configuration Fetching**  
-   The application begins by retrieving a JSON configuration file. This file contains a list of URLs and version.
+   The application starts by downloading a JSON configuration file containing a list of URLs and version information.
 
 2. **Content Retrieval**  
-   Each URL in the configuration is called if not already in cached, and its corresponding JSON content is downloaded.
+   Each URL in the configuration is checked against the local cache. If missing, the corresponding JSON content is fetched from the network.
 
 3. **Rectification**  
-   Each retrieved JSON is passed through a **Rectifier** process, which rectify the data make it correct for the renderer engine.
+   Retrieved JSON data passes through the **Rectifier**, a process that validates and adjusts the JSON structure for compatibility with the rendering engine.
 
-4. **Breaker**  
-   The rectified content is then broken into smaller components by the **Breaker** process.  
-   Each of these components is recorded in the local database.
+4. **Breaking Down**  
+   The rectified JSON is fragmented into smaller components by the **Breaker** process. These components are then stored in the local database.
 
 5. **Home Screen Initialization**  
-   The application wants to show the `screen_a` URL.
-    - If the `sreen_a` exists in the database, its components are retrieved.
-    - The components are passed through an **Assembler** process to reconstruct json page with only what needed for the screen.
-    - The assembled json is passed to the **Renderer** to draw the UI.
+   When displaying a screen (e.g., `screen_a`):
+   - If components for `screen_a` exist in the database, they are retrieved.
+   - The **Assembler** reconstructs the full JSON page from these components, including only what is necessary.
+   - The final JSON is passed to the **Renderer** which draws the UI.
+
+---
 
 ## Json Parsing Diagram
 
@@ -60,36 +68,38 @@ flowchart TD
   H1 -- No --> D
 ```
 
-## **Page json**
+## Json File Structure
 
 ```json
 {
   "version": "",
-  "root": { **component** },
-  "components": [ **component** ],
-  "styles": [ **style** ],
-  "contents": [ **content** ],
-  "texts": [ **text** ],
-  "colors": [ **color** ],
-  "dimensions": [ **dimension** ]
+  "root": { /* component */ },
+  "components": [ /* component */ ],
+  "styles": [ /* style */ ],
+  "contents": [ /* content */ ],
+  "texts": [ /* text */ ],
+  "colors": [ /* color */ ],
+  "dimensions": [ /* dimension */ ]
 }
 ```
 
-Each `PAGE` **must** have at least a `root` key. The `root` defines the top-level component. Other optional keys include: `components`, `contents`, `styles`, `texts`, `colors`, `dimensions`.
-`root` is not mandatory inside `SUBS`, .
+Each **PAGE** and **TEMPLATE** **must** include a `root` key, which defines the top-level component of the screen. Other keys such as `components`, `contents`, `styles`, `texts`, `colors`, and `dimensions` are optional. Note that the `root` key is **not** required inside **SUBS**.
 
-- `PAGE` are full screen rendered component
-- `SUBS` are shared object that can be accessed by reference (id starting by '*')
+- **PAGE** represents a full-screen rendered component.
+- **TEMPLATE** represents a full-screen rendered component with not content. They can be used multiple times with different contents
+- **SUBS** are shared objects that can be referenced by their ID, which always starts with `*`.
 
-All `id` starting by "*" are references. When the parser encounter one, it will look first inside the current `page` if the reference exist, then inside the `subs`.
+Any ID starting with `*` is treated as a reference. When the parser encounters such a reference, it first searches within the current PAGE; if not found, it then looks inside the SUBS.
 
-## **Subs**
+## More about SUBS
 
-SUBS are shared library loaded by the application before trying to render a page.
+**Subs** are shared libraries loaded by the application before rendering any page.
 
-- Used for sharing common components, styles, texts, etc., across multiple pages.
-- Reference them using the `*` notation.
-- Shared component can be global or local to the page. When the parser do not find the reference locally, it looks for shared library.
+- They enable sharing of common components, styles, texts, and other assets across multiple pages.
+- References to shared objects use the `*` prefix notation.
+- Shared components can be either global or local to a page. If the parser does not find a reference locally, it will look for it in the shared library.
+
+Many self-explanatory examples are provided throughout this documentation. To make the best use of **Subs**, it is important to understand how to assign IDs to your elements. For more details, please refer to the [ID page](object-definition/id.md).
 
 ---
 
@@ -97,3 +107,7 @@ SUBS are shared library loaded by the application before trying to render a page
 
 - [Object Definition](object-definition/index.md)
 - [Components Definition](components-definition/index.md)
+- [Subs](subs/index.md)
+- [Pages](pages/index.md)
+- [Roadmap](roadmap.md)
+- [ChangeLog](changelog.md)

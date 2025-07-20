@@ -19,3 +19,4 @@
 - add comprehensible warning and error why the json parsing is not correct
 - improve efficiency of the parser using cache index for path or meta data inside json or something else ?
 
+-- doc add a page a reserved key word

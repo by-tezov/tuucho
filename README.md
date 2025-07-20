@@ -8,7 +8,7 @@ What is possible now:
 - Label
 - Spacer vertical or horizontal
 
-Check the full documentation : https://by-tezov.github.io/tuucho/v0.0.0/
+Check the full documentation : https://by-tezov.github.io/tuucho/0.0.1-alpha0/
 
 
 backend dev repo : https://github.com/by-tezov/tuucho-backend

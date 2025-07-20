@@ -1,13 +1,13 @@
 sudo apt install python3-pip -y
-pip3 install mkdocs mkdocs-material
-
 python3 -m venv .venv
-source .venv/bin/activate
-pip freeze > documentation/requirements.txt
 
+source .venv/bin/activate
+pip install mkdocs mkdocs-material pymdown-extensions mike
+
+pip freeze > requirements.txt
 mkdocs serve -a 127.0.0.1:8001
 
-mike deploy vxxx
+mike deploy x.x.x
 mike set-default v2
 mike serve -a 127.0.0.1:8001
 
