@@ -1,36 +1,50 @@
 package com.tezov.tuucho.core.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.tezov.tuucho.core.data.database.entity.JsonEntity
+import com.tezov.tuucho.core.data.database.Database
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
+import com.tezov.tuucho.core.data.database.entity.toEntity
 
-@Dao
-interface JsonEntityDao {
+fun Database.jsonObject() = JsonObjectQueries(this)
 
-    @Query("SELECT * FROM table_json_entity")
-    suspend fun selectAll(): List<JsonEntity>
+@JvmInline
+value class JsonObjectQueries(private val database: Database) {
+    private val queries get() = database.jsonObjectStatementQueries
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(value: JsonEntity): Long
+    fun selectAll(): List<JsonObjectEntity> =
+        queries.selectAll().executeAsList().map { it.toEntity() }
 
-    @Query("SELECT * FROM table_json_entity WHERE primaryKey = :primaryKey")
-    suspend fun find(primaryKey: Long): JsonEntity?
-
-    @Query("SELECT * FROM table_json_entity WHERE type = :type AND url = :url AND id = :id")
-    suspend fun find(type: String, url: String, id: String): JsonEntity?
-
-    @Query(
-        """
-        SELECT * FROM table_json_entity 
-        WHERE type = :type  AND id = :id 
-        AND url IN (
-            SELECT url FROM table_versioning 
-            WHERE isShared = 1
+    fun insertOrUpdate(entity: JsonObjectEntity) = entity.primaryKey?.also {
+        queries.update(
+            primaryKey = entity.primaryKey,
+            type = entity.type,
+            url = entity.url,
+            id = entity.id,
+            idFrom = entity.idFrom,
+            jsonObject = entity.jsonObject
         )
-    """
-    )
-    suspend fun findShared(type: String, id: String): JsonEntity?
+    } ?: run {
+        database.transactionWithResult {
+            queries.insert(
+                type = entity.type,
+                url = entity.url,
+                id = entity.id,
+                idFrom = entity.idFrom,
+                jsonObject = entity.jsonObject
+            )
+            queries.lastInsertedId()
+        }.executeAsOne()
+    }
 
+    fun find(primaryKey: Long): JsonObjectEntity? =
+        queries.findByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
+
+    fun find(type: String, url: String, id: String): JsonObjectEntity? =
+        queries.findByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
+
+    fun findShared(type: String, id: String): JsonObjectEntity? =
+        queries.findShared(type, id).executeAsOneOrNull()?.toEntity()
 }
+
+
+
+

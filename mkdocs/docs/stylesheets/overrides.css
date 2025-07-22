@@ -1,0 +1,8 @@
+.md-header {
+  background-color: #151565;
+}
+
+.md-nav__link--active {
+  font-weight: 500;
+  color: #673ab7;
+}

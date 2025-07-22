@@ -3,34 +3,52 @@ site_url: https://by-tezov.github.io/tuucho/
 repo_url: https://github.com/by-tezov/tuucho
 theme:
   name: material
+#  palette:
+#    primary: 'indigo'
+#    accent: 'pink'
+  font:
+    text: 'Roboto, sans-serif'
+    code: 'Source Code Pro, monospace'
   features:
-    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
     - navigation.top
+    - navigation.tabs
+    - content.code.copy
     - toc.integrate
+    - search.highlight
     - versioning
+    #- content.tabs.link
+    #- content.footer.sticky
+    #- content.header.autohide
+    #- palette.toggle
+    #- navigation.instant
+
+extra_css:
+  - stylesheets/overrides.css
 
 plugins:
   - search
   - mike
+  - mermaid2
+#  - minify
 
-extra:
-  mermaid: true
 
 markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
   - pymdownx.tabbed
   - pymdownx.details
+  - pymdownx.highlight
   - pymdownx.snippets
-  - pymdownx.keys
   - pymdownx.mark
   - pymdownx.critic
   - pymdownx.caret
   - pymdownx.inlinehilite
   - pymdownx.magiclink
-  - pymdownx.highlight
   - attr_list
 
 nav:
@@ -38,6 +56,7 @@ nav:
     - index.md
     - roadmap.md
     - changelog.md
+    - test.md
   - Object Definition:
       - Overview: object-definition/index.md
       - Id: object-definition/id.md

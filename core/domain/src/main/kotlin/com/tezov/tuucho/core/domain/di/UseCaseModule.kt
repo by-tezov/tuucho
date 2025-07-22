@@ -53,9 +53,19 @@ object UseCaseModule {
             )
         }
 
-        factory { RefreshCacheMaterialUseCase(get<MaterialRepositoryProtocol>()) }
+        factory {
+            RefreshCacheMaterialUseCase(
+                get<CoroutineDispatchersProtocol>(),
+                get<MaterialRepositoryProtocol>()
+            )
+        }
 
-        factory { SendDataUseCase(get<MaterialRepositoryProtocol>()) }
+        factory {
+            SendDataUseCase(
+                get<CoroutineDispatchersProtocol>(),
+                get<MaterialRepositoryProtocol>()
+            )
+        }
 
         factory { ValidatorFactoryUseCase() }
 

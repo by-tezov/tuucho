@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
-import com.tezov.tuucho.core.data.parser._system.JsonEntityElement
+import com.tezov.tuucho.core.data.parser._system.JsonElementTree
 import com.tezov.tuucho.core.domain._system.toPath
 import com.tezov.tuucho.core.domain.model.schema.material.MaterialSchema
 import kotlinx.serialization.json.JsonElement
@@ -20,8 +20,8 @@ class MaterialBreaker : KoinComponent {
     private val textBreaker: TextBreaker by inject()
 
     data class Parts(
-        var rootJsonEntity: JsonEntityElement? = null,
-        val jsonEntityElement: MutableList<JsonEntityElement> = mutableListOf()
+        var rootJsonEntity: JsonElementTree? = null,
+        val jsonElementTree: MutableList<JsonElementTree> = mutableListOf(),
     )
 
     fun process(
@@ -34,28 +34,26 @@ class MaterialBreaker : KoinComponent {
         }?.also { rootJsonEntity = it }
         mutableMap[MaterialSchema.Key.components]?.let {
             componentBreaker.process("".toPath(), it, extraData)
-        }?.also(jsonEntityElement::add)
+        }?.also(jsonElementTree::add)
         mutableMap[MaterialSchema.Key.contents]?.let {
             contentBreaker.process("".toPath(), it, extraData)
-        }?.also(jsonEntityElement::add)
+        }?.also(jsonElementTree::add)
         mutableMap[MaterialSchema.Key.styles]?.let {
             styleBreaker.process("".toPath(), it, extraData)
-        }?.also(jsonEntityElement::add)
+        }?.also(jsonElementTree::add)
         mutableMap[MaterialSchema.Key.options]?.let {
             optionBreaker.process("".toPath(), it, extraData)
-        }?.also(jsonEntityElement::add)
+        }?.also(jsonElementTree::add)
 
         mutableMap[MaterialSchema.Key.texts]?.let {
             textBreaker.process("".toPath(), it, extraData)
-        }?.also(jsonEntityElement::add)
+        }?.also(jsonElementTree::add)
         mutableMap[MaterialSchema.Key.colors]?.let {
             colorBreaker.process("".toPath(), it, extraData)
-        }?.also(jsonEntityElement::add)
+        }?.also(jsonElementTree::add)
         mutableMap[MaterialSchema.Key.dimensions]?.let {
             dimensionBreaker.process("".toPath(), it, extraData)
-        }?.also(jsonEntityElement::add)
-
-
+        }?.also(jsonElementTree::add)
     }
 
 }

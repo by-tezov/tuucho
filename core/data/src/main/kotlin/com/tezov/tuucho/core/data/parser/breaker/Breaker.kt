@@ -1,12 +1,11 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
-import com.tezov.tuucho.core.data.database.entity.JsonEntity
-import com.tezov.tuucho.core.data.parser._system.JsonEntityArray
-import com.tezov.tuucho.core.data.parser._system.JsonEntityElement
-import com.tezov.tuucho.core.data.parser._system.JsonEntityObject
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
+import com.tezov.tuucho.core.data.parser._system.JsonElementTree
+import com.tezov.tuucho.core.data.parser._system.JsonEntityArrayTree
+import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
-import com.tezov.tuucho.core.data.parser._system.toJsonEntityArray
-import com.tezov.tuucho.core.data.parser._system.toJsonEntityObject
+import com.tezov.tuucho.core.data.parser._system.toTree
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replace
@@ -36,7 +35,7 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataBreaker,
-    ): JsonEntityElement = with(element.find(path)) {
+    ): JsonElementTree = with(element.find(path)) {
         when (this) {
             is JsonArray -> processArray(path, element, extraData)
             is JsonObject -> processObject(path, element, extraData)
@@ -59,11 +58,11 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataBreaker,
-    ): JsonEntityObject {
+    ): JsonEntityObjectTree {
         if (childProcessors.isEmpty()) {
-            return toJsonObjectEntity(extraData)
+            return toTree(extraData)
         }
-        val mapEntity = mutableMapOf<String, JsonEntityElement>()
+        val mapEntity = mutableMapOf<String, JsonElementTree>()
         keys.forEach { childKey ->
             val childPath = path.child(childKey)
             childProcessors
@@ -73,7 +72,7 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
                     mapEntity[childKey] = it.process(childPath, element, extraData)
                 }
         }
-        return toJsonObjectEntity(mapEntity, extraData)
+        return toTree(mapEntity, extraData)
     }
 
     private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
@@ -84,29 +83,29 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
     private fun JsonArray.toJsonEntityArray(
         extraData: ExtraDataBreaker,
     ) = map { entry ->
-        (entry as? JsonObject)?.toJsonObjectEntity(extraData)
+        (entry as? JsonObject)?.toTree(extraData)
             ?: error("by design element inside array must be object")
-    }.toJsonEntityArray()
+    }.toTree()
 
-    private fun JsonObject.toJsonObjectEntity(
+    private fun JsonObject.toTree(
         extraData: ExtraDataBreaker,
-    ): JsonEntityObject {
+    ): JsonEntityObjectTree {
         val schema = schema()
         val type = schema.withScope(TypeSchema::Scope).self
         val (id, idFrom) = schema.onScope(IdSchema::Scope)
             .let { it.value to it.source }
-        return JsonEntity(
+        return JsonObjectEntity(
             type = type
                 ?: error("Should not be possible, so there is surely something missing in the rectifier"),
             url = extraData.url,
             id = id
                 ?: error("Should not be possible, so there is surely something missing in the rectifier"),
             idFrom = idFrom,
-            jsonObject = this@toJsonObjectEntity
-        ).toJsonEntityObject()
+            jsonObject = this@toTree
+        ).toTree()
     }
 
-    private fun JsonEntityObject.toJsonObjectRef() = JsonNull.schema().withScope(::SchemaScope).apply {
+    private fun JsonEntityObjectTree.toJsonObjectRef() = JsonNull.schema().withScope(::SchemaScope).apply {
         withScope(TypeSchema::Scope).apply {
             self = content.type
         }
@@ -117,25 +116,25 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
         }
     }.collect()
 
-    private fun JsonObject.toJsonObjectEntity(
-        map: Map<String, JsonEntityElement>,
+    private fun JsonObject.toTree(
+        map: Map<String, JsonElementTree>,
         extraData: ExtraDataBreaker,
-    ): JsonEntityObject {
+    ): JsonEntityObjectTree {
         if (map.isEmpty()) {
-            return toJsonObjectEntity(extraData)
+            return this@toTree.toTree(extraData)
         }
         var _element = this as JsonElement
-        val output = mutableListOf<JsonEntityElement>()
+        val output = mutableListOf<JsonElementTree>()
         map.forEach { (key, value) ->
             val newValue = when (value) {
-                is JsonEntityArray -> value.map { entry ->
-                    (entry as? JsonEntityObject)?.let {
+                is JsonEntityArrayTree -> value.map { entry ->
+                    (entry as? JsonEntityObjectTree)?.let {
                         output.add(entry)
                         entry.toJsonObjectRef()
                     } ?: error("by design element inside array must be object")
                 }.let(::JsonArray)
 
-                is JsonEntityObject -> {
+                is JsonEntityObjectTree -> {
                     output.add(value)
                     value.toJsonObjectRef()
                 }
@@ -143,7 +142,7 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
             _element = _element.replace(key.toPath(), newValue)
         }
         return _element.jsonObject
-            .toJsonObjectEntity(extraData)
+            .toTree(extraData)
             .apply { children = output }
     }
 }
