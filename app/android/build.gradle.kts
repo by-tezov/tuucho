@@ -2,17 +2,16 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.convention.library)
+    alias(libs.plugins.convention.application)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.sql.delight)
 }
 
 android {
-    namespace = "com.tezov.tuucho.core.data"
+    namespace = "com.tezov.tuucho.demo"
 
     defaultConfig {
-
+        applicationId = "com.tezov.tuucho.demo"
     }
 
     buildTypes {
@@ -26,31 +25,30 @@ android {
     }
 }
 
-sqldelight {
-    databases {
-        create("Database") {
-            packageName.set("${android.namespace}.database")
-        }
-    }
-}
-
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core:domain"))
+            implementation(project(":core:data"))
+            implementation(project(":core:ui"))
 
             implementation(libs.androidx.core.ktx)
             implementation(libs.kotlin.serialization.json)
 
+            implementation(libs.androidx.appcompat)
+            implementation(libs.androidx.lifecycle.livedata.ktx)
+            implementation(libs.androidx.lifecycle.viewmodel.ktx)
+            implementation(libs.androidx.lifecycle.runtime.ktx)
+
+            implementation(libs.compose.ui)
+            implementation(libs.compose.viewmodel)
+            implementation(libs.compose.lifecycle)
+            implementation(libs.compose.activity)
+            implementation(libs.compose.material)
+
             implementation(libs.koin.core)
             implementation(libs.koin.android)
+            implementation(libs.koin.compose)
 
             implementation(libs.ktor.core)
             implementation(libs.ktor.okhttp)
@@ -62,6 +60,5 @@ kotlin {
             implementation(libs.sql.delight.coroutines)
 
         }
-
     }
 }

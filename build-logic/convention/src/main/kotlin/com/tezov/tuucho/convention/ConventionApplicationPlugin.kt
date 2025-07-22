@@ -2,23 +2,22 @@ package com.tezov.tuucho.convention
 
 import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 
-open class ConventionApplicationPlugin : ConventionPlugin() {
+open class ConventionApplicationPlugin : ConventionPlugin<ApplicationExtension>(ApplicationExtension::class) {
 
     override fun applyPlugins(project: Project) {
         with(project) {
-            pluginManager.apply(plugin("android.application"))
-            pluginManager.apply(plugin("kotlin"))
-            pluginManager.apply(plugin("kotlin.compose"))
+            pluginManager.apply(plugin(PluginId.androidApplication))
+            pluginManager.apply(plugin(PluginId.koltin))
+            pluginManager.apply(plugin(PluginId.compose))
+            pluginManager.apply(plugin(PluginId.composeCompiler))
         }
     }
 
-    override fun configureAndroid(
+    override fun ApplicationExtension.configure(
         project: Project,
     ) {
-        project.extensions.configure<ApplicationExtension> {
-            commonConfigureCompose(project)
+        commonConfigureCompose(project)
 //            packaging {
 //                resources {
 //                    excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -27,7 +26,6 @@ open class ConventionApplicationPlugin : ConventionPlugin() {
 //                    excludes += "/META-INF/*.kotlin_module"
 //                }
 //            }
-        }
     }
 }
 

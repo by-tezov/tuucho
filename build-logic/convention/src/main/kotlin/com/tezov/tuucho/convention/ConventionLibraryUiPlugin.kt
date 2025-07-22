@@ -9,16 +9,15 @@ class ConventionLibraryUiPlugin : ConventionLibraryPlugin() {
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
         with(project) {
-            pluginManager.apply(plugin("kotlin.compose"))
+            pluginManager.apply(plugin(PluginId.compose))
+            pluginManager.apply(plugin(PluginId.composeCompiler))
         }
     }
 
-    override fun configureAndroid(
+    override fun LibraryExtension.configure(
         project: Project,
     ) {
-        project.extensions.configure<LibraryExtension> {
-            commonConfigureCompose(project)
-        }
+        commonConfigureCompose(project)
     }
 }
 
