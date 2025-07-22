@@ -1,15 +1,40 @@
 package com.tezov.tuucho.convention
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.reflect.KClass
+import kotlin.text.set
 
-abstract class ConventionPlugin : Plugin<Project> {
+abstract class ConventionPlugin<T: Any>(
+    private val kclass: KClass<T>
+) : Plugin<Project> {
+
+    object PluginId {
+        const val androidApplication = "android.application"
+        const val androidLibrary = "android.library"
+        const val koltin = "kotlin"
+        const val compose = "compose"
+        const val composeCompiler = "compose.compiler"
+    }
 
     companion object {
         internal fun commonConfigureKotlin(project: Project) = with(project) {
+            project.plugins.withId(plugin(PluginId.koltin)) {
+                project.extensions.configure(KotlinMultiplatformExtension::class.java) {
+                    androidTarget {
+                        compilerOptions {
+                            jvmTarget.set(this@with.jvmTarget())
+                        }
+                    }
+                }
+            }
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(this@with.jvmTarget())
@@ -47,12 +72,6 @@ abstract class ConventionPlugin : Plugin<Project> {
             project: Project,
         ) = with(project) {
             extensions.findByType(CommonExtension::class.java)!!.apply {
-                buildFeatures {
-                    compose = true
-                }
-                composeOptions {
-                    kotlinCompilerExtensionVersion = version("kotlin-plugin")
-                }
                 lint {
                     disable.add("ComposableNaming")
                 }
@@ -64,12 +83,14 @@ abstract class ConventionPlugin : Plugin<Project> {
         applyPlugins(project)
         commonConfigureKotlin(project)
         commonConfigureAndroid(project)
-        configureAndroid(project)
+        project.extensions.configure(kclass) {
+            configure(project)
+        }
     }
 
     protected abstract fun applyPlugins(project: Project)
 
-    protected open fun configureAndroid(project: Project) {}
+    protected open fun T.configure(project: Project) {}
 }
 
 

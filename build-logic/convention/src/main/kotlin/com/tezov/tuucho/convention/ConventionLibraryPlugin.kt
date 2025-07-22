@@ -1,13 +1,14 @@
 package com.tezov.tuucho.convention
 
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Project
 
-open class ConventionLibraryPlugin : ConventionPlugin() {
+open class ConventionLibraryPlugin : ConventionPlugin<LibraryExtension>(LibraryExtension::class) {
 
     override fun applyPlugins(project: Project) {
         with(project) {
-            pluginManager.apply(plugin("android.library"))
-            pluginManager.apply(plugin("kotlin"))
+            pluginManager.apply(plugin(PluginId.androidLibrary))
+            pluginManager.apply(plugin(PluginId.koltin))
         }
     }
 
