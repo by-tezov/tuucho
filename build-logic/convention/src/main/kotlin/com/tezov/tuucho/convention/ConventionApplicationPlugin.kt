@@ -8,7 +8,7 @@ open class ConventionApplicationPlugin : ConventionPlugin<ApplicationExtension>(
     override fun applyPlugins(project: Project) {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidApplication))
-            pluginManager.apply(plugin(PluginId.koltin))
+            pluginManager.apply(plugin(PluginId.koltinAndroid))
             pluginManager.apply(plugin(PluginId.compose))
             pluginManager.apply(plugin(PluginId.composeCompiler))
         }
@@ -17,7 +17,7 @@ open class ConventionApplicationPlugin : ConventionPlugin<ApplicationExtension>(
     override fun ApplicationExtension.configure(
         project: Project,
     ) {
-        commonConfigureCompose(project)
+        configureCompose(project)
 //            packaging {
 //                resources {
 //                    excludes += "/META-INF/{AL2.0,LGPL2.1}"

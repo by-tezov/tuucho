@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.convention.library.ui)
     alias(libs.plugins.kotlin.serialization)
@@ -33,9 +30,10 @@ kotlin {
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
 
-            implementation(libs.compose.ui)
+            implementation(compose.ui)
+            implementation(compose.material3)
             implementation(libs.compose.lifecycle)
-            implementation(libs.compose.material)
+
         }
     }
 }
