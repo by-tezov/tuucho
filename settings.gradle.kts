@@ -23,10 +23,15 @@ dependencyResolutionManagement {
 
 //enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-//rootProject.name = "tuucho"
-//file("app").listFiles()
-//    ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
-//    ?.forEach { include(":app:${it.name}") }
+rootProject.name = "tuucho"
+file("app").listFiles()
+    ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
+    ?.forEach { include(":app:${it.name}") }
+
+file("core").listFiles()
+    ?.filter { it.isDirectory && File(it, "hack.hack").exists() }
+    ?.forEach { include(":core:${it.name}") }
+
 //file("core").listFiles()
 //    ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
 //    ?.forEach { include(":core:${it.name}") }

@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.protocol
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 
 interface CoroutineDispatchersProtocol {
     val main: CoroutineDispatcher

@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import org.jetbrains.compose.resources.painterResource
 import tuucho.app.kmm.generated.resources.Res
 import tuucho.app.kmm.generated.resources.compose_multiplatform
@@ -28,7 +30,7 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+                Text(TypeSchema.Value.option)
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }

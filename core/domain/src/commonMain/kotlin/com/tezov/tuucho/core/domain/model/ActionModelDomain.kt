@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.model
 
-data class ActionModelDomain private constructor(
+class ActionModelDomain private constructor(
     val command: String,
     val authority: String?,
     val target: String?,
