@@ -31,8 +31,8 @@ class JsonObjectQueries(private val database: Database) {
                 idFrom = entity.idFrom,
                 jsonObject = entity.jsonObject
             )
-            queries.lastInsertedId()
-        }.executeAsOne()
+            queries.lastInsertedId().executeAsOne()
+        }
     }
 
     fun find(primaryKey: Long): JsonObjectEntity? =

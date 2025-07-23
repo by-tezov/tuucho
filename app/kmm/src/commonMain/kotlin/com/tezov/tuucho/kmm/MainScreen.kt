@@ -52,5 +52,5 @@ private fun StartEngineScreen(
     LaunchedEffect(viewModel.url.value) {
         screen = renderer.invoke(viewModel.url.value) as? ComposableScreenProtocol
     }
-    //screen?.show(null)
+    screen?.show(null)
 }
