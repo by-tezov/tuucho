@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
-import android.util.MalformedJsonException
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find

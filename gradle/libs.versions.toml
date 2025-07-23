@@ -54,8 +54,11 @@ ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-jso
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 #lib - android
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-sql-delight-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
+sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+#lib - android
+sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
+ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 
 [plugins]
 #convention

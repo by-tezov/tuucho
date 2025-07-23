@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.database.dao.jsonObject
+import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries.Companion.jsonObject
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.booleanOrNull

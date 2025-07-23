@@ -13,7 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.data.FromCoreData
+import com.tezov.tuucho.core.domain.FromCoreDomain
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.ui.FromCoreUI
 import org.jetbrains.compose.resources.painterResource
@@ -31,7 +32,7 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(onClick = { showContent = !showContent }) {
-                Text("${TypeSchema.Value.option} $FromCoreUI  ")
+                Text("$FromCoreDomain $FromCoreUI $FromCoreData  ")
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }

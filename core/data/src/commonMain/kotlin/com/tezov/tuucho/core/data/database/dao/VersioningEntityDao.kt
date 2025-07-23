@@ -4,10 +4,12 @@ import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.database.entity.toEntity
 
-fun Database.versioning() = VersioningQueries(this)
+class VersioningQueries private constructor(private val database: Database) {
 
-@JvmInline
-value class VersioningQueries(private val database: Database) {
+    companion object {
+        fun Database.versioning() = VersioningQueries(this)
+    }
+
     private val queries get() = database.versioningStatementQueries
 
     fun selectAll(): List<VersioningEntity> {

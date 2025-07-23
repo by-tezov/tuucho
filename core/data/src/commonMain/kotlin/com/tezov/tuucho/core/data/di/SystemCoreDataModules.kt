@@ -1,13 +1,17 @@
 package com.tezov.tuucho.core.data.di
 
+import org.koin.core.module.Module
+
+expect fun SystemCoreDataModules.platformInvoke():List<Module>
+
 object SystemCoreDataModules {
 
-    operator fun invoke() = listOf(
+    operator fun invoke():List<Module> = listOf(
         MaterialRectifierModule(),
         MaterialBreakerModule(),
         MaterialAssemblerModule(),
         MaterialRepositoryModule(),
-        DatabaseRepositoryModule()
-    )
+        DatabaseRepositoryModule(),
+    ) + platformInvoke()
 
 }

@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.database.dao.jsonObject
-import com.tezov.tuucho.core.data.database.dao.versioning
+import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries.Companion.jsonObject
+import com.tezov.tuucho.core.data.database.dao.VersioningQueries.Companion.versioning
 import com.tezov.tuucho.core.domain._system.toPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.KoinComponent

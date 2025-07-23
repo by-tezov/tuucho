@@ -1,7 +1,5 @@
 plugins {
     alias(libs.plugins.convention.application)
-//    alias(libs.plugins.kotlin.serialization)
-//    alias(libs.plugins.ksp)
 }
 
 android {
@@ -24,7 +22,6 @@ android {
 
 dependencies {
       implementation(project(":app:kmm"))
-
 //    implementation(project(":core:domain"))
 //    implementation(project(":core:data"))
 //    implementation(project(":core:ui"))
@@ -44,7 +41,7 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.components.resources)
 
-//    implementation(libs.androidx.core.ktx)
+//    implementation(libs.kotlin.couroutine)
 //    implementation(libs.kotlin.serialization.json)
 
 //    implementation(libs.koin.core)
@@ -57,6 +54,6 @@ dependencies {
 //    implementation(libs.ktor.serialization)
 //
 //    implementation(libs.sql.delight.runtime)
-//    implementation(libs.sql.delight.driver)
+//    implementation(libs.sql.delight.driver.android)
 //    implementation(libs.sql.delight.coroutines)
 }

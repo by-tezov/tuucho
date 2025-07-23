@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.parser.rectifier.colors
 
-import android.util.MalformedJsonException
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -37,7 +36,7 @@ class ColorsRectifier : Rectifier() {
                 when (color) {
                     is JsonPrimitive -> alterPrimitiveColor(key, group, color)
                     is JsonObject -> alterObjectColor(key, group, color)
-                    else -> throw MalformedJsonException("type not managed")
+                    else -> error("type not managed")
                 }.let(output::add)
             }
         }
@@ -76,7 +75,7 @@ class ColorsRectifier : Rectifier() {
                     value = key.addGroup(group)
                 }
 
-                else -> throw MalformedJsonException("type not managed")
+                else -> error("type not managed")
             }
         }.collect()
     }.collect()

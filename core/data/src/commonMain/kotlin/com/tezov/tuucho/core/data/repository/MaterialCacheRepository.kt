@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.repository
 
 import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.database.dao.jsonObject
-import com.tezov.tuucho.core.data.database.dao.versioning
+import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries.Companion.jsonObject
+import com.tezov.tuucho.core.data.database.dao.VersioningQueries.Companion.versioning
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree

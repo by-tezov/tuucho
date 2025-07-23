@@ -4,10 +4,12 @@ import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.toEntity
 
-fun Database.jsonObject() = JsonObjectQueries(this)
+class JsonObjectQueries private constructor(private val database: Database) {
 
-@JvmInline
-value class JsonObjectQueries(private val database: Database) {
+    companion object {
+        fun Database.jsonObject() = JsonObjectQueries(this)
+    }
+
     private val queries get() = database.jsonObjectStatementQueries
 
     fun selectAll(): List<JsonObjectEntity> =
