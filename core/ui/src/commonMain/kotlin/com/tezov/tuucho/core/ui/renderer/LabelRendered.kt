@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain.config.Language
 import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
@@ -16,6 +15,8 @@ import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.LabelSchema
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
+import com.tezov.tuucho.core.ui._system.toColor
+import com.tezov.tuucho.core.ui._system.toColorOrNull
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -43,9 +44,7 @@ class LabelRendered(
         return LabelScreen(
             text = content.value,
             language = getLanguage.invoke(),
-            fontColor = fontColor
-                ?.runCatching { toColorInt().let(::Color) }
-                ?.getOrNull(),
+            fontColor = fontColor?.toColorOrNull(),
             fontSize = fontSize?.toFloatOrNull()?.sp
         )
     }

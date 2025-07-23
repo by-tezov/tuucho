@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.toColorInt
 import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
 import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
@@ -16,6 +15,7 @@ import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.LayoutLinearSchema.Style.Value.Orientation
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
+import com.tezov.tuucho.core.ui._system.toColorOrNull
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
@@ -46,18 +46,14 @@ class LayoutLinearRendered : Renderer() {
             Orientation.horizontal -> LayoutLinearScreen.Horizontal(
                 fillMaxSize = style.fillMaxSize,
                 fillMaxWidth = style.fillMaxWidth,
-                backgroundColor = backgroundColor
-                    ?.runCatching { toColorInt().let(::Color) }
-                    ?.getOrNull(),
+                backgroundColor = backgroundColor?.toColorOrNull(),
                 item = items,
             )
 
             else -> LayoutLinearScreen.Vertical(
                 fillMaxSize = style.fillMaxSize,
                 fillMaxWidth = style.fillMaxWidth,
-                backgroundColor = backgroundColor
-                    ?.runCatching { toColorInt().let(::Color) }
-                    ?.getOrNull(),
+                backgroundColor = backgroundColor?.toColorOrNull(),
                 item = items
             )
         }

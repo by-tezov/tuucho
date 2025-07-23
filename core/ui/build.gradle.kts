@@ -22,17 +22,30 @@ android {
 }
 
 kotlin {
+    androidTarget()
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "CoreUiFramework"
+            isStatic = true
+        }
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core:domain"))
 
-            implementation(libs.androidx.core.ktx)
+            implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
 
             implementation(compose.ui)
             implementation(compose.material3)
-            implementation(libs.compose.lifecycle)
+
 
         }
     }
