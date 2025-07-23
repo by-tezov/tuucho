@@ -1,8 +1,7 @@
 package com.tezov.tuucho.core.data.repository
 
-import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.database.dao.jsonObject
-import com.tezov.tuucho.core.data.database.dao.versioning
+import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
+import com.tezov.tuucho.core.data.database.dao.VersioningQueries
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree
@@ -13,7 +12,8 @@ import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import kotlinx.serialization.json.JsonElement
 
 class MaterialCacheRepository(
-    private val database: Database,
+    private val jsonObjectQueries: JsonObjectQueries,
+    private val versioningQueries: VersioningQueries,
     private val materialBreaker: MaterialBreaker,
     private val materialAssembler: MaterialAssembler,
 ) {
@@ -34,7 +34,7 @@ class MaterialCacheRepository(
         val parts = materialBreaker.process(materialElement, config)
         with(parts) {
             val rootPrimaryKey = rootJsonEntity?.let { root ->
-                database.jsonObject()
+                jsonObjectQueries
                     .insertOrUpdate(root.jsonEntityObjectTree.content)
             }
             VersioningEntity(
@@ -42,21 +42,21 @@ class MaterialCacheRepository(
                 version = config.version,
                 rootPrimaryKey = rootPrimaryKey,
                 isShared = config.isShared
-            ).also { database.versioning().insertOrUpdate(it) }
+            ).also { versioningQueries.insertOrUpdate(it) }
             rootJsonEntity?.let { root ->
                 root.flatten()
                     .asSequence()
                     .filter { it !== root }
                     .map { it.content }
                     .forEach {
-                        database.jsonObject().insertOrUpdate(it)
+                        jsonObjectQueries.insertOrUpdate(it)
                     }
             }
             jsonElementTree
                 .asSequence()
                 .flatMap { it.flatten() }
                 .map { it.content }
-                .forEach { database.jsonObject().insertOrUpdate(it) }
+                .forEach { jsonObjectQueries.insertOrUpdate(it) }
         }
     }
 

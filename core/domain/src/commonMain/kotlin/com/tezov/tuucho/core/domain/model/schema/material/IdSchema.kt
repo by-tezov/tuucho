@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.model.schema.material
 
-import android.util.MalformedJsonException
 import com.tezov.tuucho.core.domain.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.model.schema._system.SymbolData.ID_GROUP_SEPARATOR
 import com.tezov.tuucho.core.domain.model.schema._system.SymbolData.ID_REF_INDICATOR
@@ -29,7 +28,7 @@ object IdSchema {
 
     fun String.requireIsRef(): String {
         if (!isRef) {
-            throw MalformedJsonException("should start with *")
+            throw error("should start with *")
         }
         return this
     }

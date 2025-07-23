@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.parser.rectifier.dimensions
 
-import android.util.MalformedJsonException
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -37,7 +36,7 @@ class DimensionsRectifier : Rectifier() {
                 when (dimension) {
                     is JsonPrimitive -> alterPrimitiveDimension(key, group, dimension)
                     is JsonObject -> alterObjectDimension(key, group, dimension)
-                    else -> throw MalformedJsonException("type not managed")
+                    else -> error("type not managed")
                 }.let(output::add)
             }
         }
@@ -76,7 +75,7 @@ class DimensionsRectifier : Rectifier() {
                     value = key.addGroup(group)
                 }
 
-                else -> throw MalformedJsonException("type not managed")
+                else -> error("type not managed")
             }
         }.collect()
     }.collect()

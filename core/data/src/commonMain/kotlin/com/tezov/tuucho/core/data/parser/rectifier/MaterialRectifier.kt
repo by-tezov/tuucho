@@ -22,16 +22,16 @@ class MaterialRectifier : KoinComponent {
     private val colorsRectifier: ColorsRectifier by inject()
     private val dimensionsRectifier: DimensionsRectifier by inject()
 
-    fun process(material: JsonElement): JsonElement {
+    fun process(element: JsonElement): JsonElement {
 
 //        runCatching {
-//            if(material.jsonObject["root"]!!.jsonObject["id"].string == "page-home") {
+//            if(element.jsonObject["root"]!!.jsonObject["id"].string == "page-home") {
 //                logAll("*******************************")
-//                logAll(material)
+//                logAll(element)
 //            }
 //        }
 
-        val mutableMaterial = material.jsonObject.toMutableMap()
+        val mutableMaterial = element.jsonObject.toMutableMap()
 
         mutableMaterial[MaterialSchema.Key.root]?.let { component ->
             mutableMaterial[MaterialSchema.Key.root] = componentRectifier.process("".toPath(), component)
@@ -60,7 +60,7 @@ class MaterialRectifier : KoinComponent {
         }
 
 //        runCatching {
-//            if(material.jsonObject["root"]!!.jsonObject["id"].string == "page-home") {
+//            if(element.jsonObject["root"]!!.jsonObject["id"].string == "page-home") {
 //                logAll(JsonObject(mutableMaterial))
 //                logAll("\n")
 //            }

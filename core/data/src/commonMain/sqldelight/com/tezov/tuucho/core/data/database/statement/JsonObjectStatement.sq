@@ -1,3 +1,6 @@
+clearAll:
+DELETE FROM jsonObjectEntry;
+
 selectAll:
 SELECT * FROM jsonObjectEntry;
 

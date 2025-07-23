@@ -48,7 +48,7 @@ class MaterialRepository(
             val extraDataBreaker = ExtraDataBreaker(url, version = "", false)
             materialNetworkService.retrieve(url).let { materialElement ->
                 materialCacheRepository.refreshCache(extraDataBreaker, materialElement)
-                materialCacheRepository.retrieve(extraDataAssembler) ?: TODO()
+                materialCacheRepository.retrieve(extraDataAssembler) ?: TODO("retrieve url $url returned nothing")
             }
         }
     }

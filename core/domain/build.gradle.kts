@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.kotlin.serialization)
@@ -25,9 +22,25 @@ android {
 }
 
 kotlin {
+    androidTarget()
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            isStatic = true
+            baseName = "CoreDomainFramework"
+            freeCompilerArgs += listOf(
+                "-Xbinary=bundleId=com.tezov.tuucho.core.domain",
+            )
+        }
+    }
+
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.androidx.core.ktx)
+            implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
         }

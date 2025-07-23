@@ -1,3 +1,6 @@
+clearAll:
+DELETE FROM versioningEntry;
+
 selectAll:
 SELECT * FROM versioningEntry;
 

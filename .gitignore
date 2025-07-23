@@ -6,3 +6,4 @@
 /build
 /.venv/
 /mkdocs/site/
+/.kotlin/

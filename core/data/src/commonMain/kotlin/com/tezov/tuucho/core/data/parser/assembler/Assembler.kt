@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
-import com.tezov.tuucho.core.data.database.Database
-import com.tezov.tuucho.core.data.database.dao.jsonObject
+import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.booleanOrNull
@@ -22,7 +21,7 @@ import org.koin.core.component.inject
 abstract class Assembler : MatcherProtocol, KoinComponent {
     abstract val dataBaseType: String
 
-    protected val database: Database by inject()
+    protected val jsonObjectQueries: JsonObjectQueries by inject()
 
     protected open val matchers: List<MatcherProtocol> = emptyList()
     protected open val childProcessors: List<Assembler> = emptyList()
@@ -120,8 +119,8 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         do {
             val idRef = currentEntry.schema().onScope(IdSchema::Scope).source
             val entity = idRef?.let { ref ->
-                database.jsonObject().find(type = type, url = url, id = ref)
-                    ?: database.jsonObject().findShared(type = type, id = ref)
+                jsonObjectQueries.find(type = type, url = url, id = ref)
+                    ?: jsonObjectQueries.findShared(type = type, id = ref)
             }
             if (entity != null) {
                 currentEntry = entity.jsonObject

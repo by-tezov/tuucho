@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.parser.rectifier.texts
 
-import android.util.MalformedJsonException
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -37,7 +36,7 @@ class TextsRectifier : Rectifier() {
                 when (text) {
                     is JsonPrimitive -> alterPrimitiveText(key, group, text)
                     is JsonObject -> alterObjectText(key, group, text)
-                    else -> throw MalformedJsonException("type not managed")
+                    else -> error("type not managed")
                 }.let(output::add)
             }
         }
@@ -76,7 +75,7 @@ class TextsRectifier : Rectifier() {
                     value = key.addGroup(group)
                 }
 
-                else -> throw MalformedJsonException("type not managed")
+                else -> error("type not managed")
             }
         }.collect()
     }.collect()

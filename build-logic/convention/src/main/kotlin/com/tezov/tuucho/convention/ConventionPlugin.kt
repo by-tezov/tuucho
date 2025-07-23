@@ -19,22 +19,16 @@ abstract class ConventionPlugin<T: Any>(
     object PluginId {
         const val androidApplication = "android.application"
         const val androidLibrary = "android.library"
-        const val koltin = "kotlin"
+
+        const val koltinAndroid = "kotlin-android"
+        const val koltinMultiplatform = "kotlin-multiplatform"
+
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
     }
 
     companion object {
-        internal fun commonConfigureKotlin(project: Project) = with(project) {
-            project.plugins.withId(plugin(PluginId.koltin)) {
-                project.extensions.configure(KotlinMultiplatformExtension::class.java) {
-                    androidTarget {
-                        compilerOptions {
-                            jvmTarget.set(this@with.jvmTarget())
-                        }
-                    }
-                }
-            }
+        internal fun configureKotlinAndroid(project: Project) = with(project) {
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(this@with.jvmTarget())
@@ -47,7 +41,19 @@ abstract class ConventionPlugin<T: Any>(
             }
         }
 
-        internal fun commonConfigureAndroid(
+        internal fun configureKotlinMultiplatform(project: Project) = with(project) {
+            project.plugins.withId(plugin(PluginId.koltinMultiplatform)) {
+                project.extensions.configure(KotlinMultiplatformExtension::class.java) {
+                    androidTarget {
+                        compilerOptions {
+                            jvmTarget.set(this@with.jvmTarget())
+                        }
+                    }
+                }
+            }
+        }
+
+        internal fun configureAndroid(
             project: Project,
         ) = with(project) {
             extensions.findByType(CommonExtension::class.java)!!.apply {
@@ -68,7 +74,7 @@ abstract class ConventionPlugin<T: Any>(
             }
         }
 
-        internal fun commonConfigureCompose(
+        internal fun configureCompose(
             project: Project,
         ) = with(project) {
             extensions.findByType(CommonExtension::class.java)!!.apply {
@@ -81,8 +87,8 @@ abstract class ConventionPlugin<T: Any>(
 
     final override fun apply(project: Project) {
         applyPlugins(project)
-        commonConfigureKotlin(project)
-        commonConfigureAndroid(project)
+        configureKotlinAndroid(project)
+        configureAndroid(project)
         project.extensions.configure(kclass) {
             configure(project)
         }

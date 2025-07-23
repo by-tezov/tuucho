@@ -25,10 +25,11 @@ class MaterialBreaker : KoinComponent {
     )
 
     fun process(
-        materialElement: JsonElement,
+        element: JsonElement,
         extraData: ExtraDataBreaker,
     ) = Parts().apply {
-        val mutableMap = materialElement.jsonObject.toMutableMap()
+
+        val mutableMap = element.jsonObject.toMutableMap()
         mutableMap[MaterialSchema.Key.root]?.let { component ->
             componentBreaker.process("".toPath(), component, extraData)
         }?.also { rootJsonEntity = it }

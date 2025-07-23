@@ -15,7 +15,6 @@ class FieldsMaterialState : FieldsMaterialStateProtocol {
 
     private val fields = mutableMapOf<String, Entry>()
 
-    @Synchronized
     override fun clear() {
         fields.clear()
     }

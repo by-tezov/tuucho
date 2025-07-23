@@ -1,7 +1,5 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.BuildConfig
-import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
@@ -11,7 +9,7 @@ import com.tezov.tuucho.core.data.repository.MaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.MaterialRepository
 import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.ResponseException
@@ -19,19 +17,23 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
-import java.util.concurrent.TimeUnit
+
+expect fun MaterialRepositoryModule.serverUrlEndpoint():String //TODO external config file (android, ios, common)
+private const val serverConnectTimeoutMillis = 5000L
+private const val serverSocketTimeoutMillis = 5000L
 
 object MaterialRepositoryModule {
 
     internal operator fun invoke() = module {
+
         single<HttpClient> {
-            HttpClient(OkHttp) {
+            HttpClient(get<HttpClientEngineFactory<*>>()) {
                 install(ContentNegotiation) {
                     json(get<Json>())
                 }
                 install(HttpTimeout) {
-                    connectTimeoutMillis = TimeUnit.MILLISECONDS.convert(5, TimeUnit.SECONDS)
-                    socketTimeoutMillis = TimeUnit.MILLISECONDS.convert(5, TimeUnit.SECONDS)
+                    connectTimeoutMillis = serverConnectTimeoutMillis
+                    socketTimeoutMillis = serverSocketTimeoutMillis
                 }
                 HttpResponseValidator {
                     validateResponse { response ->
@@ -48,7 +50,7 @@ object MaterialRepositoryModule {
         single<MaterialNetworkHttpRequest> {
             MaterialNetworkHttpRequest(
                 client = get<HttpClient>(),
-                baseUrl = "http://10.0.2.2:3000" //TODO
+                baseUrl = serverUrlEndpoint()
             )
         }
 
@@ -62,7 +64,8 @@ object MaterialRepositoryModule {
 
         single<MaterialCacheRepository> {
             MaterialCacheRepository(
-                database = get<Database>(),
+                jsonObjectQueries = get(),
+                versioningQueries = get(),
                 materialBreaker = get<MaterialBreaker>(),
                 materialAssembler = get<MaterialAssembler>()
             )

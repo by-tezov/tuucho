@@ -4,11 +4,11 @@ import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.toEntity
 
-fun Database.jsonObject() = JsonObjectQueries(this)
+class JsonObjectQueries(private val database: Database) {
 
-@JvmInline
-value class JsonObjectQueries(private val database: Database) {
     private val queries get() = database.jsonObjectStatementQueries
+
+    fun clearAll() = queries.clearAll()
 
     fun selectAll(): List<JsonObjectEntity> =
         queries.selectAll().executeAsList().map { it.toEntity() }
@@ -31,8 +31,8 @@ value class JsonObjectQueries(private val database: Database) {
                 idFrom = entity.idFrom,
                 jsonObject = entity.jsonObject
             )
-            queries.lastInsertedId()
-        }.executeAsOne()
+            queries.lastInsertedId().executeAsOne()
+        }
     }
 
     fun find(primaryKey: Long): JsonObjectEntity? =

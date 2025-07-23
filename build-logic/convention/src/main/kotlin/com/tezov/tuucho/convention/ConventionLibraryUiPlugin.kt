@@ -17,7 +17,7 @@ class ConventionLibraryUiPlugin : ConventionLibraryPlugin() {
     override fun LibraryExtension.configure(
         project: Project,
     ) {
-        commonConfigureCompose(project)
+        configureCompose(project)
     }
 }
 

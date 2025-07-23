@@ -1,10 +1,7 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     alias(libs.plugins.convention.library)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.sql.delight)
 }
 
@@ -35,30 +32,47 @@ sqldelight {
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
+    androidTarget()
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            isStatic = true
+            baseName = "CoreDataFramework"
+            freeCompilerArgs += listOf(
+                "-Xbinary=bundleId=com.tezov.tuucho.core.data"
+            )
         }
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+            implementation(libs.ktor.okhttp)
+            implementation(libs.sql.delight.driver.android)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin)
+            implementation(libs.sql.delight.driver.ios)
+        }
+
         commonMain.dependencies {
             implementation(project(":core:domain"))
 
-            implementation(libs.androidx.core.ktx)
+            implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
 
             implementation(libs.koin.core)
-            implementation(libs.koin.android)
 
             implementation(libs.ktor.core)
-            implementation(libs.ktor.okhttp)
             implementation(libs.ktor.cio)
             implementation(libs.ktor.serialization)
 
             implementation(libs.sql.delight.runtime)
-            implementation(libs.sql.delight.driver)
             implementation(libs.sql.delight.coroutines)
 
         }

@@ -50,7 +50,8 @@ object MaterialAssemblerModule {
     internal operator fun invoke() = module {
         single<MaterialAssembler> {
             MaterialAssembler(
-                database = get()
+                jsonObjectQueries = get(),
+                versioningQueries = get()
             )
         }
         componentModule()
