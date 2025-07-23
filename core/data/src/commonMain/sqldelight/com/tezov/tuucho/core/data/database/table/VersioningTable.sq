@@ -4,7 +4,7 @@ CREATE TABLE versioningEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT NOT NULL UNIQUE,
     version TEXT NOT NULL,
-    rootPrimaryKey INTEGER REFERENCES jsonObjectEntry(primaryKey),
+    rootPrimaryKey INTEGER,
     isShared INTEGER AS Boolean NOT NULL
 );
 
@@ -17,3 +17,24 @@ SELECT jsonObject.*
 FROM jsonObjectEntry jsonObject
 JOIN versioningEntry versioning ON jsonObject.url = versioning.url
 WHERE versioning.isShared = 1;
+
+
+-- import kotlin.Boolean;
+--
+-- CREATE TABLE versioningEntry (
+--     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
+--     url TEXT NOT NULL UNIQUE,
+--     version TEXT NOT NULL,
+--     rootPrimaryKey INTEGER REFERENCES jsonObjectEntry(primaryKey),
+--     isShared INTEGER AS Boolean NOT NULL
+-- );
+--
+-- CREATE INDEX IF NOT EXISTS idx_versioningEntry_shared_1
+-- ON versioningEntry(url)
+-- WHERE isShared = 1;
+--
+-- CREATE VIEW sharedJsonObjects AS
+-- SELECT jsonObject.*
+-- FROM jsonObjectEntry jsonObject
+-- JOIN versioningEntry versioning ON jsonObject.url = versioning.url
+-- WHERE versioning.isShared = 1;

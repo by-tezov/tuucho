@@ -29,8 +29,11 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "CoreUiFramework"
             isStatic = true
+            baseName = "CoreUiFramework"
+            freeCompilerArgs += listOf(
+                "-Xbinary=bundleId=com.tezov.tuucho.core.ui",
+            )
         }
     }
 

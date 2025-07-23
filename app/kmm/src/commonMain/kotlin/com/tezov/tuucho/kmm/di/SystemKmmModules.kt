@@ -1,10 +1,8 @@
 package com.tezov.tuucho.kmm.di
 
-object SystemAppModules {
+object SystemKmmModules {
 
     internal operator fun invoke() = listOf(
-        ViewModelModule()
+        ViewModelModule.invoke()
     )
-
-
 }

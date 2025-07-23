@@ -14,6 +14,9 @@ class MaterialRepository(
 
     override suspend fun refreshCache(url: String) {
         val configModelDomain = materialNetworkService.retrieveConfig(url)
+
+        //TODO check if it is well recorded in database for IOS
+
         configModelDomain.preload.apply {
             subs
                 .filter { materialCacheRepository.shouldRefresh(it.url, it.version) }

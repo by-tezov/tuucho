@@ -30,8 +30,11 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "CoreDomainFramework"
             isStatic = true
+            baseName = "CoreDomainFramework"
+            freeCompilerArgs += listOf(
+                "-Xbinary=bundleId=com.tezov.tuucho.core.domain",
+            )
         }
     }
 

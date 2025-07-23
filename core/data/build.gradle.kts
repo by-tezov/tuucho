@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+
 plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.sql.delight)
@@ -38,8 +40,11 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "CoreDataFramework"
             isStatic = true
+            baseName = "CoreDataFramework"
+            freeCompilerArgs += listOf(
+                "-Xbinary=bundleId=com.tezov.tuucho.core.data"
+            )
         }
     }
 
@@ -62,10 +67,11 @@ kotlin {
             implementation(libs.kotlin.serialization.json)
 
             implementation(libs.koin.core)
-            implementation(libs.ktor.core)
 
+            implementation(libs.ktor.core)
             implementation(libs.ktor.cio)
             implementation(libs.ktor.serialization)
+
             implementation(libs.sql.delight.runtime)
             implementation(libs.sql.delight.coroutines)
 

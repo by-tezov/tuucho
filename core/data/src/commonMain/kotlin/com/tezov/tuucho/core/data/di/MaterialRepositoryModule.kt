@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
 import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
@@ -19,6 +18,10 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
+expect fun MaterialRepositoryModule.serverUrlEndpoint():String //TODO external config file (android, ios, common)
+private const val serverConnectTimeoutMillis = 5000L
+private const val serverSocketTimeoutMillis = 5000L
+
 object MaterialRepositoryModule {
 
     internal operator fun invoke() = module {
@@ -29,8 +32,8 @@ object MaterialRepositoryModule {
                     json(get<Json>())
                 }
                 install(HttpTimeout) {
-                    connectTimeoutMillis = 5000 //TODO
-                    socketTimeoutMillis = 5000 //TODO
+                    connectTimeoutMillis = serverConnectTimeoutMillis
+                    socketTimeoutMillis = serverSocketTimeoutMillis
                 }
                 HttpResponseValidator {
                     validateResponse { response ->
@@ -47,7 +50,7 @@ object MaterialRepositoryModule {
         single<MaterialNetworkHttpRequest> {
             MaterialNetworkHttpRequest(
                 client = get<HttpClient>(),
-                baseUrl = "http://10.0.2.2:3000" //TODO
+                baseUrl = serverUrlEndpoint()
             )
         }
 
@@ -61,7 +64,8 @@ object MaterialRepositoryModule {
 
         single<MaterialCacheRepository> {
             MaterialCacheRepository(
-                database = get<Database>(),
+                jsonObjectQueries = get(),
+                versioningQueries = get(),
                 materialBreaker = get<MaterialBreaker>(),
                 materialAssembler = get<MaterialAssembler>()
             )

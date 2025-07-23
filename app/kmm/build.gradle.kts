@@ -30,16 +30,17 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "KmmFramework"
             isStatic = true
+            baseName = "KmmFramework"
+            freeCompilerArgs += listOf(
+                "-Xbinary=bundleId=com.tezov.tuucho.kmm",
+            )
         }
     }
 
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.koin.core)
             implementation(libs.koin.android)
-            implementation(libs.koin.compose)
         }
 
         commonMain.dependencies {
@@ -52,6 +53,8 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.material3)
             implementation(compose.components.resources)
+
+            implementation(libs.koin.core)
         }
 
         iosMain.dependencies {
