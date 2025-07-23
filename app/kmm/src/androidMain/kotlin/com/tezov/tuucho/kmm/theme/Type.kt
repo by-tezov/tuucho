@@ -1,4 +1,4 @@
-package com.tezov.tuucho.demo.ui.theme
+package com.tezov.tuucho.kmm.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

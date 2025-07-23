@@ -37,8 +37,9 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.lifecycle.viewmodel)
-            implementation(libs.compose.lifecycle)
+            implementation(libs.koin.core)
+            implementation(libs.koin.android)
+            implementation(libs.koin.compose)
         }
 
         commonMain.dependencies {

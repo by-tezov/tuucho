@@ -1,4 +1,4 @@
-package com.tezov.tuucho.demo.ui.theme
+package com.tezov.tuucho.kmm.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
