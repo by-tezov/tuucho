@@ -13,6 +13,6 @@ This section describes the primary JSON keys used in the TUUCHO rendering engine
 - [action](action.md) — Action definitions (e.g., navigation, form submission)
 - [validator](validator.md) — Validator definitions (form field validation rules)
 
-For more practical examples, please refer to the [Components Definition](../components-definition/index.md) or the tutorial section (coming soon).
+For more practical examples, please refer to the [Components Definition](../components-definition/index.md).
 
 ---

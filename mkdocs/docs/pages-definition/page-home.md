@@ -1,0 +1,200 @@
+# Page - Home - Example
+
+```json
+{
+  "root": {
+    "id": "page-home",
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "background-color": { "id": "*background:gray-light" },
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        "*title",
+        "*item-spacer-48-v",
+        "*body",
+        "*item-spacer",
+        {
+          "subset": "label",
+          "style": "*title-section",
+          "content": {
+            "value": "*form:text-form-section-title"
+          }
+        },
+        {
+          "id": "*item-spacer-24-v"
+        },
+        {
+          "id": {
+            "value": "age",
+            "source": "*input-field-age"
+          }
+        },
+        {
+          "id": {
+            "value": "email",
+            "source": "*input-field-email"
+          }
+        },
+        {
+          "id": "input-field-custom",
+          "subset": "field",
+          "option": {
+            "validator": "string-not-null"
+          },
+          "content": {
+            "title": "any comment?",
+            "placeholder": "short comment, please I'm lazy to read",
+            "message-error": "Can't be empty, bro say something"
+          }
+        },
+        {
+          "id": "*item-spacer"
+        },
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background:funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": { "id": "*label-main-button-form" },
+                    "content": { "value": "Send Form" }
+                  },
+                  "action": {
+                    "value": "form-send://url/form-from-page-home",
+                    "params": {
+                      "action-validated": "navigate://url/page-confirmation"
+                    }
+                  }
+                }
+              },
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": { "id": "*label-main-button-help" },
+                    "content": {
+                      "value": "Get Help"
+                    }
+                  },
+                  "action": "navigate://url/page-help"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "id": "title",
+      "subset": "label",
+      "style": "*title-label",
+      "content": {
+        "value": { "id": "*text-title" }
+      }
+    },
+    {
+      "id": "body",
+      "subset": "label",
+      "style": {
+        "id": "*title-body"
+      },
+      "content": {
+        "value": { "id": "*text-body" }
+      }
+    },
+    {
+      "id": "input-field-age",
+      "subset": "field",
+      "option": {
+        "validator": [
+          {
+            "type": "string-min-value",
+            "value": "18",
+            "id-message-error": "*validator-1"
+          },
+          {
+            "type": "string-max-value",
+            "value": "65",
+            "id-message-error": "*validator-2"
+          },
+          {
+            "type": "string-not-null",
+            "id-message-error": "*validator-4"
+          }
+        ]
+      },
+      "content": {
+        "title": "*form:text-form-age-title",
+        "placeholder": "*form:text-form-age-placeholder",
+        "message-error": [
+          {
+            "id": "validator-1",
+            "default": "you must have at least 18 years"
+          },
+          {
+            "id": "validator-2",
+            "default": "you must have at most 65 years"
+          },
+          {
+            "id": "validator-4",
+            "default": "age can't be empty"
+          }
+        ]
+      }
+    },
+    {
+      "id": "input-field-email",
+      "subset": "field",
+      "option": {
+        "validator": [
+          {
+            "type": "string-email",
+            "id-message-error": "*validator-1"
+          },
+          {
+            "type": "string-not-null",
+            "id-message-error": "*validator-2"
+          }
+        ]
+      },
+      "content": "*input-field-age-content"
+    }
+  ],
+  "styles": [
+    {
+      "id": "title-section",
+      "font-size": "18",
+      "font-color": "*red"
+    }
+  ],
+  "texts": {
+    "common": {
+      "text-title": "Home Page",
+      "text-body": "bienvenue sur la page d'accueil"
+    },
+    "form": {
+      "text-form-section-title": "Inscription à la new letter",
+      "text-form-email-title": "email*",
+      "text-form-email-placeholder": "my.email@gmail.com",
+      "text-form-age-title": "age*",
+      "text-form-age-placeholder": "27"
+    }
+  }
+}
+```
+
+---
+
+Elements than doesn't exist in the json are resolved from the subs 📖 [Subs Definition](../config/subs.md).

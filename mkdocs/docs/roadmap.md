@@ -5,58 +5,68 @@
 
 ---
 
-## Current Focus
+## 🚧 Current Focus
 
-Work in Progress
-
-- **KMM integration and iOS testing**  
-  Full Kotlin Multiplatform Mobile support with thorough testing on iOS platforms.
-
-- **Navigation Stack Implementation**  
-  Enhance navigation capabilities with a robust stack system to manage screen transitions.
+Work in progress:
 
 - **Dynamic Data Support**  
   Introduce dynamic data binding to enable real-time content updates within the UI.
 
-- **Documentation**
-  Complete the documentation
+- **Navigation Stack Implementation**  
+  Enhance navigation capabilities with a robust stack system to manage screen transitions.
 
 ---
 
-## Medium-Term Goals
+## 🎯 Medium-Term Goals
+
+- **Cache Management Enhancements**
+  - Add TTL (time-to-live) options to avoid indefinite cache persistence.
+  - Implement versioning and automatic cache purging for consistency and efficiency.
 
 - **Behavior & Animation System**  
   Implement an extensible behavior module to handle animations and interactive UI elements.
 
-- **Cache Management Enhancements**
-    - Add TTL (time-to-live) options to avoid indefinite cache persistence.
-    - Implement versioning and automatic cache purging for consistency and efficiency.
+- **Advanced UI Components**  
+  Add comprehensive, fully tested UI components to cover a wider range of application needs.
 
 - **Action and Validator Modules**  
-  Develop sharable actions and validators to streamline form handling and UI logic.
+  Develop reusable actions and validators to streamline form handling and UI logic.
 
 - **Improved JSON Parsing Feedback**  
   Provide detailed, user-friendly warnings and errors to simplify troubleshooting of JSON input.
 
-- **Documentation**
-  Add dev documentation to create user module component
+- **Configuration File Support**  
+  Complete support for configuration files to allow application-wide settings.
 
 ---
 
-## Long-Term Vision
-
-- **Advanced UI Components**  
-  Add comprehensive, fully-tested UI components to cover a wide range of application needs.
+## 🚀 Long-Term Vision
 
 - **Modular UI Components**  
   Support UI components as independent modules for easier customization and extensibility.
 
+- **Accessibility Enhancements**  
+  Improve accessibility features to meet modern standards and ensure inclusivity.
+
 - **Parser Efficiency Optimizations**  
-  Explore using cache indexing, metadata, or other innovative techniques to accelerate JSON parsing and rendering.
+  Explore cache indexing, metadata, or other innovative techniques to accelerate JSON parsing and rendering.
+
+- **Documentation**  
+  Add developer documentation for creating user modules and custom components.
+
+- **Unit Tests + E2E Tests**  
+  Before production validation to protect from any regression.
 
 ---
 
-We continuously update this roadmap as TUUCHO evolves. For more detailed planning and updates, stay tuned to this documentation.
+## ✅ Realized
+
+- 🎉 **KMM Integration & iOS Support**  (2025-07)
+  Full Kotlin Multiplatform Mobile support implemented.
+
+---
+
+We continuously update this roadmap as TUUCHO evolves. For the latest updates and detailed planning, stay tuned to this documentation.
 
 ---
 

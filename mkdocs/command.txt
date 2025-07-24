@@ -2,7 +2,7 @@ sudo apt install python3-pip -y
 python3 -m venv .venv
 
 source .venv/bin/activate
-pip install mkdocs mkdocs-material mkdocs-mermaid-plugin pymdown-extensions mike
+pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin pymdown-extensions mkdocs-redirects mike
 
 pip freeze > requirements.txt
 mkdocs serve -a 127.0.0.1:8001
