@@ -22,22 +22,6 @@ android {
 }
 
 kotlin {
-    androidTarget()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            isStatic = true
-            baseName = "KmmFramework"
-            freeCompilerArgs += listOf(
-                "-Xbinary=bundleId=com.tezov.tuucho.kmm",
-            )
-        }
-    }
-
     sourceSets {
         androidMain.dependencies {
             implementation(libs.koin.android)

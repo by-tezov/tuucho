@@ -21,22 +21,6 @@ android {
 }
 
 kotlin {
-    androidTarget()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            isStatic = true
-            baseName = "CoreUiFramework"
-            freeCompilerArgs += listOf(
-                "-Xbinary=bundleId=com.tezov.tuucho.core.ui",
-            )
-        }
-    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core:domain"))

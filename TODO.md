@@ -1,9 +1,7 @@
 ## In progress
+
+- define TODO at short time and do it.
   
-WIP: KMM migration, now fix sqlDelight
-
-- IOS change the build folder on xcode to point on Products same as KMM
-
 - add module core tool/ (common-ui-...)
 - add config to remove hard string inside di
 

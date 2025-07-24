@@ -1,10 +1,8 @@
 package com.tezov.tuucho.convention
 
-import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Project
 
-open class ConventionLibraryPlugin : ConventionPlugin<LibraryExtension>(LibraryExtension::class) {
+open class ConventionLibraryPlugin : ConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
         with(project) {
@@ -13,7 +11,7 @@ open class ConventionLibraryPlugin : ConventionPlugin<LibraryExtension>(LibraryE
         }
     }
 
-    override fun LibraryExtension.configure(
+    override fun configure(
         project: Project,
     ) {
         configureKotlinMultiplatform(project)

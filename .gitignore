@@ -7,3 +7,4 @@
 /.venv/
 /mkdocs/site/
 /.kotlin/
+/app/ios/ios/Build/

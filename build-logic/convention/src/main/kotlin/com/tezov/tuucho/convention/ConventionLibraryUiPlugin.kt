@@ -1,8 +1,6 @@
 package com.tezov.tuucho.convention
 
-import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 
 class ConventionLibraryUiPlugin : ConventionLibraryPlugin() {
 
@@ -14,9 +12,10 @@ class ConventionLibraryUiPlugin : ConventionLibraryPlugin() {
         }
     }
 
-    override fun LibraryExtension.configure(
+    override fun configure(
         project: Project,
     ) {
+        super.configure(project)
         configureCompose(project)
     }
 }
