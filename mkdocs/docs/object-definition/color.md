@@ -81,4 +81,4 @@ This approach helps maintain consistent colors across pages and reduces duplicat
 
 ---
 
-For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md) or the tutorial section (coming soon).
+For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md).

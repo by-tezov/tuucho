@@ -1,28 +1,24 @@
-site_name: TUUCHO -ตู้โชว์ - Rendering engine
+site_name: TUUCHO - ตู้โชว์
 site_url: https://by-tezov.github.io/tuucho/
 repo_url: https://github.com/by-tezov/tuucho
 theme:
   name: material
-#  palette:
-#    primary: 'indigo'
-#    accent: 'pink'
-  font:
-    text: 'Roboto, sans-serif'
-    code: 'Source Code Pro, monospace'
+#  logo: images/logo.svg
+  palette:
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to lite mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
   features:
-    - navigation.sections
-    - navigation.expand
-    - navigation.top
-    - navigation.tabs
     - content.code.copy
-    - toc.integrate
+    - toc
     - search.highlight
     - versioning
-    #- content.tabs.link
-    #- content.footer.sticky
-    #- content.header.autohide
-    #- palette.toggle
-    #- navigation.instant
+    - admonition
 
 extra_css:
   - stylesheets/overrides.css
@@ -31,8 +27,10 @@ plugins:
   - search
   - mike
   - mermaid2
+  - redirects:
+      redirect_maps:
+        'config/pages.md': 'pages-definition/index.md'
 #  - minify
-
 
 markdown_extensions:
   - pymdownx.superfences:
@@ -53,10 +51,14 @@ markdown_extensions:
 
 nav:
   - Home:
-    - index.md
-    - roadmap.md
-    - changelog.md
-    - test.md
+    - Overview: index.md
+    - Roadmap: roadmap.md
+    - ChangeLog: changelog.md
+  - Config:
+      - Overview: config/index.md
+      - Subs: config/subs.md
+      - Templates: config/templates.md
+      - Pages: pages-definition/index.md
   - Object Definition:
       - Overview: object-definition/index.md
       - Id: object-definition/id.md
@@ -69,22 +71,17 @@ nav:
       - Dimension: object-definition/dimension.md
       - Action: object-definition/action.md
       - Validator: object-definition/validator.md
-  - Components Definition:
+  - Components:
       - Overview: components-definition/index.md
       - LayoutLinear: components-definition/layout-linear.md
       - Label: components-definition/label.md
       - Field: components-definition/field.md
       - Button: components-definition/button.md
       - Spacer: components-definition/spacer.md
-  - Subs:
-      - Overview: subs/index.md
-      - Components: subs/components.md
-      - Options: subs/options.md
-      - Styles: subs/styles.md
-      - Contents: subs/contents.md
-      - Texts: subs/texts.md
-      - Colors: subs/colors.md
-      - Dimensions: subs/dimensions.md
   - Pages:
-      - Overview: pages/index.md
+      - Overview: pages-definition/index.md
+      - Example:
+          - Page Home: pages-definition/page-home.md
+          - Page Help: pages-definition/page-help.md
+          - Page Confirmation: pages-definition/page-confirmation.md
 

@@ -1,11 +1,13 @@
-# TUUCHO - ตู้โชว์
+# TUUCHO - ตู้โชว์ - Rendering Engine
 
 > **Documentation in Progress** — Early stage of development
 
 
 ## Overview
 
-TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interprets a "smart" JSON structure describing the entire UI, behaviors and renders the application interface accordingly.
+TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interprets a flexible JSON structure describing the entire UI, behaviors and renders the application interface accordingly.
+
+🚀 **It is available on Android and iOS thanks to Kotlin Multiplatform Mobile (KMM).**
 
 Key features include:
 
@@ -52,19 +54,19 @@ For detailed future plans and roadmap, see [Roadmap](roadmap.md). Spoiler alert:
 
 ```mermaid
 flowchart TD
-  A[Start Application] --> B[Request **config.json**]
-  B --> C[For each **url** in config: Check cache]
+  A[Launch Application] --> B[/Request **config.json**/]
+  B --> C[[For each **url** in config: Check cache]]
   C --> C1{In Database?}
-  C1 -- No --> D[Request **url** JSON]
+  C1 -- No --> D[/Request **url** JSON/]
   D --> E[Rectifier: make JSON engine-compatible]
   E --> F[Breaker: split into parts]
-  F --> G[Store parts in DB]
+  F --> G>Store parts in DB]
   C1 -- Yes --> H
-  G --> H[Application want show 'Screen A' URL]
+  G --> H[Application want show 'FooScreen' URL]
   H --> H1{Is in DB?}
-  H1 -- Yes --> I[Retrieve parts from DB]
+  H1 -- Yes --> I[(Retrieve parts from DB)]
   I --> J[Assembler: Rebuild Page]
-  J --> K[Renderer: Draw UI of Screen A]
+  J --> K(((Renderer: Draw UI of 'FooScreen')))
   H1 -- No --> D
 ```
 
@@ -107,7 +109,7 @@ Many self-explanatory examples are provided throughout this documentation. To ma
 
 - [Object Definition](object-definition/index.md)
 - [Components Definition](components-definition/index.md)
-- [Subs](subs/index.md)
-- [Pages](pages/index.md)
+- [Subs](config/subs.md)
+- [Pages](pages-definition/index.md)
 - [Roadmap](roadmap.md)
 - [ChangeLog](changelog.md)

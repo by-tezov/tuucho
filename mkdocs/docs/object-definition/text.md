@@ -81,4 +81,4 @@ This approach is useful for maintaining consistency across pages and reducing re
 
 ---
 
-For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md) or the tutorial section (coming soon).
+For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md).

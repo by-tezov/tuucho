@@ -87,4 +87,4 @@ Dimension values are **unitless** numbers. The interpretation of units (pixels, 
 
 ---
 
-For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md) or the tutorial section (coming soon).
+For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md).

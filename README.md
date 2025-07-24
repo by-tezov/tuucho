@@ -1,15 +1,57 @@
-# TUUCHO -ตู้โชว์ - Rendering engine
+# TUUCHO - ตู้โชว์ - Rendering Engine
 
-Application renderer by parsing a json that describe the application.
+TUUCHO is a Kotlin Multiplatform Mobile (KMM) project with most of its code shared across platforms, enabling native iOS and Android support from a single Kotlin codebase. It follows Clean Architecture principles wherever they best fit the project structure, ensuring modularity, testability, and maintainability.
 
-What is possible now:
-- Linear or Horizontal Layout
-- Button with navigation action
-- Label
-- Spacer vertical or horizontal
+TUUCHO is a powerful and flexible application rendering engine that dynamically generates user interfaces by parsing JSON descriptions. It enables developers to declaratively define app layouts and UI components in a structured JSON format, which TUUCHO then renders seamlessly across platforms.
 
-Check the full documentation : https://by-tezov.github.io/tuucho/0.0.1-alpha0/
+---
 
+## ⚠️ Project Status
 
-backend dev repo : https://github.com/by-tezov/tuucho-backend
+**TUUCHO is currently in active development and is not yet ready for production use.**  
+Expect ongoing changes, new features, and improvements as the project evolves.
 
+---
+
+## Current Capabilities
+
+- **LayoutLinear**: Build flexible vertical or horizontal layouts for structuring your UI.
+- **Button**: Interactive buttons with built-in support for navigation and action triggers.
+- **Label**: Display styled text with customizable fonts and colors.
+- **Spacer**: Control spacing and alignment with flexible or fixed-sized spacers, both vertical and horizontal.
+
+---
+
+## Why Choose TUUCHO?
+
+- **Cross-Platform Ready** — Built with Kotlin Multiplatform Mobile (KMM), TUUCHO runs natively on both iOS and Android from a shared codebase.
+- **Clean Architecture** — Adheres to modular, clean design principles that improve scalability and ease of testing.
+- **Dynamic UI Updates** — Modify your app UI dynamically by changing JSON descriptions without recompiling.
+- **Extensible and Modular** — Designed to grow with your needs, TUUCHO is actively evolving with support for new components, styles, actions, and validation logic.
+- **Open Source & Community Driven** — Join the TUUCHO community and contribute to making the platform more robust and feature-rich.
+
+---
+
+## Roadmap & Future Plans
+
+TUUCHO is actively under development. Exciting features such as advanced animations, behaviors, modular UI components, improved caching, and richer validation mechanisms are on the horizon. Check out the [Roadmap](https://by-tezov.github.io/tuucho/roadmap.md) for full details.
+
+---
+
+## Documentation & Resources
+
+For comprehensive documentation, examples, and developer guides, visit:
+
+[Full TUUCHO Documentation](https://by-tezov.github.io/tuucho/0.0.1-alpha4/)
+
+---
+
+## Backend Repository
+
+The TUUCHO backend repository contains tools and services to support TUUCHO rendering:
+
+[tuucho-backend GitHub Repository](https://github.com/by-tezov/tuucho-backend)
+
+---
+
+Feel free to explore, contribute, and provide feedback. TUUCHO is building towards a powerful, scalable rendering solution for modern mobile applications!

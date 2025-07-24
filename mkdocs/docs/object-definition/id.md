@@ -95,4 +95,4 @@ Use the **object format** if you need both a pointer and a unique, trackable ID 
 
 ---
 
-For more details, see the [Components Definition](../components-definition/index.md) or tutorial section (coming soon).
+For more details, see the [Components Definition](../components-definition/index.md).

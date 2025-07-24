@@ -64,11 +64,11 @@ The engine resolves this pointer by searching first in the local page, then in s
 
 ## Summary Table
 
-| Format                          | Purpose                               | Example                                           |
-|---------------------------------|-------------------------------------|---------------------------------------------------|
-| Full object with `id` and `subset` | Complete style definition             | ````json"style": { "id": "btn-primary", "subset": "button", "backgroundColor": "#00f" }```` |
-| String starting with `*`          | Pointer to shared/local style object  | ````json"style": "*shared-primary-button-style"````                 |
+| Format                          | Purpose                               | Example                                   |
+|---------------------------------|-------------------------------------|-------------------------------------------|
+| Full object with `id` and `subset` | Complete style definition             | See above example                         |
+| String starting with `*`          | Pointer to shared/local style object  | `"style": "*shared-primary-button-style"` |
 
 ---
 
-For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md) or the tutorial section (coming soon).
+For more advanced examples and usage patterns, see the [Components Definition](../components-definition/index.md).
