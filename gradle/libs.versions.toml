@@ -3,44 +3,30 @@
 versionCode = "1"
 versionName = "0.0.1"
 javaVersion = "17"
-compileSdk = "35"
+compileSdk = "36"
 minSdk = "24"
-targetSdk = "35"
+targetSdk = "36"
 #plugin
-android-gradle-plugin = "8.7.3"
+android-gradle-plugin = "8.11.1"
 kotlin-plugin = "2.2.0"
 compose-plugin = "1.8.2"
-kotlin-serialization-plugin = "1.8.0"
+kotlin-serialization-plugin = "2.2.0"
 ksp = "2.1.10-1.0.31"
-#core - android
-androidx-core-ktx = "1.15.0"
-androidx-appcompat = "1.7.0"
-androidx-lifecycle-ktx = "2.8.7"
-lifecycle-viewmodel = "2.9.1"
 #compose - android
 compose-activity = "1.10.1"
-compose-lifecycle = "2.9.1"
 #lib - kmm
 kotlin-couroutine = "1.10.2"
-kotlin-serialization-json = "1.6.3"
+kotlin-serialization-json = "1.9.0"
 sql-delight = "2.1.0"
 ktor = "3.2.2"
-koin = "3.5.0"
+koin = "4.1.0"
 
 [libraries]
 #build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
-#core - android
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
-androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidx-lifecycle-ktx" }
-androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-ktx" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-ktx" }
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
-compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle-viewmodel" }
 #lib - kmm
 kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
@@ -50,12 +36,11 @@ sql-delight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-ext
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-cio = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 #lib - android
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 #lib - android
 sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }

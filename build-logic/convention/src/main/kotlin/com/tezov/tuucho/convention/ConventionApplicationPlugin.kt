@@ -1,9 +1,8 @@
 package com.tezov.tuucho.convention
 
-import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Project
 
-open class ConventionApplicationPlugin : ConventionPlugin<ApplicationExtension>(ApplicationExtension::class) {
+open class ConventionApplicationPlugin : ConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
         with(project) {
@@ -14,7 +13,7 @@ open class ConventionApplicationPlugin : ConventionPlugin<ApplicationExtension>(
         }
     }
 
-    override fun ApplicationExtension.configure(
+    override fun configure(
         project: Project,
     ) {
         configureCompose(project)

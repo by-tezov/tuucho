@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
-
 plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.sql.delight)
@@ -32,22 +30,6 @@ sqldelight {
 }
 
 kotlin {
-    androidTarget()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            isStatic = true
-            baseName = "CoreDataFramework"
-            freeCompilerArgs += listOf(
-                "-Xbinary=bundleId=com.tezov.tuucho.core.data"
-            )
-        }
-    }
-
     sourceSets {
         androidMain.dependencies {
             implementation(libs.koin.android)
