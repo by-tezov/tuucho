@@ -3,7 +3,7 @@ site_url: https://doc.tuucho.com/
 repo_url: https://github.com/by-tezov/tuucho
 theme:
   name: material
-#  logo: images/logo.svg
+  logo: assets/tuucho-logo.svg
   palette:
     - scheme: slate
       toggle:
@@ -27,10 +27,14 @@ plugins:
   - search
   - mike
   - mermaid2
-  - redirects:
-      redirect_maps:
-        'config/pages.md': 'pages-definition/index.md'
+#  - redirects:
+#      redirect_maps:
+#        'old.md': 'new.md'
   - minify
+
+extra:
+  version:
+    provider: mike
 
 markdown_extensions:
   - pymdownx.superfences:
@@ -47,19 +51,18 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.inlinehilite
   - pymdownx.magiclink
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - attr_list
 
 nav:
-  - Home:
-    - Overview: index.md
-    - Roadmap: roadmap.md
-    - ChangeLog: changelog.md
+  - Home: index.md
+  - Roadmap: roadmap.md
   - Config:
       - Overview: config/index.md
       - Subs: config/subs.md
       - Templates: config/templates.md
-      - Pages: pages-definition/index.md
-  - Object Definition:
+  - Object:
       - Overview: object-definition/index.md
       - Id: object-definition/id.md
       - Component: object-definition/component.md
@@ -78,10 +81,11 @@ nav:
       - Field: components-definition/field.md
       - Button: components-definition/button.md
       - Spacer: components-definition/spacer.md
-  - Pages:
+  - Page:
       - Overview: pages-definition/index.md
       - Example:
           - Page Home: pages-definition/page-home.md
           - Page Help: pages-definition/page-help.md
           - Page Confirmation: pages-definition/page-confirmation.md
-
+  - ChangeLog: changelog.md
+  - Contact: contact.md

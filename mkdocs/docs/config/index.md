@@ -78,7 +78,7 @@ The `preload` object contains three main arrays:
     - Each page entry contains a `version` and a `url`.
     - The app checks versions to ensure resources are up to date.
 
-    For detailed page structure and usage, see the [Pages Definition](pages.md).
+    For detailed page structure and usage, see the [Pages Definition](../pages-definition/index.md).
 
 
 
