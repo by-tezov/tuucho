@@ -1,5 +1,5 @@
 site_name: TUUCHO - ตู้โชว์
-site_url: https://by-tezov.github.io/tuucho/
+site_url: https://doc.tuucho.com/
 repo_url: https://github.com/by-tezov/tuucho
 theme:
   name: material
@@ -30,7 +30,7 @@ plugins:
   - redirects:
       redirect_maps:
         'config/pages.md': 'pages-definition/index.md'
-#  - minify
+  - minify
 
 markdown_extensions:
   - pymdownx.superfences:
