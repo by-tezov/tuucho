@@ -18,7 +18,7 @@ TUUCHO is a powerful and flexible application rendering engine that dynamically 
 **TUUCHO is currently in active development and is not yet ready for production use.**  
 Expect ongoing changes, new features, and improvements as the project evolves.
 
-Check out the [Roadmap](https://doc.tuucho.com/roadmap.md) for full details.
+Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap.md) for full details.
 
 ---
 
