@@ -42,7 +42,7 @@ TUUCHO is actively under development. Exciting features such as advanced animati
 
 For comprehensive documentation, examples, and developer guides, visit:
 
-[Full TUUCHO Documentation](https://by-tezov.github.io/tuucho/0.0.1-alpha4/)
+[Full Documentation](https://doc.tuucho.com/0.0.1-alpha5/)
 
 ---
 
