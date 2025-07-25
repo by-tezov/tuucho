@@ -1,8 +1,11 @@
-<p style="text-align: center;">
-  <img src="https://github.com/by-tezov/tuucho/tree/master/mkdocs/docs/assets/logo.svg?raw=true" alt="TUUCHO Logo" width="200" />
-</p>
-
-# TUUCHO - ตู้โชว์ - Rendering Engine
+<table>
+  <tr>
+    <td style="vertical-align: middle; padding-right: 10px;">
+      <img src="https://doc.tuucho.com/latest/assets/tuucho-logo.svg" alt="TUUCHO Logo" width="100" />
+    </td>
+    <td><h1>TUUCHO - ตู้โชว์ - Rendering Engine</h1></td>
+  </tr>
+</table>
 
 TUUCHO is a Kotlin Multiplatform Mobile (KMM) project with most of its code shared across platforms, enabling native iOS and Android support from a single Kotlin codebase. It follows Clean Architecture principles wherever they best fit the project structure, ensuring modularity, testability, and maintainability.
 
