@@ -8,6 +8,8 @@ pip freeze > requirements.txt
 mkdocs serve -a 127.0.0.1:8001
 
 mike deploy x.x.x
+mike deploy x.x.x --update-aliases latest
+
 mike deploy --update x.x.x
 mike set-default v2
 mike serve -a 127.0.0.1:8001

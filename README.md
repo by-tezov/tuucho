@@ -1,3 +1,7 @@
+<p style="text-align: center;">
+  <img src="https://github.com/by-tezov/tuucho/tree/master/mkdocs/docs/assets/logo.svg?raw=true" alt="TUUCHO Logo" width="200" />
+</p>
+
 # TUUCHO - ตู้โชว์ - Rendering Engine
 
 TUUCHO is a Kotlin Multiplatform Mobile (KMM) project with most of its code shared across platforms, enabling native iOS and Android support from a single Kotlin codebase. It follows Clean Architecture principles wherever they best fit the project structure, ensuring modularity, testability, and maintainability.
@@ -10,6 +14,8 @@ TUUCHO is a powerful and flexible application rendering engine that dynamically 
 
 **TUUCHO is currently in active development and is not yet ready for production use.**  
 Expect ongoing changes, new features, and improvements as the project evolves.
+
+Check out the [Roadmap](https://doc.tuucho.com/roadmap.md) for full details.
 
 ---
 
@@ -24,17 +30,11 @@ Expect ongoing changes, new features, and improvements as the project evolves.
 
 ## Why Choose TUUCHO?
 
-- **Cross-Platform Ready** — Built with Kotlin Multiplatform Mobile (KMM), TUUCHO runs natively on both iOS and Android from a shared codebase.
+- **Cross-Platform Target** — Built with Kotlin Multiplatform Mobile (KMM), TUUCHO runs natively on both iOS and Android from a shared codebase.
 - **Clean Architecture** — Adheres to modular, clean design principles that improve scalability and ease of testing.
-- **Dynamic UI Updates** — Modify your app UI dynamically by changing JSON descriptions without recompiling.
+- **Dynamic UI Updates** — Modify your app UI dynamically by changing JSON descriptions without recompiling and without mobile publication.
 - **Extensible and Modular** — Designed to grow with your needs, TUUCHO is actively evolving with support for new components, styles, actions, and validation logic.
 - **Open Source & Community Driven** — Join the TUUCHO community and contribute to making the platform more robust and feature-rich.
-
----
-
-## Roadmap & Future Plans
-
-TUUCHO is actively under development. Exciting features such as advanced animations, behaviors, modular UI components, improved caching, and richer validation mechanisms are on the horizon. Check out the [Roadmap](https://by-tezov.github.io/tuucho/roadmap.md) for full details.
 
 ---
 
@@ -48,7 +48,7 @@ For comprehensive documentation, examples, and developer guides, visit:
 
 ## Backend Repository
 
-The TUUCHO backend repository contains tools and services to support TUUCHO rendering:
+The TUUCHO backend repository for quick dev and test:
 
 [tuucho-backend GitHub Repository](https://github.com/by-tezov/tuucho-backend)
 

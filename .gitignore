@@ -8,3 +8,4 @@
 /mkdocs/site/
 /.kotlin/
 /app/ios/ios/Build/
+/build-logic/.kotlin/errors/
