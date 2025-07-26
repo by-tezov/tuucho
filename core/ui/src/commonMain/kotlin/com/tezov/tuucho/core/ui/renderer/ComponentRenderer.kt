@@ -1,7 +1,8 @@
 package com.tezov.tuucho.core.ui.renderer
 
-import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
+import com.tezov.tuucho.core.domain.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
@@ -15,10 +16,9 @@ class ComponentRenderer(
 ) : ScreenRendererProtocol, KoinComponent {
 
     override fun process(component: JsonElement): ScreenProtocol? {
-        val schema = component.schema()
-        val id = schema.withScope(IdSchema::Scope).self.stringOrNull
-        val type = schema.withScope(TypeSchema::Scope).self
-        val subset = schema.withScope(SubsetSchema::Scope).self
+        val id = component.onScope(IdSchema::Scope).value
+        val type = component.withScope(TypeSchema::Scope).self
+        val subset = component.withScope(SubsetSchema::Scope).self
 
         if (type != TypeSchema.Value.component) {
             error("object is not a component $component")

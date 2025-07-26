@@ -2,8 +2,9 @@ package com.tezov.tuucho.core.domain.actionHandler
 
 import com.tezov.tuucho.core.domain.model.Action
 import com.tezov.tuucho.core.domain.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.protocol.ActionHandlerProtocol
@@ -14,7 +15,6 @@ import com.tezov.tuucho.core.domain.usecase.SendDataUseCase
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -39,9 +39,8 @@ class FormSendUrlActionHandler(
     ) {
         action.target ?: return
         val form = materialState.form().also { it.updateAllValidity() }
-
         if (form.isAllValid()) {
-            sendData.invoke(action.target, form.data())?.schema()?.let { responseSchema ->
+            sendData.invoke(action.target, form.data())?.let { responseSchema ->
                 val rootScope = responseSchema.withScope(FormSendResponseSchema.Root::Scope)
                 val isAllSuccess = rootScope.isAllSuccess == true
                 if (isAllSuccess) {
@@ -50,8 +49,6 @@ class FormSendUrlActionHandler(
                     rootScope.processInvalidRemoteForm(id)
                 }
             }
-
-
         } else {
             form.processInvalidLocalForm(id)
         }
@@ -60,8 +57,9 @@ class FormSendUrlActionHandler(
 
     private fun FormMaterialStateProtocol.processInvalidLocalForm(id: String?) {
         val results = getAllValidityResult().filter { !it.second }.map {
-            JsonNull.schema().withScope(IdSchema::Scope).apply {
-                self = JsonPrimitive(it.first)
+            JsonNull.withScope(IdSchema::Scope).apply {
+                self = JsonNull.withScope(IdSchema::Scope)
+                    .apply { value = it.first }.collect()
             }.collect()
         }.let(::JsonArray)
         actionDenied(id, results)
@@ -69,12 +67,13 @@ class FormSendUrlActionHandler(
 
     private fun FormSendResponseSchema.Root.Scope.processInvalidRemoteForm(id: String?) {
         val results = results?.map { result ->
-            val resultScope = result.schema().withScope(FormSendResponseSchema.Result::Scope)
-            val resultId = resultScope.id
+            val resultScope = result.withScope(FormSendResponseSchema.Result::Scope)
             val resultFailureReason = resultScope.failureReason
-            JsonNull.schema().withScope(::SchemaScope).apply {
+            JsonNull.withScope(::SchemaScope).apply {
                 withScope(IdSchema::Scope).apply {
-                    self = resultId
+                    self = JsonNull.withScope(IdSchema::Scope).apply {
+                        value = resultScope.id
+                    }.collect()
                 }
                 resultFailureReason?.let {
                     withScope(FormSendResponseSchema.Result::Scope).apply {
@@ -87,8 +86,7 @@ class FormSendUrlActionHandler(
     }
 
     private fun JsonElement.actionValidated(id: String?) {
-        val actionValidated =
-            schema().withScope(FormSendResponseSchema.ActionParams::Scope).actionValidated
+        val actionValidated = withScope(FormSendResponseSchema.ActionParams::Scope).actionValidated
         actionValidated?.let { actionHandler.invoke(id, ActionModelDomain.from(it)) }
     }
 

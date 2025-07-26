@@ -19,7 +19,6 @@ class DelegateSchemaKey<T : Any?>(
     interface MapOperator {
         fun read(key: String): JsonElement?
         fun write(key: String, jsonElement: JsonElement)
-        fun collect(): JsonObject
     }
 
     private fun resolveKey(property: KProperty<*>): String {

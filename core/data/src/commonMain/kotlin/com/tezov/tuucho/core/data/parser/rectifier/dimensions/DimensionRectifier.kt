@@ -8,8 +8,9 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
 import com.tezov.tuucho.core.domain.model.schema._system.SymbolData
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.addGroup
@@ -43,7 +44,7 @@ class DimensionRectifier : Rectifier() {
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).schema().withScope(DimensionSchema::Scope).apply {
+    ) = element.find(path).withScope(DimensionSchema::Scope).apply {
         type = TypeSchema.Value.dimension
         val value = this.element.string
         if(value.startsWith(SymbolData.ID_REF_INDICATOR)) {
@@ -58,7 +59,7 @@ class DimensionRectifier : Rectifier() {
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).schema().withScope(DimensionSchema::Scope).apply {
+    ) = element.find(path).withScope(DimensionSchema::Scope).apply {
         type = TypeSchema.Value.dimension
         id ?: run { id = JsonNull }
     }.collect()
@@ -76,7 +77,7 @@ class DimensionRectifier : Rectifier() {
     ): JsonElement? {
         var valueRectified: String?
         var sourceRectified: String?
-        return element.find(path).schema()
+        return element.find(path)
             .withScope(DimensionSchema::Scope)
             .takeIf {
                 it.rectifyIds().also { (value, source) ->
