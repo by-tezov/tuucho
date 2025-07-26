@@ -25,7 +25,7 @@ fun JsonElement.find(path: JsonElementPath): JsonElement =
     this.findOrNull(path)
         ?: throw NullPointerException("element could not be found at path $path inside $this")
 
-fun JsonElement.replace(path: JsonElementPath, newElement: JsonElement): JsonElement {
+fun JsonElement.replaceOrInsert(path: JsonElementPath, newElement: JsonElement): JsonElement {
     if (path.isEmpty()) return newElement
     val stack = mutableListOf<Pair<String, JsonObject>>()
     var current = this
@@ -33,7 +33,7 @@ fun JsonElement.replace(path: JsonElementPath, newElement: JsonElement): JsonEle
         require(current is JsonObject) { "invalid path: $key is not an object" }
         stack.add(key to current)
         current = current[key]
-            ?: throw IllegalArgumentException("path not found: $path")
+            ?: emptyMap<String, JsonElement>().let(::JsonObject)
     }
     var updated = newElement
     for ((key, parent) in stack.asReversed()) {

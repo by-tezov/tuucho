@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.toTree
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.replace
+import com.tezov.tuucho.core.domain._system.replaceOrInsert
 import com.tezov.tuucho.core.domain._system.toPath
 
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
@@ -140,7 +140,7 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
                     value.toJsonObjectRef()
                 }
             }
-            _element = _element.replace(key.toPath(), newValue)
+            _element = _element.replaceOrInsert(key.toPath(), newValue)
         }
         return _element.jsonObject
             .toTree(extraData)

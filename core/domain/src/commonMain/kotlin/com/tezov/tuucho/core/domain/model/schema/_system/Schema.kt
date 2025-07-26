@@ -4,7 +4,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonObject
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -100,7 +99,9 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
                 resolveMutableMap.remove(key)
             }
 
-            override fun collect() = _map?.let { JsonObject(it) } ?: element.jsonObject
+            override fun collect() = _map?.let(::JsonObject)
+                ?: (element as? JsonObject)
+                ?: emptyMap<String, JsonElement>().let(::JsonObject)
         }
     }
 

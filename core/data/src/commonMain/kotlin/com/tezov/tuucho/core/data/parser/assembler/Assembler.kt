@@ -4,13 +4,14 @@ import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.replace
+import com.tezov.tuucho.core.domain._system.replaceOrInsert
 import com.tezov.tuucho.core.domain._system.toPath
 
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
 import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.model.schema.material.SettingSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -48,7 +49,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         path: JsonElementPath,
         element: JsonElement,
         extraData: ExtraDataAssembler,
-    ) = element.replace(
+    ) = element.replaceOrInsert(
         path, map {
             (it as? JsonObject)?.assembleObject("".toPath(), it, extraData)
                 ?: error("by design element inside array must be object")
@@ -92,7 +93,8 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         val currentRectifiedAndResolved = retrieveAllRef(extraData.url, dataBaseType)?.let {
             (it.rectify(path, element, extraData) ?: it).merge()
         } ?: rectify(path, element, extraData) ?: this
-        var _element = element.replace(path, currentRectifiedAndResolved)
+        var _element = (currentRectifiedAndResolved.udpateSetting(element) ?: element)
+            .replaceOrInsert(path, currentRectifiedAndResolved)
         if (childProcessors.isNotEmpty()) {
             currentRectifiedAndResolved.keys.forEach { childKey ->
                 val childPath = path.child(childKey)
@@ -167,4 +169,15 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
             }
         }.collect().let { merge(it) }
     }
+
+    private fun JsonObject.udpateSetting(element: JsonElement) =
+        if (onScope(IdSchema::Scope).source != null) {
+            element.onScope(SettingSchema::Scope)
+                .takeIf { it.missingDefinition != true }
+                ?.apply { missingDefinition = true }
+                ?.collect()
+                ?.let { setting ->
+                    element.replaceOrInsert(SettingSchema.root.toPath(), setting)
+                }
+        } else null
 }
