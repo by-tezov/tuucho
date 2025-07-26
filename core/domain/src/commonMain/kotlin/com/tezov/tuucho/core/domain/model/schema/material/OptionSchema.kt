@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.model.schema.material
 
 import com.tezov.tuucho.core.domain.model.schema._system.OpenSchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -17,9 +18,9 @@ object OptionSchema {
             SubsetSchema.root
     }
 
-    class Scope : OpenScope<Scope>()
+    class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
 
-    open class OpenScope<T : OpenScope<T>> : OpenSchemaScope<T>() {
+    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) : OpenSchemaScope<T>(argument) {
         final override val root =
             OptionSchema.root
         var self by delegate<JsonObject?>(root)

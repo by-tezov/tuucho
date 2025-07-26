@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.model.schema.material._element
 
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.model.schema.material.ContentSchema
 import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
@@ -19,7 +20,7 @@ object LabelSchema {
             const val value = "value"
         }
 
-        class Scope : ContentSchema.OpenScope<Scope>() {
+        class Scope(argument: SchemaScopeArgument) : ContentSchema.OpenScope<Scope>(argument) {
 
             var value by delegate<JsonObject?>(Key.value)
 
@@ -32,7 +33,7 @@ object LabelSchema {
             const val fontSize = "font-size"
         }
 
-        class Scope : StyleSchema.OpenScope<Scope>() {
+        class Scope(argument: SchemaScopeArgument) : StyleSchema.OpenScope<Scope>(argument) {
 
             var fontColor by delegate<JsonObject?>(Key.fontColor)
             var fontSize by delegate<JsonObject?>(Key.fontSize)

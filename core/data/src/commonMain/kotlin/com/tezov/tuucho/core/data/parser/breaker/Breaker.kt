@@ -10,8 +10,10 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replace
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonArray
@@ -90,9 +92,8 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
     private fun JsonObject.toTree(
         extraData: ExtraDataBreaker,
     ): JsonEntityObjectTree {
-        val schema = schema()
-        val type = schema.withScope(TypeSchema::Scope).self
-        val (id, idFrom) = schema.onScope(IdSchema::Scope)
+        val type = withScope(TypeSchema::Scope).self
+        val (id, idFrom) = onScope(IdSchema::Scope)
             .let { it.value to it.source }
         return JsonObjectEntity(
             type = type
@@ -105,7 +106,7 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
         ).toTree()
     }
 
-    private fun JsonEntityObjectTree.toJsonObjectRef() = JsonNull.schema().withScope(::SchemaScope).apply {
+    private fun JsonEntityObjectTree.toJsonObjectRef() = JsonNull.withScope(::SchemaScope).apply {
         withScope(TypeSchema::Scope).apply {
             self = content.type
         }

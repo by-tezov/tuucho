@@ -7,8 +7,10 @@ import com.tezov.tuucho.core.domain._system.booleanOrNull
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replace
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -91,10 +93,10 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         var current = retrieveAllRef(extraData.url, dataBaseType)?.let { refs ->
             (refs.rectify(path, element, extraData) ?: refs).merge()
         } ?: rectify(path, element, extraData) ?: this
-        current = current.schema().withScope(IdSchema::Scope).apply {
-            // make id a primitive value since all has been resolved
-            self = onScope(IdSchema::Scope).value.let(::JsonPrimitive)
-        }.collect()
+//        current = current.withScope(IdSchema::Scope).apply {
+//            // make id a primitive value since all has been resolved
+//            self = onScope(IdSchema::Scope).value.let(::JsonPrimitive)
+//        }.collect()
         var _element = element.replace(path, current)
         if (childProcessors.isNotEmpty()) {
             current.keys.forEach { childKey ->
@@ -113,11 +115,11 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         url: String,
         type: String,
     ): List<JsonObject>? {
-        schema().onScope(IdSchema::Scope).source ?: return null
+        onScope(IdSchema::Scope).source ?: return null
         var currentEntry = this
         val entries = mutableListOf(currentEntry)
         do {
-            val idRef = currentEntry.schema().onScope(IdSchema::Scope).source
+            val idRef = currentEntry.onScope(IdSchema::Scope).source
             val entity = idRef?.let { ref ->
                 jsonObjectQueries.find(type = type, url = url, id = ref)
                     ?: jsonObjectQueries.findShared(type = type, id = ref)
@@ -134,7 +136,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
         1 -> first()
 
         else -> {
-            JsonNull.schema().withScope(::SchemaScope).apply {
+            JsonNull.withScope(::SchemaScope).apply {
                 for (entry in this@merge.asReversed()) {
                     merge(entry)
                 }
@@ -147,7 +149,7 @@ abstract class Assembler : MatcherProtocol, KoinComponent {
             val currentValue = this[key]
             this[key] = when {
                 currentValue is JsonObject && value is JsonObject -> {
-                    JsonNull.schema().withScope(::SchemaScope).apply {
+                    JsonNull.withScope(::SchemaScope).apply {
                         when {
                             key == IdSchema.root -> mergeId(value)
                             else -> merge(value)

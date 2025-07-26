@@ -6,8 +6,9 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
 import com.tezov.tuucho.core.domain.model.schema._system.SymbolData
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.model.schema.material.TextSchema
@@ -33,7 +34,7 @@ class ValidatorRectifier : Rectifier() {
         path: JsonElementPath,
         element: JsonElement,
     ) = beforeAlterObject("".toPath(), element.find(path)
-        .schema().withScope(ValidatorSchema::Scope).apply {
+        .withScope(ValidatorSchema::Scope).apply {
             type = this.element.string
         }
         .collect())
@@ -53,7 +54,7 @@ class ValidatorRectifier : Rectifier() {
         if (!jsonArray.any { it is JsonPrimitive }) return null
         return JsonArray(jsonArray.map {
             if (it is JsonPrimitive) {
-                it.schema().withScope(ValidatorSchema::Scope).apply {
+                it.withScope(ValidatorSchema::Scope).apply {
                     type = this.element.string
                 }.collect()
             } else it
@@ -72,7 +73,7 @@ class ValidatorRectifier : Rectifier() {
         element: JsonElement,
     ): JsonElement? {
         var valueRectified: String? = null
-        return element.schema().withScope(ValidatorSchema::Scope)
+        return element.withScope(ValidatorSchema::Scope)
             .takeIf { scope ->
                 if(scope.idMessageError?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
                     valueRectified = scope.idMessageError?.removePrefix(SymbolData.ID_REF_INDICATOR)

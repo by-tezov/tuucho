@@ -7,10 +7,10 @@ import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.findOrNull
-import com.tezov.tuucho.core.domain._system.isRef
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
@@ -42,24 +42,19 @@ class StyleRectifier : Rectifier() {
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).schema().withScope(StyleSchema::Scope).apply {
+    ) = element.find(path).withScope(StyleSchema::Scope).apply {
         type = TypeSchema.Value.style
         val value = this.element.string.requireIsRef()
         id = JsonPrimitive(value)
-        if (subset == null && !isRef) {
-            subset = retrieveSubsetOrMarkUnknown(path, element)
-        }
     }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).schema().withScope(StyleSchema::Scope).apply {
+    ) = element.find(path).withScope(StyleSchema::Scope).apply {
         type = TypeSchema.Value.style
         id ?: run { id = JsonNull }
-        if (subset == null && !isRef) {
-            subset = retrieveSubsetOrMarkUnknown(path, element)
-        }
+        subset = retrieveSubsetOrMarkUnknown(path, element)
     }.collect()
 
     override fun beforeAlterArray(
@@ -72,7 +67,7 @@ class StyleRectifier : Rectifier() {
     private fun retrieveSubsetOrMarkUnknown(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.findOrNull(path.parent())?.schema()
+    ) = element.findOrNull(path.parent())
         ?.withScope(ComponentSchema::Scope)?.subset
         ?: SubsetSchema.Value.unknown
 }

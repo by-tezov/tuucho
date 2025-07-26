@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.usecase
 
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.ValidatorSchema
 import com.tezov.tuucho.core.domain.model.schema.material.ValidatorSchema.Value.Type
 import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
@@ -17,7 +18,7 @@ import kotlinx.serialization.json.JsonObject
 class ValidatorFactoryUseCase {
 
     @Suppress("UNCHECKED_CAST")
-    fun invoke(prototype: JsonObject) = prototype.schema().withScope(ValidatorSchema::Scope).let {
+    fun invoke(prototype: JsonObject) = prototype.withScope(ValidatorSchema::Scope).let {
         when (it.type) {
             Type.stringMinLength -> StringMinLengthFieldValidator(
                 length = it.length!!.toInt(),

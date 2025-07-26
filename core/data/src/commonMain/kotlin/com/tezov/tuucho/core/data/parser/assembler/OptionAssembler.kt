@@ -7,7 +7,8 @@ import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonElement
@@ -35,7 +36,7 @@ class OptionAssembler : Assembler() {
     private fun JsonObject.rectify(
         parentSubset: String
     ): JsonObject {
-        val altered = schema().withScope(SubsetSchema::Scope).apply {
+        val altered = withScope(SubsetSchema::Scope).apply {
             self = parentSubset
         }.collect()
         return rectifier.process("".toPath(), altered) as JsonObject
@@ -46,8 +47,8 @@ class OptionAssembler : Assembler() {
         element: JsonElement,
         extraData: ExtraDataAssembler
     ): JsonObject? {
-        schema().withScope(SubsetSchema::Scope).self ?: return null
-        val parentSubset = element.find(path.parent()).schema()
+        withScope(SubsetSchema::Scope).self ?: return null
+        val parentSubset = element.find(path.parent())
             .withScope(SubsetSchema::Scope).self!!
         return rectify(parentSubset)
     }
@@ -57,10 +58,10 @@ class OptionAssembler : Assembler() {
         element: JsonElement,
         extraData: ExtraDataAssembler
     ): List<JsonObject>? {
-        if (!any { it.schema().withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
-        val parentSubset = element.find(path.parent()).schema().withScope(SubsetSchema::Scope).self!!
+        if (!any { it.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
+        val parentSubset = element.find(path.parent()).withScope(SubsetSchema::Scope).self!!
         return map { current ->
-            if (current.schema().withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown) {
+            if (current.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown) {
                 current.rectify(parentSubset)
             } else current
         }

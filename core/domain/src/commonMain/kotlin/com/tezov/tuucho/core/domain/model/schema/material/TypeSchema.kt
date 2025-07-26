@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.model.schema.material
 
 import com.tezov.tuucho.core.domain.model.schema._system.OpenSchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 
 object TypeSchema {
 
@@ -16,7 +17,7 @@ object TypeSchema {
         const val color = "color"
     }
 
-    class Scope : OpenSchemaScope<Scope>() {
+    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
         override val root = TypeSchema.root
         var self by delegate<String?>(root)
     }

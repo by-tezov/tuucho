@@ -10,11 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
 import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.config.Language
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TextSchema
@@ -39,17 +40,16 @@ class FieldRendered(
     private val getLanguage: GetLanguageUseCase,
 ) : Renderer() {
 
-    override fun accept(element: JsonElement) = element.schema()
+    override fun accept(element: JsonElement) = element
         .let {
             it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                     it.withScope(SubsetSchema::Scope).self == FieldSchema.Component.Value.subset
         }
 
     override fun process(element: JsonElement): ComposableScreenProtocol {
-        val schema = element.schema()
-        val id = schema.withScope(IdSchema::Scope).self.string
-        val content = schema.onScope(FieldSchema.Content::Scope)
-        val option = schema.onScope(FieldSchema.Option::Scope)
+        val id = element.onScope(IdSchema::Scope).value ?: error("Missing id for $element")
+        val content = element.onScope(FieldSchema.Content::Scope)
+        val option = element.onScope(FieldSchema.Option::Scope)
 
         val validators = buildValidator(option.validator, content.messageError)
 
@@ -62,7 +62,7 @@ class FieldRendered(
             if (event !is FormUpdateActionHandler.Event.Error) return@invoke
             event.takeIf { it.id == id }.let {
                 val isValid = materialState.form().fieldsState().isValid(id)
-                val messageError = event.text?.schema()?.withScope(TextSchema::Scope)?.default
+                val messageError = event.text?.withScope(TextSchema::Scope)?.default
                 val shouldShowError = isValid != true || messageError != null
                 if (shouldShowError) {
                     showError.value = true
@@ -93,12 +93,12 @@ class FieldRendered(
         messagesError: JsonArray?,
     ): List<FieldValidatorProtocol<String>>? {
         val messagesErrorIdMapped = messagesError?.mapNotNull { message ->
-            val idMessage = message.schema().withScope(IdSchema::Scope).self.string
+            val idMessage = message.onScope(IdSchema::Scope).value ?: error("Missing id for $message")
             idMessage to message.jsonObject
         }
 
         return validators?.mapNotNull { validator ->
-            val validatorPrototype = validator.schema().withScope(ValidatorSchema::Scope).apply {
+            val validatorPrototype = validator.withScope(ValidatorSchema::Scope).apply {
                 this.messageError = messagesErrorIdMapped
                     ?.firstOrNull { it.first == idMessageError || validators.size == 1 }?.second
                     ?: error("Missing message error for validator")

@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.model.schema.material
 
 import com.tezov.tuucho.core.domain.model.schema._system.OpenSchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import kotlinx.serialization.json.JsonElement
 
 object DimensionSchema {
@@ -21,7 +22,7 @@ object DimensionSchema {
         }
     }
 
-    class Scope : OpenSchemaScope<Scope>() {
+    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
         override val root = DimensionSchema.root
         var self by delegate<JsonElement?>(root)
 

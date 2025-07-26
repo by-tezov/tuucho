@@ -5,7 +5,8 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.TextSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -23,7 +24,7 @@ class ContentFieldTextErrorRectifier : Rectifier() {
         path: JsonElementPath,
         element: JsonElement,
     ) = beforeAlterObject("".toPath(), element.find(path)
-        .schema().withScope(TextSchema::Scope).apply {
+        .withScope(TextSchema::Scope).apply {
             default = this.element.string
         }
         .collect())
@@ -43,7 +44,7 @@ class ContentFieldTextErrorRectifier : Rectifier() {
         if (!jsonArray.any { it is JsonPrimitive }) return null
         return JsonArray(jsonArray.map {
             if (it is JsonPrimitive) {
-                it.schema().withScope(TextSchema::Scope).apply {
+                it.withScope(TextSchema::Scope).apply {
                     default = this.element.string
                 }.collect()
             } else {

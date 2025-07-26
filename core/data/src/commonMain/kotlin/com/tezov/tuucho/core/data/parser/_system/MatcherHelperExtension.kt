@@ -2,7 +2,8 @@ package com.tezov.tuucho.core.data.parser._system
 
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.findOrNull
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonElement
@@ -24,7 +25,7 @@ fun JsonElementPath.lastSegmentStartWith(
 // type
 fun JsonElement?.isTypeOf(
     value: String,
-) = (this as? JsonObject)?.schema()?.withScope(TypeSchema::Scope)?.self == value
+) = (this as? JsonObject)?.withScope(TypeSchema::Scope)?.self == value
 
 fun JsonElementPath.isTypeOf(
     element: JsonElement, value: String,
@@ -38,7 +39,7 @@ fun JsonElementPath.parentIsTypeOf(
 fun JsonElement?.isAnyTypeOf(
     values: List<String>,
 ): Boolean {
-    val type = (this as? JsonObject)?.schema()?.withScope(TypeSchema::Scope)?.self ?: return false
+    val type = (this as? JsonObject)?.withScope(TypeSchema::Scope)?.self ?: return false
     return values.any { it == type }
 }
 
@@ -53,7 +54,7 @@ fun JsonElementPath.parentIsAnyTypeOf(
 // subset
 fun JsonElement?.isSubsetOf(
     value: String,
-) = (this as? JsonObject)?.schema()?.withScope(SubsetSchema::Scope)?.self == value
+) = (this as? JsonObject)?.withScope(SubsetSchema::Scope)?.self == value
 
 fun JsonElementPath.isSubsetOf(
     element: JsonElement, value: String,
@@ -67,7 +68,7 @@ fun JsonElementPath.parentIsSubsetOf(
 fun JsonElement?.isAnySubsetOf(
     values: List<String>,
 ):Boolean {
-    val type = (this as? JsonObject)?.schema()?.withScope(SubsetSchema::Scope)?.self ?: return false
+    val type = (this as? JsonObject)?.withScope(SubsetSchema::Scope)?.self ?: return false
     return values.any { it == type }
 }
 

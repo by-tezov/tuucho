@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.model.schema.material._element
 
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import kotlinx.serialization.json.JsonObject
@@ -17,7 +18,7 @@ object SpacerSchema {
             const val weight = "weight"
         }
 
-        class Scope : StyleSchema.OpenScope<Scope>() {
+        class Scope(argument: SchemaScopeArgument) : StyleSchema.OpenScope<Scope>(argument) {
 
             var weight by delegate<JsonObject?>(Key.weight)
 

@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.model.schema.material
 
 import com.tezov.tuucho.core.domain.model.schema._system.OpenSchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import kotlinx.serialization.json.JsonObject
 
 object ValidatorSchema {
@@ -29,7 +30,7 @@ object ValidatorSchema {
         }
     }
 
-    class Scope : OpenSchemaScope<Scope>() {
+    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
         override val root = ValidatorSchema.root
 
         var type by delegate<String?>(Key.type)

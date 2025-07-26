@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
@@ -24,18 +26,17 @@ class LayoutLinearRendered : Renderer() {
 
     private val renderer: ScreenRendererProtocol by inject()
 
-    override fun accept(element: JsonElement) = element.schema()
+    override fun accept(element: JsonElement) = element
         .let {
             it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                     it.withScope(SubsetSchema::Scope).self == LayoutLinearSchema.Component.Value.subset
         }
 
     override fun process(element: JsonElement): ComposableScreenProtocol {
-        val schema = element.schema()
-        val content = schema.onScope(LayoutLinearSchema.Content::Scope)
-        val style = schema.onScope(LayoutLinearSchema.Style::Scope)
+        val content = element.onScope(LayoutLinearSchema.Content::Scope)
+        val style = element.onScope(LayoutLinearSchema.Style::Scope)
 
-        val backgroundColor = style.backgroundColor?.schema()
+        val backgroundColor = style.backgroundColor
             ?.withScope(ColorSchema::Scope)?.default //TODO manage "selector",not only default
 
         val items = content.items
