@@ -1,24 +1,24 @@
-package com.tezov.tuucho.core.data.repository
+package com.tezov.tuucho.core.data.database
 
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree
-import com.tezov.tuucho.core.data.parser.assembler.ExtraDataAssembler
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
-import com.tezov.tuucho.core.data.parser.breaker.ExtraDataBreaker
+import com.tezov.tuucho.core.data.parser.assembler._system.ArgumentAssembler
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
+import com.tezov.tuucho.core.data.parser.breaker._system.ArgumentBreaker
 import kotlinx.serialization.json.JsonElement
 
-class MaterialCacheRepository(
+class MaterialCacheSource(
     private val jsonObjectQueries: JsonObjectQueries,
     private val versioningQueries: VersioningQueries,
     private val materialBreaker: MaterialBreaker,
     private val materialAssembler: MaterialAssembler,
 ) {
 
-    suspend fun shouldRefresh(url: String, version: String): Boolean {
+    suspend fun shouldRefresh(/* TODO */): Boolean {
 //TODO
 //        return database.versioning().countVersions(url).let { result ->
 //            result.any { it.version != version } || result.isEmpty()
@@ -26,22 +26,25 @@ class MaterialCacheRepository(
         return true
     }
 
-    fun refreshCache(
-        config: ExtraDataBreaker,
+    // Keep suspend to enforce caller to use it in background thread
+    suspend fun refreshCache(
+        version: String,
+        argumentAssembler: ArgumentAssembler,
+        argumentBreaker: ArgumentBreaker,
         materialElement: JsonElement,
     ) {
         //TODO auto purge obsolete entry
-        val parts = materialBreaker.process(materialElement, config)
+        val parts = materialBreaker.process(materialElement, argumentBreaker)
         with(parts) {
             val rootPrimaryKey = rootJsonEntity?.let { root ->
                 jsonObjectQueries
                     .insertOrUpdate(root.jsonEntityObjectTree.content)
             }
             VersioningEntity(
-                url = config.url,
-                version = config.version,
+                url = argumentAssembler.url,
+                version = version,
                 rootPrimaryKey = rootPrimaryKey,
-                isShared = config.isShared
+                isShared = argumentBreaker.isShared
             ).also { versioningQueries.insertOrUpdate(it) }
             rootJsonEntity?.let { root ->
                 root.flatten()
@@ -60,8 +63,8 @@ class MaterialCacheRepository(
         }
     }
 
-    suspend fun retrieve(config: ExtraDataAssembler): JsonElement? {
-        return materialAssembler.process(config)
+    suspend fun retrieve(argument: ArgumentAssembler): JsonElement? {
+        return materialAssembler.process(argument)
     }
 
 }

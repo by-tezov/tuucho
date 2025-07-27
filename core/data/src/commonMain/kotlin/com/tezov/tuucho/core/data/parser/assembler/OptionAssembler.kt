@@ -3,12 +3,12 @@ package com.tezov.tuucho.core.data.parser.assembler
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
+import com.tezov.tuucho.core.data.parser.assembler._system.ArgumentAssembler
 import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.toPath
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
-
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonElement
@@ -45,7 +45,7 @@ class OptionAssembler : Assembler() {
     override fun JsonObject.rectify(
         path: JsonElementPath,
         element: JsonElement,
-        extraData: ExtraDataAssembler
+        argument: ArgumentAssembler
     ): JsonObject? {
         withScope(SubsetSchema::Scope).self ?: return null
         val parentSubset = element.find(path.parent())
@@ -56,7 +56,7 @@ class OptionAssembler : Assembler() {
     override fun List<JsonObject>.rectify(
         path: JsonElementPath,
         element: JsonElement,
-        extraData: ExtraDataAssembler
+        argument: ArgumentAssembler
     ): List<JsonObject>? {
         if (!any { it.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
         val parentSubset = element.find(path.parent()).withScope(SubsetSchema::Scope).self!!

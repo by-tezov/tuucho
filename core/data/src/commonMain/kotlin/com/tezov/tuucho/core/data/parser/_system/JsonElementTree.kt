@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.data.parser._system
 
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
+import com.tezov.tuucho.core.data.exception.DataException
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
@@ -28,10 +29,10 @@ class JsonEntityArrayTree(private val content: List<JsonElementTree>) : JsonElem
 fun List<JsonElementTree>.toTree() = JsonEntityArrayTree(this)
 
 val JsonElementTree.jsonEntityObjectTree
-    get() = this as? JsonEntityObjectTree ?: error("JsonEntityPrimitive")
+    get() = this as? JsonEntityObjectTree ?: throw DataException.Default("JsonEntityPrimitive")
 
 val JsonElementTree.jsonEntityArrayTree
-    get() = this as? JsonEntityArrayTree ?: error("JsonEntityList")
+    get() = this as? JsonEntityArrayTree ?: throw DataException.Default("JsonEntityList")
 
 fun JsonElementTree.flatten(): List<JsonEntityObjectTree> {
     val output = mutableListOf<JsonEntityObjectTree>()

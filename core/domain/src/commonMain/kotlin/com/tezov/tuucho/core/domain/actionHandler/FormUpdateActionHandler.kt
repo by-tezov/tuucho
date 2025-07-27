@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.actionHandler
 
+import com.tezov.tuucho.core.domain.exception.DomainException
 import com.tezov.tuucho.core.domain.model.Action
 import com.tezov.tuucho.core.domain.model.ActionModelDomain
 
@@ -42,7 +43,7 @@ class FormUpdateActionHandler : ActionHandlerProtocol, KoinComponent {
     ) {
         when (val authority = action.authority) {
             Action.Form.Update.Authority.error -> updateErrorState(params)
-            else -> error("unknown authority $authority")
+            else -> throw DomainException.Default("unknown authority $authority")
         }
     }
 
@@ -51,7 +52,7 @@ class FormUpdateActionHandler : ActionHandlerProtocol, KoinComponent {
             params?.jsonArray?.forEach {
                 val scope = it.withScope(::SchemaScope)
                 val event = Event.Error(
-                    id = scope.onScope(IdSchema::Scope).value ?: error("Missing id for $it"),
+                    id = scope.onScope(IdSchema::Scope).value ?: throw DomainException.Default("Missing id for $it"),
                     text = scope.withScope(FormSendResponseSchema.Result::Scope).failureReason
                 )
                 _events.emit(event)

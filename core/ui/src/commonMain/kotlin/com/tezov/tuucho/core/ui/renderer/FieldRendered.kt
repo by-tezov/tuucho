@@ -27,6 +27,7 @@ import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
 import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
+import com.tezov.tuucho.core.ui.exception.UiException
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -47,7 +48,7 @@ class FieldRendered(
         }
 
     override fun process(element: JsonElement): ComposableScreenProtocol {
-        val id = element.onScope(IdSchema::Scope).value ?: error("Missing id for $element")
+        val id = element.onScope(IdSchema::Scope).value ?: throw UiException.Default("Missing id for $element")
         val content = element.onScope(FieldSchema.Content::Scope)
         val option = element.onScope(FieldSchema.Option::Scope)
 
@@ -93,7 +94,7 @@ class FieldRendered(
         messagesError: JsonArray?,
     ): List<FieldValidatorProtocol<String>>? {
         val messagesErrorIdMapped = messagesError?.mapNotNull { message ->
-            val idMessage = message.onScope(IdSchema::Scope).value ?: error("Missing id for $message")
+            val idMessage = message.onScope(IdSchema::Scope).value ?: throw UiException.Default("Missing id for $message")
             idMessage to message.jsonObject
         }
 
@@ -101,7 +102,7 @@ class FieldRendered(
             val validatorPrototype = validator.withScope(ValidatorSchema::Scope).apply {
                 this.messageError = messagesErrorIdMapped
                     ?.firstOrNull { it.first == idMessageError || validators.size == 1 }?.second
-                    ?: error("Missing message error for validator")
+                    ?: throw UiException.Default("Missing message error for validator")
             }.collect()
 
             @Suppress("UNCHECKED_CAST")

@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.actionHandler
 
 import com.tezov.tuucho.core.domain.model.Action
 import com.tezov.tuucho.core.domain.model.ActionModelDomain
-
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
@@ -40,8 +39,9 @@ class FormSendUrlActionHandler(
         action.target ?: return
         val form = materialState.form().also { it.updateAllValidity() }
         if (form.isAllValid()) {
-            sendData.invoke(action.target, form.data())?.let { responseSchema ->
-                val rootScope = responseSchema.withScope(FormSendResponseSchema.Root::Scope)
+            val response = sendData.invoke(action.target, form.data())
+            response?.let {
+                val rootScope = response.withScope(FormSendResponseSchema.Root::Scope)
                 val isAllSuccess = rootScope.isAllSuccess == true
                 if (isAllSuccess) {
                     params?.actionValidated(id)

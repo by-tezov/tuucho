@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.model.schema.material
 
+import com.tezov.tuucho.core.domain.exception.DomainException
 import com.tezov.tuucho.core.domain.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.model.schema._system.SymbolData.ID_GROUP_SEPARATOR
@@ -29,7 +30,7 @@ object IdSchema {
 
     fun String.requireIsRef(): String {
         if (!isRef) {
-            throw error("should start with *")
+            throw DomainException.Default("should start with *")
         }
         return this
     }

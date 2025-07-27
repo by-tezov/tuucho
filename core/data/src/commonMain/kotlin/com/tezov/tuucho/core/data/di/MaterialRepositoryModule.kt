@@ -1,18 +1,22 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.network.service.MaterialNetworkHttpRequest
-import com.tezov.tuucho.core.data.network.service.MaterialNetworkService
+import com.tezov.tuucho.core.data.database.MaterialCacheSource
+import com.tezov.tuucho.core.data.exception.DataException
+import com.tezov.tuucho.core.data.network.MaterialNetworkHttpRequest
+import com.tezov.tuucho.core.data.network.MaterialNetworkSource
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
-import com.tezov.tuucho.core.data.repository.MaterialCacheRepository
-import com.tezov.tuucho.core.data.repository.MaterialRepository
-import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
+import com.tezov.tuucho.core.data.repository.RefreshCacheMaterialRepository
+import com.tezov.tuucho.core.data.repository.RetrieveMaterialRepository
+import com.tezov.tuucho.core.data.repository.SendDataMaterialRepository
+import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.SendDataMaterialRepositoryProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -39,7 +43,7 @@ object MaterialRepositoryModule {
                     validateResponse { response ->
                         val statusCode = response.status.value
                         if (statusCode !in 200..299) {
-                            throw ResponseException(response, "HTTP ${response.status} received")
+                            throw DataException.Default("Bad response received: $response")
                         }
                     }
                     handleResponseExceptionWithRequest { cause, _ -> throw cause }
@@ -54,16 +58,16 @@ object MaterialRepositoryModule {
             )
         }
 
-        single<MaterialNetworkService> {
-            MaterialNetworkService(
+        single<MaterialNetworkSource> {
+            MaterialNetworkSource(
                 materialNetworkHttpRequest = get<MaterialNetworkHttpRequest>(),
                 materialRectifier = get<MaterialRectifier>(),
                 jsonConverter = get<Json>()
             )
         }
 
-        single<MaterialCacheRepository> {
-            MaterialCacheRepository(
+        single<MaterialCacheSource> {
+            MaterialCacheSource(
                 jsonObjectQueries = get(),
                 versioningQueries = get(),
                 materialBreaker = get<MaterialBreaker>(),
@@ -71,10 +75,23 @@ object MaterialRepositoryModule {
             )
         }
 
-        single<MaterialRepositoryProtocol> {
-            MaterialRepository(
-                materialNetworkService = get<MaterialNetworkService>(),
-                materialCacheRepository = get<MaterialCacheRepository>(),
+        single<SendDataMaterialRepositoryProtocol> {
+            SendDataMaterialRepository(
+                materialNetworkSource = get<MaterialNetworkSource>()
+            )
+        }
+
+        single<RetrieveMaterialRepositoryProtocol> {
+            RetrieveMaterialRepository(
+                materialNetworkSource = get<MaterialNetworkSource>(),
+                materialCacheSource = get<MaterialCacheSource>()
+            )
+        }
+
+        single<RefreshCacheMaterialRepositoryProtocol> {
+            RefreshCacheMaterialRepository(
+                materialNetworkSource = get<MaterialNetworkSource>(),
+                materialCacheSource = get<MaterialCacheSource>()
             )
         }
 

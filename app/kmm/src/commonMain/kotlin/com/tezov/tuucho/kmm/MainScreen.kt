@@ -2,6 +2,7 @@ package com.tezov.tuucho.kmm
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,5 +53,12 @@ private fun StartEngineScreen(
     LaunchedEffect(viewModel.url.value) {
         screen = renderer.invoke(viewModel.url.value) as? ComposableScreenProtocol
     }
+
     screen?.show(null)
+
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.onCleared()
+        }
+    }
 }

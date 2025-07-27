@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.data.network.service
+package com.tezov.tuucho.core.data.network
 
 import com.tezov.tuucho.core.data.network._system.JsonRequestBody
 import com.tezov.tuucho.core.data.network._system.JsonResponse

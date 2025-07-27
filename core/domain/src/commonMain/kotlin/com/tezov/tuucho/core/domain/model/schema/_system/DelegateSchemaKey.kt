@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.model.schema._system
 
 import com.tezov.tuucho.core.domain._system.booleanOrNull
 import com.tezov.tuucho.core.domain._system.stringOrNull
+import com.tezov.tuucho.core.domain.exception.DomainException
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -32,7 +33,7 @@ class DelegateSchemaKey<T : Any?>(
             JsonElement::class, JsonPrimitive::class, JsonArray::class, JsonObject::class -> value
             String::class -> value.stringOrNull
             Boolean::class -> value.booleanOrNull
-            else -> error("unknown type")
+            else -> throw DomainException.Default("unknown type")
         }) as T
     }
 
@@ -46,7 +47,7 @@ class DelegateSchemaKey<T : Any?>(
                     JsonElement::class, JsonPrimitive::class, JsonArray::class, JsonObject::class -> value
                     String::class -> JsonPrimitive(value as String)
                     Boolean::class -> JsonPrimitive(value as Boolean)
-                    else -> error("unknown type")
+                    else -> throw DomainException.Default("unknown type")
                 } as JsonElement
             )
         }

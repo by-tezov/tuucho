@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.ui.state
 
 import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
 import com.tezov.tuucho.core.domain.protocol.state.FieldsMaterialStateProtocol
+import com.tezov.tuucho.core.ui.exception.UiException
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -25,7 +26,7 @@ class FieldsMaterialState : FieldsMaterialStateProtocol {
         validators: List<FieldValidatorProtocol<String>>?,
     ) {
         if (fields.containsKey(id)) {
-            throw IllegalStateException("id $id already exist")
+            throw UiException.Default("id $id already exist")
         }
         fields[id] = Entry(initialValue, validators)
     }

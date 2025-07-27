@@ -22,7 +22,7 @@ class MaterialRectifier : KoinComponent {
     private val colorsRectifier: ColorsRectifier by inject()
     private val dimensionsRectifier: DimensionsRectifier by inject()
 
-    fun process(element: JsonElement): JsonElement {
+    fun process(element: JsonElement): JsonObject {
 
 //        runCatching {
 //            if(element.jsonObject["root"]!!.jsonObject["id"].string == "page-home") {

@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.model.schema._system
 
+import com.tezov.tuucho.core.domain.exception.DomainException
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -76,7 +77,7 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
                         element) {
                         is JsonObject -> element.toMutableMap()
                         is JsonPrimitive -> mutableMapOf()
-                        else -> error("element ${element::class.simpleName} can't be resolved as Mutable Map")
+                        else -> throw DomainException.Default("element ${element::class.simpleName} can't be resolved as Mutable Map")
                     }.also { _map = it }
                 }
 
@@ -85,7 +86,7 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
                     return _map ?: when (val element = element) {
                         is JsonObject -> element
                         is JsonPrimitive -> emptyMap()
-                        else -> error("element ${element::class.simpleName} can't be resolved as Map")
+                        else -> throw DomainException.Default("element ${element::class.simpleName} can't be resolved as Map")
                     }.also { _map = it }
                 }
 

@@ -18,47 +18,48 @@ import kotlinx.serialization.json.JsonObject
 class ValidatorFactoryUseCase {
 
     @Suppress("UNCHECKED_CAST")
-    fun invoke(prototype: JsonObject) = prototype.withScope(ValidatorSchema::Scope).let {
-        when (it.type) {
-            Type.stringMinLength -> StringMinLengthFieldValidator(
-                length = it.length!!.toInt(),
-                errorMessages = it.messageError!!
-            )
+    fun invoke(prototype: JsonObject): FieldValidatorProtocol<Any> =
+        prototype.withScope(ValidatorSchema::Scope).let {
+            when (it.type) {
+                Type.stringMinLength -> StringMinLengthFieldValidator(
+                    length = it.length!!.toInt(),
+                    errorMessages = it.messageError!!
+                )
 
-            Type.stringMaxLength -> StringMaxLengthFieldValidator(
-                length = it.length!!.toInt(),
-                errorMessages = it.messageError!!
-            )
+                Type.stringMaxLength -> StringMaxLengthFieldValidator(
+                    length = it.length!!.toInt(),
+                    errorMessages = it.messageError!!
+                )
 
-            Type.stringMinDigitLength -> StringMinDigitLengthFieldValidator(
-                length = it.length!!.toInt(),
-                errorMessages = it.messageError!!
-            )
+                Type.stringMinDigitLength -> StringMinDigitLengthFieldValidator(
+                    length = it.length!!.toInt(),
+                    errorMessages = it.messageError!!
+                )
 
-            Type.stringOnlyDigits -> StringOnlyDigitsValidator(
-                errorMessages = it.messageError!!
-            )
+                Type.stringOnlyDigits -> StringOnlyDigitsValidator(
+                    errorMessages = it.messageError!!
+                )
 
-            Type.stringEmail -> StringEmailValidator(
-                errorMessages = it.messageError!!
-            )
+                Type.stringEmail -> StringEmailValidator(
+                    errorMessages = it.messageError!!
+                )
 
-            Type.stringNotNull -> StringNotNullValidator(
-                errorMessages = it.messageError!!
-            )
+                Type.stringNotNull -> StringNotNullValidator(
+                    errorMessages = it.messageError!!
+                )
 
-            Type.stringMinValue -> StringMinValueValidator(
-                errorMessages = it.messageError!!,
-                minValue = it.value!!.toInt(),
-            )
+                Type.stringMinValue -> StringMinValueValidator(
+                    errorMessages = it.messageError!!,
+                    minValue = it.value!!.toInt(),
+                )
 
-            Type.stringMaxValue -> StringMaxValueValidator(
-                errorMessages = it.messageError!!,
-                maxValue = it.value!!.toInt(),
-            )
+                Type.stringMaxValue -> StringMaxValueValidator(
+                    errorMessages = it.messageError!!,
+                    maxValue = it.value!!.toInt(),
+                )
 
-            else -> error("Validator $prototype can't be resolved")
-        }
-    } as FieldValidatorProtocol<Any>
+                else -> error("Validator $prototype can't be resolved")
+            }
+        } as FieldValidatorProtocol<Any>
 
 }
