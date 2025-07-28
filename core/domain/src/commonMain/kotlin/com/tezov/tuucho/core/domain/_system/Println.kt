@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.domain._system
 
+//TODO remove, allow log of long string when debug in logcat
+
 fun logAll(value: Any?) {
     val output = value?.toString() ?: "null"
     logLong(output)

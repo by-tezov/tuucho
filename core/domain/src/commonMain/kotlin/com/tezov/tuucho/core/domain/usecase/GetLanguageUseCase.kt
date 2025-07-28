@@ -4,5 +4,6 @@ import com.tezov.tuucho.core.domain.config.Language
 
 class GetLanguageUseCase {
 
-    fun invoke() = Language.Default //TODO retrieve system language or preference application
+    fun invoke(): Language =
+        Language.Default //TODO retrieve system language or preference application
 }

@@ -8,14 +8,14 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain.config.Language
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
 import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.LabelSchema
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
-import com.tezov.tuucho.core.ui._system.toColor
 import com.tezov.tuucho.core.ui._system.toColorOrNull
 import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonElement
@@ -25,20 +25,19 @@ class LabelRendered(
     private val getLanguage: GetLanguageUseCase
 ) : Renderer() {
 
-    override fun accept(element: JsonElement) = element.schema()
+    override fun accept(element: JsonElement) = element
         .let {
             it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
             it.withScope(SubsetSchema::Scope).self == LabelSchema.Component.Value.subset
         }
 
     override fun process(element: JsonElement): ComposableScreenProtocol {
-        val schema = element.schema()
-        val content = schema.onScope(LabelSchema.Content::Scope)
-        val style = schema.onScope(LabelSchema.Style::Scope)
+        val content = element.onScope(LabelSchema.Content::Scope)
+        val style = element.onScope(LabelSchema.Style::Scope)
 
-        val fontColor = style.fontColor?.schema()
+        val fontColor = style.fontColor
             ?.withScope(ColorSchema::Scope)?.default //TODO manage "selector",not only default
-        val fontSize = style.fontSize?.schema()
+        val fontSize = style.fontSize
             ?.withScope(DimensionSchema::Scope)?.default //TODO manage "selector",not only default
 
         return LabelScreen(

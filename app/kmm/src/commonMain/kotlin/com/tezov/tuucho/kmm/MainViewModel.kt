@@ -1,12 +1,12 @@
 package com.tezov.tuucho.kmm
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import com.tezov.tuucho.core.domain.usecase.RegisterNavigationUrlEventUseCase
+import com.tezov.tuucho.kmm._system.KMPViewModel
 
 class MainViewModel(
     private val registerNavigationUrlEvent: RegisterNavigationUrlEventUseCase,
-) : ViewModel() {
+): KMPViewModel() {
 
     private val _url = mutableStateOf("page-home")
     val url = _url

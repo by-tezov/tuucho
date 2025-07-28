@@ -4,7 +4,8 @@ import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -22,7 +23,7 @@ class ContentLayoutLinearItemsRectifier : Rectifier() {
         path: JsonElementPath,
         element: JsonElement,
     ) = beforeAlterObject("".toPath(), element.find(path)
-        .schema().withScope(IdSchema::Scope).apply {
+        .withScope(IdSchema::Scope).apply {
             self = this.element
         }
         .collect())
@@ -39,7 +40,7 @@ class ContentLayoutLinearItemsRectifier : Rectifier() {
         if(!current.any { it is JsonPrimitive }) return null
         return current.map {
             if(it is JsonPrimitive) {
-                it.schema().withScope(IdSchema::Scope).apply {
+                it.withScope(IdSchema::Scope).apply {
                     self = this.element
                 }.collect()
             } else it

@@ -3,11 +3,12 @@ package com.tezov.tuucho.core.data.parser.assembler
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
+import com.tezov.tuucho.core.data.parser.assembler._system.ArgumentAssembler
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonElement
@@ -35,7 +36,7 @@ class StyleAssembler : Assembler() {
     private fun JsonObject.rectify(
         parentSubset: String
     ): JsonObject {
-        val altered = schema().withScope(SubsetSchema::Scope).apply {
+        val altered = withScope(SubsetSchema::Scope).apply {
             self = parentSubset
         }.collect()
         return rectifier.process("".toPath(), altered) as JsonObject
@@ -44,10 +45,10 @@ class StyleAssembler : Assembler() {
     override fun JsonObject.rectify(
         path: JsonElementPath,
         element: JsonElement,
-        extraData: ExtraDataAssembler
+        argument: ArgumentAssembler
     ): JsonObject? {
-        schema().withScope(SubsetSchema::Scope).self ?: return null
-        val parentSubset = element.find(path.parent()).schema()
+        withScope(SubsetSchema::Scope).self ?: return null
+        val parentSubset = element.find(path.parent())
             .withScope(SubsetSchema::Scope).self!!
         return rectify(parentSubset)
     }
@@ -55,12 +56,12 @@ class StyleAssembler : Assembler() {
     override fun List<JsonObject>.rectify(
         path: JsonElementPath,
         element: JsonElement,
-        extraData: ExtraDataAssembler
+        argument: ArgumentAssembler
     ): List<JsonObject>? {
-        if (!any { it.schema().withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
-        val parentSubset = element.find(path.parent()).schema().withScope(SubsetSchema::Scope).self!!
+        if (!any { it.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
+        val parentSubset = element.find(path.parent()).withScope(SubsetSchema::Scope).self!!
         return map { current ->
-            if (current.schema().withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown) {
+            if (current.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown) {
                 current.rectify(parentSubset)
             } else current
         }

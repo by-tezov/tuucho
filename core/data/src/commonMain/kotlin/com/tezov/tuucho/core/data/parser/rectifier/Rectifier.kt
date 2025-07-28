@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.parser.rectifier
 import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.replace
+import com.tezov.tuucho.core.domain._system.replaceOrInsert
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -26,13 +26,13 @@ abstract class Rectifier : MatcherProtocol, KoinComponent {
     ): JsonElement {
         var _element = element
         beforeAlter(path, _element)?.let {
-            _element = _element.replace(path, it)
+            _element = _element.replaceOrInsert(path, it)
         }
         if (childProcessors.isNotEmpty()) {
             _element = alter(path, _element)
         }
         afterAlter(path, _element)?.let {
-            _element = _element.replace(path, it)
+            _element = _element.replaceOrInsert(path, it)
         }
         return _element
     }

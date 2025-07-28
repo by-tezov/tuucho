@@ -32,7 +32,6 @@ sqldelight {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.koin.android)
             implementation(libs.ktor.okhttp)
             implementation(libs.sql.delight.driver.android)
         }
@@ -40,6 +39,7 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
             implementation(libs.sql.delight.driver.ios)
+            implementation(libs.kotlin.couroutine)
         }
 
         commonMain.dependencies {
