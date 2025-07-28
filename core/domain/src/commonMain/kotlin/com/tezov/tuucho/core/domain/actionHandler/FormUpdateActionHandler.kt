@@ -1,10 +1,11 @@
 package com.tezov.tuucho.core.domain.actionHandler
 
-import com.tezov.tuucho.core.domain._system.string
+import com.tezov.tuucho.core.domain.exception.DomainException
 import com.tezov.tuucho.core.domain.model.Action
 import com.tezov.tuucho.core.domain.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.protocol.ActionHandlerProtocol
@@ -42,16 +43,16 @@ class FormUpdateActionHandler : ActionHandlerProtocol, KoinComponent {
     ) {
         when (val authority = action.authority) {
             Action.Form.Update.Authority.error -> updateErrorState(params)
-            else -> error("unknown authority $authority")
+            else -> throw DomainException.Default("unknown authority $authority")
         }
     }
 
     private suspend fun updateErrorState(params: JsonElement?) {
         withContext(Dispatchers.Main) {
             params?.jsonArray?.forEach {
-                val scope = it.schema().withScope(::SchemaScope)
+                val scope = it.withScope(::SchemaScope)
                 val event = Event.Error(
-                    id = scope.withScope(IdSchema::Scope).self.string,
+                    id = scope.onScope(IdSchema::Scope).value ?: throw DomainException.Default("Missing id for $it"),
                     text = scope.withScope(FormSendResponseSchema.Result::Scope).failureReason
                 )
                 _events.emit(event)

@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.model.schema.material._element
 
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.model.schema.material.ActionSchema
 import com.tezov.tuucho.core.domain.model.schema.material.ContentSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
@@ -19,7 +20,7 @@ object ButtonSchema {
             const val action = ActionSchema.root
         }
 
-        class Scope : ContentSchema.OpenScope<Scope>() {
+        class Scope(argument: SchemaScopeArgument) : ContentSchema.OpenScope<Scope>(argument) {
 
             var label by delegate<JsonObject?>(Key.label)
             var action by delegate<JsonObject?>(Key.action)

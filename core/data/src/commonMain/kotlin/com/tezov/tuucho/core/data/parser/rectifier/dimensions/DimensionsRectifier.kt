@@ -6,7 +6,8 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.addGroup
@@ -47,7 +48,7 @@ class DimensionsRectifier : Rectifier() {
         key: String,
         group: String,
         dimension: JsonPrimitive,
-    ) = dimension.schema().withScope(DimensionSchema::Scope).apply {
+    ) = dimension.withScope(DimensionSchema::Scope).apply {
         type = TypeSchema.Value.dimension
         id = onScope(IdSchema::Scope).apply {
             value = key.addGroup(group)
@@ -59,7 +60,7 @@ class DimensionsRectifier : Rectifier() {
         key: String,
         group: String,
         dimension: JsonObject,
-    ) = dimension.schema().withScope(DimensionSchema::Scope).apply {
+    ) = dimension.withScope(DimensionSchema::Scope).apply {
         type = TypeSchema.Value.dimension
         id = onScope(IdSchema::Scope).apply {
             when (val id = id) {

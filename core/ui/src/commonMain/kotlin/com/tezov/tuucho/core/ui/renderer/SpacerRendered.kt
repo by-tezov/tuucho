@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.model.schema._system.Schema.Companion.schema
+import com.tezov.tuucho.core.domain.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
+
 import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
@@ -21,21 +23,20 @@ import kotlinx.serialization.json.JsonElement
 
 class SpacerRendered : Renderer() {
 
-    override fun accept(element: JsonElement) = element.schema()
+    override fun accept(element: JsonElement) = element
         .let {
             it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
             it.withScope(SubsetSchema::Scope).self == SpacerSchema.Component.Value.subset
         }
 
     override fun process(element: JsonElement): ComposableScreenProtocol {
-        val schema = element.schema()
-        val style = schema.onScope(SpacerSchema.Style::Scope)
+        val style = element.onScope(SpacerSchema.Style::Scope)
 
-        val width = style.width?.schema()
+        val width = style.width
             ?.withScope(DimensionSchema::Scope)?.default
-        val height = style.height?.schema()
+        val height = style.height
             ?.withScope(DimensionSchema::Scope)?.default
-        val weight = style.weight?.schema()
+        val weight = style.weight
             ?.withScope(DimensionSchema::Scope)?.default
 
         return SpacerScreen(

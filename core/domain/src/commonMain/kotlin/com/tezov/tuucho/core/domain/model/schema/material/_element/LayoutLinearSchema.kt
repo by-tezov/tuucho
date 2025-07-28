@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.model.schema.material._element
 
+import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.model.schema.material.ContentSchema
 import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
@@ -19,7 +20,7 @@ object LayoutLinearSchema {
             const val items = "items"
         }
 
-        class Scope : ContentSchema.OpenScope<Scope>() {
+        class Scope(argument: SchemaScopeArgument) : ContentSchema.OpenScope<Scope>(argument) {
 
             var items by delegate<JsonArray?>(Key.items)
 
@@ -41,7 +42,7 @@ object LayoutLinearSchema {
             }
         }
 
-        class Scope : StyleSchema.OpenScope<Scope>() {
+        class Scope(argument: SchemaScopeArgument) : StyleSchema.OpenScope<Scope>(argument) {
 
             var orientation by delegate<String?>(Key.orientation)
             var backgroundColor by delegate<JsonObject?>(Key.backgroundColor)

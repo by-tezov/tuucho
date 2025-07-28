@@ -11,8 +11,7 @@ android-gradle-plugin = "8.11.1"
 kotlin-plugin = "2.2.0"
 compose-plugin = "1.8.2"
 kotlin-serialization-plugin = "2.2.0"
-ksp = "2.1.10-1.0.31"
-#compose - android
+#lib - android
 compose-activity = "1.10.1"
 #lib - kmm
 kotlin-couroutine = "1.10.2"
@@ -37,7 +36,6 @@ ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor"
 ktor-cio = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 #lib - android
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
@@ -58,5 +56,4 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }

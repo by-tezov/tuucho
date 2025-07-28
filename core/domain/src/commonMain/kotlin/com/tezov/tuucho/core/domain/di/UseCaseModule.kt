@@ -3,9 +3,11 @@ package com.tezov.tuucho.core.domain.di
 import com.tezov.tuucho.core.domain.actionHandler.FormSendUrlActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.NavigationUrlActionHandler
-import com.tezov.tuucho.core.domain.protocol.CoroutineDispatchersProtocol
-import com.tezov.tuucho.core.domain.protocol.MaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
+import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
+import com.tezov.tuucho.core.domain.protocol.SendDataMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
@@ -22,7 +24,7 @@ object UseCaseModule {
     internal operator fun invoke() = module {
         factory {
             ActionHandlerUseCase(
-                get<CoroutineDispatchersProtocol>(),
+                get<CoroutineContextProviderProtocol>(),
                 listOf(
                     get<NavigationUrlActionHandler>(),
                     get<FormSendUrlActionHandler>(),
@@ -33,37 +35,38 @@ object UseCaseModule {
 
         factory {
             ComponentRenderUseCase(
+                get<CoroutineContextProviderProtocol>(),
                 get<MaterialStateProtocol>(),
-                get<MaterialRepositoryProtocol>(),
+                get<RetrieveMaterialRepositoryProtocol>(),
                 get<ScreenRendererProtocol>(),
             )
         }
 
         factory {
             RegisterNavigationUrlEventUseCase(
+                get<CoroutineContextProviderProtocol>(),
                 get<NavigationUrlActionHandler>(),
-                get<CoroutineDispatchersProtocol>()
             )
         }
 
         factory {
             RegisterUpdateFormEventUseCase(
+                get<CoroutineContextProviderProtocol>(),
                 get<FormUpdateActionHandler>(),
-                get<CoroutineDispatchersProtocol>()
             )
         }
 
         factory {
             RefreshCacheMaterialUseCase(
-                get<CoroutineDispatchersProtocol>(),
-                get<MaterialRepositoryProtocol>()
+                get<CoroutineContextProviderProtocol>(),
+                get<RefreshCacheMaterialRepositoryProtocol>()
             )
         }
 
         factory {
             SendDataUseCase(
-                get<CoroutineDispatchersProtocol>(),
-                get<MaterialRepositoryProtocol>()
+                get<CoroutineContextProviderProtocol>(),
+                get<SendDataMaterialRepositoryProtocol>()
             )
         }
 

@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.domain.model
 
+import com.tezov.tuucho.core.domain.exception.DomainException
+
 class ActionModelDomain private constructor(
     val command: String,
     val authority: String?,
@@ -13,7 +15,7 @@ class ActionModelDomain private constructor(
         private fun String.command(): String {
             val regex = Regex("^(.+?)$COMMAND_SEPARATOR")
             return regex.find(this)?.groupValues?.get(1)
-                ?: throw IllegalStateException("missing action in string")
+                ?: throw DomainException.Default("missing action in string")
         }
 
         private fun String.authority(): String? {
