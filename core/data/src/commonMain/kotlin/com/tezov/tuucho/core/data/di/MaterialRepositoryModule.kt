@@ -1,100 +1,97 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.database.MaterialCacheSource
-import com.tezov.tuucho.core.data.exception.DataException
-import com.tezov.tuucho.core.data.network.MaterialNetworkHttpRequest
-import com.tezov.tuucho.core.data.network.MaterialNetworkSource
-import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
-import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
-import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.RefreshCacheMaterialRepository
 import com.tezov.tuucho.core.data.repository.RetrieveMaterialRepository
-import com.tezov.tuucho.core.data.repository.SendDataMaterialRepository
+import com.tezov.tuucho.core.data.repository.RetrieveOnDemandMaterialRepository
+import com.tezov.tuucho.core.data.repository.SendDataAndRetrieveMaterialRepository
+import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.SendDataMaterialRepositoryProtocol
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.plugins.HttpResponseValidator
-import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
+import org.koin.core.module.Module
 import org.koin.dsl.module
-
-expect fun MaterialRepositoryModule.serverUrlEndpoint():String //TODO external config file (android, ios, common)
-private const val serverConnectTimeoutMillis = 5000L
-private const val serverSocketTimeoutMillis = 5000L
 
 object MaterialRepositoryModule {
 
     internal operator fun invoke() = module {
+        localSource()
+        remoteSource()
+        repository()
+    }
 
-        single<HttpClient> {
-            HttpClient(get<HttpClientEngineFactory<*>>()) {
-                install(ContentNegotiation) {
-                    json(get<Json>())
-                }
-                install(HttpTimeout) {
-                    connectTimeoutMillis = serverConnectTimeoutMillis
-                    socketTimeoutMillis = serverSocketTimeoutMillis
-                }
-                HttpResponseValidator {
-                    validateResponse { response ->
-                        val statusCode = response.status.value
-                        if (statusCode !in 200..299) {
-                            throw DataException.Default("Bad response received: $response")
-                        }
-                    }
-                    handleResponseExceptionWithRequest { cause, _ -> throw cause }
-                }
-            }
-        }
+    private fun Module.repository() {
 
-        single<MaterialNetworkHttpRequest> {
-            MaterialNetworkHttpRequest(
-                client = get<HttpClient>(),
-                baseUrl = serverUrlEndpoint()
-            )
-        }
-
-        single<MaterialNetworkSource> {
-            MaterialNetworkSource(
-                materialNetworkHttpRequest = get<MaterialNetworkHttpRequest>(),
-                materialRectifier = get<MaterialRectifier>(),
-                jsonConverter = get<Json>()
-            )
-        }
-
-        single<MaterialCacheSource> {
-            MaterialCacheSource(
-                jsonObjectQueries = get(),
-                versioningQueries = get(),
-                materialBreaker = get<MaterialBreaker>(),
-                materialAssembler = get<MaterialAssembler>()
-            )
-        }
-
-        single<SendDataMaterialRepositoryProtocol> {
-            SendDataMaterialRepository(
-                materialNetworkSource = get<MaterialNetworkSource>()
+        single<RetrieveOnDemandMaterialRepository> {
+            RetrieveOnDemandMaterialRepository(
+                materialShadower = get()
             )
         }
 
         single<RetrieveMaterialRepositoryProtocol> {
             RetrieveMaterialRepository(
-                materialNetworkSource = get<MaterialNetworkSource>(),
-                materialCacheSource = get<MaterialCacheSource>()
+                retrieveMaterialCacheLocalSource = get(),
+                retrieveMaterialRemoteSource = get(),
+                refreshMaterialCacheLocalSource = get(),
+                retrieveOnDemandMaterialRepository = get(),
             )
         }
 
         single<RefreshCacheMaterialRepositoryProtocol> {
             RefreshCacheMaterialRepository(
-                materialNetworkSource = get<MaterialNetworkSource>(),
-                materialCacheSource = get<MaterialCacheSource>()
+                retrieveObjectRemoteSource = get(),
+                retrieveMaterialRemoteSource = get(),
+                refreshMaterialCacheLocalSource = get()
             )
         }
 
-
+        single<SendDataAndRetrieveMaterialRepositoryProtocol> {
+            SendDataAndRetrieveMaterialRepository(
+                sendObjectAndRetrieveMaterialRemoteSource = get()
+            )
+        }
     }
+
+    private fun Module.localSource() {
+        factory<RefreshMaterialCacheLocalSource> {
+            RefreshMaterialCacheLocalSource(
+                materialDatabaseSource = get(),
+                materialBreaker = get()
+            )
+        }
+
+        factory<RetrieveMaterialCacheLocalSource> {
+            RetrieveMaterialCacheLocalSource(
+                materialDatabaseSource = get(),
+                materialAssembler = get()
+            )
+        }
+    }
+
+    private fun Module.remoteSource() {
+
+        factory<RetrieveMaterialRemoteSource> {
+            RetrieveMaterialRemoteSource(
+                materialNetworkSource = get(),
+                materialRectifier = get()
+            )
+        }
+
+        factory<RetrieveObjectRemoteSource> {
+            RetrieveObjectRemoteSource(
+                materialNetworkSource = get()
+            )
+        }
+
+        factory<SendDataAndRetrieveMaterialRemoteSource> {
+            SendDataAndRetrieveMaterialRemoteSource(
+                materialNetworkSource = get(),
+                materialRectifier = get()
+            )
+        }
+    }
+
 }

@@ -11,7 +11,7 @@ class RefreshCacheMaterialUseCase(
 
     suspend fun invoke(url: String) {
         withContext(coroutineDispatchers.io) {
-            repository.refreshCache(url)
+            repository.process(url)
         }
     }
 

@@ -15,7 +15,7 @@ class ComponentRenderUseCase(
 ) {
 
     suspend fun invoke(url: String): ScreenProtocol? = withContext(coroutineDispatchers.default) {
-        val component = repository.retrieve(url)
+        val component = repository.process(url)
         materialState.clear()
         screenRenderer.process(component)
     }

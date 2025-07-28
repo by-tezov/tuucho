@@ -1,9 +1,10 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.spacer
 
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+
 import com.tezov.tuucho.core.data.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIsAny
+import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
@@ -11,7 +12,7 @@ import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.SpacerSchema
 import kotlinx.serialization.json.JsonElement
 
-class StyleSpacerDimensionMatcher : MatcherProtocol {
+class StyleSpacerDimensionMatcher : MatcherRectifierProtocol {
 
     private val segments = listOf(
         SpacerSchema.Style.Key.weight,

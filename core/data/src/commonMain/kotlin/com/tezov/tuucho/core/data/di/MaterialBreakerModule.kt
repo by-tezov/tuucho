@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser.breaker.Breaker
 import com.tezov.tuucho.core.data.parser.breaker.ColorBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ComponentBreaker
@@ -10,11 +9,14 @@ import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.parser.breaker.OptionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.parser.breaker.TextBreaker
-import com.tezov.tuucho.core.data.parser.breaker._element.layout.linear.ContentLayoutLinearMatcher
+import com.tezov.tuucho.core.data.parser.breaker._system.MatcherBreakerProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+// For now, breaker matcher and child processor are not used,
+// only root and subs are broken into database
+// TODO, if decided to not used it forever, code shrink should be done
 object MaterialBreakerModule {
 
     object Name {
@@ -53,10 +55,8 @@ object MaterialBreakerModule {
     private fun Module.componentModule() {
         single<ComponentBreaker> { ComponentBreaker() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.COMPONENT) {
-            listOf(
-                ContentLayoutLinearMatcher()
-            )
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.COMPONENT) {
+            emptyList()
         }
 
         single<List<Breaker>>(Name.Processor.COMPONENT) {
@@ -67,21 +67,19 @@ object MaterialBreakerModule {
     private fun Module.contentModule() {
         single<ContentBreaker> { ContentBreaker() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.CONTENT) {
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.CONTENT) {
             emptyList()
         }
 
         single<List<Breaker>>(Name.Processor.CONTENT) {
-            listOf(
-                get<ComponentBreaker>()
-            )
+            emptyList()
         }
     }
 
     private fun Module.styleModule() {
         single<StyleBreaker> { StyleBreaker() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.STYLE) {
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.STYLE) {
             emptyList()
         }
 
@@ -93,7 +91,7 @@ object MaterialBreakerModule {
     private fun Module.optionModule() {
         single<OptionBreaker> { OptionBreaker() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.OPTION) {
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.OPTION) {
             emptyList()
         }
 
@@ -105,7 +103,7 @@ object MaterialBreakerModule {
     private fun Module.textModule() {
         single<TextBreaker> { TextBreaker() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.TEXT) {
             emptyList()
         }
 
@@ -117,7 +115,7 @@ object MaterialBreakerModule {
     private fun Module.colorModule() {
         single<ColorBreaker> { ColorBreaker() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.COLOR) {
             emptyList()
         }
 
@@ -129,7 +127,7 @@ object MaterialBreakerModule {
     private fun Module.dimensionModule() {
         single<DimensionBreaker> { DimensionBreaker() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.DIMENSION) {
             emptyList()
         }
 
@@ -137,6 +135,7 @@ object MaterialBreakerModule {
             emptyList()
         }
     }
+
 }
 
 

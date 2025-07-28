@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+
 import com.tezov.tuucho.core.data.parser.rectifier.ActionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
@@ -24,6 +24,7 @@ import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.Conten
 import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.StyleLayoutLinearColorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.spacer.StyleSpacerDimensionMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
@@ -86,9 +87,13 @@ object MaterialRectifierModule {
     private fun Module.idModule() {
         single<IdGenerator> { IdGenerator() }
 
-        single<IdRectifier> { IdRectifier() }
+        single<IdRectifier> {
+            IdRectifier(
+                get<IdGenerator>()
+            )
+        }
 
-        single<List<MatcherProtocol>>(Name.Matcher.ID) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.ID) {
             listOf(IdMatcher())
         }
     }
@@ -96,7 +101,7 @@ object MaterialRectifierModule {
     private fun Module.componentModule() {
         single<ComponentRectifier> { ComponentRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.COMPONENT) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.COMPONENT) {
             listOf(
                 ContentLayoutLinearItemsMatcher(),
                 ContentButtonLabelMatcher(),
@@ -116,7 +121,7 @@ object MaterialRectifierModule {
     private fun Module.contentModule() {
         single<ContentRectifier> { ContentRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.CONTENT) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.CONTENT) {
             emptyList()
         }
 
@@ -126,7 +131,7 @@ object MaterialRectifierModule {
                 ContentLayoutLinearItemsRectifier(),
                 ContentButtonLabelRectifier(),
                 ContentFieldTextErrorRectifier(),
-                ActionRectifier(),
+                get<ActionRectifier>(),
                 get<TextRectifier>(),
                 get<ComponentRectifier>(),
             )
@@ -136,7 +141,7 @@ object MaterialRectifierModule {
     private fun Module.styleModule() {
         single<StyleRectifier> { StyleRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.STYLE) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.STYLE) {
             emptyList()
         }
 
@@ -152,7 +157,7 @@ object MaterialRectifierModule {
     private fun Module.optionModule() {
         single<OptionRectifier> { OptionRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.OPTION) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.OPTION) {
             emptyList()
         }
 
@@ -173,7 +178,7 @@ object MaterialRectifierModule {
 
         single<TextRectifier> { TextRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.TEXT) {
             listOf(
                 ContentLabelTextMatcher(),
                 ContentFieldTextMatcher(),
@@ -195,7 +200,7 @@ object MaterialRectifierModule {
 
         single<ColorRectifier> { ColorRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.COLOR) {
             listOf(
                 StyleLabelColorMatcher(),
                 StyleLayoutLinearColorMatcher()
@@ -216,7 +221,7 @@ object MaterialRectifierModule {
 
         single<DimensionRectifier> { DimensionRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.DIMENSION) {
             listOf(
                 StyleLabelDimensionMatcher(),
                 StyleSpacerDimensionMatcher(),
@@ -231,7 +236,7 @@ object MaterialRectifierModule {
     private fun Module.actionModule() {
         single<ActionRectifier> { ActionRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.ACTION) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.ACTION) {
             listOf(
                 ActionButtonMatcher()
             )
@@ -245,7 +250,7 @@ object MaterialRectifierModule {
     private fun Module.validatorModule() {
         single<ValidatorRectifier> { ValidatorRectifier() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.VALIDATOR) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.VALIDATOR) {
             listOf(
                 OptionFieldValidatorMatcher()
             )

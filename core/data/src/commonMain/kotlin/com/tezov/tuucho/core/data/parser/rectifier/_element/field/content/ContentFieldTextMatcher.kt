@@ -1,16 +1,17 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.field.content
 
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+
 import com.tezov.tuucho.core.data.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIsAny
+import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.FieldSchema
 import kotlinx.serialization.json.JsonElement
 
-class ContentFieldTextMatcher : MatcherProtocol {
+class ContentFieldTextMatcher : MatcherRectifierProtocol {
 
     private val segments = listOf(
         FieldSchema.Content.Key.title,

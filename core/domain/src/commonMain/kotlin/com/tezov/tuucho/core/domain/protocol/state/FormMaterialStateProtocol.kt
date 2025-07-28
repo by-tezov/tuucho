@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.protocol.state
 
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 
 interface FormMaterialStateProtocol {
 
@@ -20,5 +20,5 @@ interface FormMaterialStateProtocol {
 
     fun getAllValidityResult(): List<Pair<String, Boolean>>
 
-    fun data(): JsonElement
+    fun data(): JsonObject
 }

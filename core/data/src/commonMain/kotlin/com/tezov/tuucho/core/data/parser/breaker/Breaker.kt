@@ -1,19 +1,16 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
-import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser._system.JsonElementTree
 import com.tezov.tuucho.core.data.parser._system.JsonEntityArrayTree
 import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
-import com.tezov.tuucho.core.data.parser._system.toTree
-import com.tezov.tuucho.core.data.parser.breaker._system.ArgumentBreaker
+import com.tezov.tuucho.core.data.parser.breaker._system.JsonEntityObjectTreeProducerProtocol
+import com.tezov.tuucho.core.data.parser.breaker._system.MatcherBreakerProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replaceOrInsert
 import com.tezov.tuucho.core.domain._system.toPath
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScope
-import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
@@ -24,10 +21,14 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class Breaker : MatcherProtocol, KoinComponent {
-
-    protected open val matchers: List<MatcherProtocol> = emptyList()
+abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
+    protected open val matchers: List<MatcherBreakerProtocol> = emptyList()
     protected open val childProcessors: List<Breaker> = emptyList()
+
+    private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
+        if (size > 1) throw DataException.Default("Only one child processor can accept the element at path $path")
+        return firstOrNull()
+    }
 
     override fun accept(
         path: JsonElementPath,
@@ -37,33 +38,30 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
     fun process(
         path: JsonElementPath,
         element: JsonElement,
-        argument: ArgumentBreaker,
+        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
     ): JsonElementTree = with(element.find(path)) {
         when (this) {
-            is JsonArray -> processArray(path, element, argument)
-            is JsonObject -> processObject(path, element, argument)
-            else -> throw DataException.Default("primitive to JsonEntity is not allowed by design")
+            is JsonArray -> processArray(jsonEntityObjectTreeProducer)
+            is JsonObject -> processObject(path, element, jsonEntityObjectTreeProducer)
+            else -> throw DataException.Default("Primitive to JsonEntity is not allowed by design")
         }
     }
 
     private fun JsonArray.processArray(
-        path: JsonElementPath,
-        element: JsonElement,
-        argument: ArgumentBreaker,
-    ) = childProcessors
-        .takeIf { it.isNotEmpty() }
-        ?.filter { it.accept(path, element) }
-        ?.singleOrThrow(path)
-        ?.process(path, element, argument)
-        ?: toJsonEntityArray(argument)
+        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
+    ) = map { entry ->
+        (entry as? JsonObject)
+            ?: throw DataException.Default("By design element inside array must be object, so there is surely something missing in the rectifier for $entry ")
+        entry.processObject("".toPath(), entry, jsonEntityObjectTreeProducer)
+    }.let { JsonEntityArrayTree(it) }
 
     private fun JsonObject.processObject(
         path: JsonElementPath,
         element: JsonElement,
-        argument: ArgumentBreaker,
+        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
     ): JsonEntityObjectTree {
         if (childProcessors.isEmpty()) {
-            return toTree(argument)
+            return jsonEntityObjectTreeProducer.invoke(this)
         }
         val mapEntity = mutableMapOf<String, JsonElementTree>()
         keys.forEach { childKey ->
@@ -72,39 +70,42 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
                 .filter { it.accept(childPath, element) }
                 .singleOrThrow(path)
                 ?.let {
-                    mapEntity[childKey] = it.process(childPath, element, argument)
+                    mapEntity[childKey] =
+                        it.process(childPath, element, jsonEntityObjectTreeProducer)
                 }
         }
-        return toTree(mapEntity, argument)
+        return processObject(mapEntity, jsonEntityObjectTreeProducer)
     }
 
-    private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
-        if (size > 1) throw DataException.Default("Only one child processor can accept the element at path $path")
-        return firstOrNull()
-    }
-
-    private fun JsonArray.toJsonEntityArray(
-        argument: ArgumentBreaker,
-    ) = map { entry ->
-        (entry as? JsonObject)?.toTree(argument)
-            ?: throw DataException.Default("by design element inside array must be object, so there is surely something missing in the rectifier for $entry ")
-    }.toTree()
-
-    private fun JsonObject.toTree(
-        argument: ArgumentBreaker,
+    private fun JsonObject.processObject(
+        map: Map<String, JsonElementTree>,
+        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
     ): JsonEntityObjectTree {
-        val type = withScope(TypeSchema::Scope).self
-        val (id, idFrom) = onScope(IdSchema::Scope)
-            .let { it.value to it.source }
-        return JsonObjectEntity(
-            type = type
-                ?: throw DataException.Default("Should not be possible, so there is surely something missing in the rectifier for $this"),
-            url = argument.url,
-            id = id
-                ?: throw DataException.Default("Should not be possible, so there is surely something missing in the rectifier for $this"),
-            idFrom = idFrom,
-            jsonObject = this@toTree
-        ).toTree()
+        if (map.isEmpty()) {
+            return jsonEntityObjectTreeProducer.invoke(this)
+        }
+        var _element = this as JsonElement
+        val children = mutableListOf<JsonElementTree>()
+        map.forEach { (key, value) ->
+            val newValue = when (value) {
+                is JsonEntityArrayTree -> value.map { entry ->
+                    (entry as? JsonEntityObjectTree)?.let {
+                        children.add(entry)
+                        entry.toJsonObjectRef()
+                    }
+                        ?: throw DataException.Default("By design element inside array must be object")
+                }.let(::JsonArray)
+
+                is JsonEntityObjectTree -> {
+                    children.add(value)
+                    value.toJsonObjectRef()
+                }
+            }
+            _element = _element.replaceOrInsert(key.toPath(), newValue)
+        }
+        return _element.jsonObject
+            .let { jsonEntityObjectTreeProducer.invoke(it) }
+            .apply { this.children = children }
     }
 
     private fun JsonEntityObjectTree.toJsonObjectRef() = JsonNull.withScope(::SchemaScope).apply {
@@ -118,34 +119,5 @@ abstract class Breaker : MatcherProtocol, KoinComponent {
         }
     }.collect()
 
-    private fun JsonObject.toTree(
-        map: Map<String, JsonElementTree>,
-        argument: ArgumentBreaker,
-    ): JsonEntityObjectTree {
-        if (map.isEmpty()) {
-            return this@toTree.toTree(argument)
-        }
-        var _element = this as JsonElement
-        val output = mutableListOf<JsonElementTree>()
-        map.forEach { (key, value) ->
-            val newValue = when (value) {
-                is JsonEntityArrayTree -> value.map { entry ->
-                    (entry as? JsonEntityObjectTree)?.let {
-                        output.add(entry)
-                        entry.toJsonObjectRef()
-                    }
-                        ?: throw DataException.Default("by design element inside array must be object")
-                }.let(::JsonArray)
 
-                is JsonEntityObjectTree -> {
-                    output.add(value)
-                    value.toJsonObjectRef()
-                }
-            }
-            _element = _element.replaceOrInsert(key.toPath(), newValue)
-        }
-        return _element.jsonObject
-            .toTree(argument)
-            .apply { children = output }
-    }
 }

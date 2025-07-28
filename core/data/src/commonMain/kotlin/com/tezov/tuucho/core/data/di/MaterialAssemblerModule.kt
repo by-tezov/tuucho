@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+
 import com.tezov.tuucho.core.data.parser.assembler.Assembler
 import com.tezov.tuucho.core.data.parser.assembler.ColorAssembler
 import com.tezov.tuucho.core.data.parser.assembler.ComponentAssembler
@@ -10,15 +10,9 @@ import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.assembler.OptionAssembler
 import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
-import com.tezov.tuucho.core.data.parser.assembler._element.button.ContentButtonLabelMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.field.ContentFieldTextErrorMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.field.ContentFieldTextMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.label.content.ContentLabelTextMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.label.style.StyleLabelColorMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.label.style.StyleLabelDimensionMatcher
 import com.tezov.tuucho.core.data.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.layout.linear.StyleLayoutLinearColorMatcher
-import com.tezov.tuucho.core.data.parser.assembler._element.spacer.StyleSpacerDimensionMatcher
+import com.tezov.tuucho.core.data.parser.assembler._system.JsonObjectMerger
+import com.tezov.tuucho.core.data.parser.assembler._system.MatcherAssemblerProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -49,10 +43,10 @@ object MaterialAssemblerModule {
 
     internal operator fun invoke() = module {
         single<MaterialAssembler> {
-            MaterialAssembler(
-                jsonObjectQueries = get(),
-                versioningQueries = get()
-            )
+            MaterialAssembler()
+        }
+        single<JsonObjectMerger> {
+            JsonObjectMerger()
         }
         componentModule()
         contentModule()
@@ -66,10 +60,9 @@ object MaterialAssemblerModule {
     private fun Module.componentModule() {
         single<ComponentAssembler> { ComponentAssembler() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.COMPONENT) {
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.COMPONENT) {
             listOf(
-                ContentLayoutLinearItemsMatcher(),
-                ContentButtonLabelMatcher()
+                ContentLayoutLinearItemsMatcher()
             )
         }
 
@@ -77,6 +70,7 @@ object MaterialAssemblerModule {
             listOf(
                 get<ContentAssembler>(),
                 get<StyleAssembler>(),
+                get<OptionAssembler>(),
             )
         }
     }
@@ -84,7 +78,7 @@ object MaterialAssemblerModule {
     private fun Module.contentModule() {
         single<ContentAssembler> { ContentAssembler() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.CONTENT) {
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.CONTENT) {
             emptyList()
         }
 
@@ -99,7 +93,7 @@ object MaterialAssemblerModule {
     private fun Module.styleModule() {
         single<StyleAssembler> { StyleAssembler() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.STYLE) {
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.STYLE) {
             emptyList()
         }
 
@@ -114,7 +108,7 @@ object MaterialAssemblerModule {
     private fun Module.optionModule() {
         single<OptionAssembler> { OptionAssembler() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.OPTION) {
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.OPTION) {
             emptyList()
         }
 
@@ -126,11 +120,11 @@ object MaterialAssemblerModule {
     private fun Module.textModule() {
         single<TextAssembler> { TextAssembler() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.TEXT) {
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.TEXT) {
             listOf(
-                ContentLabelTextMatcher(),
-                ContentFieldTextMatcher(),
-                ContentFieldTextErrorMatcher(),
+//                ContentLabelTextMatcher(),
+//                ContentFieldTextMatcher(),
+//                ContentFieldTextErrorMatcher(),
             )
         }
 
@@ -142,11 +136,8 @@ object MaterialAssemblerModule {
     private fun Module.colorModule() {
         single<ColorAssembler> { ColorAssembler() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.COLOR) {
-            listOf(
-                StyleLabelColorMatcher(),
-                StyleLayoutLinearColorMatcher()
-            )
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.COLOR) {
+            emptyList()
         }
 
         single<List<Assembler>>(Name.Processor.COLOR) {
@@ -157,11 +148,8 @@ object MaterialAssemblerModule {
     private fun Module.dimensionModule() {
         single<DimensionAssembler> { DimensionAssembler() }
 
-        single<List<MatcherProtocol>>(Name.Matcher.DIMENSION) {
-            listOf(
-                StyleLabelDimensionMatcher(),
-                StyleSpacerDimensionMatcher(),
-            )
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.DIMENSION) {
+            emptyList()
         }
 
         single<List<Assembler>>(Name.Processor.DIMENSION) {

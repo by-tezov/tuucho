@@ -1,43 +1,30 @@
 package com.tezov.tuucho.core.data.network
 
 import com.tezov.tuucho.core.data.exception.DataException
-import com.tezov.tuucho.core.data.network._system.JsonRequestBody
-import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 class MaterialNetworkSource(
-    private val materialNetworkHttpRequest: MaterialNetworkHttpRequest,
-    private val materialRectifier: MaterialRectifier,
+    private val networkHttpRequest: NetworkHttpRequest,
     private val jsonConverter: Json
 ) {
 
-    suspend fun retrieveConfig(url: String): JsonObject {
-        val response = materialNetworkHttpRequest.retrieve(url)
-        val data = response.json ?: throw DataException.Default("failed to retrieve the config")
-        return jsonConverter.decodeFromString(
-            deserializer = JsonObject.Companion.serializer(),
-            string = data
-        )
-    }
-
-    suspend fun retrieve(url: String): JsonObject {
-        val response = materialNetworkHttpRequest.retrieve(url)
-        val data = response.json ?: throw DataException.Default("failed to retrieve the url")
+   suspend fun retrieve(url: String): JsonObject {
+        val response = networkHttpRequest.retrieve(url)
+        val data = response.json ?: throw DataException.Default("failed to retrieve the url $url")
         val jsonElement = jsonConverter.decodeFromString(
             deserializer = JsonObject.Companion.serializer(),
             string = data
         )
-        return materialRectifier.process(jsonElement)
+        return jsonElement
     }
 
-    suspend fun send(url: String, data: JsonElement): JsonObject? {
+    suspend fun send(url: String, data: JsonObject): JsonObject? {
         val json = jsonConverter.encodeToString(
-            serializer = JsonElement.Companion.serializer(),
+            serializer = JsonObject.Companion.serializer(),
             value = data
         )
-        val response = materialNetworkHttpRequest.send(url, JsonRequestBody(json))
+        val response = networkHttpRequest.send(url, RemoteRequest(json))
         return response.json?.let {
             val jsonElement = jsonConverter.decodeFromString(
                 deserializer = JsonObject.Companion.serializer(),

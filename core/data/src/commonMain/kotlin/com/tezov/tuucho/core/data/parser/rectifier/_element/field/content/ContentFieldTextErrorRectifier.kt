@@ -27,7 +27,7 @@ class ContentFieldTextErrorRectifier : Rectifier() {
         .withScope(TextSchema::Scope).apply {
             default = this.element.string
         }
-        .collect())
+        .collect()) //TODO if was ref, should be replace by id
 
     override fun beforeAlterObject(
         path: JsonElementPath,

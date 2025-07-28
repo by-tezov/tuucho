@@ -1,9 +1,8 @@
 package com.tezov.tuucho.core.data.parser.assembler
 
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
-import com.tezov.tuucho.core.data.parser.assembler._system.ArgumentAssembler
+import com.tezov.tuucho.core.data.parser.assembler._system.MatcherAssemblerProtocol
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
@@ -17,9 +16,9 @@ import org.koin.core.component.inject
 
 class StyleAssembler : Assembler() {
 
-    override val dataBaseType: String = TypeSchema.Value.style
+    override val schemaType: String = TypeSchema.Value.style
 
-    override val matchers: List<MatcherProtocol> by inject(
+    override val matchers: List<MatcherAssemblerProtocol> by inject(
         Name.Matcher.STYLE
     )
 
@@ -44,8 +43,7 @@ class StyleAssembler : Assembler() {
 
     override fun JsonObject.rectify(
         path: JsonElementPath,
-        element: JsonElement,
-        argument: ArgumentAssembler
+        element: JsonElement
     ): JsonObject? {
         withScope(SubsetSchema::Scope).self ?: return null
         val parentSubset = element.find(path.parent())
@@ -55,8 +53,7 @@ class StyleAssembler : Assembler() {
 
     override fun List<JsonObject>.rectify(
         path: JsonElementPath,
-        element: JsonElement,
-        argument: ArgumentAssembler
+        element: JsonElement
     ): List<JsonObject>? {
         if (!any { it.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
         val parentSubset = element.find(path.parent()).withScope(SubsetSchema::Scope).self!!

@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.protocol.SendDataMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
@@ -66,7 +66,7 @@ object UseCaseModule {
         factory {
             SendDataUseCase(
                 get<CoroutineContextProviderProtocol>(),
-                get<SendDataMaterialRepositoryProtocol>()
+                get<SendDataAndRetrieveMaterialRepositoryProtocol>()
             )
         }
 
