@@ -12,11 +12,31 @@ object SettingSchema {
         const val onDemandDefinitionUrl = "on-demand-definition-url"
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-        override val root = SettingSchema.root
+    object Value {
+        object OnDemandDefinitionUrl {
+            const val default = "on-demand-definition"
+        }
+
+    }
+
+    class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
+
+    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
+        OpenSchemaScope<T>(argument) {
+        final override val root = SettingSchema.root
         var self by delegate<JsonObject?>(root)
 
         var onDemandDefinitionUrl by delegate<String?>(Key.onDemandDefinitionUrl)
+    }
+
+    object Root {
+        object Key {
+            const val disableOnDemandDefinitionShadower = "disable-on-demande-definition-shadower"
+        }
+
+        class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument) {
+            var disableOnDemandShadower by delegate<Boolean?>(Key.disableOnDemandDefinitionShadower)
+        }
     }
 
 }

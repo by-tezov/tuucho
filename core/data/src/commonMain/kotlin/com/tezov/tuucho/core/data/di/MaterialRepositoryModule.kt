@@ -2,31 +2,39 @@ package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.repository.RefreshCacheMaterialRepository
 import com.tezov.tuucho.core.data.repository.RetrieveMaterialRepository
-import com.tezov.tuucho.core.data.repository.RetrieveOnDemandMaterialRepository
 import com.tezov.tuucho.core.data.repository.SendDataAndRetrieveMaterialRepository
+import com.tezov.tuucho.core.data.repository.ShadowerMaterialRepository
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandShadowerMaterialSource
+import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
 import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 object MaterialRepositoryModule {
 
+    object Name {
+        val SHADOWER_SOURCE = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
+    }
+
     internal operator fun invoke() = module {
         localSource()
         remoteSource()
+        compositeSource()
         repository()
     }
 
     private fun Module.repository() {
 
-        single<RetrieveOnDemandMaterialRepository> {
-            RetrieveOnDemandMaterialRepository(
+        single<ShadowerMaterialRepository> {
+            ShadowerMaterialRepository(
                 materialShadower = get()
             )
         }
@@ -36,7 +44,7 @@ object MaterialRepositoryModule {
                 retrieveMaterialCacheLocalSource = get(),
                 retrieveMaterialRemoteSource = get(),
                 refreshMaterialCacheLocalSource = get(),
-                retrieveOnDemandMaterialRepository = get(),
+                shadowerMaterialRepository = get(),
             )
         }
 
@@ -92,6 +100,18 @@ object MaterialRepositoryModule {
                 materialRectifier = get()
             )
         }
+    }
+
+    private fun Module.compositeSource() {
+
+        factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
+            listOf(
+                RetrieveOnDemandShadowerMaterialSource(
+                    materialNetworkSource = get()
+                )
+            )
+        }
+
     }
 
 }

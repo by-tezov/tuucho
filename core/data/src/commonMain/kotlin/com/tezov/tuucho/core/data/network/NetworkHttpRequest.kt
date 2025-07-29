@@ -15,7 +15,7 @@ class NetworkHttpRequest(
     private val baseUrl: String
 )  {
 
-    suspend fun retrieve(url: String): RemoteResponse {
+    suspend fun getResource(url: String): RemoteResponse {
         val response = httpClient.get("$baseUrl/resource") {
             parameter("version", "v1")
             parameter("url", url)
@@ -27,7 +27,7 @@ class NetworkHttpRequest(
         )
     }
 
-    suspend fun send(url: String, request: RemoteRequest): RemoteResponse {
+    suspend fun postSend(url: String, request: RemoteRequest): RemoteResponse {
         val response = httpClient.post("$baseUrl/send") {
             parameter("version", "v1")
             parameter("url", url)

@@ -21,7 +21,7 @@ abstract class Shadower : MatcherShadowerProtocol, KoinComponent {
         element: JsonElement,
     ) = matchers.any { it.accept(path, element) }
 
-    fun process(
+    suspend fun process(
         path: JsonElementPath,
         element: JsonElement,
         jsonObjectConsumer: JsonObjectConsumerProtocol,
@@ -30,12 +30,12 @@ abstract class Shadower : MatcherShadowerProtocol, KoinComponent {
             when (this) {
                 is JsonArray -> processArray(jsonObjectConsumer)
                 is JsonObject -> processObject(path, element, jsonObjectConsumer)
-                is JsonPrimitive -> throw DataException.Default("by design can't assemble primitive")
+                is JsonPrimitive -> throw DataException.Default("By design can't assemble primitive")
             }
         }
     }
 
-    private fun JsonArray.processArray(
+    private suspend fun JsonArray.processArray(
         jsonObjectConsumer: JsonObjectConsumerProtocol,
     ) {
         forEach { entry ->
@@ -45,7 +45,7 @@ abstract class Shadower : MatcherShadowerProtocol, KoinComponent {
         }
     }
 
-    private fun JsonObject.processObject(
+    private suspend fun JsonObject.processObject(
         path: JsonElementPath,
         element: JsonElement,
         jsonObjectConsumer: JsonObjectConsumerProtocol,
@@ -58,6 +58,6 @@ abstract class Shadower : MatcherShadowerProtocol, KoinComponent {
                     .forEach { it.process(childPath, element, jsonObjectConsumer) }
             }
         }
-        jsonObjectConsumer.invoke(this)
+        jsonObjectConsumer.onNext(this)
     }
 }

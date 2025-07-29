@@ -10,7 +10,7 @@ class MaterialNetworkSource(
 ) {
 
    suspend fun retrieve(url: String): JsonObject {
-        val response = networkHttpRequest.retrieve(url)
+        val response = networkHttpRequest.getResource(url)
         val data = response.json ?: throw DataException.Default("failed to retrieve the url $url")
         val jsonElement = jsonConverter.decodeFromString(
             deserializer = JsonObject.Companion.serializer(),
@@ -24,7 +24,7 @@ class MaterialNetworkSource(
             serializer = JsonObject.Companion.serializer(),
             value = data
         )
-        val response = networkHttpRequest.send(url, RemoteRequest(json))
+        val response = networkHttpRequest.postSend(url, RemoteRequest(json))
         return response.json?.let {
             val jsonElement = jsonConverter.decodeFromString(
                 deserializer = JsonObject.Companion.serializer(),
