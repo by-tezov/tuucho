@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.composable._system
+package com.tezov.tuucho.core.ui.uiComponentFactory._system
 
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.domain.protocol.ScreenProtocol

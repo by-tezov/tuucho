@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.ui.state
 
-import com.tezov.tuucho.core.domain.protocol.state.FieldsMaterialStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.FormMaterialStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FieldsMaterialStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FormMaterialStateProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 

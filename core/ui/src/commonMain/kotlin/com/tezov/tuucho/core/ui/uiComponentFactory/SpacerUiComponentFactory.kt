@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.composable
+package com.tezov.tuucho.core.ui.uiComponentFactory
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
@@ -11,79 +11,80 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.model.schema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.SpacerSchema
-import com.tezov.tuucho.core.ui.composable._system.Screen
-import com.tezov.tuucho.core.ui.composable._system.UiComponentFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.Screen
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.UiComponentFactory
 import kotlinx.serialization.json.JsonObject
 
-class SpacerRendered : UiComponentFactory() {
+class SpacerUiComponentFactory : UiComponentFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
-            it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
-            it.withScope(SubsetSchema::Scope).self == SpacerSchema.Component.Value.subset
-        }
+        it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
+                it.withScope(SubsetSchema::Scope).self == SpacerSchema.Component.Value.subset
+    }
 
-    override fun process(componentElement: JsonObject) = SpacerScreen(componentElement)
+    override fun process(url: String, componentElement: JsonObject) =
+        SpacerScreen(url, componentElement)
+            .also { it.init() }
 }
 
 class SpacerScreen(
+    url: String,
     componentElement: JsonObject
-) : Screen() {
+) : Screen(url, componentElement) {
 
     private var _width: JsonObject? = null
     private var _height: JsonObject? = null
     private var _weight: JsonObject? = null
 
-    init {
-        val componentScope = componentElement.withScope(ComponentSchema::Scope)
-        componentScope.onScope(IdSchema::Scope).value?.let {
-            addProcessor(TypeSchema.Value.component, id = it, ::processComponent)
+    override fun JsonObject.processComponent() {
+        withScope(ComponentSchema::Scope).run {
+            style?.processStyle()
         }
-        componentScope.style?.onScope(IdSchema::Scope)?.value?.let {
-            addProcessor(TypeSchema.Value.style, id = it, ::processStyle)
-        }
-        processComponent(componentElement)
     }
 
-    private fun processComponent(componentElement: JsonObject) {
-        val componentScope = componentElement.withScope(ComponentSchema::Scope)
-        componentScope.style?.let { processStyle(it) }
+    override fun JsonObject.processStyle() {
+        withScope(SpacerSchema.Style::Scope).run {
+            width?.processDimension(StyleSchema.Key.width)
+            height?.processDimension(StyleSchema.Key.height)
+            weight?.processDimension(SpacerSchema.Style.Key.weight)
+        }
     }
 
-    private fun processStyle(styleElement: JsonObject) {
-        val styleScope = styleElement.withScope(SpacerSchema.Style::Scope)
-        styleScope.width?.let { _width = it }
-        styleScope.height?.let { _height = it }
-        styleScope.weight?.let { _weight = it }
+    override fun JsonObject.processDimension(key: String) {
+        when (key) {
+            StyleSchema.Key.width -> _width = this
+            StyleSchema.Key.height -> _height = this
+            SpacerSchema.Style.Key.weight -> _weight = this
+        }
     }
 
     private val width
-        @Composable get():Dp? {
+        get():Dp? {
             return _width?.withScope(DimensionSchema::Scope)
                 ?.default?.toIntOrNull()?.dp
         }
 
     private val height
-        @Composable get():Dp? {
+        get():Dp? {
             return _height?.withScope(DimensionSchema::Scope)
                 ?.default?.toIntOrNull()?.dp
         }
 
     private val weight
-        @Composable get():Float? {
+        get():Float? {
             return _weight?.withScope(DimensionSchema::Scope)
                 ?.default?.toFloatOrNull()
         }
 
     @Composable
-    override fun show(scope: Any?) {
+    override fun showComponent(scope: Any?) {
 
         //TODO do much better than that
         var modifier: Modifier = Modifier
@@ -103,4 +104,5 @@ class SpacerScreen(
                 .background(color = Color.Gray)
         )
     }
+
 }

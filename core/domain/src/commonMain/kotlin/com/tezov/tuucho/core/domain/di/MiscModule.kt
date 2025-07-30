@@ -1,7 +1,5 @@
 package com.tezov.tuucho.core.domain.di
 
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProvider
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
@@ -18,7 +16,7 @@ object MiscModule {
             }
         }
 
-        single<CoroutineContextProviderProtocol> { CoroutineContextProvider() }
+
     }
 
 }

@@ -2,24 +2,31 @@ package com.tezov.tuucho.core.data.source
 
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
-import kotlinx.coroutines.withContext
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
+import kotlinx.coroutines.async
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveMaterialCacheLocalSource(
-    private val coroutineContextProvider: CoroutineContextProviderProtocol,
+    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialAssembler: MaterialAssembler
 ) {
 
-    suspend fun process(url: String): JsonObject? = withContext(coroutineContextProvider.default) {
-        val entity = materialDatabaseSource.findRootOrNull(url) ?: return@withContext null
-        return@withContext materialAssembler.process(
-            material = entity.jsonObject,
-            findAllRefOrNullFetcher = { from, type ->
-                materialDatabaseSource.findAllRefOrNull(from, url, type)
-            }
-        )
+    suspend fun process(url: String): JsonObject? {
+        val entity = coroutineScopeProvider.database.async {
+            materialDatabaseSource.findRootOrNull(url)
+        }.await() ?: return null
+        return coroutineScopeProvider.parser.async {
+            materialAssembler.process(
+                material = entity.jsonObject,
+                findAllRefOrNullFetcher = { from, type ->
+                    coroutineScopeProvider.database.async {
+                        materialDatabaseSource.findAllRefOrNull(from, url, type)
+                    }.await()
+                }
+            )
+        }.await()
     }
+
 
 }

@@ -1,22 +1,21 @@
 package com.tezov.tuucho.core.domain.usecase
 
 import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
-import kotlinx.coroutines.CoroutineScope
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class RegisterUpdateFormEventUseCase(
-    private val coroutineContextProvider: CoroutineContextProviderProtocol,
+    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
     private val formUpdateActionHandler: FormUpdateActionHandler,
 ) {
 
     fun invoke(
-        onAuthorityRequested: (event: FormUpdateActionHandler.Event) -> Unit,
+        onMessageReceived: (event: FormUpdateActionHandler.Event) -> Unit,
     ) {
         formUpdateActionHandler.events
-            .onEach { onAuthorityRequested(it) }
-            .launchIn(CoroutineScope(coroutineContextProvider.main))
+            .onEach { onMessageReceived(it) }
+            .launchIn(coroutineScopeProvider.event)
     }
 
 }

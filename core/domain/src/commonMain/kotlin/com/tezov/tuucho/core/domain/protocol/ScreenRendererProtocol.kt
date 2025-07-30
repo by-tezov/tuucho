@@ -9,5 +9,5 @@ interface ScreenProtocol {
 
 interface ScreenRendererProtocol {
 
-    fun process(componentElement: JsonObject): ScreenProtocol?
+    fun process(url:String, componentElement: JsonObject): ScreenProtocol?
 }

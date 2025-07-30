@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.domain.model.Shadower
 import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SettingSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveOnDemandDefinitionShadowerMaterialSource(
-    private val coroutineContextProvider: CoroutineContextProviderProtocol,
+    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
     private val materialNetworkSource: MaterialNetworkSource,
     private val materialRectifier: MaterialRectifier,
     private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
@@ -37,7 +37,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         if (materialElement.onScope(SettingSchema.Root::Scope).disableOnDemandDefinitionShadower == true) {
             isCancelled = true
         }
-        this.url = url
+        this@RetrieveOnDemandDefinitionShadowerMaterialSource.url = url
         map = mutableMapOf()
     }
 
@@ -58,17 +58,18 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
                     refreshTransientDatabaseCache(url)
                     jsonObjects.assembleAll()
                 }
-            }.awaitAll().flatten().forEach { emit(it) }
-        }
+            }
+        }.awaitAll()
+            .flatten()
+            .forEach { emit(it) }
     }
 
     private suspend fun refreshTransientDatabaseCache(
         url: String
     ) {
-        val material = materialNetworkSource
-            .retrieve(url)
-            .let { materialRectifier.process(it) }
-
+        val material = coroutineScopeProvider.network.async {
+            materialNetworkSource.retrieve(url)
+        }.await().let { materialRectifier.process(it) }
         //TODO should not be inserted inside the static database, do another one for transient data
         refreshMaterialCacheLocalSource.process(
             material = material,
@@ -81,11 +82,13 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         materialAssembler.process(
             material = jsonObject,
             findAllRefOrNullFetcher = { from, type ->
-                materialDatabaseSource.findAllRefOrNull(
-                    from = from,
-                    url = this@RetrieveOnDemandDefinitionShadowerMaterialSource.url,
-                    type = type
-                )
+                coroutineScopeProvider.database.async {
+                    materialDatabaseSource.findAllRefOrNull(
+                        from = from,
+                        url = this@RetrieveOnDemandDefinitionShadowerMaterialSource.url,
+                        type = type
+                    )
+                }.await()
             }
         )
     }

@@ -12,12 +12,12 @@ import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
-import kotlinx.coroutines.withContext
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
+import kotlinx.coroutines.async
 import kotlinx.serialization.json.JsonObject
 
 class RefreshMaterialCacheLocalSource(
-    private val coroutineContextProvider: CoroutineContextProviderProtocol,
+    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialBreaker: MaterialBreaker
 ) {
@@ -36,8 +36,8 @@ class RefreshMaterialCacheLocalSource(
         isShared: Boolean
     ) {
         //TODO auto purge obsolete entry
-        withContext(coroutineContextProvider.default) {
-            val parts = materialBreaker.process(
+        val parts = coroutineScopeProvider.parser.async {
+            materialBreaker.process(
                 material = material,
                 jsonEntityObjectTreeProducer = { jsonObject ->
                     val idScope = jsonObject.onScope(IdSchema::Scope)
@@ -52,6 +52,8 @@ class RefreshMaterialCacheLocalSource(
                     ).let(::JsonEntityObjectTree)
                 }
             )
+        }.await()
+        coroutineScopeProvider.database.async {
             with(parts) {
                 val rootPrimaryKey = rootJsonEntity?.let { root ->
                     materialDatabaseSource.insertOrUpdate(root.jsonEntityObjectTree.content)

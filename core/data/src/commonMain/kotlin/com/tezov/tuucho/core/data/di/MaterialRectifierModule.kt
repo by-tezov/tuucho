@@ -13,10 +13,10 @@ import com.tezov.tuucho.core.data.parser.rectifier.ValidatorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.field.content.ContentFieldTextErrorMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._element.field.content.ContentFieldTextErrorRectifier
-import com.tezov.tuucho.core.data.parser.rectifier._element.field.content.ContentFieldTextMatcher
-import com.tezov.tuucho.core.data.parser.rectifier._element.field.option.OptionFieldValidatorMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextMatcher
+import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.option.OptionFormFieldValidatorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.content.ContentLabelTextMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelColorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.label.style.StyleLabelDimensionMatcher
@@ -130,7 +130,7 @@ object MaterialRectifierModule {
                 get<IdRectifier>(),
                 ContentLayoutLinearItemsRectifier(),
                 ContentButtonLabelRectifier(),
-                ContentFieldTextErrorRectifier(),
+                ContentFormFieldTextErrorRectifier(),
                 get<ActionRectifier>(),
                 get<TextRectifier>(),
                 get<ComponentRectifier>(),
@@ -181,8 +181,8 @@ object MaterialRectifierModule {
         single<List<MatcherRectifierProtocol>>(Name.Matcher.TEXT) {
             listOf(
                 ContentLabelTextMatcher(),
-                ContentFieldTextMatcher(),
-                ContentFieldTextErrorMatcher(),
+                ContentFormFieldTextMatcher(),
+                ContentFormFieldTextErrorMatcher(),
             )
         }
 
@@ -252,7 +252,7 @@ object MaterialRectifierModule {
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.VALIDATOR) {
             listOf(
-                OptionFieldValidatorMatcher()
+                OptionFormFieldValidatorMatcher()
             )
         }
 

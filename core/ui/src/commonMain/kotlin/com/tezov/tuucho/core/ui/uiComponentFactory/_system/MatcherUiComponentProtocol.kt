@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.composable._system
+package com.tezov.tuucho.core.ui.uiComponentFactory._system
 
 import kotlinx.serialization.json.JsonObject
 

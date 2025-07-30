@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.data.parser.rectifier._element.field.content
+package com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content
 
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain._system.JsonElementPath
@@ -14,9 +14,9 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-class ContentFieldTextErrorRectifier : Rectifier() {
+class ContentFormFieldTextErrorRectifier : Rectifier() {
 
-    private val matcher = ContentFieldTextErrorMatcher()
+    private val matcher = ContentFormFieldTextErrorMatcher()
 
     override fun accept(path: JsonElementPath, element: JsonElement) = matcher.accept(path, element)
 

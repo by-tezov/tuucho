@@ -5,9 +5,9 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 class SendDataUseCase(
-    private val repository: SendDataAndRetrieveMaterialRepositoryProtocol,
+    private val sendDataAndRetrieveMaterialRepository: SendDataAndRetrieveMaterialRepositoryProtocol,
 ) {
 
-    suspend fun invoke(url: String, data: JsonObject): JsonElement? = repository.process(url, data)
+    suspend fun invoke(url: String, data: JsonObject): JsonElement? = sendDataAndRetrieveMaterialRepository.process(url, data)
 
 }

@@ -1,14 +1,10 @@
-package com.tezov.tuucho.core.domain.protocol.state
+package com.tezov.tuucho.core.domain.protocol.state.form
 
 import kotlinx.serialization.json.JsonObject
 
-interface FormMaterialStateProtocol {
+interface FormStateProtocol {
 
-    fun clear(){
-        fieldsState().clear()
-    }
-
-    fun fieldsState(): FieldsMaterialStateProtocol
+    fun clear()
 
     fun updateAllValidity()
 

@@ -12,7 +12,7 @@ import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
 import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
 import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
-import com.tezov.tuucho.core.ui.composable._system.ComposableScreenProtocol
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.ComposableScreenProtocol
 import org.koin.mp.KoinPlatform.getKoin
 
 @Composable
@@ -28,10 +28,9 @@ fun mainScreen() {
         //TODO remove when loading, migration upgrade/auto purge is done
         getKoin().get<JsonObjectQueries>().clearAll()
         getKoin().get<VersioningQueries>().clearAll()
-        //***********************************************
-
         refreshCacheMaterial.invoke("config")
         ready = true
+        //***********************************************
     }
     /* end hack */
 
@@ -53,12 +52,10 @@ private fun StartEngineScreen(
     LaunchedEffect(viewModel.url.value) {
         screen = renderer.invoke(viewModel.url.value) as? ComposableScreenProtocol
     }
-
     screen?.show(null)
-
     DisposableEffect(Unit) {
         onDispose {
-            viewModel.onCleared()
+            viewModel.onDispose()
         }
     }
 }

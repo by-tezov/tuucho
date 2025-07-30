@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.di
 
-import app.cash.sqldelight.db.SqlDriver
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.database.converter.JsonObjectConverter
@@ -17,33 +16,33 @@ object DatabaseRepositoryModule {
 
         factory<JsonObjectEntry.Adapter> {
             JsonObjectEntry.Adapter(
-                JsonObjectConverter()
+                jsonObjectAdapter = JsonObjectConverter()
             )
         }
 
         single<Database> {
             Database(
-                get<SqlDriver>(),
-                get<JsonObjectEntry.Adapter>()
+                driver = get(),
+                jsonObjectEntryAdapter = get()
             )
         }
 
         factory<JsonObjectQueries> {
             JsonObjectQueries(
-                get<Database>()
+                database = get()
             )
         }
 
         factory<VersioningQueries> {
             VersioningQueries(
-                get<Database>()
+                database = get()
             )
         }
 
         single<MaterialDatabaseSource> {
             MaterialDatabaseSource(
-                get<VersioningQueries>(),
-                get<JsonObjectQueries>()
+                versioningQueries = get(),
+                jsonObjectQueries = get()
             )
         }
 

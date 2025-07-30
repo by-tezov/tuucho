@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.ui.state
 
 import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
-import com.tezov.tuucho.core.domain.protocol.state.FieldsMaterialStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FieldsMaterialStateProtocol
 import com.tezov.tuucho.core.ui.exception.UiException
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -18,6 +18,10 @@ class FieldsMaterialState : FieldsMaterialStateProtocol {
 
     override fun clear() {
         fields.clear()
+    }
+
+    override fun removeField(id: String) {
+        fields.remove(id)
     }
 
     override fun addField(
