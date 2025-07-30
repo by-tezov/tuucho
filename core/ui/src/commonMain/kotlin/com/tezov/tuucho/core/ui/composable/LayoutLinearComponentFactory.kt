@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.renderer
+package com.tezov.tuucho.core.ui.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,37 +10,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
-
 import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.LayoutLinearSchema.Style.Value.Orientation
-import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
 import com.tezov.tuucho.core.ui._system.toColorOrNull
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonElement
+import com.tezov.tuucho.core.ui.composable._system.ComposableScreenProtocol
+import com.tezov.tuucho.core.ui.composable._system.UiComponentFactory
+import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
-class LayoutLinearRendered : Renderer() {
+class LayoutLinearRendered : UiComponentFactory() {
 
-    private val renderer: ScreenRendererProtocol by inject()
+    private val componentRendered: MaterialUiComponentFactory by inject()
 
-    override fun accept(element: JsonElement) = element
+    override fun accept(componentElement: JsonObject) = componentElement
         .let {
             it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                     it.withScope(SubsetSchema::Scope).self == LayoutLinearSchema.Component.Value.subset
         }
 
-    override fun process(element: JsonElement): ComposableScreenProtocol {
-        val content = element.onScope(LayoutLinearSchema.Content::Scope)
-        val style = element.onScope(LayoutLinearSchema.Style::Scope)
+    override fun process(componentElement: JsonObject): ComposableScreenProtocol {
+        val content = componentElement.onScope(LayoutLinearSchema.Content::Scope)
+        val style = componentElement.onScope(LayoutLinearSchema.Style::Scope)
 
         val backgroundColor = style.backgroundColor
             ?.withScope(ColorSchema::Scope)?.default //TODO manage "selector",not only default
 
         val items = content.items
-            ?.mapNotNull { renderer.process(it) as? ComposableScreenProtocol }
+            ?.mapNotNull { componentRendered.process(it as JsonObject) as? ComposableScreenProtocol }
             ?: emptyList()
 
         return when (style.orientation) {

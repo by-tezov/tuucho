@@ -6,11 +6,14 @@ import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.setting.ConfigSchema
+import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
 class RefreshCacheMaterialRepository(
+    private val coroutineContextProvider: CoroutineContextProviderProtocol,
     private val retrieveObjectRemoteSource: RetrieveObjectRemoteSource,
     private val retrieveMaterialRemoteSource: RetrieveMaterialRemoteSource,
     private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
@@ -18,11 +21,13 @@ class RefreshCacheMaterialRepository(
 
     override suspend fun process(url: String) {
         val configModelDomain = retrieveObjectRemoteSource.process(url)
-        configModelDomain.withScope(ConfigSchema.Root::Scope).let { configScope ->
-            configScope.preload?.withScope(ConfigSchema.Preload::Scope)?.let { preloadScope ->
-                preloadScope.subs?.refreshCache()
-                preloadScope.templates?.refreshCache()
-                preloadScope.pages?.refreshCache()
+        withContext(coroutineContextProvider.default) {
+            configModelDomain.withScope(ConfigSchema.Root::Scope).let { configScope ->
+                configScope.preload?.withScope(ConfigSchema.Preload::Scope)?.let { preloadScope ->
+                    preloadScope.subs?.refreshCache()
+                    preloadScope.templates?.refreshCache()
+                    preloadScope.pages?.refreshCache()
+                }
             }
         }
     }

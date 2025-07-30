@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class RegisterUpdateFormEventUseCase(
-    private val coroutineDispatchers: CoroutineContextProviderProtocol,
+    private val coroutineContextProvider: CoroutineContextProviderProtocol,
     private val formUpdateActionHandler: FormUpdateActionHandler,
 ) {
 
@@ -16,7 +16,7 @@ class RegisterUpdateFormEventUseCase(
     ) {
         formUpdateActionHandler.events
             .onEach { onAuthorityRequested(it) }
-            .launchIn(CoroutineScope(coroutineDispatchers.main))
+            .launchIn(CoroutineScope(coroutineContextProvider.main))
     }
 
 }

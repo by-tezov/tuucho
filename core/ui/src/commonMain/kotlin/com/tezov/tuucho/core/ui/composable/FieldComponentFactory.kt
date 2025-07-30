@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.renderer
+package com.tezov.tuucho.core.ui.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.config.Language
 import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
-
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TextSchema
@@ -27,10 +26,10 @@ import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
 import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
+import com.tezov.tuucho.core.ui.composable._system.ComposableScreenProtocol
+import com.tezov.tuucho.core.ui.composable._system.UiComponentFactory
 import com.tezov.tuucho.core.ui.exception.UiException
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
 import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
@@ -39,18 +38,18 @@ class FieldRendered(
     private val validatorFactory: ValidatorFactoryUseCase,
     private val registerUpdateFormEventUseCase: RegisterUpdateFormEventUseCase,
     private val getLanguage: GetLanguageUseCase,
-) : Renderer() {
+) : UiComponentFactory() {
 
-    override fun accept(element: JsonElement) = element
+    override fun accept(componentElement: JsonObject) = componentElement
         .let {
             it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                     it.withScope(SubsetSchema::Scope).self == FieldSchema.Component.Value.subset
         }
 
-    override fun process(element: JsonElement): ComposableScreenProtocol {
-        val id = element.onScope(IdSchema::Scope).value ?: throw UiException.Default("Missing id for $element")
-        val content = element.onScope(FieldSchema.Content::Scope)
-        val option = element.onScope(FieldSchema.Option::Scope)
+    override fun process(componentElement: JsonObject): ComposableScreenProtocol {
+        val id = componentElement.onScope(IdSchema::Scope).value ?: throw UiException.Default("Missing id for $componentElement")
+        val content = componentElement.onScope(FieldSchema.Content::Scope)
+        val option = componentElement.onScope(FieldSchema.Option::Scope)
 
         val validators = buildValidator(option.validator, content.messageError)
 

@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain.model.Shadower
 import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SettingSchema
+import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveOnDemandDefinitionShadowerMaterialSource(
+    private val coroutineContextProvider: CoroutineContextProviderProtocol,
     private val materialNetworkSource: MaterialNetworkSource,
     private val materialRectifier: MaterialRectifier,
     private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,

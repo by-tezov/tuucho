@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.di.MaterialRepositoryModule.Name
 import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
+import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
 import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol.Event
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,6 +13,7 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
 class ShadowerMaterialRepository(
+    private val coroutineContextProvider: CoroutineContextProviderProtocol,
     private val materialShadower: MaterialShadower,
 ) : ShadowerMaterialRepositoryProtocol, KoinComponent {
 
@@ -21,7 +23,6 @@ class ShadowerMaterialRepository(
     suspend fun process(url: String, materialElement: JsonObject) {
         val shadowerMaterialSources = getKoin()
             .get<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE)
-
         shadowerMaterialSources.forEach { it.onStart(url, materialElement) }
         materialShadower.process(
             material = materialElement,

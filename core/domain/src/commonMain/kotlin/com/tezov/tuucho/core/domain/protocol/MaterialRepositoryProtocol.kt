@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.protocol
 
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 sealed interface MaterialRepositoryProtocol
@@ -10,7 +9,7 @@ interface RefreshCacheMaterialRepositoryProtocol: MaterialRepositoryProtocol {
 }
 
 interface RetrieveMaterialRepositoryProtocol: MaterialRepositoryProtocol {
-    suspend fun process(url: String): JsonElement
+    suspend fun process(url: String): JsonObject
 }
 
 interface SendDataAndRetrieveMaterialRepositoryProtocol: MaterialRepositoryProtocol {

@@ -7,16 +7,17 @@ import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
 import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
-import com.tezov.tuucho.core.ui.renderer.ButtonRendered
-import com.tezov.tuucho.core.ui.renderer.ComponentRenderer
-import com.tezov.tuucho.core.ui.renderer.FieldRendered
-import com.tezov.tuucho.core.ui.renderer.LabelRendered
-import com.tezov.tuucho.core.ui.renderer.LayoutLinearRendered
-import com.tezov.tuucho.core.ui.renderer.SpacerRendered
+import com.tezov.tuucho.core.ui.composable.ButtonUiFactory
+import com.tezov.tuucho.core.ui.composable.FieldRendered
+import com.tezov.tuucho.core.ui.composable.LabelRendered
+import com.tezov.tuucho.core.ui.composable.LayoutLinearRendered
+import com.tezov.tuucho.core.ui.composable.MaterialUiComponentFactory
+import com.tezov.tuucho.core.ui.composable.SpacerRendered
 import com.tezov.tuucho.core.ui.state.FieldsMaterialState
 import com.tezov.tuucho.core.ui.state.FormMaterialState
 import com.tezov.tuucho.core.ui.state.MaterialState
 import org.koin.core.module.Module
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 object MaterialRendererModule {
@@ -25,17 +26,17 @@ object MaterialRendererModule {
         state()
         rendered()
 
-        single<ScreenRendererProtocol> {
-            ComponentRenderer(
+        single<MaterialUiComponentFactory> {
+            MaterialUiComponentFactory(
                 listOf(
                     get<LabelRendered>(),
                     get<FieldRendered>(),
-                    get<ButtonRendered>(),
+                    get<ButtonUiFactory>(),
                     get<SpacerRendered>(),
                     get<LayoutLinearRendered>(),
                 )
             )
-        }
+        } bind ScreenRendererProtocol::class
     }
 
     private fun Module.state() {
@@ -58,9 +59,13 @@ object MaterialRendererModule {
 
     private fun Module.rendered() {
         single<LayoutLinearRendered> { LayoutLinearRendered() }
-        single<LabelRendered> { LabelRendered(
-            get<GetLanguageUseCase>()
-        ) }
+
+        single<LabelRendered> {
+            LabelRendered(
+                materialState = get<MaterialStateProtocol>()
+            )
+        }
+
         single<FieldRendered> {
             FieldRendered(
                 get<MaterialStateProtocol>(),
@@ -69,7 +74,9 @@ object MaterialRendererModule {
                 get<GetLanguageUseCase>()
             )
         }
-        single<ButtonRendered> { ButtonRendered() }
+
+        single<ButtonUiFactory> { ButtonUiFactory() }
+
         single<SpacerRendered> { SpacerRendered() }
     }
 

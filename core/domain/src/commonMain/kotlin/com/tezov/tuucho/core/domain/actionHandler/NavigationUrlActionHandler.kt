@@ -3,13 +3,11 @@ package com.tezov.tuucho.core.domain.actionHandler
 import com.tezov.tuucho.core.domain.model.Action
 import com.tezov.tuucho.core.domain.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.protocol.ActionHandlerProtocol
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonElement
 
-class NavigationUrlActionHandler : ActionHandlerProtocol {
+class NavigationUrlActionHandler() : ActionHandlerProtocol {
     private val _events = MutableSharedFlow<String>(replay = 0)
     val events: SharedFlow<String> = _events
 
@@ -21,11 +19,7 @@ class NavigationUrlActionHandler : ActionHandlerProtocol {
     }
 
     override suspend fun process(id: String?, action: ActionModelDomain, params: JsonElement?) {
-        action.target?.let {
-            withContext(Dispatchers.Main) {
-                _events.emit(it)
-            }
-        }
+        action.target?.let { _events.emit(it) }
     }
 
 }

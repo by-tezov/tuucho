@@ -8,18 +8,18 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class RegisterShadowerEventUseCase(
-    private val coroutineDispatchers: CoroutineContextProviderProtocol,
+    private val coroutineContextProvider: CoroutineContextProviderProtocol,
     private val shadowerMaterialRepository: ShadowerMaterialRepositoryProtocol,
 ) {
 
     fun invoke(
         type: String,
-        onReceived: (event: ShadowerMaterialRepositoryProtocol.Event) -> Unit,
+        onReceived: suspend (event: ShadowerMaterialRepositoryProtocol.Event) -> Unit,
     ) {
         shadowerMaterialRepository.events
             .filter { it.type == type }
             .onEach { onReceived(it) }
-            .launchIn(CoroutineScope(coroutineDispatchers.main))
+            .launchIn(CoroutineScope(coroutineContextProvider.main))
     }
 
 }

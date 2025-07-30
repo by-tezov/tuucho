@@ -24,7 +24,7 @@ import org.koin.dsl.module
 object UseCaseModule {
 
     internal operator fun invoke() = module {
-        factory {
+        single {
             ActionHandlerUseCase(
                 get<CoroutineContextProviderProtocol>(),
                 listOf(
@@ -35,7 +35,7 @@ object UseCaseModule {
             )
         }
 
-        factory {
+        single {
             ComponentRenderUseCase(
                 get<CoroutineContextProviderProtocol>(),
                 get<MaterialStateProtocol>(),
@@ -45,44 +45,42 @@ object UseCaseModule {
             )
         }
 
-        factory {
+        single {
             RegisterNavigationUrlEventUseCase(
                 get<CoroutineContextProviderProtocol>(),
                 get<NavigationUrlActionHandler>(),
             )
         }
 
-        factory {
+        single {
             RegisterShadowerEventUseCase(
                 get<CoroutineContextProviderProtocol>(),
                 get<ShadowerMaterialRepositoryProtocol>(),
             )
         }
 
-        factory {
+        single {
             RegisterUpdateFormEventUseCase(
                 get<CoroutineContextProviderProtocol>(),
                 get<FormUpdateActionHandler>(),
             )
         }
 
-        factory {
+        single {
             RefreshCacheMaterialUseCase(
-                get<CoroutineContextProviderProtocol>(),
                 get<RefreshCacheMaterialRepositoryProtocol>()
             )
         }
 
-        factory {
+        single {
             SendDataUseCase(
-                get<CoroutineContextProviderProtocol>(),
                 get<SendDataAndRetrieveMaterialRepositoryProtocol>()
             )
         }
 
         factory { ValidatorFactoryUseCase() }
 
-        factory { GetLanguageUseCase() }
+        single { GetLanguageUseCase() }
 
     }
 

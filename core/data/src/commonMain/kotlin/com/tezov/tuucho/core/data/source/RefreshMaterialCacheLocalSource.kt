@@ -12,9 +12,12 @@ import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
 
 class RefreshMaterialCacheLocalSource(
+    private val coroutineContextProvider: CoroutineContextProviderProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialBreaker: MaterialBreaker
 ) {
@@ -33,48 +36,49 @@ class RefreshMaterialCacheLocalSource(
         isShared: Boolean
     ) {
         //TODO auto purge obsolete entry
+        withContext(coroutineContextProvider.default) {
+            val parts = materialBreaker.process(
+                material = material,
+                jsonEntityObjectTreeProducer = { jsonObject ->
+                    val idScope = jsonObject.onScope(IdSchema::Scope)
+                    JsonObjectEntity(
+                        type = jsonObject.withScope(TypeSchema::Scope).self
+                            ?: throw DataException.Default("Missing type, so there is surely something missing in the rectifier for $this"),
+                        url = url,
+                        id = idScope.value
+                            ?: throw DataException.Default("Missing Id, so there is surely something missing in the rectifier for $this"),
+                        idFrom = idScope.source,
+                        jsonObject = jsonObject
+                    ).let(::JsonEntityObjectTree)
+                }
+            )
+            with(parts) {
+                val rootPrimaryKey = rootJsonEntity?.let { root ->
+                    materialDatabaseSource.insertOrUpdate(root.jsonEntityObjectTree.content)
+                        .also {
+                            root.flatten()
+                                .asSequence()
+                                .filter { it !== root }
+                                .forEach {
+                                    materialDatabaseSource.insertOrUpdate(it.content)
+                                }
+                        }
+                }
 
-        val parts = materialBreaker.process(
-            material = material,
-            jsonEntityObjectTreeProducer = { jsonObject ->
-                val idScope = jsonObject.onScope(IdSchema::Scope)
-                JsonObjectEntity(
-                    type = jsonObject.withScope(TypeSchema::Scope).self
-                        ?: throw DataException.Default("Missing type, so there is surely something missing in the rectifier for $this"),
+                VersioningEntity(
                     url = url,
-                    id = idScope.value
-                        ?: throw DataException.Default("Missing Id, so there is surely something missing in the rectifier for $this"),
-                    idFrom = idScope.source,
-                    jsonObject = jsonObject
-                ).let(::JsonEntityObjectTree)
-            }
-        )
-        with(parts) {
-            val rootPrimaryKey = rootJsonEntity?.let { root ->
-                materialDatabaseSource.insertOrUpdate(root.jsonEntityObjectTree.content)
-                    .also {
-                        root.flatten()
-                            .asSequence()
-                            .filter { it !== root }
-                            .forEach {
-                                materialDatabaseSource.insertOrUpdate(it.content)
-                            }
+                    version = version,
+                    rootPrimaryKey = rootPrimaryKey,
+                    isShared = isShared
+                ).also { materialDatabaseSource.insertOrUpdate(it) }
+
+                jsonElementTree
+                    .asSequence()
+                    .flatMap { it.flatten() }
+                    .forEach {
+                        materialDatabaseSource.insertOrUpdate(it.content)
                     }
             }
-
-            VersioningEntity(
-                url = url,
-                version = version,
-                rootPrimaryKey = rootPrimaryKey,
-                isShared = isShared
-            ).also { materialDatabaseSource.insertOrUpdate(it) }
-
-            jsonElementTree
-                .asSequence()
-                .flatMap { it.flatten() }
-                .forEach {
-                    materialDatabaseSource.insertOrUpdate(it.content)
-                }
         }
     }
 }

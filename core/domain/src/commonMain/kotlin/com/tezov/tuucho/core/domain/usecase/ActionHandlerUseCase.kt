@@ -8,10 +8,10 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonElement
 
 class ActionHandlerUseCase(
-    coroutineDispatchers: CoroutineContextProviderProtocol,
+    coroutineContextProvider: CoroutineContextProviderProtocol,
     private val handlers: List<ActionHandlerProtocol>,
 ) {
-    private val coroutineScope = CoroutineScope(coroutineDispatchers.default)
+    private val coroutineScope = CoroutineScope(coroutineContextProvider.default)
 
     fun invoke(id: String?, action: ActionModelDomain, params: JsonElement? = null) {
         handlers

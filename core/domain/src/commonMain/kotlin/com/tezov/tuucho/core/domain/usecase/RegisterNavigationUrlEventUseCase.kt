@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class RegisterNavigationUrlEventUseCase(
-    private val coroutineDispatchers: CoroutineContextProviderProtocol,
+    private val coroutineContextProvider: CoroutineContextProviderProtocol,
     private val navigationUrlActionHandler: NavigationUrlActionHandler,
 ) {
 
@@ -16,7 +16,7 @@ class RegisterNavigationUrlEventUseCase(
     ) {
         navigationUrlActionHandler.events
             .onEach { onUrlRequested(it) }
-            .launchIn(CoroutineScope(coroutineDispatchers.main))
+            .launchIn(CoroutineScope(coroutineContextProvider.main))
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.renderer
+package com.tezov.tuucho.core.ui.composable
 
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
@@ -12,24 +12,25 @@ import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
-import kotlinx.serialization.json.JsonElement
+import com.tezov.tuucho.core.ui.composable._system.ComposableScreenProtocol
+import com.tezov.tuucho.core.ui.composable._system.UiComponentFactory
+import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
-class ButtonRendered : Renderer() {
+class ButtonUiFactory : UiComponentFactory() {
 
     private val labelRendered: LabelRendered by inject()
     private val actionHandler: ActionHandlerUseCase by inject()
 
-    override fun accept(element: JsonElement) = element
+    override fun accept(componentElement: JsonObject) = componentElement
         .let {
             it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                     it.withScope(SubsetSchema::Scope).self == ButtonSchema.Component.Value.subset
         }
 
-    override fun process(element: JsonElement): ComposableScreenProtocol {
-        val id = element.onScope(IdSchema::Scope).value
-        val content = element.onScope(ButtonSchema.Content::Scope)
+    override fun process(componentElement: JsonObject): ComposableScreenProtocol {
+        val id = componentElement.onScope(IdSchema::Scope).value
+        val content = componentElement.onScope(ButtonSchema.Content::Scope)
 
         val label =  content.label?.let { labelRendered.process(it) }
 
