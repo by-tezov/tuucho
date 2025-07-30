@@ -31,11 +31,11 @@ object SettingSchema {
 
     object Root {
         object Key {
-            const val disableOnDemandDefinitionShadower = "disable-on-demande-definition-shadower"
+            const val disableOnDemandDefinitionShadower = "disable-on-demand-definition-shadower"
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument) {
-            var disableOnDemandShadower by delegate<Boolean?>(Key.disableOnDemandDefinitionShadower)
+            var disableOnDemandDefinitionShadower by delegate<Boolean?>(Key.disableOnDemandDefinitionShadower)
         }
     }
 

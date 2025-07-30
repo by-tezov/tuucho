@@ -8,12 +8,14 @@ import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProto
 import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
 import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterNavigationUrlEventUseCase
+import com.tezov.tuucho.core.domain.usecase.RegisterShadowerEventUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
 import com.tezov.tuucho.core.domain.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
@@ -39,6 +41,7 @@ object UseCaseModule {
                 get<MaterialStateProtocol>(),
                 get<RetrieveMaterialRepositoryProtocol>(),
                 get<ScreenRendererProtocol>(),
+                get<RegisterShadowerEventUseCase>()
             )
         }
 
@@ -46,6 +49,13 @@ object UseCaseModule {
             RegisterNavigationUrlEventUseCase(
                 get<CoroutineContextProviderProtocol>(),
                 get<NavigationUrlActionHandler>(),
+            )
+        }
+
+        factory {
+            RegisterShadowerEventUseCase(
+                get<CoroutineContextProviderProtocol>(),
+                get<ShadowerMaterialRepositoryProtocol>(),
             )
         }
 

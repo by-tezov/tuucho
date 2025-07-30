@@ -9,13 +9,15 @@ import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
-import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandShadowerMaterialSource
+import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandDefinitionShadowerMaterialSource
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 object MaterialRepositoryModule {
@@ -37,7 +39,7 @@ object MaterialRepositoryModule {
             ShadowerMaterialRepository(
                 materialShadower = get()
             )
-        }
+        } bind ShadowerMaterialRepositoryProtocol::class
 
         single<RetrieveMaterialRepositoryProtocol> {
             RetrieveMaterialRepository(
@@ -103,11 +105,14 @@ object MaterialRepositoryModule {
     }
 
     private fun Module.compositeSource() {
-
         factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
             listOf(
-                RetrieveOnDemandShadowerMaterialSource(
-                    materialNetworkSource = get()
+                RetrieveOnDemandDefinitionShadowerMaterialSource(
+                    materialNetworkSource = get(),
+                    materialRectifier = get(),
+                    refreshMaterialCacheLocalSource = get(),
+                    materialAssembler = get(),
+                    materialDatabaseSource = get(),
                 )
             )
         }

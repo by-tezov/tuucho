@@ -4,6 +4,8 @@ import com.tezov.tuucho.core.data.di.MaterialRepositoryModule.Name
 import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
+import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol.Event
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.serialization.json.JsonObject
@@ -11,10 +13,10 @@ import org.koin.core.component.KoinComponent
 
 class ShadowerMaterialRepository(
     private val materialShadower: MaterialShadower,
-) : KoinComponent {
+) : ShadowerMaterialRepositoryProtocol, KoinComponent {
 
-    private val _events = MutableSharedFlow<JsonObject>(replay = 0)
-    val events: SharedFlow<JsonObject> = _events
+    private val _events = MutableSharedFlow<Event>(replay = 0)
+    override val events: SharedFlow<Event> = _events
 
     suspend fun process(url: String, materialElement: JsonObject) {
         val shadowerMaterialSources = getKoin()
@@ -24,6 +26,7 @@ class ShadowerMaterialRepository(
         materialShadower.process(
             material = materialElement,
             jsonObjectConsumer = object : JsonObjectConsumerProtocol {
+
                 override suspend fun onNext(jsonObject: JsonObject) {
                     shadowerMaterialSources
                         .asSequence()
@@ -35,8 +38,16 @@ class ShadowerMaterialRepository(
                     shadowerMaterialSources
                         .asSequence()
                         .filter { !it.isCancelled }
-                        .forEach { jsonObject ->
-                            jsonObject.onDone()?.let { _events.emit(it) }
+                        .forEach { source ->
+                            source.onDone().collect {
+                                _events.emit(
+                                    Event(
+                                        type = source.type,
+                                        url = url,
+                                        jsonObject = it
+                                    )
+                                )
+                            }
                         }
                 }
             }

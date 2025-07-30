@@ -3,25 +3,11 @@ import kotlinx.serialization.json.JsonObject;
 CREATE TABLE jsonObjectEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL,
-    url TEXT NOT NULL,
+    url TEXT NOT NULL REFERENCES versioningEntry(url) ON DELETE CASCADE,
     id TEXT NOT NULL,
     idFrom TEXT,
-    jsonObject TEXT AS JsonObject NOT NULL
+    jsonObject TEXT AS JsonObject NOT NULL,
+    UNIQUE(type, url, id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_jsonObjectEntry_type_id ON jsonObjectEntry(type, id);
-
-
--- import kotlinx.serialization.json.JsonObject;
---
--- CREATE TABLE jsonObjectEntry (
---     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
---     type TEXT NOT NULL,
---     url TEXT NOT NULL REFERENCES versioningEntry(url) ON DELETE CASCADE,
---     id TEXT NOT NULL,
---     idFrom TEXT,
---     jsonObject TEXT AS JsonObject NOT NULL,
---     UNIQUE (type, url, id)
--- );
---
--- CREATE INDEX IF NOT EXISTS idx_jsonObjectEntry_type_id ON jsonObjectEntry(type, id);

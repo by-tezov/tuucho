@@ -20,6 +20,8 @@ import org.koin.dsl.module
 object MaterialAssemblerModule {
 
     object Name {
+        val ASSEMBLERS = named("MaterialAssemblerModule.Name.ASSEMBLERS")
+
         object Processor {
             val COMPONENT = named("MaterialAssemblerModule.Name.Processor.COMPONENT")
             val CONTENT = named("MaterialAssemblerModule.Name.Processor.CONTENT")
@@ -42,6 +44,14 @@ object MaterialAssemblerModule {
     }
 
     internal operator fun invoke() = module {
+        factory<List<Assembler>>(Name.ASSEMBLERS) {
+            listOf(
+                get<ComponentAssembler>(),
+                get<ContentAssembler>(),
+                get<TextAssembler>(),
+            )
+        }
+
         single<MaterialAssembler> {
             MaterialAssembler()
         }

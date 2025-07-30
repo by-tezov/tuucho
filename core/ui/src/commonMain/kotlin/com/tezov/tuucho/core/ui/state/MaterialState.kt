@@ -7,6 +7,8 @@ class MaterialState(
     private val formMaterialState: FormMaterialStateProtocol
 ) : MaterialStateProtocol {
 
+    override var url: String = ""
+
     override fun form() = formMaterialState
 
 

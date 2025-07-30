@@ -1,8 +1,11 @@
 package com.tezov.tuucho.core.data.source.shadower
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonObject
 
 interface ShadowerMaterialSourceProtocol {
+
+    val type: String
 
     val isCancelled: Boolean
 
@@ -10,5 +13,5 @@ interface ShadowerMaterialSourceProtocol {
 
     suspend fun onNext(jsonObject: JsonObject)
 
-    suspend fun onDone(): JsonObject?
+    suspend fun onDone(): Flow<JsonObject>
 }
