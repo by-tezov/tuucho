@@ -36,8 +36,9 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     override suspend fun onStart(url: String, materialElement: JsonObject) {
         if (materialElement.onScope(SettingSchema.Root::Scope).disableOnDemandDefinitionShadower == true) {
             isCancelled = true
+            return
         }
-        this@RetrieveOnDemandDefinitionShadowerMaterialSource.url = url
+        this.url = url
         map = mutableMapOf()
     }
 
@@ -72,7 +73,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         }.await().let { materialRectifier.process(it) }
         //TODO should not be inserted inside the static database, do another one for transient data
         refreshMaterialCacheLocalSource.process(
-            material = material,
+            materialObject = material,
             url = url,
             isShared = true
         )
@@ -80,7 +81,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
 
     private suspend fun List<JsonObject>.assembleAll() = mapNotNull { jsonObject ->
         materialAssembler.process(
-            material = jsonObject,
+            materialObject = jsonObject,
             findAllRefOrNullFetcher = { from, type ->
                 coroutineScopeProvider.database.async {
                     materialDatabaseSource.findAllRefOrNull(

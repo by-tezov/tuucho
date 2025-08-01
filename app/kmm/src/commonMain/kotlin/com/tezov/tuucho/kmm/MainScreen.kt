@@ -10,9 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
-import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
 import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.ComposableScreenProtocol
+import com.tezov.tuucho.core.domain.usecase.RenderComponentUseCase
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewProtocol
 import org.koin.mp.KoinPlatform.getKoin
 
 @Composable
@@ -45,14 +45,14 @@ fun mainScreen() {
 private fun StartEngineScreen(
     viewModel:MainViewModel = remember { getKoin().get<MainViewModel>() }
 ) {
-    var screen by remember { mutableStateOf<ComposableScreenProtocol?>(null) }
-    val renderer = remember { getKoin().get<ComponentRenderUseCase>() }
+    var screen by remember { mutableStateOf<ViewProtocol?>(null) }
+    val renderer = remember { getKoin().get<RenderComponentUseCase>() }
 
     LaunchedEffect(Unit) { viewModel.init() }
     LaunchedEffect(viewModel.url.value) {
-        screen = renderer.invoke(viewModel.url.value) as? ComposableScreenProtocol
+        screen = renderer.invoke(viewModel.url.value) as? ViewProtocol
     }
-    screen?.show(null)
+    screen?.display(null)
     DisposableEffect(Unit) {
         onDispose {
             viewModel.onDispose()

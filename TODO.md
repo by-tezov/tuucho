@@ -1,8 +1,7 @@
 ## In progress
 
+Then finnish by this
 - !!!!!! Find a solution for the transient database
-- correct name componentObject, ... instead of element
-- Single / Factory correct
 
 
 - add language management

@@ -7,8 +7,8 @@ import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.protocol.ActionHandlerProtocol
-import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.form.FormMaterialStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.ScreenStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FormsStateProtocol
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.usecase.SendDataUseCase
 import kotlinx.serialization.json.JsonArray
@@ -18,7 +18,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class FormSendUrlActionHandler(
-    private val materialState: MaterialStateProtocol,
+    private val materialState: ScreenStateProtocol,
     private val sendData: SendDataUseCase,
 ) : ActionHandlerProtocol, KoinComponent {
 
@@ -27,7 +27,7 @@ class FormSendUrlActionHandler(
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: ActionModelDomain, params: JsonElement?): Boolean {
+    override fun accept(id: String, action: ActionModelDomain, jsonElement: JsonElement?): Boolean {
         return action.command == Action.Form.Send.command && action.authority == Action.Form.Send.Authority.url
     }
 
@@ -35,17 +35,17 @@ class FormSendUrlActionHandler(
         url: String,
         id: String,
         action: ActionModelDomain,
-        params: JsonElement?,
+        jsonElement: JsonElement?,
     ) {
         action.target ?: return
-        val form = materialState.formState().also { it.updateAllValidity() }
+        val form = materialState.form().also { it.updateAllValidity() }
         if (form.isAllValid()) {
             val response = sendData.invoke(action.target, form.data())
             response?.let {
                 val rootScope = response.withScope(FormSendResponseSchema.Root::Scope)
                 val isAllSuccess = rootScope.isAllSuccess == true
                 if (isAllSuccess) {
-                    params?.actionValidated(url, id)
+                    jsonElement?.actionValidated(url, id)
                 } else {
                     rootScope.processInvalidRemoteForm(url, id)
                 }
@@ -56,7 +56,7 @@ class FormSendUrlActionHandler(
         actionDenied(url, id, null)
     }
 
-    private fun FormMaterialStateProtocol.processInvalidLocalForm(url: String, id: String) {
+    private fun FormsStateProtocol.processInvalidLocalForm(url: String, id: String) {
         val results = getAllValidityResult().filter { !it.second }.map {
             JsonNull.withScope(IdSchema::Scope).apply {
                 self = JsonNull.withScope(IdSchema::Scope)
@@ -107,7 +107,7 @@ class FormSendUrlActionHandler(
                 authority = Action.Form.Update.Authority.error,
                 target = null
             ),
-            params = results
+            paramElement = results
         )
     }
 

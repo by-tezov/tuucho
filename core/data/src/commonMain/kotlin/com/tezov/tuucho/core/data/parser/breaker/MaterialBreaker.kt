@@ -29,9 +29,9 @@ class MaterialBreaker : KoinComponent {
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
-        material: JsonObject,
+        materialObject: JsonObject,
         jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
-    ): Parts = with(material.withScope(MaterialSchema::Scope)) {
+    ): Parts = with(materialObject.withScope(MaterialSchema::Scope)) {
         val jsonElementTree: MutableList<JsonElementTree> = mutableListOf()
 
         components?.let {

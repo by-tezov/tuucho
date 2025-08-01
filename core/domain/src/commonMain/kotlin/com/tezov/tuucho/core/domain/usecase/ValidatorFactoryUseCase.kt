@@ -18,8 +18,8 @@ import kotlinx.serialization.json.JsonObject
 class ValidatorFactoryUseCase {
 
     @Suppress("UNCHECKED_CAST")
-    fun invoke(prototype: JsonObject): FieldValidatorProtocol<Any> =
-        prototype.withScope(ValidatorSchema::Scope).let {
+    fun invoke(prototypeObject: JsonObject): FieldValidatorProtocol<Any> =
+        prototypeObject.withScope(ValidatorSchema::Scope).let {
             when (it.type) {
                 Type.stringMinLength -> StringMinLengthFieldValidator(
                     length = it.length!!.toInt(),
@@ -58,7 +58,7 @@ class ValidatorFactoryUseCase {
                     maxValue = it.value!!.toInt(),
                 )
 
-                else -> error("Validator $prototype can't be resolved")
+                else -> error("Validator $prototypeObject can't be resolved")
             }
         } as FieldValidatorProtocol<Any>
 

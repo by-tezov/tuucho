@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.model.schema.material._element
+package com.tezov.tuucho.core.domain.model.schema.material._element.layout
 
 import com.tezov.tuucho.core.domain.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.model.schema.material.ContentSchema

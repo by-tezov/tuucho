@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.ui.state
 
 import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
-import com.tezov.tuucho.core.domain.protocol.state.form.FieldsMaterialStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FieldsFormStateProtocol
 import com.tezov.tuucho.core.ui.exception.UiException
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-class FieldsMaterialState : FieldsMaterialStateProtocol {
+class FieldsFormState : FieldsFormStateProtocol {
 
     private data class Entry(
         var value: String,

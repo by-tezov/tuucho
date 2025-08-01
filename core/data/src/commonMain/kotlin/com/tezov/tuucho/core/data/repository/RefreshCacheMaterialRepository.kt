@@ -39,7 +39,7 @@ class RefreshCacheMaterialRepository(
             element.withScope(ConfigSchema.MaterialItem::Scope).let { subScope ->
                 retrieveMaterialRemoteSource.process(url).let { material ->
                     refreshMaterialCacheLocalSource.process(
-                        material = material,
+                        materialObject = material,
                         url = url,
                         isShared = true
                     )

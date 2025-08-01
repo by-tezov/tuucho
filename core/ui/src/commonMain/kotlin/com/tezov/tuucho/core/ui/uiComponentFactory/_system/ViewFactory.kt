@@ -20,21 +20,21 @@ import com.tezov.tuucho.core.ui.exception.UiException
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class UiComponentFactory : MatcherUiComponentProtocol, KoinComponent {
+abstract class ViewFactory : MatcherViewProtocol, KoinComponent {
 
-    abstract fun process(url: String, componentElement: JsonObject): ComposableScreenProtocol
+    abstract fun process(url: String, componentObject: JsonObject): ViewProtocol
 
 }
 
-abstract class Screen(
+abstract class View(
     protected val url: String,
     componentObject: JsonObject
-) : ComposableScreenProtocol {
+) : ViewProtocol {
 
     protected var isInitialized = false
 
     private val typeIds = mutableMapOf<String, String>()
-    private val _canBeRendered = mutableStateOf<Boolean>(false)
+    private val _canBeRendered = mutableStateOf(false)
 
     protected var componentObject = componentObject
         private set(value) {
@@ -135,19 +135,19 @@ abstract class Screen(
     private val canBeRendered get() = _canBeRendered.value
 
     @Composable
-    final override fun show(scope: Any?) {
+    final override fun display(scope: Any?) {
         if (canBeRendered) {
-            showComponent(scope)
+            displayComponent(scope)
         } else {
-            showPlaceholder(scope)
+            displayPlaceholder(scope)
         }
     }
 
     @Composable
-    protected abstract fun showComponent(scope: Any?)
+    protected abstract fun displayComponent(scope: Any?)
 
     @Composable
-    protected open fun showPlaceholder(scope: Any?) {
+    protected open fun displayPlaceholder(scope: Any?) {
         Box(modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)

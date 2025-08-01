@@ -18,7 +18,7 @@ class RetrieveMaterialCacheLocalSource(
         }.await() ?: return null
         return coroutineScopeProvider.parser.async {
             materialAssembler.process(
-                material = entity.jsonObject,
+                materialObject = entity.jsonObject,
                 findAllRefOrNullFetcher = { from, type ->
                     coroutineScopeProvider.database.async {
                         materialDatabaseSource.findAllRefOrNull(from, url, type)

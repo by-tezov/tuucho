@@ -23,49 +23,49 @@ import com.tezov.tuucho.core.domain.model.schema.material._element.form.FormFiel
 import com.tezov.tuucho.core.domain.model.schema.material._element.form.FormSchema
 import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
 import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
-import com.tezov.tuucho.core.domain.usecase.state.AddFormInMaterialStateUseCase
-import com.tezov.tuucho.core.domain.usecase.state.ClearFormInMaterialStateUseCase
-import com.tezov.tuucho.core.domain.usecase.state.IsFieldFormValidUseCase
-import com.tezov.tuucho.core.domain.usecase.state.UpdateFieldFormUseCase
+import com.tezov.tuucho.core.domain.usecase.state.AddFormUseCase
+import com.tezov.tuucho.core.domain.usecase.state.IsFieldFormViewValidUseCase
+import com.tezov.tuucho.core.domain.usecase.state.RemoveFormFieldViewUseCase
+import com.tezov.tuucho.core.domain.usecase.state.UpdateFieldFormViewUseCase
 import com.tezov.tuucho.core.ui.exception.UiException
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.Screen
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.UiComponentFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
-class FieldUiComponentFactory(
+class FieldViewFactory(
     private val validatorFactory: ValidatorFactoryUseCase,
-    private val addFormInMaterialState: AddFormInMaterialStateUseCase,
-    private val clearFormInMaterialState: ClearFormInMaterialStateUseCase,
-    private val updateFieldForm: UpdateFieldFormUseCase,
-    private val isFieldFormValid: IsFieldFormValidUseCase,
-) : UiComponentFactory() {
+    private val addForm: AddFormUseCase,
+    private val removeFormFieldView: RemoveFormFieldViewUseCase,
+    private val updateFieldFormView: UpdateFieldFormViewUseCase,
+    private val isFieldFormViewValid: IsFieldFormViewValidUseCase,
+) : ViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                 it.withScope(SubsetSchema::Scope).self == FormFieldSchema.Component.Value.subset
     }
 
-    override fun process(url: String, componentElement: JsonObject) = FieldScreen(
+    override fun process(url: String, componentObject: JsonObject) = FieldView(
         url = url,
-        componentObject = componentElement,
+        componentObject = componentObject,
         validatorFactory = validatorFactory,
-        addFormInMaterialState = addFormInMaterialState,
-        clearFormInMaterialState = clearFormInMaterialState,
-        updateFieldForm = updateFieldForm,
-        isFieldFormValid = isFieldFormValid,
+        addForm = addForm,
+        removeFormFieldView = removeFormFieldView,
+        updateFieldFormView = updateFieldFormView,
+        isFieldFormViewValid = isFieldFormViewValid,
     ).also { it.init() }
 }
 
-class FieldScreen(
+class FieldView(
     url: String,
     componentObject: JsonObject,
     private val validatorFactory: ValidatorFactoryUseCase,
-    private val addFormInMaterialState: AddFormInMaterialStateUseCase,
-    private val clearFormInMaterialState: ClearFormInMaterialStateUseCase,
-    private val updateFieldForm: UpdateFieldFormUseCase,
-    private val isFieldFormValid: IsFieldFormValidUseCase,
-) : Screen(url, componentObject) {
+    private val addForm: AddFormUseCase,
+    private val removeFormFieldView: RemoveFormFieldViewUseCase,
+    private val updateFieldFormView: UpdateFieldFormViewUseCase,
+    private val isFieldFormViewValid: IsFieldFormViewValidUseCase,
+) : View(url, componentObject) {
 
     private val _title = mutableStateOf<JsonObject?>(null)
     private val _placeholder = mutableStateOf<JsonObject?>(null)
@@ -97,7 +97,7 @@ class FieldScreen(
 
     override fun JsonObject.processComponent() {
         if(isInitialized) {
-            clearFormInMaterialState.invoke(
+            removeFormFieldView.invoke(
                 url = url,
                 id = componentObject.idValue
             )
@@ -107,11 +107,11 @@ class FieldScreen(
             option?.processOption()
             state?.processState()
         }
-        addFormInMaterialState.invoke(
+        addForm.invoke(
             url = url,
             initialValue = "",
             id = componentObject.idValue,
-            validators = this@FieldScreen.validators
+            validators = this@FieldView.validators
         )
     }
 
@@ -148,7 +148,7 @@ class FieldScreen(
         when (withScope(MessageSchema::Scope).subset) {
             FormSchema.Message.Value.Subset.updateErrorState -> {
                 withScope(FormSchema.Message::Scope).run {
-                    val isValid = isFieldFormValid.invoke(url, componentObject.idValue)
+                    val isValid = isFieldFormViewValid.invoke(url, componentObject.idValue)
                     val messageError = messageErrorExtra
                     val shouldShowError = isValid != true || messageError != null
                     if (shouldShowError) {
@@ -166,7 +166,7 @@ class FieldScreen(
                 val messageError = componentObject.contentOrNull
                     ?.withScope(FormFieldSchema.Content::Scope)
                     ?.messageError
-                this@FieldScreen.validators = messageError?.let {
+                this@FieldView.validators = messageError?.let {
                     buildValidator(validators, messageError)
                 }
             }
@@ -220,7 +220,7 @@ class FieldScreen(
         get() = _messageErrorExtra.value?.get(Language.Default.code)?.string ?: ""
 
     @Composable
-    override fun showComponent(scope: Any?) {
+    override fun displayComponent(scope: Any?) {
         //TODO validators:
         //  - when lost focus, if not empty test validator and update the error status
         //  - when gain focus and user write, remove the error while user is typing
@@ -229,7 +229,7 @@ class FieldScreen(
             modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = { newValue ->
-                updateFieldForm.invoke(
+                updateFieldFormView.invoke(
                     url = url,
                     id = componentObject.idValue,
                     value = newValue,

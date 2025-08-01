@@ -42,7 +42,7 @@ object MaterialRepositoryModule {
             )
         } bind ShadowerMaterialRepositoryProtocol::class
 
-        single<RetrieveMaterialRepositoryProtocol> {
+        factory<RetrieveMaterialRepositoryProtocol> {
             RetrieveMaterialRepository(
                 retrieveMaterialCacheLocalSource = get(),
                 retrieveMaterialRemoteSource = get(),
@@ -51,7 +51,7 @@ object MaterialRepositoryModule {
             )
         }
 
-        single<RefreshCacheMaterialRepositoryProtocol> {
+        factory<RefreshCacheMaterialRepositoryProtocol> {
             RefreshCacheMaterialRepository(
                 coroutineScopeProvider = get(),
                 retrieveObjectRemoteSource = get(),
@@ -60,7 +60,7 @@ object MaterialRepositoryModule {
             )
         }
 
-        single<SendDataAndRetrieveMaterialRepositoryProtocol> {
+        factory<SendDataAndRetrieveMaterialRepositoryProtocol> {
             SendDataAndRetrieveMaterialRepository(
                 sendObjectAndRetrieveMaterialRemoteSource = get()
             )

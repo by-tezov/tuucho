@@ -8,7 +8,7 @@ class SendDataAndRetrieveMaterialRepository(
     private val sendObjectAndRetrieveMaterialRemoteSource: SendDataAndRetrieveMaterialRemoteSource
 ) : SendDataAndRetrieveMaterialRepositoryProtocol {
 
-    override suspend fun process(url: String, data: JsonObject): JsonObject? {
-        return sendObjectAndRetrieveMaterialRemoteSource.process(url, data)
+    override suspend fun process(url: String, dataObject: JsonObject): JsonObject? {
+        return sendObjectAndRetrieveMaterialRemoteSource.process(url, dataObject)
     }
 }

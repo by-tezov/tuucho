@@ -16,15 +16,15 @@ class MaterialAssembler() : KoinComponent {
     private val assemblers: List<Assembler> by inject(Name.ASSEMBLERS)
 
     suspend fun process(
-        material: JsonObject,
+        materialObject: JsonObject,
         findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol
     ): JsonObject? {
-        val type = material.withScope(TypeSchema::Scope).self
-            ?: throw DataException.Default("Missing type in material $material")
+        val type = materialObject.withScope(TypeSchema::Scope).self
+            ?: throw DataException.Default("Missing type in material $materialObject")
         return assemblers.firstOrNull { it.schemaType == type }?.let {
             val jsonObjectAssembled = it.process(
                 path = "".toPath(),
-                element = material,
+                element = materialObject,
                 findAllRefOrNullFetcher = findAllRefOrNullFetcher
             )
             jsonObjectAssembled.jsonObject

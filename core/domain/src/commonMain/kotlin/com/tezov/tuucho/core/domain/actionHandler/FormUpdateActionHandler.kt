@@ -30,7 +30,7 @@ class FormUpdateActionHandler : ActionHandlerProtocol, KoinComponent {
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: ActionModelDomain, params: JsonElement?): Boolean {
+    override fun accept(id: String, action: ActionModelDomain, jsonElement: JsonElement?): Boolean {
         return action.command == Action.Form.Update.command
     }
 
@@ -38,16 +38,16 @@ class FormUpdateActionHandler : ActionHandlerProtocol, KoinComponent {
         url: String,
         id: String,
         action: ActionModelDomain,
-        params: JsonElement?,
+        jsonElement: JsonElement?,
     ) {
         when (val authority = action.authority) {
-            Action.Form.Update.Authority.error -> updateErrorState(url, params)
+            Action.Form.Update.Authority.error -> updateErrorState(url, jsonElement)
             else -> throw DomainException.Default("Unknown authority $authority")
         }
     }
 
-    private suspend fun updateErrorState(url: String, params: JsonElement?) {
-        params?.jsonArray?.forEach { param ->
+    private suspend fun updateErrorState(url: String, jsonElement: JsonElement?) {
+        jsonElement?.jsonArray?.forEach { param ->
             val message = JsonNull.withScope(FormSchema.Message::Scope).apply {
                 id = param.withScope(IdSchema::Scope).self
                 type = TypeSchema.Value.message

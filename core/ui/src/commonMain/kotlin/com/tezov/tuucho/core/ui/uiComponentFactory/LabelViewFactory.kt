@@ -20,26 +20,26 @@ import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.LabelSchema
 import com.tezov.tuucho.core.ui._system.toColorOrNull
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.Screen
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.UiComponentFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 
-class LabelUiComponentFactory() : UiComponentFactory() {
+class LabelViewFactory() : ViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                 it.withScope(SubsetSchema::Scope).self == LabelSchema.Component.Value.subset
     }
 
-    override fun process(url: String, componentElement: JsonObject) =
-        LabelScreen(url, componentElement)
+    override fun process(url: String, componentObject: JsonObject) =
+        LabelView(url, componentObject)
             .also { it.init() }
 }
 
-class LabelScreen(
+class LabelView(
     url: String,
     componentObject: JsonObject
-) : Screen(url, componentObject) {
+) : View(url, componentObject) {
 
     private val _value = mutableStateOf<JsonObject?>(null)
     private var _fontColor: JsonObject? = null
@@ -122,7 +122,7 @@ class LabelScreen(
         }
 
     @Composable
-    override fun showComponent(scope: Any?) {
+    override fun displayComponent(scope: Any?) {
         val textStyle = LocalTextStyle.current.let { current ->
             current.copy(
                 color = fontColor ?: current.color,

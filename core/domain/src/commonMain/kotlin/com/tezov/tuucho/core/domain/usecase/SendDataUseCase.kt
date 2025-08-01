@@ -8,6 +8,6 @@ class SendDataUseCase(
     private val sendDataAndRetrieveMaterialRepository: SendDataAndRetrieveMaterialRepositoryProtocol,
 ) {
 
-    suspend fun invoke(url: String, data: JsonObject): JsonElement? = sendDataAndRetrieveMaterialRepository.process(url, data)
+    suspend fun invoke(url: String, dataObject: JsonObject): JsonElement? = sendDataAndRetrieveMaterialRepository.process(url, dataObject)
 
 }

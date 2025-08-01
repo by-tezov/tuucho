@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProto
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.model.schema.material._element.LayoutLinearSchema
+import com.tezov.tuucho.core.domain.model.schema.material._element.layout.LayoutLinearSchema
 import kotlinx.serialization.json.JsonElement
 
 class ContentLayoutLinearItemsMatcher : MatcherRectifierProtocol {

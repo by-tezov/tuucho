@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.protocol.state.form
 
 import com.tezov.tuucho.core.domain.protocol.FieldValidatorProtocol
 
-interface FieldsMaterialStateProtocol: FormStateProtocol {
+interface FieldsFormStateProtocol: FormStateProtocol {
 
     fun removeField(
         id: String,

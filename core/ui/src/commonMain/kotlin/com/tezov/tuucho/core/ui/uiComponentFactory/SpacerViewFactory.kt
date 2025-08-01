@@ -18,26 +18,26 @@ import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.SpacerSchema
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.Screen
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.UiComponentFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 
-class SpacerUiComponentFactory : UiComponentFactory() {
+class SpacerViewFactory : ViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                 it.withScope(SubsetSchema::Scope).self == SpacerSchema.Component.Value.subset
     }
 
-    override fun process(url: String, componentElement: JsonObject) =
-        SpacerScreen(url, componentElement)
+    override fun process(url: String, componentObject: JsonObject) =
+        SpacerView(url, componentObject)
             .also { it.init() }
 }
 
-class SpacerScreen(
+class SpacerView(
     url: String,
     componentElement: JsonObject
-) : Screen(url, componentElement) {
+) : View(url, componentElement) {
 
     private var _width: JsonObject? = null
     private var _height: JsonObject? = null
@@ -84,7 +84,7 @@ class SpacerScreen(
         }
 
     @Composable
-    override fun showComponent(scope: Any?) {
+    override fun displayComponent(scope: Any?) {
 
         //TODO do much better than that
         var modifier: Modifier = Modifier

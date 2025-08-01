@@ -2,12 +2,12 @@ package com.tezov.tuucho.core.domain.protocol
 
 import kotlinx.serialization.json.JsonObject
 
-interface ScreenProtocol {
+interface ViewProtocol {
 
     fun update(jsonObject: JsonObject) {}
 }
 
-interface ScreenRendererProtocol {
+interface ComponentRendererProtocol {
 
-    fun process(url:String, componentElement: JsonObject): ScreenProtocol?
+    fun process(url:String, componentObject: JsonObject): ViewProtocol?
 }

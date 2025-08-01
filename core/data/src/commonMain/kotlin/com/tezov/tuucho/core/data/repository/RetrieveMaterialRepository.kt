@@ -15,18 +15,18 @@ class RetrieveMaterialRepository(
 ) : RetrieveMaterialRepositoryProtocol {
 
     override suspend fun process(url: String): JsonObject {
-        val materialElement = retrieveMaterialCacheLocalSource.process(url)
+        val materialObject = retrieveMaterialCacheLocalSource.process(url)
             ?: run {
                 val material = retrieveMaterialRemoteSource.process(url)
                 refreshMaterialCacheLocalSource.process(
-                    material = material,
+                    materialObject = material,
                     url = url,
                     isShared = false
                 )
                 retrieveMaterialCacheLocalSource.process(url)
                     ?: throw DataException.Default("Retrieved url $url returned nothing")
             }
-        shadowerMaterialRepository.process(url, materialElement)
-        return materialElement
+        shadowerMaterialRepository.process(url, materialObject)
+        return materialObject
     }
 }

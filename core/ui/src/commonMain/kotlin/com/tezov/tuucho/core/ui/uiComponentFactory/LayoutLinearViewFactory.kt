@@ -14,42 +14,42 @@ import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
 import com.tezov.tuucho.core.domain.model.schema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.model.schema.material._element.LayoutLinearSchema
-import com.tezov.tuucho.core.domain.model.schema.material._element.LayoutLinearSchema.Style.Value.Orientation
+import com.tezov.tuucho.core.domain.model.schema.material._element.layout.LayoutLinearSchema
+import com.tezov.tuucho.core.domain.model.schema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
 import com.tezov.tuucho.core.ui._system.toColorOrNull
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.Screen
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.UiComponentFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class LayoutLinearUiComponentFactory : UiComponentFactory() {
+class LayoutLinearViewFactory : ViewFactory() {
 
-    private val materialUiComponentFactory: MaterialUiComponentFactory by inject()
+    private val componentRendererFactory: ComponentRendererFactory by inject()
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                 it.withScope(SubsetSchema::Scope).self == LayoutLinearSchema.Component.Value.subset
     }
 
-    override fun process(url: String, componentElement: JsonObject) = LayoutLinearScreen(
+    override fun process(url: String, componentObject: JsonObject) = LayoutLinearView(
         url = url,
-        componentElement = componentElement,
-        materialUiComponentFactory = materialUiComponentFactory,
+        componentElement = componentObject,
+        componentRendererFactory = componentRendererFactory,
     ).also { it.init() }
 }
 
-class LayoutLinearScreen(
+class LayoutLinearView(
     url: String,
     componentElement: JsonObject,
-    private val materialUiComponentFactory: MaterialUiComponentFactory,
-) : Screen(url, componentElement) {
+    private val componentRendererFactory: ComponentRendererFactory,
+) : View(url, componentElement) {
 
     private var _orientation: String? = null
     private var _fillMaxSize: Boolean? = null
     private var _fillMaxWidth: Boolean? = null
     private var _backgroundColor: JsonObject? = null
-    private val _items = mutableStateOf<List<Screen>?>(null)
+    private val _items = mutableStateOf<List<View>?>(null)
 
     override fun JsonObject.processComponent() {
         withScope(ComponentSchema::Scope).run {
@@ -62,7 +62,7 @@ class LayoutLinearScreen(
         withScope(LayoutLinearSchema.Content::Scope).run {
             items?.let { items ->
                 _items.value = items.mapNotNull {
-                    materialUiComponentFactory.process(url, it.jsonObject) as? Screen
+                    componentRendererFactory.process(url, it.jsonObject) as? View
                 }
             }
         }
@@ -98,10 +98,10 @@ class LayoutLinearScreen(
                 ?.default?.toColorOrNull()
         }
 
-    private val items get():List<Screen>? = _items.value
+    private val items get():List<View>? = _items.value
 
     @Composable
-    override fun showComponent(scope: Any?) {
+    override fun displayComponent(scope: Any?) {
 
         when (orientation) {
             Orientation.horizontal -> {
@@ -117,7 +117,7 @@ class LayoutLinearScreen(
                 Row(
                     modifier = modifier
                 ) {
-                    items?.forEach { it.show(this@Row) }
+                    items?.forEach { it.display(this@Row) }
                 }
             }
 
@@ -134,7 +134,7 @@ class LayoutLinearScreen(
                 Column(
                     modifier = modifier
                 ) {
-                    items?.forEach { it.show(this@Column) }
+                    items?.forEach { it.display(this@Column) }
                 }
             }
         }

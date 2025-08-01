@@ -11,38 +11,38 @@ import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.Screen
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.UiComponentFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
+import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
-class ButtonUiComponentFactory(
+class ButtonViewFactory(
     private val actionHandler: ActionHandlerUseCase
-) : UiComponentFactory() {
+) : ViewFactory() {
 
-    private val labelUiComponentFactory: LabelUiComponentFactory by inject()
+    private val labelUiComponentFactory: LabelViewFactory by inject()
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
                 it.withScope(SubsetSchema::Scope).self == ButtonSchema.Component.Value.subset
     }
 
-    override fun process(url: String, componentElement: JsonObject) = ButtonScreen(
+    override fun process(url: String, componentObject: JsonObject) = ButtonView(
         url = url,
-        componentElement = componentElement,
+        componentElement = componentObject,
         labelUiComponentFactory = labelUiComponentFactory,
         actionHandler = actionHandler
     ).also { it.init() }
 }
 
-class ButtonScreen(
+class ButtonView(
     url: String,
     componentElement: JsonObject,
-    private val labelUiComponentFactory: LabelUiComponentFactory,
+    private val labelUiComponentFactory: LabelViewFactory,
     private val actionHandler: ActionHandlerUseCase
-) : Screen(url, componentElement) {
+) : View(url, componentElement) {
 
-    private var label: Screen? = null
+    private var label: View? = null
     private var _action: JsonObject? = null
 
     override fun JsonObject.processComponent() {
@@ -56,7 +56,7 @@ class ButtonScreen(
             action?.let { _action = it }
             label?.let {
                 //TODO if label not null, push an update event on material state
-                this@ButtonScreen.label = labelUiComponentFactory.process(url, it)
+                this@ButtonView.label = labelUiComponentFactory.process(url, it)
             }
         }
 
@@ -70,17 +70,17 @@ class ButtonScreen(
                         url = url,
                         id = componentObject.idValue,
                         action = ActionModelDomain.Companion.from(value),
-                        params = params
+                        paramElement = params
                     )
                 }
             }
         })
 
     @Composable
-    override fun showComponent(scope: Any?) {
+    override fun displayComponent(scope: Any?) {
         Button(
             onClick = action,
-            content = { label?.show(this) }
+            content = { label?.display(this) }
         )
     }
 

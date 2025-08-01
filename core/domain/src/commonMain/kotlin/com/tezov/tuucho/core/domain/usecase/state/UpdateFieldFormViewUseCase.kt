@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.domain.usecase.state
 
-import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.ScreenStateProtocol
 
-class UpdateFieldFormUseCase(
-    private val materialState: MaterialStateProtocol,
+class UpdateFieldFormViewUseCase(
+    private val screenState: ScreenStateProtocol,
 ) {
 
     //TODO: inject stack navigation repo, find materialState with url instead of injecting a singleton
@@ -13,9 +13,9 @@ class UpdateFieldFormUseCase(
         id: String,
         value: String
     ) {
-        materialState
-            .formState()
-            .fieldsState()
+        screenState
+            .form()
+            .fields()
             .updateField(
                 id = id,
                 value = value

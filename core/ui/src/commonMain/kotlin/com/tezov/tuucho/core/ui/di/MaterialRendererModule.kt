@@ -1,18 +1,18 @@
 package com.tezov.tuucho.core.ui.di
 
-import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.form.FieldsMaterialStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.form.FormMaterialStateProtocol
-import com.tezov.tuucho.core.ui.state.FieldsMaterialState
-import com.tezov.tuucho.core.ui.state.FormMaterialState
-import com.tezov.tuucho.core.ui.state.MaterialState
-import com.tezov.tuucho.core.ui.uiComponentFactory.ButtonUiComponentFactory
-import com.tezov.tuucho.core.ui.uiComponentFactory.FieldUiComponentFactory
-import com.tezov.tuucho.core.ui.uiComponentFactory.LabelUiComponentFactory
-import com.tezov.tuucho.core.ui.uiComponentFactory.LayoutLinearUiComponentFactory
-import com.tezov.tuucho.core.ui.uiComponentFactory.MaterialUiComponentFactory
-import com.tezov.tuucho.core.ui.uiComponentFactory.SpacerUiComponentFactory
+import com.tezov.tuucho.core.domain.protocol.ComponentRendererProtocol
+import com.tezov.tuucho.core.domain.protocol.state.ScreenStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FieldsFormStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FormsStateProtocol
+import com.tezov.tuucho.core.ui.state.FieldsFormState
+import com.tezov.tuucho.core.ui.state.FormsState
+import com.tezov.tuucho.core.ui.state.ScreenState
+import com.tezov.tuucho.core.ui.uiComponentFactory.ButtonViewFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory.ComponentRendererFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory.FieldViewFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory.LabelViewFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory.LayoutLinearViewFactory
+import com.tezov.tuucho.core.ui.uiComponentFactory.SpacerViewFactory
 import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -23,62 +23,63 @@ object MaterialRendererModule {
         state()
         rendered()
 
-        single<MaterialUiComponentFactory> {
-            MaterialUiComponentFactory(
-                addScreenInMaterialState = get(),
+        factory<ComponentRendererFactory> {
+            ComponentRendererFactory(
+                addView = get(),
                 uiComponentFactory = listOf(
-                    get<LabelUiComponentFactory>(),
-                    get<FieldUiComponentFactory>(),
-                    get<ButtonUiComponentFactory>(),
-                    get<SpacerUiComponentFactory>(),
-                    get<LayoutLinearUiComponentFactory>(),
+                    get<LabelViewFactory>(),
+                    get<FieldViewFactory>(),
+                    get<ButtonViewFactory>(),
+                    get<SpacerViewFactory>(),
+                    get<LayoutLinearViewFactory>(),
                 )
             )
-        } bind ScreenRendererProtocol::class
+        } bind ComponentRendererProtocol::class
     }
 
     private fun Module.state() {
-        single<FieldsMaterialStateProtocol> {
-            FieldsMaterialState()
+        factory<FieldsFormStateProtocol> {
+            FieldsFormState()
         }
 
-        single<FormMaterialStateProtocol> {
-            FormMaterialState(
-                fieldsMaterialState = get()
+        factory<FormsStateProtocol> {
+            FormsState(
+                fieldsFormState = get()
             )
         }
 
-        single<MaterialStateProtocol> {
-            MaterialState(
-                formMaterialState = get()
+        //TODO: when navigation stack will be done, it must not be a single but a factory
+        single <ScreenStateProtocol> {
+            ScreenState(
+                formsState = get()
             )
         }
     }
 
     private fun Module.rendered() {
-        single<LayoutLinearUiComponentFactory> { LayoutLinearUiComponentFactory() }
+        factory<LayoutLinearViewFactory> { LayoutLinearViewFactory() }
 
-        single<LabelUiComponentFactory> {
-            LabelUiComponentFactory()
+        factory<LabelViewFactory> {
+            LabelViewFactory()
         }
 
-        single<FieldUiComponentFactory> {
-            FieldUiComponentFactory(
+        factory<FieldViewFactory> {
+            FieldViewFactory(
                 validatorFactory = get(),
-                addFormInMaterialState = get(),
-                clearFormInMaterialState = get(),
-                updateFieldForm = get(),
-                isFieldFormValid = get()
+                addForm = get(),
+                removeFormFieldView = get(),
+                updateFieldFormView = get(),
+                isFieldFormViewValid = get()
             )
         }
 
-        single<ButtonUiComponentFactory> {
-            ButtonUiComponentFactory(
+        factory<ButtonViewFactory> {
+            ButtonViewFactory(
                 actionHandler = get()
             )
         }
 
-        single<SpacerUiComponentFactory> { SpacerUiComponentFactory() }
+        factory <SpacerViewFactory> { SpacerViewFactory() }
     }
 
 }

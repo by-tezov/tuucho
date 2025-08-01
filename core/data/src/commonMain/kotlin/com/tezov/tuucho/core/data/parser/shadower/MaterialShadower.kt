@@ -11,12 +11,12 @@ class MaterialShadower : KoinComponent {
     private val componentShadower: ComponentShadower by inject()
 
     suspend fun process(
-        material: JsonObject,
+        materialObject: JsonObject,
         jsonObjectConsumer: JsonObjectConsumerProtocol
     ) {
         componentShadower.process(
             path = "".toPath(),
-            element = material,
+            element = materialObject,
             jsonObjectConsumer = jsonObjectConsumer
         )
         jsonObjectConsumer.onDone()

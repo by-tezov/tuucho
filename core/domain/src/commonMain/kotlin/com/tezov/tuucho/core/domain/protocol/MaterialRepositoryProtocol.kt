@@ -13,5 +13,5 @@ interface RetrieveMaterialRepositoryProtocol: MaterialRepositoryProtocol {
 }
 
 interface SendDataAndRetrieveMaterialRepositoryProtocol: MaterialRepositoryProtocol {
-    suspend fun process(url: String, data: JsonObject): JsonObject?
+    suspend fun process(url: String, dataObject: JsonObject): JsonObject?
 }

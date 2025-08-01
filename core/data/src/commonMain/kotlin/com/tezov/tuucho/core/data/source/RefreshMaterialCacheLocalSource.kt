@@ -31,14 +31,14 @@ class RefreshMaterialCacheLocalSource(
     }
 
     suspend fun process(
-        material: JsonObject,
+        materialObject: JsonObject,
         url: String,
         isShared: Boolean
     ) {
         //TODO auto purge obsolete entry
         val parts = coroutineScopeProvider.parser.async {
             materialBreaker.process(
-                material = material,
+                materialObject = materialObject,
                 jsonEntityObjectTreeProducer = { jsonObject ->
                     val idScope = jsonObject.onScope(IdSchema::Scope)
                     JsonObjectEntity(
@@ -81,6 +81,6 @@ class RefreshMaterialCacheLocalSource(
                         materialDatabaseSource.insertOrUpdate(it.content)
                     }
             }
-        }
+        }.await()
     }
 }

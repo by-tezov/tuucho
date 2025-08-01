@@ -25,7 +25,7 @@ class MaterialRectifier : KoinComponent {
     private val dimensionsRectifier: DimensionsRectifier by inject()
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun process(material: JsonObject): JsonObject = material.withScope(MaterialSchema::Scope).apply {
+    suspend fun process(materialObject: JsonObject): JsonObject = materialObject.withScope(MaterialSchema::Scope).apply {
 
 //        logAll("*******************************")
 //        logAll(element)

@@ -21,13 +21,13 @@ class ShadowerMaterialRepository(
     private val _events = MutableSharedFlow<Event>(replay = 0)
     override val events: SharedFlow<Event> = _events
 
-    fun process(url: String, materialElement: JsonObject) {
+    fun process(url: String, materialObject: JsonObject) {
         coroutineScopeProvider.parser.launch {
             val shadowerMaterialSources = getKoin()
                 .get<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE)
-            shadowerMaterialSources.forEach { it.onStart(url, materialElement) }
+            shadowerMaterialSources.forEach { it.onStart(url, materialObject) }
             materialShadower.process(
-                material = materialElement,
+                materialObject = materialObject,
                 jsonObjectConsumer = object : JsonObjectConsumerProtocol {
 
                     override suspend fun onNext(jsonObject: JsonObject) {

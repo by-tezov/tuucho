@@ -14,7 +14,7 @@ class NavigationUrlActionHandler() : ActionHandlerProtocol {
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: ActionModelDomain, params: JsonElement?): Boolean {
+    override fun accept(id: String, action: ActionModelDomain, jsonElement: JsonElement?): Boolean {
         return action.command == Action.Navigate.command && action.authority == Action.Navigate.Authority.url
     }
 
@@ -22,7 +22,7 @@ class NavigationUrlActionHandler() : ActionHandlerProtocol {
         url: String,
         id: String,
         action: ActionModelDomain,
-        params: JsonElement?
+        jsonElement: JsonElement?
     ) {
         action.target?.let { _events.emit(it) }
     }
