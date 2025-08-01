@@ -1,8 +1,8 @@
-clearAll:
-DELETE FROM jsonObjectEntry;
-
 selectAll:
 SELECT * FROM jsonObjectEntry;
+
+deleteAll:
+DELETE FROM jsonObjectEntry;
 
 insert:
 INSERT INTO jsonObjectEntry(type, url, id, idFrom, jsonObject)
@@ -11,16 +11,8 @@ VALUES (?, ?, ?, ?, ?);
 lastInsertedId:
 SELECT last_insert_rowid();
 
-update:
-UPDATE jsonObjectEntry
-SET type = ?, url = ?, id = ?, idFrom = ?, jsonObject = ?
-WHERE primaryKey = ?;
-
-findByPrimaryKey:
+getByPrimaryKey:
 SELECT * FROM jsonObjectEntry WHERE primaryKey = ?;
 
-findByTypeUrlId:
+getByTypeUrlId:
 SELECT * FROM jsonObjectEntry WHERE type = ? AND url = ? AND id = ?;
-
-findShared:
-SELECT * FROM sharedJsonObjects WHERE type = ? AND id = ?;

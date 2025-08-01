@@ -3,6 +3,8 @@ package com.tezov.tuucho.core.data.source
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
+import com.tezov.tuucho.core.data.database.type.Lifetime
+import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser._system.flatten
@@ -12,12 +14,11 @@ import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
-import kotlinx.coroutines.async
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RefreshMaterialCacheLocalSource(
-    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialBreaker: MaterialBreaker
 ) {
@@ -33,10 +34,11 @@ class RefreshMaterialCacheLocalSource(
     suspend fun process(
         materialObject: JsonObject,
         url: String,
-        isShared: Boolean
+        visibility: Visibility,
+        lifetime: Lifetime
     ) {
         //TODO auto purge obsolete entry
-        val parts = coroutineScopeProvider.parser.async {
+        val parts = coroutineScopes.onParser {
             materialBreaker.process(
                 materialObject = materialObject,
                 jsonEntityObjectTreeProducer = { jsonObject ->
@@ -52,17 +54,19 @@ class RefreshMaterialCacheLocalSource(
                     ).let(::JsonEntityObjectTree)
                 }
             )
-        }.await()
-        coroutineScopeProvider.database.async {
+        }
+        coroutineScopes.onDatabase {
             with(parts) {
                 val rootPrimaryKey = rootJsonEntity?.let { root ->
-                    materialDatabaseSource.insertOrUpdate(root.jsonEntityObjectTree.content)
+                    materialDatabaseSource
+                        .insertOrUpdate(root.jsonEntityObjectTree.content, lifetime)
                         .also {
                             root.flatten()
                                 .asSequence()
                                 .filter { it !== root }
                                 .forEach {
-                                    materialDatabaseSource.insertOrUpdate(it.content)
+                                    materialDatabaseSource
+                                        .insertOrUpdate(it.content, lifetime)
                                 }
                         }
                 }
@@ -71,16 +75,17 @@ class RefreshMaterialCacheLocalSource(
                     url = url,
                     version = version,
                     rootPrimaryKey = rootPrimaryKey,
-                    isShared = isShared
+                    visibility = visibility,
+                    lifetime = lifetime,
                 ).also { materialDatabaseSource.insertOrUpdate(it) }
 
                 jsonElementTree
                     .asSequence()
                     .flatMap { it.flatten() }
                     .forEach {
-                        materialDatabaseSource.insertOrUpdate(it.content)
+                        materialDatabaseSource.insertOrUpdate(it.content, lifetime)
                     }
             }
-        }.await()
+        }
     }
 }

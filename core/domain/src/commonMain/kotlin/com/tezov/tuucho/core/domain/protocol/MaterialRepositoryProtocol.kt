@@ -4,6 +4,10 @@ import kotlinx.serialization.json.JsonObject
 
 sealed interface MaterialRepositoryProtocol
 
+interface ClearTransientMaterialCacheRepositoryProtocol: MaterialRepositoryProtocol {
+    suspend fun process(urlOrigin: String)
+}
+
 interface RefreshCacheMaterialRepositoryProtocol: MaterialRepositoryProtocol {
     suspend fun process(url: String)
 }

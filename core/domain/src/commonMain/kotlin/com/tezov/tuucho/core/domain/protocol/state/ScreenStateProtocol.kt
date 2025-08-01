@@ -6,9 +6,12 @@ import kotlinx.serialization.json.JsonObject
 
 interface ScreenStateProtocol {
 
+    var url: String
+
     val views: MutableList<ViewProtocol>
 
     fun clear() {
+        url = ""
         views.clear()
         form().clear()
     }

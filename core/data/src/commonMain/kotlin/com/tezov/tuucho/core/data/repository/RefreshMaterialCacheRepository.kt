@@ -1,19 +1,20 @@
 package com.tezov.tuucho.core.data.repository
 
+import com.tezov.tuucho.core.data.database.type.Lifetime
+import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.setting.ConfigSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
-import kotlinx.coroutines.async
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
-class RefreshCacheMaterialRepository(
-    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
+class RefreshMaterialCacheRepository(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val retrieveObjectRemoteSource: RetrieveObjectRemoteSource,
     private val retrieveMaterialRemoteSource: RetrieveMaterialRemoteSource,
     private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
@@ -21,7 +22,7 @@ class RefreshCacheMaterialRepository(
 
     override suspend fun process(url: String) {
         val configModelDomain = retrieveObjectRemoteSource.process(url)
-        coroutineScopeProvider.parser.async {
+        coroutineScopes.onParser {
             configModelDomain.withScope(ConfigSchema.Root::Scope).let { configScope ->
                 configScope.preload?.withScope(ConfigSchema.Preload::Scope)?.let { preloadScope ->
                     preloadScope.subs?.refreshCache()
@@ -29,7 +30,7 @@ class RefreshCacheMaterialRepository(
                     preloadScope.pages?.refreshCache()
                 }
             }
-        }.await()
+        }
     }
 
     private suspend fun JsonArray.refreshCache() {
@@ -41,7 +42,8 @@ class RefreshCacheMaterialRepository(
                     refreshMaterialCacheLocalSource.process(
                         materialObject = material,
                         url = url,
-                        isShared = true
+                        visibility = Visibility.Global,
+                        lifetime = Lifetime.Unlimited
                     )
                 }
             }

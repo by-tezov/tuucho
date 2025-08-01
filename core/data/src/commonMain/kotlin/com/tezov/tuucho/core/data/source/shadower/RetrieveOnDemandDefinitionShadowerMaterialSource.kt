@@ -1,6 +1,8 @@
 package com.tezov.tuucho.core.data.source.shadower
 
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.type.Lifetime
+import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.network.MaterialNetworkSource
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
@@ -9,7 +11,7 @@ import com.tezov.tuucho.core.domain.model.Shadower
 import com.tezov.tuucho.core.domain.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SettingSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -17,7 +19,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveOnDemandDefinitionShadowerMaterialSource(
-    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val materialNetworkSource: MaterialNetworkSource,
     private val materialRectifier: MaterialRectifier,
     private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
@@ -30,7 +32,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     override var isCancelled = false
         private set
 
-    private lateinit var url: String
+    private lateinit var urlOrigin: String
     private lateinit var map: MutableMap<String, MutableList<JsonObject>>
 
     override suspend fun onStart(url: String, materialElement: JsonObject) {
@@ -38,7 +40,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
             isCancelled = true
             return
         }
-        this.url = url
+        this.urlOrigin = url
         map = mutableMapOf()
     }
 
@@ -46,8 +48,8 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         val idScope = jsonObject.onScope(IdSchema::Scope)
         idScope.source ?: return
         val url = jsonObject.onScope(SettingSchema::Scope)
-            .onDemandDefinitionUrl?.replace("\${current}", url)
-            ?: "$url-${SettingSchema.Value.OnDemandDefinitionUrl.default}"
+            .onDemandDefinitionUrl?.replace("\${current}", urlOrigin)
+            ?: "$urlOrigin-${SettingSchema.Value.OnDemandDefinitionUrl.default}"
         map[url] = (map[url] ?: mutableListOf())
             .apply { add(jsonObject) }
     }
@@ -57,7 +59,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
             map.map { (url, jsonObjects) ->
                 async {
                     refreshTransientDatabaseCache(url)
-                    jsonObjects.assembleAll()
+                    jsonObjects.assembleAll(url)
                 }
             }
         }.awaitAll()
@@ -68,28 +70,31 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     private suspend fun refreshTransientDatabaseCache(
         url: String
     ) {
-        val material = coroutineScopeProvider.network.async {
+        val material = coroutineScopes.onNetwork {
             materialNetworkSource.retrieve(url)
-        }.await().let { materialRectifier.process(it) }
-        //TODO should not be inserted inside the static database, do another one for transient data
+        }.let { materialRectifier.process(it) }
         refreshMaterialCacheLocalSource.process(
             materialObject = material,
             url = url,
-            isShared = true
+            visibility = Visibility.Local,
+            lifetime = Lifetime.Transient(
+                urlOrigin = urlOrigin
+            )
         )
     }
 
-    private suspend fun List<JsonObject>.assembleAll() = mapNotNull { jsonObject ->
+    private suspend fun List<JsonObject>.assembleAll(url: String) = mapNotNull { jsonObject ->
         materialAssembler.process(
             materialObject = jsonObject,
             findAllRefOrNullFetcher = { from, type ->
-                coroutineScopeProvider.database.async {
+                coroutineScopes.onDatabase {
                     materialDatabaseSource.findAllRefOrNull(
                         from = from,
-                        url = this@RetrieveOnDemandDefinitionShadowerMaterialSource.url,
+                        url = url,
+                        urlOrigin = urlOrigin,
                         type = type
                     )
-                }.await()
+                }
             }
         )
     }

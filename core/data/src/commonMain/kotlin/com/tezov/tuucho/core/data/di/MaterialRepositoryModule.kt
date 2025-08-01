@@ -1,9 +1,11 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.repository.RefreshCacheMaterialRepository
+import com.tezov.tuucho.core.data.repository.ClearTransientMaterialCacheRepository
+import com.tezov.tuucho.core.data.repository.RefreshMaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.RetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.SendDataAndRetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.ShadowerMaterialRepository
+import com.tezov.tuucho.core.data.source.ClearTransientMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
@@ -11,6 +13,7 @@ import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandDefinitionShadowerMaterialSource
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
+import com.tezov.tuucho.core.domain.protocol.ClearTransientMaterialCacheRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
@@ -35,12 +38,20 @@ object MaterialRepositoryModule {
 
     private fun Module.repository() {
 
-        single<ShadowerMaterialRepository> {
-            ShadowerMaterialRepository(
-                coroutineScopeProvider = get(),
-                materialShadower = get()
+        factory<ClearTransientMaterialCacheRepositoryProtocol> {
+            ClearTransientMaterialCacheRepository(
+                clearTransientMaterialCacheLocalSource = get(),
             )
-        } bind ShadowerMaterialRepositoryProtocol::class
+        }
+
+        factory<RefreshCacheMaterialRepositoryProtocol> {
+            RefreshMaterialCacheRepository(
+                coroutineScopes = get(),
+                retrieveObjectRemoteSource = get(),
+                retrieveMaterialRemoteSource = get(),
+                refreshMaterialCacheLocalSource = get()
+            )
+        }
 
         factory<RetrieveMaterialRepositoryProtocol> {
             RetrieveMaterialRepository(
@@ -51,26 +62,32 @@ object MaterialRepositoryModule {
             )
         }
 
-        factory<RefreshCacheMaterialRepositoryProtocol> {
-            RefreshCacheMaterialRepository(
-                coroutineScopeProvider = get(),
-                retrieveObjectRemoteSource = get(),
-                retrieveMaterialRemoteSource = get(),
-                refreshMaterialCacheLocalSource = get()
-            )
-        }
-
         factory<SendDataAndRetrieveMaterialRepositoryProtocol> {
             SendDataAndRetrieveMaterialRepository(
                 sendObjectAndRetrieveMaterialRemoteSource = get()
             )
         }
+
+        single<ShadowerMaterialRepository> {
+            ShadowerMaterialRepository(
+                coroutineScopes = get(),
+                materialShadower = get(),
+                shadowerMaterialSources = get<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE)
+            )
+        } bind ShadowerMaterialRepositoryProtocol::class
     }
 
     private fun Module.localSource() {
+        factory<ClearTransientMaterialCacheLocalSource> {
+            ClearTransientMaterialCacheLocalSource(
+                coroutineScopes = get(),
+                materialDatabaseSource = get(),
+            )
+        }
+
         factory<RefreshMaterialCacheLocalSource> {
             RefreshMaterialCacheLocalSource(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 materialDatabaseSource = get(),
                 materialBreaker = get()
             )
@@ -78,7 +95,7 @@ object MaterialRepositoryModule {
 
         factory<RetrieveMaterialCacheLocalSource> {
             RetrieveMaterialCacheLocalSource(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 materialDatabaseSource = get(),
                 materialAssembler = get()
             )
@@ -89,7 +106,7 @@ object MaterialRepositoryModule {
 
         factory<RetrieveMaterialRemoteSource> {
             RetrieveMaterialRemoteSource(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 materialNetworkSource = get(),
                 materialRectifier = get()
             )
@@ -97,14 +114,14 @@ object MaterialRepositoryModule {
 
         factory<RetrieveObjectRemoteSource> {
             RetrieveObjectRemoteSource(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 materialNetworkSource = get()
             )
         }
 
         factory<SendDataAndRetrieveMaterialRemoteSource> {
             SendDataAndRetrieveMaterialRemoteSource(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 materialNetworkSource = get(),
                 materialRectifier = get()
             )
@@ -115,7 +132,7 @@ object MaterialRepositoryModule {
         factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
             listOf(
                 RetrieveOnDemandDefinitionShadowerMaterialSource(
-                    coroutineScopeProvider = get(),
+                    coroutineScopes = get(),
                     materialNetworkSource = get(),
                     materialRectifier = get(),
                     refreshMaterialCacheLocalSource = get(),
@@ -124,7 +141,6 @@ object MaterialRepositoryModule {
                 )
             )
         }
-
     }
 
 }

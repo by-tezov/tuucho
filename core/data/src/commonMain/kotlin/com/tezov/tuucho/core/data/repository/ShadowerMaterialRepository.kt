@@ -1,30 +1,27 @@
 package com.tezov.tuucho.core.data.repository
 
-import com.tezov.tuucho.core.data.di.MaterialRepositoryModule.Name
 import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopeProviderProtocol
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol.Event
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
 class ShadowerMaterialRepository(
-    private val coroutineScopeProvider: CoroutineScopeProviderProtocol,
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val materialShadower: MaterialShadower,
+    private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
 ) : ShadowerMaterialRepositoryProtocol, KoinComponent {
 
     private val _events = MutableSharedFlow<Event>(replay = 0)
     override val events: SharedFlow<Event> = _events
 
     fun process(url: String, materialObject: JsonObject) {
-        coroutineScopeProvider.parser.launch {
-            val shadowerMaterialSources = getKoin()
-                .get<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE)
+        coroutineScopes.launchOnParser {
             shadowerMaterialSources.forEach { it.onStart(url, materialObject) }
             materialShadower.process(
                 materialObject = materialObject,
@@ -43,7 +40,7 @@ class ShadowerMaterialRepository(
                             .filter { !it.isCancelled }
                             .forEach { source ->
                                 source.onDone().collect {
-                                    coroutineScopeProvider.event.launch {
+                                    coroutineScopes.launchOnEvent {
                                         _events.emit(
                                             Event(
                                                 type = source.type,

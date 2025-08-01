@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
-import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
+import com.tezov.tuucho.core.domain.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.usecase.RenderComponentUseCase
 import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewProtocol
 import org.koin.mp.KoinPlatform.getKoin
@@ -22,13 +22,13 @@ fun mainScreen() {
         but for now, it will be here
     */
     var ready by remember { mutableStateOf(false) }
-    val refreshCacheMaterial = remember { getKoin().get<RefreshCacheMaterialUseCase>() }
+    val refreshMaterialCache = remember { getKoin().get<RefreshMaterialCacheUseCase>() }
 
     LaunchedEffect(Unit) {
         //TODO remove when loading, migration upgrade/auto purge is done
-        getKoin().get<JsonObjectQueries>().clearAll()
-        getKoin().get<VersioningQueries>().clearAll()
-        refreshCacheMaterial.invoke("config")
+        getKoin().get<JsonObjectQueries>().deleteAll()
+        getKoin().get<VersioningQueries>().deleteAll()
+        refreshMaterialCache.invoke("config")
         ready = true
         //***********************************************
     }

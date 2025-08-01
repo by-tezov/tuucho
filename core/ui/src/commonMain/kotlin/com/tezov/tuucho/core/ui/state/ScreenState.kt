@@ -9,6 +9,8 @@ class ScreenState(
     private val formsState: FormsStateProtocol
 ) : ScreenStateProtocol {
 
+    override var url: String = ""
+
     override val views: MutableList<ViewProtocol> = mutableListOf()
 
     override fun update(jsonObject: JsonObject) {

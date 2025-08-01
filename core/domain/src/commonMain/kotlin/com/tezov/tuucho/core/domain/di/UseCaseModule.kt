@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.NavigationUrlActionHandler
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
-import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
+import com.tezov.tuucho.core.domain.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterNavigationUrlEventUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterShadowerEventUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
@@ -29,7 +29,7 @@ object UseCaseModule {
 
         factory<ActionHandlerUseCase> {
             ActionHandlerUseCase(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 handlers = listOf(
                     get<NavigationUrlActionHandler>(),
                     get<FormSendUrlActionHandler>(),
@@ -40,7 +40,7 @@ object UseCaseModule {
 
         factory<RenderComponentUseCase> {
             RenderComponentUseCase(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 initializeMaterialState = get(),
                 updateMaterialState = get(),
                 retrieveMaterialRepository = get(),
@@ -52,28 +52,28 @@ object UseCaseModule {
 
         factory<RegisterNavigationUrlEventUseCase> {
             RegisterNavigationUrlEventUseCase(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 navigationUrlActionHandler = get(),
             )
         }
 
         factory<RegisterShadowerEventUseCase> {
             RegisterShadowerEventUseCase(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 shadowerMaterialRepository = get(),
             )
         }
 
         factory<RegisterUpdateFormEventUseCase> {
             RegisterUpdateFormEventUseCase(
-                coroutineScopeProvider = get(),
+                coroutineScopes = get(),
                 formUpdateActionHandler = get(),
             )
         }
 
-        factory<RefreshCacheMaterialUseCase> {
-            RefreshCacheMaterialUseCase(
-                refreshCacheMaterialRepository = get()
+        factory<RefreshMaterialCacheUseCase> {
+            RefreshMaterialCacheUseCase(
+                refreshMaterialCacheRepository = get()
             )
         }
 
@@ -112,7 +112,8 @@ object UseCaseModule {
 
         factory<InitializeViewStateUseCase> {
             InitializeViewStateUseCase(
-                screenState = get()
+                screenState = get(),
+                clearTransientMaterialCacheRepository = get()
             )
         }
 

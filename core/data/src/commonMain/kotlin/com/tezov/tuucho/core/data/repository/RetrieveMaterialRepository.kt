@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.data.repository
 
+import com.tezov.tuucho.core.data.database.type.Lifetime
+import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
@@ -21,7 +23,8 @@ class RetrieveMaterialRepository(
                 refreshMaterialCacheLocalSource.process(
                     materialObject = material,
                     url = url,
-                    isShared = false
+                    visibility = Visibility.Local,
+                    lifetime = Lifetime.Unlimited
                 )
                 retrieveMaterialCacheLocalSource.process(url)
                     ?: throw DataException.Default("Retrieved url $url returned nothing")

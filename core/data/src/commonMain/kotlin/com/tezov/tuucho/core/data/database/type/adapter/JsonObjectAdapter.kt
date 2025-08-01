@@ -1,12 +1,13 @@
-package com.tezov.tuucho.core.data.database.converter
+package com.tezov.tuucho.core.data.database.type.adapter
 
 import app.cash.sqldelight.ColumnAdapter
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
-class JsonObjectConverter: ColumnAdapter<JsonObject, String> {
+class JsonObjectAdapter(
+    private val json: Json
+): ColumnAdapter<JsonObject, String> {
 
-    private val json = Json
     private val serializer = JsonObject.serializer()
 
     override fun decode(databaseValue: String): JsonObject {
