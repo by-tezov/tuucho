@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Config Definition
 
 The `config` JSON file is the main configuration container for the application. It organizes the resources and assets that the app needs to load, manage, and cache.

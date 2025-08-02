@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Components Definition
 
 List of supported UI components:

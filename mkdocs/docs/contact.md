@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # 📬 Contact
 
 Whether you have a question, a suggestion, a collaboration idea, or just want to say hi — feel free to reach out!
