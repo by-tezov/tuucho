@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.uiComponentFactory
+package com.tezov.tuucho.core.ui.viewFactory
 
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
@@ -11,8 +11,8 @@ import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
+import com.tezov.tuucho.core.ui.viewFactory._system.View
+import com.tezov.tuucho.core.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 

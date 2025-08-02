@@ -15,6 +15,7 @@ object ComponentSchema {
         const val content = ContentSchema.root
         const val style = StyleSchema.root
         const val option = OptionSchema.root
+        const val setting = SettingSchema.root
         const val state = OptionSchema.root
         const val message = MessageSchema.root
     }

@@ -12,7 +12,7 @@ import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
 import com.tezov.tuucho.core.domain.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.usecase.RenderComponentUseCase
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewProtocol
+import com.tezov.tuucho.core.ui.viewFactory._system.ViewProtocol
 import org.koin.mp.KoinPlatform.getKoin
 
 @Composable

@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.uiComponentFactory
+package com.tezov.tuucho.core.ui.viewFactory
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,8 +28,8 @@ import com.tezov.tuucho.core.domain.usecase.state.IsFieldFormViewValidUseCase
 import com.tezov.tuucho.core.domain.usecase.state.RemoveFormFieldViewUseCase
 import com.tezov.tuucho.core.domain.usecase.state.UpdateFieldFormViewUseCase
 import com.tezov.tuucho.core.ui.exception.UiException
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
+import com.tezov.tuucho.core.ui.viewFactory._system.View
+import com.tezov.tuucho.core.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
@@ -208,6 +208,7 @@ class FieldView(
         get() = _value.value
         set(value) {
             _value.value = value
+            _messageErrorExtra.value = null
         }
 
     private var showError

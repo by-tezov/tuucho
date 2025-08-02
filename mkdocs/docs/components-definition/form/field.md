@@ -7,7 +7,7 @@ A `Field` component represents an input form field that supports validation rule
 ```json
 {
   "id": /* id object */,
-  "subset": "field",
+  "subset": "form-field",
   "option": {
     "validator": /* validator object or array of validator objects */
   },
@@ -15,6 +15,9 @@ A `Field` component represents an input form field that supports validation rule
     "title": /* text object */,
     "placeholder": /* text object */,
     "message-error": /* text object or array of text objects */
+  },
+  "state": {
+    "initial-value": /* text object */
   }
 }
 ```
@@ -49,18 +52,33 @@ Validation options defining rules applied to the field input.
 
 ---
 
-## 📝 `content`
+### 📝 `content`
 
 The content provides user-facing text such as titles, placeholders, and validation error messages.
 
 ```json
 "content": {
-  "title": /* string */,
-  "placeholder": /* string */,
+  "title": /* text object */,
+  "placeholder": /* text object */,
   "message-error": /* text object or array of text objects */
 }
 ```
 
-- `title`: A string representing the field label shown to the user. (Will evolve to use a [Text object](../object-definition/text.md))
-- `placeholder`: A string displayed when the field is empty. (Will evolve to use a [Text object](../object-definition/text.md))
+- `title`: A text object representing the field label shown to the user.
+- `placeholder`: A text object displayed when the field is empty.
 - `message-error`: Either a single or an array of [Text objects](../object-definition/text.md) representing validation error messages linked to the validators.
+
+---
+
+### `state`
+
+The state provides initial value.
+
+```json
+"state": {
+  "initial-value": /* text object */
+}
+```
+
+- `initial-value`: A text object representing the initial value shown to the user.
+ 

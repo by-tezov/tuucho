@@ -14,8 +14,8 @@ Example:
 
 ```json
 "option": {
-  "id": "email-field-options",
-  "validator": /* validator */
+  "id": /* id object */,
+  "validator": /* validator object */
 }
 ```
 

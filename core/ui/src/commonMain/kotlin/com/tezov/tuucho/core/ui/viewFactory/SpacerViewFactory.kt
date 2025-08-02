@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.uiComponentFactory
+package com.tezov.tuucho.core.ui.viewFactory
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
@@ -18,8 +18,8 @@ import com.tezov.tuucho.core.domain.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.model.schema.material._element.SpacerSchema
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.View
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
+import com.tezov.tuucho.core.ui.viewFactory._system.View
+import com.tezov.tuucho.core.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 
 class SpacerViewFactory : ViewFactory() {

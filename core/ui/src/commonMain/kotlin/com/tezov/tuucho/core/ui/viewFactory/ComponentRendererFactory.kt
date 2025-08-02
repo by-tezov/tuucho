@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.ui.uiComponentFactory
+package com.tezov.tuucho.core.ui.viewFactory
 
 
 import com.tezov.tuucho.core.domain.model.schema._system.onScope
@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.protocol.ComponentRendererProtocol
 import com.tezov.tuucho.core.domain.protocol.ViewProtocol
 import com.tezov.tuucho.core.domain.usecase.state.AddViewUseCase
-import com.tezov.tuucho.core.ui.uiComponentFactory._system.ViewFactory
+import com.tezov.tuucho.core.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 

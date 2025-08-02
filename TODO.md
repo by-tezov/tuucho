@@ -11,9 +11,5 @@ and next element to avoid overhear job (aka generate validators)
 - add module core tool/ (common-ui-...)
 - add config to remove hard string inside di
 
-- doc: on demand
-- Renderer replaced by factory screen
-- doc: action, send command response not documented
-
-
 - When do the ttl stuff, improve the database code. Not readable, not scalable, not maintainable...
+-doc for setting
