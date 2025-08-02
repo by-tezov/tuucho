@@ -12,17 +12,15 @@ object OptionSchema {
 
     object Key {
         const val id = IdSchema.root
-        const val type =
-            TypeSchema.root
-        const val subset =
-            SubsetSchema.root
+        const val type = TypeSchema.root
+        const val subset = SubsetSchema.root
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
 
-    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) : OpenSchemaScope<T>(argument) {
-        final override val root =
-            OptionSchema.root
+    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
+        OpenSchemaScope<T>(argument) {
+        final override val root = OptionSchema.root
         var self by delegate<JsonObject?>(root)
 
         var id by delegate<JsonElement?>(Key.id)

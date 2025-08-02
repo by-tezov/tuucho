@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.replaceOrInsert
@@ -12,8 +12,9 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class Rectifier : MatcherProtocol, KoinComponent {
-    protected open val matchers: List<MatcherProtocol> = emptyList()
+//Improve add meta data 'path' for breaker, assembler and shadower to improve speed
+abstract class Rectifier : MatcherRectifierProtocol, KoinComponent {
+    protected open val matchers: List<MatcherRectifierProtocol> = emptyList()
     protected open val childProcessors: List<Rectifier> = emptyList()
 
     override fun accept(
@@ -21,7 +22,7 @@ abstract class Rectifier : MatcherProtocol, KoinComponent {
         element: JsonElement
     ) = matchers.any { it.accept(path, element) }
 
-    open fun process(
+    fun process(
         path: JsonElementPath, element: JsonElement
     ): JsonElement {
         var _element = element

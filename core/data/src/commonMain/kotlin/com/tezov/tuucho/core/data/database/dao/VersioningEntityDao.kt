@@ -3,44 +3,42 @@ package com.tezov.tuucho.core.data.database.dao
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.database.entity.toEntity
+import com.tezov.tuucho.core.data.database.type.Lifetime
 
-class VersioningQueries (private val database: Database) {
+class VersioningQueries(private val database: Database) {
 
     private val queries get() = database.versioningStatementQueries
 
-    fun clearAll() = queries.clearAll()
+    fun deleteAll() = queries.deleteAll()
 
-    fun selectAll(): List<VersioningEntity> {
-        return queries.selectAll().executeAsList().map { it.toEntity() }
+    fun clearTransient(lifetime: Lifetime): List<String> = database.transactionWithResult {
+        val entities = queries
+            .selectByLifetime("${lifetime.to()}%")
+            .executeAsList().map { it.toEntity() }
+        entities.map {
+            queries.deleteByPrimaryKey(it.primaryKey!!)
+            it.url
+        }
     }
 
     fun insertOrUpdate(entity: VersioningEntity) {
         database.transaction {
-            if(queries.existWithUrl(entity.url).executeAsOne()) {
-                queries.updateByUrl(
-                    url = entity.url,
-                    version = entity.version,
-                    rootPrimaryKey = entity.rootPrimaryKey,
-                    isShared = entity.isShared
-                )
-            }
-            else {
-                database.versioningStatementQueries.insert(
-                    url = entity.url,
-                    version = entity.version,
-                    rootPrimaryKey = entity.rootPrimaryKey,
-                    isShared = entity.isShared
-                )
-            }
+            database.versioningStatementQueries.insert(
+                url = entity.url,
+                version = entity.version,
+                rootPrimaryKey = entity.rootPrimaryKey,
+                visibility = entity.visibility,
+                lifetime = entity.lifetime,
+            )
         }
     }
 
     fun getVersion(url: String): String {
-        return queries.version(url).executeAsOne()
+        return queries.getVersionByUrl(url).executeAsOne()
     }
 
-    fun find(url: String): VersioningEntity? {
-        return queries.find(url).executeAsOneOrNull()?.toEntity()
+    fun get(url: String): VersioningEntity? {
+        return queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
     }
 }
 

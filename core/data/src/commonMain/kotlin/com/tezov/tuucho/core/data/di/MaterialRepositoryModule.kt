@@ -1,100 +1,146 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.database.MaterialCacheSource
-import com.tezov.tuucho.core.data.exception.DataException
-import com.tezov.tuucho.core.data.network.MaterialNetworkHttpRequest
-import com.tezov.tuucho.core.data.network.MaterialNetworkSource
-import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
-import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
-import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
-import com.tezov.tuucho.core.data.repository.RefreshCacheMaterialRepository
+import com.tezov.tuucho.core.data.repository.ClearTransientMaterialCacheRepository
+import com.tezov.tuucho.core.data.repository.RefreshMaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.RetrieveMaterialRepository
-import com.tezov.tuucho.core.data.repository.SendDataMaterialRepository
+import com.tezov.tuucho.core.data.repository.SendDataAndRetrieveMaterialRepository
+import com.tezov.tuucho.core.data.repository.ShadowerMaterialRepository
+import com.tezov.tuucho.core.data.source.ClearTransientMaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandDefinitionShadowerMaterialSource
+import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
+import com.tezov.tuucho.core.domain.protocol.ClearTransientMaterialCacheRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.SendDataMaterialRepositoryProtocol
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.plugins.HttpResponseValidator
-import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
+import org.koin.core.module.Module
+import org.koin.core.qualifier.named
+import org.koin.dsl.bind
 import org.koin.dsl.module
-
-expect fun MaterialRepositoryModule.serverUrlEndpoint():String //TODO external config file (android, ios, common)
-private const val serverConnectTimeoutMillis = 5000L
-private const val serverSocketTimeoutMillis = 5000L
 
 object MaterialRepositoryModule {
 
-    internal operator fun invoke() = module {
-
-        single<HttpClient> {
-            HttpClient(get<HttpClientEngineFactory<*>>()) {
-                install(ContentNegotiation) {
-                    json(get<Json>())
-                }
-                install(HttpTimeout) {
-                    connectTimeoutMillis = serverConnectTimeoutMillis
-                    socketTimeoutMillis = serverSocketTimeoutMillis
-                }
-                HttpResponseValidator {
-                    validateResponse { response ->
-                        val statusCode = response.status.value
-                        if (statusCode !in 200..299) {
-                            throw DataException.Default("Bad response received: $response")
-                        }
-                    }
-                    handleResponseExceptionWithRequest { cause, _ -> throw cause }
-                }
-            }
-        }
-
-        single<MaterialNetworkHttpRequest> {
-            MaterialNetworkHttpRequest(
-                client = get<HttpClient>(),
-                baseUrl = serverUrlEndpoint()
-            )
-        }
-
-        single<MaterialNetworkSource> {
-            MaterialNetworkSource(
-                materialNetworkHttpRequest = get<MaterialNetworkHttpRequest>(),
-                materialRectifier = get<MaterialRectifier>(),
-                jsonConverter = get<Json>()
-            )
-        }
-
-        single<MaterialCacheSource> {
-            MaterialCacheSource(
-                jsonObjectQueries = get(),
-                versioningQueries = get(),
-                materialBreaker = get<MaterialBreaker>(),
-                materialAssembler = get<MaterialAssembler>()
-            )
-        }
-
-        single<SendDataMaterialRepositoryProtocol> {
-            SendDataMaterialRepository(
-                materialNetworkSource = get<MaterialNetworkSource>()
-            )
-        }
-
-        single<RetrieveMaterialRepositoryProtocol> {
-            RetrieveMaterialRepository(
-                materialNetworkSource = get<MaterialNetworkSource>(),
-                materialCacheSource = get<MaterialCacheSource>()
-            )
-        }
-
-        single<RefreshCacheMaterialRepositoryProtocol> {
-            RefreshCacheMaterialRepository(
-                materialNetworkSource = get<MaterialNetworkSource>(),
-                materialCacheSource = get<MaterialCacheSource>()
-            )
-        }
-
-
+    object Name {
+        val SHADOWER_SOURCE = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
     }
+
+    internal operator fun invoke() = module {
+        localSource()
+        remoteSource()
+        compositeSource()
+        repository()
+    }
+
+    private fun Module.repository() {
+
+        factory<ClearTransientMaterialCacheRepositoryProtocol> {
+            ClearTransientMaterialCacheRepository(
+                clearTransientMaterialCacheLocalSource = get(),
+            )
+        }
+
+        factory<RefreshCacheMaterialRepositoryProtocol> {
+            RefreshMaterialCacheRepository(
+                coroutineScopes = get(),
+                retrieveObjectRemoteSource = get(),
+                retrieveMaterialRemoteSource = get(),
+                refreshMaterialCacheLocalSource = get()
+            )
+        }
+
+        factory<RetrieveMaterialRepositoryProtocol> {
+            RetrieveMaterialRepository(
+                retrieveMaterialCacheLocalSource = get(),
+                retrieveMaterialRemoteSource = get(),
+                refreshMaterialCacheLocalSource = get(),
+                shadowerMaterialRepository = get(),
+            )
+        }
+
+        factory<SendDataAndRetrieveMaterialRepositoryProtocol> {
+            SendDataAndRetrieveMaterialRepository(
+                sendObjectAndRetrieveMaterialRemoteSource = get()
+            )
+        }
+
+        single<ShadowerMaterialRepository> {
+            ShadowerMaterialRepository(
+                coroutineScopes = get(),
+                materialShadower = get(),
+                shadowerMaterialSources = get<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE)
+            )
+        } bind ShadowerMaterialRepositoryProtocol::class
+    }
+
+    private fun Module.localSource() {
+        factory<ClearTransientMaterialCacheLocalSource> {
+            ClearTransientMaterialCacheLocalSource(
+                coroutineScopes = get(),
+                materialDatabaseSource = get(),
+            )
+        }
+
+        factory<RefreshMaterialCacheLocalSource> {
+            RefreshMaterialCacheLocalSource(
+                coroutineScopes = get(),
+                materialDatabaseSource = get(),
+                materialBreaker = get()
+            )
+        }
+
+        factory<RetrieveMaterialCacheLocalSource> {
+            RetrieveMaterialCacheLocalSource(
+                coroutineScopes = get(),
+                materialDatabaseSource = get(),
+                materialAssembler = get()
+            )
+        }
+    }
+
+    private fun Module.remoteSource() {
+
+        factory<RetrieveMaterialRemoteSource> {
+            RetrieveMaterialRemoteSource(
+                coroutineScopes = get(),
+                materialNetworkSource = get(),
+                materialRectifier = get()
+            )
+        }
+
+        factory<RetrieveObjectRemoteSource> {
+            RetrieveObjectRemoteSource(
+                coroutineScopes = get(),
+                materialNetworkSource = get()
+            )
+        }
+
+        factory<SendDataAndRetrieveMaterialRemoteSource> {
+            SendDataAndRetrieveMaterialRemoteSource(
+                coroutineScopes = get(),
+                materialNetworkSource = get(),
+                materialRectifier = get()
+            )
+        }
+    }
+
+    private fun Module.compositeSource() {
+        factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
+            listOf(
+                RetrieveOnDemandDefinitionShadowerMaterialSource(
+                    coroutineScopes = get(),
+                    materialNetworkSource = get(),
+                    materialRectifier = get(),
+                    refreshMaterialCacheLocalSource = get(),
+                    materialAssembler = get(),
+                    materialDatabaseSource = get(),
+                )
+            )
+        }
+    }
+
 }

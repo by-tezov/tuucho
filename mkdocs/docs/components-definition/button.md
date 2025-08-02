@@ -50,3 +50,6 @@ Defines the button’s content including the displayed label and the triggered a
 The button supports the following action command for navigation:
 
 - `navigate://url/{the_page_to_reach}` — Performs navigation to the specified page URL.
+- `form-send://url/{the_server_endpoint}` — Sends the form data to the server if the form is valid, waits for the server confirmation, then navigates to the page URL specified in the action's `params`.
+  Check [Action object](../object-definition/action.md) and [Form Send action](../components-definition/form/index.md)
+

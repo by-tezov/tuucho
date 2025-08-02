@@ -9,11 +9,11 @@
 
 Work in progress:
 
-- **Dynamic Data Support**  
-  Introduce dynamic data binding to enable real-time content updates within the UI.
-
 - **Navigation Stack Implementation**  
   Enhance navigation capabilities with a robust stack system to manage screen transitions.
+
+- **Real time Data Support**  
+  Introduce dynamic data binding to enable real-time content updates within the UI.
 
 ---
 
@@ -61,7 +61,10 @@ Work in progress:
 
 ## ✅ Realized
 
-- 🎉 **KMM Integration & iOS Support**  (2025-07)
+- **Context Data Support**  
+  Introduce dynamic data binding to enable context content resolution within the UI. (2025-08)
+
+- 🎉 **KMM Integration & iOS Support** (2025-07)
   Full Kotlin Multiplatform Mobile support implemented.
 
 ---

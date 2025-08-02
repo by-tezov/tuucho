@@ -3,8 +3,6 @@ package com.tezov.tuucho.core.domain.di
 import com.tezov.tuucho.core.domain.actionHandler.FormSendUrlActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.NavigationUrlActionHandler
-import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
-import com.tezov.tuucho.core.domain.usecase.SendDataUseCase
 import org.koin.dsl.module
 
 object ActionHandlerModule {
@@ -16,8 +14,8 @@ object ActionHandlerModule {
 
         single {
             FormSendUrlActionHandler(
-                get<MaterialStateProtocol>(),
-                get<SendDataUseCase>()
+                materialState = get(),
+                sendData = get()
             )
         }
 

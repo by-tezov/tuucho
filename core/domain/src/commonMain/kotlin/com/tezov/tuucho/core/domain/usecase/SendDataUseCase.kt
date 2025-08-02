@@ -1,18 +1,13 @@
 package com.tezov.tuucho.core.domain.usecase
 
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
-import com.tezov.tuucho.core.domain.protocol.SendDataMaterialRepositoryProtocol
-import kotlinx.coroutines.withContext
+import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 
 class SendDataUseCase(
-    private val coroutineDispatchers: CoroutineContextProviderProtocol,
-    private val repository: SendDataMaterialRepositoryProtocol,
+    private val sendDataAndRetrieveMaterialRepository: SendDataAndRetrieveMaterialRepositoryProtocol,
 ) {
 
-    suspend fun invoke(url: String, data: JsonElement): JsonElement? =
-        withContext(coroutineDispatchers.io) {
-            repository.sendData(url, data)
-        }
+    suspend fun invoke(url: String, dataObject: JsonObject): JsonElement? = sendDataAndRetrieveMaterialRepository.process(url, dataObject)
 
 }

@@ -1,40 +1,19 @@
-import kotlin.Boolean;
+import com.tezov.tuucho.core.data.database.type.Lifetime;
+import com.tezov.tuucho.core.data.database.type.Visibility;
 
 CREATE TABLE versioningEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT NOT NULL UNIQUE,
     version TEXT NOT NULL,
-    rootPrimaryKey INTEGER,
-    isShared INTEGER AS Boolean NOT NULL
+    rootPrimaryKey INTEGER REFERENCES jsonObjectEntry(primaryKey),
+    visibility TEXT AS Visibility NOT NULL,
+    lifetime TEXT AS Lifetime NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS idx_versioningEntry_shared_1
-ON versioningEntry(url)
-WHERE isShared = 1;
-
-CREATE VIEW sharedJsonObjects AS
-SELECT jsonObject.*
-FROM jsonObjectEntry jsonObject
-JOIN versioningEntry versioning ON jsonObject.url = versioning.url
-WHERE versioning.isShared = 1;
-
-
--- import kotlin.Boolean;
---
--- CREATE TABLE versioningEntry (
---     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
---     url TEXT NOT NULL UNIQUE,
---     version TEXT NOT NULL,
---     rootPrimaryKey INTEGER REFERENCES jsonObjectEntry(primaryKey),
---     isShared INTEGER AS Boolean NOT NULL
--- );
---
--- CREATE INDEX IF NOT EXISTS idx_versioningEntry_shared_1
+-- CREATE INDEX IF NOT EXISTS idx_versioningEntry_shared
 -- ON versioningEntry(url)
--- WHERE isShared = 1;
+-- WHERE visibility = ?;
 --
--- CREATE VIEW sharedJsonObjects AS
--- SELECT jsonObject.*
--- FROM jsonObjectEntry jsonObject
--- JOIN versioningEntry versioning ON jsonObject.url = versioning.url
--- WHERE versioning.isShared = 1;
+-- CREATE INDEX IF NOT EXISTS idx_versioningEntry_transient
+-- ON versioningEntry(url)
+-- WHERE lifetime = ?;

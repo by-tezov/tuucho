@@ -56,6 +56,10 @@ fun JsonElement?.isSubsetOf(
     value: String,
 ) = (this as? JsonObject)?.withScope(SubsetSchema::Scope)?.self == value
 
+fun JsonElement?.isSubsetStartWith(
+    value: String,
+) = (this as? JsonObject)?.withScope(SubsetSchema::Scope)?.self?.startsWith(value) == true
+
 fun JsonElementPath.isSubsetOf(
     element: JsonElement, value: String,
 ) = element.findOrNull(this).isSubsetOf(value)

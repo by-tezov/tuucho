@@ -2,8 +2,9 @@ package com.tezov.tuucho.core.data.parser.rectifier.id
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.stringOrNull
@@ -15,11 +16,11 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import org.koin.core.component.inject
 
-class IdRectifier : Rectifier() {
+class IdRectifier(
+    private val idGenerator: IdGenerator
+) : Rectifier() {
 
-    private val idGenerator: IdGenerator by inject()
-
-    override val matchers: List<MatcherProtocol> by inject(
+    override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.ID
     )
 

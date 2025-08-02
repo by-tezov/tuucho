@@ -1,12 +1,13 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
 import com.tezov.tuucho.core.data.di.MaterialBreakerModule.Name
-import com.tezov.tuucho.core.data.parser._system.MatcherProtocol
+import com.tezov.tuucho.core.data.parser.breaker._system.MatcherBreakerProtocol
+
 import org.koin.core.component.inject
 
 class ComponentBreaker: Breaker() {
 
-    override val matchers: List<MatcherProtocol> by inject(
+    override val matchers: List<MatcherBreakerProtocol> by inject(
         Name.Matcher.COMPONENT
     )
 

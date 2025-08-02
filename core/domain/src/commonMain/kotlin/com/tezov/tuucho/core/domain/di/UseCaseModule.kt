@@ -3,29 +3,34 @@ package com.tezov.tuucho.core.domain.di
 import com.tezov.tuucho.core.domain.actionHandler.FormSendUrlActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.actionHandler.NavigationUrlActionHandler
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
-import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.protocol.SendDataMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
 import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
-import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
 import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
-import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
+import com.tezov.tuucho.core.domain.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterNavigationUrlEventUseCase
+import com.tezov.tuucho.core.domain.usecase.RegisterShadowerEventUseCase
 import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
+import com.tezov.tuucho.core.domain.usecase.RenderComponentUseCase
 import com.tezov.tuucho.core.domain.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
+import com.tezov.tuucho.core.domain.usecase.state.AddFormUseCase
+import com.tezov.tuucho.core.domain.usecase.state.AddViewUseCase
+import com.tezov.tuucho.core.domain.usecase.state.InitializeViewStateUseCase
+import com.tezov.tuucho.core.domain.usecase.state.IsFieldFormViewValidUseCase
+import com.tezov.tuucho.core.domain.usecase.state.RemoveFormFieldViewUseCase
+import com.tezov.tuucho.core.domain.usecase.state.UpdateFieldFormViewUseCase
+import com.tezov.tuucho.core.domain.usecase.state.UpdateViewUseCase
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object UseCaseModule {
 
     internal operator fun invoke() = module {
-        factory {
+        stateModule()
+
+        factory<ActionHandlerUseCase> {
             ActionHandlerUseCase(
-                get<CoroutineContextProviderProtocol>(),
-                listOf(
+                coroutineScopes = get(),
+                handlers = listOf(
                     get<NavigationUrlActionHandler>(),
                     get<FormSendUrlActionHandler>(),
                     get<FormUpdateActionHandler>(),
@@ -33,49 +38,104 @@ object UseCaseModule {
             )
         }
 
-        factory {
-            ComponentRenderUseCase(
-                get<CoroutineContextProviderProtocol>(),
-                get<MaterialStateProtocol>(),
-                get<RetrieveMaterialRepositoryProtocol>(),
-                get<ScreenRendererProtocol>(),
+        factory<RenderComponentUseCase> {
+            RenderComponentUseCase(
+                coroutineScopes = get(),
+                initializeMaterialState = get(),
+                updateMaterialState = get(),
+                retrieveMaterialRepository = get(),
+                screenRenderer = get(),
+                registerShadowerEvent = get(),
+                registerUpdateFormEvent = get()
             )
         }
 
-        factory {
+        factory<RegisterNavigationUrlEventUseCase> {
             RegisterNavigationUrlEventUseCase(
-                get<CoroutineContextProviderProtocol>(),
-                get<NavigationUrlActionHandler>(),
+                coroutineScopes = get(),
+                navigationUrlActionHandler = get(),
             )
         }
 
-        factory {
+        factory<RegisterShadowerEventUseCase> {
+            RegisterShadowerEventUseCase(
+                coroutineScopes = get(),
+                shadowerMaterialRepository = get(),
+            )
+        }
+
+        factory<RegisterUpdateFormEventUseCase> {
             RegisterUpdateFormEventUseCase(
-                get<CoroutineContextProviderProtocol>(),
-                get<FormUpdateActionHandler>(),
+                coroutineScopes = get(),
+                formUpdateActionHandler = get(),
             )
         }
 
-        factory {
-            RefreshCacheMaterialUseCase(
-                get<CoroutineContextProviderProtocol>(),
-                get<RefreshCacheMaterialRepositoryProtocol>()
+        factory<RefreshMaterialCacheUseCase> {
+            RefreshMaterialCacheUseCase(
+                refreshMaterialCacheRepository = get()
             )
         }
 
-        factory {
+        factory<SendDataUseCase> {
             SendDataUseCase(
-                get<CoroutineContextProviderProtocol>(),
-                get<SendDataMaterialRepositoryProtocol>()
+                sendDataAndRetrieveMaterialRepository = get()
             )
         }
 
-        factory { ValidatorFactoryUseCase() }
+        factory<ValidatorFactoryUseCase> { ValidatorFactoryUseCase() }
 
-        factory { GetLanguageUseCase() }
+        factory<GetLanguageUseCase> { GetLanguageUseCase() }
 
     }
 
+
+    internal fun Module.stateModule() {
+
+        factory<AddFormUseCase> {
+            AddFormUseCase(
+                screenState = get()
+            )
+        }
+
+        factory<AddViewUseCase> {
+            AddViewUseCase(
+                screenState = get()
+            )
+        }
+
+        factory<RemoveFormFieldViewUseCase> {
+            RemoveFormFieldViewUseCase(
+                screenState = get()
+            )
+        }
+
+        factory<InitializeViewStateUseCase> {
+            InitializeViewStateUseCase(
+                screenState = get(),
+                clearTransientMaterialCacheRepository = get()
+            )
+        }
+
+        factory<IsFieldFormViewValidUseCase> {
+            IsFieldFormViewValidUseCase(
+                screenState = get()
+            )
+        }
+
+        factory<UpdateFieldFormViewUseCase> {
+            UpdateFieldFormViewUseCase(
+                screenState = get()
+            )
+        }
+
+        factory<UpdateViewUseCase> {
+            UpdateViewUseCase(
+                screenState = get()
+            )
+        }
+
+    }
 }
 
 

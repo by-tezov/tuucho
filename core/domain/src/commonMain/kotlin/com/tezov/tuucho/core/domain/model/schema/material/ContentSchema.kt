@@ -17,7 +17,8 @@ object ContentSchema {
 
     class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
 
-    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) : OpenSchemaScope<T>(argument) {
+    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
+        OpenSchemaScope<T>(argument) {
         final override val root = ContentSchema.root
         var self by delegate<JsonObject?>(root)
 

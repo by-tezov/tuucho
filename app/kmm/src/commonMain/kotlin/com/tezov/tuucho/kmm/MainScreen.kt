@@ -10,9 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
-import com.tezov.tuucho.core.domain.usecase.ComponentRenderUseCase
-import com.tezov.tuucho.core.domain.usecase.RefreshCacheMaterialUseCase
-import com.tezov.tuucho.core.ui.renderer._system.ComposableScreenProtocol
+import com.tezov.tuucho.core.domain.usecase.RefreshMaterialCacheUseCase
+import com.tezov.tuucho.core.domain.usecase.RenderComponentUseCase
+import com.tezov.tuucho.core.ui.viewFactory._system.ViewProtocol
 import org.koin.mp.KoinPlatform.getKoin
 
 @Composable
@@ -22,16 +22,15 @@ fun mainScreen() {
         but for now, it will be here
     */
     var ready by remember { mutableStateOf(false) }
-    val refreshCacheMaterial = remember { getKoin().get<RefreshCacheMaterialUseCase>() }
+    val refreshMaterialCache = remember { getKoin().get<RefreshMaterialCacheUseCase>() }
 
     LaunchedEffect(Unit) {
         //TODO remove when loading, migration upgrade/auto purge is done
-        getKoin().get<JsonObjectQueries>().clearAll()
-        getKoin().get<VersioningQueries>().clearAll()
-        //***********************************************
-
-        refreshCacheMaterial.invoke("config")
+        getKoin().get<JsonObjectQueries>().deleteAll()
+        getKoin().get<VersioningQueries>().deleteAll()
+        refreshMaterialCache.invoke("config")
         ready = true
+        //***********************************************
     }
     /* end hack */
 
@@ -46,19 +45,17 @@ fun mainScreen() {
 private fun StartEngineScreen(
     viewModel:MainViewModel = remember { getKoin().get<MainViewModel>() }
 ) {
-    var screen by remember { mutableStateOf<ComposableScreenProtocol?>(null) }
-    val renderer = remember { getKoin().get<ComponentRenderUseCase>() }
+    var screen by remember { mutableStateOf<ViewProtocol?>(null) }
+    val renderer = remember { getKoin().get<RenderComponentUseCase>() }
 
     LaunchedEffect(Unit) { viewModel.init() }
     LaunchedEffect(viewModel.url.value) {
-        screen = renderer.invoke(viewModel.url.value) as? ComposableScreenProtocol
+        screen = renderer.invoke(viewModel.url.value) as? ViewProtocol
     }
-
-    screen?.show(null)
-
+    screen?.display(null)
     DisposableEffect(Unit) {
         onDispose {
-            viewModel.onCleared()
+            viewModel.onDispose()
         }
     }
 }

@@ -3,46 +3,74 @@ package com.tezov.tuucho.core.data.database.dao
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.toEntity
+import com.tezov.tuucho.core.data.database.type.Lifetime
 
 class JsonObjectQueries(private val database: Database) {
 
     private val queries get() = database.jsonObjectStatementQueries
 
-    fun clearAll() = queries.clearAll()
+    private val queriesTransient get() = database.jsonObjectTransientStatementQueries
 
-    fun selectAll(): List<JsonObjectEntity> =
-        queries.selectAll().executeAsList().map { it.toEntity() }
+    private val queriesShared get() = database.sharedStatementQueries
 
-    fun insertOrUpdate(entity: JsonObjectEntity) = entity.primaryKey?.also {
-        queries.update(
-            primaryKey = entity.primaryKey,
-            type = entity.type,
-            url = entity.url,
-            id = entity.id,
-            idFrom = entity.idFrom,
-            jsonObject = entity.jsonObject
-        )
-    } ?: run {
-        database.transactionWithResult {
-            queries.insert(
-                type = entity.type,
-                url = entity.url,
-                id = entity.id,
-                idFrom = entity.idFrom,
-                jsonObject = entity.jsonObject
-            )
-            queries.lastInsertedId().executeAsOne()
+    fun deleteAll() {
+        queries.deleteAll()
+        queriesTransient.deleteAll()
+    }
+
+    fun deleteTransient(urls: List<String>) {
+        database.transaction {
+            urls.forEach {
+                queriesTransient.deleteByUrl(it)
+            }
         }
     }
 
-    fun find(primaryKey: Long): JsonObjectEntity? =
-        queries.findByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
+    fun insert(entity: JsonObjectEntity, lifetime: Lifetime) = when (lifetime) {
+        Lifetime.Unlimited -> {
+            database.transactionWithResult {
+                queries.insert(
+                    type = entity.type,
+                    url = entity.url,
+                    id = entity.id,
+                    idFrom = entity.idFrom,
+                    jsonObject = entity.jsonObject
+                )
+                queries.lastInsertedId().executeAsOne()
+            }
+        }
 
-    fun find(type: String, url: String, id: String): JsonObjectEntity? =
-        queries.findByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
+        is Lifetime.Transient -> {
+            queriesTransient.transactionWithResult {
+                queriesTransient.insert(
+                    type = entity.type,
+                    url = entity.url,
+                    urlOrigin = lifetime.urlOrigin,
+                    id = entity.id,
+                    idFrom = entity.idFrom,
+                    jsonObject = entity.jsonObject
+                )
+                queriesTransient.lastInsertedId().executeAsOne()
+            }
+        }
+    }
 
-    fun findShared(type: String, id: String): JsonObjectEntity? =
-        queries.findShared(type, id).executeAsOneOrNull()?.toEntity()
+    fun get(primaryKey: Long): JsonObjectEntity? =
+        queries.getByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
+
+    fun get(type: String, url: String, id: String): JsonObjectEntity? =
+        queries.getByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
+
+    fun findShared(type: String, id: String, urlOrigin: String?): JsonObjectEntity? {
+        return queriesShared
+            .getGlobalUnlimitedByTypeId(type, id)
+            .executeAsOneOrNull()?.toEntity()
+            ?: urlOrigin?.let {
+                queriesShared
+                    .getLocalTransientByTypeIdUrlOrigin(type, id, urlOrigin)
+                    .executeAsOneOrNull()?.toEntity()
+            }
+    }
 }
 
 
