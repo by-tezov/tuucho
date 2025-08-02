@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # TUUCHO - ตู้โชว์ - Rendering Engine
 
 > **Documentation in Progress** — Early stage of development

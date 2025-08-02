@@ -4,6 +4,7 @@ repo_url: https://github.com/by-tezov/tuucho
 theme:
   name: material
   logo: assets/tuucho-logo.svg
+  custom_dir: overrides
   palette:
     - scheme: slate
       toggle:
@@ -22,6 +23,8 @@ theme:
 
 extra_css:
   - stylesheets/overrides.css
+extra_templates:
+    - discussion_footer.html
 
 plugins:
   - search
