@@ -743,7 +743,7 @@
   C1 -- No --&gt; D[/Request **url** JSON/]
   D --&gt; E[Rectifier: make JSON engine-compatible]
   E --&gt; F[Breaker: split into parts]
-  F --&gt; G&gt;Store parts in DB]
+  F --&gt; G[(Store parts in DB)]
   C1 -- Yes --&gt; H
   G --&gt; H[Application want show 'FooScreen' URL]
   H --&gt; H1{Is in DB?}
@@ -753,6 +753,7 @@
   K --&gt; L((('FooScreen' is visible)))
   H1 -- No --&gt; D
   J --&gt; S[Shadower: Dynamic update context data]
+  S --&gt; M[(Save parts in Transient DB)]
   S --&gt; L
 </code></pre>
 <h2 id="json-file-structure">Json File Structure</h2>
@@ -798,10 +799,10 @@
 <p>it recognizes that additional data is required to fully render the component.</p>
 <h3 id="background-fetch-process">Background Fetch Process</h3>
 <ol>
-<li>The Assembler gathers all <strong>missing objects</strong> (e.g., components, contents, texts) required to render the page properly.</li>
+<li>The Shadower gathers all <strong>missing objects</strong> (e.g., components, contents, texts) required to render the page entirely.</li>
 <li>It initiates a background request to the corresponding dynamic URL: {current-page}-on-demand-definition. This URL is expected to return all the necessary missing elements.</li>
 <li>Once the data is received:<ul>
-<li>The <strong>Shadower</strong> step dynamically injects the new objects into the existing view structure.</li>
+<li>The <strong>Shadower</strong> step dynamically injects the new objects into the existing view structure and the transient cache database.</li>
 <li>The affected UI sections are updated <strong>in place</strong>, without requiring a full reload.</li>
 </ul>
 </li>
@@ -813,6 +814,36 @@
 - Smooth transition as dynamic data becomes available.
 - Flexible modular content delivery that doesn’t block page rendering due to partial data.</p>
 <hr/>
+<!--<h2 id="__comments">Comments</h2>-->
+<script async="" crossorigin="anonymous" data-category="General" data-category-id="DIC_kwDOPC42VM4CttMM" data-emit-metadata="0" data-input-position="bottom" data-lang="en" data-mapping="pathname" data-reactions-enabled="1" data-repo="by-tezov/tuucho" data-repo-id="R_kgDOPC42VA" data-strict="0" data-theme="preferred_color_scheme" src="https://giscus.app/client.js">
+</script>
+<script>
+    var giscus = document.querySelector("script[src*=giscus]")
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+      giscus.setAttribute("data-theme", theme)
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+</script>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
