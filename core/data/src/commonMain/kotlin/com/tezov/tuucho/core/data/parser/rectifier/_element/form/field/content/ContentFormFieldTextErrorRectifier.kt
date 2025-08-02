@@ -5,11 +5,12 @@ import com.tezov.tuucho.core.domain._system.JsonElementPath
 import com.tezov.tuucho.core.domain._system.find
 import com.tezov.tuucho.core.domain._system.string
 import com.tezov.tuucho.core.domain._system.toPath
+import com.tezov.tuucho.core.domain.model.schema._system.SymbolData
 import com.tezov.tuucho.core.domain.model.schema._system.withScope
-
 import com.tezov.tuucho.core.domain.model.schema.material.TextSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -23,11 +24,18 @@ class ContentFormFieldTextErrorRectifier : Rectifier() {
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = beforeAlterObject("".toPath(), element.find(path)
-        .withScope(TextSchema::Scope).apply {
-            default = this.element.string
-        }
-        .collect()) //TODO if was ref, should be replace by id
+    ) = beforeAlterObject(
+        "".toPath(), element.find(path).withScope(TextSchema::Scope).apply {
+            val value = this.element.string
+            //TODO add escaper on "ID_REF_INDICATOR" to allow string user content to start with it
+            if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
+                id = JsonPrimitive(value)
+            } else {
+                id = JsonNull
+                default = value
+            }
+        }.collect()
+    )
 
     override fun beforeAlterObject(
         path: JsonElementPath,

@@ -24,7 +24,7 @@ Key features include:
 - **Input Field** (form element)
 - **Spacer**
 
-For detailed future plans and roadmap, see [Roadmap](roadmap.md). Spoiler alert: KMM integration is on the horizon.
+For detailed future plans and roadmap, see [Roadmap](roadmap.md).
 
 ---
 
@@ -43,8 +43,8 @@ For detailed future plans and roadmap, see [Roadmap](roadmap.md). Spoiler alert:
    The rectified JSON is fragmented into smaller components by the **Breaker** process. These components are then stored in the local database.
 
 5. **Home Screen Initialization**  
-   When displaying a screen (e.g., `screen_a`):
-   - If components for `screen_a` exist in the database, they are retrieved.
+   When displaying a screen (e.g., `FooScreen`):
+   - If components for `FooScreen` exist in the database, they are retrieved.
    - The **Assembler** reconstructs the full JSON page from these components, including only what is necessary.
    - The final JSON is passed to the **Renderer** which draws the UI.
 

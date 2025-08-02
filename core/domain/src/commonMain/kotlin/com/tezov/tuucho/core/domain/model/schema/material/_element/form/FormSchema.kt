@@ -9,6 +9,13 @@ import kotlinx.serialization.json.JsonObject
 
 object FormSchema {
 
+    object Component {
+        object Value {
+            const val subset = "form-"
+        }
+
+    }
+
     object Option {
         object Key {
             const val validator = "validator"

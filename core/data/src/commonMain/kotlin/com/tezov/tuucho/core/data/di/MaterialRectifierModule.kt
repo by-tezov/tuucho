@@ -8,11 +8,13 @@ import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.StateRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ValidatorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.form.StateFormTextMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextMatcher
@@ -46,6 +48,7 @@ object MaterialRectifierModule {
             val CONTENT = named("MaterialRectifierModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Processor.STYLE")
             val OPTION = named("MaterialRectifierModule.Name.Processor.OPTION")
+            val STATE = named("MaterialRectifierModule.Name.Processor.STATE")
             val TEXTS = named("MaterialRectifierModule.Name.Processor.TEXTS")
             val TEXT = named("MaterialRectifierModule.Name.Processor.TEXT")
             val COLORS = named("MaterialRectifierModule.Name.Processor.COLORS")
@@ -62,6 +65,7 @@ object MaterialRectifierModule {
             val CONTENT = named("MaterialRectifierModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Matcher.STYLE")
             val OPTION = named("MaterialRectifierModule.Name.Matcher.OPTION")
+            val STATE = named("MaterialRectifierModule.Name.Matcher.STATE")
             val TEXT = named("MaterialRectifierModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialRectifierModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialRectifierModule.Name.Matcher.DIMENSION")
@@ -77,6 +81,7 @@ object MaterialRectifierModule {
         contentModule()
         styleModule()
         optionModule()
+        stateModule()
         textModule()
         colorModule()
         dimensionModule()
@@ -169,6 +174,20 @@ object MaterialRectifierModule {
         }
     }
 
+    private fun Module.stateModule() {
+        single<StateRectifier> { StateRectifier() }
+
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.STATE) {
+            emptyList()
+        }
+
+        single<List<Rectifier>>(Name.Processor.STATE) {
+            listOf(
+                get<IdRectifier>()
+            )
+        }
+    }
+
     private fun Module.textModule() {
         single<TextsRectifier> { TextsRectifier() }
 
@@ -183,6 +202,7 @@ object MaterialRectifierModule {
                 ContentLabelTextMatcher(),
                 ContentFormFieldTextMatcher(),
                 ContentFormFieldTextErrorMatcher(),
+                StateFormTextMatcher(),
             )
         }
 
@@ -203,7 +223,7 @@ object MaterialRectifierModule {
         single<List<MatcherRectifierProtocol>>(Name.Matcher.COLOR) {
             listOf(
                 StyleLabelColorMatcher(),
-                StyleLayoutLinearColorMatcher()
+                StyleLayoutLinearColorMatcher(),
             )
         }
 
