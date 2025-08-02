@@ -130,5 +130,9 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
 
     fun collect() = mapOperator.collect()
 
+    override fun toString(): String {
+        return "initial=$element\ncurrent=${collect()}"
+    }
+
 }
 

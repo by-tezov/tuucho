@@ -1,22 +1,20 @@
 package com.tezov.tuucho.core.domain.usecase
 
 import com.tezov.tuucho.core.domain.actionHandler.NavigationUrlActionHandler
-import com.tezov.tuucho.core.domain.protocol.CoroutineContextProviderProtocol
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
 
 class RegisterNavigationUrlEventUseCase(
-    private val coroutineDispatchers: CoroutineContextProviderProtocol,
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val navigationUrlActionHandler: NavigationUrlActionHandler,
 ) {
 
     fun invoke(
         onUrlRequested: (url: String) -> Unit,
     ) {
-        navigationUrlActionHandler.events
-            .onEach { onUrlRequested(it) }
-            .launchIn(CoroutineScope(coroutineDispatchers.main))
+        coroutineScopes.launchOnEvent {
+            navigationUrlActionHandler.events
+                .collect { onUrlRequested(it) }
+        }
     }
 
 }

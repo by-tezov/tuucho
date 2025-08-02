@@ -4,9 +4,11 @@ import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
 import com.tezov.tuucho.core.domain._system.toPath
+import com.tezov.tuucho.core.domain.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.model.schema.material.MaterialSchema
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -22,51 +24,24 @@ class MaterialRectifier : KoinComponent {
     private val colorsRectifier: ColorsRectifier by inject()
     private val dimensionsRectifier: DimensionsRectifier by inject()
 
-    fun process(element: JsonElement): JsonObject {
+    @Suppress("RedundantSuspendModifier")
+    suspend fun process(materialObject: JsonObject): JsonObject = materialObject.withScope(MaterialSchema::Scope).apply {
 
-//        runCatching {
-//            if(element.jsonObject["root"]!!.jsonObject["id"].string == "page-home") {
-//                logAll("*******************************")
-//                logAll(element)
-//            }
-//        }
+//        logAll("*******************************")
+//        logAll(element)
 
-        val mutableMaterial = element.jsonObject.toMutableMap()
+        rootComponent?.let { rootComponent = componentRectifier.process("".toPath(), it).jsonObject }
+        components?.let { components = componentRectifier.process("".toPath(), it).jsonArray }
+        contents?.let { contents = contentRectifier.process("".toPath(), it).jsonArray }
+        styles?.let { styles = styleRectifier.process("".toPath(), it).jsonArray }
+        options?.let { options = optionRectifier.process("".toPath(), it).jsonArray }
+        texts?.takeIf { it != JsonNull }?.let { texts = textsRectifier.process("".toPath(), it).jsonArray }
+        colors?.takeIf { it != JsonNull }?.let { colors = colorsRectifier.process("".toPath(), it).jsonArray }
+        dimensions?.takeIf { it != JsonNull }?.let { dimensions = dimensionsRectifier.process("".toPath(), it).jsonArray }
 
-        mutableMaterial[MaterialSchema.Key.root]?.let { component ->
-            mutableMaterial[MaterialSchema.Key.root] = componentRectifier.process("".toPath(), component)
-        }
-        mutableMaterial[MaterialSchema.Key.components]?.let {
-            mutableMaterial[MaterialSchema.Key.components] = componentRectifier.process("".toPath(), it)
-        }
-        mutableMaterial[MaterialSchema.Key.contents]?.let {
-            mutableMaterial[MaterialSchema.Key.contents] = contentRectifier.process("".toPath(), it)
-        }
-        mutableMaterial[MaterialSchema.Key.styles]?.let {
-            mutableMaterial[MaterialSchema.Key.styles] = styleRectifier.process("".toPath(), it)
-        }
-        mutableMaterial[MaterialSchema.Key.options]?.let {
-            mutableMaterial[MaterialSchema.Key.options] = optionRectifier.process("".toPath(), it)
-        }
+//        logAll(collect())
+//        logAll("\n")
 
-        mutableMaterial[MaterialSchema.Key.texts]?.let {
-            mutableMaterial[MaterialSchema.Key.texts] = textsRectifier.process("".toPath(), it)
-        }
-        mutableMaterial[MaterialSchema.Key.colors]?.let {
-            mutableMaterial[MaterialSchema.Key.colors] = colorsRectifier.process("".toPath(), it)
-        }
-        mutableMaterial[MaterialSchema.Key.dimensions]?.let {
-            mutableMaterial[MaterialSchema.Key.dimensions] = dimensionsRectifier.process("".toPath(), it)
-        }
-
-//        runCatching {
-//            if(element.jsonObject["root"]!!.jsonObject["id"].string == "page-home") {
-//                logAll(JsonObject(mutableMaterial))
-//                logAll("\n")
-//            }
-//        }
-
-        return JsonObject(mutableMaterial)
-    }
+    }.collect()
 
 }

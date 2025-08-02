@@ -132,5 +132,5 @@ Below are the currently supported validator types:
 ---
 
 For more details and examples, see the following component definitions that use the `validator` object:
-- [Field Component](../components-definition/field.md)
+- [Field Component](../components-definition/form/field.md)
 

@@ -16,8 +16,6 @@ class JsonEntityObjectTree(val content: JsonObjectEntity) : JsonElementTree() {
     override fun toString() = content.toString()
 }
 
-fun JsonObjectEntity.toTree() = JsonEntityObjectTree(this)
-
 class JsonEntityArrayTree(private val content: List<JsonElementTree>) : JsonElementTree(),
     List<JsonElementTree> by content {
     override fun equals(other: Any?) = content == other
@@ -26,13 +24,11 @@ class JsonEntityArrayTree(private val content: List<JsonElementTree>) : JsonElem
         .joinToString(prefix = "[", postfix = "]", separator = ",")
 }
 
-fun List<JsonElementTree>.toTree() = JsonEntityArrayTree(this)
-
 val JsonElementTree.jsonEntityObjectTree
-    get() = this as? JsonEntityObjectTree ?: throw DataException.Default("JsonEntityPrimitive")
+    get() = this as? JsonEntityObjectTree ?: throw DataException.Default("JsonEntityObjectTree")
 
 val JsonElementTree.jsonEntityArrayTree
-    get() = this as? JsonEntityArrayTree ?: throw DataException.Default("JsonEntityList")
+    get() = this as? JsonEntityArrayTree ?: throw DataException.Default("JsonEntityArrayTree")
 
 fun JsonElementTree.flatten(): List<JsonEntityObjectTree> {
     val output = mutableListOf<JsonEntityObjectTree>()

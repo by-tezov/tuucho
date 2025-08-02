@@ -1,7 +1,7 @@
 [versions]
 #project
 versionCode = "1"
-versionName = "0.0.1"
+versionName = "0.0.1-alpha6"
 javaVersion = "17"
 compileSdk = "36"
 minSdk = "24"
@@ -16,6 +16,7 @@ compose-activity = "1.10.1"
 #lib - kmm
 kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
+kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.1.0"
 ktor = "3.2.2"
 koin = "4.1.0"
@@ -35,6 +36,7 @@ sql-delight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-ext
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-cio = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-collections-immutable" }
 #lib - android
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }

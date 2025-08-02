@@ -24,7 +24,7 @@ Key features include:
 - **Input Field** (form element)
 - **Spacer**
 
-For detailed future plans and roadmap, see [Roadmap](roadmap.md). Spoiler alert: KMM integration is on the horizon.
+For detailed future plans and roadmap, see [Roadmap](roadmap.md).
 
 ---
 
@@ -43,10 +43,14 @@ For detailed future plans and roadmap, see [Roadmap](roadmap.md). Spoiler alert:
    The rectified JSON is fragmented into smaller components by the **Breaker** process. These components are then stored in the local database.
 
 5. **Home Screen Initialization**  
-   When displaying a screen (e.g., `screen_a`):
-   - If components for `screen_a` exist in the database, they are retrieved.
-   - The **Assembler** reconstructs the full JSON page from these components, including only what is necessary.
-   - The final JSON is passed to the **Renderer** which draws the UI.
+   When displaying a screen (e.g., `FooScreen`):
+   - If components for `FooScreen` exist in the database, they are retrieved.
+     - The **Assembler** reconstructs the full JSON page from these components, including only what is necessary.
+     - The final JSON is passed to the **Renderer** which draws the UI.
+   - If components for `FooScreen` doesn't exist in the database, they are fetched, saved in database. Then the rendering process is done.
+
+6. **Dynamic content**
+   - If the `FooScreen` contains some context data (user context data that can't be cached), it is retrieved in the background and the FooScreen is updated on the fly.
 
 ---
 
@@ -66,8 +70,11 @@ flowchart TD
   H --> H1{Is in DB?}
   H1 -- Yes --> I[(Retrieve parts from DB)]
   I --> J[Assembler: Rebuild Page]
-  J --> K(((Renderer: Draw UI of 'FooScreen')))
+  J --> K[Renderer: Create all UI part]
+  K --> L((('FooScreen' is visible)))
   H1 -- No --> D
+  J --> S[Shadower: Dynamic update context data]
+  S --> L
 ```
 
 ## Json File Structure
@@ -105,11 +112,44 @@ Many self-explanatory examples are provided throughout this documentation. To ma
 
 ---
 
-## Documentation Menu
+## More about Dynamic Context Data Updates
 
-- [Object Definition](object-definition/index.md)
-- [Components Definition](components-definition/index.md)
-- [Subs](config/subs.md)
-- [Pages](pages-definition/index.md)
-- [Roadmap](roadmap.md)
-- [ChangeLog](changelog.md)
+In certain cases, components on a page depend on dynamic data that is not included in the local page definition or cached globally in SUBS. When such components are encountered during the assembly phase, the system handles them intelligently to maintain a smooth user experience.
+
+### How It Works
+
+When the **Assembler** encounters a component with a reference to an object that is **not locally or globally available**, such as:
+
+```json
+{
+  "id": {
+    "value": "hobbies",
+    "source": "*input-field-on-demand"
+  },
+  "subset": "field"
+}
+```
+
+it recognizes that additional data is required to fully render the component.
+
+### Background Fetch Process
+
+1. The Assembler gathers all **missing objects** (e.g., components, contents, texts) required to render the page properly.
+2. It initiates a background request to the corresponding dynamic URL: {current-page}-on-demand-definition. This URL is expected to return all the necessary missing elements.
+3. Once the data is received:
+    - The **Shadower** step dynamically injects the new objects into the existing view structure.
+    - The affected UI sections are updated **in place**, without requiring a full reload.
+
+### Placeholder Rendering
+
+While waiting for the missing data, the renderer shows **placeholder UI elements** (aka **skimmers**) in place of the missing content. These serve as visual indicators to users that the data is being loaded.
+
+This ensures:
+- Fast initial rendering of all available UI.
+- Smooth transition as dynamic data becomes available.
+- Flexible modular content delivery that doesn’t block page rendering due to partial data.
+
+---
+
+
+

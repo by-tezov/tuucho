@@ -1,22 +1,20 @@
 package com.tezov.tuucho.core.ui.di
 
-import com.tezov.tuucho.core.domain.protocol.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.protocol.state.FieldsMaterialStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.FormMaterialStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.MaterialStateProtocol
-import com.tezov.tuucho.core.domain.usecase.GetLanguageUseCase
-import com.tezov.tuucho.core.domain.usecase.RegisterUpdateFormEventUseCase
-import com.tezov.tuucho.core.domain.usecase.ValidatorFactoryUseCase
-import com.tezov.tuucho.core.ui.renderer.ButtonRendered
-import com.tezov.tuucho.core.ui.renderer.ComponentRenderer
-import com.tezov.tuucho.core.ui.renderer.FieldRendered
-import com.tezov.tuucho.core.ui.renderer.LabelRendered
-import com.tezov.tuucho.core.ui.renderer.LayoutLinearRendered
-import com.tezov.tuucho.core.ui.renderer.SpacerRendered
-import com.tezov.tuucho.core.ui.state.FieldsMaterialState
-import com.tezov.tuucho.core.ui.state.FormMaterialState
-import com.tezov.tuucho.core.ui.state.MaterialState
+import com.tezov.tuucho.core.domain.protocol.ComponentRendererProtocol
+import com.tezov.tuucho.core.domain.protocol.state.ScreenStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FieldsFormStateProtocol
+import com.tezov.tuucho.core.domain.protocol.state.form.FormsStateProtocol
+import com.tezov.tuucho.core.ui.state.FieldsFormState
+import com.tezov.tuucho.core.ui.state.FormsState
+import com.tezov.tuucho.core.ui.state.ScreenState
+import com.tezov.tuucho.core.ui.viewFactory.ButtonViewFactory
+import com.tezov.tuucho.core.ui.viewFactory.ComponentRendererFactory
+import com.tezov.tuucho.core.ui.viewFactory.FieldViewFactory
+import com.tezov.tuucho.core.ui.viewFactory.LabelViewFactory
+import com.tezov.tuucho.core.ui.viewFactory.LayoutLinearViewFactory
+import com.tezov.tuucho.core.ui.viewFactory.SpacerViewFactory
 import org.koin.core.module.Module
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 object MaterialRendererModule {
@@ -25,52 +23,63 @@ object MaterialRendererModule {
         state()
         rendered()
 
-        single<ScreenRendererProtocol> {
-            ComponentRenderer(
-                listOf(
-                    get<LabelRendered>(),
-                    get<FieldRendered>(),
-                    get<ButtonRendered>(),
-                    get<SpacerRendered>(),
-                    get<LayoutLinearRendered>(),
+        factory<ComponentRendererFactory> {
+            ComponentRendererFactory(
+                addView = get(),
+                uiComponentFactory = listOf(
+                    get<LabelViewFactory>(),
+                    get<FieldViewFactory>(),
+                    get<ButtonViewFactory>(),
+                    get<SpacerViewFactory>(),
+                    get<LayoutLinearViewFactory>(),
                 )
             )
-        }
+        } bind ComponentRendererProtocol::class
     }
 
     private fun Module.state() {
-        single<FieldsMaterialStateProtocol> {
-            FieldsMaterialState()
+        factory<FieldsFormStateProtocol> {
+            FieldsFormState()
         }
 
-        single<FormMaterialStateProtocol> {
-            FormMaterialState(
-                get<FieldsMaterialStateProtocol>()
+        factory<FormsStateProtocol> {
+            FormsState(
+                fieldsFormState = get()
             )
         }
 
-        single<MaterialStateProtocol> {
-            MaterialState(
-                get<FormMaterialStateProtocol>()
+        //TODO: when navigation stack will be done, it must not be a single but a factory
+        single <ScreenStateProtocol> {
+            ScreenState(
+                formsState = get()
             )
         }
     }
 
     private fun Module.rendered() {
-        single<LayoutLinearRendered> { LayoutLinearRendered() }
-        single<LabelRendered> { LabelRendered(
-            get<GetLanguageUseCase>()
-        ) }
-        single<FieldRendered> {
-            FieldRendered(
-                get<MaterialStateProtocol>(),
-                get<ValidatorFactoryUseCase>(),
-                get<RegisterUpdateFormEventUseCase>(),
-                get<GetLanguageUseCase>()
+        factory<LayoutLinearViewFactory> { LayoutLinearViewFactory() }
+
+        factory<LabelViewFactory> {
+            LabelViewFactory()
+        }
+
+        factory<FieldViewFactory> {
+            FieldViewFactory(
+                validatorFactory = get(),
+                addForm = get(),
+                removeFormFieldView = get(),
+                updateFieldFormView = get(),
+                isFieldFormViewValid = get()
             )
         }
-        single<ButtonRendered> { ButtonRendered() }
-        single<SpacerRendered> { SpacerRendered() }
+
+        factory<ButtonViewFactory> {
+            ButtonViewFactory(
+                actionHandler = get()
+            )
+        }
+
+        factory <SpacerViewFactory> { SpacerViewFactory() }
     }
 
 }

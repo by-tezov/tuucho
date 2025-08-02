@@ -10,8 +10,10 @@ object SystemCoreDataModules {
         MaterialRectifierModule(),
         MaterialBreakerModule(),
         MaterialAssemblerModule(),
+        MaterialShadowerModule(),
         MaterialRepositoryModule(),
         DatabaseRepositoryModule(),
+        NetworkRepositoryModule(),
     ) + platformInvoke()
 
 }

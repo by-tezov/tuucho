@@ -45,7 +45,7 @@ Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap/) for full details
 
 For comprehensive documentation, examples, and developer guides, visit:
 
-[Full Documentation](https://doc.tuucho.com/0.0.1-alpha5/)
+[Full Documentation](https://doc.tuucho.com/0.0.1-alpha6/)
 
 ---
 
