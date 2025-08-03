@@ -3,11 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "com.tezov.tuucho.kmm"
+    namespace = "com.tezov.tuucho.core.presentation.ui"
 
     defaultConfig {
 
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -21,26 +22,16 @@ android {
 
 kotlin {
     sourceSets {
-        androidMain.dependencies {
-
-        }
-
         commonMain.dependencies {
             implementation(project(":core:domain"))
-            implementation(project(":core:presentation:ui"))
-            implementation(project(":core:data"))
 
-            implementation(compose.runtime)
-            implementation(compose.foundation)
+            implementation(libs.kotlin.couroutine)
+            implementation(libs.kotlin.serialization.json)
+            implementation(libs.koin.core)
+
             implementation(compose.ui)
             implementation(compose.material3)
-            implementation(compose.components.resources)
-
-            implementation(libs.koin.core)
-        }
-
-        iosMain.dependencies {
-
+            implementation(libs.kotlin.collections.immutable)
         }
     }
 }
