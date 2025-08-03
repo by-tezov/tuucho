@@ -4,16 +4,19 @@ import com.tezov.tuucho.core.domain.tool.async.ExtensionFlow.collectForever
 import com.tezov.tuucho.core.domain.tool.async.ExtensionFlow.collectOnce
 import com.tezov.tuucho.core.domain.tool.async.ExtensionFlow.collectUntil
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.filter
+import kotlin.jvm.JvmInline
 
 object Notifier {
 
     class Emitter<T : Any>(
         replay: Int = 0,
-        extraBufferCapacity: Int = 1,
-        onBufferOverflow: BufferOverflow = BufferOverflow.DROP_OLDEST,
+        extraBufferCapacity: Int = 0,
+        onBufferOverflow: BufferOverflow = BufferOverflow.SUSPEND,
     ) {
-        internal val flow = MutableSharedFlow<T>(
+        private val flow = MutableSharedFlow<T>(
             replay = replay,
             extraBufferCapacity = extraBufferCapacity,
             onBufferOverflow = onBufferOverflow
@@ -23,21 +26,24 @@ object Notifier {
 
         suspend fun emit(event: T) = flow.emit(event)
 
-        val createCollector get() = Collector(this)
+        val createCollector get() = Collector(flow)
     }
 
-    class Collector<T : Any>(
-        private val emitter: Emitter<T>,
+    @JvmInline
+    value class Collector<T : Any>(
+        private val flow: Flow<T>,
     ) {
 
-        suspend fun filter(block: suspend (T) -> Unit) = emitter.flow.filter
+        fun filter(predicate: suspend (T) -> Boolean): Collector<T> =
+            Collector(flow.filter(predicate))
 
-        suspend fun once(block: suspend (T) -> Unit) = emitter.flow.collectOnce(block)
+        suspend fun once(block: suspend (T) -> Unit) =
+            flow.collectOnce(block)
 
-        suspend fun forever(block: suspend (T) -> Unit) = emitter.flow.collectForever(block)
+        suspend fun forever(block: suspend (T) -> Unit) =
+            flow.collectForever(block)
 
-        suspend fun until(block: suspend (T) -> Boolean) = emitter.flow.collectUntil(block)
-
+        suspend fun until(block: suspend (T) -> Boolean) =
+            flow.collectUntil(block)
     }
-
 }

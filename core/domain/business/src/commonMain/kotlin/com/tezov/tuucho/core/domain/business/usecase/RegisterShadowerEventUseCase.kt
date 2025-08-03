@@ -14,7 +14,7 @@ class RegisterShadowerEventUseCase(
     ) {
         coroutineScopes.launchOnEvent {
             shadowerMaterialRepository.events
-                .filter { it.type == type } //TODO fix that
+                .filter { it.type == type }
                 .forever { onReceived(it) }
         }
     }
