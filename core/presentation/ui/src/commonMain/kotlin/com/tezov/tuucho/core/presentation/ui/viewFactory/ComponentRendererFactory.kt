@@ -1,14 +1,14 @@
 package com.tezov.tuucho.core.presentation.ui.viewFactory
 
 
-import com.tezov.tuucho.core.domain.model.schema._system.onScope
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.protocol.ComponentRendererProtocol
-import com.tezov.tuucho.core.domain.protocol.ViewProtocol
-import com.tezov.tuucho.core.domain.usecase.state.AddViewUseCase
+import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.protocol.ComponentRendererProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ViewProtocol
+import com.tezov.tuucho.core.domain.business.usecase.state.AddViewUseCase
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent

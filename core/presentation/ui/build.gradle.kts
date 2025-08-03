@@ -23,7 +23,8 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core:domain"))
+            implementation(project(":core:domain:business"))
+            implementation(project(":core:presentation:tool"))
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)

@@ -4,10 +4,10 @@ import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser.assembler._system.FindAllRefOrNullFetcherProtocol
 import com.tezov.tuucho.core.data.parser.assembler._system.JsonObjectMerger
 import com.tezov.tuucho.core.data.parser.assembler._system.MatcherAssemblerProtocol
-import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.replaceOrInsert
-import com.tezov.tuucho.core.domain._system.toPath
+import com.tezov.tuucho.core.domain.business._system.JsonElementPath
+import com.tezov.tuucho.core.domain.business._system.find
+import com.tezov.tuucho.core.domain.business._system.replaceOrInsert
+import com.tezov.tuucho.core.domain.business._system.toPath
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject

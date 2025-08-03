@@ -2,15 +2,15 @@ package com.tezov.tuucho.core.presentation.ui.viewFactory
 
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
-import com.tezov.tuucho.core.domain.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.model.schema.material.ActionSchema
-import com.tezov.tuucho.core.domain.model.schema.material.ComponentSchema
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.idValue
-import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.model.schema.material._element.ButtonSchema
-import com.tezov.tuucho.core.domain.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business.model.schema.material.ActionSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idValue
+import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material._element.ButtonSchema
+import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.View
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject

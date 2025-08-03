@@ -3,9 +3,9 @@ package com.tezov.tuucho.core.data.parser.rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
-import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.model.schema.material.MaterialSchema
+import com.tezov.tuucho.core.domain.business._system.toPath
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business.model.schema.material.MaterialSchema
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray

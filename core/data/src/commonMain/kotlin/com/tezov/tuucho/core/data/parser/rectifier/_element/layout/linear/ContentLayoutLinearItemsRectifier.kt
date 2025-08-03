@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear
 
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
-import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.toPath
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business._system.JsonElementPath
+import com.tezov.tuucho.core.domain.business._system.find
+import com.tezov.tuucho.core.domain.business._system.toPath
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive

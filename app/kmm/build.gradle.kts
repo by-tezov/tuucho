@@ -26,7 +26,7 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(project(":core:domain"))
+            implementation(project(":core:domain:business"))
             implementation(project(":core:presentation:ui"))
             implementation(project(":core:data"))
 

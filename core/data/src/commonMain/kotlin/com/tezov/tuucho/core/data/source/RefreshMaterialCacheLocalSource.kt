@@ -10,11 +10,11 @@ import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
-import com.tezov.tuucho.core.domain.model.schema._system.onScope
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RefreshMaterialCacheLocalSource(

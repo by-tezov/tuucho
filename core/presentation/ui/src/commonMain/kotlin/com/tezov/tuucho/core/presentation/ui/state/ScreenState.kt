@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.presentation.ui.state
 
-import com.tezov.tuucho.core.domain.protocol.ViewProtocol
-import com.tezov.tuucho.core.domain.protocol.state.ScreenStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.form.FormsStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ViewProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateProtocol
 import kotlinx.serialization.json.JsonObject
 
 class ScreenState(

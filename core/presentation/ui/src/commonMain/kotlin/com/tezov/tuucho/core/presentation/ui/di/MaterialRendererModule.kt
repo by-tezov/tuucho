@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
-import com.tezov.tuucho.core.domain.protocol.ComponentRendererProtocol
-import com.tezov.tuucho.core.domain.protocol.state.ScreenStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.form.FieldsFormStateProtocol
-import com.tezov.tuucho.core.domain.protocol.state.form.FormsStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ComponentRendererProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FieldsFormStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateProtocol
 import com.tezov.tuucho.core.presentation.ui.state.FieldsFormState
 import com.tezov.tuucho.core.presentation.ui.state.FormsState
 import com.tezov.tuucho.core.presentation.ui.state.ScreenState

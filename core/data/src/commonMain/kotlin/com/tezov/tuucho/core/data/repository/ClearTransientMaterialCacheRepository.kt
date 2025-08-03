@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository
 
 import com.tezov.tuucho.core.data.source.ClearTransientMaterialCacheLocalSource
-import com.tezov.tuucho.core.domain.protocol.ClearTransientMaterialCacheRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ClearTransientMaterialCacheRepositoryProtocol
 
 class ClearTransientMaterialCacheRepository(
     private val clearTransientMaterialCacheLocalSource: ClearTransientMaterialCacheLocalSource,

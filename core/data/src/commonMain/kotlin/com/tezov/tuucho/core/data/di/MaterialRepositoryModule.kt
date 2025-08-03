@@ -13,11 +13,11 @@ import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandDefinitionShadowerMaterialSource
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
-import com.tezov.tuucho.core.domain.protocol.ClearTransientMaterialCacheRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ClearTransientMaterialCacheRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.RefreshCacheMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.RetrieveMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ShadowerMaterialRepositoryProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind

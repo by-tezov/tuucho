@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.data.parser._system
 
-import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain._system.findOrNull
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business._system.JsonElementPath
+import com.tezov.tuucho.core.domain.business._system.findOrNull
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 
-import com.tezov.tuucho.core.domain.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
