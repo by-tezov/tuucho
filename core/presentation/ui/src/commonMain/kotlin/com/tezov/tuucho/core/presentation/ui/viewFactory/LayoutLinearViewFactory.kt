@@ -16,6 +16,9 @@ import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.layout.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
+import com.tezov.tuucho.core.presentation.tool.modifier.onTrue
+import com.tezov.tuucho.core.presentation.tool.modifier.then
+import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.View
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory
@@ -102,38 +105,21 @@ class LayoutLinearView(
 
     @Composable
     override fun displayComponent(scope: Any?) {
+        val modifier = Modifier
+            .then {
+                onTrue(fillMaxSize) { fillMaxSize() } or onTrue(fillMaxWidth) { fillMaxWidth() }
+            }
+            .thenOnNotNull(backgroundColor) { background(it) }
 
         when (orientation) {
             Orientation.horizontal -> {
-                var modifier: Modifier = Modifier
-                if (fillMaxSize == true) {
-                    modifier = modifier.fillMaxSize()
-                } else if (fillMaxWidth == true) {
-                    modifier = modifier.fillMaxWidth()
-                }
-                backgroundColor?.let {
-                    modifier = modifier.background(it)
-                }
-                Row(
-                    modifier = modifier
-                ) {
+                Row(modifier = modifier) {
                     items?.forEach { it.display(this@Row) }
                 }
             }
 
             else -> {
-                var modifier: Modifier = Modifier
-                if (fillMaxSize == true) {
-                    modifier = modifier.fillMaxSize()
-                } else if (fillMaxWidth == true) {
-                    modifier = modifier.fillMaxWidth()
-                }
-                backgroundColor?.let {
-                    modifier = modifier.background(it)
-                }
-                Column(
-                    modifier = modifier
-                ) {
+                Column(modifier = modifier) {
                     items?.forEach { it.display(this@Column) }
                 }
             }

@@ -2,13 +2,14 @@ package com.tezov.tuucho.core.presentation.ui.viewFactory
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.core.domain.business._system.string
 import com.tezov.tuucho.core.domain.business.config.Language
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
@@ -27,6 +28,7 @@ import com.tezov.tuucho.core.domain.business.usecase.state.AddFormUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.IsFieldFormViewValidUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.RemoveFormFieldViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.UpdateFieldFormViewUseCase
+import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.View
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory
@@ -227,7 +229,9 @@ class FieldView(
         //  - when gain focus and user write, remove the error while user is typing
 
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 4.dp),
             value = value,
             onValueChange = { newValue ->
                 updateFieldFormView.invoke(

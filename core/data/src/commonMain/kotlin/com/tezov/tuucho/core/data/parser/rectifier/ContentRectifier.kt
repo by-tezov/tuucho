@@ -1,22 +1,20 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
-import com.tezov.tuucho.core.domain.business._system.JsonElementPath
-import com.tezov.tuucho.core.domain.business._system.find
-import com.tezov.tuucho.core.domain.business._system.findOrNull
-import com.tezov.tuucho.core.domain.business._system.string
-import com.tezov.tuucho.core.domain.business._system.toPath
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-
 import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.ContentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.find
+import com.tezov.tuucho.core.domain.tool.json.findOrNull
+import com.tezov.tuucho.core.domain.tool.json.string
+import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull

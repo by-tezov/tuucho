@@ -8,7 +8,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPaletteSize
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitShape.StateColor.Style.Companion.asPaletteSize
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitShapeStateColor

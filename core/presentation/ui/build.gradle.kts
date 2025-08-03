@@ -24,6 +24,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core:domain:business"))
+            implementation(project(":core:domain:tool"))
             implementation(project(":core:presentation:tool"))
 
             implementation(libs.kotlin.couroutine)

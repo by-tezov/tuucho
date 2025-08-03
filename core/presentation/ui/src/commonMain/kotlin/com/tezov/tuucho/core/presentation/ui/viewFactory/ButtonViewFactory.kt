@@ -17,7 +17,7 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 class ButtonViewFactory(
-    private val actionHandler: ActionHandlerUseCase
+    private val actionHandler: ActionHandlerUseCase,
 ) : ViewFactory() {
 
     private val labelUiComponentFactory: LabelViewFactory by inject()
@@ -39,7 +39,7 @@ class ButtonView(
     url: String,
     componentElement: JsonObject,
     private val labelUiComponentFactory: LabelViewFactory,
-    private val actionHandler: ActionHandlerUseCase
+    private val actionHandler: ActionHandlerUseCase,
 ) : View(url, componentElement) {
 
     private var label: View? = null

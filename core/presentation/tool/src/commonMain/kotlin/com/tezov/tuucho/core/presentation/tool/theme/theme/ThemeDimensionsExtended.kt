@@ -7,7 +7,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPalette.Direction.Style.Companion.asPaletteDirection
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPalette.Size.Style.Companion.asPaletteSize
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPaletteDirection

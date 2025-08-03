@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business._system
+package com.tezov.tuucho.core.domain.tool.json
 
 fun String.toPath() = JsonElementPath(this)
 

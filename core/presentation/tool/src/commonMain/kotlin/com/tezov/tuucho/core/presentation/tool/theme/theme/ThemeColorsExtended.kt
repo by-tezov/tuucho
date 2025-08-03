@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitBorderStateColor
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitFrameStateColor
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPaletteColor

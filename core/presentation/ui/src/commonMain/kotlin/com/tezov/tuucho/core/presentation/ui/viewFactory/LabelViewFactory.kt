@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.core.domain.business._system.string
 import com.tezov.tuucho.core.domain.business.config.Language
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.ColorSchema
@@ -19,6 +18,7 @@ import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idVa
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.View
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory

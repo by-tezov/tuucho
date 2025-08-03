@@ -9,7 +9,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnTrue
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitShape.Size.Companion.asShapeSize
 import androidx.compose.ui.graphics.Color as ColorImport

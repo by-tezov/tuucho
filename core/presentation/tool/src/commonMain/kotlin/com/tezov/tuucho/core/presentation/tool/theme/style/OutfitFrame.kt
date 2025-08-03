@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.presentation.tool.theme.style
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 
 fun Modifier.background(
     style: OutfitFrame.StateColor.Style,
@@ -45,7 +45,7 @@ object OutfitFrame {
             )
             val outfitBorder: OutfitBorderStateColor by DelegateNullFallBack.Ref(
                 outfitBorder,
-                fallBackValue = { _root_ide_package_.com.tezov.tuucho.core.presentation.tool.theme.style.OutfitBorderStateColor() }
+                fallBackValue = { com.tezov.tuucho.core.presentation.tool.theme.style.OutfitBorderStateColor() }
             )
 
             companion object {

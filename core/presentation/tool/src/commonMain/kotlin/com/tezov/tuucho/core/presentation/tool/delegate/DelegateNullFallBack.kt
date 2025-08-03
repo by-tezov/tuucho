@@ -1,12 +1,10 @@
-package com.tezov.tuucho.core.domain.tool.delegate
+package com.tezov.tuucho.core.presentation.tool.delegate
 
-import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 object DelegateNullFallBack {
 
-    class Ref<V : Any>(initialValue: V? = null, fallBackValue: (() -> V)? = null) :
-        ReadWriteProperty<Any?, V> {
+    class Ref<V : Any>(initialValue: V? = null, fallBackValue: (() -> V)? = null) {
 
         var value: (() -> V)? = null
             private set
@@ -27,11 +25,11 @@ object DelegateNullFallBack {
             }
         }
 
-        override fun getValue(thisRef: Any?, property: KProperty<*>): V {
+        operator fun getValue(thisRef: Any?, property: KProperty<*>): V {
             return value!!.invoke()
         }
 
-        override fun setValue(thisRef: Any?, property: KProperty<*>, value: V) {
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: V) {
             this.value = { value }
         }
 
@@ -41,11 +39,8 @@ object DelegateNullFallBack {
 
         private val refs = mutableListOf<Ref<V>>()
 
-        fun ref(initialValue: V?, fallBackValue: (() -> V)? = null): Ref<V> {
-            val ref = Ref(initialValue, fallBackValue)
-            refs.add(ref)
-            return ref
-        }
+        fun ref(initialValue: V?, fallBackValue: (() -> V)? = null) =
+            Ref(initialValue, fallBackValue).also { refs.add(it) }
 
         var fallBackValue: (() -> V)?
             get() = refs.firstOrNull()?.fallBackValue
@@ -61,6 +56,3 @@ object DelegateNullFallBack {
     }
 
 }
-
-
-

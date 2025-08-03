@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.presentation.ui.viewFactory
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
@@ -18,6 +16,8 @@ import com.tezov.tuucho.core.domain.business.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.SpacerSchema
+import com.tezov.tuucho.core.presentation.tool.modifier.onNotNull
+import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.View
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
@@ -36,7 +36,7 @@ class SpacerViewFactory : ViewFactory() {
 
 class SpacerView(
     url: String,
-    componentElement: JsonObject
+    componentElement: JsonObject,
 ) : View(url, componentElement) {
 
     private var _width: JsonObject? = null
@@ -85,23 +85,20 @@ class SpacerView(
 
     @Composable
     override fun displayComponent(scope: Any?) {
-
-        //TODO do much better than that
-        var modifier: Modifier = Modifier
-        weight?.let {
-            scope.apply {
-                when (this) {
-                    is ColumnScope -> modifier = modifier.weight(it)
-                    is RowScope -> modifier = modifier.weight(it)
-                }
-            }
-        } ?: run {
-            width?.let { modifier = modifier.width(it) }
-            height?.let { modifier = modifier.height(it) }
-        }
         Spacer(
-            modifier = modifier
-                .background(color = Color.Gray)
+            modifier = Modifier
+                .then {
+                    (onNotNull(weight) { weight ->
+                        when (scope) {
+                            is ColumnScope -> with(scope) { weight(weight) }
+                            is RowScope -> with(scope) { weight(weight) }
+                            else -> null
+                        } ?: this
+                    } or {
+                        onNotNull(width) { width(it) }
+                        onNotNull(height) { height(it) }
+                    })
+                }
         )
     }
 

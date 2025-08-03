@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.business.model.schema._system
 
-import com.tezov.tuucho.core.domain.business._system.booleanOrNull
-import com.tezov.tuucho.core.domain.business._system.stringOrNull
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.tool.json.booleanOrNull
+import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull

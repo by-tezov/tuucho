@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.presentation.tool.theme.style
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 import kotlin.reflect.KClass
 
 typealias OutfitStateNull<T> = OutfitState.Null.Style<T>

@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.business.validator.fieldValidator
 
-import com.tezov.tuucho.core.domain.business._system.stringOrNull
 import com.tezov.tuucho.core.domain.business.config.Language
 import com.tezov.tuucho.core.domain.business.protocol.FieldValidatorProtocol
+import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonObject
 
 class StringNotNullValidator(

@@ -1,15 +1,9 @@
 package com.tezov.tuucho.core.data.parser.rectifier.texts
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
-import com.tezov.tuucho.core.domain.business._system.JsonElementPath
-import com.tezov.tuucho.core.domain.business._system.find
-import com.tezov.tuucho.core.domain.business._system.string
-import com.tezov.tuucho.core.domain.business._system.toPath
-
 import com.tezov.tuucho.core.domain.business.model.schema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
@@ -17,6 +11,10 @@ import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.addG
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.model.schema.material.TextSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.find
+import com.tezov.tuucho.core.domain.tool.json.string
+import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull

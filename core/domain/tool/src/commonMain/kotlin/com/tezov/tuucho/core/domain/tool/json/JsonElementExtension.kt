@@ -1,6 +1,5 @@
-package com.tezov.tuucho.core.domain.business._system
+package com.tezov.tuucho.core.domain.tool.json
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -24,7 +23,7 @@ fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? {
 
 fun JsonElement.find(path: JsonElementPath): JsonElement =
     this.findOrNull(path)
-        ?: throw DomainException.Default("element could not be found at path $path inside $this")
+        ?: error("element could not be found at path $path inside $this")
 
 fun JsonElement.replaceOrInsert(path: JsonElementPath, newElement: JsonElement): JsonElement {
     if (path.isEmpty()) return newElement

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitBorder.StateColor.Style.Companion.asPaletteSize
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitBorderStateColor
 import com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPaletteSize

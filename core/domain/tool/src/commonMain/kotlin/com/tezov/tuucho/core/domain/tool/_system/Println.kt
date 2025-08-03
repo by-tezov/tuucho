@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business._system
+package com.tezov.tuucho.core.domain.tool._system
 
 //TODO remove, allow log of long string when debug in logcat
 

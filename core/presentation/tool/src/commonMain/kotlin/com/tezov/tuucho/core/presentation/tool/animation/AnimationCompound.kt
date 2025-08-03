@@ -12,7 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.tezov.tuucho.core.domain.tool.delegate.DelegateNullFallBack
+import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 
 abstract class AnimationCompound<KEY : Any, STEP_PARENT : Any>(
     private val animators: MutableMap<KEY, Animator<Any>> = mutableMapOf<KEY, Animator<Any>>(),
