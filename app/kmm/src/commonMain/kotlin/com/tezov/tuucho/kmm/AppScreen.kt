@@ -10,19 +10,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
+import com.tezov.tuucho.core.domain.business.usecase.GetLastViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RenderComponentUseCase
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewProtocol
+import com.tezov.tuucho.kmm.di.StartKoinModules
+import org.koin.compose.koinInject
+import org.koin.dsl.ModuleDeclaration
 import org.koin.mp.KoinPlatform.getKoin
 
 @Composable
-fun mainScreen() {
-
+fun AppScreen(
+    moduleDeclaration: ModuleDeclaration,
+) = StartKoinModules(moduleDeclaration) {
     /* TODO: that part will move on application launch, it has nothing to do here,
         but for now, it will be here
     */
     var ready by remember { mutableStateOf(false) }
-    val refreshMaterialCache = remember { getKoin().get<RefreshMaterialCacheUseCase>() }
+    val refreshMaterialCache = koinInject<RefreshMaterialCacheUseCase>()
 
     LaunchedEffect(Unit) {
         //TODO remove when loading, migration upgrade/auto purge is done
@@ -43,16 +47,19 @@ fun mainScreen() {
 
 @Composable
 private fun StartEngineScreen(
-    viewModel:MainViewModel = remember { getKoin().get<MainViewModel>() }
+    viewModel: AppScreenViewModel = koinInject(),
 ) {
-    var screen by remember { mutableStateOf<ViewProtocol?>(null) }
-    val renderer = remember { getKoin().get<RenderComponentUseCase>() }
+    var view by remember { mutableStateOf<ViewProtocol?>(null) }
+    koinInject<GetLastViewUseCase>()
 
-    LaunchedEffect(Unit) { viewModel.init() }
-    LaunchedEffect(viewModel.url.value) {
-        screen = renderer.invoke(viewModel.url.value) as? ViewProtocol
+    LaunchedEffect(Unit) {
+        viewModel.init()
+
     }
-    screen?.display(null)
+    LaunchedEffect(viewModel.triggerCount) {
+        //view = getLastView.invoke() as? ViewProtocol
+    }
+    view?.display()
     DisposableEffect(Unit) {
         onDispose {
             viewModel.onDispose()

@@ -15,7 +15,7 @@ import org.koin.core.component.KoinComponent
 
 class ComponentRendererFactory(
     private val addView: AddViewUseCase,
-    private val uiComponentFactory: List<ViewFactory>,
+    private val viewFactories: List<ViewFactory>,
 ) : ComponentRendererProtocol, KoinComponent {
 
     override fun process(url:String, componentObject: JsonObject): ViewProtocol? {
@@ -27,7 +27,7 @@ class ComponentRendererFactory(
             error("object is not a component $componentObject")
         }
 
-        val renderer = uiComponentFactory
+        val renderer = viewFactories
             .filter { it.accept(componentObject) }
             .also {
                 if (it.size > 1) {

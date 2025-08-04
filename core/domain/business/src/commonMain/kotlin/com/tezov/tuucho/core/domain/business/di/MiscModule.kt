@@ -1,5 +1,9 @@
 package com.tezov.tuucho.core.domain.business.di
 
+import com.tezov.tuucho.core.domain.business.navigation.protocol.NavigationStackRepository
+import com.tezov.tuucho.core.domain.business.navigation.protocol.NavigationStackRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.navigation.protocol.ViewContextStackRepository
+import com.tezov.tuucho.core.domain.business.navigation.protocol.ViewContextStackRepositoryProtocol
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
@@ -14,6 +18,17 @@ object MiscModule {
                 encodeDefaults = true
                 explicitNulls = true
             }
+        }
+
+        single<NavigationStackRepositoryProtocol> {
+            NavigationStackRepository(
+                coroutineScopes = get()
+            )
+        }
+        single<ViewContextStackRepositoryProtocol> {
+            ViewContextStackRepository(
+                coroutineScopes = get()
+            )
         }
 
 

@@ -1,18 +1,17 @@
-package com.tezov.tuucho.kmm.system.di
+package com.tezov.tuucho.demo.di
 
 import android.content.Context
 import com.tezov.tuucho.core.data.di.DatabaseRepositoryModuleAndroid
-import org.koin.dsl.module
+import org.koin.dsl.ModuleDeclaration
 
-object MiscModuleAndroid {
+object ModuleDeclarationAndroid {
 
-    internal operator fun invoke(
-        applicationContext: Context
-    ) = module {
-
+    operator fun invoke(
+        applicationContext: Context,
+    ): ModuleDeclaration = {
         single<Context>(DatabaseRepositoryModuleAndroid.Name.APPLICATION_CONTEXT) {
             applicationContext
         }
-
     }
+
 }

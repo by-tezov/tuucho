@@ -1,18 +1,17 @@
 package com.tezov.tuucho.core.domain.business.usecase.state
 
-import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
+import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
 
 class RemoveFormFieldViewUseCase(
-    private val screenState: ScreenStateProtocol,
+    private val getViewState: GetViewStateUseCase,
 ) {
-
-    //TODO: inject stack navigation repo, find materialState with url instead of injecting a singleton
 
     fun invoke(
         url: String,
         id: String,
     ) {
-        screenState
+        val stateView = getViewState.invoke(url)
+        stateView
             .form()
             .fields()
             .removeField(

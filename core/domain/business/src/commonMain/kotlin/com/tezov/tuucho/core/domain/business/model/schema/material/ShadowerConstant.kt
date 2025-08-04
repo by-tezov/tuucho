@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.model
+package com.tezov.tuucho.core.domain.business.model.schema.material
 
 object Shadower {
 

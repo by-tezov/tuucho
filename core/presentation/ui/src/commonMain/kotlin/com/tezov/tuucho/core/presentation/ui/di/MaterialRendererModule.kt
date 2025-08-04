@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
 import com.tezov.tuucho.core.domain.business.protocol.ComponentRendererProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FieldsFormStateProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateProtocol
-import com.tezov.tuucho.core.presentation.ui.state.FieldsFormState
-import com.tezov.tuucho.core.presentation.ui.state.FormsState
-import com.tezov.tuucho.core.presentation.ui.state.ScreenState
+import com.tezov.tuucho.core.domain.business.protocol.state.StateViewProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FieldsFormStateViewProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateViewProtocol
+import com.tezov.tuucho.core.presentation.ui.state.FieldsFormStateView
+import com.tezov.tuucho.core.presentation.ui.state.FormsStateView
+import com.tezov.tuucho.core.presentation.ui.state.StateView
 import com.tezov.tuucho.core.presentation.ui.viewFactory.ButtonViewFactory
 import com.tezov.tuucho.core.presentation.ui.viewFactory.ComponentRendererFactory
 import com.tezov.tuucho.core.presentation.ui.viewFactory.FieldViewFactory
@@ -26,7 +26,7 @@ object MaterialRendererModule {
         factory<ComponentRendererFactory> {
             ComponentRendererFactory(
                 addView = get(),
-                uiComponentFactory = listOf(
+                viewFactories = listOf(
                     get<LabelViewFactory>(),
                     get<FieldViewFactory>(),
                     get<ButtonViewFactory>(),
@@ -38,21 +38,19 @@ object MaterialRendererModule {
     }
 
     private fun Module.state() {
-        factory<FieldsFormStateProtocol> {
-            FieldsFormState()
+        factory<FieldsFormStateViewProtocol> {
+            FieldsFormStateView()
         }
 
-        factory<FormsStateProtocol> {
-            FormsState(
-                fieldsFormState = get()
+        factory<FormsStateViewProtocol> {
+            FormsStateView(
+                fieldsFormStateView = get()
             )
         }
 
-        //TODO: when navigation stack will be done, it must not be a single but a factory
-        single <ScreenStateProtocol> {
-            ScreenState(
-                formsState = get()
-            )
+
+        single<() -> StateViewProtocol> {
+            { StateView(formsStateView = get()) }
         }
     }
 
@@ -79,7 +77,7 @@ object MaterialRendererModule {
             )
         }
 
-        factory <SpacerViewFactory> { SpacerViewFactory() }
+        factory<SpacerViewFactory> { SpacerViewFactory() }
     }
 
 }

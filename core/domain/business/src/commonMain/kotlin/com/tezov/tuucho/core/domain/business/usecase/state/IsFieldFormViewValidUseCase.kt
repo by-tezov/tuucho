@@ -1,18 +1,17 @@
 package com.tezov.tuucho.core.domain.business.usecase.state
 
-import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
+import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
 
 class IsFieldFormViewValidUseCase(
-    private val screenState: ScreenStateProtocol,
+    private val getViewState: GetViewStateUseCase,
 ) {
-
-    //TODO: inject stack navigation repo, find materialState with url instead of injecting a singleton
 
     fun invoke(
         url: String,
         id: String,
     ): Boolean? {
-        return screenState
+        val stateView = getViewState.invoke(url)
+        return stateView
             .form()
             .fields()
             .isValid(id)

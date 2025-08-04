@@ -7,9 +7,9 @@ import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.model.schema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.protocol.ActionHandlerProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateViewProtocol
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -18,7 +18,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class FormSendUrlActionHandler(
-    private val materialState: ScreenStateProtocol,
+    private val getViewState: GetViewStateUseCase,
     private val sendData: SendDataUseCase,
 ) : ActionHandlerProtocol, KoinComponent {
 
@@ -38,7 +38,7 @@ class FormSendUrlActionHandler(
         jsonElement: JsonElement?,
     ) {
         action.target ?: return
-        val form = materialState.form().also { it.updateAllValidity() }
+        val form = getViewState.invoke(url).form().also { it.updateAllValidity() }
         if (form.isAllValid()) {
             val response = sendData.invoke(action.target, form.data())
             response?.let {
@@ -56,7 +56,7 @@ class FormSendUrlActionHandler(
         actionDenied(url, id, null)
     }
 
-    private fun FormsStateProtocol.processInvalidLocalForm(url: String, id: String) {
+    private fun FormsStateViewProtocol.processInvalidLocalForm(url: String, id: String) {
         val results = getAllValidityResult().filter { !it.second }.map {
             JsonNull.withScope(IdSchema::Scope).apply {
                 self = JsonNull.withScope(IdSchema::Scope)

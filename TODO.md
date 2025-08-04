@@ -1,5 +1,10 @@
 ## In progress
 
+- Now: debug modification and make it start up to stackViewRepository crash, then do the repository
+  code
+
+- If many url identique in stack, it will fail from everywhere...
+
 - add language management
 - add selector management + on language too
 

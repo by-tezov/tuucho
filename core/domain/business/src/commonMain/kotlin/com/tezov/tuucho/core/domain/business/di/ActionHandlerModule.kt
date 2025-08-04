@@ -14,7 +14,7 @@ object ActionHandlerModule {
 
         single {
             FormSendUrlActionHandler(
-                materialState = get(),
+                getViewState = get(),
                 sendData = get()
             )
         }

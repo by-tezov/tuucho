@@ -3,17 +3,17 @@ package com.tezov.tuucho.core.domain.business.usecase
 import com.tezov.tuucho.core.domain.business.actionHandler.FormUpdateActionHandler
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 
-class RegisterUpdateFormEventUseCase(
+class RegisterToFormUpdateEventUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val formUpdateActionHandler: FormUpdateActionHandler,
 ) {
 
     fun invoke(
-        onMessageReceived: (event: FormUpdateActionHandler.Event) -> Unit,
+        onEventReceived: (event: FormUpdateActionHandler.Event) -> Unit,
     ) {
         coroutineScopes.launchOnEvent {
             formUpdateActionHandler.events
-                .forever { onMessageReceived(it) }
+                .forever { onEventReceived(it) }
         }
     }
 

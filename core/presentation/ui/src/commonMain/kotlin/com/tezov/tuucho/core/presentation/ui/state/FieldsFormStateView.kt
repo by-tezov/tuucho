@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.presentation.ui.state
 
 import com.tezov.tuucho.core.domain.business.protocol.FieldValidatorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FieldsFormStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FieldsFormStateViewProtocol
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-class FieldsFormState : FieldsFormStateProtocol {
+class FieldsFormStateView : FieldsFormStateViewProtocol {
 
     private data class Entry(
         var value: String,
@@ -16,9 +16,6 @@ class FieldsFormState : FieldsFormStateProtocol {
 
     private val fields = mutableMapOf<String, Entry>()
 
-    override fun clear() {
-        fields.clear()
-    }
 
     override fun removeField(id: String) {
         fields.remove(id)

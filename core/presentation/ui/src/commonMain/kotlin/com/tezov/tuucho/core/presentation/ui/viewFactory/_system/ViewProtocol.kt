@@ -6,5 +6,5 @@ import com.tezov.tuucho.core.domain.business.protocol.ViewProtocol
 interface ViewProtocol: ViewProtocol {
 
     @Composable
-    fun display(scope: Any?)
+    fun display(scope: Any? = null)
 }

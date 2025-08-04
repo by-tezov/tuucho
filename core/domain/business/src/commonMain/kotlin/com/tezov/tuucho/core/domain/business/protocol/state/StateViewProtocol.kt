@@ -1,23 +1,15 @@
 package com.tezov.tuucho.core.domain.business.protocol.state
 
 import com.tezov.tuucho.core.domain.business.protocol.ViewProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateViewProtocol
 import kotlinx.serialization.json.JsonObject
 
-interface ScreenStateProtocol {
-
-    var url: String
+interface StateViewProtocol {
 
     val views: MutableList<ViewProtocol>
 
-    fun clear() {
-        url = ""
-        views.clear()
-        form().clear()
-    }
-
     fun update(jsonObject: JsonObject)
 
-    fun form(): FormsStateProtocol
+    fun form(): FormsStateViewProtocol
 
 }

@@ -2,9 +2,7 @@ package com.tezov.tuucho.core.domain.business.protocol.state.form
 
 import kotlinx.serialization.json.JsonObject
 
-interface FormStateProtocol {
-
-    fun clear()
+interface FormStateViewProtocol {
 
     fun updateAllValidity()
 

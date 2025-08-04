@@ -5,22 +5,27 @@ import com.tezov.tuucho.core.domain.business.actionHandler.FormUpdateActionHandl
 import com.tezov.tuucho.core.domain.business.actionHandler.NavigationUrlActionHandler
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetLastViewUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
+import com.tezov.tuucho.core.domain.business.usecase.InitiateAndRegisterToNavigationEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.NavigateForwardUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterNavigationUrlEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterShadowerEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateFormEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RenderComponentUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RegisterToFormUpdateEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RegisterToShadowerEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RenderViewContextUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RetrieveComponentUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.AddFormUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.AddViewUseCase
-import com.tezov.tuucho.core.domain.business.usecase.state.InitializeViewStateUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.IsFieldFormViewValidUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.RemoveFormFieldViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.UpdateFieldFormViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.UpdateViewUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
+
+// TODO() // add new use case navigation
 
 object UseCaseModule {
 
@@ -38,42 +43,71 @@ object UseCaseModule {
             )
         }
 
-        factory<RenderComponentUseCase> {
-            RenderComponentUseCase(
-                coroutineScopes = get(),
-                initializeMaterialState = get(),
-                updateMaterialState = get(),
-                retrieveMaterialRepository = get(),
-                screenRenderer = get(),
-                registerShadowerEvent = get(),
-                registerUpdateFormEvent = get()
+        factory<GetLanguageUseCase> { GetLanguageUseCase() }
+
+        factory<GetLastViewUseCase> {
+            GetLastViewUseCase(
+                viewStackRepository = get()
             )
         }
 
-        factory<RegisterNavigationUrlEventUseCase> {
-            RegisterNavigationUrlEventUseCase(
+        factory<GetViewStateUseCase> {
+            GetViewStateUseCase(
+                viewStackRepository = get()
+            )
+        }
+
+        factory<InitiateAndRegisterToNavigationEventUseCase> {
+            InitiateAndRegisterToNavigationEventUseCase(
                 coroutineScopes = get(),
                 navigationUrlActionHandler = get(),
+                navigateForward = get(),
             )
         }
 
-        factory<RegisterShadowerEventUseCase> {
-            RegisterShadowerEventUseCase(
-                coroutineScopes = get(),
-                shadowerMaterialRepository = get(),
-            )
-        }
-
-        factory<RegisterUpdateFormEventUseCase> {
-            RegisterUpdateFormEventUseCase(
-                coroutineScopes = get(),
-                formUpdateActionHandler = get(),
+        factory<NavigateForwardUseCase> {
+            NavigateForwardUseCase(
+                navigationRepository = get(),
+                viewStackRepository = get(),
+                retrieveComponent = get(),
             )
         }
 
         factory<RefreshMaterialCacheUseCase> {
             RefreshMaterialCacheUseCase(
                 refreshMaterialCacheRepository = get()
+            )
+        }
+
+        factory<RegisterToFormUpdateEventUseCase> {
+            RegisterToFormUpdateEventUseCase(
+                coroutineScopes = get(),
+                formUpdateActionHandler = get(),
+            )
+        }
+
+        factory<RegisterToShadowerEventUseCase> {
+            RegisterToShadowerEventUseCase(
+                coroutineScopes = get(),
+                shadowerMaterialRepository = get(),
+            )
+        }
+
+        factory<RenderViewContextUseCase> {
+            RenderViewContextUseCase(
+                coroutineScopes = get(),
+                stateViewFactory = get(),
+                componentRenderer = get(),
+            )
+        }
+
+        factory<RetrieveComponentUseCase> {
+            RetrieveComponentUseCase(
+                coroutineScopes = get(),
+                updateMaterialState = get(),
+                retrieveMaterialRepository = get(),
+                registerShadowerEvent = get(),
+                registerUpdateFormEvent = get(),
             )
         }
 
@@ -85,8 +119,6 @@ object UseCaseModule {
 
         factory<ValidatorFactoryUseCase> { ValidatorFactoryUseCase() }
 
-        factory<GetLanguageUseCase> { GetLanguageUseCase() }
-
     }
 
 
@@ -94,44 +126,37 @@ object UseCaseModule {
 
         factory<AddFormUseCase> {
             AddFormUseCase(
-                screenState = get()
+                getViewState = get()
             )
         }
 
         factory<AddViewUseCase> {
             AddViewUseCase(
-                screenState = get()
-            )
-        }
-
-        factory<RemoveFormFieldViewUseCase> {
-            RemoveFormFieldViewUseCase(
-                screenState = get()
-            )
-        }
-
-        factory<InitializeViewStateUseCase> {
-            InitializeViewStateUseCase(
-                screenState = get(),
-                clearTransientMaterialCacheRepository = get()
+                getViewState = get()
             )
         }
 
         factory<IsFieldFormViewValidUseCase> {
             IsFieldFormViewValidUseCase(
-                screenState = get()
+                getViewState = get()
+            )
+        }
+
+        factory<RemoveFormFieldViewUseCase> {
+            RemoveFormFieldViewUseCase(
+                getViewState = get()
             )
         }
 
         factory<UpdateFieldFormViewUseCase> {
             UpdateFieldFormViewUseCase(
-                screenState = get()
+                getViewState = get()
             )
         }
 
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(
-                screenState = get()
+                getViewState = get()
             )
         }
 
