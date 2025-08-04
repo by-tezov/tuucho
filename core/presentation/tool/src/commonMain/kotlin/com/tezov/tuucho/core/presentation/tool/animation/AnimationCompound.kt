@@ -5,8 +5,8 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Transition
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.createChildTransition
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.snap
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -76,7 +76,7 @@ abstract class AnimationCompound<KEY : Any, STEP_PARENT : Any>(
             if (isIdle) {
                 updateStep()
             }
-            updateTransition(this, label = "").also { transition ->
+            rememberTransition(this, label = "").also { transition ->
                 animators.forEach { entry ->
                     val animator = entry.value
 

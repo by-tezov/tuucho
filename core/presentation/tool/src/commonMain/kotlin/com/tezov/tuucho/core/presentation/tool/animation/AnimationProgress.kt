@@ -4,9 +4,9 @@ import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Transition
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -70,7 +70,7 @@ class AnimationProgress private constructor() {
                 }
             }
         }
-        transition = updateTransition(transitionState = transitionState, label = "")
+        transition = rememberTransition(transitionState = transitionState, label = "")
     }
 
     @Composable
