@@ -3,9 +3,9 @@ package com.tezov.tuucho.core.data.parser.shadower
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.parser.shadower._system.MatcherShadowerProtocol
-import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.toPath
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.find
+import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject

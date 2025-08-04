@@ -1,0 +1,26 @@
+package com.tezov.tuucho.core.domain.business.validator.fieldValidator
+
+import com.tezov.tuucho.core.domain.business.config.Language
+import com.tezov.tuucho.core.domain.business.protocol.FieldValidatorProtocol
+import com.tezov.tuucho.core.domain.tool.json.stringOrNull
+import kotlinx.serialization.json.JsonObject
+
+class StringMinLengthFieldValidator(
+    private val length: Int,
+    private val errorMessages: JsonObject,
+) : FieldValidatorProtocol<String> {
+
+    private var isValid = false
+
+    override fun updateValidity(value: String) {
+        isValid = value.length >= length
+    }
+
+    override fun isValid() = isValid
+
+    override fun getErrorMessage(language: Language): String {
+        return errorMessages[language.code].stringOrNull
+            ?: errorMessages[Language.Default.code].stringOrNull
+            ?: ""
+    }
+}

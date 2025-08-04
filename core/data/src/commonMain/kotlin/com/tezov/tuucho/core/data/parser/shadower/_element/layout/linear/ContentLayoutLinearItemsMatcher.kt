@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.shadower._element.layout.linear
 
 import com.tezov.tuucho.core.data.parser.shadower._system.MatcherShadowerProtocol
-import com.tezov.tuucho.core.domain._system.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsMatcher as ContentLayoutLinearItemsMatcherRectifier
 

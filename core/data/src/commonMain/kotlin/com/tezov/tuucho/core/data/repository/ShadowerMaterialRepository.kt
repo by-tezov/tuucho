@@ -3,11 +3,10 @@ package com.tezov.tuucho.core.data.repository
 import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol.Event
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ShadowerMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ShadowerMaterialRepositoryProtocol.Event
+import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
@@ -17,8 +16,8 @@ class ShadowerMaterialRepository(
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
 ) : ShadowerMaterialRepositoryProtocol, KoinComponent {
 
-    private val _events = MutableSharedFlow<Event>(replay = 0)
-    override val events: SharedFlow<Event> = _events
+    private val _events = Notifier.Emitter<Event>()
+    override val events get() = _events.createCollector
 
     fun process(url: String, materialObject: JsonObject) {
         coroutineScopes.launchOnParser {

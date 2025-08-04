@@ -2,17 +2,16 @@ package com.tezov.tuucho.core.data.parser.rectifier.colors
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
-import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.string
-import com.tezov.tuucho.core.domain._system.stringOrNull
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
-
-import com.tezov.tuucho.core.domain.model.schema.material.ColorSchema
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.addGroup
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema.requireIsRef
-import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business.model.schema.material.ColorSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.addGroup
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.requireIsRef
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.find
+import com.tezov.tuucho.core.domain.tool.json.string
+import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
