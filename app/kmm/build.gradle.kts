@@ -1,7 +1,5 @@
 plugins {
     alias(libs.plugins.convention.library.ui)
-//    alias(libs.plugins.kotlin.serialization)
-//    alias(libs.plugins.ksp)
 }
 
 android {
@@ -28,8 +26,8 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(project(":core:domain"))
-            implementation(project(":core:ui"))
+            implementation(project(":core:domain:business"))
+            implementation(project(":core:presentation:ui"))
             implementation(project(":core:data"))
 
             implementation(compose.runtime)

@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.source
 
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.database.type.Lifetime
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 
 class ClearTransientMaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,

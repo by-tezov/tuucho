@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
-import com.tezov.tuucho.core.domain.protocol.RetrieveMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.RetrieveMaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveMaterialRepository(

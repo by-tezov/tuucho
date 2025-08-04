@@ -5,10 +5,10 @@ import com.tezov.tuucho.core.data.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
-import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.model.schema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
 class StyleLabelColorMatcher : MatcherRectifierProtocol {
