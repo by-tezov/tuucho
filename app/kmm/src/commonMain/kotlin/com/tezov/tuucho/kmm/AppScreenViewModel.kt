@@ -22,13 +22,11 @@ class AppScreenViewModel(
     fun init() {
         useCaseExecutor.invoke(
             useCase = registerUpdateViewEvent,
-            input = Unit,
-            onResult = {}
+            input = Unit
         )
         useCaseExecutor.invoke(
             useCase = registerToNavigationUrlActionEvent,
-            input = Unit,
-            onResult = {}
+            input = Unit
         )
         useCaseExecutor.invoke(
             useCase = registerToViewStackRepositoryEvent,

@@ -18,7 +18,7 @@ class RenderViewContextUseCase(
 
     data class Input(
         val url: String,
-        val component: JsonObject,
+        val componentObject: JsonObject,
     )
 
     data class Output(
@@ -31,7 +31,7 @@ class RenderViewContextUseCase(
                 ViewContext(
                     url = url,
                     view = lazy {
-                        componentRenderer.process(url, component)
+                        componentRenderer.process(url, componentObject)
                             ?: throw DomainException.Default("Failed to render the view $url")
                     },
                     state = stateViewFactory.invoke(),

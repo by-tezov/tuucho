@@ -5,10 +5,11 @@ import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.navigation.ViewContext
 import com.tezov.tuucho.core.domain.business.navigation.protocol.NavigationStackRepositoryProtocol.Event
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.RetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.state.StateViewProtocol
 import com.tezov.tuucho.core.domain.business.usecase.RenderViewContextUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.tool.async.Notifier
+import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -20,12 +21,13 @@ interface ViewContextStackRepositoryProtocol {
 
     fun getViewState(url: String): StateViewProtocol
 
-    suspend fun swallow(events: List<Event>)
+    suspend fun swallow(events: List<Event>, componentObject: JsonObject)
 
 }
 
 class ViewContextStackRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val useCaseExecutor: UseCaseExecutor,
 ) : ViewContextStackRepositoryProtocol, KoinComponent {
 
     private val _events = Notifier.Emitter<NavigationRoute>()
@@ -33,7 +35,6 @@ class ViewContextStackRepository(
 
     //TODO
     private val renderViewContext: RenderViewContextUseCase by inject()
-    private val retrieveMaterialRepository: RetrieveMaterialRepositoryProtocol by inject()
 
     override val currentViewContext: ViewContext?
         get() = stack.entries.lastOrNull()?.value //TODO
@@ -44,14 +45,14 @@ class ViewContextStackRepository(
         (it.key as NavigationRoute.Url).value == url
     }.value.state
 
-    override suspend fun swallow(events: List<Event>) {
+    override suspend fun swallow(events: List<Event>, componentObject: JsonObject) {
         val reuseBin = mutableMapOf<NavigationRoute, ViewContext>()
         for (event in events) {
             when (event) {
                 is Event.Clear -> clear()
                 is Event.SavedForReuse -> savedForReuse(event, reuseBin)
                 is Event.RemovedFromTail -> removedFromTail(event)
-                is Event.AddedAtTail -> addedAtTail(event)
+                is Event.AddedAtTail -> addedAtTail(event, componentObject)
                 is Event.ReuseRestoredAtTail -> reuseRestoredAtTail(event, reuseBin)
             }
         }
@@ -79,31 +80,22 @@ class ViewContextStackRepository(
 
     private suspend fun addedAtTail(
         event: Event.AddedAtTail,
+        componentObject: JsonObject,
     ) {
         val route = event.destination.route
         (route as? NavigationRoute.Url)?.value
             ?: throw DomainException.Default("Only Url routes are supported")
 
-        retrieveMaterialRepository.process(route.value)
+        val context = useCaseExecutor.invokeSuspend(
+            useCase = renderViewContext,
+            input = RenderViewContextUseCase.Input(
+                url = route.value,
+                componentObject = componentObject,
+            ),
+        ).viewContext
 
-//        val context = renderViewContext.invoke(url, component)
-//        stack[route] = context //TODO
+        stack[route] = context //TODO
 
-//        useCaseExecutor.invoke(
-//            useCase = actionHandler,
-//            input = ActionHandlerUseCase.Input(
-//                url = url,
-//                id = id,
-//                action = ActionModelDomain.from(
-//                    command = Action.Form.Update.command,
-//                    authority = Action.Form.Update.Authority.error,
-//                    target = null
-//                ),
-//                paramElement = results
-//            ),
-//        )
-
-        println("ici")
 
         coroutineScopes.launchOnEvent {
             _events.emit(route)
@@ -123,6 +115,5 @@ class ViewContextStackRepository(
             _events.emit(route)
         }
     }
-
 
 }

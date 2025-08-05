@@ -31,7 +31,7 @@ class NavigateToUrlUseCase(
                 option = NavigationOption.from(component.withScope(SettingSchema.Root::Scope))
             )
             val events = navigationStackRepository.swallow(destination)
-            viewContextStackRepository.swallow(events)
+            viewContextStackRepository.swallow(events, component)
         }
     }
 

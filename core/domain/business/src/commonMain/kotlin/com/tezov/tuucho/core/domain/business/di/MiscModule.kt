@@ -27,7 +27,8 @@ object MiscModule {
         }
         single<ViewContextStackRepositoryProtocol> {
             ViewContextStackRepository(
-                coroutineScopes = get()
+                coroutineScopes = get(),
+                useCaseExecutor = get()
             )
         }
 
