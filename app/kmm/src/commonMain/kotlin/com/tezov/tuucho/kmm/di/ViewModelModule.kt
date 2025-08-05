@@ -9,7 +9,11 @@ object ViewModelModule {
 
         factory<AppScreenViewModel> {
             AppScreenViewModel(
-                registerNavigationUrlEvent = get(),
+                useCaseExecutor = get(),
+                registerUpdateViewEvent = get(),
+                registerToNavigationUrlActionEvent = get(),
+                registerToViewStackRepositoryEvent = get(),
+                navigateToUrl = get()
             )
         }
 

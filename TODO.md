@@ -1,9 +1,11 @@
 ## In progress
 
-- Now: debug modification and make it start up to stackViewRepository crash, then do the repository
-  code
+Problem
 
-- If many url identique in stack, it will fail from everywhere...
+- state and use case do recursive koin
+- url is not enough to identifie a view -> Route
+- component retrieve is done on view and navigate (cached, freed, ...)
+
 
 - add language management
 - add selector management + on language too

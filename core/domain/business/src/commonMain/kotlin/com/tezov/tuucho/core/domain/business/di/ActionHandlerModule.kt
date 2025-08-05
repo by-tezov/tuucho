@@ -14,6 +14,7 @@ object ActionHandlerModule {
 
         single {
             FormSendUrlActionHandler(
+                useCaseExecutor = get(),
                 getViewState = get(),
                 sendData = get()
             )

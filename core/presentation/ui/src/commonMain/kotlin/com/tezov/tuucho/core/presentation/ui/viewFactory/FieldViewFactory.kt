@@ -19,23 +19,23 @@ import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idVa
 import com.tezov.tuucho.core.domain.business.model.schema.material.MessageSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.ValidatorSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormFieldSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormSchema
 import com.tezov.tuucho.core.domain.business.protocol.FieldValidatorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.state.AddFormUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.IsFieldFormViewValidUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.RemoveFormFieldViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.UpdateFieldFormViewUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
-import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.View
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 class FieldViewFactory(
+    private val useCaseExecutor: UseCaseExecutor,
     private val validatorFactory: ValidatorFactoryUseCase,
     private val addForm: AddFormUseCase,
     private val removeFormFieldView: RemoveFormFieldViewUseCase,
@@ -50,6 +50,7 @@ class FieldViewFactory(
 
     override fun process(url: String, componentObject: JsonObject) = FieldView(
         url = url,
+        useCaseExecutor = useCaseExecutor,
         componentObject = componentObject,
         validatorFactory = validatorFactory,
         addForm = addForm,
@@ -62,6 +63,7 @@ class FieldViewFactory(
 class FieldView(
     url: String,
     componentObject: JsonObject,
+    private val useCaseExecutor: UseCaseExecutor,
     private val validatorFactory: ValidatorFactoryUseCase,
     private val addForm: AddFormUseCase,
     private val removeFormFieldView: RemoveFormFieldViewUseCase,
@@ -179,21 +181,33 @@ class FieldView(
         validators: JsonArray?,
         messagesError: JsonArray,
     ): List<FieldValidatorProtocol<String>>? {
-        val messagesErrorIdMapped = messagesError.mapNotNull { message ->
-            if (message !is JsonObject) return@mapNotNull null
-            val idMessage = message.idValue
-            idMessage to message
-        }
-
-        return validators?.mapNotNull { validator ->
-            val validatorPrototype = validator.withScope(ValidatorSchema::Scope).apply {
-                this.messageError = messagesErrorIdMapped
-                    .firstOrNull { it.first == idMessageError || validators.size == 1 }?.second
-                    ?: throw UiException.Default("Missing message error for validator")
-            }.collect()
-            @Suppress("UNCHECKED_CAST")
-            validatorFactory.invoke(validatorPrototype) as? FieldValidatorProtocol<String>
-        }?.takeIf { it.isNotEmpty() }
+//        val messagesErrorIdMapped = messagesError.mapNotNull { message ->
+//            if (message !is JsonObject) return@mapNotNull null
+//            val idMessage = message.idValue
+//            idMessage to message
+//        }
+//
+//        return validators?.mapNotNull { validator ->
+//            val validatorPrototype = validator.withScope(ValidatorSchema::Scope).apply {
+//                this.messageError = messagesErrorIdMapped
+//                    .firstOrNull { it.first == idMessageError || validators.size == 1 }?.second
+//                    ?: throw UiException.Default("Missing message error for validator")
+//            }.collect()
+//            @Suppress("UNCHECKED_CAST")
+//
+//            useCaseExecutor.invoke(
+//                useCase = validatorFactory,
+//                input = ValidatorFactoryUseCase.Input(
+//                    prototypeObject = validatorPrototype
+//                ),
+//                onResult = {
+//                    validator as? FieldValidatorProtocol<String>
+//                }
+//            )
+//
+//            validatorFactory.invoke(validatorPrototype) as? FieldValidatorProtocol<String>
+//        }?.takeIf { it.isNotEmpty() }
+        return null
     }
 
     private val title

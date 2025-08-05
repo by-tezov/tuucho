@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateViewP
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -18,6 +19,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class FormSendUrlActionHandler(
+    private val useCaseExecutor: UseCaseExecutor,
     private val getViewState: GetViewStateUseCase,
     private val sendData: SendDataUseCase,
 ) : ActionHandlerProtocol, KoinComponent {
@@ -38,9 +40,20 @@ class FormSendUrlActionHandler(
         jsonElement: JsonElement?,
     ) {
         action.target ?: return
-        val form = getViewState.invoke(url).form().also { it.updateAllValidity() }
+        val form = useCaseExecutor.invokeSuspend(
+            useCase = getViewState,
+            input = GetViewStateUseCase.Input(
+                url = url
+            )
+        ).state.form().also { it.updateAllValidity() }
         if (form.isAllValid()) {
-            val response = sendData.invoke(action.target, form.data())
+            val response = useCaseExecutor.invokeSuspend(
+                useCase = sendData,
+                input = SendDataUseCase.Input(
+                    url = action.target,
+                    jsonObject = form.data()
+                )
+            ).jsonObject
             response?.let {
                 val rootScope = response.withScope(FormSendResponseSchema.Root::Scope)
                 val isAllSuccess = rootScope.isAllSuccess == true
@@ -56,7 +69,7 @@ class FormSendUrlActionHandler(
         actionDenied(url, id, null)
     }
 
-    private fun FormsStateViewProtocol.processInvalidLocalForm(url: String, id: String) {
+    private suspend fun FormsStateViewProtocol.processInvalidLocalForm(url: String, id: String) {
         val results = getAllValidityResult().filter { !it.second }.map {
             JsonNull.withScope(IdSchema::Scope).apply {
                 self = JsonNull.withScope(IdSchema::Scope)
@@ -66,7 +79,7 @@ class FormSendUrlActionHandler(
         actionDenied(url, id, results)
     }
 
-    private fun FormSendResponseSchema.Root.Scope.processInvalidRemoteForm(
+    private suspend fun FormSendResponseSchema.Root.Scope.processInvalidRemoteForm(
         url: String,
         id: String,
     ) {
@@ -89,25 +102,37 @@ class FormSendUrlActionHandler(
         actionDenied(url, id, results)
     }
 
-    private fun JsonElement.actionValidated(url: String, id: String) {
+    private suspend fun JsonElement.actionValidated(url: String, id: String) {
         val actionValidated = withScope(FormSendResponseSchema.ActionParams::Scope).actionValidated
-        actionValidated?.let { actionHandler.invoke(url, id, ActionModelDomain.from(it)) }
+        actionValidated?.let {
+            useCaseExecutor.invokeSuspend(
+                useCase = actionHandler,
+                input = ActionHandlerUseCase.Input(
+                    url = url,
+                    id = id,
+                    action = ActionModelDomain.from(it)
+                ),
+            )
+        }
     }
 
-    private fun actionDenied(
+    private suspend fun actionDenied(
         url: String,
         id: String,
         results: JsonElement?,
     ) {
-        actionHandler.invoke(
-            url = url,
-            id = id,
-            action = ActionModelDomain.from(
-                command = Action.Form.Update.command,
-                authority = Action.Form.Update.Authority.error,
-                target = null
+        useCaseExecutor.invokeSuspend(
+            useCase = actionHandler,
+            input = ActionHandlerUseCase.Input(
+                url = url,
+                id = id,
+                action = ActionModelDomain.from(
+                    command = Action.Form.Update.command,
+                    authority = Action.Form.Update.Authority.error,
+                    target = null
+                ),
+                paramElement = results
             ),
-            paramElement = results
         )
     }
 

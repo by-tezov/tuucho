@@ -29,7 +29,7 @@ class RetrieveMaterialRepository(
                 retrieveMaterialCacheLocalSource.process(url)
                     ?: throw DataException.Default("Retrieved url $url returned nothing")
             }
-        shadowerMaterialRepository.process(url, materialObject)
+        //shadowerMaterialRepository.process(url, materialObject) TODO
         return materialObject
     }
 }

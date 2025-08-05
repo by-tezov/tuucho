@@ -12,6 +12,7 @@ import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
 import com.tezov.tuucho.core.domain.business.usecase.GetLastViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewProtocol
 import com.tezov.tuucho.kmm.di.StartKoinModules
 import org.koin.compose.koinInject
@@ -26,13 +27,18 @@ fun AppScreen(
         but for now, it will be here
     */
     var ready by remember { mutableStateOf(false) }
-    val refreshMaterialCache = koinInject<RefreshMaterialCacheUseCase>()
 
     LaunchedEffect(Unit) {
         //TODO remove when loading, migration upgrade/auto purge is done
         getKoin().get<JsonObjectQueries>().deleteAll()
         getKoin().get<VersioningQueries>().deleteAll()
-        refreshMaterialCache.invoke("config")
+        val useCaseExecutor = getKoin().get<UseCaseExecutor>()
+        useCaseExecutor.invokeSuspend(
+            useCase = getKoin().get<RefreshMaterialCacheUseCase>(),
+            input = RefreshMaterialCacheUseCase.Input(
+                url = "config"
+            )
+        )
         ready = true
         //***********************************************
     }
@@ -50,14 +56,17 @@ private fun StartEngineScreen(
     viewModel: AppScreenViewModel = koinInject(),
 ) {
     var view by remember { mutableStateOf<ViewProtocol?>(null) }
-    koinInject<GetLastViewUseCase>()
-
     LaunchedEffect(Unit) {
         viewModel.init()
-
     }
-    LaunchedEffect(viewModel.triggerCount) {
-        //view = getLastView.invoke() as? ViewProtocol
+    LaunchedEffect(viewModel.url) {
+        if (viewModel.url.isNotBlank()) {
+            val useCaseExecutor = getKoin().get<UseCaseExecutor>()
+            view = useCaseExecutor.invokeSuspend(
+                useCase = getKoin().get<GetLastViewUseCase>(),
+                input = Unit,
+            ).view as? ViewProtocol
+        }
     }
     view?.display()
     DisposableEffect(Unit) {

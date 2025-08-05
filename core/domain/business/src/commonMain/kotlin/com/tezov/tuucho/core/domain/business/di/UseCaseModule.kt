@@ -7,15 +7,15 @@ import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLastViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
-import com.tezov.tuucho.core.domain.business.usecase.InitiateAndRegisterToNavigationEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NavigateForwardUseCase
+import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToFormUpdateEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToShadowerEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActionEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RegisterToViewStackRepositoryEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RenderViewContextUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RetrieveComponentUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.state.AddFormUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.AddViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase.state.IsFieldFormViewValidUseCase
@@ -25,12 +25,16 @@ import com.tezov.tuucho.core.domain.business.usecase.state.UpdateViewUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-// TODO() // add new use case navigation
-
 object UseCaseModule {
 
     internal operator fun invoke() = module {
         stateModule()
+
+        single<UseCaseExecutor> {
+            UseCaseExecutor(
+                coroutineScopes = get()
+            )
+        }
 
         factory<ActionHandlerUseCase> {
             ActionHandlerUseCase(
@@ -57,19 +61,12 @@ object UseCaseModule {
             )
         }
 
-        factory<InitiateAndRegisterToNavigationEventUseCase> {
-            InitiateAndRegisterToNavigationEventUseCase(
+        factory<NavigateToUrlUseCase> {
+            NavigateToUrlUseCase(
                 coroutineScopes = get(),
-                navigationUrlActionHandler = get(),
-                navigateForward = get(),
-            )
-        }
-
-        factory<NavigateForwardUseCase> {
-            NavigateForwardUseCase(
-                navigationRepository = get(),
-                viewStackRepository = get(),
-                retrieveComponent = get(),
+                retrieveMaterialRepository = get(),
+                navigationStackRepository = get(),
+                viewContextStackRepository = get()
             )
         }
 
@@ -79,16 +76,27 @@ object UseCaseModule {
             )
         }
 
-        factory<RegisterToFormUpdateEventUseCase> {
-            RegisterToFormUpdateEventUseCase(
+        factory<RegisterToNavigationUrlActionEventUseCase> {
+            RegisterToNavigationUrlActionEventUseCase(
                 coroutineScopes = get(),
-                formUpdateActionHandler = get(),
+                useCaseExecutor = get(),
+                navigationUrlActionHandler = get(),
+                navigateForward = get(),
             )
         }
 
-        factory<RegisterToShadowerEventUseCase> {
-            RegisterToShadowerEventUseCase(
+        factory<RegisterToViewStackRepositoryEventUseCase> {
+            RegisterToViewStackRepositoryEventUseCase(
                 coroutineScopes = get(),
+                viewContextStackRepository = get()
+            )
+        }
+
+        factory<RegisterUpdateViewEventUseCase> {
+            RegisterUpdateViewEventUseCase(
+                coroutineScopes = get(),
+                updateViewUseCase = get(),
+                formUpdateActionHandler = get(),
                 shadowerMaterialRepository = get(),
             )
         }
@@ -98,16 +106,6 @@ object UseCaseModule {
                 coroutineScopes = get(),
                 stateViewFactory = get(),
                 componentRenderer = get(),
-            )
-        }
-
-        factory<RetrieveComponentUseCase> {
-            RetrieveComponentUseCase(
-                coroutineScopes = get(),
-                updateMaterialState = get(),
-                retrieveMaterialRepository = get(),
-                registerShadowerEvent = get(),
-                registerUpdateFormEvent = get(),
             )
         }
 
@@ -126,36 +124,42 @@ object UseCaseModule {
 
         factory<AddFormUseCase> {
             AddFormUseCase(
+                useCaseExecutor = get(),
                 getViewState = get()
             )
         }
 
         factory<AddViewUseCase> {
             AddViewUseCase(
+                useCaseExecutor = get(),
                 getViewState = get()
             )
         }
 
         factory<IsFieldFormViewValidUseCase> {
             IsFieldFormViewValidUseCase(
+                useCaseExecutor = get(),
                 getViewState = get()
             )
         }
 
         factory<RemoveFormFieldViewUseCase> {
             RemoveFormFieldViewUseCase(
+                useCaseExecutor = get(),
                 getViewState = get()
             )
         }
 
         factory<UpdateFieldFormViewUseCase> {
             UpdateFieldFormViewUseCase(
+                useCaseExecutor = get(),
                 getViewState = get()
             )
         }
 
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(
+                useCaseExecutor = get(),
                 getViewState = get()
             )
         }

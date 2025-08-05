@@ -11,12 +11,14 @@ import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.View
 import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 class ButtonViewFactory(
+    private val useCaseExecutor: UseCaseExecutor,
     private val actionHandler: ActionHandlerUseCase,
 ) : ViewFactory() {
 
@@ -30,6 +32,7 @@ class ButtonViewFactory(
     override fun process(url: String, componentObject: JsonObject) = ButtonView(
         url = url,
         componentElement = componentObject,
+        useCaseExecutor = useCaseExecutor,
         labelUiComponentFactory = labelUiComponentFactory,
         actionHandler = actionHandler
     ).also { it.init() }
@@ -38,6 +41,7 @@ class ButtonViewFactory(
 class ButtonView(
     url: String,
     componentElement: JsonObject,
+    private val useCaseExecutor: UseCaseExecutor,
     private val labelUiComponentFactory: LabelViewFactory,
     private val actionHandler: ActionHandlerUseCase,
 ) : View(url, componentElement) {
@@ -66,11 +70,15 @@ class ButtonView(
         get():() -> Unit = ({
             _action?.withScope(ActionSchema::Scope)?.run {
                 value?.let { value ->
-                    actionHandler.invoke(
-                        url = url,
-                        id = componentObject.idValue,
-                        action = ActionModelDomain.Companion.from(value),
-                        paramElement = params
+                    useCaseExecutor.invoke(
+                        useCase = actionHandler,
+                        input = ActionHandlerUseCase.Input(
+                            url = url,
+                            id = componentObject.idValue,
+                            action = ActionModelDomain.Companion.from(value),
+                            paramElement = params
+                        ),
+                        onResult = {}
                     )
                 }
             }

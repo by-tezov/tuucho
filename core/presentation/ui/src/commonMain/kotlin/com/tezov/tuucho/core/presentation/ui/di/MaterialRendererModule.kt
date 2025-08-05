@@ -63,6 +63,7 @@ object MaterialRendererModule {
 
         factory<FieldViewFactory> {
             FieldViewFactory(
+                useCaseExecutor = get(),
                 validatorFactory = get(),
                 addForm = get(),
                 removeFormFieldView = get(),
@@ -73,6 +74,7 @@ object MaterialRendererModule {
 
         factory<ButtonViewFactory> {
             ButtonViewFactory(
+                useCaseExecutor = get(),
                 actionHandler = get()
             )
         }

@@ -1,8 +1,10 @@
 package com.tezov.tuucho.core.domain.business.usecase.state
 
 import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 
 class RemoveFormFieldViewUseCase(
+    private val useCaseExecutor: UseCaseExecutor,
     private val getViewState: GetViewStateUseCase,
 ) {
 
@@ -10,13 +12,19 @@ class RemoveFormFieldViewUseCase(
         url: String,
         id: String,
     ) {
-        val stateView = getViewState.invoke(url)
-        stateView
-            .form()
-            .fields()
-            .removeField(
-                id = id
-            )
+        useCaseExecutor.invoke(
+            useCase = getViewState,
+            input = GetViewStateUseCase.Input(
+                url = url
+            ),
+            onResult = {
+                state.form()
+                    .fields()
+                    .removeField(
+                        id = id
+                    )
+            }
+        )
     }
 
 }
