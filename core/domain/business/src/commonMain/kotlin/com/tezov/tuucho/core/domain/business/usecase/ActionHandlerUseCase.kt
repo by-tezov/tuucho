@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.domain.business.usecase
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionHandlerProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import kotlinx.serialization.json.JsonElement
 
@@ -12,8 +13,7 @@ class ActionHandlerUseCase(
 ) : UseCaseProtocol.Async<ActionHandlerUseCase.Input, Unit> {
 
     data class Input(
-        val url: String,
-        val id: String,
+        val source: SourceIdentifierProtocol,
         val action: ActionModelDomain,
         val paramElement: JsonElement? = null,
     )
@@ -22,11 +22,11 @@ class ActionHandlerUseCase(
         coroutineScopes.onEvent {
             handlers
                 .asSequence()
-                .filter { it.accept(id, action, paramElement) }
+                .filter { it.accept(source, action, paramElement) }
                 .sortedBy { it.priority }
                 .let {
                     for (handler in it) {
-                        handler.process(url, id, action, paramElement)
+                        handler.process(source, action, paramElement)
                     }
                 }
         }

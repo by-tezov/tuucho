@@ -2,33 +2,25 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.actionHandler.FormSendUrlActionHandler
 import com.tezov.tuucho.core.domain.business.actionHandler.FormUpdateActionHandler
+import com.tezov.tuucho.core.domain.business.actionHandler.NavigationLocalDestinationActionHandler
 import com.tezov.tuucho.core.domain.business.actionHandler.NavigationUrlActionHandler
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetLastViewUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetViewStateUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetOrNullScreenUseCase
+import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActionEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToViewStackRepositoryEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenStackRepositoryEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RenderViewContextUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
-import com.tezov.tuucho.core.domain.business.usecase.state.AddFormUseCase
-import com.tezov.tuucho.core.domain.business.usecase.state.AddViewUseCase
-import com.tezov.tuucho.core.domain.business.usecase.state.IsFieldFormViewValidUseCase
-import com.tezov.tuucho.core.domain.business.usecase.state.RemoveFormFieldViewUseCase
-import com.tezov.tuucho.core.domain.business.usecase.state.UpdateFieldFormViewUseCase
-import com.tezov.tuucho.core.domain.business.usecase.state.UpdateViewUseCase
-import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object UseCaseModule {
 
     internal operator fun invoke() = module {
-        stateModule()
 
         single<UseCaseExecutor> {
             UseCaseExecutor(
@@ -41,6 +33,7 @@ object UseCaseModule {
                 coroutineScopes = get(),
                 handlers = listOf(
                     get<NavigationUrlActionHandler>(),
+                    get<NavigationLocalDestinationActionHandler>(),
                     get<FormSendUrlActionHandler>(),
                     get<FormUpdateActionHandler>(),
                 )
@@ -49,15 +42,17 @@ object UseCaseModule {
 
         factory<GetLanguageUseCase> { GetLanguageUseCase() }
 
-        factory<GetLastViewUseCase> {
-            GetLastViewUseCase(
-                viewStackRepository = get()
+        factory<GetOrNullScreenUseCase> {
+            GetOrNullScreenUseCase(
+                navigationScreenStackRepository = get()
             )
         }
 
-        factory<GetViewStateUseCase> {
-            GetViewStateUseCase(
-                viewStackRepository = get()
+        factory<NavigateBackUseCase> {
+            NavigateBackUseCase(
+                coroutineScopes = get(),
+                navigationDestinationStackRepository = get(),
+                navigationScreenStackRepository = get(),
             )
         }
 
@@ -65,8 +60,9 @@ object UseCaseModule {
             NavigateToUrlUseCase(
                 coroutineScopes = get(),
                 retrieveMaterialRepository = get(),
-                navigationStackRepository = get(),
-                viewContextStackRepository = get()
+                navigationDestinationStackRepository = get(),
+                navigationScreenStackRepository = get(),
+                shadowerMaterialRepository = get()
             )
         }
 
@@ -85,27 +81,19 @@ object UseCaseModule {
             )
         }
 
-        factory<RegisterToViewStackRepositoryEventUseCase> {
-            RegisterToViewStackRepositoryEventUseCase(
+        factory<RegisterToScreenStackRepositoryEventUseCase> {
+            RegisterToScreenStackRepositoryEventUseCase(
                 coroutineScopes = get(),
-                viewContextStackRepository = get()
+                navigationScreenStackRepository = get()
             )
         }
 
         factory<RegisterUpdateViewEventUseCase> {
             RegisterUpdateViewEventUseCase(
                 coroutineScopes = get(),
-                updateViewUseCase = get(),
+                navigationScreenStackRepository = get(),
                 formUpdateActionHandler = get(),
-                shadowerMaterialRepository = get(),
-            )
-        }
-
-        factory<RenderViewContextUseCase> {
-            RenderViewContextUseCase(
-                coroutineScopes = get(),
-                stateViewFactory = get(),
-                componentRenderer = get(),
+                shadowerMaterialRepository = get()
             )
         }
 
@@ -116,53 +104,6 @@ object UseCaseModule {
         }
 
         factory<ValidatorFactoryUseCase> { ValidatorFactoryUseCase() }
-
-    }
-
-
-    internal fun Module.stateModule() {
-
-        factory<AddFormUseCase> {
-            AddFormUseCase(
-                useCaseExecutor = get(),
-                getViewState = get()
-            )
-        }
-
-        factory<AddViewUseCase> {
-            AddViewUseCase(
-                useCaseExecutor = get(),
-                getViewState = get()
-            )
-        }
-
-        factory<IsFieldFormViewValidUseCase> {
-            IsFieldFormViewValidUseCase(
-                useCaseExecutor = get(),
-                getViewState = get()
-            )
-        }
-
-        factory<RemoveFormFieldViewUseCase> {
-            RemoveFormFieldViewUseCase(
-                useCaseExecutor = get(),
-                getViewState = get()
-            )
-        }
-
-        factory<UpdateFieldFormViewUseCase> {
-            UpdateFieldFormViewUseCase(
-                useCaseExecutor = get(),
-                getViewState = get()
-            )
-        }
-
-        factory<UpdateViewUseCase> {
-            UpdateViewUseCase(
-                useCaseExecutor = get(),
-                getViewState = get()
-            )
-        }
 
     }
 }

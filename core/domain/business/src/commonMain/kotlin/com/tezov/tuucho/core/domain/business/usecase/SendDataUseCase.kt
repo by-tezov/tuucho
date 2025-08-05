@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
-import com.tezov.tuucho.core.domain.business.protocol.SendDataAndRetrieveMaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase.Output
 import kotlinx.serialization.json.JsonObject
 
 class SendDataUseCase(
-    private val sendDataAndRetrieveMaterialRepository: SendDataAndRetrieveMaterialRepositoryProtocol,
+    private val sendDataAndRetrieveMaterialRepository: MaterialRepositoryProtocol.SendDataAndRetrieve,
 ) : UseCaseProtocol.Async<Input, Output> {
 
     data class Input(

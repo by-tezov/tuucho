@@ -10,10 +10,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
-import com.tezov.tuucho.core.domain.business.usecase.GetLastViewUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetOrNullScreenUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
-import com.tezov.tuucho.core.presentation.ui.viewFactory._system.ViewProtocol
+import com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenProtocol
 import com.tezov.tuucho.kmm.di.StartKoinModules
 import org.koin.compose.koinInject
 import org.koin.dsl.ModuleDeclaration
@@ -55,20 +55,22 @@ fun AppScreen(
 private fun StartEngineScreen(
     viewModel: AppScreenViewModel = koinInject(),
 ) {
-    var view by remember { mutableStateOf<ViewProtocol?>(null) }
+    var screen by remember { mutableStateOf<ScreenProtocol?>(null) }
     LaunchedEffect(Unit) {
         viewModel.init()
     }
-    LaunchedEffect(viewModel.url) {
-        if (viewModel.url.isNotBlank()) {
+    LaunchedEffect(viewModel.screenIdentifier) {
+        viewModel.screenIdentifier?.let {
             val useCaseExecutor = getKoin().get<UseCaseExecutor>()
-            view = useCaseExecutor.invokeSuspend(
-                useCase = getKoin().get<GetLastViewUseCase>(),
-                input = Unit,
-            ).view as? ViewProtocol
+            screen = useCaseExecutor.invokeSuspend(
+                useCase = getKoin().get<GetOrNullScreenUseCase>(),
+                input = GetOrNullScreenUseCase.Input(
+                    screenIdentifier = it
+                ),
+            ).screen as? ScreenProtocol
         }
     }
-    view?.display()
+    screen?.display()
     DisposableEffect(Unit) {
         onDispose {
             viewModel.onDispose()

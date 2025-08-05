@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.domain.business.actionHandler
 import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionHandlerProtocol
+import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonElement
 
@@ -13,13 +14,16 @@ class NavigationUrlActionHandler() : ActionHandlerProtocol {
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: ActionModelDomain, jsonElement: JsonElement?): Boolean {
-        return action.command == Action.Navigate.command && action.authority == Action.Navigate.Authority.url
+    override fun accept(
+        source: SourceIdentifierProtocol,
+        action: ActionModelDomain,
+        jsonElement: JsonElement?,
+    ): Boolean {
+        return action.command == Action.Navigate.command && action.authority == Action.Navigate.Url.authority
     }
 
     override suspend fun process(
-        url: String,
-        id: String,
+        source: SourceIdentifierProtocol,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {

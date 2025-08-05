@@ -4,8 +4,8 @@ package com.tezov.tuucho.core.domain.business.usecase
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.ValidatorSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.ValidatorSchema.Value.Type
-import com.tezov.tuucho.core.domain.business.protocol.FieldValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
+import com.tezov.tuucho.core.domain.business.protocol.screen.FieldValidatorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase.Output
 import com.tezov.tuucho.core.domain.business.validator.fieldValidator.StringEmailValidator

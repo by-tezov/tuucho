@@ -13,9 +13,10 @@ interface CoroutineScopesProtocol {
     fun launchOnParser(block: suspend CoroutineScope.() -> Unit)
     suspend fun <T> onParser(block: suspend CoroutineScope.() -> T): T
 
+    fun launchOnRenderer(block: suspend CoroutineScope.() -> Unit)
+    suspend fun <T> onRenderer(block: suspend CoroutineScope.() -> T): T
+
     fun launchOnEvent(block: suspend CoroutineScope.() -> Unit)
     suspend fun <T> onEvent(block: suspend CoroutineScope.() -> T): T
 
-    fun launchOnUiProcessor(block: suspend CoroutineScope.() -> Unit)
-    suspend fun <T> onUiProcessor(block: suspend CoroutineScope.() -> T): T
 }

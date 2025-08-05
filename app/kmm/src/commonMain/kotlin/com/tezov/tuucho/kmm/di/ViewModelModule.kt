@@ -12,7 +12,7 @@ object ViewModelModule {
                 useCaseExecutor = get(),
                 registerUpdateViewEvent = get(),
                 registerToNavigationUrlActionEvent = get(),
-                registerToViewStackRepositoryEvent = get(),
+                registerToScreenStackRepositoryEvent = get(),
                 navigateToUrl = get()
             )
         }
