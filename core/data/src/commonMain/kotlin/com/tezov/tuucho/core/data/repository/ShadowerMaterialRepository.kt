@@ -4,8 +4,7 @@ import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ShadowerMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ShadowerMaterialRepositoryProtocol.Event
+import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
@@ -14,12 +13,12 @@ class ShadowerMaterialRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialShadower: MaterialShadower,
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
-) : ShadowerMaterialRepositoryProtocol, KoinComponent {
+) : Shadower, KoinComponent {
 
-    private val _events = Notifier.Emitter<Event>()
+    private val _events = Notifier.Emitter<Shadower.Event>()
     override val events get() = _events.createCollector
 
-    fun process(url: String, materialObject: JsonObject) {
+    override fun process(url: String, materialObject: JsonObject) {
         coroutineScopes.launchOnParser {
             shadowerMaterialSources.forEach { it.onStart(url, materialObject) }
             materialShadower.process(
@@ -41,7 +40,7 @@ class ShadowerMaterialRepository(
                                 source.onDone().collect {
                                     coroutineScopes.launchOnEvent {
                                         _events.emit(
-                                            Event(
+                                            Shadower.Event(
                                                 type = source.type,
                                                 url = url,
                                                 jsonObject = it

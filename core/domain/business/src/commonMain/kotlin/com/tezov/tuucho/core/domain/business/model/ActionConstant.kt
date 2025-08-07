@@ -5,29 +5,30 @@ object Action {
     object Navigate {
         const val command = "navigate"
 
-        object Authority {
-            const val url = "url"
+        object Url {
+            const val authority = "url"
+        }
+        object LocalDestination {
+            const val authority = "local-destination"
+            object Target {
+                const val back = "back"
+                const val finish = "finish"
+            }
         }
     }
 
     object Form {
-        private const val command = "form-"
+        const val command = "form"
 
         object Send {
-            const val command = "${Form.command}send"
-
-            object Authority {
-                const val url = "url"
-            }
+            const val authority = "send-url"
         }
 
         object Update {
-            const val command = "${Form.command}update"
-
-            object Authority {
+            const val authority = "update"
+            object Target {
                 const val error = "error"
             }
-
         }
     }
 

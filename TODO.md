@@ -1,19 +1,29 @@
 ## In progress
 
-- add language management
-- add selector management + on language too
+- Do the Option Navigation from
+- Clean the Coroutine Job + executor use case job
+- Add server example
+- Do the Animation
 
-- Improve: update view have a knowledge of previous element 
-and next element to avoid overhear job (aka generate validators)
-- Improve: // add option wait all available before to render the view instead of render on the fly
+- Done -> Medium promo
+
+- solution for JsonObject low storage update easy ?
+
+**** ****
+
+- add language management
+- add selector management + on text language too (not only dimension/color)
+
+- Improve: update view have a knowledge of previous element and next element to avoid overhear job (aka generate validators)
+- Improve: add option wait all available before to render the view instead of render on the fly
+- Improve: solution for JsonObject low storage update easy ?
 - Check the TODO List
 
 - add config to remove hard string inside di
 
-- When do the ttl stuff, improve the database code. Not readable, not scalable, not maintainable...
+- When do the ttl stuff, improve the database code. Not readable, not scalable, not maintainable... fix the cancel bug stuff
 - doc for setting
 
-- Fix the monkey navigation crash the onDemand unique constraint -> because on-demand are not
-  cancelled when leave the page
-  and so requested multiple times -> add proxy client xD
+
+- Fix unique constraint failed be cause job not cancelled when navigated faster than the on demand data arrive.
 

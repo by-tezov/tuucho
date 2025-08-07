@@ -7,18 +7,23 @@ import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.model.schema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.protocol.ActionHandlerProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateProtocol
+import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
+import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetOrNullScreenUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class FormSendUrlActionHandler(
-    private val materialState: ScreenStateProtocol,
+    private val useCaseExecutor: UseCaseExecutor,
+    private val getOrNullScreen: GetOrNullScreenUseCase,
     private val sendData: SendDataUseCase,
 ) : ActionHandlerProtocol, KoinComponent {
 
@@ -27,48 +32,77 @@ class FormSendUrlActionHandler(
     override val priority: Int
         get() = ActionHandlerProtocol.Priority.DEFAULT
 
-    override fun accept(id: String, action: ActionModelDomain, jsonElement: JsonElement?): Boolean {
-        return action.command == Action.Form.Send.command && action.authority == Action.Form.Send.Authority.url
+    override fun accept(
+        source: SourceIdentifierProtocol,
+        action: ActionModelDomain,
+        jsonElement: JsonElement?,
+    ): Boolean {
+        return action.command == Action.Form.command && action.authority == Action.Form.Send.authority
     }
 
     override suspend fun process(
-        url: String,
-        id: String,
+        source: SourceIdentifierProtocol,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {
         action.target ?: return
-        val form = materialState.form().also { it.updateAllValidity() }
-        if (form.isAllValid()) {
-            val response = sendData.invoke(action.target, form.data())
+        val formView = source.getAllFormView() ?: return
+        if (formView.isAllFormValid()) {
+            val response = useCaseExecutor.invokeSuspend(
+                useCase = sendData,
+                input = SendDataUseCase.Input(
+                    url = action.target,
+                    jsonObject = formView.data()
+                )
+            ).jsonObject
             response?.let {
-                val rootScope = response.withScope(FormSendResponseSchema.Root::Scope)
-                val isAllSuccess = rootScope.isAllSuccess == true
+                val responseScope = response.withScope(FormSendResponseSchema.Root::Scope)
+                val isAllSuccess = responseScope.isAllSuccess == true
                 if (isAllSuccess) {
-                    jsonElement?.actionValidated(url, id)
+                    jsonElement?.actionValidated(source)
                 } else {
-                    rootScope.processInvalidRemoteForm(url, id)
+                    responseScope.processInvalidRemoteForm(source)
                 }
             }
         } else {
-            form.processInvalidLocalForm(url, id)
+            formView.processInvalidLocalForm(source)
         }
-        actionDenied(url, id, null)
+
     }
 
-    private fun FormsStateProtocol.processInvalidLocalForm(url: String, id: String) {
-        val results = getAllValidityResult().filter { !it.second }.map {
-            JsonNull.withScope(IdSchema::Scope).apply {
-                self = JsonNull.withScope(IdSchema::Scope)
-                    .apply { value = it.first }.collect()
-            }.collect()
-        }.let(::JsonArray)
-        actionDenied(url, id, results)
+    private suspend fun SourceIdentifierProtocol.getAllFormView() =
+        useCaseExecutor.invokeSuspend(
+            useCase = getOrNullScreen,
+            input = GetOrNullScreenUseCase.Input(
+                screenIdentifier = this
+            )
+        ).screen?.views(FormViewProtocol.Extension::class)?.map { it.formView }
+
+    private fun List<FormViewProtocol>.isAllFormValid(): Boolean {
+        forEach { it.updateValidity() }
+        return all { it.isValid() ?: true }
     }
 
-    private fun FormSendResponseSchema.Root.Scope.processInvalidRemoteForm(
-        url: String,
-        id: String,
+    private fun List<FormViewProtocol>.data() = buildMap<String, JsonPrimitive> {
+        this@data.forEach {
+            put(it.getId(), JsonPrimitive(it.getValue()))
+        }
+    }.let(::JsonObject)
+
+    private suspend fun List<FormViewProtocol>.processInvalidLocalForm(source: SourceIdentifierProtocol) {
+        val results = filter { it.isValid() == false }
+            .map {
+                JsonNull.withScope(IdSchema::Scope).apply {
+                    self = JsonNull.withScope(IdSchema::Scope)
+                        .apply { value = it.getId() }.collect()
+                }.collect()
+
+            }.let(::JsonArray)
+        actionDenied(source, results)
+    }
+
+    private suspend fun FormSendResponseSchema.Root.Scope.processInvalidRemoteForm(
+        source: SourceIdentifierProtocol,
     ) {
         val results = results?.map { result ->
             val resultScope = result.withScope(FormSendResponseSchema.Result::Scope)
@@ -86,28 +120,37 @@ class FormSendUrlActionHandler(
                 }
             }.collect()
         }?.let(::JsonArray)
-        actionDenied(url, id, results)
+        actionDenied(source, results)
     }
 
-    private fun JsonElement.actionValidated(url: String, id: String) {
+    private suspend fun JsonElement.actionValidated(source: SourceIdentifierProtocol) {
         val actionValidated = withScope(FormSendResponseSchema.ActionParams::Scope).actionValidated
-        actionValidated?.let { actionHandler.invoke(url, id, ActionModelDomain.from(it)) }
+        actionValidated?.let {
+            useCaseExecutor.invokeSuspend(
+                useCase = actionHandler,
+                input = ActionHandlerUseCase.Input(
+                    source = source,
+                    action = ActionModelDomain.from(it)
+                ),
+            )
+        }
     }
 
-    private fun actionDenied(
-        url: String,
-        id: String,
+    private suspend fun actionDenied(
+        source: SourceIdentifierProtocol,
         results: JsonElement?,
     ) {
-        actionHandler.invoke(
-            url = url,
-            id = id,
-            action = ActionModelDomain.from(
-                command = Action.Form.Update.command,
-                authority = Action.Form.Update.Authority.error,
-                target = null
+        useCaseExecutor.invokeSuspend(
+            useCase = actionHandler,
+            input = ActionHandlerUseCase.Input(
+                source = source,
+                action = ActionModelDomain.from(
+                    command = Action.Form.command,
+                    authority = Action.Form.Update.authority,
+                    target = Action.Form.Update.Target.error
+                ),
+                paramElement = results
             ),
-            paramElement = results
         )
     }
 
