@@ -4,8 +4,5 @@ object Shadower {
 
     object Type {
         const val onDemandDefinition = "on-demand-definition"
-
     }
-
-
 }

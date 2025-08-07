@@ -1,13 +1,15 @@
-package com.tezov.tuucho.core.domain.business.model.schema.material
+package com.tezov.tuucho.core.domain.business.model.schema.material.option
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 
-object ContentSchema {
+object OptionSchema {
 
-    const val root = TypeSchema.Value.content
+    const val root = TypeSchema.Value.option
 
     object Key {
         const val id = IdSchema.root
@@ -19,8 +21,7 @@ object ContentSchema {
 
     open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
         OpenSchemaScope<T>(argument) {
-        final override val root = ContentSchema.root
-        var self by delegate<JsonObject?>(root)
+        final override val root = OptionSchema.root
 
         var id by delegate<JsonElement?>(Key.id)
         var type by delegate<String?>(Key.type)

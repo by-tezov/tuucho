@@ -1,13 +1,12 @@
 ## In progress
 
-- Do the Option Navigation from
 - Clean the Coroutine Job + executor use case job
 - Add server example
 - Do the Animation
 
-- Done -> Medium promo
+update the doc: form-validator, setting with navigation stack
 
-- solution for JsonObject low storage update easy ?
+- Done -> Medium promo
 
 **** ****
 
@@ -17,6 +16,8 @@
 - Improve: update view have a knowledge of previous element and next element to avoid overhear job (aka generate validators)
 - Improve: add option wait all available before to render the view instead of render on the fly
 - Improve: solution for JsonObject low storage update easy ?
+- rectifier after array, never return null and so over work on replace maybe not needed
+- Navigation Repo must speed efficient improved
 - Check the TODO List
 
 - add config to remove hard string inside di

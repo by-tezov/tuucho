@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.protocol.screen
+package com.tezov.tuucho.core.domain.business.protocol
 
 import com.tezov.tuucho.core.domain.business.config.Language
 
@@ -9,7 +9,7 @@ interface ValidatorProtocol<T : Any> {
     fun isValid(): Boolean
 }
 
-interface FieldValidatorProtocol<T : Any> : ValidatorProtocol<T> {
+interface FormValidatorProtocol<T : Any> : ValidatorProtocol<T> {
 
     fun getErrorMessage(language: Language): String
 }

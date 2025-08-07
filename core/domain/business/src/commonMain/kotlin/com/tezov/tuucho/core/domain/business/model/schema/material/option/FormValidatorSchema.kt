@@ -1,12 +1,12 @@
-package com.tezov.tuucho.core.domain.business.model.schema.material
+package com.tezov.tuucho.core.domain.business.model.schema.material.option
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
 import kotlinx.serialization.json.JsonObject
 
-object ValidatorSchema {
+object FormValidatorSchema {
 
-    const val root = "validator"
+    const val root = "form-validator"
 
     object Key {
         const val type = "type"
@@ -31,7 +31,7 @@ object ValidatorSchema {
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-        override val root = ValidatorSchema.root
+        override val root = FormValidatorSchema.root
 
         var type by delegate<String?>(Key.type)
         var idMessageError by delegate<String?>(Key.idMessageError)
@@ -42,6 +42,3 @@ object ValidatorSchema {
     }
 
 }
-
-
-

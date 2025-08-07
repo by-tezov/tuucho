@@ -27,6 +27,8 @@ sealed interface NavigationRepositoryProtocol {
 
         }
 
+        val stack: List<NavigationDestination>
+
         suspend fun swallow(destination: NavigationDestination): List<Event>
 
     }

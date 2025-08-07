@@ -1,16 +1,11 @@
 package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
-
-import com.tezov.tuucho.core.data.parser.rectifier.ActionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StateRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.ValidatorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
@@ -29,10 +24,16 @@ import com.tezov.tuucho.core.data.parser.rectifier._element.spacer.StyleSpacerDi
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.content.ActionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.content.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.option.FormValidatorRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.option.OptionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingNavigationOptionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
 import org.koin.core.module.Module
@@ -45,6 +46,7 @@ object MaterialRectifierModule {
 
         object Processor {
             val COMPONENT = named("MaterialRectifierModule.Name.Processor.COMPONENT")
+            val SETTING = named("MaterialRectifierModule.Name.Processor.SETTING")
             val CONTENT = named("MaterialRectifierModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Processor.STYLE")
             val OPTION = named("MaterialRectifierModule.Name.Processor.OPTION")
@@ -56,12 +58,13 @@ object MaterialRectifierModule {
             val DIMENSIONS = named("MaterialRectifierModule.Name.Processor.DIMENSIONS")
             val DIMENSION = named("MaterialRectifierModule.Name.Processor.DIMENSION")
             val ACTION = named("MaterialRectifierModule.Name.Processor.ACTION")
-            val VALIDATOR = named("MaterialRectifierModule.Name.Processor.VALIDATOR")
+            val FIELD_VALIDATOR = named("MaterialRectifierModule.Name.Processor.FIELD_VALIDATOR")
         }
 
         object Matcher {
             val ID = named("MaterialRectifierModule.Name.Matcher.ID")
             val COMPONENT = named("MaterialRectifierModule.Name.Matcher.COMPONENT")
+            val SETTING = named("MaterialRectifierModule.Name.Matcher.SETTING")
             val CONTENT = named("MaterialRectifierModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialRectifierModule.Name.Matcher.STYLE")
             val OPTION = named("MaterialRectifierModule.Name.Matcher.OPTION")
@@ -70,7 +73,7 @@ object MaterialRectifierModule {
             val COLOR = named("MaterialRectifierModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialRectifierModule.Name.Matcher.DIMENSION")
             val ACTION = named("MaterialRectifierModule.Name.Matcher.ACTION")
-            val VALIDATOR = named("MaterialRectifierModule.Name.Matcher.VALIDATOR")
+            val FIELD_VALIDATOR = named("MaterialRectifierModule.Name.Matcher.FIELD_VALIDATOR")
         }
     }
 
@@ -78,6 +81,7 @@ object MaterialRectifierModule {
         single<MaterialRectifier> { MaterialRectifier() }
         idModule()
         componentModule()
+        settingModule()
         contentModule()
         styleModule()
         optionModule()
@@ -86,7 +90,7 @@ object MaterialRectifierModule {
         colorModule()
         dimensionModule()
         actionModule()
-        validatorModule()
+        fieldValidatorModule()
     }
 
     private fun Module.idModule() {
@@ -116,9 +120,25 @@ object MaterialRectifierModule {
         single<List<Rectifier>>(Name.Processor.COMPONENT) {
             listOf(
                 get<IdRectifier>(),
+                get<SettingRectifier>(),
                 get<ContentRectifier>(),
                 get<StyleRectifier>(),
                 get<OptionRectifier>(),
+            )
+        }
+    }
+
+    private fun Module.settingModule() {
+        single<SettingRectifier> { SettingRectifier() }
+
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
+            emptyList()
+        }
+
+        single<List<Rectifier>>(Name.Processor.SETTING) {
+            listOf(
+                get<IdRectifier>(),
+                SettingNavigationOptionRectifier(),
             )
         }
     }
@@ -169,7 +189,7 @@ object MaterialRectifierModule {
         single<List<Rectifier>>(Name.Processor.OPTION) {
             listOf(
                 get<IdRectifier>(),
-                get<ValidatorRectifier>(),
+                get<FormValidatorRectifier>(),
             )
         }
     }
@@ -267,16 +287,16 @@ object MaterialRectifierModule {
         }
     }
 
-    private fun Module.validatorModule() {
-        single<ValidatorRectifier> { ValidatorRectifier() }
+    private fun Module.fieldValidatorModule() {
+        single<FormValidatorRectifier> { FormValidatorRectifier() }
 
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.VALIDATOR) {
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.FIELD_VALIDATOR) {
             listOf(
                 OptionFormFieldValidatorMatcher()
             )
         }
 
-        single<List<Rectifier>>(Name.Processor.VALIDATOR) {
+        single<List<Rectifier>>(Name.Processor.FIELD_VALIDATOR) {
             emptyList()
         }
     }

@@ -80,7 +80,7 @@ object MaterialRendererModule {
             FieldViewFactory(
                 identifierFactory = get(),
                 useCaseExecutor = get(),
-                validatorFactory = get(),
+                fieldValidatorFactory = get(),
             )
         }
 

@@ -1,7 +1,9 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.content.ContentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.option.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.MaterialSchema

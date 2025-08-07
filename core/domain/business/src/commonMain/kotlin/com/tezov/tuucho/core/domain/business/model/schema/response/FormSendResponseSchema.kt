@@ -8,39 +8,32 @@ import kotlinx.serialization.json.JsonObject
 
 object FormSendResponseSchema {
 
-    object Root {
-        object Key {
-            const val isAllSuccess = "isAllSuccess"
-            const val results = "results"
-        }
+    object Key {
+        const val isAllSuccess = "isAllSuccess"
+        const val results = "results"
+    }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-            var isAllSuccess by delegate<Boolean?>(Key.isAllSuccess)
-            var results by delegate<JsonArray?>(Key.results)
-        }
+    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        var isAllSuccess by delegate<Boolean?>(Key.isAllSuccess)
+        var results by delegate<JsonArray?>(Key.results)
     }
 
     object Result {
+        const val root = FormSendResponseSchema.Key.results
+
         object Key {
             const val id = IdSchema.root
             const val failureReason = "failure-reason"
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+            override val root = Result.root
+
             var id by delegate<String?>(Key.id)
             var failureReason by delegate<JsonObject?>(Key.failureReason)
         }
     }
 
-    object ActionParams {
-        object Key {
-            const val actionValidated = "action-validated"
-        }
-
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-            var actionValidated by delegate<String?>(Key.actionValidated)
-        }
-    }
 }
 
 
