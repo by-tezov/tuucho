@@ -1,10 +1,7 @@
 package com.tezov.tuucho.demo.system
 
-import com.tezov.tuucho.kmm.system.KmmApplication
+import android.app.Application
 
-class DemoApplication : KmmApplication() {
+class DemoApplication : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-    }
 }

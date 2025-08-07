@@ -1,18 +1,18 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
-import com.tezov.tuucho.core.domain.business.protocol.ComponentRendererProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.ScreenStateProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FieldsFormStateProtocol
-import com.tezov.tuucho.core.domain.business.protocol.state.form.FormsStateProtocol
-import com.tezov.tuucho.core.presentation.ui.state.FieldsFormState
-import com.tezov.tuucho.core.presentation.ui.state.FormsState
-import com.tezov.tuucho.core.presentation.ui.state.ScreenState
-import com.tezov.tuucho.core.presentation.ui.viewFactory.ButtonViewFactory
-import com.tezov.tuucho.core.presentation.ui.viewFactory.ComponentRendererFactory
-import com.tezov.tuucho.core.presentation.ui.viewFactory.FieldViewFactory
-import com.tezov.tuucho.core.presentation.ui.viewFactory.LabelViewFactory
-import com.tezov.tuucho.core.presentation.ui.viewFactory.LayoutLinearViewFactory
-import com.tezov.tuucho.core.presentation.ui.viewFactory.SpacerViewFactory
+import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
+import com.tezov.tuucho.core.presentation.ui.renderer._system.IdGenerator
+import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
+import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenRenderer
+import com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenIdentifierFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view.ButtonViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view.LabelViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view.LayoutLinearViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view.SpacerViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifier
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifierFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view.fieldView.FieldViewFactory
 import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -20,66 +20,83 @@ import org.koin.dsl.module
 object MaterialRendererModule {
 
     internal operator fun invoke() = module {
-        state()
-        rendered()
 
-        factory<ComponentRendererFactory> {
-            ComponentRendererFactory(
-                addView = get(),
-                uiComponentFactory = listOf(
-                    get<LabelViewFactory>(),
-                    get<FieldViewFactory>(),
-                    get<ButtonViewFactory>(),
-                    get<SpacerViewFactory>(),
-                    get<LayoutLinearViewFactory>(),
+        single<IdGenerator> { IdGenerator() }
+
+        viewModule()
+        screenModule()
+    }
+
+    private fun Module.screenModule() {
+        factory<ScreenIdentifierFactory> {
+            {
+                ScreenIdentifier(
+                    idGenerator = get()
                 )
+            }
+        }
+
+        factory<ScreenRenderer> {
+            ScreenRenderer(
+                identifierFactory = get()
             )
-        } bind ComponentRendererProtocol::class
+        } bind ScreenRendererProtocol::class
     }
 
-    private fun Module.state() {
-        factory<FieldsFormStateProtocol> {
-            FieldsFormState()
+    private fun Module.viewModule() {
+
+        factory<ViewIdentifierFactory> {
+            { screenIdentifier ->
+                ViewIdentifier(
+                    idGenerator = get(),
+                    screenIdentifier = screenIdentifier,
+                )
+            }
         }
 
-        factory<FormsStateProtocol> {
-            FormsState(
-                fieldsFormState = get()
+        factory<List<ViewFactory>> {
+            listOf(
+                get<LabelViewFactory>(),
+                get<FieldViewFactory>(),
+                get<ButtonViewFactory>(),
+                get<SpacerViewFactory>(),
+                get<LayoutLinearViewFactory>(),
             )
         }
 
-        //TODO: when navigation stack will be done, it must not be a single but a factory
-        single <ScreenStateProtocol> {
-            ScreenState(
-                formsState = get()
+        factory<LayoutLinearViewFactory> {
+            LayoutLinearViewFactory(
+                identifierFactory = get(),
             )
         }
-    }
-
-    private fun Module.rendered() {
-        factory<LayoutLinearViewFactory> { LayoutLinearViewFactory() }
 
         factory<LabelViewFactory> {
-            LabelViewFactory()
+            LabelViewFactory(
+                identifierFactory = get(),
+            )
         }
 
         factory<FieldViewFactory> {
             FieldViewFactory(
+                identifierFactory = get(),
+                useCaseExecutor = get(),
                 validatorFactory = get(),
-                addForm = get(),
-                removeFormFieldView = get(),
-                updateFieldFormView = get(),
-                isFieldFormViewValid = get()
             )
         }
 
         factory<ButtonViewFactory> {
             ButtonViewFactory(
+                identifierFactory = get(),
+                useCaseExecutor = get(),
                 actionHandler = get()
             )
         }
 
-        factory <SpacerViewFactory> { SpacerViewFactory() }
+        factory<SpacerViewFactory> {
+            SpacerViewFactory(
+                identifierFactory = get()
+            )
+        }
     }
 
 }

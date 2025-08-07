@@ -80,11 +80,11 @@ class CoroutineScopes : CoroutineScopesProtocol {
     override suspend fun <T>onEvent(block: suspend CoroutineScope.() -> T) =
         event.async(block = block).await()
 
-    override fun launchOnUiProcessor(block: suspend CoroutineScope.() -> Unit) {
+    override fun launchOnRenderer(block: suspend CoroutineScope.() -> Unit) {
         uiProcessor.launch(block = block)
     }
 
-    override suspend fun <T>onUiProcessor(block: suspend CoroutineScope.() -> T) =
+    override suspend fun <T> onRenderer(block: suspend CoroutineScope.() -> T) =
         uiProcessor.async(block = block).await()
 
 

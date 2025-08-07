@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.setting.ConfigSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.RefreshCacheMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
@@ -18,7 +18,7 @@ class RefreshMaterialCacheRepository(
     private val retrieveObjectRemoteSource: RetrieveObjectRemoteSource,
     private val retrieveMaterialRemoteSource: RetrieveMaterialRemoteSource,
     private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
-) : RefreshCacheMaterialRepositoryProtocol {
+) : MaterialRepositoryProtocol.RefreshCache {
 
     override suspend fun process(url: String) {
         val configModelDomain = retrieveObjectRemoteSource.process(url)

@@ -22,5 +22,7 @@ android {
 
 dependencies {
     implementation(project(":app:kmm"))
+    implementation(project(":core:data"))
     implementation(libs.compose.activity)
+    implementation(libs.koin.core)
 }

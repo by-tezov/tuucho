@@ -7,10 +7,10 @@ import com.tezov.tuucho.core.data.network.MaterialNetworkSource
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
-import com.tezov.tuucho.core.domain.business.model.Shadower
 import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SettingSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.Shadower
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -40,6 +40,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
             isCancelled = true
             return
         }
+        materialDatabaseSource.clearTransient(Lifetime.Transient(url))
         this.urlOrigin = url
         map = mutableMapOf()
     }
