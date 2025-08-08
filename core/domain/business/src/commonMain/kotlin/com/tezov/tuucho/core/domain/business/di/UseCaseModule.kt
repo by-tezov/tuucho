@@ -13,7 +13,6 @@ import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigationOptionSelectorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActionEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenStackRepositoryEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
@@ -63,6 +62,7 @@ object UseCaseModule {
                 retrieveMaterialRepository = get(),
                 navigationDestinationStackRepository = get(),
                 navigationScreenStackRepository = get(),
+                navigationAnimatorStackRepository = get(),
                 shadowerMaterialRepository = get(),
                 navigationOptionSelectorFactory = get(),
             )
@@ -86,13 +86,6 @@ object UseCaseModule {
                 useCaseExecutor = get(),
                 navigationUrlActionHandler = get(),
                 navigateForward = get(),
-            )
-        }
-
-        factory<RegisterToScreenStackRepositoryEventUseCase> {
-            RegisterToScreenStackRepositoryEventUseCase(
-                coroutineScopes = get(),
-                navigationScreenStackRepository = get()
             )
         }
 

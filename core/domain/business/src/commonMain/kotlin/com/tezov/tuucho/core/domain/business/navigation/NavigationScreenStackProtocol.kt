@@ -3,142 +3,144 @@ package com.tezov.tuucho.core.domain.business.navigation
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.Destination
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.Event
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
-import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
 class NavigationScreenStackProtocol(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val screenRenderer: ScreenRendererProtocol,
-) : NavigationRepositoryProtocol.StackScreen, KoinComponent {
+) : StackScreen, KoinComponent {
 
     data class Item(
-        val destination: NavigationDestination,
+        val route: NavigationRoute,
         val screen: ScreenProtocol,
     )
 
-    private val _events = Notifier.Emitter<ScreenProtocol.IdentifierProtocol>()
-    override val events get() = _events.createCollector
-
     private val stack = mutableListOf<Item>()
 
-    override suspend fun getView(identifier: SourceIdentifierProtocol) =
+    override suspend fun getScreen(identifier: SourceIdentifierProtocol) =
         coroutineScopes.navigation.on {
             stack.firstOrNull {
                 identifier.accept(it.screen.identifier)
             }?.screen
         }
 
-    override suspend fun getViews(url: String) = coroutineScopes.navigation.on {
+    override suspend fun getScreens(url: String) = coroutineScopes.navigation.on {
         stack
-            .filter { (it.destination.route as? NavigationRoute.Url)?.value == url }
+            .filter { (it.route as? NavigationRoute.Url)?.value == url }
             .map { it.screen }
     }
 
     override suspend fun swallow(
-        events: List<Destination.Event>,
+        events: List<Event<NavigationRoute>>,
         componentObject: JsonObject?,
     ) = coroutineScopes.navigation.on {
+        val outputEvents = mutableListOf<Event<ScreenProtocol.IdentifierProtocol>>()
         val reuseBin = mutableListOf<Item>()
         for (event in events) {
             when (event) {
-                is Destination.Event.Clear -> clear()
-                is Destination.Event.SavedForReuse -> savedForReuse(event, reuseBin)
-                is Destination.Event.RemovedFromTail -> removedFromTail(event)
-                is Destination.Event.AddedAtTail -> addedAtTail(
-                    event,
-                    componentObject
+                is Event.Clear -> clear()
+                is Event.SavedForReuse -> savedForReuse(event, reuseBin)
+                is Event.RemovedFromTail -> removedFromTail(event)
+                is Event.ReuseRestoredAtTail -> reuseRestoredAtTail(event, reuseBin)
+                is Event.RemovedAtTail -> removedAtTail(event)
+                is Event.AddedAtTail -> addedAtTail(
+                    event, componentObject
                         ?: throw DomainException.Default("componentObject can't be null")
                 )
-
-                is Destination.Event.ReuseRestoredAtTail -> reuseRestoredAtTail(event, reuseBin)
-                is Destination.Event.RemovedAtTail -> removedAtTail(event)
-            }
+            }.also { outputEvents.add(it) }
         }
+        outputEvents
     }
 
-    private fun clear() {
+    private fun clear(): Event<Nothing> {
         stack.clear()
-        // TODO, event finish
+        return Event.Clear
     }
 
     private fun savedForReuse(
-        event: Destination.Event.SavedForReuse,
+        event: Event.SavedForReuse<NavigationRoute>,
         reuseBin: MutableList<Item>,
-    ) {
-        val route = event.destination.route
-        stack.indexOfLast { it.destination.route == route }
-            .takeIf { it >= 0 }
-            ?.let { stack.removeAt(it) }
-            ?.let { reuseBin.add(it) }
+    ): Event<ScreenProtocol.IdentifierProtocol> {
+        val route = event.element
+        return stack.indexOfLast { it.route == route }
+            .also {
+                if (it != event.fromIndex) {
+                    throw DomainException.Default("Inconsistent stack, found index $it, expected ${event.fromIndex}")
+                }
+            }
+            .let { stack.removeAt(it) }
+            .also { reuseBin.add(it) }
+            .let {
+                Event.SavedForReuse(fromIndex = event.fromIndex, element = it.screen.identifier)
+            }
     }
 
     private fun removedFromTail(
-        event: Destination.Event.RemovedFromTail,
-    ) {
-        for (destination in event.destinations) {
-            stack.asReversed()
-                .indexOfLast { it.destination.route == destination.route }
-                .takeIf { it >= 0 }
-                ?.let { stack.removeAt(it) }
+        event: Event.RemovedFromTail<NavigationRoute>,
+    ): Event<ScreenProtocol.IdentifierProtocol> {
+        event.elements.firstOrNull()?.let { firstRouteToRemoved ->
+            val index = stack
+                .indexOfLast { it.route == firstRouteToRemoved }
+            if ((stack.size - index) != event.elements.size) {
+                throw DomainException.Default("Inconsistent stack, size to remove is ${stack.size - index}, expected to remove ${event.elements.size} elements")
+            }
+            val subList = stack.subList(index, stack.size)
+            val event = Event.RemovedFromTail(subList.map { it.screen.identifier })
+            subList.clear()
+            return event
         }
+        return Event.RemovedFromTail(emptyList())
     }
 
     private fun removedAtTail(
-        event: Destination.Event.RemovedAtTail,
-    ) {
-        val route = event.destination.route
-        stack.indexOfLast { it.destination.route == route }
-            .takeIf { it >= 0 }
-            ?.let { stack.removeAt(it) }
-            ?: throw DomainException.Default("Expected Screen for route $route not found")
-
-        stack.lastOrNull()?.let {
-            coroutineScopes.event.launch {
-                _events.emit(it.screen.identifier)
+        event: Event.RemovedAtTail<NavigationRoute>,
+    ): Event<ScreenProtocol.IdentifierProtocol> {
+        val route = event.element
+        return stack.indexOfLast { it.route == route }
+            .also {
+                if (it != stack.lastIndex) {
+                    throw DomainException.Default("Inconsistent stack, found index $it, expected ${stack.lastIndex}")
+                }
             }
-        } ?: run {
-            // TODO, event finish
-        }
+            .let { stack.removeAt(it) }
+            .let {
+                Event.RemovedAtTail(element = it.screen.identifier)
+            }
     }
 
     private suspend fun addedAtTail(
-        event: Destination.Event.AddedAtTail,
+        event: Event.AddedAtTail<NavigationRoute>,
         componentObject: JsonObject,
-    ) {
+    ): Event<ScreenProtocol.IdentifierProtocol> {
         val screen = screenRenderer.process(componentObject)
         stack.add(
-            Item(
-                destination = event.destination,
-                screen = screen
-            )
+            Item(route = event.element, screen = screen)
         )
-        coroutineScopes.event.launch {
-            _events.emit(screen.identifier)
-        }
+        return Event.AddedAtTail(
+            element = screen.identifier
+        )
     }
 
-    private suspend fun reuseRestoredAtTail(
-        event: Destination.Event.ReuseRestoredAtTail,
+    private fun reuseRestoredAtTail(
+        event: Event.ReuseRestoredAtTail<NavigationRoute>,
         reuseBin: MutableList<Item>,
-    ) {
-        val route = event.destination.route
-        val item = reuseBin.indexOfLast { it.destination.route == route }
+    ): Event<ScreenProtocol.IdentifierProtocol> {
+        val route = event.element
+        val item = reuseBin.indexOfLast { it.route == route }
             .takeIf { it >= 0 }
             ?.let { reuseBin.removeAt(it) }
-            ?: throw DomainException.Default("Expected reusable Screen for route $route not found")
+            ?: throw DomainException.Default("Expected reusable screen for route $route not found")
         stack.add(
-            item.copy(
-                destination = event.destination
-            )
+            item.copy(route = event.element)
         )
-        coroutineScopes.event.launch {
-            _events.emit(item.screen.identifier)
-        }
+        return Event.ReuseRestoredAtTail(
+            element = item.screen.identifier
+        )
     }
 
 }
