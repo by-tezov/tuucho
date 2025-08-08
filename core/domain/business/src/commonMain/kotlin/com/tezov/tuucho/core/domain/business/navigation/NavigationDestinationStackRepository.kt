@@ -10,10 +10,12 @@ class NavigationDestinationStackRepository(
 
     private val _stack = mutableListOf<NavigationDestination>()
 
-    override val stack = _stack as List<NavigationDestination>
+    override suspend fun stack() = coroutineScopes.navigation.on {
+        _stack.toList()
+    }
 
-    override suspend fun swallow(destination: NavigationDestination): List<Destination.Event> =
-        coroutineScopes.onRenderer {
+    override suspend fun swallow(destination: NavigationDestination) =
+        coroutineScopes.navigation.on {
             when (val route = destination.route) {
                 is NavigationRoute.Back -> {
                     val removed = _stack.removeLast()

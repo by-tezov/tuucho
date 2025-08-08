@@ -3,12 +3,14 @@ package com.tezov.tuucho.core.data.di
 import com.tezov.tuucho.core.data.parser._system.IdGenerator
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StateRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
+import com.tezov.tuucho.core.data.parser.rectifier._element.form.FormValidatorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.form.StateFormTextMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorRectifier
@@ -30,8 +32,6 @@ import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.option.FormValidatorRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.option.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingNavigationOptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextRectifier

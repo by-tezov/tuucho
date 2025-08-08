@@ -1,10 +1,7 @@
-package com.tezov.tuucho.core.domain.business.model.schema.material.option
+package com.tezov.tuucho.core.domain.business.model.schema.material
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonElement
 
 object OptionSchema {

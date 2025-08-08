@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.model.schema.setting
+package com.tezov.tuucho.core.domain.business.model.schema.config
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
@@ -8,7 +8,7 @@ import kotlinx.serialization.json.JsonObject
 object ConfigSchema {
 
     object Key {
-        const val preload = "preload"
+        const val preload = Preload.root
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
@@ -16,7 +16,7 @@ object ConfigSchema {
     }
 
     object Preload {
-        const val root = ConfigSchema.Key.preload
+        const val root = "preload"
 
         object Key {
             const val subs = "subs"

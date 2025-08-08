@@ -16,11 +16,9 @@ class RegisterToScreenStackRepositoryEventUseCase(
     )
 
     override suspend fun invoke(input: Input): Unit = with(input) {
-        coroutineScopes.onEvent {
+        coroutineScopes.event.on {
             navigationScreenStackRepository.events
-                .forever { event ->
-                    onEvent(event)
-                }
+                .forever { event -> onEvent(event) }
         }
     }
 
