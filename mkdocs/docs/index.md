@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # TUUCHO - ตู้โชว์ - Rendering Engine
 
 > **Documentation in Progress** — Early stage of development
@@ -64,7 +68,7 @@ flowchart TD
   C1 -- No --> D[/Request **url** JSON/]
   D --> E[Rectifier: make JSON engine-compatible]
   E --> F[Breaker: split into parts]
-  F --> G>Store parts in DB]
+  F --> G[(Store parts in DB)]
   C1 -- Yes --> H
   G --> H[Application want show 'FooScreen' URL]
   H --> H1{Is in DB?}
@@ -74,6 +78,7 @@ flowchart TD
   K --> L((('FooScreen' is visible)))
   H1 -- No --> D
   J --> S[Shadower: Dynamic update context data]
+  S --> M[(Save parts in Transient DB)]
   S --> L
 ```
 
@@ -134,10 +139,10 @@ it recognizes that additional data is required to fully render the component.
 
 ### Background Fetch Process
 
-1. The Assembler gathers all **missing objects** (e.g., components, contents, texts) required to render the page properly.
+1. The Shadower gathers all **missing objects** (e.g., components, contents, texts) required to render the page entirely.
 2. It initiates a background request to the corresponding dynamic URL: {current-page}-on-demand-definition. This URL is expected to return all the necessary missing elements.
 3. Once the data is received:
-    - The **Shadower** step dynamically injects the new objects into the existing view structure.
+    - The **Shadower** step dynamically injects the new objects into the existing view structure and the transient cache database.
     - The affected UI sections are updated **in place**, without requiring a full reload.
 
 ### Placeholder Rendering

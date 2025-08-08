@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
-import com.tezov.tuucho.core.domain._system.JsonElementPath
-import com.tezov.tuucho.core.domain._system.find
-import com.tezov.tuucho.core.domain._system.replaceOrInsert
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.find
+import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull

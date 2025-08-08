@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Page
 
 A **page** JSON describes a full screen layout.

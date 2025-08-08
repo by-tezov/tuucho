@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Object Definition
 
 This section describes the primary JSON keys used in the TUUCHO rendering engine. You will find each fundamental object’s capabilities and its intended purpose.

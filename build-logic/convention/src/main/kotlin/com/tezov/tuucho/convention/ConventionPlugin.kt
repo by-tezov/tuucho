@@ -3,6 +3,7 @@ package com.tezov.tuucho.convention
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.provider.ListProperty
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -45,16 +46,15 @@ abstract class ConventionPlugin : Plugin<Project> {
                 compilerOptions {
                     jvmTarget.set(this@with.jvmTarget())
                     allWarningsAsErrors.set(false)
-                    freeCompilerArgs.apply {
-                        add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
-                        add("-opt-in=kotlin.uuid.ExperimentalUuidApi")
-                    }
+                    optIn.configureOptIn()
                 }
             }
         }
 
         internal fun configureKotlinMultiplatform(project: Project) = with(project) {
             extensions.configure(KotlinMultiplatformExtension::class.java) {
+                compilerOptions.optIn.configureOptIn()
+
                 val androidTargets = listOf(androidTarget())
                 androidTargets.forEach {
                     it.compilerOptions {
@@ -85,9 +85,16 @@ abstract class ConventionPlugin : Plugin<Project> {
         ) = with(project) {
             extensions.findByType(CommonExtension::class.java)!!.apply {
                 lint {
-                    disable.add("ComposableNaming")
+                    disable.apply {
+                        add("ComposableNaming")
+                    }
                 }
             }
+        }
+
+        internal fun ListProperty<String>.configureOptIn() {
+            add("kotlin.uuid.ExperimentalUuidApi")
+            add("kotlin.ExperimentalUnsignedTypes")
         }
 
     }

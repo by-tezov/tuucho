@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Roadmap
 
 > This roadmap outlines the planned evolution of the TUUCHO rendering engine.  

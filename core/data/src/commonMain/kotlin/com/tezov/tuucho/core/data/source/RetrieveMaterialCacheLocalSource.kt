@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.source
 
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveMaterialCacheLocalSource(
@@ -12,14 +12,14 @@ class RetrieveMaterialCacheLocalSource(
 ) {
 
     suspend fun process(url: String): JsonObject? {
-        val entity = coroutineScopes.onDatabase {
+        val entity = coroutineScopes.database.on {
             materialDatabaseSource.findRootOrNull(url)
         } ?: return null
-        return coroutineScopes.onParser {
+        return coroutineScopes.parser.on {
             materialAssembler.process(
                 materialObject = entity.jsonObject,
                 findAllRefOrNullFetcher = { from, type ->
-                    coroutineScopes.onDatabase {
+                    coroutineScopes.database.on {
                         materialDatabaseSource.findAllRefOrNull(from, url, null, type)
                     }
                 }

@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.source
 
 import com.tezov.tuucho.core.data.network.MaterialNetworkSource
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveMaterialRemoteSource(
@@ -12,10 +12,10 @@ class RetrieveMaterialRemoteSource(
 ) {
 
     suspend fun process(url: String): JsonObject {
-        val response = coroutineScopes.onNetwork {
+        val response = coroutineScopes.network.on {
             materialNetworkSource.retrieve(url)
         }
-        return coroutineScopes.onParser {
+        return coroutineScopes.parser.on {
             materialRectifier.process(response)
         }
     }

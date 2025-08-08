@@ -43,7 +43,8 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(project(":core:domain"))
+            implementation(project(":core:domain:business"))
+            implementation(project(":core:domain:tool"))
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)

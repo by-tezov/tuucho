@@ -6,10 +6,11 @@ import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.model.schema.setting.ConfigSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.protocol.RefreshCacheMaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business.model.schema.config.ConfigSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
@@ -18,17 +19,15 @@ class RefreshMaterialCacheRepository(
     private val retrieveObjectRemoteSource: RetrieveObjectRemoteSource,
     private val retrieveMaterialRemoteSource: RetrieveMaterialRemoteSource,
     private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
-) : RefreshCacheMaterialRepositoryProtocol {
+) : MaterialRepositoryProtocol.RefreshCache {
 
     override suspend fun process(url: String) {
         val configModelDomain = retrieveObjectRemoteSource.process(url)
-        coroutineScopes.onParser {
-            configModelDomain.withScope(ConfigSchema.Root::Scope).let { configScope ->
-                configScope.preload?.withScope(ConfigSchema.Preload::Scope)?.let { preloadScope ->
-                    preloadScope.subs?.refreshCache()
-                    preloadScope.templates?.refreshCache()
-                    preloadScope.pages?.refreshCache()
-                }
+        coroutineScopes.parser.on {
+            configModelDomain.onScope(ConfigSchema.Preload::Scope).let { preloadScope ->
+                preloadScope.subs?.refreshCache()
+                preloadScope.templates?.refreshCache()
+                preloadScope.pages?.refreshCache()
             }
         }
     }

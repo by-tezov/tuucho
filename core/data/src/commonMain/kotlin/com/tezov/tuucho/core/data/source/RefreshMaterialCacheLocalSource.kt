@@ -10,17 +10,17 @@ import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
-import com.tezov.tuucho.core.domain.model.schema._system.onScope
-import com.tezov.tuucho.core.domain.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RefreshMaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
-    private val materialBreaker: MaterialBreaker
+    private val materialBreaker: MaterialBreaker,
 ) {
 
     suspend fun shouldRefresh(/* TODO */): Boolean {
@@ -35,10 +35,10 @@ class RefreshMaterialCacheLocalSource(
         materialObject: JsonObject,
         url: String,
         visibility: Visibility,
-        lifetime: Lifetime
+        lifetime: Lifetime,
     ) {
         //TODO auto purge obsolete entry
-        val parts = coroutineScopes.onParser {
+        val parts = coroutineScopes.parser.on {
             materialBreaker.process(
                 materialObject = materialObject,
                 jsonEntityObjectTreeProducer = { jsonObject ->
@@ -55,7 +55,7 @@ class RefreshMaterialCacheLocalSource(
                 }
             )
         }
-        coroutineScopes.onDatabase {
+        coroutineScopes.database.on {
             with(parts) {
                 val rootPrimaryKey = rootJsonEntity?.let { root ->
                     materialDatabaseSource

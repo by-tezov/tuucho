@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.data.database.dao.VersioningQueries
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.database.type.Lifetime
-import com.tezov.tuucho.core.domain.model.schema._system.onScope
-import com.tezov.tuucho.core.domain.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
+import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
 import kotlinx.serialization.json.JsonObject
 
 class MaterialDatabaseSource(

@@ -3,11 +3,9 @@ package com.tezov.tuucho.core.data.repository
 import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
-import com.tezov.tuucho.core.domain.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.protocol.ShadowerMaterialRepositoryProtocol.Event
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower
+import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
@@ -15,13 +13,13 @@ class ShadowerMaterialRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialShadower: MaterialShadower,
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
-) : ShadowerMaterialRepositoryProtocol, KoinComponent {
+) : Shadower, KoinComponent {
 
-    private val _events = MutableSharedFlow<Event>(replay = 0)
-    override val events: SharedFlow<Event> = _events
+    private val _events = Notifier.Emitter<Shadower.Event>()
+    override val events get() = _events.createCollector
 
-    fun process(url: String, materialObject: JsonObject) {
-        coroutineScopes.launchOnParser {
+    override fun process(url: String, materialObject: JsonObject) {
+        coroutineScopes.parser.launch {
             shadowerMaterialSources.forEach { it.onStart(url, materialObject) }
             materialShadower.process(
                 materialObject = materialObject,
@@ -40,9 +38,9 @@ class ShadowerMaterialRepository(
                             .filter { !it.isCancelled }
                             .forEach { source ->
                                 source.onDone().collect {
-                                    coroutineScopes.launchOnEvent {
+                                    coroutineScopes.event.launch {
                                         _events.emit(
-                                            Event(
+                                            Shadower.Event(
                                                 type = source.type,
                                                 url = url,
                                                 jsonObject = it
