@@ -1,48 +1,83 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
-import com.tezov.tuucho.core.domain.business.navigation.NavigationDestination
-import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 
 sealed interface NavigationRepositoryProtocol {
 
-    interface Destination {
+    interface StackRoute {
 
-        sealed class Event {
+        suspend fun routes(): List<NavigationRoute>
 
-            object Clear : Event()
+        suspend fun forward(
+            route: NavigationRoute,
+            navigationOptionObject: JsonObject?,
+        ): NavigationRoute?
 
-            data class SavedForReuse(val fromIndex: Int, val destination: NavigationDestination) :
-                Event()
-
-            data class RemovedFromTail(val destinations: List<NavigationDestination>) : Event()
-
-            data class RemovedAtTail(val destination: NavigationDestination) : Event()
-
-            data class AddedAtTail(val destination: NavigationDestination) : Event()
-
-            data class ReuseRestoredAtTail(val destination: NavigationDestination) : Event()
-
-        }
-
-        suspend fun stack(): List<NavigationDestination>
-
-        suspend fun swallow(destination: NavigationDestination): List<Event>
+        suspend fun backward(
+            route: NavigationRoute,
+        )
 
     }
 
     interface StackScreen {
 
-        val events: Notifier.Collector<ScreenProtocol.IdentifierProtocol>
+        suspend fun routes(): List<NavigationRoute>
 
-        suspend fun getView(identifier: SourceIdentifierProtocol): ScreenProtocol?
+        suspend fun getScreens(routes: List<NavigationRoute>): List<ScreenProtocol>
 
-        suspend fun getViews(url: String): List<ScreenProtocol>?
+        suspend fun getScreenOrNull(route: NavigationRoute): ScreenProtocol?
 
-        suspend fun swallow(events: List<Destination.Event>, componentObject: JsonObject? = null)
+        suspend fun getScreensOrNull(url: String): List<ScreenProtocol>?
 
+        suspend fun forward(
+            route: NavigationRoute,
+            componentObject: JsonObject,
+        )
+
+        suspend fun backward(
+            routes: List<NavigationRoute>,
+        )
+
+    }
+
+    interface StackTransition {
+
+        sealed class Event {
+            data class Idle(val routes: List<NavigationRoute>) : Event()
+            data object PrepareTransition : Event()
+            data class RequestTransition(
+                val foregroundGroup: Group,
+                val backgroundGroup: Group,
+            ) : Event() {
+                data class Group(
+                    val routes: List<NavigationRoute>,
+                    val transitionSpecObject: JsonObject,
+                )
+            }
+
+            data object TransitionComplete : Event()
+        }
+
+        suspend fun routes(): List<NavigationRoute>
+
+        suspend fun isBusy(): Boolean
+
+        val events: Notifier.Collector<Event>
+
+        suspend fun notifyTransitionCompleted()
+
+        suspend fun forward(
+            routes: List<NavigationRoute>,
+            navigationExtraObject: JsonObject?,
+            navigationTransitionObject: JsonObject?,
+        )
+
+        suspend fun backward(
+            routes: List<NavigationRoute>,
+        )
     }
 
 }

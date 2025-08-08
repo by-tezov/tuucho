@@ -2,12 +2,12 @@ package com.tezov.tuucho.core.data.parser.rectifier.dimensions
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.addGroup
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.requireIsRef
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -30,17 +30,17 @@ class DimensionsRectifier : Rectifier() {
         path: JsonElementPath,
         element: JsonElement,
     ): JsonArray {
-        val output = mutableListOf<JsonObject>()
-        element.find(path).jsonObject.forEach { (group, dimensions) ->
-            dimensions.jsonObject.forEach { (key, dimension) ->
-                when (dimension) {
-                    is JsonPrimitive -> alterPrimitiveDimension(key, group, dimension)
-                    is JsonObject -> alterObjectDimension(key, group, dimension)
-                    else -> error("type not managed")
-                }.let(output::add)
+        return buildList {
+            element.find(path).jsonObject.forEach { (group, dimensions) ->
+                dimensions.jsonObject.forEach { (key, dimension) ->
+                    when (dimension) {
+                        is JsonPrimitive -> alterPrimitiveDimension(key, group, dimension)
+                        is JsonObject -> alterObjectDimension(key, group, dimension)
+                        else -> error("type not managed")
+                    }.let(::add)
+                }
             }
-        }
-        return JsonArray(output)
+        }.let(::JsonArray)
     }
 
     private fun alterPrimitiveDimension(

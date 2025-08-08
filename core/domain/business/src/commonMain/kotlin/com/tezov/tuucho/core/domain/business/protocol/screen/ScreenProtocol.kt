@@ -1,15 +1,13 @@
 package com.tezov.tuucho.core.domain.business.protocol.screen
 
-import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 
 interface ScreenProtocol {
 
-    interface IdentifierProtocol : SourceIdentifierProtocol
-
-    val identifier: IdentifierProtocol
+    val route: NavigationRoute
 
     suspend fun update(jsonObject: JsonObject)
 

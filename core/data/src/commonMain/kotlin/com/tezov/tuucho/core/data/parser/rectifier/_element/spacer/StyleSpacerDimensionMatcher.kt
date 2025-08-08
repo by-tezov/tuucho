@@ -5,9 +5,9 @@ import com.tezov.tuucho.core.data.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIsAny
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
-import com.tezov.tuucho.core.domain.business.model.schema.material.StyleSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.SpacerSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement

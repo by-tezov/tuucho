@@ -9,29 +9,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.ColorSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.layout.LayoutLinearSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ColorSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.presentation.tool.modifier.onTrue
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
-import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifier
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifierFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class LayoutLinearViewFactory(
-    private val identifierFactory: ViewIdentifierFactory,
-) : ViewFactory() {
+class LayoutLinearViewFactory : ViewFactory() {
 
     private val viewFactories: List<ViewFactory> by inject()
 
@@ -41,21 +37,21 @@ class LayoutLinearViewFactory(
     }
 
     override suspend fun process(
-        screenIdentifier: ScreenIdentifier,
+        route: NavigationRoute,
         componentObject: JsonObject,
     ) =
         LayoutLinearView(
-            identifier = identifierFactory.invoke(screenIdentifier),
+            route = route,
             componentObject = componentObject,
             viewFactories = viewFactories,
         ).also { it.init() }
 }
 
 class LayoutLinearView(
-    identifier: ViewIdentifier,
+    private val route: NavigationRoute,
     componentObject: JsonObject,
     private val viewFactories: List<ViewFactory>,
-) : View(identifier, componentObject) {
+) : View(componentObject) {
 
     override val children: List<ViewProtocol>?
         get() = _itemViews.value
@@ -82,10 +78,10 @@ class LayoutLinearView(
                     _itemViews.value = itemsArray.mapNotNull { item ->
                         viewFactories
                             .first { it.accept(item.jsonObject) }
-                            .process(identifier.screenIdentifier, item.jsonObject)
+                            .process(route, item.jsonObject)
                     }
                 }
-                
+
                 //TODO
 //                componentObject = componentObject.withScope(ComponentSchema::Scope).apply {
 //                    content = content?.withScope(LayoutLinearSchema.Content::Scope).apply {

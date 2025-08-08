@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.data.parser.breaker
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser._system.JsonElementTree
 import com.tezov.tuucho.core.data.parser.breaker._system.JsonEntityObjectTreeProducerProtocol
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.MaterialSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
@@ -24,7 +24,7 @@ class MaterialBreaker : KoinComponent {
     data class Parts(
         val version: String,
         val rootJsonEntity: JsonElementTree?,
-        val jsonElementTree: MutableList<JsonElementTree>,
+        val jsonElementTree: List<JsonElementTree>,
     )
 
     @Suppress("RedundantSuspendModifier")
@@ -32,32 +32,31 @@ class MaterialBreaker : KoinComponent {
         materialObject: JsonObject,
         jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
     ): Parts = with(materialObject.withScope(MaterialSchema::Scope)) {
-        val jsonElementTree: MutableList<JsonElementTree> = mutableListOf()
+        val jsonElementTree = buildList {
+            components?.let {
+                componentBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
+            }?.also(::add)
 
-        components?.let {
-            componentBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
-        }?.also(jsonElementTree::add)
+            contents?.let {
+                contentBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
+            }?.also(::add)
+            styles?.let {
+                styleBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
+            }?.also(::add)
+            options?.let {
+                optionBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
+            }?.also(::add)
 
-        contents?.let {
-            contentBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
-        }?.also(jsonElementTree::add)
-        styles?.let {
-            styleBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
-        }?.also(jsonElementTree::add)
-        options?.let {
-            optionBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
-        }?.also(jsonElementTree::add)
-
-        texts?.let {
-            textBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
-        }?.also(jsonElementTree::add)
-        colors?.let {
-            colorBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
-        }?.also(jsonElementTree::add)
-        dimensions?.let {
-            dimensionBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
-        }?.also(jsonElementTree::add)
-
+            texts?.let {
+                textBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
+            }?.also(::add)
+            colors?.let {
+                colorBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
+            }?.also(::add)
+            dimensions?.let {
+                dimensionBreaker.process("".toPath(), it, jsonEntityObjectTreeProducer)
+            }?.also(::add)
+        }
         Parts(
             version = version
                 ?: throw DataException.Default("missing version in page material $this"),

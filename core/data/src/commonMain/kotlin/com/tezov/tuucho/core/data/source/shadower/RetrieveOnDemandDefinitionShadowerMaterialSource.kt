@@ -7,10 +7,10 @@ import com.tezov.tuucho.core.data.network.MaterialNetworkSource
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
-import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.Shadower
-import com.tezov.tuucho.core.domain.business.model.schema.material.setting.SettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -71,7 +71,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     private suspend fun refreshTransientDatabaseCache(
         url: String
     ) {
-        val material = coroutineScopes.network.on {
+        val material = coroutineScopes.network.await {
             materialNetworkSource.retrieve(url)
         }.let { materialRectifier.process(it) }
         refreshMaterialCacheLocalSource.process(
@@ -88,7 +88,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         materialAssembler.process(
             materialObject = jsonObject,
             findAllRefOrNullFetcher = { from, type ->
-                coroutineScopes.database.on {
+                coroutineScopes.database.await {
                     materialDatabaseSource.findAllRefOrNull(
                         from = from,
                         url = url,
