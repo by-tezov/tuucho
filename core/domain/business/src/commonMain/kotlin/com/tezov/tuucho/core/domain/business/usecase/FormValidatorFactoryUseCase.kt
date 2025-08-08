@@ -11,8 +11,8 @@ import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringNotNu
 import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringOnlyDigitsFormValidator
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.FormValidatorSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.FormValidatorSchema.Value.Type
+import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase.Input

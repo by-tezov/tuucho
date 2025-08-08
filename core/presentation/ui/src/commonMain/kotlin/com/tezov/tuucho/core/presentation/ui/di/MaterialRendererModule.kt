@@ -38,6 +38,7 @@ object MaterialRendererModule {
 
         factory<ScreenRenderer> {
             ScreenRenderer(
+                coroutineScopes = get(),
                 identifierFactory = get()
             )
         } bind ScreenRendererProtocol::class

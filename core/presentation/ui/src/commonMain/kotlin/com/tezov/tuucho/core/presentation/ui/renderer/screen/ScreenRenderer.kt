@@ -5,22 +5,23 @@ import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenIdentifierFactory
-import com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ScreenRenderer(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val identifierFactory: ScreenIdentifierFactory,
 ) : ScreenRendererProtocol, KoinComponent {
 
     private val viewFactories: List<ViewFactory> by inject()
 
-    override suspend fun process(componentObject: JsonObject): ScreenProtocol {
+    override suspend fun process(componentObject: JsonObject) = coroutineScopes.renderer.on {
         val type = componentObject.withScope(TypeSchema::Scope).self
         if (type != TypeSchema.Value.component) {
             throw UiException.Default("object is not a component $componentObject")
@@ -34,7 +35,7 @@ class ScreenRenderer(
             .singleOrThrow(id, subset)
             ?: throw UiException.Default("No renderer found for $componentObject")
 
-        return Screen(
+        Screen(
             view = viewFactory.process(screenIdentifier, componentObject),
             identifier = screenIdentifier
         )

@@ -33,7 +33,7 @@ class NavigateToUrlUseCase(
     )
 
     override suspend fun invoke(input: Input) = with(input) {
-        coroutineScopes.onEvent {
+        coroutineScopes.navigation.on {
             val component = retrieveMaterialRepository.process(url)
             val destination = NavigationDestination(
                 route = NavigationRoute.Url(url),
@@ -70,10 +70,10 @@ class NavigateToUrlUseCase(
         }
     } ?: NavigationOption()
 
-    private fun NavigationOptionSelectorProtocol.accept() = when (this) {
+    private suspend fun NavigationOptionSelectorProtocol.accept() = when (this) {
         is PageBreadCrumbNavigationOptionSelector -> accept(
             navigationDestinationStackRepository
-                .stack
+                .stack()
                 .mapNotNull { (it.route as? NavigationRoute.Url)?.value }
         )
 

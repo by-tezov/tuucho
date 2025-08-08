@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.model.schema.material
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.OptionSchema
 import kotlinx.serialization.json.JsonElement
 
 object MessageSchema {

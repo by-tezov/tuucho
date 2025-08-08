@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.model.schema.material.option
+package com.tezov.tuucho.core.domain.business.model.schema.material._element.form
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument

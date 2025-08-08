@@ -71,7 +71,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     private suspend fun refreshTransientDatabaseCache(
         url: String
     ) {
-        val material = coroutineScopes.onNetwork {
+        val material = coroutineScopes.network.on {
             materialNetworkSource.retrieve(url)
         }.let { materialRectifier.process(it) }
         refreshMaterialCacheLocalSource.process(
@@ -88,7 +88,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         materialAssembler.process(
             materialObject = jsonObject,
             findAllRefOrNullFetcher = { from, type ->
-                coroutineScopes.onDatabase {
+                coroutineScopes.database.on {
                     materialDatabaseSource.findAllRefOrNull(
                         from = from,
                         url = url,

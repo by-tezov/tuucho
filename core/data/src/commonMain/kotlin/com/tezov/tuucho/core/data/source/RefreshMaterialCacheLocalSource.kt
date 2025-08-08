@@ -20,7 +20,7 @@ import kotlinx.serialization.json.JsonObject
 class RefreshMaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
-    private val materialBreaker: MaterialBreaker
+    private val materialBreaker: MaterialBreaker,
 ) {
 
     suspend fun shouldRefresh(/* TODO */): Boolean {
@@ -35,10 +35,10 @@ class RefreshMaterialCacheLocalSource(
         materialObject: JsonObject,
         url: String,
         visibility: Visibility,
-        lifetime: Lifetime
+        lifetime: Lifetime,
     ) {
         //TODO auto purge obsolete entry
-        val parts = coroutineScopes.onParser {
+        val parts = coroutineScopes.parser.on {
             materialBreaker.process(
                 materialObject = materialObject,
                 jsonEntityObjectTreeProducer = { jsonObject ->
@@ -55,7 +55,7 @@ class RefreshMaterialCacheLocalSource(
                 }
             )
         }
-        coroutineScopes.onDatabase {
+        coroutineScopes.database.on {
             with(parts) {
                 val rootPrimaryKey = rootJsonEntity?.let { root ->
                     materialDatabaseSource

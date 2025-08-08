@@ -15,23 +15,23 @@ class RegisterUpdateViewEventUseCase(
 ) : UseCaseProtocol.Sync<Unit, Unit> {
 
     override fun invoke(input: Unit) {
-        coroutineScopes.launchOnEvent {
+        coroutineScopes.event.launch {
             formUpdateActionHandler.events
                 .forever {
-                    coroutineScopes.launchOnRenderer {
-                        navigationScreenStackRepository.getView(it.source)
-                            ?.update(it.jsonObject)
+                    val view = navigationScreenStackRepository.getView(it.source)
+                    coroutineScopes.renderer.on {
+                        view?.update(it.jsonObject)
                     }
+
                 }
         }
-
-        coroutineScopes.launchOnEvent {
+        coroutineScopes.event.launch {
             shadowerMaterialRepository.events
                 .filter { it.type == Shadower.Type.onDemandDefinition }
                 .forever {
-                    coroutineScopes.launchOnRenderer {
-                        navigationScreenStackRepository.getViews(it.url)
-                            ?.forEach { view -> view.update(it.jsonObject) }
+                    val views = navigationScreenStackRepository.getViews(it.url)
+                    coroutineScopes.renderer.on {
+                        views?.forEach { view -> view.update(it.jsonObject) }
                     }
                 }
         }

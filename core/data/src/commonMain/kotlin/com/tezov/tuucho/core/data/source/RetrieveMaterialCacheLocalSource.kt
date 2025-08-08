@@ -12,14 +12,14 @@ class RetrieveMaterialCacheLocalSource(
 ) {
 
     suspend fun process(url: String): JsonObject? {
-        val entity = coroutineScopes.onDatabase {
+        val entity = coroutineScopes.database.on {
             materialDatabaseSource.findRootOrNull(url)
         } ?: return null
-        return coroutineScopes.onParser {
+        return coroutineScopes.parser.on {
             materialAssembler.process(
                 materialObject = entity.jsonObject,
                 findAllRefOrNullFetcher = { from, type ->
-                    coroutineScopes.onDatabase {
+                    coroutineScopes.database.on {
                         materialDatabaseSource.findAllRefOrNull(from, url, null, type)
                     }
                 }

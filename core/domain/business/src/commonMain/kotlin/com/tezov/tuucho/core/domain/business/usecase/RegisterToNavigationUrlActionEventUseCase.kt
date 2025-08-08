@@ -13,7 +13,7 @@ class RegisterToNavigationUrlActionEventUseCase(
 ) : UseCaseProtocol.Async<Unit, Unit> {
 
     override suspend fun invoke(input: Unit) {
-        coroutineScopes.onEvent {
+        coroutineScopes.event.on {
             navigationUrlActionHandler.events
                 .forever { url ->
                     useCaseExecutor.invokeSuspend(

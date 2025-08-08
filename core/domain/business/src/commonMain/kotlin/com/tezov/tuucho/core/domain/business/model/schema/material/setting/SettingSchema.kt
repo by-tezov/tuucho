@@ -3,14 +3,13 @@ package com.tezov.tuucho.core.domain.business.model.schema.material.setting
 import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.StyleSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
 object SettingSchema {
 
-    const val root = "setting"
+    const val root = TypeSchema.Value.setting
 
     object Key {
         const val id = IdSchema.root
@@ -39,7 +38,7 @@ object SettingSchema {
     object Root {
         object Key {
             const val disableOnDemandDefinitionShadower = "disable-on-demand-definition-shadower"
-            const val navigationOption = "navigation-option"
+            const val navigationOption = SettingNavigationOptionSchema.root
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument) {
