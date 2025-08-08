@@ -23,7 +23,6 @@ object StyleSchema {
     open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
         OpenSchemaScope<T>(argument) {
         final override val root = StyleSchema.root
-        var self by delegate<JsonObject?>(root)
 
         var id by delegate<JsonElement?>(Key.id)
         var type by delegate<String?>(Key.type)

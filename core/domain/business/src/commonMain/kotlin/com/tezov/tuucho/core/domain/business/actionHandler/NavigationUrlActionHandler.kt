@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.actionHandler
 
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.action.Action
 import com.tezov.tuucho.core.domain.business.protocol.ActionHandlerProtocol
 import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier

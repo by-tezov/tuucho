@@ -1,13 +1,14 @@
-package com.tezov.tuucho.core.data.parser.rectifier
+package com.tezov.tuucho.core.data.parser.rectifier.option
 
-import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
+import com.tezov.tuucho.core.data.di.MaterialRectifierModule
+import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.model.schema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.model.schema.material.TextSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.ValidatorSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.option.FormValidatorSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -19,21 +20,22 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class ValidatorRectifier : Rectifier() {
+class FormValidatorRectifier : Rectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
-        Name.Matcher.VALIDATOR
+        MaterialRectifierModule.Name.Matcher.FIELD_VALIDATOR
     )
 
     override val childProcessors: List<Rectifier> by inject(
-        Name.Processor.VALIDATOR
+        MaterialRectifierModule.Name.Processor.FIELD_VALIDATOR
     )
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = beforeAlterObject("".toPath(), element.find(path)
-        .withScope(ValidatorSchema::Scope).apply {
+    ) = beforeAlterObject(
+        "".toPath(), element.find(path)
+        .withScope(FormValidatorSchema::Scope).apply {
             type = this.element.string
         }
         .collect())
@@ -53,7 +55,7 @@ class ValidatorRectifier : Rectifier() {
         if (!jsonArray.any { it is JsonPrimitive }) return null
         return JsonArray(jsonArray.map {
             if (it is JsonPrimitive) {
-                it.withScope(ValidatorSchema::Scope).apply {
+                it.withScope(FormValidatorSchema::Scope).apply {
                     type = this.element.string
                 }.collect()
             } else it
@@ -71,20 +73,19 @@ class ValidatorRectifier : Rectifier() {
         path: JsonElementPath,
         element: JsonElement,
     ): JsonElement? {
-        var valueRectified: String? = null
-        return element.withScope(ValidatorSchema::Scope)
+        var idMessageErrorRectified: String? = null
+        return element.withScope(FormValidatorSchema::Scope)
             .takeIf { scope ->
-                if(scope.idMessageError?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
-                    valueRectified = scope.idMessageError?.removePrefix(SymbolData.ID_REF_INDICATOR)
+                if (scope.idMessageError?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
+                    idMessageErrorRectified = scope.idMessageError?.removePrefix(SymbolData.ID_REF_INDICATOR)
                 }
-                valueRectified = (valueRectified ?: scope.idMessageError)
+                idMessageErrorRectified = (idMessageErrorRectified ?: scope.idMessageError)
                     ?.takeIf { !it.hasGroup() }
                     ?.addGroup(TextSchema.Value.Group.common)
-                valueRectified != null
+                idMessageErrorRectified != null
             }
-            ?.apply {
-                idMessageError = valueRectified
-            }?.collect()
+            ?.apply { idMessageError = idMessageErrorRectified }
+            ?.collect()
     }
 
 

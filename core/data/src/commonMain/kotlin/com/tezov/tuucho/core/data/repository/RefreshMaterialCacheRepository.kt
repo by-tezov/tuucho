@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.setting.ConfigSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
@@ -23,12 +24,10 @@ class RefreshMaterialCacheRepository(
     override suspend fun process(url: String) {
         val configModelDomain = retrieveObjectRemoteSource.process(url)
         coroutineScopes.onParser {
-            configModelDomain.withScope(ConfigSchema.Root::Scope).let { configScope ->
-                configScope.preload?.withScope(ConfigSchema.Preload::Scope)?.let { preloadScope ->
-                    preloadScope.subs?.refreshCache()
-                    preloadScope.templates?.refreshCache()
-                    preloadScope.pages?.refreshCache()
-                }
+            configModelDomain.onScope(ConfigSchema.Preload::Scope).let { preloadScope ->
+                preloadScope.subs?.refreshCache()
+                preloadScope.templates?.refreshCache()
+                preloadScope.pages?.refreshCache()
             }
         }
     }

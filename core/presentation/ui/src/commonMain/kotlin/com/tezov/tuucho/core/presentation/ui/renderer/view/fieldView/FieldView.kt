@@ -22,7 +22,7 @@ import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormFieldSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormSchema
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldFormViewProtocol
-import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
@@ -34,7 +34,7 @@ import kotlinx.serialization.json.JsonObject
 class FieldViewFactory(
     private val identifierFactory: (screenIdentifier: ScreenIdentifier) -> ViewIdentifier,
     private val useCaseExecutor: UseCaseExecutor,
-    private val validatorFactory: ValidatorFactoryUseCase,
+    private val fieldValidatorFactory: FormValidatorFactoryUseCase,
 ) : ViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
@@ -50,7 +50,7 @@ class FieldViewFactory(
         componentObject = componentObject,
         fieldFormView = FieldFormView(
             useCaseExecutor = useCaseExecutor,
-            validatorFactory = validatorFactory,
+            fieldValidatorFactory = fieldValidatorFactory,
         )
     ).also { it.init() }
 }

@@ -12,14 +12,15 @@ object TypeSchema {
 
     object Value {
         const val component = "component"
+        const val setting = "setting"
         const val content = "content"
         const val style = "style"
         const val option = "option"
-        const val state = "state"
-        const val message = "message"
         const val text = "text"
         const val dimension = "dimension"
         const val color = "color"
+        const val state = "state"
+        const val message = "message"
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {

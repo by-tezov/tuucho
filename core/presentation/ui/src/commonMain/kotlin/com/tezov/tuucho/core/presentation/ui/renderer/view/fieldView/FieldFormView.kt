@@ -2,11 +2,11 @@ package com.tezov.tuucho.core.presentation.ui.renderer.view.fieldView
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idValue
-import com.tezov.tuucho.core.domain.business.model.schema.material.ValidatorSchema
-import com.tezov.tuucho.core.domain.business.protocol.screen.FieldValidatorProtocol
+import com.tezov.tuucho.core.domain.business.model.schema.material.option.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldFormViewProtocol
-import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import kotlinx.serialization.json.JsonArray
@@ -14,12 +14,12 @@ import kotlinx.serialization.json.JsonObject
 
 class FieldFormView(
     private val useCaseExecutor: UseCaseExecutor,
-    private val validatorFactory: ValidatorFactoryUseCase,
+    private val fieldValidatorFactory: FormValidatorFactoryUseCase,
 ) : FieldFormViewProtocol {
 
     private lateinit var fieldView: FieldView
 
-    override var validators: List<FieldValidatorProtocol<String>>? = null
+    override var validators: List<FormValidatorProtocol<String>>? = null
         private set
 
     override fun attach(view: ViewProtocol) {
@@ -53,18 +53,18 @@ class FieldFormView(
         }
 
         validators = validatorsArray?.mapNotNull { validatorObject ->
-            val validatorPrototype = validatorObject.withScope(ValidatorSchema::Scope).apply {
+            val validatorPrototype = validatorObject.withScope(FormValidatorSchema::Scope).apply {
                 this.messageError = messagesErrorIdMapped
                     .firstOrNull { it.first == idMessageError || validatorsArray.size == 1 }?.second
                     ?: throw UiException.Default("Missing message error for validator")
             }.collect()
             @Suppress("UNCHECKED_CAST")
             useCaseExecutor.invokeSuspend(
-                useCase = validatorFactory,
-                input = ValidatorFactoryUseCase.Input(
+                useCase = fieldValidatorFactory,
+                input = FormValidatorFactoryUseCase.Input(
                     prototypeObject = validatorPrototype
                 ),
-            ).validator as? FieldValidatorProtocol<String>
+            ).validator as? FormValidatorProtocol<String>
         }?.takeIf { it.isNotEmpty() }
     }
 

@@ -15,18 +15,18 @@ class ActionHandlerUseCase(
     data class Input(
         val source: SourceIdentifierProtocol,
         val action: ActionModelDomain,
-        val paramElement: JsonElement? = null,
+        val jsonElement: JsonElement? = null,
     )
 
     override suspend fun invoke(input: Input) = with(input) {
         coroutineScopes.onEvent {
             handlers
                 .asSequence()
-                .filter { it.accept(source, action, paramElement) }
+                .filter { it.accept(source, action, jsonElement) }
                 .sortedBy { it.priority }
                 .let {
                     for (handler in it) {
-                        handler.process(source, action, paramElement)
+                        handler.process(source, action, jsonElement)
                     }
                 }
         }

@@ -1,13 +1,14 @@
-package com.tezov.tuucho.core.data.parser.rectifier
+package com.tezov.tuucho.core.data.parser.rectifier.content
 
-import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
+import com.tezov.tuucho.core.data.di.MaterialRectifierModule
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
+import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.ContentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.requireIsRef
-import com.tezov.tuucho.core.domain.business.model.schema.material.OptionSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
@@ -22,27 +23,27 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
-class OptionRectifier : Rectifier() {
+class ContentRectifier : Rectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
-        Name.Matcher.OPTION
+        MaterialRectifierModule.Name.Matcher.CONTENT
     )
 
     override val childProcessors: List<Rectifier> by inject(
-        Name.Processor.OPTION
+        MaterialRectifierModule.Name.Processor.CONTENT
     )
 
     override fun accept(
         path: JsonElementPath, element: JsonElement
-    ) = (path.lastSegmentIs(TypeSchema.Value.option) && path.parentIsTypeOf(
+    ) = (path.lastSegmentIs(TypeSchema.Value.content) && path.parentIsTypeOf(
         element, TypeSchema.Value.component
     )) || super.accept(path, element)
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(OptionSchema::Scope).apply {
-        type = TypeSchema.Value.option
+    ) = element.find(path).withScope(ContentSchema::Scope).apply {
+        type = TypeSchema.Value.content
         val value = this.element.string.requireIsRef()
         id = JsonPrimitive(value)
     }.collect()
@@ -50,18 +51,16 @@ class OptionRectifier : Rectifier() {
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement
-    ) = element.find(path).withScope(OptionSchema::Scope).apply {
-        type = TypeSchema.Value.option
+    ) = element.find(path).withScope(ContentSchema::Scope).apply {
+        type = TypeSchema.Value.content
         id ?: run { id = JsonNull }
         subset = retrieveSubsetOrMarkUnknown(path, element)
     }.collect()
 
-    override fun beforeAlterArray(
-        path: JsonElementPath,
-        element: JsonElement
-    ) = with(element.find(path).jsonArray) {
-        JsonArray(map { process("".toPath(), it) })
-    }
+    override fun beforeAlterArray(path: JsonElementPath, element: JsonElement) =
+        with(element.find(path).jsonArray) {
+            JsonArray(map { process("".toPath(), it) })
+        }
 
     private fun retrieveSubsetOrMarkUnknown(
         path: JsonElementPath,

@@ -13,7 +13,7 @@ val JsonElement?.string get() = this!!.jsonPrimitive.content
 val JsonElement?.booleanOrNull: Boolean? get() = (this as? JsonPrimitive)?.boolean
 val JsonElement?.boolean get() = this!!.jsonPrimitive.boolean
 
-fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? {
+fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? { //Improve: No efficient, but will do the job
     var currentElement: JsonElement = this
     path.forEach { key ->
         currentElement = (currentElement as? JsonObject)?.get(key) ?: return null
@@ -25,7 +25,7 @@ fun JsonElement.find(path: JsonElementPath): JsonElement =
     this.findOrNull(path)
         ?: error("element could not be found at path $path inside $this")
 
-fun JsonElement.replaceOrInsert(path: JsonElementPath, newElement: JsonElement): JsonElement {
+fun JsonElement.replaceOrInsert(path: JsonElementPath, newElement: JsonElement): JsonElement { //Improve: No efficient, but will do the job
     if (path.isEmpty()) return newElement
     val stack = mutableListOf<Pair<String, JsonObject>>()
     var current = this
