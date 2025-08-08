@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.parser.assembler
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser.assembler._system.MatcherAssemblerProtocol
-import com.tezov.tuucho.core.data.parser.rectifier.ContentRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.content.ContentRectifier
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema

@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.domain.business.actionHandler
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.action.Action
 import com.tezov.tuucho.core.domain.business.model.schema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.protocol.ActionHandlerProtocol
 import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol

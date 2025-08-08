@@ -1,18 +1,19 @@
-package com.tezov.tuucho.core.domain.business.validator.fieldValidator
+package com.tezov.tuucho.core.domain.business.Validator.formValidator
 
 import com.tezov.tuucho.core.domain.business.config.Language
-import com.tezov.tuucho.core.domain.business.protocol.screen.FieldValidatorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonObject
 
-class StringEmailValidator(
+class StringMinValueFormValidator(
     private val errorMessages: JsonObject,
-) : FieldValidatorProtocol<String> {
+    private val minValue: Int,
+) : FormValidatorProtocol<String> {
 
     private var isValid = false
 
     override fun updateValidity(value: String) {
-        isValid = value.isEmpty() || value.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
+        isValid = value.isEmpty() || value.toIntOrNull()?.let { it > minValue } ?: false
     }
 
     override fun isValid() = isValid

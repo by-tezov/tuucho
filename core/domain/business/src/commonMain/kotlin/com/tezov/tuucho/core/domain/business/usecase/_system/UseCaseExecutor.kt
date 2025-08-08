@@ -12,9 +12,9 @@ class UseCaseExecutor(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
         onResult: OUTPUT.() -> Unit = {},
-        onException: (DomainException) -> Unit = {},
+        onException: ((DomainException) -> Unit)? = null,
     ) {
-        runCatching {
+        try {
             coroutineScopes.launchOnEvent {
                 when (useCase) {
                     is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input).also {
@@ -26,10 +26,11 @@ class UseCaseExecutor(
                     }
                 }
             }
-        }.onFailure {
-            when (it) {
-                is DomainException -> onException(it)
-                else -> onException(DomainException.Unknown(it))
+        } catch (e: Throwable) {
+            val output: (DomainException) -> Unit = onException ?: { throw it }
+            when (e) {
+                is DomainException -> output(e)
+                else -> output(DomainException.Unknown(e))
             }
         }
     }
@@ -37,19 +38,23 @@ class UseCaseExecutor(
     suspend fun <INPUT : Any, OUTPUT : Any> invokeSuspend(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
-    ): OUTPUT = runCatching {
-        coroutineScopes.onEvent {
-            when (useCase) {
-                is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input)
-                is UseCaseProtocol.Sync<INPUT, OUTPUT> -> useCase.invoke(input)
+    ): OUTPUT {
+
+        try {
+            return coroutineScopes.onEvent {
+                when (useCase) {
+                    is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input)
+                    is UseCaseProtocol.Sync<INPUT, OUTPUT> -> useCase.invoke(input)
+                }
+            }
+        } catch (e: Throwable) {
+            throw when (e) {
+                is DomainException -> e
+                else -> DomainException.Unknown(e)
             }
         }
-    }.onFailure {
-        when (it) {
-            is DomainException -> it
-            else -> DomainException.Unknown(it)
-        }
-    }.getOrThrow()
+
+    }
 
 }
 

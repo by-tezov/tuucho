@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema.contentOrNull
-import com.tezov.tuucho.core.domain.business.model.schema.material.ContentSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.ContentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idSourceOrNull
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idValue
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema

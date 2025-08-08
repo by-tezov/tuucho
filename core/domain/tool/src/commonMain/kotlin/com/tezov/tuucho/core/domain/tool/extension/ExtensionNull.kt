@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.tool.extension
 
-@OptIn(ExperimentalUnsignedTypes::class)
 object ExtensionNull {
 
     inline val Any?.isNull get() = this == null

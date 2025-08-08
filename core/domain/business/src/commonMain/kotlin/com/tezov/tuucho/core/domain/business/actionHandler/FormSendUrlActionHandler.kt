@@ -1,10 +1,11 @@
 package com.tezov.tuucho.core.domain.business.actionHandler
 
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.action.Action
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.model.schema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.protocol.ActionHandlerProtocol
 import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
@@ -56,7 +57,7 @@ class FormSendUrlActionHandler(
                 )
             ).jsonObject
             response?.let {
-                val responseScope = response.withScope(FormSendResponseSchema.Root::Scope)
+                val responseScope = response.withScope(FormSendResponseSchema::Scope)
                 val isAllSuccess = responseScope.isAllSuccess == true
                 if (isAllSuccess) {
                     jsonElement?.actionValidated(source)
@@ -101,7 +102,7 @@ class FormSendUrlActionHandler(
         actionDenied(source, results)
     }
 
-    private suspend fun FormSendResponseSchema.Root.Scope.processInvalidRemoteForm(
+    private suspend fun FormSendResponseSchema.Scope.processInvalidRemoteForm(
         source: SourceIdentifierProtocol,
     ) {
         val results = results?.map { result ->
@@ -124,7 +125,7 @@ class FormSendUrlActionHandler(
     }
 
     private suspend fun JsonElement.actionValidated(source: SourceIdentifierProtocol) {
-        val actionValidated = withScope(FormSendResponseSchema.ActionParams::Scope).actionValidated
+        val actionValidated = withScope(ActionFormSchema.Send::Scope).actionValidated
         actionValidated?.let {
             useCaseExecutor.invokeSuspend(
                 useCase = actionHandler,
@@ -149,7 +150,7 @@ class FormSendUrlActionHandler(
                     authority = Action.Form.Update.authority,
                     target = Action.Form.Update.Target.error
                 ),
-                paramElement = results
+                jsonElement = results
             ),
         )
     }

@@ -4,11 +4,11 @@ import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.ActionSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material._element.ButtonSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.action.ActionSchema
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
@@ -94,7 +94,7 @@ class ButtonView(
                         input = ActionHandlerUseCase.Input(
                             source = identifier,
                             action = ActionModelDomain.Companion.from(value),
-                            paramElement = params
+                            jsonElement = element
                         )
                     )
                 }

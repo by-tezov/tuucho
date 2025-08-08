@@ -5,16 +5,17 @@ import com.tezov.tuucho.core.domain.business.actionHandler.FormUpdateActionHandl
 import com.tezov.tuucho.core.domain.business.actionHandler.NavigationLocalDestinationActionHandler
 import com.tezov.tuucho.core.domain.business.actionHandler.NavigationUrlActionHandler
 import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetOrNullScreenUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
+import com.tezov.tuucho.core.domain.business.usecase.NavigationOptionSelectorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenStackRepositoryEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
-import com.tezov.tuucho.core.domain.business.usecase.ValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import org.koin.dsl.module
 
@@ -59,10 +60,18 @@ object UseCaseModule {
         factory<NavigateToUrlUseCase> {
             NavigateToUrlUseCase(
                 coroutineScopes = get(),
+                useCaseExecutor = get(),
                 retrieveMaterialRepository = get(),
                 navigationDestinationStackRepository = get(),
                 navigationScreenStackRepository = get(),
-                shadowerMaterialRepository = get()
+                shadowerMaterialRepository = get(),
+                navigationOptionSelectorFactory = get(),
+            )
+        }
+
+        factory<NavigationOptionSelectorFactoryUseCase> {
+            NavigationOptionSelectorFactoryUseCase(
+
             )
         }
 
@@ -103,7 +112,7 @@ object UseCaseModule {
             )
         }
 
-        factory<ValidatorFactoryUseCase> { ValidatorFactoryUseCase() }
+        factory<FormValidatorFactoryUseCase> { FormValidatorFactoryUseCase() }
 
     }
 }

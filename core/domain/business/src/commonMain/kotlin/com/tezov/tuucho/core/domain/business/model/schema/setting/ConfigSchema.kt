@@ -7,18 +7,16 @@ import kotlinx.serialization.json.JsonObject
 
 object ConfigSchema {
 
-    object Root {
-        object Key {
-            const val preload = "preload"
-        }
+    object Key {
+        const val preload = "preload"
+    }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-            var preload by delegate<JsonObject?>(Key.preload)
-        }
+    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        var preload by delegate<JsonObject?>(Key.preload)
     }
 
     object Preload {
-        const val root = Root.Key.preload
+        const val root = ConfigSchema.Key.preload
 
         object Key {
             const val subs = "subs"

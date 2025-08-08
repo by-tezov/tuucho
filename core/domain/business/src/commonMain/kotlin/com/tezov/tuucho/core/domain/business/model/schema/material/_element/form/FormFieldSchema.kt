@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.model.schema.material._element.form
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.model.schema.material.ContentSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.content.ContentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject

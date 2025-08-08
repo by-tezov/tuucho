@@ -1,18 +1,20 @@
-package com.tezov.tuucho.core.domain.business.validator.fieldValidator
+package com.tezov.tuucho.core.domain.business.Validator.formValidator
 
 import com.tezov.tuucho.core.domain.business.config.Language
-import com.tezov.tuucho.core.domain.business.protocol.screen.FieldValidatorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonObject
 
-class StringNotNullValidator(
+class StringMinDigitLengthFormValidator(
+    private val length: Int,
     private val errorMessages: JsonObject,
-) : FieldValidatorProtocol<String> {
+) : FormValidatorProtocol<String> {
 
     private var isValid = false
 
     override fun updateValidity(value: String) {
-        isValid = value.isNotEmpty()
+        val digitCount = value.count { it.isDigit() }
+        isValid = digitCount >= length
     }
 
     override fun isValid() = isValid
