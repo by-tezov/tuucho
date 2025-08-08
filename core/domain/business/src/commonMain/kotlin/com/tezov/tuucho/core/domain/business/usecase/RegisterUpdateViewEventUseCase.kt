@@ -18,7 +18,7 @@ class RegisterUpdateViewEventUseCase(
         coroutineScopes.event.launch {
             formUpdateActionHandler.events
                 .forever {
-                    val view = navigationScreenStackRepository.getView(it.source)
+                    val view = navigationScreenStackRepository.getScreen(it.source)
                     coroutineScopes.renderer.on {
                         view?.update(it.jsonObject)
                     }
@@ -29,7 +29,7 @@ class RegisterUpdateViewEventUseCase(
             shadowerMaterialRepository.events
                 .filter { it.type == Shadower.Type.onDemandDefinition }
                 .forever {
-                    val views = navigationScreenStackRepository.getViews(it.url)
+                    val views = navigationScreenStackRepository.getScreens(it.url)
                     coroutineScopes.renderer.on {
                         views?.forEach { view -> view.update(it.jsonObject) }
                     }

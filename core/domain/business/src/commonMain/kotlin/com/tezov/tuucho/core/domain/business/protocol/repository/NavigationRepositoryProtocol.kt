@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
 import com.tezov.tuucho.core.domain.business.navigation.NavigationDestination
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.SourceIdentifierProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
@@ -8,40 +9,52 @@ import kotlinx.serialization.json.JsonObject
 
 sealed interface NavigationRepositoryProtocol {
 
-    interface Destination {
+    sealed class Event<out ELEMENT:Any> {
 
-        sealed class Event {
+        object Clear : Event<Nothing>()
 
-            object Clear : Event()
+        data class SavedForReuse<ELEMENT:Any>(val fromIndex: Int, val element: ELEMENT) : Event<ELEMENT>()
 
-            data class SavedForReuse(val fromIndex: Int, val destination: NavigationDestination) :
-                Event()
+        data class RemovedFromTail<ELEMENT:Any>(val elements: List<ELEMENT>) : Event<ELEMENT>()
 
-            data class RemovedFromTail(val destinations: List<NavigationDestination>) : Event()
+        data class RemovedAtTail<ELEMENT:Any>(val element: ELEMENT) : Event<ELEMENT>()
 
-            data class RemovedAtTail(val destination: NavigationDestination) : Event()
+        data class AddedAtTail<ELEMENT:Any>(val element: ELEMENT) : Event<ELEMENT>()
 
-            data class AddedAtTail(val destination: NavigationDestination) : Event()
+        data class ReuseRestoredAtTail<ELEMENT:Any>(val element: ELEMENT) : Event<ELEMENT>()
 
-            data class ReuseRestoredAtTail(val destination: NavigationDestination) : Event()
+    }
 
-        }
+    interface StackDestination {
 
         suspend fun stack(): List<NavigationDestination>
 
-        suspend fun swallow(destination: NavigationDestination): List<Event>
+        suspend fun swallow(destination: NavigationDestination): List<Event<NavigationRoute>>
 
     }
 
     interface StackScreen {
 
-        val events: Notifier.Collector<ScreenProtocol.IdentifierProtocol>
+        suspend fun getScreen(identifier: SourceIdentifierProtocol): ScreenProtocol?
 
-        suspend fun getView(identifier: SourceIdentifierProtocol): ScreenProtocol?
+        suspend fun getScreens(url: String): List<ScreenProtocol>?
 
-        suspend fun getViews(url: String): List<ScreenProtocol>?
+        suspend fun swallow(
+            events: List<Event<NavigationRoute>>,
+            componentObject: JsonObject? = null,
+        ): List<Event<ScreenProtocol.IdentifierProtocol>>
 
-        suspend fun swallow(events: List<Destination.Event>, componentObject: JsonObject? = null)
+    }
+
+    interface StackAnimator {
+
+        val animate: Notifier.Collector<Boolean>
+
+        suspend fun swallow(events: List<Event<ScreenProtocol.IdentifierProtocol>>, animationObject: JsonObject? = null)
+
+        suspend fun getScreenIdentifiers(): List<ScreenProtocol.IdentifierProtocol>?
+
+        fun notifyComplete()
 
     }
 

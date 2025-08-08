@@ -1,6 +1,7 @@
 ## In progress
 
-- Do the Animation
+- Do the Animator Stack
+- What to do ui side (don't fort=get the state-holder)
 
 update the doc: form-validator, setting with navigation stack
 

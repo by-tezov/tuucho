@@ -22,8 +22,9 @@ class NavigateToUrlUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
     private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve,
-    private val navigationDestinationStackRepository: NavigationRepositoryProtocol.Destination,
+    private val navigationDestinationStackRepository: NavigationRepositoryProtocol.StackDestination,
     private val navigationScreenStackRepository: NavigationRepositoryProtocol.StackScreen,
+    private val navigationAnimatorStackRepository: NavigationRepositoryProtocol.StackAnimator,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val navigationOptionSelectorFactory: NavigationOptionSelectorFactoryUseCase,
 ) : UseCaseProtocol.Async<Input, Unit> {
@@ -41,7 +42,8 @@ class NavigateToUrlUseCase(
                     .navigationOption.navigationOptionResolver()
             )
             val events = navigationDestinationStackRepository.swallow(destination)
-            navigationScreenStackRepository.swallow(events, component)
+            val view = navigationScreenStackRepository.swallow(events, component)
+            navigationAnimatorStackRepository.swallow(view, component)
             shadowerMaterialRepository.process(url, component)
         }
     }

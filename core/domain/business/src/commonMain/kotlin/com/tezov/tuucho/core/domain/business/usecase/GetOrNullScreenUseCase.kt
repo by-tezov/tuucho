@@ -21,7 +21,7 @@ class GetOrNullScreenUseCase(
 
     override suspend fun invoke(input: Input) = with(input) {
         Output(
-            screen = navigationScreenStackRepository.getView(screenIdentifier)
+            screen = navigationScreenStackRepository.getScreen(screenIdentifier)
         )
     }
 }

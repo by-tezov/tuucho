@@ -17,7 +17,7 @@ object MiscModule {
             }
         }
 
-        single<NavigationRepositoryProtocol.Destination> {
+        single<NavigationRepositoryProtocol.StackDestination> {
             NavigationDestinationStackRepository(
                 coroutineScopes = get(),
             )
