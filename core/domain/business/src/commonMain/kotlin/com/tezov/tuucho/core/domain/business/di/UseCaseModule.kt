@@ -51,7 +51,6 @@ object UseCaseModule {
 
         factory<NavigateBackUseCase> {
             NavigateBackUseCase(
-                coroutineScopes = get(),
                 navigationDestinationStackRepository = get(),
                 navigationScreenStackRepository = get(),
             )

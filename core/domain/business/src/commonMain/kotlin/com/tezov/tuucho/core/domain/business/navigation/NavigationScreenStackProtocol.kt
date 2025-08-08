@@ -26,14 +26,15 @@ class NavigationScreenStackProtocol(
 
     private val stack = mutableListOf<Item>()
 
-    override fun getView(identifier: SourceIdentifierProtocol): ScreenProtocol? {
-        return stack.firstOrNull {
-            identifier.accept(it.screen.identifier)
-        }?.screen
-    }
+    override suspend fun getView(identifier: SourceIdentifierProtocol) =
+        coroutineScopes.navigation.on {
+            stack.firstOrNull {
+                identifier.accept(it.screen.identifier)
+            }?.screen
+        }
 
-    override fun getViews(url: String): List<ScreenProtocol>? {
-        return stack
+    override suspend fun getViews(url: String) = coroutineScopes.navigation.on {
+        stack
             .filter { (it.destination.route as? NavigationRoute.Url)?.value == url }
             .map { it.screen }
     }
@@ -41,7 +42,7 @@ class NavigationScreenStackProtocol(
     override suspend fun swallow(
         events: List<Destination.Event>,
         componentObject: JsonObject?,
-    ) {
+    ) = coroutineScopes.navigation.on {
         val reuseBin = mutableListOf<Item>()
         for (event in events) {
             when (event) {
@@ -50,7 +51,8 @@ class NavigationScreenStackProtocol(
                 is Destination.Event.RemovedFromTail -> removedFromTail(event)
                 is Destination.Event.AddedAtTail -> addedAtTail(
                     event,
-                    componentObject ?: throw DomainException.Default("componentObject can't be null")
+                    componentObject
+                        ?: throw DomainException.Default("componentObject can't be null")
                 )
 
                 is Destination.Event.ReuseRestoredAtTail -> reuseRestoredAtTail(event, reuseBin)
@@ -86,7 +88,7 @@ class NavigationScreenStackProtocol(
         }
     }
 
-    private suspend fun removedAtTail(
+    private fun removedAtTail(
         event: Destination.Event.RemovedAtTail,
     ) {
         val route = event.destination.route
@@ -96,7 +98,7 @@ class NavigationScreenStackProtocol(
             ?: throw DomainException.Default("Expected Screen for route $route not found")
 
         stack.lastOrNull()?.let {
-            coroutineScopes.launchOnEvent {
+            coroutineScopes.event.launch {
                 _events.emit(it.screen.identifier)
             }
         } ?: run {
@@ -115,12 +117,12 @@ class NavigationScreenStackProtocol(
                 screen = screen
             )
         )
-        coroutineScopes.launchOnEvent {
+        coroutineScopes.event.launch {
             _events.emit(screen.identifier)
         }
     }
 
-    private fun reuseRestoredAtTail(
+    private suspend fun reuseRestoredAtTail(
         event: Destination.Event.ReuseRestoredAtTail,
         reuseBin: MutableList<Item>,
     ) {
@@ -134,7 +136,7 @@ class NavigationScreenStackProtocol(
                 destination = event.destination
             )
         )
-        coroutineScopes.launchOnEvent {
+        coroutineScopes.event.launch {
             _events.emit(item.screen.identifier)
         }
     }

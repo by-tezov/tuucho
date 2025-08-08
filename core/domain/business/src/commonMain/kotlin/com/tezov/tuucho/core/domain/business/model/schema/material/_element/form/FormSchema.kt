@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.model.schema.material._element.for
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.model.schema.material.MessageSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.OptionSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.OptionSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.StateSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -18,7 +18,7 @@ object FormSchema {
 
     object Option {
         object Key {
-            const val validator = "validator"
+            const val validator = FormValidatorSchema.root
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)

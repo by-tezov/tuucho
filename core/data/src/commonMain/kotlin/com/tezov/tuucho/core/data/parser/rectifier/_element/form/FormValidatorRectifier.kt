@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.data.parser.rectifier.option
+package com.tezov.tuucho.core.data.parser.rectifier._element.form
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.model.schema.material.TextSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string

@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.presentation.ui.renderer.view.fieldView
 
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idValue
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldFormViewProtocol

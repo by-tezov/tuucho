@@ -27,7 +27,7 @@ sealed interface NavigationRepositoryProtocol {
 
         }
 
-        val stack: List<NavigationDestination>
+        suspend fun stack(): List<NavigationDestination>
 
         suspend fun swallow(destination: NavigationDestination): List<Event>
 
@@ -37,9 +37,9 @@ sealed interface NavigationRepositoryProtocol {
 
         val events: Notifier.Collector<ScreenProtocol.IdentifierProtocol>
 
-        fun getView(identifier: SourceIdentifierProtocol): ScreenProtocol?
+        suspend fun getView(identifier: SourceIdentifierProtocol): ScreenProtocol?
 
-        fun getViews(url: String): List<ScreenProtocol>?
+        suspend fun getViews(url: String): List<ScreenProtocol>?
 
         suspend fun swallow(events: List<Destination.Event>, componentObject: JsonObject? = null)
 

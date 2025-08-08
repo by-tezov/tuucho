@@ -1,7 +1,5 @@
 ## In progress
 
-- Clean the Coroutine Job + executor use case job
-- Add server example
 - Do the Animation
 
 update the doc: form-validator, setting with navigation stack

@@ -4,7 +4,6 @@ import com.tezov.tuucho.core.domain.business.model.schema._system.OpenSchemaScop
 import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.content.ContentSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.OptionSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.setting.SettingSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject

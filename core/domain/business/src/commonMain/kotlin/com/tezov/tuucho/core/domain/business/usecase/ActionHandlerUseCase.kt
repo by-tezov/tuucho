@@ -19,7 +19,7 @@ class ActionHandlerUseCase(
     )
 
     override suspend fun invoke(input: Input) = with(input) {
-        coroutineScopes.onEvent {
+        coroutineScopes.event.on {
             handlers
                 .asSequence()
                 .filter { it.accept(source, action, jsonElement) }

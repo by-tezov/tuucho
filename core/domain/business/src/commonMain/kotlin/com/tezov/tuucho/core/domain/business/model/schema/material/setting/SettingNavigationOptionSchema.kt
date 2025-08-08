@@ -7,13 +7,13 @@ import kotlinx.serialization.json.JsonObject
 
 object SettingNavigationOptionSchema {
 
-    const val root = SettingSchema.Root.Key.navigationOption
+    const val root = "navigation-option"
 
     object Key {
-        const val selector = "selector"
+        const val selector = Selector.root
         const val singleTop = "single-top"
         const val clearStack = "clear-stack"
-        const val popupTo = "pop-up-to"
+        const val popupTo = PopUpTo.root
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
@@ -27,7 +27,7 @@ object SettingNavigationOptionSchema {
     }
 
     object Selector {
-        const val root = SettingNavigationOptionSchema.Key.selector
+        const val root = "selector"
 
         object Key {
             const val type = "type"
@@ -50,7 +50,7 @@ object SettingNavigationOptionSchema {
     }
 
     object PopUpTo {
-        const val root = SettingNavigationOptionSchema.Key.popupTo
+        const val root = "pop-up-to"
 
         object Key {
             const val url = "url"

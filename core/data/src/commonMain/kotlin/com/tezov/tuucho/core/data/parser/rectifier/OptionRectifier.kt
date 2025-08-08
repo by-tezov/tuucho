@@ -1,14 +1,13 @@
-package com.tezov.tuucho.core.data.parser.rectifier.option
+package com.tezov.tuucho.core.data.parser.rectifier
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
 import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.requireIsRef
-import com.tezov.tuucho.core.domain.business.model.schema.material.option.OptionSchema
+import com.tezov.tuucho.core.domain.business.model.schema.material.OptionSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath

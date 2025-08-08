@@ -10,7 +10,7 @@ object FormSendResponseSchema {
 
     object Key {
         const val isAllSuccess = "isAllSuccess"
-        const val results = "results"
+        const val results = Result.root
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
@@ -19,7 +19,7 @@ object FormSendResponseSchema {
     }
 
     object Result {
-        const val root = FormSendResponseSchema.Key.results
+        const val root = "results"
 
         object Key {
             const val id = IdSchema.root

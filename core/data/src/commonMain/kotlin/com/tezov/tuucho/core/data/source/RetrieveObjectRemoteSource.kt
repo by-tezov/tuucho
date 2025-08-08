@@ -9,7 +9,7 @@ class RetrieveObjectRemoteSource(
     private val materialNetworkSource: MaterialNetworkSource,
 ) {
 
-    suspend fun process(url: String): JsonObject = coroutineScopes.onNetwork {
+    suspend fun process(url: String): JsonObject = coroutineScopes.network.on {
         materialNetworkSource.retrieve(url)
     }
 

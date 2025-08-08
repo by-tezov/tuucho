@@ -12,10 +12,10 @@ class RetrieveMaterialRemoteSource(
 ) {
 
     suspend fun process(url: String): JsonObject {
-        val response = coroutineScopes.onNetwork {
+        val response = coroutineScopes.network.on {
             materialNetworkSource.retrieve(url)
         }
-        return coroutineScopes.onParser {
+        return coroutineScopes.parser.on {
             materialRectifier.process(response)
         }
     }
