@@ -10,9 +10,9 @@ import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringMinVa
 import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringNotNullFormValidator
 import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringOnlyDigitsFormValidator
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase.Input

@@ -19,7 +19,7 @@ class ShadowerMaterialRepository(
     override val events get() = _events.createCollector
 
     override fun process(url: String, materialObject: JsonObject) {
-        coroutineScopes.parser.launch {
+        coroutineScopes.parser.async {
             shadowerMaterialSources.forEach { it.onStart(url, materialObject) }
             materialShadower.process(
                 materialObject = materialObject,
@@ -38,7 +38,7 @@ class ShadowerMaterialRepository(
                             .filter { !it.isCancelled }
                             .forEach { source ->
                                 source.onDone().collect {
-                                    coroutineScopes.event.launch {
+                                    coroutineScopes.event.async {
                                         _events.emit(
                                             Shadower.Event(
                                                 type = source.type,

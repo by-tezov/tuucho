@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.data.parser.breaker
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser._system.JsonElementTree
 import com.tezov.tuucho.core.data.parser.breaker._system.JsonEntityObjectTreeProducerProtocol
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.MaterialSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent

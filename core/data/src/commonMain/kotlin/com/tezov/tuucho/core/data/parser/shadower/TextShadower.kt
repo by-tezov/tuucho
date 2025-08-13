@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.parser.shadower
 import com.tezov.tuucho.core.data.di.MaterialShadowerModule.Name
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser.shadower._system.MatcherShadowerProtocol
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject

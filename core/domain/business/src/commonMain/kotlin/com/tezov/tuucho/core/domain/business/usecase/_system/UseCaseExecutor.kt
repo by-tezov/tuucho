@@ -15,7 +15,7 @@ class UseCaseExecutor(
         onException: ((DomainException) -> Unit)? = null,
     ) {
         try {
-            coroutineScopes.useCase.launch {
+            coroutineScopes.useCase.async {
                 when (useCase) {
                     is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input).also {
                         it.onResult()
@@ -41,7 +41,7 @@ class UseCaseExecutor(
     ): OUTPUT {
 
         try {
-            return coroutineScopes.useCase.on {
+            return coroutineScopes.useCase.await {
                 when (useCase) {
                     is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input)
                     is UseCaseProtocol.Sync<INPUT, OUTPUT> -> useCase.invoke(input)

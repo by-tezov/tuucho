@@ -1,18 +1,21 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.actionHandler.FormSendUrlActionHandler
-import com.tezov.tuucho.core.domain.business.actionHandler.FormUpdateActionHandler
-import com.tezov.tuucho.core.domain.business.actionHandler.NavigationLocalDestinationActionHandler
-import com.tezov.tuucho.core.domain.business.actionHandler.NavigationUrlActionHandler
-import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.domain.business.action.FormSendUrlActionProcessor
+import com.tezov.tuucho.core.domain.business.action.FormUpdateActionProcessor
+import com.tezov.tuucho.core.domain.business.action.NavigationLocalDestinationActionProcessor
+import com.tezov.tuucho.core.domain.business.action.NavigationUrlActionProcessor
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetOrNullScreenUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetVisibleScreensUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigationOptionSelectorFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
+import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActionEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
@@ -28,30 +31,41 @@ object UseCaseModule {
             )
         }
 
-        factory<ActionHandlerUseCase> {
-            ActionHandlerUseCase(
+        factory<ProcessActionUseCase> {
+            ProcessActionUseCase(
                 coroutineScopes = get(),
                 handlers = listOf(
-                    get<NavigationUrlActionHandler>(),
-                    get<NavigationLocalDestinationActionHandler>(),
-                    get<FormSendUrlActionHandler>(),
-                    get<FormUpdateActionHandler>(),
+                    get<NavigationUrlActionProcessor>(),
+                    get<NavigationLocalDestinationActionProcessor>(),
+                    get<FormSendUrlActionProcessor>(),
+                    get<FormUpdateActionProcessor>(),
                 )
             )
         }
 
+        factory<FormValidatorFactoryUseCase> { FormValidatorFactoryUseCase() }
+
         factory<GetLanguageUseCase> { GetLanguageUseCase() }
 
-        factory<GetOrNullScreenUseCase> {
-            GetOrNullScreenUseCase(
-                navigationScreenStackRepository = get()
+        factory<GetScreenOrNullUseCase> {
+            GetScreenOrNullUseCase(
+                navigationStackScreenRepository = get()
+            )
+        }
+
+        factory<GetVisibleScreensUseCase> {
+            GetVisibleScreensUseCase(
+                navigationStackScreenRepository = get(),
+                navigationStackAnimatorRepository = get()
             )
         }
 
         factory<NavigateBackUseCase> {
             NavigateBackUseCase(
-                navigationDestinationStackRepository = get(),
-                navigationScreenStackRepository = get(),
+                coroutineScopes = get(),
+                navigationStackRouteRepository = get(),
+                navigationStackScreenRepository = get(),
+                navigationStackAnimatorRepository = get()
             )
         }
 
@@ -60,17 +74,22 @@ object UseCaseModule {
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
                 retrieveMaterialRepository = get(),
-                navigationDestinationStackRepository = get(),
-                navigationScreenStackRepository = get(),
-                navigationAnimatorStackRepository = get(),
+                navigationRouteIdGenerator = get(),
+                navigationStackRouteRepository = get(),
+                navigationStackScreenRepository = get(),
+                navigationStackAnimatorRepository = get(),
                 shadowerMaterialRepository = get(),
                 navigationOptionSelectorFactory = get(),
             )
         }
 
         factory<NavigationOptionSelectorFactoryUseCase> {
-            NavigationOptionSelectorFactoryUseCase(
+            NavigationOptionSelectorFactoryUseCase()
+        }
 
+        factory<NotifyNavigationTransitionCompletedUseCase> {
+            NotifyNavigationTransitionCompletedUseCase(
+                navigationAnimatorStackRepository = get()
             )
         }
 
@@ -84,8 +103,15 @@ object UseCaseModule {
             RegisterToNavigationUrlActionEventUseCase(
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
-                navigationUrlActionHandler = get(),
+                navigationUrlActionProcessor = get(),
                 navigateForward = get(),
+            )
+        }
+
+        factory<RegisterToScreenTransitionEventUseCase> {
+            RegisterToScreenTransitionEventUseCase(
+                coroutineScopes = get(),
+                navigationAnimatorStackRepository = get()
             )
         }
 
@@ -93,7 +119,7 @@ object UseCaseModule {
             RegisterUpdateViewEventUseCase(
                 coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
-                formUpdateActionHandler = get(),
+                formUpdateActionProcessor = get(),
                 shadowerMaterialRepository = get()
             )
         }
@@ -103,8 +129,6 @@ object UseCaseModule {
                 sendDataAndRetrieveMaterialRepository = get()
             )
         }
-
-        factory<FormValidatorFactoryUseCase> { FormValidatorFactoryUseCase() }
 
     }
 }

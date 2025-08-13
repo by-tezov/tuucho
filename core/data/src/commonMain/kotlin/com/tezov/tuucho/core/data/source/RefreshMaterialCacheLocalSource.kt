@@ -10,10 +10,10 @@ import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
-import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
@@ -38,7 +38,7 @@ class RefreshMaterialCacheLocalSource(
         lifetime: Lifetime,
     ) {
         //TODO auto purge obsolete entry
-        val parts = coroutineScopes.parser.on {
+        val parts = coroutineScopes.parser.await {
             materialBreaker.process(
                 materialObject = materialObject,
                 jsonEntityObjectTreeProducer = { jsonObject ->
@@ -55,7 +55,7 @@ class RefreshMaterialCacheLocalSource(
                 }
             )
         }
-        coroutineScopes.database.on {
+        coroutineScopes.database.await {
             with(parts) {
                 val rootPrimaryKey = rootJsonEntity?.let { root ->
                     materialDatabaseSource

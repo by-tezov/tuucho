@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.data.parser.assembler
 import com.tezov.tuucho.core.data.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser.assembler._system.FindAllRefOrNullFetcherProtocol
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject

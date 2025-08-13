@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.parser._system.IdGenerator
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
@@ -24,6 +23,7 @@ import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.Conten
 import com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear.StyleLayoutLinearColorMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._element.spacer.StyleSpacerDimensionMatcher
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
+import com.tezov.tuucho.core.data.parser.rectifier._system.RectifierIdGenerator
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.colors.ColorsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.content.ActionRectifier
@@ -94,11 +94,11 @@ object MaterialRectifierModule {
     }
 
     private fun Module.idModule() {
-        single<IdGenerator> { IdGenerator() }
+        single<RectifierIdGenerator> { RectifierIdGenerator() }
 
         single<IdRectifier> {
             IdRectifier(
-                get<IdGenerator>()
+                get<RectifierIdGenerator>()
             )
         }
 

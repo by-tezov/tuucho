@@ -3,11 +3,11 @@ package com.tezov.tuucho.core.data.parser.rectifier.setting
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.setting.SettingNavigationOptionSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.setting.SettingNavigationOptionSchema.Selector
-import com.tezov.tuucho.core.domain.business.model.schema.material.setting.SettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationOptionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationOptionSchema.Selector
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.toPath

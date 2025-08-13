@@ -2,9 +2,9 @@ package com.tezov.tuucho.core.domain.business.usecase
 
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.setting.SettingNavigationOptionSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.setting.SettingNavigationOptionSchema.Selector.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationOptionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationOptionSchema.Selector.Value.Type
 import com.tezov.tuucho.core.domain.business.navigation.option.PageBreadCrumbNavigationOptionSelector
 import com.tezov.tuucho.core.domain.business.protocol.NavigationOptionSelectorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
@@ -29,10 +29,10 @@ class NavigationOptionSelectorFactoryUseCase : UseCaseProtocol.Sync<Input, Outpu
     override fun invoke(input: Input) = with(input) {
         Output(
             selector = prototypeObject.withScope(SettingNavigationOptionSchema.Selector::Scope)
-                .let {
-                    when (it.type) {
+                .let { scope ->
+                    when (scope.type) {
                         Type.pageBreadCrumb -> PageBreadCrumbNavigationOptionSelector(
-                            values = it.values!!.jsonArray.map { it.jsonPrimitive.string },
+                            values = scope.values!!.jsonArray.map { it.jsonPrimitive.string },
                         )
 
                         else -> throw DomainException.Default("Selector $prototypeObject can't be resolved")

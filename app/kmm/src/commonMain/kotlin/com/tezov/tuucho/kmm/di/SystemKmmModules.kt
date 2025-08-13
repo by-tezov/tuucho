@@ -7,9 +7,7 @@ import org.koin.dsl.module
 object SystemKmmModules {
 
     internal operator fun invoke() = listOf(
-        ViewModelModule.invoke(),
         module {
-
             single<CoroutineScopesProtocol> {
                 CoroutineScopes()
             }

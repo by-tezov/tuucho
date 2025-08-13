@@ -2,10 +2,10 @@ package com.tezov.tuucho.core.domain.tool.async
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 interface CoroutineContextProtocol {
@@ -13,8 +13,8 @@ interface CoroutineContextProtocol {
     val job: Job
     val scope: CoroutineScope
 
-    fun launch(block: suspend CoroutineScope.() -> Unit)
-    suspend fun <T> on(block: suspend CoroutineScope.() -> T): T
+    fun <T> async(block: suspend CoroutineScope.() -> T): Deferred<T>
+    suspend fun <T> await(block: suspend CoroutineScope.() -> T): T
 }
 
 open class CoroutineContext(
@@ -30,11 +30,11 @@ open class CoroutineContext(
 
     override val scope: CoroutineScope = CoroutineScope(context + job + exceptionHandler)
 
-    override fun launch(block: suspend CoroutineScope.() -> Unit) {
-        scope.launch(block = block)
+    override fun <T> async(block: suspend CoroutineScope.() -> T): Deferred<T> {
+        return scope.async(block = block)
     }
 
-    override suspend fun <T> on(block: suspend CoroutineScope.() -> T): T {
-        return scope.async(block = block).await()
+    override suspend fun <T> await(block: suspend CoroutineScope.() -> T): T {
+        return async(block).await()
     }
 }

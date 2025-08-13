@@ -1,7 +1,9 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.navigation.NavigationDestinationStackRepository
-import com.tezov.tuucho.core.domain.business.navigation.NavigationScreenStackProtocol
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRouteIdGenerator
+import com.tezov.tuucho.core.domain.business.navigation.NavigationStackAnimatorRepository
+import com.tezov.tuucho.core.domain.business.navigation.NavigationStackRouteRepository
+import com.tezov.tuucho.core.domain.business.navigation.NavigationStackScreenRepository
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
@@ -17,15 +19,25 @@ object MiscModule {
             }
         }
 
-        single<NavigationRepositoryProtocol.StackDestination> {
-            NavigationDestinationStackRepository(
+        single<NavigationRouteIdGenerator> {
+            NavigationRouteIdGenerator()
+        }
+
+        single<NavigationRepositoryProtocol.StackRoute> {
+            NavigationStackRouteRepository(
                 coroutineScopes = get(),
             )
         }
         single<NavigationRepositoryProtocol.StackScreen> {
-            NavigationScreenStackProtocol(
+            NavigationStackScreenRepository(
                 coroutineScopes = get(),
                 screenRenderer = get()
+            )
+        }
+
+        single<NavigationRepositoryProtocol.StackAnimator> {
+            NavigationStackAnimatorRepository(
+                coroutineScopes = get()
             )
         }
 

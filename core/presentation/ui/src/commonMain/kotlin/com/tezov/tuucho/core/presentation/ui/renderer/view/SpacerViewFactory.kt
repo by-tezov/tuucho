@@ -9,24 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.StyleSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.SpacerSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.presentation.tool.modifier.onNotNull
 import com.tezov.tuucho.core.presentation.tool.modifier.then
-import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifier
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifierFactory
 import kotlinx.serialization.json.JsonObject
 
-class SpacerViewFactory(
-    private val identifierFactory: ViewIdentifierFactory,
-) : ViewFactory() {
+class SpacerViewFactory : ViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
@@ -34,19 +30,17 @@ class SpacerViewFactory(
     }
 
     override suspend fun process(
-        screenIdentifier: ScreenIdentifier,
+        route: NavigationRoute,
         componentObject: JsonObject,
     ) =
         SpacerView(
-            identifier = identifierFactory.invoke(screenIdentifier),
             componentObject = componentObject
         ).also { it.init() }
 }
 
 class SpacerView(
-    identifier: ViewIdentifier,
     componentObject: JsonObject,
-) : View(identifier, componentObject) {
+) : View(componentObject) {
 
     private var _width: JsonObject? = null
     private var _height: JsonObject? = null
