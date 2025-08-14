@@ -13,24 +13,29 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.tezov.tuucho.core.domain.tool.async.Notifier
+import kotlinx.coroutines.channels.BufferOverflow
 
 class AnimationProgress private constructor() {
 
-    private enum class Step { Start_Idle, Running, End_Idle }
+    private enum class Step { startIdle, Running, endIdle }
 
     private lateinit var isStarted: MutableState<Boolean>
     private lateinit var transitionState: MutableTransitionState<Step>
     private lateinit var transition: Transition<Step>
 
-    private val _events = Notifier.Emitter<Boolean>()
+    private val _events = Notifier.Emitter<Boolean>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
     val events get() = _events.createCollector
 
     val isIdle
-        get() = !isStarted.value && (transitionState.currentState == Step.Start_Idle || transitionState.currentState == Step.End_Idle)
+        get() = !isStarted.value && (transitionState.currentState == Step.startIdle || transitionState.currentState == Step.endIdle)
 
     fun start() {
         if (isStarted.value) return
-        transitionState.targetState = Step.Start_Idle
+        transitionState.targetState = Step.startIdle
         isStarted.value = true
     }
 
@@ -44,24 +49,22 @@ class AnimationProgress private constructor() {
             mutableStateOf(false)
         }
         transitionState = remember {
-            mutableStateOf(
-                MutableTransitionState(Step.Start_Idle)
-            )
+            mutableStateOf(MutableTransitionState(Step.startIdle))
         }.value
         with(transitionState) {
             if (isIdle) {
                 when (currentState) {
-                    Step.Start_Idle -> {
+                    Step.startIdle -> {
                         if (isStarted.value) {
                             targetState = Step.Running
                         }
                     }
 
                     Step.Running -> {
-                        targetState = Step.End_Idle
+                        targetState = Step.endIdle
                     }
 
-                    Step.End_Idle -> {
+                    Step.endIdle -> {
                         if (isStarted.value) {
                             isStarted.value = false
                             onDone()
@@ -70,7 +73,7 @@ class AnimationProgress private constructor() {
                 }
             }
         }
-        transition = rememberTransition(transitionState = transitionState, label = "")
+        transition = rememberTransition(transitionState = transitionState)
     }
 
     @Composable
@@ -87,21 +90,20 @@ class AnimationProgress private constructor() {
         val animatedFloat = transition.animateFloat(
             transitionSpec = {
                 when (transitionState.targetState) {
-                    Step.Start_Idle, Step.End_Idle -> snap(delayMillis = 0)
+                    Step.startIdle, Step.endIdle -> snap(delayMillis = 0)
                     else -> animationSpecToEnd
                 }
             },
-            label = "",
         ) {
             when (it) {
-                Step.Start_Idle -> startValue
+                Step.startIdle -> startValue
                 else -> endValue
             }
         }
         clampedValue.value = when (transitionState.targetState) {
             Step.Running -> animatedFloat.value
-            Step.Start_Idle -> startValue
-            Step.End_Idle -> endValue
+            Step.startIdle -> startValue
+            Step.endIdle -> endValue
         }
         return clampedValue
     }

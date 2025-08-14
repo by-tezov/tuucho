@@ -18,7 +18,9 @@ object ActionProcessorModule {
         }
 
         single<FormUpdateActionProcessor> {
-            FormUpdateActionProcessor()
+            FormUpdateActionProcessor(
+                coroutineScopes = get(),
+            )
         }
 
         factory<NavigationLocalDestinationActionProcessor> {
@@ -29,7 +31,9 @@ object ActionProcessorModule {
         }
 
         single<NavigationUrlActionProcessor> {
-            NavigationUrlActionProcessor()
+            NavigationUrlActionProcessor(
+                coroutineScopes = get(),
+            )
         }
 
     }

@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationOptionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationOptionSchema.Selector
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingOptionSelector
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -47,9 +47,9 @@ class SettingNavigationOptionRectifier : Rectifier() {
         var selectorRectified: JsonObject? = null
         return element.find(path).withScope(SettingNavigationOptionSchema::Scope)
             .takeIf { scope ->
-                scope.selector?.withScope(Selector::Scope)?.apply {
+                scope.selector?.withScope(SettingOptionSelector::Scope)?.apply {
                     when (type) {
-                        Selector.Value.Type.pageBreadCrumb -> rectifySelector_PageBreadCrumb()
+                        SettingOptionSelector.Value.Type.pageBreadCrumb -> rectifySelector_PageBreadCrumb()
                         else -> null
                     }?.let { selectorRectified = it }
                 }
@@ -59,8 +59,8 @@ class SettingNavigationOptionRectifier : Rectifier() {
             ?.collect()
     }
 
-    private fun Selector.Scope.rectifySelector_PageBreadCrumb(): JsonObject? {
-        val values = (element as? JsonObject)?.get(Selector.Key.value)
+    private fun SettingOptionSelector.Scope.rectifySelector_PageBreadCrumb(): JsonObject? {
+        val values = (element as? JsonObject)?.get(SettingOptionSelector.Key.value)
         if(values is JsonPrimitive) {
             this.values = JsonArray(listOf(values))
             return this.collect()

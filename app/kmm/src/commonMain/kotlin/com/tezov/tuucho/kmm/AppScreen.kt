@@ -19,7 +19,6 @@ fun AppScreen(
         getKoin().get<JsonObjectQueries>().deleteAll()
         getKoin().get<VersioningQueries>().deleteAll()
         //***************************************************************
-
         tuuchoEngine.init(
             configUrl = "config",
             initialUrl = "page-home"

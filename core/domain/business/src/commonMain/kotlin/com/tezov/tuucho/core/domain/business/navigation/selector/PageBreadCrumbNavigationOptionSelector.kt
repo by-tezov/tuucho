@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.navigation.option
+package com.tezov.tuucho.core.domain.business.navigation.selector
 
 import com.tezov.tuucho.core.domain.business.protocol.NavigationOptionSelectorProtocol
 

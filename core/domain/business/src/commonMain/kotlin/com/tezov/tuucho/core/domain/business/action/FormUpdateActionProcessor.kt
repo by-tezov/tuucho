@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendRespons
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -17,7 +18,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.KoinComponent
 
-class FormUpdateActionProcessor : ActionProcessorProtocol, KoinComponent {
+class FormUpdateActionProcessor(
+    private val coroutineScopes: CoroutineScopesProtocol,
+) : ActionProcessorProtocol, KoinComponent {
 
     data class Event(
         val route: NavigationRoute,
@@ -62,12 +65,14 @@ class FormUpdateActionProcessor : ActionProcessorProtocol, KoinComponent {
                     messageErrorExtra = it
                 }
             }.collect()
-            _events.emit(
-                Event(
-                    route = route,
-                    jsonObject = message
+            coroutineScopes.event.async {
+                _events.emit(
+                    Event(
+                        route = route,
+                        jsonObject = message
+                    )
                 )
-            )
+            }
         }
     }
 

@@ -9,25 +9,24 @@ class NavigateBackUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
-    private val navigationStackAnimatorRepository: NavigationRepositoryProtocol.StackAnimator,
+    private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
 ) : UseCaseProtocol.Sync<Unit, Unit> {
 
     override fun invoke(input: Unit) {
         coroutineScopes.navigation.async {
-            navigationStackRouteRepository.spit(
+            if(navigationStackTransitionRepository.isBusy()){
+                //throw DomainException.Default("Navigation is not ready to accept new request")
+                return@async
+            }
+            navigationStackRouteRepository.pop(
                 route = NavigationRoute.Back
             )
-            navigationStackAnimatorRepository.spit(
+            navigationStackTransitionRepository.spit(
                 routes = navigationStackRouteRepository.routes(),
             )
-            navigationStackScreenRepository.spit(
+            navigationStackScreenRepository.intersect(
                 routes = navigationStackRouteRepository.routes(),
             )
-
-            println("********************")
-            println(navigationStackRouteRepository.routes())
-            println(navigationStackScreenRepository.routes())
-            println(navigationStackAnimatorRepository.routes())
         }
     }
 

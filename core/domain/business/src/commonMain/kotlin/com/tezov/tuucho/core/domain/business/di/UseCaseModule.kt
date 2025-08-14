@@ -7,10 +7,9 @@ import com.tezov.tuucho.core.domain.business.action.NavigationUrlActionProcessor
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetVisibleScreensUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetScreensWithAnimationOptionsUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NavigationOptionSelectorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
@@ -18,6 +17,7 @@ import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActi
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase.SettingOptionSelectorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import org.koin.dsl.module
 
@@ -53,10 +53,10 @@ object UseCaseModule {
             )
         }
 
-        factory<GetVisibleScreensUseCase> {
-            GetVisibleScreensUseCase(
+        factory<GetScreensWithAnimationOptionsUseCase> {
+            GetScreensWithAnimationOptionsUseCase(
                 navigationStackScreenRepository = get(),
-                navigationStackAnimatorRepository = get()
+                navigationStackTransitionRepository = get()
             )
         }
 
@@ -65,26 +65,24 @@ object UseCaseModule {
                 coroutineScopes = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
-                navigationStackAnimatorRepository = get()
+                navigationStackTransitionRepository = get()
             )
         }
 
         factory<NavigateToUrlUseCase> {
             NavigateToUrlUseCase(
                 coroutineScopes = get(),
-                useCaseExecutor = get(),
                 retrieveMaterialRepository = get(),
                 navigationRouteIdGenerator = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
-                navigationStackAnimatorRepository = get(),
+                navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                navigationOptionSelectorFactory = get(),
             )
         }
 
-        factory<NavigationOptionSelectorFactoryUseCase> {
-            NavigationOptionSelectorFactoryUseCase()
+        factory<SettingOptionSelectorFactoryUseCase> {
+            SettingOptionSelectorFactoryUseCase()
         }
 
         factory<NotifyNavigationTransitionCompletedUseCase> {

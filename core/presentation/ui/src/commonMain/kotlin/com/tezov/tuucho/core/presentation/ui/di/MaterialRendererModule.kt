@@ -31,13 +31,14 @@ object MaterialRendererModule {
 
         single<TuuchoEngineProtocol> {
             TuuchoEngine(
+                coroutineScopes = get(),
                 useCaseExecutor = get(),
                 refreshMaterialCache = get(),
                 registerUpdateViewEvent = get(),
                 registerToNavigationUrlActionEvent = get(),
                 registerToScreenTransitionEvent = get(),
                 notifyNavigationTransitionCompleted = get(),
-                getVisibleScreens = get(),
+                getScreensWithAnimationOptions = get(),
                 navigateToUrl = get()
             )
         }

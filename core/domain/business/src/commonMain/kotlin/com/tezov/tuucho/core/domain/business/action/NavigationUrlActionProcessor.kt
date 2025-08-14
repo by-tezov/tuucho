@@ -4,10 +4,13 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonElement
 
-class NavigationUrlActionProcessor() : ActionProcessorProtocol {
+class NavigationUrlActionProcessor(
+    private val coroutineScopes: CoroutineScopesProtocol,
+) : ActionProcessorProtocol {
     private val _events = Notifier.Emitter<String>()
     val events get() = _events.createCollector
 
@@ -27,7 +30,9 @@ class NavigationUrlActionProcessor() : ActionProcessorProtocol {
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {
-        action.target?.let { _events.emit(it) }
+        action.target?.let {
+            coroutineScopes.event.async { _events.emit(it) }
+        }
     }
 
 }

@@ -1,9 +1,10 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.navigation.option.NavigationOption
+import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationScreen
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 sealed interface NavigationRepositoryProtocol {
@@ -12,12 +13,12 @@ sealed interface NavigationRepositoryProtocol {
 
         suspend fun routes(): List<NavigationRoute>
 
-        suspend fun swallow(
+        suspend fun push(
             route: NavigationRoute,
-            option: NavigationOption,
+            navigationOptionObject: JsonArray?,
         ): NavigationRoute?
 
-        suspend fun spit(
+        suspend fun pop(
             route: NavigationRoute,
         )
 
@@ -31,30 +32,44 @@ sealed interface NavigationRepositoryProtocol {
 
         suspend fun getScreensOrNull(url: String): List<ScreenProtocol>?
 
-        suspend fun swallow(
+        suspend fun push(
             route: NavigationRoute,
             componentObject: JsonObject,
         )
 
-        suspend fun spit(
+        suspend fun intersect(
             routes: List<NavigationRoute>,
         )
 
     }
 
-    interface StackAnimator {
+    interface StackTransition {
+
+        sealed class Event {
+            data object RequestTransitionForward: Event()
+            data object RequestTransitionBackward: Event()
+            data object TransitionComplete: Event()
+            data object Idle: Event()
+        }
+
+        data class Item(
+            val route: NavigationRoute,
+            val animationScreen: AnimationScreen,
+        )
 
         suspend fun routes(): List<NavigationRoute>
 
-        val animate: Notifier.Collector<Boolean>
+        suspend fun isBusy(): Boolean
 
-        suspend fun getVisibleRoutes(): List<NavigationRoute>
+        val events: Notifier.Collector<Event>
+
+        suspend fun getRoutesWithAnimationOptions(): List<Item>
 
         suspend fun notifyTransitionCompleted()
 
         suspend fun swallow(
             routes: List<NavigationRoute>,
-            animationObject: JsonObject,
+            animationOptionObject: JsonArray?,
         )
 
         suspend fun spit(

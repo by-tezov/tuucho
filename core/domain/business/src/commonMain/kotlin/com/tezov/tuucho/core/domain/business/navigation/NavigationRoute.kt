@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.navigation
 
 sealed class NavigationRoute(
-    val id: String,
+    open val id: String,
 ) {
 
     abstract fun accept(other: Any): Boolean
@@ -26,14 +26,9 @@ sealed class NavigationRoute(
         }
     }
 
-    class Url(id: String, val value: String) : NavigationRoute(id) {
-
+    data class Url(override val id: String, val value: String) : NavigationRoute(id) {
         override fun accept(other: Any): Boolean {
             return (other is Url && other.value == value) || (other is String && other == value)
-        }
-
-        override fun toString(): String {
-            return "$value:$id"
         }
     }
 }

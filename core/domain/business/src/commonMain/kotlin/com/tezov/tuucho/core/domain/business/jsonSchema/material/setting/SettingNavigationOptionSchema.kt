@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material.setting
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 object SettingNavigationOptionSchema {
@@ -10,7 +9,7 @@ object SettingNavigationOptionSchema {
     const val root = "navigation-option"
 
     object Key {
-        const val selector = Selector.root
+        const val selector = SettingOptionSelector.root
         const val single = "single"
         const val reuse = "reuse"
         const val clearStack = "clear-stack"
@@ -33,29 +32,6 @@ object SettingNavigationOptionSchema {
         var reuse by delegate<String?>(Key.reuse)
         var clearStack by delegate<Boolean?>(Key.clearStack)
         var popupTo by delegate<JsonObject?>(Key.popupTo)
-    }
-
-    object Selector {
-        const val root = "selector"
-
-        object Key {
-            const val type = "type"
-            const val value = "value"
-        }
-
-        object Value {
-            object Type {
-                const val pageBreadCrumb = "page-bread-crumb"
-            }
-        }
-
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-            override val root = Selector.root
-            var self by delegate<JsonObject?>(root)
-
-            var type by delegate<String?>(Key.type)
-            var values by delegate<JsonArray?>(Key.value)
-        }
     }
 
     object PopUpTo {

@@ -39,11 +39,13 @@ object SettingSchema {
         object Key {
             const val disableOnDemandDefinitionShadower = "disable-on-demand-definition-shadower"
             const val navigationOption = SettingNavigationOptionSchema.root
+            const val animationOption = SettingTransitionOptionSchema.root
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument) {
             var disableOnDemandDefinitionShadower by delegate<Boolean?>(Key.disableOnDemandDefinitionShadower)
             var navigationOption by delegate<JsonArray?>(Key.navigationOption)
+            var animationOption by delegate<JsonArray?>(Key.animationOption)
         }
     }
 
