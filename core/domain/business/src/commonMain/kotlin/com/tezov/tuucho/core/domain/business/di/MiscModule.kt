@@ -26,8 +26,6 @@ object MiscModule {
         single<NavigationRepositoryProtocol.StackRoute> {
             NavigationStackRouteRepository(
                 coroutineScopes = get(),
-                useCaseExecutor = get(),
-                settingOptionSelectorFactory = get(),
             )
         }
         single<NavigationRepositoryProtocol.StackScreen> {
@@ -39,7 +37,9 @@ object MiscModule {
 
         single<NavigationRepositoryProtocol.StackTransition> {
             NavigationStackTransitionRepository(
-                coroutineScopes = get()
+                coroutineScopes = get(),
+                useCaseExecutor = get(),
+                navigationTransitionSettingFactory = get(),
             )
         }
 

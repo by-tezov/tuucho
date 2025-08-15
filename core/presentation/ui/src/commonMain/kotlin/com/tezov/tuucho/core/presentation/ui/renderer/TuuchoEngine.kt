@@ -6,14 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationDirection
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationScreen
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.setting.AnimationSetting
+import com.tezov.tuucho.core.domain.business.navigation.transition.TransitionDirection
+import com.tezov.tuucho.core.domain.business.navigation.transition.TransitionScreen
+import com.tezov.tuucho.core.domain.business.navigation.transition.spec.TransitionSpec
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event.Idle
-import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event.RequestTransitionBackward
-import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event.RequestTransitionForward
 import com.tezov.tuucho.core.domain.business.usecase.GetScreensWithAnimationOptionsUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
@@ -24,13 +22,13 @@ import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseC
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.updateAnimationProgress
-import com.tezov.tuucho.core.presentation.ui.animation.AnimationFade.fade
-import com.tezov.tuucho.core.presentation.ui.animation.AnimationNone
-import com.tezov.tuucho.core.presentation.ui.animation.AnimationSlideHorizontal.slideHorizontal
-import com.tezov.tuucho.core.presentation.ui.animation.AnimationSlideVertical.slideVertical
-import com.tezov.tuucho.core.presentation.ui.animation._system.ModifierAnimation
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenProtocol
+import com.tezov.tuucho.core.presentation.ui.transition.TransitionFade.fade
+import com.tezov.tuucho.core.presentation.ui.transition.TransitionNone
+import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideHorizontal.slideHorizontal
+import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideVertical.slideVertical
+import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierAnimation
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -58,7 +56,7 @@ class TuuchoEngine(
 
     data class Item(
         val screen: ScreenProtocol,
-        val animationScreen: AnimationScreen,
+        val transitionScreen: TransitionScreen,
         var isVisible: Boolean,
         var modifierAnimation: ModifierAnimation,
     )
@@ -118,38 +116,38 @@ class TuuchoEngine(
         event: NavigationRepositoryProtocol.StackTransition.Event,
     ) {
         when (event) {
-            RequestTransitionBackward -> {
-                isNavigatingBack = true
-                items.value = screensWithAnimationOptions.map {
-                    Item(
-                        screen = it.screen as ScreenProtocol,
-                        animationScreen = it.animationScreen,
-                        isVisible = true,
-                        modifierAnimation = AnimationNone(),
-                    )
-                }
-            }
-
-            RequestTransitionForward -> {
-                isNavigatingBack = false
-                items.value = screensWithAnimationOptions.map {
-                    Item(
-                        screen = it.screen as ScreenProtocol,
-                        animationScreen = it.animationScreen,
-                        isVisible = true,
-                        modifierAnimation = AnimationNone(),
-                    )
-                }
-            }
+//            RequestTransitionBackward -> {
+//                isNavigatingBack = true
+//                items.value = screensWithAnimationOptions.map {
+//                    Item(
+//                        screen = it.screen as ScreenProtocol,
+//                        transitionScreen = it.transitionScreen,
+//                        isVisible = true,
+//                        modifierAnimation = TransitionNone(),
+//                    )
+//                }
+//            }
+//
+//            RequestTransitionForward -> {
+//                isNavigatingBack = false
+//                items.value = screensWithAnimationOptions.map {
+//                    Item(
+//                        screen = it.screen as ScreenProtocol,
+//                        transitionScreen = it.transitionScreen,
+//                        isVisible = true,
+//                        modifierAnimation = TransitionNone(),
+//                    )
+//                }
+//            }
 
             Idle -> {
                 isNavigatingBack = null
                 items.value = screensWithAnimationOptions.map {
                     Item(
                         screen = it.screen as ScreenProtocol,
-                        animationScreen = it.animationScreen,
+                        transitionScreen = it.transitionScreen,
                         isVisible = true,
-                        modifierAnimation = AnimationNone(),
+                        modifierAnimation = TransitionNone(),
                     )
                 }
             }
@@ -175,55 +173,55 @@ class TuuchoEngine(
 
     private fun Item.updateTransition(
         transition: AnimationProgress,
-        animationScreen: AnimationScreen,
-        directionContent: AnimationDirection.Content,
+        transitionScreen: TransitionScreen,
+        directionScreen: TransitionDirection.Screen,
     ) {
-        val type = when (directionContent) {
-            AnimationDirection.Content.Enter -> when (isNavigatingBack) {
-                true -> animationScreen.enter.pop
-                false -> animationScreen.enter.push
+        val type = when (directionScreen) {
+            TransitionDirection.Screen.Enter -> when (isNavigatingBack) {
+                true -> transitionScreen.enter.pop
+                false -> transitionScreen.enter.push
                 else -> throw UiException.Default("Shouldn't be possible, no navigation transition in progress")
             }
 
-            AnimationDirection.Content.Exit -> when (isNavigatingBack) {
-                true -> animationScreen.exit.pop
-                false -> animationScreen.exit.push
+            TransitionDirection.Screen.Exit -> when (isNavigatingBack) {
+                true -> transitionScreen.exit.pop
+                false -> transitionScreen.exit.push
                 else -> throw UiException.Default("Shouldn't be possible, no navigation transition in progress")
             }
         }
         when (type) {
-            is AnimationSetting.None -> {
-                modifierAnimation = AnimationNone()
+            is TransitionSpec.None -> {
+                modifierAnimation = TransitionNone()
             }
 
-            is AnimationSetting.Fade -> {
+            is TransitionSpec.Fade -> {
                 modifierAnimation = transition.fade(
-                    config = type,
-                    directionContent = directionContent,
+                    spec = type,
+                    directionScreen = directionScreen,
                 )
             }
 
-            is AnimationSetting.SlideHorizontal -> {
+            is TransitionSpec.SlideHorizontal -> {
                 modifierAnimation = transition.slideHorizontal(
-                    config = type,
+                    spec = type,
                     directionNav = when (isNavigatingBack) {
-                        true -> AnimationDirection.Navigation.Pop
-                        false -> AnimationDirection.Navigation.Push
+                        true -> TransitionDirection.Navigation.Pop
+                        false -> TransitionDirection.Navigation.Push
                         else -> throw UiException.Default("Shouldn't be possible, no navigation transition in progress")
                     },
-                    directionContent = directionContent,
+                    directionScreen = directionScreen,
                 )
             }
 
-            is AnimationSetting.SlideVertical -> {
+            is TransitionSpec.SlideVertical -> {
                 modifierAnimation = transition.slideVertical(
-                    config = type,
+                    spec = type,
                     directionNav = when (isNavigatingBack) {
-                        true -> AnimationDirection.Navigation.Pop
-                        false -> AnimationDirection.Navigation.Push
+                        true -> TransitionDirection.Navigation.Pop
+                        false -> TransitionDirection.Navigation.Push
                         else -> throw UiException.Default("Shouldn't be possible, no navigation transition in progress")
                     },
-                    directionContent = directionContent,
+                    directionScreen = directionScreen,
                 )
             }
         }
@@ -239,8 +237,8 @@ class TuuchoEngine(
         val lastEntries = remember { lastEntries }
         val priorEntries = remember { priorEntries }
         val animationOptionResolved = when (isNavigatingBack) {
-            true -> priorEntries.last().animationScreen
-            false -> lastEntries.last().animationScreen
+            true -> priorEntries.last().transitionScreen
+            false -> lastEntries.last().transitionScreen
             else -> throw UiException.Default("Shouldn't be possible, no navigation transition in progress")
         }
 
@@ -249,15 +247,15 @@ class TuuchoEngine(
         priorEntries.forEach {
             it.updateTransition(
                 transition = transition,
-                animationScreen = animationOptionResolved,
-                directionContent = AnimationDirection.Content.Exit,
+                transitionScreen = animationOptionResolved,
+                directionScreen = TransitionDirection.Screen.Exit,
             )
         }
         lastEntries.forEach {
             it.updateTransition(
                 transition = transition,
-                animationScreen = animationOptionResolved,
-                directionContent = AnimationDirection.Content.Enter,
+                transitionScreen = animationOptionResolved,
+                directionScreen = TransitionDirection.Screen.Enter,
             )
         }
 
@@ -269,10 +267,10 @@ class TuuchoEngine(
                         println("once")
 
                         priorEntries.forEach { entry ->
-                            entry.modifierAnimation = AnimationNone()
+                            entry.modifierAnimation = TransitionNone()
                         }
                         lastEntries.forEach { entry ->
-                            entry.modifierAnimation = AnimationNone()
+                            entry.modifierAnimation = TransitionNone()
                         }
                         useCaseExecutor.invoke(
                             useCase = notifyNavigationTransitionCompleted,

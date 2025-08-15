@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationOptionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingOptionSelector
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingNavigationSchema.Selector
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -18,10 +18,10 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-class SettingNavigationOptionRectifier : Rectifier() {
+class SettingNavigationRectifier : Rectifier() {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
-        if (!path.lastSegmentIs(SettingSchema.Root.Key.navigationOption)) return false
+        if (!path.lastSegmentIs(SettingSchema.Root.Key.navigation)) return false
         val parent = element.find(path.parent())
         return parent.isTypeOf(TypeSchema.Value.setting)
     }
@@ -45,13 +45,10 @@ class SettingNavigationOptionRectifier : Rectifier() {
         element: JsonElement,
     ): JsonElement? {
         var selectorRectified: JsonObject? = null
-        return element.find(path).withScope(SettingNavigationOptionSchema::Scope)
+        return element.find(path).withScope(SettingNavigationSchema::Scope)
             .takeIf { scope ->
-                scope.selector?.withScope(SettingOptionSelector::Scope)?.apply {
-                    when (type) {
-                        SettingOptionSelector.Value.Type.pageBreadCrumb -> rectifySelector_PageBreadCrumb()
-                        else -> null
-                    }?.let { selectorRectified = it }
+                scope.selector?.withScope(Selector::Scope)?.apply {
+                    rectifySelector()?.let { selectorRectified = it }
                 }
                 selectorRectified != null
             }
@@ -59,11 +56,16 @@ class SettingNavigationOptionRectifier : Rectifier() {
             ?.collect()
     }
 
-    private fun SettingOptionSelector.Scope.rectifySelector_PageBreadCrumb(): JsonObject? {
-        val values = (element as? JsonObject)?.get(SettingOptionSelector.Key.value)
+    private fun Selector.Scope.rectifySelector(): JsonObject? {
+        val value = (element as? JsonObject)?.get(Selector.Key.value)
+        if(value is JsonPrimitive) {
+            this.values = JsonArray(listOf(value))
+            return collect()
+        }
+        val values = (element as? JsonObject)?.get(Selector.Key.values)
         if(values is JsonPrimitive) {
             this.values = JsonArray(listOf(values))
-            return this.collect()
+            return collect()
         }
         return null
     }

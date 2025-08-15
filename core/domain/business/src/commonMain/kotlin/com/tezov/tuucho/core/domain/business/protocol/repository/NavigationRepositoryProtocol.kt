@@ -1,10 +1,9 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationScreen
+import com.tezov.tuucho.core.domain.business.navigation.transition.TransitionDirection
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
-import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 sealed interface NavigationRepositoryProtocol {
@@ -15,7 +14,7 @@ sealed interface NavigationRepositoryProtocol {
 
         suspend fun push(
             route: NavigationRoute,
-            navigationOptionObject: JsonArray?,
+            navigationOptionObject: JsonObject?,
         ): NavigationRoute?
 
         suspend fun pop(
@@ -46,16 +45,20 @@ sealed interface NavigationRepositoryProtocol {
     interface StackTransition {
 
         sealed class Event {
-            data object RequestTransitionForward: Event()
-            data object RequestTransitionBackward: Event()
-            data object TransitionComplete: Event()
-            data object Idle: Event()
-        }
+            data object Idle : Event()
+            data object PrepareTransition : Event()
+            data class RequestTransition(
+                val directionNavigation: TransitionDirection.Navigation,
+                val foregroundRoutes: List<NavigationRoute>,
+                val foregroundDirectionScreen: TransitionDirection.Screen,
+                val foregroundTransitionSpec: JsonObject?,
+                val backgroundRoutes: List<NavigationRoute>,
+                val backgroundDirectionScreen: TransitionDirection.Screen,
+                val backgroundTransitionSpec: JsonObject?,
+            ) : Event()
 
-        data class Item(
-            val route: NavigationRoute,
-            val animationScreen: AnimationScreen,
-        )
+            data object TransitionComplete : Event()
+        }
 
         suspend fun routes(): List<NavigationRoute>
 
@@ -63,13 +66,11 @@ sealed interface NavigationRepositoryProtocol {
 
         val events: Notifier.Collector<Event>
 
-        suspend fun getRoutesWithAnimationOptions(): List<Item>
-
         suspend fun notifyTransitionCompleted()
 
         suspend fun swallow(
             routes: List<NavigationRoute>,
-            animationOptionObject: JsonArray?,
+            navigationTransitionScreenObject: JsonObject?,
         )
 
         suspend fun spit(

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationScreen
+import com.tezov.tuucho.core.domain.business.navigation.transition.TransitionScreen
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
@@ -13,22 +13,23 @@ class GetScreensWithAnimationOptionsUseCase(
 
     data class Output(
         val screen: ScreenProtocol,
-        val animationScreen: AnimationScreen,
+        val transitionScreen: TransitionScreen,
     )
 
     override suspend fun invoke(input: Unit): List<Output> {
-        return navigationStackTransitionRepository
-            .getRoutesWithAnimationOptions()
-            .mapNotNull { routeWithAnimationOption ->
-                navigationStackScreenRepository
-                    .getScreenOrNull(routeWithAnimationOption.route)
-                    ?.let { screen ->
-                        Output(
-                            screen = screen,
-                            animationScreen = routeWithAnimationOption.animationScreen
-                        )
-                    }
-            }
+        TODO()
+//        return navigationStackTransitionRepository
+//            .getRoutesWithAnimationOptions()
+//            .mapNotNull { routeWithAnimationOption ->
+//                navigationStackScreenRepository
+//                    .getScreenOrNull(routeWithAnimationOption.route)
+//                    ?.let { screen ->
+//                        Output(
+//                            screen = screen,
+//                            transitionScreen = routeWithAnimationOption.transitionScreen
+//                        )
+//                    }
+//            }
 
     }
 }

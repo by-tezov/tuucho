@@ -1,29 +1,29 @@
-package com.tezov.tuucho.core.presentation.ui.animation
+package com.tezov.tuucho.core.presentation.ui.transition
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationDirection
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.setting.AnimationSetting
+import com.tezov.tuucho.core.domain.business.navigation.transition.TransitionDirection
+import com.tezov.tuucho.core.domain.business.navigation.transition.spec.TransitionSpec
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
-import com.tezov.tuucho.core.presentation.ui.animation._system.ModifierAnimation
+import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierAnimation
 
-object AnimationFade {
+object TransitionFade {
 
     fun AnimationProgress.fade(
-        config: AnimationSetting.Fade,
-        directionContent: AnimationDirection.Content
+        spec: TransitionSpec.Fade,
+        directionScreen: TransitionDirection.Screen
     ): ModifierAnimation {
-        return when (directionContent) {
-            AnimationDirection.Content.Enter -> In(config, this)
-            AnimationDirection.Content.Exit -> Out(config, this)
+        return when (directionScreen) {
+            TransitionDirection.Screen.Enter -> In(spec, this)
+            TransitionDirection.Screen.Exit -> Out(spec, this)
         }
     }
 
     class In(
-        private val config: AnimationSetting.Fade,
+        private val config: TransitionSpec.Fade,
         private val animationProgress: AnimationProgress,
     ) : ModifierAnimation() {
 
@@ -42,7 +42,7 @@ object AnimationFade {
     }
 
     class Out(
-        private val config: AnimationSetting.Fade,
+        private val config: TransitionSpec.Fade,
         private val animationProgress: AnimationProgress,
     ) : ModifierAnimation() {
 

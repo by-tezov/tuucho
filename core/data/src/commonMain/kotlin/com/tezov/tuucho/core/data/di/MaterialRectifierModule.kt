@@ -32,7 +32,7 @@ import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingNavigationOptionRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingNavigationRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
@@ -138,7 +138,7 @@ object MaterialRectifierModule {
         single<List<Rectifier>>(Name.Processor.SETTING) {
             listOf(
                 get<IdRectifier>(),
-                SettingNavigationOptionRectifier(),
+                SettingNavigationRectifier(),
             )
         }
     }

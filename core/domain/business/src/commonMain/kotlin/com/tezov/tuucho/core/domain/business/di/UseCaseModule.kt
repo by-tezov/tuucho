@@ -10,6 +10,8 @@ import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreensWithAnimationOptionsUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
+import com.tezov.tuucho.core.domain.business.usecase.NavigationOptionSelectorFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase.NavigationTransitionSettingFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
@@ -17,7 +19,6 @@ import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActi
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
-import com.tezov.tuucho.core.domain.business.usecase.SettingOptionSelectorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import org.koin.dsl.module
 
@@ -28,18 +29,6 @@ object UseCaseModule {
         single<UseCaseExecutor> {
             UseCaseExecutor(
                 coroutineScopes = get()
-            )
-        }
-
-        factory<ProcessActionUseCase> {
-            ProcessActionUseCase(
-                coroutineScopes = get(),
-                handlers = listOf(
-                    get<NavigationUrlActionProcessor>(),
-                    get<NavigationLocalDestinationActionProcessor>(),
-                    get<FormSendUrlActionProcessor>(),
-                    get<FormUpdateActionProcessor>(),
-                )
             )
         }
 
@@ -72,8 +61,10 @@ object UseCaseModule {
         factory<NavigateToUrlUseCase> {
             NavigateToUrlUseCase(
                 coroutineScopes = get(),
+                useCaseExecutor = get(),
                 retrieveMaterialRepository = get(),
                 navigationRouteIdGenerator = get(),
+                navigationOptionSelectorFactory = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
@@ -81,13 +72,29 @@ object UseCaseModule {
             )
         }
 
-        factory<SettingOptionSelectorFactoryUseCase> {
-            SettingOptionSelectorFactoryUseCase()
+        factory<NavigationOptionSelectorFactoryUseCase> {
+            NavigationOptionSelectorFactoryUseCase()
+        }
+
+        factory<NavigationTransitionSettingFactoryUseCase> {
+            NavigationTransitionSettingFactoryUseCase()
         }
 
         factory<NotifyNavigationTransitionCompletedUseCase> {
             NotifyNavigationTransitionCompletedUseCase(
                 navigationAnimatorStackRepository = get()
+            )
+        }
+
+        factory<ProcessActionUseCase> {
+            ProcessActionUseCase(
+                coroutineScopes = get(),
+                handlers = listOf(
+                    get<NavigationUrlActionProcessor>(),
+                    get<NavigationLocalDestinationActionProcessor>(),
+                    get<FormSendUrlActionProcessor>(),
+                    get<FormUpdateActionProcessor>(),
+                )
             )
         }
 

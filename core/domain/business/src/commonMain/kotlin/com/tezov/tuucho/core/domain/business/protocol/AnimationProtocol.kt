@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationScreen
+import com.tezov.tuucho.core.domain.business.navigation.transition.TransitionScreen
 
 interface AnimationProtocol {
 
-    fun enter(block: AnimationScreen.() -> Unit)
+    fun enter(block: TransitionScreen.() -> Unit)
 
-    fun exit(block: AnimationScreen.() -> Unit)
+    fun exit(block: TransitionScreen.() -> Unit)
 
 }

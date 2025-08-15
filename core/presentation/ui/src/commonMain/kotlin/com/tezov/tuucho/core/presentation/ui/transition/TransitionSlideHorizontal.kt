@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.animation
+package com.tezov.tuucho.core.presentation.ui.transition
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -10,68 +10,68 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.AnimationDirection
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.setting.AnimationSetting
-import com.tezov.tuucho.core.domain.business.navigation.transitionOption.setting.AnimationSlideSetting
+import com.tezov.tuucho.core.domain.business.navigation.transition.TransitionDirection
+import com.tezov.tuucho.core.domain.business.navigation.transition.spec.TransitionSlideSpec
+import com.tezov.tuucho.core.domain.business.navigation.transition.spec.TransitionSpec
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
-import com.tezov.tuucho.core.presentation.ui.animation._system.ModifierAnimation
+import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierAnimation
 
-object AnimationSlideHorizontal {
+object TransitionSlideHorizontal {
 
     fun AnimationProgress.slideHorizontal(
-        config: AnimationSetting.SlideHorizontal,
-        directionNav: AnimationDirection.Navigation,
-        directionContent: AnimationDirection.Content,
+        spec: TransitionSpec.SlideHorizontal,
+        directionNav: TransitionDirection.Navigation,
+        directionScreen: TransitionDirection.Screen,
     ): ModifierAnimation {
-        return when (directionContent) {
-            AnimationDirection.Content.Enter -> when (directionNav) {
-                AnimationDirection.Navigation.Push -> In(
-                    config = config,
+        return when (directionScreen) {
+            TransitionDirection.Screen.Enter -> when (directionNav) {
+                TransitionDirection.Navigation.Push -> In(
+                    config = spec,
                     animationProgress = this,
-                    directionNav = AnimationDirection.Navigation.Push
+                    directionNav = TransitionDirection.Navigation.Push
                 )
 
-                AnimationDirection.Navigation.Pop -> Out(
-                    config = config,
+                TransitionDirection.Navigation.Pop -> Out(
+                    config = spec,
                     animationProgress = this,
-                    directionNav = AnimationDirection.Navigation.Pop
+                    directionNav = TransitionDirection.Navigation.Pop
                 )
             }
 
-            AnimationDirection.Content.Exit -> when (directionNav) {
-                AnimationDirection.Navigation.Push -> Out(
-                    config = config,
+            TransitionDirection.Screen.Exit -> when (directionNav) {
+                TransitionDirection.Navigation.Push -> Out(
+                    config = spec,
                     animationProgress = this,
-                    directionNav = AnimationDirection.Navigation.Push
+                    directionNav = TransitionDirection.Navigation.Push
                 )
 
-                AnimationDirection.Navigation.Pop -> In(
-                    config = config,
+                TransitionDirection.Navigation.Pop -> In(
+                    config = spec,
                     animationProgress = this,
-                    directionNav = AnimationDirection.Navigation.Pop
+                    directionNav = TransitionDirection.Navigation.Pop
                 )
             }
         }
     }
 
     class In(
-        private val config: AnimationSetting.SlideHorizontal,
+        private val config: TransitionSpec.SlideHorizontal,
         private val animationProgress: AnimationProgress,
-        directionNav: AnimationDirection.Navigation,
+        directionNav: TransitionDirection.Navigation,
     ) : ModifierAnimation() {
 
         private val startValue = when (directionNav) {
-            AnimationDirection.Navigation.Push -> 1.0f
-            AnimationDirection.Navigation.Pop -> 0.0f
+            TransitionDirection.Navigation.Push -> 1.0f
+            TransitionDirection.Navigation.Pop -> 0.0f
         }
         private val endValue = when (directionNav) {
-            AnimationDirection.Navigation.Push -> 0.0f
-            AnimationDirection.Navigation.Pop -> 1.0f
+            TransitionDirection.Navigation.Push -> 0.0f
+            TransitionDirection.Navigation.Pop -> 1.0f
         }
 
         private val entranceFactor = when (config.entrance) {
-            AnimationSlideSetting.Horizontal.Entrance.FromEnd -> 1.0f
-            AnimationSlideSetting.Horizontal.Entrance.FromStart -> -1.0f
+            TransitionSlideSpec.Horizontal.Entrance.FromEnd -> 1.0f
+            TransitionSlideSpec.Horizontal.Entrance.FromStart -> -1.0f
         }
 
         @Composable
@@ -91,23 +91,23 @@ object AnimationSlideHorizontal {
     }
 
     class Out(
-        private val config: AnimationSetting.SlideHorizontal,
+        private val config: TransitionSpec.SlideHorizontal,
         private val animationProgress: AnimationProgress,
-        directionNav: AnimationDirection.Navigation,
+        directionNav: TransitionDirection.Navigation,
     ) : ModifierAnimation() {
 
         private val startValue = when (directionNav) {
-            AnimationDirection.Navigation.Push -> 0.0f
-            AnimationDirection.Navigation.Pop -> -1.0f
+            TransitionDirection.Navigation.Push -> 0.0f
+            TransitionDirection.Navigation.Pop -> -1.0f
         }
         private val endValue = when (directionNav) {
-            AnimationDirection.Navigation.Push -> -1.0f
-            AnimationDirection.Navigation.Pop -> 0.0f
+            TransitionDirection.Navigation.Push -> -1.0f
+            TransitionDirection.Navigation.Pop -> 0.0f
         }
 
         private val entranceFactor = when (config.entrance) {
-            AnimationSlideSetting.Horizontal.Entrance.FromEnd -> 1.0f
-            AnimationSlideSetting.Horizontal.Entrance.FromStart -> -1.0f
+            TransitionSlideSpec.Horizontal.Entrance.FromEnd -> 1.0f
+            TransitionSlideSpec.Horizontal.Entrance.FromStart -> -1.0f
         }
 
         @Composable
@@ -122,17 +122,17 @@ object AnimationSlideHorizontal {
             )
 
             val width = when (config.effect) {
-                AnimationSlideSetting.Effect.CoverPush -> {
+                TransitionSlideSpec.Effect.CoverPush -> {
 //                    (LocalActivity.size.width * entranceFactor) / 2 //TODO
                       150.dp
                 }
 
-                AnimationSlideSetting.Effect.Push -> {
+                TransitionSlideSpec.Effect.Push -> {
 //                    (LocalActivity.size.width * entranceFactor) //TODO
                     150.dp
                 }
 
-                AnimationSlideSetting.Effect.Cover -> {
+                TransitionSlideSpec.Effect.Cover -> {
                     0.dp
                 }
             }

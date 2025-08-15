@@ -1,6 +1,6 @@
-package com.tezov.tuucho.core.domain.business.navigation.transitionOption.setting
+package com.tezov.tuucho.core.domain.business.navigation.transition.spec
 
-object AnimationSlideSetting {
+object TransitionSlideSpec {
 
     enum class Effect { CoverPush, Cover, Push }
 

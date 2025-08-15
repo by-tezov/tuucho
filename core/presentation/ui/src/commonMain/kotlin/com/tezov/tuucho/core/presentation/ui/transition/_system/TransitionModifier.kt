@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.animation._system
+package com.tezov.tuucho.core.presentation.ui.transition._system
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

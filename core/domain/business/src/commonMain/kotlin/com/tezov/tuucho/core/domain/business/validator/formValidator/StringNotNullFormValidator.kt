@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.Validator.formValidator
+package com.tezov.tuucho.core.domain.business.validator.formValidator
 
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol

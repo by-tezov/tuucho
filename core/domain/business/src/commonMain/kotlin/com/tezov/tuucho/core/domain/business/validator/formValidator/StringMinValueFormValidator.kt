@@ -1,19 +1,19 @@
-package com.tezov.tuucho.core.domain.business.Validator.formValidator
+package com.tezov.tuucho.core.domain.business.validator.formValidator
 
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonObject
 
-class StringMinLengthFormValidator(
-    private val length: Int,
+class StringMinValueFormValidator(
     private val errorMessages: JsonObject,
+    private val minValue: Int,
 ) : FormValidatorProtocol<String> {
 
     private var isValid = false
 
     override fun updateValidity(value: String) {
-        isValid = value.length >= length
+        isValid = value.isEmpty() || value.toIntOrNull()?.let { it > minValue } ?: false
     }
 
     override fun isValid() = isValid

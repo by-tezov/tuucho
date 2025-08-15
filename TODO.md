@@ -1,7 +1,7 @@
 ## In progress
 
-- Do the Animator Stack
-- What to do ui side (don't fort=get the state-holder)
+- Do the transition Schema (fade, Slide) + factory
+- Do it in stack transition  and +find a way to order correcty the stack transition
 
 update the doc: form-validator, setting with navigation stack
 
