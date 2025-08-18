@@ -4,8 +4,8 @@ package com.tezov.tuucho.core.data.parser.rectifier.id
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser._system.parentIsAnyTypeOf
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.KoinComponent

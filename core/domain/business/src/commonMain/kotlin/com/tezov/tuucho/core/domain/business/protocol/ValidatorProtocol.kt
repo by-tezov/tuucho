@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
-import com.tezov.tuucho.core.domain.business.config.Language
+import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 
 interface ValidatorProtocol<T : Any> {
 
@@ -11,5 +11,5 @@ interface ValidatorProtocol<T : Any> {
 
 interface FormValidatorProtocol<T : Any> : ValidatorProtocol<T> {
 
-    fun getErrorMessage(language: Language): String
+    fun getErrorMessage(language: LanguageModelDomain): String
 }

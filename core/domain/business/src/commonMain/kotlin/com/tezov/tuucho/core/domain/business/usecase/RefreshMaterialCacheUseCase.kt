@@ -12,8 +12,10 @@ class RefreshMaterialCacheUseCase(
         val url: String,
     )
 
-    override suspend fun invoke(input: Input) = with(input) {
-        refreshMaterialCacheRepository.process(url)
+    override suspend fun invoke(input: Input) {
+        with(input) {
+            refreshMaterialCacheRepository.process(url)
+        }
     }
 
 }

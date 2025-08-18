@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
-import com.tezov.tuucho.core.domain.business.actionHandler.NavigationUrlActionHandler
+import com.tezov.tuucho.core.domain.business.action.NavigationUrlActionProcessor
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
@@ -8,13 +8,13 @@ import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 class RegisterToNavigationUrlActionEventUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
-    private val navigationUrlActionHandler: NavigationUrlActionHandler,
+    private val navigationUrlActionProcessor: NavigationUrlActionProcessor,
     private val navigateForward: NavigateToUrlUseCase,
-) : UseCaseProtocol.Async<Unit, Unit> {
+) : UseCaseProtocol.Sync<Unit, Unit> {
 
-    override suspend fun invoke(input: Unit) {
-        coroutineScopes.event.on {
-            navigationUrlActionHandler.events
+    override fun invoke(input: Unit) {
+        coroutineScopes.event.async {
+            navigationUrlActionProcessor.events
                 .forever { url ->
                     useCaseExecutor.invokeSuspend(
                         useCase = navigateForward,

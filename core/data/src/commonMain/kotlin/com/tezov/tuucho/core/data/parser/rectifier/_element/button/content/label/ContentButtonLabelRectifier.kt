@@ -1,10 +1,10 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label
 
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.ButtonSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.toPath

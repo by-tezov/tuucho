@@ -25,15 +25,19 @@ fun JsonElement.find(path: JsonElementPath): JsonElement =
     this.findOrNull(path)
         ?: error("element could not be found at path $path inside $this")
 
-fun JsonElement.replaceOrInsert(path: JsonElementPath, newElement: JsonElement): JsonElement { //Improve: No efficient, but will do the job
+fun JsonElement.replaceOrInsert(
+    path: JsonElementPath,
+    newElement: JsonElement,
+): JsonElement { //Improve: No efficient, but will do the job
     if (path.isEmpty()) return newElement
-    val stack = mutableListOf<Pair<String, JsonObject>>()
-    var current = this
-    for (key in path) {
-        require(current is JsonObject) { "invalid path: $key is not an object" }
-        stack.add(key to current)
-        current = current[key]
-            ?: emptyMap<String, JsonElement>().let(::JsonObject)
+    val stack = buildList {
+        var current = this@replaceOrInsert
+        for (key in path) {
+            require(current is JsonObject) { "invalid path: $key is not an object" }
+            add(key to current)
+            current = current[key]
+                ?: emptyMap<String, JsonElement>().let(::JsonObject)
+        }
     }
     var updated = newElement
     for ((key, parent) in stack.asReversed()) {

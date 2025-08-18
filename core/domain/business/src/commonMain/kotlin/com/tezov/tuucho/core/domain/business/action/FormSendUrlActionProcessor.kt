@@ -1,0 +1,158 @@
+package com.tezov.tuucho.core.domain.business.action
+
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.Action
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionFormSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
+import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
+import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
+class FormSendUrlActionProcessor(
+    private val useCaseExecutor: UseCaseExecutor,
+    private val getOrNullScreen: GetScreenOrNullUseCase,
+    private val sendData: SendDataUseCase,
+) : ActionProcessorProtocol, KoinComponent {
+
+    private val actionHandler: ProcessActionUseCase by inject()
+
+    override val priority: Int
+        get() = ActionProcessorProtocol.Priority.DEFAULT
+
+    override fun accept(
+        route: NavigationRoute,
+        action: ActionModelDomain,
+        jsonElement: JsonElement?,
+    ): Boolean {
+        return action.command == Action.Form.command && action.authority == Action.Form.Send.authority
+    }
+
+    override suspend fun process(
+        route: NavigationRoute,
+        action: ActionModelDomain,
+        jsonElement: JsonElement?,
+    ) {
+        action.target ?: return
+        val formView = route.getAllFormView() ?: return
+        if (formView.isAllFormValid()) {
+            val response = useCaseExecutor.invokeSuspend(
+                useCase = sendData,
+                input = SendDataUseCase.Input(
+                    url = action.target,
+                    jsonObject = formView.data()
+                )
+            ).jsonObject
+            response?.let {
+                val responseScope = response.withScope(FormSendResponseSchema::Scope)
+                val isAllSuccess = responseScope.isAllSuccess == true
+                if (isAllSuccess) {
+                    jsonElement?.actionValidated(route)
+                } else {
+                    responseScope.processInvalidRemoteForm(route)
+                }
+            }
+        } else {
+            formView.processInvalidLocalForm(route)
+        }
+
+    }
+
+    private suspend fun NavigationRoute.getAllFormView() =
+        useCaseExecutor.invokeSuspend(
+            useCase = getOrNullScreen,
+            input = GetScreenOrNullUseCase.Input(
+                route = this
+            )
+        ).screen?.views(FormViewProtocol.Extension::class)?.map { it.formView }
+
+    private fun List<FormViewProtocol>.isAllFormValid(): Boolean {
+        forEach { it.updateValidity() }
+        return all { it.isValid() ?: true }
+    }
+
+    private fun List<FormViewProtocol>.data() = buildMap<String, JsonPrimitive> {
+        this@data.forEach {
+            put(it.getId(), JsonPrimitive(it.getValue()))
+        }
+    }.let(::JsonObject)
+
+    private suspend fun List<FormViewProtocol>.processInvalidLocalForm(route: NavigationRoute) {
+        val results = filter { it.isValid() == false }
+            .map {
+                JsonNull.withScope(IdSchema::Scope).apply {
+                    self = JsonNull.withScope(IdSchema::Scope)
+                        .apply { value = it.getId() }.collect()
+                }.collect()
+
+            }.let(::JsonArray)
+        actionDenied(route, results)
+    }
+
+    private suspend fun FormSendResponseSchema.Scope.processInvalidRemoteForm(
+        route: NavigationRoute,
+    ) {
+        val results = results?.map { result ->
+            val resultScope = result.withScope(FormSendResponseSchema.Result::Scope)
+            val resultFailureReason = resultScope.failureReason
+            JsonNull.withScope(::SchemaScope).apply {
+                withScope(IdSchema::Scope).apply {
+                    self = JsonNull.withScope(IdSchema::Scope).apply {
+                        value = resultScope.id
+                    }.collect()
+                }
+                resultFailureReason?.let {
+                    withScope(FormSendResponseSchema.Result::Scope).apply {
+                        failureReason = it
+                    }
+                }
+            }.collect()
+        }?.let(::JsonArray)
+        actionDenied(route, results)
+    }
+
+    private suspend fun JsonElement.actionValidated(route: NavigationRoute) {
+        val actionValidated = withScope(ActionFormSchema.Send::Scope).actionValidated
+        actionValidated?.let {
+            useCaseExecutor.invokeSuspend(
+                useCase = actionHandler,
+                input = ProcessActionUseCase.Input(
+                    route = route,
+                    action = ActionModelDomain.from(it)
+                ),
+            )
+        }
+    }
+
+    private suspend fun actionDenied(
+        route: NavigationRoute,
+        results: JsonElement?,
+    ) {
+        useCaseExecutor.invokeSuspend(
+            useCase = actionHandler,
+            input = ProcessActionUseCase.Input(
+                route = route,
+                action = ActionModelDomain.from(
+                    command = Action.Form.command,
+                    authority = Action.Form.Update.authority,
+                    target = Action.Form.Update.Target.error
+                ),
+                jsonElement = results
+            ),
+        )
+    }
+
+}

@@ -31,24 +31,24 @@ val JsonElementTree.jsonEntityArrayTree
     get() = this as? JsonEntityArrayTree ?: throw DataException.Default("JsonEntityArrayTree")
 
 fun JsonElementTree.flatten(): List<JsonEntityObjectTree> {
-    val output = mutableListOf<JsonEntityObjectTree>()
-    val stack = ArrayDeque<JsonElementTree>()
-    stack.add(this)
-    while (stack.isNotEmpty()) {
-        when (val current = stack.removeLast()) {
-            is JsonEntityObjectTree -> {
-                output.add(current)
-                val children = current.children
-                if (children?.isNotEmpty() == true) {
-                    current.children = null
-                    stack.addAll(children.asReversed())
+    return buildList {
+        val stack = ArrayDeque<JsonElementTree>()
+        stack.add(this@flatten)
+        while (stack.isNotEmpty()) {
+            when (val current = stack.removeLast()) {
+                is JsonEntityObjectTree -> {
+                    add(current)
+                    val children = current.children
+                    if (children?.isNotEmpty() == true) {
+                        current.children = null
+                        stack.addAll(children.asReversed())
+                    }
                 }
-            }
 
-            is JsonEntityArrayTree -> stack.addAll(current.asReversed())
+                is JsonEntityArrayTree -> stack.addAll(current.asReversed())
+            }
         }
     }
-    return output
 }
 
 fun JsonElementTree.toJsonElement(): JsonElement = when (this) {

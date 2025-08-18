@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.parser.assembler._system
 
-import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScope
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 

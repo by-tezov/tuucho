@@ -2,27 +2,24 @@ package com.tezov.tuucho.core.presentation.ui.renderer.view
 
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionSchema
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.ButtonSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.content.action.ActionSchema
-import com.tezov.tuucho.core.domain.business.usecase.ActionHandlerUseCase
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
-import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifier
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifierFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 class ButtonViewFactory(
-    private val identifierFactory: ViewIdentifierFactory,
     private val useCaseExecutor: UseCaseExecutor,
-    private val actionHandler: ActionHandlerUseCase,
+    private val actionHandler: ProcessActionUseCase,
 ) : ViewFactory() {
 
     private val labelUiComponentFactory: LabelViewFactory by inject()
@@ -35,10 +32,10 @@ class ButtonViewFactory(
     }
 
     override suspend fun process(
-        screenIdentifier: ScreenIdentifier,
+        route: NavigationRoute,
         componentObject: JsonObject,
     ) = ButtonView(
-        identifier = identifierFactory.invoke(screenIdentifier),
+        route = route,
         componentObject = componentObject,
         useCaseExecutor = useCaseExecutor,
         labelUiComponentFactory = labelUiComponentFactory,
@@ -47,12 +44,12 @@ class ButtonViewFactory(
 }
 
 class ButtonView(
-    identifier: ViewIdentifier,
+    private val route: NavigationRoute,
     componentObject: JsonObject,
     private val useCaseExecutor: UseCaseExecutor,
     private val labelUiComponentFactory: LabelViewFactory,
-    private val actionHandler: ActionHandlerUseCase,
-) : View(identifier, componentObject) {
+    private val actionHandler: ProcessActionUseCase,
+) : View(componentObject) {
 
     override val children: List<ViewProtocol>?
         get() = labelView?.let { listOf(it) }
@@ -72,7 +69,7 @@ class ButtonView(
             label?.let { labelObject ->
                 labelView?.update(labelObject) ?: run {
                     labelView = labelUiComponentFactory
-                        .process(identifier.screenIdentifier, labelObject)
+                        .process(route, labelObject)
                 }
 
                 //TODO
@@ -91,8 +88,8 @@ class ButtonView(
                 value?.let { value ->
                     useCaseExecutor.invoke(
                         useCase = actionHandler,
-                        input = ActionHandlerUseCase.Input(
-                            source = identifier,
+                        input = ProcessActionUseCase.Input(
+                            route = route,
                             action = ActionModelDomain.Companion.from(value),
                             jsonElement = element
                         )

@@ -1,22 +1,22 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
 
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringEmailFormValidator
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringMaxLengthFieldFormValidator
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringMaxValueFormValidator
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringMinDigitLengthFormValidator
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringMinLengthFormValidator
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringMinValueFormValidator
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringNotNullFormValidator
-import com.tezov.tuucho.core.domain.business.Validator.formValidator.StringOnlyDigitsFormValidator
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormValidatorSchema.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase.Output
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringEmailFormValidator
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMaxLengthFieldFormValidator
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMaxValueFormValidator
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMinDigitLengthFormValidator
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMinLengthFormValidator
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMinValueFormValidator
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringNotNullFormValidator
+import com.tezov.tuucho.core.domain.business.validator.formValidator.StringOnlyDigitsFormValidator
 import kotlinx.serialization.json.JsonObject
 
 class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
