@@ -76,7 +76,7 @@ nav:
       - Color: object-definition/color.md
       - Dimension: object-definition/dimension.md
       - Action: object-definition/action.md
-      - Validator: object-definition/validator.md
+      - Form-Validator: object-definition/form-validator.md
   - Components:
       - Overview: components-definition/index.md
       - LayoutLinear: components-definition/layout-linear.md
@@ -86,6 +86,11 @@ nav:
         - Field: components-definition/form/field.md
       - Button: components-definition/button.md
       - Spacer: components-definition/spacer.md
+  - Navigation:
+      - Overview: navigation/index.md
+      - Transitions:
+          - navigation/transition-fade.md
+          - navigation/transition-slide.md
   - Page:
       - Overview: pages-definition/index.md
       - Example:

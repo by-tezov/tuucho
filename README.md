@@ -29,6 +29,7 @@ Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap/) for full details
 - **Label**: Display styled text with customizable fonts and colors.
 - **Spacer**: Control spacing and alignment with flexible or fixed-sized spacers, both vertical and horizontal.
 
+- **Stack navigation with Transition Animations**
 ---
 
 ## Why Choose TUUCHO?
@@ -45,7 +46,7 @@ Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap/) for full details
 
 For comprehensive documentation, examples, and developer guides, visit:
 
-[Full Documentation](https://doc.tuucho.com/0.0.1-alpha6/)
+[Full Documentation](https://doc.tuucho.com/0.0.1-alpha7/)
 
 ---
 

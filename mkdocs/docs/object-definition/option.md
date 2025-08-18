@@ -21,7 +21,7 @@ Example:
 
 In this example:
 
-- `validator` follow the [validator](validator.md) object rules.
+- `validator` follow the [validator](form-validator.md) object rules.
 
 ---
 
