@@ -26,8 +26,8 @@ object TransitionFade {
                 ?.withScope(SettingNavigationTransitionSchema.SpecFade::Scope)
                 .let {
                     Spec(
-                        duration = it?.duration?.toIntOrNull() ?: 200,
-                        alphaInitial = it?.alphaInitial?.toFloatOrNull() ?: 0.3f,
+                        duration = it?.duration?.toIntOrNull() ?: 250,
+                        alphaInitial = it?.alphaInitial?.toFloatOrNull() ?: 0.1f,
                     )
                 }
         }

@@ -20,13 +20,7 @@ abstract class ModifierTransition : Modifier {
                 height = (it.size.height / density)
             )
 
-        }.let {
-            if (size.value != Size.Unspecified) {
-                it.then(animate(size.value))
-            } else {
-                it
-            }
-        }
+        }.then(animate(size.value))
     }
 
     @Composable

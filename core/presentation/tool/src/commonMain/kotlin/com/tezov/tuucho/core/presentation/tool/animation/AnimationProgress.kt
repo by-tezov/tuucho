@@ -81,6 +81,7 @@ class AnimationProgress private constructor() {
             Step.Initial, Step.Head -> startValue
             Step.Tail -> endValue
         }
+        println(clampedValue.value)
         return clampedValue
     }
 

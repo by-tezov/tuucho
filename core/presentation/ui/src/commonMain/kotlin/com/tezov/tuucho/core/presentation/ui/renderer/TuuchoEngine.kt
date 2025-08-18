@@ -204,9 +204,7 @@ class TuuchoEngine(
                 .fillMaxSize()
                 .thenOnNotNull(
                     animationProgress,
-                    block = {
-                        ModifierTransition(it, spec = spec)
-                    }
+                    block = { ModifierTransition(it, spec = spec) }
                 )
         ) {
             display()

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -36,7 +37,7 @@ object TransitionSlideHorizontal {
                 ?.withScope(SettingNavigationTransitionSchema.SpecSlide::Scope)
                 .let {
                     Spec(
-                        duration = it?.duration?.toIntOrNull() ?: 350,
+                        duration = it?.duration?.toIntOrNull() ?: 5000,
                         exitDarkAlphaFactor = it?.exitDarkAlphaFactor?.toFloatOrNull() ?: 0.8f,
                         entrance = it?.entrance ?: Entrance.fromEnd,
                         effect = it?.effect ?: Effect.coverPush,
@@ -97,7 +98,7 @@ object TransitionSlideHorizontal {
     class FlatSlideModifier(
         private val spec: Spec,
         private val animationProgress: AnimationProgress,
-        directionNavigation: String,
+        private val directionNavigation: String,
     ) : ModifierTransition() {
 
         private val startValue = when (directionNavigation) {
@@ -127,15 +128,24 @@ object TransitionSlideHorizontal {
                     easing = LinearEasing
                 )
             )
-            val width = boundaries.width.dp * entranceFactor
-            return offset(x = width * progress.value, y = 0.dp)
+            if(boundaries == Size.Unspecified){
+                return when (directionNavigation) {
+                    DirectionNavigation.forward -> alpha(0.0f)
+                    DirectionNavigation.backward -> this
+                    else -> throw UiException.Default("unknown entrance value ${spec.entrance}")
+                }
+            }
+            else {
+                val width = boundaries.width.dp * entranceFactor
+                return offset(x = width * progress.value, y = 0.dp)
+            }
         }
     }
 
     class LayerSlideModifier(
         private val spec: Spec,
         private val animationProgress: AnimationProgress,
-        directionNavigation: String,
+        private val directionNavigation: String,
     ) : ModifierTransition() {
 
         private val startValue = when (directionNavigation) {
@@ -165,24 +175,32 @@ object TransitionSlideHorizontal {
                     easing = LinearEasing
                 )
             )
-
-            val width = when (spec.effect) {
-                Effect.coverPush -> (boundaries.width.dp * entranceFactor) / 2
-                Effect.push -> (boundaries.width.dp * entranceFactor)
-                Effect.cover -> 0.dp
-                else -> throw UiException.Default("unknown effect value ${spec.effect}")
-            }
-            return offset(x = width * progress.value, y = 0.dp)
-                .drawWithContent {
-                    drawContent()
-                    drawRect(
-                        color = Color.Black,
-                        alpha = -progress.value * spec.exitDarkAlphaFactor,
-                        topLeft = Offset(0f, 0f),
-                        size = size,
-                        style = Fill
-                    )
+            if(boundaries == Size.Unspecified){
+                return when (directionNavigation) {
+                    DirectionNavigation.forward -> this
+                    DirectionNavigation.backward -> alpha(0.0f)
+                    else -> throw UiException.Default("unknown entrance value ${spec.entrance}")
                 }
+            }
+            else {
+                val width = when (spec.effect) {
+                    Effect.coverPush -> (boundaries.width.dp * entranceFactor) / 2
+                    Effect.push -> (boundaries.width.dp * entranceFactor)
+                    Effect.cover -> 0.dp
+                    else -> throw UiException.Default("unknown effect value ${spec.effect}")
+                }
+                return offset(x = width * progress.value, y = 0.dp)
+                    .drawWithContent {
+                        drawContent()
+                        drawRect(
+                            color = Color.Black,
+                            alpha = -progress.value * spec.exitDarkAlphaFactor,
+                            topLeft = Offset(0f, 0f),
+                            size = size,
+                            style = Fill
+                        )
+                    }
+            }
         }
     }
 }
