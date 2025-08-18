@@ -14,9 +14,8 @@ The `form-send` action is used to submit form data to a server endpoint. It is t
 
 ## 🔧 Action Format
 
-- **Action value**: `form-send://url/{the_server_endpoint}`
-- **Params**:
-    - `action-validated`: A follow-up action (commonly a navigation) to trigger after a successful server response.
+- `value`: `form-send://url/{the_server_endpoint}`
+- `action-validated`: A follow-up action (commonly a navigation) to trigger after a successful server response.
 
 ### Example
 
@@ -25,9 +24,7 @@ Used in a `Button` component:
 ```json
 "action": {
   "value": "form-send://url/form-from-page-home",
-  "params": {
-    "action-validated": "navigate://url/page-confirmation"
-  }
+  "action-validated": "navigate://url/page-confirmation"
 }
 ```
 

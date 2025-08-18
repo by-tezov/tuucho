@@ -7,16 +7,14 @@ The `action` object defines an executable command with optional parameters. It s
 ## 1. Full Object Format
 
 - `value` (**required**): specifies the action command using the format `command://authority/target`.
-- `params` (optional): an object containing parameters whose content depends on the specific action command.
+- `other` (optional): any key containing value whose depends on the specific action command.
 
 Example for the `form-send` action:
 
 ```json
 "action": {
   "value": "form-send://url/form-from-page-home",
-  "params": {
-    "action-validated": "navigate://url/page-confirmation"
-  }
+  "action-validated": "navigate://url/page-confirmation"
 }
 ```
 
@@ -29,14 +27,14 @@ This example instructs to send a form from the home page URL and navigate to a c
 When no parameters are needed, you can use a simple string with the action command:
 
 ```json
-"action": "form-send://url/form-from-page-home"
+"action": "navigate://url/page-help"
 ```
 
 This is equivalent to:
 
 ```json
 "action": {
-  "value": "form-send://url/form-from-page-home"
+  "value": "navigate://url/page-help"
 ```
 
 ---
