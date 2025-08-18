@@ -37,8 +37,8 @@ object TransitionSlideVertical {
                 ?.withScope(SettingNavigationTransitionSchema.SpecSlide::Scope)
                 .let {
                     Spec(
-                        duration = it?.duration?.toIntOrNull() ?: 5000,
-                        exitDarkAlphaFactor = it?.exitDarkAlphaFactor?.toFloatOrNull() ?: 1.0f,
+                        duration = it?.duration?.toIntOrNull() ?: 350,
+                        exitDarkAlphaFactor = it?.exitDarkAlphaFactor?.toFloatOrNull() ?: 0.75f,
                         entrance = it?.entrance ?: Entrance.fromBottom,
                         effect = it?.effect ?: Effect.coverPush,
                     )
