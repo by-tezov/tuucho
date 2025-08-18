@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.domain.business.usecase.NavigationStackTransitionHelperFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.tool.async.Notifier
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonNull
@@ -24,7 +25,10 @@ class NavigationStackTransitionRepository(
 ) : StackTransition, KoinComponent {
 
     private var lastEvent: StackTransition.Event = StackTransition.Event.Idle(routes = emptyList())
-    private val _events = Notifier.Emitter<StackTransition.Event>()
+    private val _events = Notifier.Emitter<StackTransition.Event>(
+        extraBufferCapacity = 5,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     override val events get() = _events.createCollector
 
     private data class Item(

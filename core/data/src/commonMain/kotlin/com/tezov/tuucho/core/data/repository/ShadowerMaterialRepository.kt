@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower
 import com.tezov.tuucho.core.domain.tool.async.Notifier
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
@@ -15,7 +16,10 @@ class ShadowerMaterialRepository(
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
 ) : Shadower, KoinComponent {
 
-    private val _events = Notifier.Emitter<Shadower.Event>()
+    private val _events = Notifier.Emitter<Shadower.Event>(
+        extraBufferCapacity = 5,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     override val events get() = _events.createCollector
 
     override fun process(url: String, materialObject: JsonObject) {
