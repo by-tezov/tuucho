@@ -15,12 +15,12 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionNavigation
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionScreen
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.SpecSlide.Value.Effect
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.SpecSlide.Value.Entrance
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
+import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionNavigation
+import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
 import kotlinx.serialization.json.JsonObject
 
@@ -50,67 +50,52 @@ object TransitionSlideVertical {
     fun AnimationProgress.slideVertical(
         specObject: JsonObject,
     ) = remember {
-        val directionScreen = specObject
-            .withScope(SettingNavigationTransitionSchema.Spec::Scope)
-            .directionScreen
-
-        val directionNavigation = specObject
-            .withScope(SettingNavigationTransitionSchema.Spec::Scope)
-            .directionNavigation
+        val directionScreen = DirectionScreen.from(specObject)
+        val directionNavigation = DirectionNavigation.from(specObject)
 
         when (directionScreen) {
-            DirectionScreen.enter -> when (directionNavigation) {
-                DirectionNavigation.forward -> FlatSlideModifier(
-                    spec = Spec.from(specObject),
+            DirectionScreen.Enter -> when (directionNavigation) {
+                DirectionNavigation.Forward -> FlatSlideModifier(
                     animationProgress = this,
-                    directionNavigation = directionNavigation
+                    specObject = specObject
                 )
 
-                DirectionNavigation.backward -> LayerSlideModifier(
-                    spec = Spec.from(specObject),
+                DirectionNavigation.Backward -> LayerSlideModifier(
                     animationProgress = this,
-                    directionNavigation = directionNavigation
+                    specObject = specObject
                 )
-
-                else -> throw UiException.Default("unknown direction navigation $directionNavigation")
             }
 
-            DirectionScreen.exit -> when (directionNavigation) {
-                DirectionNavigation.forward -> LayerSlideModifier(
-                    spec = Spec.from(specObject),
+            DirectionScreen.Exit -> when (directionNavigation) {
+                DirectionNavigation.Forward -> LayerSlideModifier(
                     animationProgress = this,
-                    directionNavigation = directionNavigation
+                    specObject = specObject
                 )
 
-                DirectionNavigation.backward -> FlatSlideModifier(
-                    spec = Spec.from(specObject),
+                DirectionNavigation.Backward -> FlatSlideModifier(
                     animationProgress = this,
-                    directionNavigation = directionNavigation
+                    specObject = specObject
                 )
-
-                else -> throw UiException.Default("unknown direction navigation $directionNavigation")
             }
-
-            else -> throw UiException.Default("unknown direction screen $directionScreen")
         }
 
     }
 
     class FlatSlideModifier(
-        private val spec: Spec,
         private val animationProgress: AnimationProgress,
-        private val directionNavigation: String,
+        specObject: JsonObject,
     ) : ModifierTransition() {
 
+        private val spec = Spec.from(specObject)
+        val directionNavigation = DirectionNavigation.from(specObject)
+
         private val startValue = when (directionNavigation) {
-            DirectionNavigation.forward -> 1.0f
-            DirectionNavigation.backward -> 0.0f
-            else -> throw UiException.Default("unknown direction navigation $directionNavigation")
+            DirectionNavigation.Forward -> 1.0f
+            DirectionNavigation.Backward -> 0.0f
         }
         private val endValue = when (directionNavigation) {
-            DirectionNavigation.forward -> 0.0f
-            DirectionNavigation.backward -> 1.0f
-            else -> throw UiException.Default("unknown direction navigation $directionNavigation")
+            DirectionNavigation.Forward -> 0.0f
+            DirectionNavigation.Backward -> 1.0f
         }
 
         private val entranceFactor = when (spec.entrance) {
@@ -129,14 +114,12 @@ object TransitionSlideVertical {
                     easing = LinearEasing
                 )
             )
-            if(boundaries == Size.Unspecified){
+            if (boundaries == Size.Unspecified) {
                 return when (directionNavigation) {
-                    DirectionNavigation.forward -> alpha(0.0f)
-                    DirectionNavigation.backward -> this
-                    else -> throw UiException.Default("unknown entrance value ${spec.entrance}")
+                    DirectionNavigation.Forward -> alpha(0.0f)
+                    DirectionNavigation.Backward -> this
                 }
-            }
-            else {
+            } else {
                 val height = boundaries.height.dp * entranceFactor
                 return offset(x = 0.dp, y = height * progress.value)
             }
@@ -144,20 +127,20 @@ object TransitionSlideVertical {
     }
 
     class LayerSlideModifier(
-        private val spec: Spec,
         private val animationProgress: AnimationProgress,
-        private val directionNavigation: String,
+        specObject: JsonObject,
     ) : ModifierTransition() {
 
+        private val spec = Spec.from(specObject)
+        val directionNavigation = DirectionNavigation.from(specObject)
+
         private val startValue = when (directionNavigation) {
-            DirectionNavigation.forward -> 0.0f
-            DirectionNavigation.backward -> -1.0f
-            else -> throw UiException.Default("unknown direction navigation $directionNavigation")
+            DirectionNavigation.Forward -> 0.0f
+            DirectionNavigation.Backward -> -1.0f
         }
         private val endValue = when (directionNavigation) {
-            DirectionNavigation.forward -> -1.0f
-            DirectionNavigation.backward -> 0.0f
-            else -> throw UiException.Default("unknown direction navigation $directionNavigation")
+            DirectionNavigation.Forward -> -1.0f
+            DirectionNavigation.Backward -> 0.0f
         }
 
         private val entranceFactor = when (spec.entrance) {
@@ -176,14 +159,12 @@ object TransitionSlideVertical {
                     easing = LinearEasing
                 )
             )
-            if(boundaries == Size.Unspecified){
+            if (boundaries == Size.Unspecified) {
                 return when (directionNavigation) {
-                    DirectionNavigation.forward -> this
-                    DirectionNavigation.backward -> alpha(0.0f)
-                    else -> throw UiException.Default("unknown entrance value ${spec.entrance}")
+                    DirectionNavigation.Forward -> this
+                    DirectionNavigation.Backward -> alpha(0.0f)
                 }
-            }
-            else {
+            } else {
                 val height = when (spec.effect) {
                     Effect.coverPush -> (boundaries.height.dp * entranceFactor) / 4
                     Effect.push -> (boundaries.height.dp * entranceFactor)

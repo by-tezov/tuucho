@@ -9,9 +9,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Size
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionScreen
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
-import com.tezov.tuucho.core.presentation.ui.exception.UiException
+import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
 import kotlinx.serialization.json.JsonObject
 
@@ -36,28 +35,27 @@ object TransitionFade {
     @Composable
     fun AnimationProgress.fade(
         specObject: JsonObject,
-    ) = remember {
-        val directionScreen = specObject
-            .withScope(SettingNavigationTransitionSchema.Spec::Scope)
-            .directionScreen
-        FadeModifier(Spec.from(specObject), this, directionScreen)
-    }
+    ) = remember { FadeModifier(this, specObject) }
 
     class FadeModifier(
-        private val spec: Spec,
         private val animationProgress: AnimationProgress,
-        directionScreen: String?,
+        specObject: JsonObject
     ) : ModifierTransition() {
 
-        private val startValue = when (directionScreen) {
-            DirectionScreen.enter -> spec.alphaInitial
-            DirectionScreen.exit -> 1.0f
-            else -> throw UiException.Default("unknown direction screen $directionScreen")
-        }
-        private val endValue = when (directionScreen) {
-            DirectionScreen.enter -> 1.0f
-            DirectionScreen.exit -> spec.alphaInitial
-            else -> throw UiException.Default("unknown direction screen $directionScreen")
+        private val spec = Spec.from(specObject)
+        private val startValue: Float
+        private val endValue: Float
+
+        init {
+            val directionScreen = DirectionScreen.from(specObject)
+            startValue = when (directionScreen) {
+                DirectionScreen.Enter -> spec.alphaInitial
+                DirectionScreen.Exit -> 1.0f
+            }
+            endValue = when (directionScreen) {
+                DirectionScreen.Enter -> 1.0f
+                DirectionScreen.Exit -> spec.alphaInitial
+            }
         }
 
         @Composable
