@@ -1,6 +1,6 @@
-# Validator Definition
+# Form Validator Definition
 
-The `validator` object is used to enforce validation rules for input components. It supports multiple formats—from simple strings to detailed object arrays—offering flexibility in how validation logic is defined and reused.
+The `form validator` object is used to enforce validation rules for input components. It supports multiple formats—from simple strings to detailed object arrays—offering flexibility in how validation logic is defined and reused.
 
 ---
 
@@ -17,7 +17,7 @@ Each validator object must include:
 Example:
 
 ```json
-"validator": [
+"form-validator": [
   {
     "type": "string-min-value",
     "value": "18",
@@ -42,7 +42,7 @@ Example:
 When only one validator is needed, you can define it as a single object:
 
 ```json
-"validator": {
+"form-validator": {
   "type": "string-email",
   "id-message-error": "*validator-1"
 }
@@ -64,13 +64,13 @@ In this format:
 Example:
 
 ```json
-"validator": "string-not-null"
+"form-validator": "string-not-null"
 ```
 
 Equivalent to:
 
 ```json
-"validator": {
+"form-validator": {
   "type": "string-not-null",
   "id-message-error": /* auto-resolved */
 }

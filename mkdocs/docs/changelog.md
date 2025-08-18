@@ -4,7 +4,13 @@
 
 ---
 
-## 0.0.1-alpha6 - 2025-06-01
+## 0.0.1-alpha7 - 2025-08-01
+
+- 🎉 Navigation Stack + Transition Animations.
+
+---
+
+## 0.0.1-alpha6 - 2025-07-01
 
 - 🎉 Context Data Support completed allowing context data live update in background.
 

@@ -28,6 +28,25 @@ Key features include:
 - **Input Field** (form element)
 - **Spacer**
 
+### Supported Features
+
+- **Navigation Stack**  
+  TUUCHO provides its own navigation stack and supports all capabilities offered by Compose Navigation, including:
+    - **Clear Stack**
+    - **Single Top**
+    - **Reuse** (do not create a new one, bring back an existing one)
+    - **PopUpTo** (inclusive or not)
+
+- **Transition Animations**  
+  TUUCHO supports transition animations between screens:
+    - **Fade**
+    - **Slide Vertically**
+    - **Slide Horizontally**
+
+To learn more about navigation and transitions, see [Navigation](navigation/index.md).
+
+---
+
 For detailed future plans and roadmap, see [Roadmap](roadmap.md).
 
 ---

@@ -9,7 +9,7 @@ A `Field` component represents an input form field that supports validation rule
   "id": /* id object */,
   "subset": "form-field",
   "option": {
-    "validator": /* validator object or array of validator objects */
+    "form-validator": /* validator object or array of validator objects */
   },
   "content": {
     "title": /* text object */,
@@ -46,7 +46,7 @@ Validation options defining rules applied to the field input.
 }
 ```
 
-- `validator`: A [Validator object](../../object-definition/validator.md) or an array of such objects defining validation rules.
+- `form-validator`: A [Validator object](../../object-definition/form-validator.md) or an array of such objects defining validation rules.
 
 **Note:** The `id-message-error` key inside each validator object links to the corresponding error message defined in the component's `content/message-error` array or object by matching the same ID.
 
