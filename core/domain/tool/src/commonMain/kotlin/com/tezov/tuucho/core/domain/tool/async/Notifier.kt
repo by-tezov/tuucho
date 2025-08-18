@@ -13,8 +13,8 @@ object Notifier {
 
     class Emitter<T : Any>(
         replay: Int = 0,
-        extraBufferCapacity: Int = 0,
-        onBufferOverflow: BufferOverflow = BufferOverflow.SUSPEND,
+        extraBufferCapacity: Int = 5,
+        onBufferOverflow: BufferOverflow = BufferOverflow.DROP_OLDEST,
     ) {
         private val flow = MutableSharedFlow<T>(
             replay = replay,
