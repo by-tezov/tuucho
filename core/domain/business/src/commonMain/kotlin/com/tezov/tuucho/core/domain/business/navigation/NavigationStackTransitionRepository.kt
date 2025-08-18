@@ -108,7 +108,7 @@ class NavigationStackTransitionRepository(
                     stack.add(
                         Item(
                             route = pushedRoute,
-                            extraObject = navigationTransitionObject,
+                            extraObject = navigationExtraObject,
                             transitionObject = navigationTransitionObject
                         )
                     )
@@ -137,9 +137,9 @@ class NavigationStackTransitionRepository(
                     }
                     StackTransition.Event.Idle(
                         routes = buildList {
-                            val idleItem = stack.last()
-                            add(idleItem.route)
-                            if (!idleItem.isBackgroundSolid()) {
+                            val lastItem = stack.last()
+                            add(lastItem.route)
+                            if (!lastItem.isBackgroundSolid()) {
                                 for (item in stack.dropLast(1).asReversed()) {
                                     add(item.route)
                                     if (item.isBackgroundSolid()) break
