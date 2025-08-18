@@ -6,10 +6,10 @@ import com.tezov.tuucho.core.data.parser._system.JsonEntityArrayTree
 import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser.breaker._system.JsonEntityObjectTreeProducerProtocol
 import com.tezov.tuucho.core.data.parser.breaker._system.MatcherBreakerProtocol
-import com.tezov.tuucho.core.domain.business.model.schema._system.SchemaScope
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
@@ -85,23 +85,24 @@ abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
             return jsonEntityObjectTreeProducer.invoke(this)
         }
         var _element = this as JsonElement
-        val children = mutableListOf<JsonElementTree>()
-        map.forEach { (key, value) ->
-            val newValue = when (value) {
-                is JsonEntityArrayTree -> value.map { entry ->
-                    (entry as? JsonEntityObjectTree)?.let {
-                        children.add(entry)
-                        entry.toJsonObjectRef()
-                    }
-                        ?: throw DataException.Default("By design element inside array must be object")
-                }.let(::JsonArray)
+        val children = buildList {
+            map.forEach { (key, value) ->
+                val newValue = when (value) {
+                    is JsonEntityArrayTree -> value.map { entry ->
+                        (entry as? JsonEntityObjectTree)?.let {
+                            add(entry)
+                            entry.toJsonObjectRef()
+                        }
+                            ?: throw DataException.Default("By design element inside array must be object")
+                    }.let(::JsonArray)
 
-                is JsonEntityObjectTree -> {
-                    children.add(value)
-                    value.toJsonObjectRef()
+                    is JsonEntityObjectTree -> {
+                        add(value)
+                        value.toJsonObjectRef()
+                    }
                 }
+                _element = _element.replaceOrInsert(key.toPath(), newValue)
             }
-            _element = _element.replaceOrInsert(key.toPath(), newValue)
         }
         return _element.jsonObject
             .let { jsonEntityObjectTreeProducer.invoke(it) }

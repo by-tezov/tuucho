@@ -10,29 +10,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.core.domain.business.config.Language
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema.contentOrNull
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema.optionOrNull
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idValue
-import com.tezov.tuucho.core.domain.business.model.schema.material.MessageSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormFieldSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.form.FormSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema.contentOrNull
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema.optionOrNull
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.idValue
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.MessageSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormFieldSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
+import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldFormViewProtocol
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.tool.json.string
-import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
 import com.tezov.tuucho.core.presentation.ui.renderer.view.View
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifier
 import kotlinx.serialization.json.JsonObject
 
 class FieldViewFactory(
-    private val identifierFactory: (screenIdentifier: ScreenIdentifier) -> ViewIdentifier,
     private val useCaseExecutor: UseCaseExecutor,
     private val fieldValidatorFactory: FormValidatorFactoryUseCase,
 ) : ViewFactory() {
@@ -43,10 +41,9 @@ class FieldViewFactory(
     }
 
     override suspend fun process(
-        screenIdentifier: ScreenIdentifier,
+        route: NavigationRoute,
         componentObject: JsonObject,
     ) = FieldView(
-        identifier = identifierFactory.invoke(screenIdentifier),
         componentObject = componentObject,
         fieldFormView = FieldFormView(
             useCaseExecutor = useCaseExecutor,
@@ -56,10 +53,9 @@ class FieldViewFactory(
 }
 
 class FieldView(
-    identifier: ViewIdentifier,
     componentObject: JsonObject,
     fieldFormView: FieldFormView,
-) : View(identifier, componentObject), FieldFormViewProtocol.Extension {
+) : View(componentObject), FieldFormViewProtocol.Extension {
 
     override val formView = fieldFormView.also { it.attach(this) }
 
@@ -114,7 +110,7 @@ class FieldView(
 
     override suspend fun JsonObject.processState() {
         withScope(FormSchema.State::Scope).run {
-            initialValue?.get(Language.Default.code)?.string?.let {
+            initialValue?.get(LanguageModelDomain.Default.code)?.string?.let {
                 _value.value = it
             }
         }
@@ -160,12 +156,12 @@ class FieldView(
 
     private val title
         get():String {
-            return _title.value?.get(Language.Default.code)?.string ?: ""
+            return _title.value?.get(LanguageModelDomain.Default.code)?.string ?: ""
         }
 
     private val placeholder
         get():String {
-            return _placeholder.value?.get(Language.Default.code)?.string ?: ""
+            return _placeholder.value?.get(LanguageModelDomain.Default.code)?.string ?: ""
         }
 
     var value
@@ -182,7 +178,7 @@ class FieldView(
         }
 
     private val messageErrorExtra
-        get() = _messageErrorExtra.value?.get(Language.Default.code)?.string
+        get() = _messageErrorExtra.value?.get(LanguageModelDomain.Default.code)?.string
 
     @Composable
     override fun displayComponent(scope: Any?) {
@@ -213,7 +209,7 @@ class FieldView(
                         formView.validators?.filter { !it.isValid() }?.forEach {
                             Text(
                                 //TODO language retrieve by Composition Local
-                                it.getErrorMessage(Language.Default),
+                                it.getErrorMessage(LanguageModelDomain.Default),
                                 fontSize = 13.sp //TODO
                             )
                         }

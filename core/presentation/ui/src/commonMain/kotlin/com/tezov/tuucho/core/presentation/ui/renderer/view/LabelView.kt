@@ -7,28 +7,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.core.domain.business.config.Language
-import com.tezov.tuucho.core.domain.business.model.schema._system.withScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.ColorSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.ComponentSchema.contentOrNull
-import com.tezov.tuucho.core.domain.business.model.schema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idSourceOrNull
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema.idValue
-import com.tezov.tuucho.core.domain.business.model.schema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.model.schema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ColorSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema.contentOrNull
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.idSourceOrNull
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.idValue
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
+import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
-import com.tezov.tuucho.core.presentation.ui.renderer.screen.ScreenIdentifier
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifier
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewIdentifierFactory
 import kotlinx.serialization.json.JsonObject
 
-class LabelViewFactory(
-    private val identifierFactory: ViewIdentifierFactory,
-) : ViewFactory() {
+class LabelViewFactory : ViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
@@ -36,19 +32,17 @@ class LabelViewFactory(
     }
 
     override suspend fun process(
-        screenIdentifier: ScreenIdentifier,
+        route: NavigationRoute,
         componentObject: JsonObject,
     ) =
         LabelView(
-            identifier = identifierFactory.invoke(screenIdentifier),
             componentObject = componentObject
         ).also { it.init() }
 }
 
 class LabelView(
-    identifier: ViewIdentifier,
     componentObject: JsonObject,
-) : View(identifier, componentObject) {
+) : View(componentObject) {
 
     private val _value = mutableStateOf<JsonObject?>(null)
     private var _fontColor: JsonObject? = null
@@ -113,7 +107,7 @@ class LabelView(
         @Composable get():String {
             //TODO language retrieve by Composition Local
             // selector for multiple text ?
-            return _value.value?.get(Language.Default.code)?.string ?: ""
+            return _value.value?.get(LanguageModelDomain.Default.code)?.string ?: ""
         }
 
     private val fontColor

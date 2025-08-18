@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.data.database.dao.VersioningQueries
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.database.type.Lifetime
-import com.tezov.tuucho.core.domain.business.model.schema._system.onScope
-import com.tezov.tuucho.core.domain.business.model.schema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import kotlinx.serialization.json.JsonObject
 
 class MaterialDatabaseSource(
@@ -30,24 +30,25 @@ class MaterialDatabaseSource(
         type: String,
     ): List<JsonObject>? {
         from.onScope(IdSchema::Scope).source ?: return null
-        var currentEntry = from
-        val entries = mutableListOf(currentEntry)
-        do {
-            val idRef = currentEntry.onScope(IdSchema::Scope).source
-            val entity = idRef?.let { ref ->
-                urlOrigin?.let {
-                    jsonObjectQueries.findShared(type = type, id = ref, urlOrigin = urlOrigin)
-                } ?: run {
-                    jsonObjectQueries.get(type = type, url = url, id = ref)
-                        ?: jsonObjectQueries.findShared(type = type, id = ref, urlOrigin = null)
+        return buildList {
+            var currentEntry = from
+            add(currentEntry)
+            do {
+                val idRef = currentEntry.onScope(IdSchema::Scope).source
+                val entity = idRef?.let { ref ->
+                    urlOrigin?.let {
+                        jsonObjectQueries.findShared(type = type, id = ref, urlOrigin = urlOrigin)
+                    } ?: run {
+                        jsonObjectQueries.get(type = type, url = url, id = ref)
+                            ?: jsonObjectQueries.findShared(type = type, id = ref, urlOrigin = null)
+                    }
                 }
-            }
-            if (entity != null) {
-                currentEntry = entity.jsonObject
-                entries.add(currentEntry)
-            }
-        } while (idRef != null && entity != null)
-        return entries
+                if (entity != null) {
+                    currentEntry = entity.jsonObject
+                    add(currentEntry)
+                }
+            } while (idRef != null && entity != null)
+        }
     }
 
     @Suppress("RedundantSuspendModifier")

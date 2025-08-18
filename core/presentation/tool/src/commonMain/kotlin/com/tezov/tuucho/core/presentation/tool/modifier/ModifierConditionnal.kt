@@ -30,6 +30,10 @@ fun <T : Any> Modifier.thenOnNotNull(
     block: @Composable Modifier.(T) -> Modifier,
 ) = thenInternal(condition, onNotNull = block)
 
+fun Modifier.thenOnNotNull(
+    condition: Modifier?
+) = thenInternal(condition, onNotNull = { then(it) })
+
 fun <T : Any> Modifier.thenOnNull(
     condition: T?,
     block: @Composable Modifier.() -> Modifier,
