@@ -1,7 +1,7 @@
 [versions]
 #project
 versionCode = "1"
-versionName = "0.0.1-alpha8"
+versionName = "0.0.1-alpha9"
 javaVersion = "17"
 compileSdk = "36"
 minSdk = "24"
