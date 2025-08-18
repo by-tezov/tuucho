@@ -54,11 +54,6 @@ class NavigationStackTransitionRepository(
     }
 
     override suspend fun notifyTransitionCompleted() {
-        stackLock.withLock {
-            if (lastEvent !is StackTransition.Event.RequestTransition) {
-                return
-            }
-        }
         emit(StackTransition.Event.TransitionComplete)
     }
 
