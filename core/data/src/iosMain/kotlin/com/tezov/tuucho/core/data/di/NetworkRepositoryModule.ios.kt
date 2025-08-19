@@ -4,7 +4,7 @@ import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.engine.darwin.Darwin
 import org.koin.dsl.module
 
-actual fun NetworkRepositoryModule.serverUrlEndpoint() = "http://127.0.0.1:3000"
+actual fun serverUrlEndpoint() = "http://127.0.0.1:3000"
 
 object NetworkRepositoryModuleIos {
 
