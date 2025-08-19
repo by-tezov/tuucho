@@ -4,6 +4,7 @@ import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
+import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -74,6 +75,25 @@ abstract class ConventionPlugin : Plugin<Project> {
                             freeCompilerArgs += listOf(
                                 "-Xbinary=bundleId=$namespace",
                             )
+                        }
+                    }
+                }
+            }
+        }
+
+        internal fun configureSourceSetMultiplatform(project: Project) = with(project) {
+            extensions.configure(KotlinMultiplatformExtension::class.java) {
+                afterEvaluate {
+                    val flavor = version("flavor").replaceFirstChar { it.uppercaseChar() }
+                    sourceSets {
+                        androidMain {
+                            kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavor")
+                        }
+                        iosMain {
+                            kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavor")
+                        }
+                        commonMain {
+                            kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavor")
                         }
                     }
                 }

@@ -12,7 +12,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-expect fun NetworkRepositoryModule.serverUrlEndpoint(): String //TODO external config file (android, ios, common)
+expect fun serverUrlEndpoint(): String //TODO external config file (android, ios, common)
 private const val serverConnectTimeoutMillis = 5000L
 private const val serverSocketTimeoutMillis = 5000L
 

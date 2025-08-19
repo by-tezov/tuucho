@@ -28,6 +28,7 @@ listOf("app", "core", "core/domain", "core/presentation").forEach { basePath ->
     file(basePath).listFiles()
         ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
         ?.map {
-            ":${it.relativeTo(rootDir).path.replace("/", ":")}"
+            val relative = it.relativeTo(rootDir).invariantSeparatorsPath
+            ":${relative.replace("/", ":")}"
         }?.forEach { include(it) }
 }

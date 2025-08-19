@@ -1,3 +1,7 @@
+import org.gradle.kotlin.dsl.androidMain
+import org.gradle.kotlin.dsl.commonMain
+import java.util.regex.Pattern
+
 plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.sql.delight)
@@ -35,13 +39,11 @@ kotlin {
             implementation(libs.ktor.okhttp)
             implementation(libs.sql.delight.driver.android)
         }
-
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
             implementation(libs.sql.delight.driver.ios)
             implementation(libs.kotlin.couroutine)
         }
-
         commonMain.dependencies {
             implementation(project(":core:domain:business"))
             implementation(project(":core:domain:tool"))
@@ -59,6 +61,5 @@ kotlin {
             implementation(libs.sql.delight.coroutines)
 
         }
-
     }
 }
