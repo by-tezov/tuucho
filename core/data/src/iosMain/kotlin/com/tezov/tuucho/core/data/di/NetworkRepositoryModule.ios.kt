@@ -9,11 +9,7 @@ actual fun serverUrlEndpoint() = "http://127.0.0.1:3000"
 object NetworkRepositoryModuleIos {
 
     internal operator fun invoke() = module {
-
-        factory<HttpClientEngineFactory<*>> {
-            Darwin
-        }
-
+        NetworkRepositoryModuleIosFlavor.invoke(this)
     }
 
 }
