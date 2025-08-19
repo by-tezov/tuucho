@@ -9,7 +9,7 @@ class MaterialNetworkSource(
     private val jsonConverter: Json
 ) {
 
-   suspend fun retrieve(url: String): JsonObject {
+    suspend fun retrieve(url: String): JsonObject {
         val response = networkHttpRequest.getResource(url)
         val data = response.json ?: throw DataException.Default("failed to retrieve the url $url")
         val jsonElement = jsonConverter.decodeFromString(
