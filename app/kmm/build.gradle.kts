@@ -24,7 +24,9 @@ kotlin {
         androidMain.dependencies {
 
         }
+        iosMain.dependencies {
 
+        }
         commonMain.dependencies {
             implementation(project(":core:domain:business"))
             implementation(project(":core:domain:tool"))
@@ -39,10 +41,6 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-        }
-
-        iosMain.dependencies {
-
         }
     }
 }

@@ -15,6 +15,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
         project: Project,
     ) {
         configureKotlinMultiplatform(project)
+        configureSourceSetMultiplatform(project)
     }
 
 }
