@@ -8,6 +8,8 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
+            pluginManager.apply(plugin(PluginId.kover))
+            pluginManager.apply(plugin(PluginId.mokkery))
         }
     }
 

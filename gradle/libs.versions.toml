@@ -9,10 +9,12 @@ compileSdk = "36"
 minSdk = "24"
 targetSdk = "36"
 #plugin
-android-gradle-plugin = "8.12.1"
+kover-plugin = "0.9.1"
+android-plugin = "8.12.1"
 kotlin-plugin = "2.2.10"
 compose-plugin = "1.8.2"
 kotlin-serialization-plugin = "2.2.10"
+ksp-plugin = "2.2.0-2.0.2"
 #lib - android
 compose-activity = "1.10.1"
 #lib - kmm
@@ -22,11 +24,14 @@ kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.1.0"
 ktor = "3.2.3"
 koin = "4.1.0"
+#test
+mokkery = "3.0.0-Beta1"
 
 [libraries]
 #build-logic
-android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
+android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-plugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
+kover-gradle-plugin = { group = "org.jetbrains.kotlinx", name = "kover-gradle-plugin", version.ref = "kover-plugin" }
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - kmm
@@ -47,6 +52,8 @@ ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = 
 #lib - android
 sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+#test
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-couroutine" }
 
 [plugins]
 #convention
@@ -54,11 +61,16 @@ convention-application = { id = "com.tezov.tuucho.convention.application", versi
 convention-library = { id = "com.tezov.tuucho.convention.library", version = "unspecified" }
 convention-library-ui = { id = "com.tezov.tuucho.convention.library-ui", version = "unspecified" }
 #project
-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
-android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover-plugin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-plugin" }
+android-application = { id = "com.android.application", version.ref = "android-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
+#test
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
+

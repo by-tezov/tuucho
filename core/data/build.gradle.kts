@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.androidMain
-import org.gradle.kotlin.dsl.commonMain
-import java.util.regex.Pattern
-
 plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.sql.delight)
@@ -60,6 +56,10 @@ kotlin {
             implementation(libs.sql.delight.runtime)
             implementation(libs.sql.delight.coroutines)
 
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }
