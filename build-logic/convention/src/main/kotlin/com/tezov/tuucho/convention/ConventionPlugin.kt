@@ -17,7 +17,7 @@ abstract class ConventionPlugin : Plugin<Project> {
         const val androidLibrary = "android.library"
         const val koltinAndroid = "kotlin.android"
         const val koltinMultiplatform = "kotlin.multiplatform"
-        const val kover = "mokkery"
+        const val kover = "kover"
         const val mokkery = "mokkery"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
@@ -126,10 +126,13 @@ abstract class ConventionPlugin : Plugin<Project> {
 
                         }
                     }
-
-                    total {
-
-                    }
+                }
+            }
+            tasks.named("koverHtmlReport") {
+                dependsOn.clear()
+                val debugTest = tasks.findByName("debugUnitTest")
+                if (debugTest != null) {
+                    dependsOn(debugTest)
                 }
             }
         }

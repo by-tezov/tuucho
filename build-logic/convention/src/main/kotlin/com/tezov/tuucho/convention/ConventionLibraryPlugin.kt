@@ -18,6 +18,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
     ) {
         configureKotlinMultiplatform(project)
         configureSourceSetMultiplatform(project)
+        configureKover(project)
     }
 
 }
