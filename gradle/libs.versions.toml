@@ -3,7 +3,7 @@
 flavor = "mock"
 #flavor = "prod"
 versionCode = "1"
-versionName = "0.0.1-alpha9"
+versionName = "0.0.1-alpha10"
 javaVersion = "17"
 compileSdk = "36"
 minSdk = "24"
