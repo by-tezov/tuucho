@@ -1,9 +1,8 @@
 ## In progress
 
-- TODO add mockK
-
-update the doc: form-validator, setting with navigation stack and animation
-- Done -> Medium promo
+- master for QA test + jenkins default on master
+- webhooks jenkins, fix missing merge request when deleted or merged ;)
+- prepare medium story
 
 **** ****
 - 
