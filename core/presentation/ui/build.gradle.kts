@@ -34,5 +34,9 @@ kotlin {
             implementation(compose.material3)
             implementation(libs.kotlin.collections.immutable)
         }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }
