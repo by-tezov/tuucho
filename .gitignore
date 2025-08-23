@@ -7,5 +7,7 @@
 /.venv/
 /mkdocs/site/
 /.kotlin/
-/app/ios/ios/Build/
+/app/ios/build/
 /build-logic/.kotlin/errors/
+/app/ios/fastlane/report.xml
+/app/ios/fastlane/Appfile
