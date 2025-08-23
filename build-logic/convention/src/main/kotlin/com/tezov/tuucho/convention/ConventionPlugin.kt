@@ -1,6 +1,7 @@
 package com.tezov.tuucho.convention
 
 import com.android.build.api.dsl.CommonExtension
+import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
@@ -16,11 +17,18 @@ abstract class ConventionPlugin : Plugin<Project> {
         const val androidLibrary = "android.library"
         const val koltinAndroid = "kotlin.android"
         const val koltinMultiplatform = "kotlin.multiplatform"
+        const val kover = "kover"
+        const val mokkery = "mokkery"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
     }
 
     companion object {
+        internal fun ListProperty<String>.configureOptIn() {
+            add("kotlin.uuid.ExperimentalUuidApi")
+            add("kotlin.ExperimentalUnsignedTypes")
+        }
+
         internal fun configureAndroid(
             project: Project,
         ) = with(project) {
@@ -48,6 +56,18 @@ abstract class ConventionPlugin : Plugin<Project> {
                     jvmTarget.set(this@with.jvmTarget())
                     allWarningsAsErrors.set(false)
                     optIn.configureOptIn()
+                }
+            }
+        }
+
+        internal fun configureCompose(
+            project: Project,
+        ) = with(project) {
+            extensions.findByType(CommonExtension::class.java)!!.apply {
+                lint {
+                    disable.apply {
+                        add("ComposableNaming")
+                    }
                 }
             }
         }
@@ -83,40 +103,39 @@ abstract class ConventionPlugin : Plugin<Project> {
 
         internal fun configureSourceSetMultiplatform(project: Project) = with(project) {
             extensions.configure(KotlinMultiplatformExtension::class.java) {
-                afterEvaluate {
-                    val flavor = version("flavor").replaceFirstChar { it.uppercaseChar() }
-                    sourceSets {
-                        androidMain {
-                            kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavor")
-                        }
-                        iosMain {
-                            kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavor")
-                        }
-                        commonMain {
-                            kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavor")
-                        }
+                val flavor = version("flavor").replaceFirstChar { it.uppercaseChar() }
+                sourceSets {
+                    androidMain {
+                        kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavor")
+                    }
+                    iosMain {
+                        kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavor")
+                    }
+                    commonMain {
+                        kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavor")
                     }
                 }
             }
         }
 
-        internal fun configureCompose(
-            project: Project,
-        ) = with(project) {
-            extensions.findByType(CommonExtension::class.java)!!.apply {
-                lint {
-                    disable.apply {
-                        add("ComposableNaming")
+        internal fun configureKover(project: Project) = with(project) {
+            extensions.configure(KoverProjectExtension::class.java) {
+                reports {
+                    verify {
+                        rule {
+
+                        }
                     }
                 }
             }
+            tasks.named("koverHtmlReport") {
+                dependsOn.clear()
+                val debugTest = tasks.findByName("debugUnitTest")
+                if (debugTest != null) {
+                    dependsOn(debugTest)
+                }
+            }
         }
-
-        internal fun ListProperty<String>.configureOptIn() {
-            add("kotlin.uuid.ExperimentalUuidApi")
-            add("kotlin.ExperimentalUnsignedTypes")
-        }
-
     }
 
     final override fun apply(project: Project) {
