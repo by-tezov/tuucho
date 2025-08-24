@@ -1,11 +1,9 @@
 ## In progress
 
-- master for QA test + jenkins default on master
-- webhooks jenkins, fix missing merge request when deleted or merged ;)
-- prepare medium story
+- Auto-Purge + TTL
 
 **** ****
-- 
+ 
 - add language management
 - add selector management + on text language too (not only dimension/color)
 - add bottom/top screen not react to transition
