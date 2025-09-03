@@ -45,7 +45,6 @@ fun getAvailableDevices(): Map<String, List<String>> {
     return deviceSections
 }
 
-
 fun getSimulatorId(device: String, devices: Map<String, List<String>>? = null): String? {
     val _devices = devices ?: getAvailableDevices()
     val deviceId = _devices.values.flatten()
