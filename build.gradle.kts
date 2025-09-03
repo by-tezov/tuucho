@@ -29,6 +29,7 @@ tasks.register<TestReport>("allUnitTestsDebug") {
 dependencies {
     subprojects.forEach { sub ->
         if (sub.path == ":app:android") return@forEach
+        if (sub.path == ":app:ios") return@forEach
         val buildFile = sub.file("build.gradle.kts")
         if (buildFile.exists()) {
             kover(sub)

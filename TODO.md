@@ -1,13 +1,13 @@
 ## In progress
 
-- TODO add mockK
+- IOS build for e2e with fastlane (check my old way for the command line)
+- Do the pipeline up to the test
+- Inside the mac-agent-installer, need to check if fastlane is present, else install it
 
-update the doc: form-validator, setting with navigation stack and animation
-- Done -> Medium promo
+- Auto-Purge + TTL
 
 **** ****
-- 
-- add language management
+ - add language management
 - add selector management + on text language too (not only dimension/color)
 - add bottom/top screen not react to transition
 - Improve: update view have a knowledge of previous element and next element to avoid overhear job (aka generate validators)
