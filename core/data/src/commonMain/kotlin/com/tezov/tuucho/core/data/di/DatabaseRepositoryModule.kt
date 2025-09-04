@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.database.Database
+import com.tezov.tuucho.core.data.database.DatabaseTransactionFactory
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
@@ -50,13 +51,19 @@ object DatabaseRepositoryModule {
             )
         }
 
-        single<MaterialDatabaseSource> {
+        factory<DatabaseTransactionFactory> {
+            DatabaseTransactionFactory(
+                database = get()
+            )
+        }
+
+        factory<MaterialDatabaseSource> {
             MaterialDatabaseSource(
+                transactionFactory = get(),
                 versioningQueries = get(),
                 jsonObjectQueries = get()
             )
         }
-
     }
 
 }

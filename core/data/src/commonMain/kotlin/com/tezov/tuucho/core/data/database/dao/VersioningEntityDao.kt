@@ -11,9 +11,9 @@ class VersioningQueries(private val database: Database) {
 
     fun deleteAll() = queries.deleteAll()
 
-    fun clearTransient(lifetime: Lifetime): List<String> = database.transactionWithResult {
+    fun deleteAllTransient(lifetime: Lifetime): List<String> = database.transactionWithResult {
         val entities = queries
-            .selectByLifetime("${lifetime.to()}%")
+            .selectByLifetime("${lifetime.serialize()}%")
             .executeAsList().map { it.toEntity() }
         entities.map {
             queries.deleteByPrimaryKey(it.primaryKey!!)
@@ -21,25 +21,24 @@ class VersioningQueries(private val database: Database) {
         }
     }
 
+    fun delete(url: String) {
+        queries.deleteByUrl(url)
+    }
+
     fun insertOrUpdate(entity: VersioningEntity) {
-        database.transaction {
-            database.versioningStatementQueries.insert(
-                url = entity.url,
-                version = entity.version,
-                rootPrimaryKey = entity.rootPrimaryKey,
-                visibility = entity.visibility,
-                lifetime = entity.lifetime,
-            )
-        }
+        database.versioningStatementQueries.insert(
+            url = entity.url,
+            version = entity.version,
+            rootPrimaryKey = entity.rootPrimaryKey,
+            visibility = entity.visibility,
+            lifetime = entity.lifetime,
+        )
     }
 
-    fun getVersion(url: String): String {
-        return queries.getVersionByUrl(url).executeAsOne()
-    }
+    fun getVersion(url: String): String? = queries.getVersionByUrl(url)
+        .executeAsOneOrNull()?.version
 
-    fun get(url: String): VersioningEntity? {
-        return queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
-    }
+    fun get(url: String) = queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
 }
 
 

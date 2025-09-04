@@ -19,39 +19,37 @@ class JsonObjectQueries(private val database: Database) {
     }
 
     fun deleteTransient(urls: List<String>) {
-        database.transaction {
-            urls.forEach {
-                queriesTransient.deleteByUrl(it)
-            }
+        urls.forEach {
+            queriesTransient.deleteByUrl(it)
         }
+    }
+
+    fun deleteAll(url: String) {
+        queries.deleteByUrl(url)
     }
 
     fun insert(entity: JsonObjectEntity, lifetime: Lifetime) = when (lifetime) {
         Lifetime.Unlimited -> {
-            database.transactionWithResult {
-                queries.insert(
-                    type = entity.type,
-                    url = entity.url,
-                    id = entity.id,
-                    idFrom = entity.idFrom,
-                    jsonObject = entity.jsonObject
-                )
-                queries.lastInsertedId().executeAsOne()
-            }
+            queries.insert(
+                type = entity.type,
+                url = entity.url,
+                id = entity.id,
+                idFrom = entity.idFrom,
+                jsonObject = entity.jsonObject
+            )
+            queries.lastInsertedId().executeAsOne()
         }
 
         is Lifetime.Transient -> {
-            queriesTransient.transactionWithResult {
-                queriesTransient.insert(
-                    type = entity.type,
-                    url = entity.url,
-                    urlOrigin = lifetime.urlOrigin,
-                    id = entity.id,
-                    idFrom = entity.idFrom,
-                    jsonObject = entity.jsonObject
-                )
-                queriesTransient.lastInsertedId().executeAsOne()
-            }
+            queriesTransient.insert(
+                type = entity.type,
+                url = entity.url,
+                urlOrigin = lifetime.urlOrigin,
+                id = entity.id,
+                idFrom = entity.idFrom,
+                jsonObject = entity.jsonObject
+            )
+            queriesTransient.lastInsertedId().executeAsOne()
         }
     }
 
@@ -61,16 +59,14 @@ class JsonObjectQueries(private val database: Database) {
     fun get(type: String, url: String, id: String): JsonObjectEntity? =
         queries.getByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
 
-    fun findShared(type: String, id: String, urlOrigin: String?): JsonObjectEntity? {
-        return queriesShared
-            .getGlobalUnlimitedByTypeId(type, id)
-            .executeAsOneOrNull()?.toEntity()
-            ?: urlOrigin?.let {
-                queriesShared
-                    .getLocalTransientByTypeIdUrlOrigin(type, id, urlOrigin)
-                    .executeAsOneOrNull()?.toEntity()
-            }
-    }
+    fun findShared(type: String, id: String, urlOrigin: String?) = queriesShared
+        .getGlobalUnlimitedByTypeId(type, id)
+        .executeAsOneOrNull()?.toEntity()
+        ?: urlOrigin?.let {
+            queriesShared
+                .getLocalTransientByTypeIdUrlOrigin(type, id, urlOrigin)
+                .executeAsOneOrNull()?.toEntity()
+        }
 }
 
 

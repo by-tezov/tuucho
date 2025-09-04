@@ -12,7 +12,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.config.ConfigSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
 
 class RefreshMaterialCacheRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -34,23 +33,25 @@ class RefreshMaterialCacheRepository(
 
     private suspend fun JsonArray.refreshCache() {
         for (element in this) {
-            val url = element.url()
-            if (!refreshMaterialCacheLocalSource.shouldRefresh()) continue
-            element.withScope(ConfigSchema.MaterialItem::Scope).let { subScope ->
-                retrieveMaterialRemoteSource.process(url).let { material ->
-                    refreshMaterialCacheLocalSource.process(
-                        materialObject = material,
-                        url = url,
-                        visibility = Visibility.Global,
-                        lifetime = Lifetime.Unlimited
-                    )
+            element.withScope(ConfigSchema.MaterialItem::Scope).let {
+                val url = it.url
+                    ?: throw DataException.Default("missing url in page material $this")
+                val version = it.version
+                    ?: throw DataException.Default("missing version in page material $this")
+                if (!refreshMaterialCacheLocalSource.shouldRefresh(url, version)) continue
+                element.withScope(ConfigSchema.MaterialItem::Scope).let { subScope ->
+                    retrieveMaterialRemoteSource.process(url).let { material ->
+                        refreshMaterialCacheLocalSource.process(
+                            materialObject = material,
+                            url = url,
+                            visibility = Visibility.Global,
+                            lifetime = Lifetime.Unlimited
+                        )
+                    }
                 }
             }
         }
     }
-
-    private fun JsonElement.url() = withScope(ConfigSchema.MaterialItem::Scope).url
-        ?: throw DataException.Default("missing url in page material $this")
 
 }
 

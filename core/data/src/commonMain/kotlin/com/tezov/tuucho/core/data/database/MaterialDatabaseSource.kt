@@ -10,16 +10,40 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import kotlinx.serialization.json.JsonObject
 
 class MaterialDatabaseSource(
+    private val transactionFactory:DatabaseTransactionFactory,
     private val versioningQueries: VersioningQueries,
     private val jsonObjectQueries: JsonObjectQueries,
 ) {
+
+    @Suppress("RedundantSuspendModifier")
+    suspend fun deleteAll() {
+        transactionFactory.transaction {
+            versioningQueries.deleteAll()
+            jsonObjectQueries.deleteAll()
+        }
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    suspend fun deleteAll(url: String) {
+        transactionFactory.transaction {
+            versioningQueries.delete(url)
+            jsonObjectQueries.deleteAll(url)
+        }
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    suspend fun deleteAllTransient(lifetime: Lifetime) {
+        transactionFactory.transaction {
+            val urls = versioningQueries.deleteAllTransient(lifetime)
+            jsonObjectQueries.deleteTransient(urls)
+        }
+    }
 
     @Suppress("RedundantSuspendModifier")
     suspend fun findRootOrNull(url: String): JsonObjectEntity? {
         val versioning = versioningQueries.get(url = url) ?: return null
         versioning.rootPrimaryKey ?: return null
         return jsonObjectQueries.get(versioning.rootPrimaryKey)
-
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -58,12 +82,11 @@ class MaterialDatabaseSource(
     suspend fun insertOrUpdate(
         entity: JsonObjectEntity,
         lifetime: Lifetime,
-    ) = jsonObjectQueries.insert(entity, lifetime)
+    ) = transactionFactory.transactionWithResult {
+        jsonObjectQueries.insert(entity, lifetime)
+    }
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun clearTransient(lifetime: Lifetime) {
-        val urls = versioningQueries.clearTransient(lifetime)
-        jsonObjectQueries.deleteTransient(urls)
-    }
+    suspend fun getVersion(url: String) = versioningQueries.getVersion(url)
 
 }

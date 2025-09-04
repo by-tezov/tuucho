@@ -16,3 +16,6 @@ SELECT * FROM jsonObjectEntry WHERE primaryKey = ?;
 
 getByTypeUrlId:
 SELECT * FROM jsonObjectEntry WHERE type = ? AND url = ? AND id = ?;
+
+deleteByUrl:
+DELETE FROM jsonObjectEntry WHERE url = ?;
