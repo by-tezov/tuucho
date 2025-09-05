@@ -1,14 +1,14 @@
 package com.tezov.tuucho.convention
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
 import org.gradle.kotlin.dsl.invoke
-import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 abstract class ConventionPlugin : Plugin<Project> {
 
@@ -29,7 +29,7 @@ abstract class ConventionPlugin : Plugin<Project> {
             add("kotlin.ExperimentalUnsignedTypes")
         }
 
-        internal fun configureAndroid(
+        internal fun configureAndroidCommon(
             project: Project,
         ) = with(project) {
             extensions.findByType(CommonExtension::class.java)!!.apply {
@@ -50,31 +50,27 @@ abstract class ConventionPlugin : Plugin<Project> {
             }
         }
 
-        internal fun configureKotlinAndroid(project: Project) = with(project) {
-            tasks.withType<KotlinCompile>().configureEach {
-                compilerOptions {
-                    jvmTarget.set(this@with.jvmTarget())
-                    allWarningsAsErrors.set(false)
-                    optIn.configureOptIn()
-                }
-            }
-        }
-
-        internal fun configureCompose(
+        internal fun configureApplication(
             project: Project,
         ) = with(project) {
-            extensions.findByType(CommonExtension::class.java)!!.apply {
-                lint {
-                    disable.apply {
-                        add("ComposableNaming")
-                    }
+            extensions.findByType(ApplicationExtension::class.java)!!.apply {
+                defaultConfig {
+                    targetSdk = version("targetSdk").toInt()
+                    versionCode = version("versionCode").toInt()
+                    versionName = version("versionName")
                 }
+            }
+            project.extensions.findByType(KotlinAndroidProjectExtension::class.java)!!.apply {
+                jvmToolchain(this@with.javaVersionInt())
+                compilerOptions.optIn.configureOptIn()
+                compilerOptions.allWarningsAsErrors.set(true)
             }
         }
 
-        internal fun configureKotlinMultiplatform(project: Project) = with(project) {
+        internal fun configureLibraryMultiplatform(project: Project) = with(project) {
             extensions.configure(KotlinMultiplatformExtension::class.java) {
                 compilerOptions.optIn.configureOptIn()
+                compilerOptions.allWarningsAsErrors.set(true)
 
                 val androidTargets = listOf(androidTarget())
                 androidTargets.forEach {
@@ -118,15 +114,21 @@ abstract class ConventionPlugin : Plugin<Project> {
             }
         }
 
-        internal fun configureKover(project: Project) = with(project) {
-            extensions.configure(KoverProjectExtension::class.java) {
-                reports {
-                    verify {
-                        rule {
-
-                        }
+        internal fun configureCompose(
+            project: Project,
+        ) = with(project) {
+            extensions.findByType(CommonExtension::class.java)!!.apply {
+                lint {
+                    disable.apply {
+                        add("ComposableNaming")
                     }
                 }
+            }
+        }
+
+        internal fun configureKover(project: Project) = with(project) {
+            extensions.configure(KoverProjectExtension::class.java) {
+                reports { verify { rule { } } }
             }
             tasks.named("koverHtmlReport") {
                 dependsOn.clear()
@@ -140,8 +142,7 @@ abstract class ConventionPlugin : Plugin<Project> {
 
     final override fun apply(project: Project) {
         applyPlugins(project)
-        configureKotlinAndroid(project)
-        configureAndroid(project)
+        configureAndroidCommon(project)
         configure(project)
     }
 
