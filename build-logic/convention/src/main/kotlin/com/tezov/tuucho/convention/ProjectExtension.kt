@@ -27,6 +27,8 @@ internal fun Project.version(name: String): String = libs.findVersion(name)
     .get()
     .requiredVersion
 
-internal fun Project.javaVersion() = JavaVersion.toVersion(version("javaVersion").toInt())
+internal fun Project.javaVersionInt() = version("javaVersion").toInt()
+
+internal fun Project.javaVersion() = JavaVersion.toVersion(javaVersionInt())
 
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))

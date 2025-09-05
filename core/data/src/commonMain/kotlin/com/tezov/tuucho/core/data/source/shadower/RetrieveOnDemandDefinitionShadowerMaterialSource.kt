@@ -40,7 +40,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
             isCancelled = true
             return
         }
-        materialDatabaseSource.clearTransient(Lifetime.Transient(url))
+        materialDatabaseSource.deleteAllTransient(Lifetime.Transient(url))
         this.urlOrigin = url
         map = mutableMapOf()
     }

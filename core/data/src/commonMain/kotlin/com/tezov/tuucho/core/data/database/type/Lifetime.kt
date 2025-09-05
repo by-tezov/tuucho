@@ -10,7 +10,7 @@ sealed class Lifetime(val value: String) {
 
     companion object {
 
-        fun from(value: String): Lifetime {
+        fun deserialize(value: String): Lifetime {
             return when {
                 value == "unlimited" -> Unlimited
                 value.startsWith("transient:") -> {
@@ -22,7 +22,7 @@ sealed class Lifetime(val value: String) {
         }
     }
 
-    fun to(): String {
+    fun serialize(): String {
         return when (this) {
             is Unlimited -> "unlimited"
             is Transient -> "transient:${urlOrigin}"

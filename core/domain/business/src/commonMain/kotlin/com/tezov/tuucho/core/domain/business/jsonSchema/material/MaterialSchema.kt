@@ -22,8 +22,6 @@ object MaterialSchema {
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-        var version by delegate<String?>(Key.version)
-
         var rootComponent by delegate<JsonObject?>(Key.rootComponent)
 
         var components by delegate<JsonArray?>(Key.components)

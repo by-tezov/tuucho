@@ -13,7 +13,7 @@ val JsonElement?.string get() = this!!.jsonPrimitive.content
 val JsonElement?.booleanOrNull: Boolean? get() = (this as? JsonPrimitive)?.boolean
 val JsonElement?.boolean get() = this!!.jsonPrimitive.boolean
 
-fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? { //Improve: No efficient, but will do the job
+fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? { //IMPROVE: No efficient, but will do the job
     var currentElement: JsonElement = this
     path.forEach { key ->
         currentElement = (currentElement as? JsonObject)?.get(key) ?: return null
@@ -28,7 +28,7 @@ fun JsonElement.find(path: JsonElementPath): JsonElement =
 fun JsonElement.replaceOrInsert(
     path: JsonElementPath,
     newElement: JsonElement,
-): JsonElement { //Improve: No efficient, but will do the job
+): JsonElement { //IMPROVE: No efficient, but will do the job
     if (path.isEmpty()) return newElement
     val stack = buildList {
         var current = this@replaceOrInsert

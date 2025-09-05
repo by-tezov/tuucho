@@ -7,6 +7,9 @@ DELETE FROM jsonObjectTransientEntry;
 deleteByUrl:
 DELETE FROM jsonObjectTransientEntry WHERE url = ?;
 
+deleteByUrlOrigin:
+DELETE FROM jsonObjectTransientEntry WHERE urlOrigin = ?;
+
 insert:
 INSERT INTO jsonObjectTransientEntry(type, url, urlOrigin, id, idFrom, jsonObject)
 VALUES (?, ?, ?, ?, ?, ?);

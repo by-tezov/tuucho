@@ -16,7 +16,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
     override fun configure(
         project: Project,
     ) {
-        configureKotlinMultiplatform(project)
+        configureLibraryMultiplatform(project)
         configureSourceSetMultiplatform(project)
         configureKover(project)
     }
