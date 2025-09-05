@@ -59,7 +59,7 @@ class NavigateToUrlUseCase(
                         route = it,
                         componentObject = componentObject
                     )
-//                    shadowerMaterialRepository.process(url, componentObject) //TODO
+                    shadowerMaterialRepository.process(url, componentObject) //TODO
                 }
                 navigationStackTransitionRepository.forward(
                     routes = navigationStackRouteRepository.routes(),
