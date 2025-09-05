@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.database.type.Visibility;
 CREATE TABLE versioningEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT NOT NULL UNIQUE,
-    version TEXT NOT NULL,
+    version TEXT,
     rootPrimaryKey INTEGER REFERENCES jsonObjectEntry(primaryKey),
     visibility TEXT AS Visibility NOT NULL,
     lifetime TEXT AS Lifetime NOT NULL

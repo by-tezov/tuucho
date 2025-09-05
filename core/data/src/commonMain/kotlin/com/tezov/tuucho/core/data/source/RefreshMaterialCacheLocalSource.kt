@@ -23,11 +23,13 @@ class RefreshMaterialCacheLocalSource(
     private val materialBreaker: MaterialBreaker,
 ) {
 
-    suspend fun shouldRefresh(/* TODO */): Boolean {
-//TODO
-//        return database.versioning().countVersions(url).let { result ->
-//            result.any { it.version != version } || result.isEmpty()
-//        }
+    suspend fun shouldRefresh(url: String, remoteVersion: String): Boolean {
+        materialDatabaseSource.getVersion(url)?.let {
+
+
+
+            return it != remoteVersion
+        }
         return true
     }
 
@@ -37,7 +39,7 @@ class RefreshMaterialCacheLocalSource(
         visibility: Visibility,
         lifetime: Lifetime,
     ) {
-        //TODO auto purge obsolete entry
+        purgeCache(url)
         val parts = coroutineScopes.parser.await {
             materialBreaker.process(
                 materialObject = materialObject,
@@ -73,7 +75,7 @@ class RefreshMaterialCacheLocalSource(
 
                 VersioningEntity(
                     url = url,
-                    version = version,
+                    version = null,
                     rootPrimaryKey = rootPrimaryKey,
                     visibility = visibility,
                     lifetime = lifetime,
@@ -86,6 +88,12 @@ class RefreshMaterialCacheLocalSource(
                         materialDatabaseSource.insertOrUpdate(it.content, lifetime)
                     }
             }
+        }
+    }
+
+    private suspend fun purgeCache(url: String) {
+        materialDatabaseSource.getVersion(url).let {
+            materialDatabaseSource.deleteAll(url)
         }
     }
 }

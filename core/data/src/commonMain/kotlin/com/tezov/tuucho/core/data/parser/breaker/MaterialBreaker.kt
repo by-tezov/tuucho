@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
-import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser._system.JsonElementTree
 import com.tezov.tuucho.core.data.parser.breaker._system.JsonEntityObjectTreeProducerProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -22,7 +21,6 @@ class MaterialBreaker : KoinComponent {
     private val textBreaker: TextBreaker by inject()
 
     data class Parts(
-        val version: String,
         val rootJsonEntity: JsonElementTree?,
         val jsonElementTree: List<JsonElementTree>,
     )
@@ -58,8 +56,6 @@ class MaterialBreaker : KoinComponent {
             }?.also(::add)
         }
         Parts(
-            version = version
-                ?: throw DataException.Default("missing version in page material $this"),
             rootJsonEntity = rootComponent?.let { component ->
                 jsonEntityObjectTreeProducer.invoke(component)
             },

@@ -22,3 +22,6 @@ SELECT * FROM versioningEntry WHERE lifetime LIKE ?;
 
 getVersionByUrl:
 SELECT version FROM versioningEntry WHERE url = ?;
+
+deleteByUrl:
+DELETE FROM versioningEntry WHERE url = ?;

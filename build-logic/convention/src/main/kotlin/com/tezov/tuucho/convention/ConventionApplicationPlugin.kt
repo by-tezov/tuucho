@@ -16,6 +16,7 @@ open class ConventionApplicationPlugin : ConventionPlugin() {
     override fun configure(
         project: Project,
     ) {
+        configureApplication(project)
         configureCompose(project)
 //            packaging {
 //                resources {
