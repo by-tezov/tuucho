@@ -5,8 +5,7 @@ CREATE TABLE versioningEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT NOT NULL UNIQUE,
     validityKey TEXT,
-    validityDateTime TEXT,
-    validityTimeZone TEXT,
+    expirationDateTime TEXT,
     rootPrimaryKey INTEGER REFERENCES jsonObjectEntry(primaryKey),
     visibility TEXT AS Visibility NOT NULL,
     lifetime TEXT AS Lifetime NOT NULL

@@ -38,7 +38,7 @@ class RefreshMaterialCacheRepository(
                     ?: throw DataException.Default("missing url in page material $this")
                 val validityKey = it.validityKey
                     ?: throw DataException.Default("missing validity key in page material $this")
-                if (!refreshMaterialCacheLocalSource.shouldRefresh(url, validityKey)) continue
+                if (refreshMaterialCacheLocalSource.isCacheValid(url, validityKey)) continue
                 element.withScope(ConfigSchema.MaterialItem::Scope).let { subScope ->
                     retrieveMaterialRemoteSource.process(url).let { material ->
                         refreshMaterialCacheLocalSource.process(

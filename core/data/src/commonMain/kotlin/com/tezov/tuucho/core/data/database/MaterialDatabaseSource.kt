@@ -87,6 +87,6 @@ class MaterialDatabaseSource(
     }
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun getValidityKey(url: String) = versioningQueries.getValidityKey(url)
+    suspend fun getValidity(url: String) = versioningQueries.getValidity(url)
 
 }

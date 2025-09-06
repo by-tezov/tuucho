@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.domain.tool.datetime
 
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.FixedOffsetTimeZone
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
@@ -13,13 +12,12 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
 
-class ExpirationDateTimeParser() {
+class ExpirationDateTimeRectifier() {
 
-    fun parse(
+    fun process(
         input: String,
         now: Instant = Clock.System.now(),
     ): String {
-        val utcZone: FixedOffsetTimeZone = TimeZone.UTC
         return when {
             // ---- relative durations ----
             input.endsWith("s") -> {
@@ -39,7 +37,7 @@ class ExpirationDateTimeParser() {
 
             input.endsWith("mth") -> {
                 val value = input.removeSuffix("mth").toInt()
-                now.plus(value, DateTimeUnit.MONTH, utcZone).toString()
+                now.plus(value, DateTimeUnit.MONTH, TimeZone.UTC).toString()
             }
 
             // ---- iso datetime utc (already valid) ----
@@ -50,7 +48,7 @@ class ExpirationDateTimeParser() {
             // ---- iso date (add midnight) ----
             Regex("""\d{4}-\d{2}-\d{2}""").matches(input) -> {
                 try {
-                    LocalDateTime.parse("${input}T00:00:00").toInstant(utcZone).toString()
+                    LocalDateTime.parse("${input}T00:00:00").toInstant(TimeZone.UTC).toString()
                 } catch (_: Exception) {
                     throw IllegalArgumentException("Invalid ISO date: $input")
                 }
@@ -65,15 +63,15 @@ class ExpirationDateTimeParser() {
                         3 -> Triple(parts[0], parts[1], parts[2])
                         else -> throw IllegalArgumentException("Invalid time format: $input")
                     }
-                    val today = now.toLocalDateTime(utcZone).date
+                    val today = now.toLocalDateTime(TimeZone.UTC).date
                     var candidate = LocalDateTime(today.year, today.month, today.day, h, m, s)
-                    val candidateInstant = candidate.toInstant(utcZone)
+                    val candidateInstant = candidate.toInstant(TimeZone.UTC)
                     if (candidateInstant <= now) {
                         val tomorrow = today.plus(1, DateTimeUnit.DAY)
                         candidate =
                             LocalDateTime(tomorrow.year, tomorrow.month, tomorrow.day, h, m, s)
                     }
-                    candidate.toInstant(utcZone).toString()
+                    candidate.toInstant(TimeZone.UTC).toString()
                 } catch (_: Exception) {
                     throw IllegalArgumentException("Invalid ISO time: $input")
                 }

@@ -71,7 +71,7 @@ object MaterialRepositoryModule {
                 coroutineScopes = get(),
                 materialDatabaseSource = get(),
                 materialBreaker = get(),
-                expirationDateTimeParser = get(),
+                expirationDateTimeRectifier = get(),
             )
         }
 

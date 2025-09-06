@@ -15,21 +15,26 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page.PageSettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeParser
+import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import kotlinx.serialization.json.JsonObject
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class RefreshMaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialBreaker: MaterialBreaker,
-    private val expirationDateTimeParser: ExpirationDateTimeParser,
+    private val expirationDateTimeRectifier: ExpirationDateTimeRectifier,
 ) {
 
-    suspend fun shouldRefresh(url: String, remoteValidityKey: String): Boolean {
-        materialDatabaseSource.getValidityKey(url)?.let {
-            return it != remoteValidityKey
+    suspend fun isCacheValid(url: String, remoteValidityKey: String?): Boolean {
+        materialDatabaseSource.getValidity(url)?.let { validity ->
+            return validity.key == remoteValidityKey &&
+                    validity.expirationDateTime?.let { expirationDateTime ->
+                        expirationDateTime >= Clock.System.now()
+                    } ?: true
         }
-        return true
+        return false
     }
 
     suspend fun process(
@@ -46,24 +51,29 @@ class RefreshMaterialCacheLocalSource(
                 versioningEntityFactory = { pageSetting ->
                     val settingScope = pageSetting?.withScope(PageSettingSchema::Scope)
                     val ttlScope = settingScope?.ttl?.withScope(PageSettingSchema.Ttl::Scope)
-
+                    var validityDateTime: Instant? = null
                     ttlScope?.let {
-//                        println(it.strategy)
-//                        println(it.transientValue)
-//                        println(it.transientOption)
+                        val strategy = ttlScope.strategy
+                        when (strategy) {
+                            PageSettingSchema.Ttl.Value.Strategy.transient -> {
+                                validityDateTime =
+                                    ttlScope.transientValue
+                                        ?.let { expirationDateTimeRectifier.process(it) }
+                                        ?.let { Instant.parse(it) }
+                                // ttlScope.transientOption //TODO: "stale-while-revalidate / stale-if-error"
+                            }
 
-                        if(url == "page-home") {
-                            println(expirationDateTimeParser.parse("16:00"))
+                            PageSettingSchema.Ttl.Value.Strategy.noStore -> {
+                                validityDateTime = Clock.System.now()
+                                //TODO: should be removed from table as soon as used.
+                                // It would not really respect because if not used right away, it will seat in database...
+                            }
                         }
-
-
                     }
-
                     VersioningEntity(
                         url = url,
                         validityKey = validityKey,
-                        validityDateTime = null,
-                        validityTimeZone = null,
+                        expirationDateTime = validityDateTime,
                         rootPrimaryKey = null,
                         visibility = visibility,
                         lifetime = lifetime,
@@ -103,7 +113,7 @@ class RefreshMaterialCacheLocalSource(
     }
 
     private suspend fun purgeCache(url: String) {
-        materialDatabaseSource.getValidityKey(url).let {
+        materialDatabaseSource.getValidity(url).let {
             materialDatabaseSource.deleteAll(url)
         }
     }

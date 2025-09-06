@@ -1,6 +1,10 @@
 ## In progress
 
-- Auto-Purge + TTL
+
+- TTL
+  - look the validity validityDateTime on refresh cache and retrieve
+  - then think how I can do for on demand definition
+
 
 **** ****
  - add language management

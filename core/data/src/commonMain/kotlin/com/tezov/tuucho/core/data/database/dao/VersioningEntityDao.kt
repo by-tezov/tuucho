@@ -29,16 +29,16 @@ class VersioningQueries(private val database: Database) {
         database.versioningStatementQueries.insert(
             url = entity.url,
             validityKey = entity.validityKey,
-            validityDateTime = entity.validityDateTime?.toString(),
-            validityTimeZone = entity.validityTimeZone?.toString(),
+            expirationDateTime = entity.expirationDateTime?.toString(),
             rootPrimaryKey = entity.rootPrimaryKey,
             visibility = entity.visibility,
             lifetime = entity.lifetime,
         )
     }
 
-    fun getValidityKey(url: String): String? = queries.getValidityKeyByUrl(url)
-        .executeAsOneOrNull()?.validityKey
+    fun getValidity(url: String) = queries
+        .getValidityKeyAndValidityDateTimeByUrl(url)
+        .executeAsOneOrNull()?.toEntity()
 
     fun get(url: String) = queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
 }
