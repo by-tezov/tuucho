@@ -9,8 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
 import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
@@ -138,7 +138,7 @@ class TuuchoEngine(
                 )
             ).screens as List<ScreenProtocol>,
             transitionSpecObject = JsonNull
-                .withScope(SettingNavigationTransitionSchema.Spec::Scope)
+                .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
                 .apply { type = Type.none }
                 .collect()
         )
@@ -215,7 +215,7 @@ class TuuchoEngine(
     private fun ModifierTransition(
         animationProgress: AnimationProgress,
         spec: JsonObject,
-    ): ModifierTransition = spec.withScope(SettingNavigationTransitionSchema.Spec::Scope)
+    ): ModifierTransition = spec.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
         .let { scope ->
             when (scope.type) {
                 Type.fade -> animationProgress.fade(

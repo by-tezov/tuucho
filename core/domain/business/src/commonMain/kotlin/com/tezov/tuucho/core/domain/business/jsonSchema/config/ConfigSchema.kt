@@ -36,12 +36,12 @@ object ConfigSchema {
 
     object MaterialItem {
         object Key {
-            const val version = "version"
+            const val validityKey = "validity-key"
             const val url = "url"
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-            var version by delegate<String?>(Key.version)
+            var validityKey by delegate<String?>(Key.validityKey)
             var url by delegate<String?>(Key.url)
         }
     }

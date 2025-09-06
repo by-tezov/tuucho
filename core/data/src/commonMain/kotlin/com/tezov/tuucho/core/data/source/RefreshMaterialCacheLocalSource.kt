@@ -6,29 +6,28 @@ import com.tezov.tuucho.core.data.database.entity.VersioningEntity
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
-import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
+import com.tezov.tuucho.core.data.parser._system.JsonObjectEntityTree
 import com.tezov.tuucho.core.data.parser._system.flatten
-import com.tezov.tuucho.core.data.parser._system.jsonEntityObjectTree
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page.PageSettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeParser
 import kotlinx.serialization.json.JsonObject
 
 class RefreshMaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialBreaker: MaterialBreaker,
+    private val expirationDateTimeParser: ExpirationDateTimeParser,
 ) {
 
-    suspend fun shouldRefresh(url: String, remoteVersion: String): Boolean {
-        materialDatabaseSource.getVersion(url)?.let {
-
-
-
-            return it != remoteVersion
+    suspend fun shouldRefresh(url: String, remoteValidityKey: String): Boolean {
+        materialDatabaseSource.getValidityKey(url)?.let {
+            return it != remoteValidityKey
         }
         return true
     }
@@ -36,6 +35,7 @@ class RefreshMaterialCacheLocalSource(
     suspend fun process(
         materialObject: JsonObject,
         url: String,
+        validityKey: String?,
         visibility: Visibility,
         lifetime: Lifetime,
     ) {
@@ -43,7 +43,33 @@ class RefreshMaterialCacheLocalSource(
         val parts = coroutineScopes.parser.await {
             materialBreaker.process(
                 materialObject = materialObject,
-                jsonEntityObjectTreeProducer = { jsonObject ->
+                versioningEntityFactory = { pageSetting ->
+                    val settingScope = pageSetting?.withScope(PageSettingSchema::Scope)
+                    val ttlScope = settingScope?.ttl?.withScope(PageSettingSchema.Ttl::Scope)
+
+                    ttlScope?.let {
+//                        println(it.strategy)
+//                        println(it.transientValue)
+//                        println(it.transientOption)
+
+                        if(url == "page-home") {
+                            println(expirationDateTimeParser.parse("16:00"))
+                        }
+
+
+                    }
+
+                    VersioningEntity(
+                        url = url,
+                        validityKey = validityKey,
+                        validityDateTime = null,
+                        validityTimeZone = null,
+                        rootPrimaryKey = null,
+                        visibility = visibility,
+                        lifetime = lifetime,
+                    )
+                },
+                jsonObjectEntityTreeProducer = { jsonObject ->
                     val idScope = jsonObject.onScope(IdSchema::Scope)
                     JsonObjectEntity(
                         type = jsonObject.withScope(TypeSchema::Scope).self
@@ -53,34 +79,19 @@ class RefreshMaterialCacheLocalSource(
                             ?: throw DataException.Default("Missing Id, so there is surely something missing in the rectifier for $this"),
                         idFrom = idScope.source,
                         jsonObject = jsonObject
-                    ).let(::JsonEntityObjectTree)
+                    ).let(::JsonObjectEntityTree)
                 }
             )
         }
         coroutineScopes.database.await {
             with(parts) {
-                val rootPrimaryKey = rootJsonEntity?.let { root ->
+                val rootPrimaryKey = rootJsonObjectEntity?.let { root ->
                     materialDatabaseSource
-                        .insertOrUpdate(root.jsonEntityObjectTree.content, lifetime)
-                        .also {
-                            root.flatten()
-                                .asSequence()
-                                .filter { it !== root }
-                                .forEach {
-                                    materialDatabaseSource
-                                        .insertOrUpdate(it.content, lifetime)
-                                }
-                        }
+                        .insertOrUpdate(root, lifetime)
                 }
-
-                VersioningEntity(
-                    url = url,
-                    version = null,
+                versionEntity.copy(
                     rootPrimaryKey = rootPrimaryKey,
-                    visibility = visibility,
-                    lifetime = lifetime,
                 ).also { materialDatabaseSource.insertOrUpdate(it) }
-
                 jsonElementTree
                     .asSequence()
                     .flatMap { it.flatten() }
@@ -92,7 +103,7 @@ class RefreshMaterialCacheLocalSource(
     }
 
     private suspend fun purgeCache(url: String) {
-        materialDatabaseSource.getVersion(url).let {
+        materialDatabaseSource.getValidityKey(url).let {
             materialDatabaseSource.deleteAll(url)
         }
     }

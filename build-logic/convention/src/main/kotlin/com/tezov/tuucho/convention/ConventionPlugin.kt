@@ -27,6 +27,7 @@ abstract class ConventionPlugin : Plugin<Project> {
         internal fun ListProperty<String>.configureOptIn() {
             add("kotlin.uuid.ExperimentalUuidApi")
             add("kotlin.ExperimentalUnsignedTypes")
+            add("kotlin.time.ExperimentalTime")
         }
 
         internal fun configureAndroidCommon(

@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Size
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
@@ -22,7 +22,7 @@ object TransitionFade {
     ) {
         companion object {
             fun from(specObject: JsonObject?) = specObject
-                ?.withScope(SettingNavigationTransitionSchema.SpecFade::Scope)
+                ?.withScope(SettingComponentNavigationTransitionSchema.SpecFade::Scope)
                 .let {
                     Spec(
                         duration = it?.duration?.toIntOrNull() ?: 250,

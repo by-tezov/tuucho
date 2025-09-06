@@ -7,7 +7,7 @@ import kotlinx.serialization.json.JsonElement
 
 sealed class JsonElementTree
 
-class JsonEntityObjectTree(val content: JsonObjectEntity) : JsonElementTree() {
+class JsonObjectEntityTree(val content: JsonObjectEntity) : JsonElementTree() {
 
     var children: List<JsonElementTree>? = null
 
@@ -16,7 +16,7 @@ class JsonEntityObjectTree(val content: JsonObjectEntity) : JsonElementTree() {
     override fun toString() = content.toString()
 }
 
-class JsonEntityArrayTree(private val content: List<JsonElementTree>) : JsonElementTree(),
+class JsonArrayEntityTree(private val content: List<JsonElementTree>) : JsonElementTree(),
     List<JsonElementTree> by content {
     override fun equals(other: Any?) = content == other
     override fun hashCode() = content.hashCode()
@@ -24,19 +24,19 @@ class JsonEntityArrayTree(private val content: List<JsonElementTree>) : JsonElem
         .joinToString(prefix = "[", postfix = "]", separator = ",")
 }
 
-val JsonElementTree.jsonEntityObjectTree
-    get() = this as? JsonEntityObjectTree ?: throw DataException.Default("JsonEntityObjectTree")
+val JsonElementTree.jsonObjectEntityTree
+    get() = this as? JsonObjectEntityTree ?: throw DataException.Default("JsonEntityObjectTree")
 
-val JsonElementTree.jsonEntityArrayTree
-    get() = this as? JsonEntityArrayTree ?: throw DataException.Default("JsonEntityArrayTree")
+val JsonElementTree.jsonArrayEntityTree
+    get() = this as? JsonArrayEntityTree ?: throw DataException.Default("JsonEntityArrayTree")
 
-fun JsonElementTree.flatten(): List<JsonEntityObjectTree> {
+fun JsonElementTree.flatten(): List<JsonObjectEntityTree> {
     return buildList {
         val stack = ArrayDeque<JsonElementTree>()
         stack.add(this@flatten)
         while (stack.isNotEmpty()) {
             when (val current = stack.removeLast()) {
-                is JsonEntityObjectTree -> {
+                is JsonObjectEntityTree -> {
                     add(current)
                     val children = current.children
                     if (children?.isNotEmpty() == true) {
@@ -45,13 +45,13 @@ fun JsonElementTree.flatten(): List<JsonEntityObjectTree> {
                     }
                 }
 
-                is JsonEntityArrayTree -> stack.addAll(current.asReversed())
+                is JsonArrayEntityTree -> stack.addAll(current.asReversed())
             }
         }
     }
 }
 
 fun JsonElementTree.toJsonElement(): JsonElement = when (this) {
-    is JsonEntityObjectTree -> this.content.jsonObject
-    is JsonEntityArrayTree -> JsonArray(this.map { it.toJsonElement() })
+    is JsonObjectEntityTree -> this.content.jsonObject
+    is JsonArrayEntityTree -> JsonArray(this.map { it.toJsonElement() })
 }

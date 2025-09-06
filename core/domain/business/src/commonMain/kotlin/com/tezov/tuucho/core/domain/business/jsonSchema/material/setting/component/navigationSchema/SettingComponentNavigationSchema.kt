@@ -1,12 +1,13 @@
-package com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema
+package com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
-object SettingNavigationSchema {
+object ComponentSettingNavigationSchema {
 
     const val root = "navigation"
 
@@ -16,7 +17,7 @@ object SettingNavigationSchema {
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-        override val root = SettingSchema.root
+        override val root = ComponentSettingSchema.root
 
         var extra by delegate<JsonObject?>(Key.extra)
         var definition by delegate<JsonArray?>(Key.definition)
@@ -30,7 +31,7 @@ object SettingNavigationSchema {
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-            override val root = SettingSchema.root
+            override val root = ComponentSettingSchema.root
 
             var isBackgroundSolid by delegate<Boolean?>(Key.isBackgroundSolid)
         }
@@ -40,13 +41,13 @@ object SettingNavigationSchema {
         const val root = "definition"
 
         object Key {
-            const val selector = SettingNavigationSelectorSchema.root
-            const val option = SettingNavigationOptionSchema.root
-            const val transition = SettingNavigationTransitionSchema.root
+            const val selector = ComponentSettingNavigationSelectorSchema.root
+            const val option = ComponentSettingNavigationOptionSchema.root
+            const val transition = SettingComponentNavigationTransitionSchema.root
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-            override val root = SettingSchema.root
+            override val root = ComponentSettingSchema.root
 
             var selector by delegate<JsonObject?>(Key.selector)
             var option by delegate<JsonObject?>(Key.option)

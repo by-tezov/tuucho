@@ -50,6 +50,7 @@ kotlin {
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
+            implementation(libs.kotlin.datetime)
 
             implementation(libs.koin.core)
 

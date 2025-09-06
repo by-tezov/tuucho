@@ -28,15 +28,17 @@ class VersioningQueries(private val database: Database) {
     fun insertOrUpdate(entity: VersioningEntity) {
         database.versioningStatementQueries.insert(
             url = entity.url,
-            version = entity.version,
+            validityKey = entity.validityKey,
+            validityDateTime = entity.validityDateTime?.toString(),
+            validityTimeZone = entity.validityTimeZone?.toString(),
             rootPrimaryKey = entity.rootPrimaryKey,
             visibility = entity.visibility,
             lifetime = entity.lifetime,
         )
     }
 
-    fun getVersion(url: String): String? = queries.getVersionByUrl(url)
-        .executeAsOneOrNull()?.version
+    fun getValidityKey(url: String): String? = queries.getValidityKeyByUrl(url)
+        .executeAsOneOrNull()?.validityKey
 
     fun get(url: String) = queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
 }

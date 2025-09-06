@@ -1,10 +1,10 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
 import com.tezov.tuucho.core.data.exception.DataException
+import com.tezov.tuucho.core.data.parser._system.JsonArrayEntityTree
 import com.tezov.tuucho.core.data.parser._system.JsonElementTree
-import com.tezov.tuucho.core.data.parser._system.JsonEntityArrayTree
-import com.tezov.tuucho.core.data.parser._system.JsonEntityObjectTree
-import com.tezov.tuucho.core.data.parser.breaker._system.JsonEntityObjectTreeProducerProtocol
+import com.tezov.tuucho.core.data.parser._system.JsonObjectEntityTree
+import com.tezov.tuucho.core.data.parser.breaker._system.JsonObjectEntityTreeFactoryProtocol
 import com.tezov.tuucho.core.data.parser.breaker._system.MatcherBreakerProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -38,7 +38,7 @@ abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
     fun process(
         path: JsonElementPath,
         element: JsonElement,
-        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
+        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
     ): JsonElementTree = with(element.find(path)) {
         when (this) {
             is JsonArray -> processArray(jsonEntityObjectTreeProducer)
@@ -48,18 +48,18 @@ abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
     }
 
     private fun JsonArray.processArray(
-        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
+        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
     ) = map { entry ->
         (entry as? JsonObject)
             ?: throw DataException.Default("By design element inside array must be object, so there is surely something missing in the rectifier for $entry ")
         entry.processObject("".toPath(), entry, jsonEntityObjectTreeProducer)
-    }.let { JsonEntityArrayTree(it) }
+    }.let { JsonArrayEntityTree(it) }
 
     private fun JsonObject.processObject(
         path: JsonElementPath,
         element: JsonElement,
-        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
-    ): JsonEntityObjectTree {
+        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
+    ): JsonObjectEntityTree {
         if (childProcessors.isEmpty()) {
             return jsonEntityObjectTreeProducer.invoke(this)
         }
@@ -79,8 +79,8 @@ abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
 
     private fun JsonObject.processObject(
         map: Map<String, JsonElementTree>,
-        jsonEntityObjectTreeProducer: JsonEntityObjectTreeProducerProtocol,
-    ): JsonEntityObjectTree {
+        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
+    ): JsonObjectEntityTree {
         if (map.isEmpty()) {
             return jsonEntityObjectTreeProducer.invoke(this)
         }
@@ -88,15 +88,15 @@ abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
         val children = buildList {
             map.forEach { (key, value) ->
                 val newValue = when (value) {
-                    is JsonEntityArrayTree -> value.map { entry ->
-                        (entry as? JsonEntityObjectTree)?.let {
+                    is JsonArrayEntityTree -> value.map { entry ->
+                        (entry as? JsonObjectEntityTree)?.let {
                             add(entry)
                             entry.toJsonObjectRef()
                         }
                             ?: throw DataException.Default("By design element inside array must be object")
                     }.let(::JsonArray)
 
-                    is JsonEntityObjectTree -> {
+                    is JsonObjectEntityTree -> {
                         add(value)
                         value.toJsonObjectRef()
                     }
@@ -109,7 +109,7 @@ abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
             .apply { this.children = children }
     }
 
-    private fun JsonEntityObjectTree.toJsonObjectRef() = JsonNull.withScope(::SchemaScope).apply {
+    private fun JsonObjectEntityTree.toJsonObjectRef() = JsonNull.withScope(::SchemaScope).apply {
         withScope(TypeSchema::Scope).apply {
             self = content.type
         }

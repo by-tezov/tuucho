@@ -1,12 +1,12 @@
-package com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema
+package com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionNavigation
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionScreen
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen
 import kotlinx.serialization.json.JsonObject
 
-object SettingNavigationTransitionSchema {
+object SettingComponentNavigationTransitionSchema {
 
     const val root = "transition"
 
@@ -16,7 +16,7 @@ object SettingNavigationTransitionSchema {
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-        override val root = SettingNavigationTransitionSchema.root
+        override val root = SettingComponentNavigationTransitionSchema.root
 
         var forward by delegate<JsonObject?>(Key.forward)
         var backward by delegate<JsonObject?>(Key.backward)

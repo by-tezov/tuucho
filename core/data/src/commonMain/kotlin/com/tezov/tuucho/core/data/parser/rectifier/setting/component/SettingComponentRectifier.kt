@@ -1,14 +1,14 @@
-package com.tezov.tuucho.core.data.parser.rectifier.setting
+package com.tezov.tuucho.core.data.parser.rectifier.setting.component
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule
-import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
+import com.tezov.tuucho.core.data.parser._system.lastSegmentStartWith
 import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -20,7 +20,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
-class SettingRectifier : Rectifier() {
+class SettingComponentRectifier : Rectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.SETTING
@@ -32,15 +32,15 @@ class SettingRectifier : Rectifier() {
 
     override fun accept(
         path: JsonElementPath, element: JsonElement,
-    ) = (path.lastSegmentIs(TypeSchema.Value.setting) && path.parentIsTypeOf(
+    ) = (path.lastSegmentStartWith(TypeSchema.Value.Setting.prefix) && path.parentIsTypeOf(
         element, TypeSchema.Value.component
     )) || super.accept(path, element)
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(SettingSchema::Scope).apply {
-        type = TypeSchema.Value.setting
+    ) = element.find(path).withScope(ComponentSettingSchema::Scope).apply {
+        type = TypeSchema.Value.Setting.component
         val value = this.element.string.requireIsRef()
         id = JsonPrimitive(value)
     }.collect()
@@ -48,8 +48,8 @@ class SettingRectifier : Rectifier() {
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(SettingSchema::Scope).apply {
-        type = TypeSchema.Value.setting
+    ) = element.find(path).withScope(ComponentSettingSchema::Scope).apply {
+        type = TypeSchema.Value.Setting.component
         id ?: run { id = JsonNull }
     }.collect()
 

@@ -32,8 +32,8 @@ import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingNavigationRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.setting.component.SettingComponentNavigationRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.setting.component.SettingComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
 import org.koin.core.module.Module
@@ -120,7 +120,7 @@ object MaterialRectifierModule {
         single<List<Rectifier>>(Name.Processor.COMPONENT) {
             listOf(
                 get<IdRectifier>(),
-                get<SettingRectifier>(),
+                get<SettingComponentRectifier>(),
                 get<ContentRectifier>(),
                 get<StyleRectifier>(),
                 get<OptionRectifier>(),
@@ -129,7 +129,7 @@ object MaterialRectifierModule {
     }
 
     private fun Module.settingModule() {
-        single<SettingRectifier> { SettingRectifier() }
+        single<SettingComponentRectifier> { SettingComponentRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
             emptyList()
@@ -138,7 +138,7 @@ object MaterialRectifierModule {
         single<List<Rectifier>>(Name.Processor.SETTING) {
             listOf(
                 get<IdRectifier>(),
-                SettingNavigationRectifier(),
+                SettingComponentNavigationRectifier(),
             )
         }
     }

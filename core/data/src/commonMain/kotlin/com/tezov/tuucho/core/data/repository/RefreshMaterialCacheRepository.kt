@@ -36,14 +36,15 @@ class RefreshMaterialCacheRepository(
             element.withScope(ConfigSchema.MaterialItem::Scope).let {
                 val url = it.url
                     ?: throw DataException.Default("missing url in page material $this")
-                val version = it.version
-                    ?: throw DataException.Default("missing version in page material $this")
-                if (!refreshMaterialCacheLocalSource.shouldRefresh(url, version)) continue
+                val validityKey = it.validityKey
+                    ?: throw DataException.Default("missing validity key in page material $this")
+                if (!refreshMaterialCacheLocalSource.shouldRefresh(url, validityKey)) continue
                 element.withScope(ConfigSchema.MaterialItem::Scope).let { subScope ->
                     retrieveMaterialRemoteSource.process(url).let { material ->
                         refreshMaterialCacheLocalSource.process(
                             materialObject = material,
                             url = url,
+                            validityKey = validityKey,
                             visibility = Visibility.Global,
                             lifetime = Lifetime.Unlimited
                         )

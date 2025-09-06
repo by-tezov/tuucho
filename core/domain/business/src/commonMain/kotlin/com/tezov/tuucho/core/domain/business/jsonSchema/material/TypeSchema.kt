@@ -12,7 +12,11 @@ object TypeSchema {
 
     object Value {
         const val component = "component"
-        const val setting = "setting"
+        object Setting {
+            const val prefix = "setting"
+            const val component = "${prefix}-component"
+            const val page = "${prefix}-page"
+        }
         const val content = "content"
         const val style = "style"
         const val option = "option"

@@ -1,14 +1,14 @@
-package com.tezov.tuucho.core.data.parser.rectifier.setting
+package com.tezov.tuucho.core.data.parser.rectifier.setting.component
 
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationSelectorSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionNavigation
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionScreen
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSelectorSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.toPath
@@ -19,10 +19,10 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-class SettingNavigationDefinitionRectifier : Rectifier() {
+class SettingComponentNavigationDefinitionRectifier : Rectifier() {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
-        return path.lastSegmentIs(SettingNavigationSchema.Key.definition)
+        return path.lastSegmentIs(ComponentSettingNavigationSchema.Key.definition)
     }
 
     override fun beforeAlterObject(
@@ -44,24 +44,24 @@ class SettingNavigationDefinitionRectifier : Rectifier() {
         element: JsonElement,
     ): JsonElement? {
         val definitionScope = element.find(path)
-            .withScope(SettingNavigationSchema.Definition::Scope)
+            .withScope(ComponentSettingNavigationSchema.Definition::Scope)
         definitionScope.selector
             ?.rectifySelector()
             ?.let { definitionScope.selector = it }
-        definitionScope[SettingNavigationSchema.Definition.Key.transition]
+        definitionScope[ComponentSettingNavigationSchema.Definition.Key.transition]
             ?.rectifyTransition()
             ?.let { definitionScope.transition = it }
         return definitionScope.collectChangedOrNull()
     }
 
     private fun JsonObject.rectifySelector(): JsonObject? {
-        withScope(SettingNavigationSelectorSchema::Scope).apply {
-            val value = (element as? JsonObject)?.get(SettingNavigationSelectorSchema.Key.value)
+        withScope(ComponentSettingNavigationSelectorSchema::Scope).apply {
+            val value = (element as? JsonObject)?.get(ComponentSettingNavigationSelectorSchema.Key.value)
             if (value is JsonPrimitive) {
                 this.values = JsonArray(listOf(value))
                 return collect()
             }
-            val values = (element as? JsonObject)?.get(SettingNavigationSelectorSchema.Key.values)
+            val values = (element as? JsonObject)?.get(ComponentSettingNavigationSelectorSchema.Key.values)
             if (values is JsonPrimitive) {
                 this.values = JsonArray(listOf(values))
                 return collect()
@@ -73,28 +73,28 @@ class SettingNavigationDefinitionRectifier : Rectifier() {
     private fun JsonElement.rectifyTransition(): JsonObject? {
         if (this is JsonPrimitive) {
             return withScope(::SchemaScope).apply {
-                this[SettingNavigationTransitionSchema.Spec.Key.type] = this.element
+                this[SettingComponentNavigationTransitionSchema.Spec.Key.type] = this.element
             }.collect().rectifyTransition()
         }
-        val scope = withScope(SettingNavigationTransitionSchema::Scope)
+        val scope = withScope(SettingComponentNavigationTransitionSchema::Scope)
         val remainingMap = scope.element.jsonObject -
-                SettingNavigationTransitionSchema.Key.forward -
-                SettingNavigationTransitionSchema.Key.backward
+                SettingComponentNavigationTransitionSchema.Key.forward -
+                SettingComponentNavigationTransitionSchema.Key.backward
         return scope.apply {
-            (this[SettingNavigationTransitionSchema.Key.forward] ?: JsonObject(emptyMap()))
+            (this[SettingComponentNavigationTransitionSchema.Key.forward] ?: JsonObject(emptyMap()))
                 .rectifyTransitionSet(buildMap {
                     putAll(remainingMap)
                     put(
-                        SettingNavigationTransitionSchema.Spec.Key.directionNavigation,
+                        SettingComponentNavigationTransitionSchema.Spec.Key.directionNavigation,
                         JsonPrimitive(DirectionNavigation.forward)
                     )
                 })
                 ?.let { forward = it }
-            (this[SettingNavigationTransitionSchema.Key.backward] ?: JsonObject(emptyMap()))
+            (this[SettingComponentNavigationTransitionSchema.Key.backward] ?: JsonObject(emptyMap()))
                 .rectifyTransitionSet(buildMap {
                     putAll(remainingMap)
                     put(
-                        SettingNavigationTransitionSchema.Spec.Key.directionNavigation,
+                        SettingComponentNavigationTransitionSchema.Spec.Key.directionNavigation,
                         JsonPrimitive(DirectionNavigation.backward)
                     )
                 })
@@ -108,33 +108,33 @@ class SettingNavigationDefinitionRectifier : Rectifier() {
     ): JsonObject? {
         if (this is JsonPrimitive) {
             return withScope(::SchemaScope).apply {
-                this[SettingNavigationTransitionSchema.Spec.Key.type] = this.element
+                this[SettingComponentNavigationTransitionSchema.Spec.Key.type] = this.element
             }.collect().rectifyTransitionSet(remaining)
         }
-        val scope = withScope(SettingNavigationTransitionSchema.Set::Scope)
+        val scope = withScope(SettingComponentNavigationTransitionSchema.Set::Scope)
         val remainingMap = buildMap {
             putAll(remaining)
             putAll(
                 scope.element.jsonObject -
-                        SettingNavigationTransitionSchema.Set.Key.enter -
-                        SettingNavigationTransitionSchema.Set.Key.exit
+                        SettingComponentNavigationTransitionSchema.Set.Key.enter -
+                        SettingComponentNavigationTransitionSchema.Set.Key.exit
             )
         }
         return scope.apply {
-            (this[SettingNavigationTransitionSchema.Set.Key.enter] ?: JsonObject(emptyMap()))
+            (this[SettingComponentNavigationTransitionSchema.Set.Key.enter] ?: JsonObject(emptyMap()))
                 .rectifyTransitionSpec(buildMap {
                     putAll(remainingMap)
                     put(
-                        SettingNavigationTransitionSchema.Spec.Key.directionScreen,
+                        SettingComponentNavigationTransitionSchema.Spec.Key.directionScreen,
                         JsonPrimitive(DirectionScreen.enter)
                     )
                 })
                 ?.let { enter = it }
-            (this[SettingNavigationTransitionSchema.Set.Key.exit] ?: JsonObject(emptyMap()))
+            (this[SettingComponentNavigationTransitionSchema.Set.Key.exit] ?: JsonObject(emptyMap()))
                 .rectifyTransitionSpec(buildMap {
                     putAll(remainingMap)
                     put(
-                        SettingNavigationTransitionSchema.Spec.Key.directionScreen,
+                        SettingComponentNavigationTransitionSchema.Spec.Key.directionScreen,
                         JsonPrimitive(DirectionScreen.exit)
                     )
                 })
@@ -148,10 +148,10 @@ class SettingNavigationDefinitionRectifier : Rectifier() {
     ): JsonObject? {
         if (this is JsonPrimitive) {
             return withScope(::SchemaScope).apply {
-                this[SettingNavigationTransitionSchema.Spec.Key.type] = this.element
+                this[SettingComponentNavigationTransitionSchema.Spec.Key.type] = this.element
             }.collect().rectifyTransitionSpec(remaining)
         }
-        return withScope(SettingNavigationTransitionSchema.Spec::Scope).apply {
+        return withScope(SettingComponentNavigationTransitionSchema.Spec::Scope).apply {
             remaining.forEach { (key, value) ->
                 if (!contains(key)) {
                     this[key] = value

@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -36,7 +36,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     private lateinit var map: MutableMap<String, MutableList<JsonObject>>
 
     override suspend fun onStart(url: String, materialElement: JsonObject) {
-        if (materialElement.onScope(SettingSchema.Root::Scope).disableOnDemandDefinitionShadower == true) {
+        if (materialElement.onScope(ComponentSettingSchema.Root::Scope).disableOnDemandDefinitionShadower == true) {
             isCancelled = true
             return
         }
@@ -48,9 +48,9 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     override suspend fun onNext(jsonObject: JsonObject) {
         val idScope = jsonObject.onScope(IdSchema::Scope)
         idScope.source ?: return
-        val url = jsonObject.onScope(SettingSchema::Scope)
+        val url = jsonObject.onScope(ComponentSettingSchema::Scope)
             .onDemandDefinitionUrl?.replace("\${current}", urlOrigin)
-            ?: "$urlOrigin-${SettingSchema.Value.OnDemandDefinitionUrl.default}"
+            ?: "$urlOrigin-${ComponentSettingSchema.Value.OnDemandDefinitionUrl.default}"
         map[url] = (map[url] ?: mutableListOf())
             .apply { add(jsonObject) }
     }
@@ -69,7 +69,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     }
 
     private suspend fun refreshTransientDatabaseCache(
-        url: String
+        url: String,
     ) {
         val material = coroutineScopes.network.await {
             materialNetworkSource.retrieve(url)
@@ -77,6 +77,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         refreshMaterialCacheLocalSource.process(
             materialObject = material,
             url = url,
+            validityKey = null,
             visibility = Visibility.Local,
             lifetime = Lifetime.Transient(
                 urlOrigin = urlOrigin

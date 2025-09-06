@@ -1,10 +1,10 @@
-package com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema
+package com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import kotlinx.serialization.json.JsonObject
 
-object SettingNavigationOptionSchema {
+object ComponentSettingNavigationOptionSchema {
 
     const val root = "option"
 
@@ -23,7 +23,7 @@ object SettingNavigationOptionSchema {
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-        override val root = SettingNavigationOptionSchema.root
+        override val root = ComponentSettingNavigationOptionSchema.root
 
         var single by delegate<Boolean?>(Key.single)
         var reuse by delegate<String?>(Key.reuse)

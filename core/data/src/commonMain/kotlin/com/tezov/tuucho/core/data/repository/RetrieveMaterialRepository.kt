@@ -22,6 +22,7 @@ class RetrieveMaterialRepository(
                 refreshMaterialCacheLocalSource.process(
                     materialObject = material,
                     url = url,
+                    validityKey = null,
                     visibility = Visibility.Local,
                     lifetime = Lifetime.Unlimited
                 )

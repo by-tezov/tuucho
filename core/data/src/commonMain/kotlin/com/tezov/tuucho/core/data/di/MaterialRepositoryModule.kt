@@ -70,7 +70,8 @@ object MaterialRepositoryModule {
             RefreshMaterialCacheLocalSource(
                 coroutineScopes = get(),
                 materialDatabaseSource = get(),
-                materialBreaker = get()
+                materialBreaker = get(),
+                expirationDateTimeParser = get(),
             )
         }
 

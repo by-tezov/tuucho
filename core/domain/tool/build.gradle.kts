@@ -26,6 +26,7 @@ kotlin {
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
+            implementation(libs.kotlin.datetime)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

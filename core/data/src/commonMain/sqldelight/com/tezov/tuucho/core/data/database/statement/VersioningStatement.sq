@@ -8,8 +8,8 @@ deleteByPrimaryKey:
 DELETE FROM versioningEntry WHERE primaryKey = ?;
 
 insert:
-INSERT INTO versioningEntry(url, version, rootPrimaryKey, visibility, lifetime)
-VALUES ( ?, ?, ?, ?,?);
+INSERT INTO versioningEntry(url, validityKey, validityDateTime, validityTimeZone, rootPrimaryKey, visibility, lifetime)
+VALUES ( ?, ?, ?, ?, ?, ?,?);
 
 existWithUrl:
 SELECT EXISTS(SELECT 1 FROM versioningEntry WHERE url = ?) AS exist;
@@ -20,8 +20,11 @@ SELECT * FROM versioningEntry WHERE url = ?;
 selectByLifetime:
 SELECT * FROM versioningEntry WHERE lifetime LIKE ?;
 
-getVersionByUrl:
-SELECT version FROM versioningEntry WHERE url = ?;
+getValidityKeyByUrl:
+SELECT validityKey FROM versioningEntry WHERE url = ?;
+
+getValidityDateTimeByUrl:
+SELECT validityDateTime FROM versioningEntry WHERE url = ?;
 
 deleteByUrl:
 DELETE FROM versioningEntry WHERE url = ?;
