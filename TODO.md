@@ -1,9 +1,5 @@
 ## In progress
 
-- IOS build for e2e with fastlane (check my old way for the command line)
-- Do the pipeline up to the test
-- Inside the mac-agent-installer, need to check if fastlane is present, else install it
-
 - Auto-Purge + TTL
 
 **** ****
@@ -18,4 +14,3 @@
 - When do the ttl stuff, improve the database code. Not readable, not scalable, not maintainable... fix the cancel bug stuff
 - Check the TODO List
 - Fix unique constraint failed be cause job not cancelled when navigated faster than the on demand data arrive.
-
