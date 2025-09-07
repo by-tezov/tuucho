@@ -19,9 +19,9 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSettin
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
+import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionNavigation
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
-import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
 import kotlinx.serialization.json.JsonObject
 
 object TransitionSlideHorizontal {
@@ -82,7 +82,7 @@ object TransitionSlideHorizontal {
     class FlatSlideModifier(
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
-    ) : ModifierTransition() {
+    ) : AbstractModifierTransition() {
 
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)
@@ -127,7 +127,7 @@ object TransitionSlideHorizontal {
     class LayerSlideModifier(
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
-    ) : ModifierTransition() {
+    ) : AbstractModifierTransition() {
 
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)

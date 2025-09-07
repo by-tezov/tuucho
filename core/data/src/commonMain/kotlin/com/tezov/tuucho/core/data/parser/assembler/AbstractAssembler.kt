@@ -15,13 +15,13 @@ import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class Assembler : MatcherAssemblerProtocol, KoinComponent {
+abstract class AbstractAssembler : MatcherAssemblerProtocol, KoinComponent {
     abstract val schemaType: String
 
     private val jsonObjectMerger: JsonObjectMerger by inject()
 
     protected open val matchers: List<MatcherAssemblerProtocol> = emptyList()
-    protected open val childProcessors: List<Assembler> = emptyList()
+    protected open val childProcessors: List<AbstractAssembler> = emptyList()
 
     private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
         if (size > 1) throw DataException.Default("Only one child processor can accept the element at path $path")

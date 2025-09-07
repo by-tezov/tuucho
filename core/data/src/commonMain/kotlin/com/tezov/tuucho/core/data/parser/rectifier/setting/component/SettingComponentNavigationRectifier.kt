@@ -2,14 +2,14 @@ package com.tezov.tuucho.core.data.parser.rectifier.setting.component
 
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
-class SettingComponentNavigationRectifier : Rectifier() {
+class SettingComponentNavigationRectifier : AbstractRectifier() {
 
     override val childProcessors = listOf(
         SettingComponentNavigationDefinitionRectifier()

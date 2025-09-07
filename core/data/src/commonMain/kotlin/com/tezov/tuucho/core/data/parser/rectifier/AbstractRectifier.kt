@@ -13,9 +13,9 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
 //Improve add meta data 'path' for breaker, assembler and shadower to improve speed
-abstract class Rectifier : MatcherRectifierProtocol, KoinComponent {
+abstract class AbstractRectifier : MatcherRectifierProtocol, KoinComponent {
     protected open val matchers: List<MatcherRectifierProtocol> = emptyList()
-    protected open val childProcessors: List<Rectifier> = emptyList()
+    protected open val childProcessors: List<AbstractRectifier> = emptyList()
 
     override fun accept(
         path: JsonElementPath,

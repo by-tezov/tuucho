@@ -12,9 +12,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.KoinComponent
 
-abstract class Shadower : MatcherShadowerProtocol, KoinComponent {
+abstract class AbstractShadower : MatcherShadowerProtocol, KoinComponent {
     protected open val matchers: List<MatcherShadowerProtocol> = emptyList()
-    protected open val childProcessors: List<Shadower> = emptyList()
+    protected open val childProcessors: List<AbstractShadower> = emptyList()
 
     override fun accept(
         path: JsonElementPath,

@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class ViewFactory : MatcherViewFactoryProtocol, KoinComponent {
+abstract class AbstractViewFactory : MatcherViewFactoryProtocol, KoinComponent {
 
     abstract suspend fun process(
         route: NavigationRoute,

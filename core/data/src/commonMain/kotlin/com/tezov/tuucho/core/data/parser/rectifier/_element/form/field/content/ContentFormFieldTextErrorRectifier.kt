@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.form.field.content
 
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
@@ -15,7 +15,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-class ContentFormFieldTextErrorRectifier : Rectifier() {
+class ContentFormFieldTextErrorRectifier : AbstractRectifier() {
 
     private val matcher = ContentFormFieldTextErrorMatcher()
 

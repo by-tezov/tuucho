@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.parser.breaker.Breaker
+import com.tezov.tuucho.core.data.parser.breaker.AbstractBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ColorBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ComponentBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ContentBreaker
@@ -59,7 +59,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.COMPONENT) {
+        single<List<AbstractBreaker>>(Name.Processor.COMPONENT) {
             emptyList()
         }
     }
@@ -71,7 +71,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.CONTENT) {
+        single<List<AbstractBreaker>>(Name.Processor.CONTENT) {
             emptyList()
         }
     }
@@ -83,7 +83,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.STYLE) {
+        single<List<AbstractBreaker>>(Name.Processor.STYLE) {
             emptyList()
         }
     }
@@ -95,7 +95,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.OPTION) {
+        single<List<AbstractBreaker>>(Name.Processor.OPTION) {
             emptyList()
         }
     }
@@ -107,7 +107,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.TEXT) {
+        single<List<AbstractBreaker>>(Name.Processor.TEXT) {
             emptyList()
         }
     }
@@ -119,7 +119,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.COLOR) {
+        single<List<AbstractBreaker>>(Name.Processor.COLOR) {
             emptyList()
         }
     }
@@ -131,7 +131,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.DIMENSION) {
+        single<List<AbstractBreaker>>(Name.Processor.DIMENSION) {
             emptyList()
         }
     }

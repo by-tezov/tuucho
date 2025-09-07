@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.data.di
 
+import com.tezov.tuucho.core.data.parser.shadower.AbstractShadower
 import com.tezov.tuucho.core.data.parser.shadower.ComponentShadower
 import com.tezov.tuucho.core.data.parser.shadower.ContentShadower
 import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
-import com.tezov.tuucho.core.data.parser.shadower.Shadower
 import com.tezov.tuucho.core.data.parser.shadower.TextShadower
 import com.tezov.tuucho.core.data.parser.shadower._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.parser.shadower._system.MatcherShadowerProtocol
@@ -43,7 +43,7 @@ object MaterialShadowerModule {
             )
         }
 
-        single<List<Shadower>>(Name.Processor.COMPONENT) {
+        single<List<AbstractShadower>>(Name.Processor.COMPONENT) {
             listOf(
                 get<ContentShadower>()
             )
@@ -57,7 +57,7 @@ object MaterialShadowerModule {
             emptyList()
         }
 
-        single<List<Shadower>>(Name.Processor.CONTENT) {
+        single<List<AbstractShadower>>(Name.Processor.CONTENT) {
             listOf(
                 get<ComponentShadower>(),
                 get<TextShadower>()
@@ -72,7 +72,7 @@ object MaterialShadowerModule {
             emptyList()
         }
 
-        single<List<Shadower>>(Name.Processor.TEXT) {
+        single<List<AbstractShadower>>(Name.Processor.TEXT) {
             emptyList()
         }
     }

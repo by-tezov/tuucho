@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
-class ComponentAssembler : Assembler() {
+class ComponentAssembler : AbstractAssembler() {
 
     override val schemaType: String = TypeSchema.Value.component
 
@@ -16,7 +16,7 @@ class ComponentAssembler : Assembler() {
         Name.Matcher.COMPONENT
     )
 
-    override val childProcessors: List<Assembler> by inject(
+    override val childProcessors: List<AbstractAssembler> by inject(
         Name.Processor.COMPONENT
     )
 

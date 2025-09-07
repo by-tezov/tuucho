@@ -39,7 +39,7 @@ class FieldFormView(
     }
 
     override fun isValid(): Boolean? {
-        return validators?.all { it.isValid() }
+        return validators?.all { it.isValid }
     }
 
     suspend fun buildValidator(

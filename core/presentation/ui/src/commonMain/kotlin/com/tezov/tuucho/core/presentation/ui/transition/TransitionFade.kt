@@ -10,8 +10,8 @@ import androidx.compose.ui.geometry.Size
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
+import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
-import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
 import kotlinx.serialization.json.JsonObject
 
 object TransitionFade {
@@ -40,7 +40,7 @@ object TransitionFade {
     class FadeModifier(
         private val animationProgress: AnimationProgress,
         specObject: JsonObject
-    ) : ModifierTransition() {
+    ) : AbstractModifierTransition() {
 
         private val spec = Spec.from(specObject)
         private val startValue: Float

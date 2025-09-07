@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier.setting.component
 
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
@@ -19,7 +19,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-class SettingComponentNavigationDefinitionRectifier : Rectifier() {
+class SettingComponentNavigationDefinitionRectifier : AbstractRectifier() {
 
     override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
         return path.lastSegmentIs(ComponentSettingNavigationSchema.Key.definition)

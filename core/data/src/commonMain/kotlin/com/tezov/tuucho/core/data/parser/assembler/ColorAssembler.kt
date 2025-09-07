@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
-class ColorAssembler : Assembler() {
+class ColorAssembler : AbstractAssembler() {
 
     override val schemaType: String = TypeSchema.Value.color
 
@@ -16,7 +16,7 @@ class ColorAssembler : Assembler() {
         Name.Matcher.COLOR
     )
 
-    override val childProcessors: List<Assembler> by inject(
+    override val childProcessors: List<AbstractAssembler> by inject(
         Name.Processor.COLOR
     )
 

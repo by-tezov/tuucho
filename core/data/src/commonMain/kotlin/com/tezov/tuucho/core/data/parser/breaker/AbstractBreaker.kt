@@ -21,9 +21,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class Breaker : MatcherBreakerProtocol, KoinComponent {
+abstract class AbstractBreaker : MatcherBreakerProtocol, KoinComponent {
     protected open val matchers: List<MatcherBreakerProtocol> = emptyList()
-    protected open val childProcessors: List<Breaker> = emptyList()
+    protected open val childProcessors: List<AbstractBreaker> = emptyList()
 
     private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
         if (size > 1) throw DataException.Default("Only one child processor can accept the element at path $path")

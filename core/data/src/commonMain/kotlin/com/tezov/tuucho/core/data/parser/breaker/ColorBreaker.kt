@@ -5,13 +5,13 @@ import com.tezov.tuucho.core.data.parser.breaker._system.MatcherBreakerProtocol
 
 import org.koin.core.component.inject
 
-class ColorBreaker: Breaker() {
+class ColorBreaker: AbstractBreaker() {
 
     override val matchers: List<MatcherBreakerProtocol> by inject(
         Name.Matcher.COLOR
     )
 
-    override val childProcessors: List<Breaker> by inject(
+    override val childProcessors: List<AbstractBreaker> by inject(
         Name.Processor.COLOR
     )
 

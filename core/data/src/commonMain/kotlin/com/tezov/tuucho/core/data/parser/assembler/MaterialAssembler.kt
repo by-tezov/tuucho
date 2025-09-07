@@ -13,7 +13,7 @@ import org.koin.core.component.inject
 
 class MaterialAssembler() : KoinComponent {
 
-    private val assemblers: List<Assembler> by inject(Name.ASSEMBLERS)
+    private val assemblers: List<AbstractAssembler> by inject(Name.ASSEMBLERS)
 
     suspend fun process(
         materialObject: JsonObject,

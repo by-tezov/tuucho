@@ -30,7 +30,7 @@ import com.tezov.tuucho.core.presentation.ui.transition.TransitionFade.fade
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionNone.none
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideHorizontal.slideHorizontal
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideVertical.slideVertical
-import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
+import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import org.koin.compose.currentKoinScope
@@ -215,7 +215,7 @@ class TuuchoEngine(
     private fun ModifierTransition(
         animationProgress: AnimationProgress,
         spec: JsonObject,
-    ): ModifierTransition = spec.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
+    ): AbstractModifierTransition = spec.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
         .let { scope ->
             when (scope.type) {
                 Type.fade -> animationProgress.fade(
