@@ -37,7 +37,9 @@ import org.koin.compose.currentKoinScope
 
 interface TuuchoEngineProtocol {
 
-    suspend fun init(configUrl: String, initialUrl: String)
+    suspend fun load(url: String)
+    
+    suspend fun start(url: String)
 
     @Composable
     fun display()
@@ -65,13 +67,16 @@ class TuuchoEngine(
     private var transitionRequested = false
     private val redrawTrigger = mutableStateOf(0)
 
-    override suspend fun init(configUrl: String, initialUrl: String) {
+    override suspend fun load(url: String) {
         useCaseExecutor.invokeSuspend(
             useCase = refreshMaterialCache,
             input = RefreshMaterialCacheUseCase.Input(
-                url = configUrl
+                url = url
             )
         )
+    }
+    
+    override suspend fun start(url: String) {
         useCaseExecutor.invoke(
             useCase = registerUpdateViewEvent,
             input = Unit
@@ -98,7 +103,7 @@ class TuuchoEngine(
         useCaseExecutor.invoke(
             useCase = navigateToUrl,
             input = NavigateToUrlUseCase.Input(
-                url = initialUrl
+                url = url
             )
         )
     }

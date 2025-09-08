@@ -1,0 +1,13 @@
+getGlobalByTypeId:
+SELECT jsonObject.*
+FROM jsonObjectEntry jsonObject
+JOIN versioningEntry versioning ON jsonObject.url = versioning.url
+WHERE versioning.visibility LIKE 'global:%'
+AND jsonObject.type = ? AND jsonObject.id = ?;
+
+-- getLocalTransientByTypeIdUrlOrigin:
+-- SELECT jsonObject.*
+-- FROM jsonObjectTransientEntry jsonObject
+-- JOIN versioningEntry versioning ON jsonObject.url = versioning.url
+-- WHERE versioning.visibility = 'local' AND versioning.lifetime LIKE 'transient:%' --TODO fix
+-- AND jsonObject.type = ? AND jsonObject.id = ? AND jsonObject.urlOrigin = ?;

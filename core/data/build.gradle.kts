@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.sql.delight)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {

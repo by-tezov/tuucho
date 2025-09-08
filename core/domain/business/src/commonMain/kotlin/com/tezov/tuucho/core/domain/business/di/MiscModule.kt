@@ -5,8 +5,11 @@ import com.tezov.tuucho.core.domain.business.navigation.NavigationStackRouteRepo
 import com.tezov.tuucho.core.domain.business.navigation.NavigationStackScreenRepository
 import com.tezov.tuucho.core.domain.business.navigation.NavigationStackTransitionRepository
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.tool.json.InstantSerializer
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
 import org.koin.dsl.module
+import kotlin.time.Instant
 
 object MiscModule {
 
@@ -16,6 +19,10 @@ object MiscModule {
                 ignoreUnknownKeys = true
                 encodeDefaults = true
                 explicitNulls = true
+
+                serializersModule = SerializersModule {
+                    contextual(Instant::class, InstantSerializer())
+                }
             }
         }
 

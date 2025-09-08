@@ -3,24 +3,23 @@ package com.tezov.tuucho.core.data.database.dao
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.toEntity
-import com.tezov.tuucho.core.data.database.type.Lifetime
 
 class JsonObjectQueries(private val database: Database) {
 
     private val queries get() = database.jsonObjectStatementQueries
 
-    private val queriesTransient get() = database.jsonObjectTransientStatementQueries
+    private val queriesContextual get() = database.jsonObjectContextualStatementQueries
 
-    private val queriesShared get() = database.sharedStatementQueries
+    private val queriesJoin get() = database.joinStatementQueries
 
     fun deleteAll() {
         queries.deleteAll()
-        queriesTransient.deleteAll()
+        queriesContextual.deleteAll()
     }
 
     fun deleteTransient(urls: List<String>) {
         urls.forEach {
-            queriesTransient.deleteByUrl(it)
+            queriesContextual.deleteByUrl(it)
         }
     }
 
@@ -28,45 +27,47 @@ class JsonObjectQueries(private val database: Database) {
         queries.deleteByUrl(url)
     }
 
-    fun insert(entity: JsonObjectEntity, lifetime: Lifetime) = when (lifetime) {
-        Lifetime.Unlimited -> {
-            queries.insert(
-                type = entity.type,
-                url = entity.url,
-                id = entity.id,
-                idFrom = entity.idFrom,
-                jsonObject = entity.jsonObject
-            )
-            queries.lastInsertedId().executeAsOne()
-        }
-
-        is Lifetime.Transient -> {
-            queriesTransient.insert(
-                type = entity.type,
-                url = entity.url,
-                urlOrigin = lifetime.urlOrigin,
-                id = entity.id,
-                idFrom = entity.idFrom,
-                jsonObject = entity.jsonObject
-            )
-            queriesTransient.lastInsertedId().executeAsOne()
-        }
+    fun insert(entity: JsonObjectEntity): Long {
+        queries.insert(
+            type = entity.type,
+            url = entity.url,
+            id = entity.id,
+            idFrom = entity.idFrom,
+            jsonObject = entity.jsonObject
+        )
+        return queries.lastInsertedId().executeAsOne()
     }
 
-    fun get(primaryKey: Long): JsonObjectEntity? =
+    fun insertContextual(entity: JsonObjectEntity): Long {
+        queriesContextual.insert(
+            type = entity.type,
+            url = entity.url,
+            id = entity.id,
+            idFrom = entity.idFrom,
+            jsonObject = entity.jsonObject
+        )
+        return queriesContextual.lastInsertedId().executeAsOne()
+    }
+
+    fun getOrNull(primaryKey: Long): JsonObjectEntity? =
         queries.getByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
 
-    fun get(type: String, url: String, id: String): JsonObjectEntity? =
+    fun getOrNull(type: String, url: String, id: String): JsonObjectEntity? =
         queries.getByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
 
-    fun findShared(type: String, id: String, urlOrigin: String?) = queriesShared
-        .getGlobalUnlimitedByTypeId(type, id)
+    fun getGlobalOrNull(type: String, id: String) = queriesJoin
+        .getGlobalByTypeId(type, id)
         .executeAsOneOrNull()?.toEntity()
-        ?: urlOrigin?.let {
-            queriesShared
-                .getLocalTransientByTypeIdUrlOrigin(type, id, urlOrigin)
-                .executeAsOneOrNull()?.toEntity()
-        }
+
+//    fun findShared2(type: String, id: String, urlOrigin: String?): JsonObjectEntity? = queriesShared
+//        .getGlobalUnlimitedByTypeId(type, id)
+//        .executeAsOneOrNull()?.toEntity()
+//        ?: urlOrigin?.let {
+//            queriesShared
+//                .getLocalTransientByTypeIdUrlOrigin(type, id, urlOrigin)
+//                .executeAsOneOrNull()?.toEntity()
+//        }
+
 }
 
 

@@ -12,10 +12,8 @@ fun AppScreen(
 ) = StartKoinModules(moduleDeclaration) {
     val tuuchoEngine = rememberTuuchoEngine()
     LaunchedEffect(Unit) {
-        tuuchoEngine.init(
-            configUrl = "config",
-            initialUrl = "page-home"
-        )
+        tuuchoEngine.load(url = "config")
+        tuuchoEngine.start(url = "page-home")
     }
     tuuchoEngine.display()
 }

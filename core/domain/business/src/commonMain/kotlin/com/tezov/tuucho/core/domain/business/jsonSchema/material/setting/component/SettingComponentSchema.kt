@@ -20,7 +20,7 @@ object ComponentSettingSchema {
 
     object Value {
         object OnDemandDefinitionUrl {
-            const val default = "on-demand-definition"
+            const val suffix = "-on-demand-definition"
         }
     }
 

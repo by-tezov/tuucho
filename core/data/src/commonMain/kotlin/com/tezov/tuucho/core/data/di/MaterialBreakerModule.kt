@@ -14,9 +14,6 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-// For now, breaker matcher and child processor are not used,
-// only root and subs are broken into database
-// TODO, if decided to not used it forever, code shrink should be done
 object MaterialBreakerModule {
 
     object Name {

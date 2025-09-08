@@ -12,13 +12,14 @@ class VersioningQueries(private val database: Database) {
     fun deleteAll() = queries.deleteAll()
 
     fun deleteAllTransient(lifetime: Lifetime): List<String> = database.transactionWithResult {
-        val entities = queries
-            .selectByLifetime("${lifetime.serialize()}%")
-            .executeAsList().map { it.toEntity() }
-        entities.map {
-            queries.deleteByPrimaryKey(it.primaryKey!!)
-            it.url
-        }
+//        val entities = queries
+//            .selectByLifetime("${lifetime.serialize()}%")
+//            .executeAsList().map { it.toEntity() }
+//        entities.map {
+//            queries.deleteByPrimaryKey(it.primaryKey!!)
+//            it.url
+//        }
+        TODO()
     }
 
     fun delete(url: String) {
@@ -28,19 +29,17 @@ class VersioningQueries(private val database: Database) {
     fun insertOrUpdate(entity: VersioningEntity) {
         database.versioningStatementQueries.insert(
             url = entity.url,
-            validityKey = entity.validityKey,
-            expirationDateTime = entity.expirationDateTime?.toString(),
             rootPrimaryKey = entity.rootPrimaryKey,
             visibility = entity.visibility,
             lifetime = entity.lifetime,
         )
     }
 
-    fun getValidity(url: String) = queries
-        .getValidityKeyAndValidityDateTimeByUrl(url)
-        .executeAsOneOrNull()?.toEntity()
+    fun getOrNull(url: String) =
+        queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
 
-    fun get(url: String) = queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
+    fun getLifetimeOrNull(url: String) =
+        queries.getLifetimeByUrl(url).executeAsOneOrNull()
 }
 
 

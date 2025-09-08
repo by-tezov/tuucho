@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.data.database.DatabaseTransactionFactory
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.dao.VersioningQueries
+import com.tezov.tuucho.core.data.database.table.JsonObjectContextualEntry
 import com.tezov.tuucho.core.data.database.table.JsonObjectEntry
-import com.tezov.tuucho.core.data.database.table.JsonObjectTransientEntry
 import com.tezov.tuucho.core.data.database.table.VersioningEntry
 import com.tezov.tuucho.core.data.database.type.adapter.JsonObjectAdapter
 import com.tezov.tuucho.core.data.database.type.adapter.LifetimeAdapter
@@ -23,18 +23,26 @@ object DatabaseRepositoryModule {
             JsonObjectAdapter(json = get())
         }
 
+        factory<LifetimeAdapter> {
+            LifetimeAdapter(json = get())
+        }
+
+        factory<VisibilityAdapter> {
+            VisibilityAdapter(json = get())
+        }
+
         single<Database> {
             Database(
                 driver = get(),
                 jsonObjectEntryAdapter = JsonObjectEntry.Adapter(
                     jsonObjectAdapter = get<JsonObjectAdapter>()
                 ),
-                jsonObjectTransientEntryAdapter = JsonObjectTransientEntry.Adapter(
+                jsonObjectContextualEntryAdapter = JsonObjectContextualEntry.Adapter(
                     jsonObjectAdapter = get<JsonObjectAdapter>()
                 ),
                 versioningEntryAdapter = VersioningEntry.Adapter(
-                    visibilityAdapter = VisibilityAdapter(),
-                    lifetimeAdapter = LifetimeAdapter()
+                    visibilityAdapter = get<VisibilityAdapter>(),
+                    lifetimeAdapter = get<LifetimeAdapter>()
                 ),
             )
         }

@@ -4,6 +4,9 @@ SELECT * FROM jsonObjectEntry;
 deleteAll:
 DELETE FROM jsonObjectEntry;
 
+deleteByUrl:
+DELETE FROM jsonObjectEntry WHERE url = ?;
+
 insert:
 INSERT INTO jsonObjectEntry(type, url, id, idFrom, jsonObject)
 VALUES (?, ?, ?, ?, ?);
@@ -16,6 +19,3 @@ SELECT * FROM jsonObjectEntry WHERE primaryKey = ?;
 
 getByTypeUrlId:
 SELECT * FROM jsonObjectEntry WHERE type = ? AND url = ? AND id = ?;
-
-deleteByUrl:
-DELETE FROM jsonObjectEntry WHERE url = ?;

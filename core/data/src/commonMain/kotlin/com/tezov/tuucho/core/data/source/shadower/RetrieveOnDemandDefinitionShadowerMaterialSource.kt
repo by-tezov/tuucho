@@ -1,12 +1,10 @@
 package com.tezov.tuucho.core.data.source.shadower
 
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
-import com.tezov.tuucho.core.data.database.type.Lifetime
-import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.network.MaterialNetworkSource
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
-import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
@@ -22,7 +20,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialNetworkSource: MaterialNetworkSource,
     private val materialRectifier: MaterialRectifier,
-    private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
+    private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialAssembler: MaterialAssembler,
     private val materialDatabaseSource: MaterialDatabaseSource,
 ) : ShadowerMaterialSourceProtocol {
@@ -40,7 +38,10 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
             isCancelled = true
             return
         }
-        materialDatabaseSource.deleteAllTransient(Lifetime.Transient(url))
+// TODO
+//        materialDatabaseSource.deleteAllTransient(
+//            Lifetime.Transient(null, url)
+//        )
         this.urlOrigin = url
         map = mutableMapOf()
     }
@@ -50,7 +51,7 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         idScope.source ?: return
         val url = jsonObject.onScope(ComponentSettingSchema::Scope)
             .onDemandDefinitionUrl?.replace("\${current}", urlOrigin)
-            ?: "$urlOrigin-${ComponentSettingSchema.Value.OnDemandDefinitionUrl.default}"
+            ?: "$urlOrigin${ComponentSettingSchema.Value.OnDemandDefinitionUrl.suffix}"
         map[url] = (map[url] ?: mutableListOf())
             .apply { add(jsonObject) }
     }
@@ -74,15 +75,16 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         val material = coroutineScopes.network.await {
             materialNetworkSource.retrieve(url)
         }.let { materialRectifier.process(it) }
-        refreshMaterialCacheLocalSource.process(
-            materialObject = material,
-            url = url,
-            validityKey = null,
-            visibility = Visibility.Local,
-            lifetime = Lifetime.Transient(
-                urlOrigin = urlOrigin
-            )
-        )
+//        refreshMaterialCacheLocalSource.process(
+//            materialObject = material,
+//            url = url,
+//            validityKey = null,
+//            visibility = Visibility.Local,
+//            lifetime = Lifetime.Transient(
+//                urlOrigin = urlOrigin
+//            )
+//        )
+        TODO()
     }
 
     private suspend fun List<JsonObject>.assembleAll(url: String) = mapNotNull { jsonObject ->
@@ -90,10 +92,10 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
             materialObject = jsonObject,
             findAllRefOrNullFetcher = { from, type ->
                 coroutineScopes.database.await {
-                    materialDatabaseSource.findAllRefOrNull(
+                    materialDatabaseSource.getAllRefOrNull(
                         from = from,
                         url = url,
-                        urlOrigin = urlOrigin,
+//                        urlOrigin = urlOrigin,
                         type = type
                     )
                 }
