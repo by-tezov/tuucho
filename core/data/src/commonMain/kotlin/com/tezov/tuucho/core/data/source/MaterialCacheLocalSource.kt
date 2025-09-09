@@ -1,32 +1,32 @@
 package com.tezov.tuucho.core.data.source
 
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.entity.HookEntity
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
-import com.tezov.tuucho.core.data.database.entity.VersioningEntity
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
-import com.tezov.tuucho.core.data.parser._system.JsonObjectEntityTree
+import com.tezov.tuucho.core.data.parser._system.JsonObjectNode
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
+import com.tezov.tuucho.core.data.source._system.LifetimeResolver
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page.PageSettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import kotlinx.serialization.json.JsonObject
 import kotlin.time.Clock
-import kotlin.time.Instant
 
 class MaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialBreaker: MaterialBreaker,
     private val materialAssembler: MaterialAssembler,
-    private val expirationDateTimeRectifier: ExpirationDateTimeRectifier,
+    private val lifetimeResolver: LifetimeResolver,
 ) {
 
     suspend fun isCacheValid(url: String, remoteValidityKey: String?): Boolean {
@@ -36,93 +36,63 @@ class MaterialCacheLocalSource(
             }
             return when (lifetime) {
                 is Lifetime.Unlimited -> true
-                is Lifetime.Transient -> lifetime.expirationDateTime >= Clock.System.now().also {
-                    println(lifetime.expirationDateTime >= Clock.System.now())
-                }
-
+                is Lifetime.Transient -> lifetime.expirationDateTime >= Clock.System.now()
                 is Lifetime.Enrolled -> false
             }
         }
         return false
     }
 
-    suspend fun delete(url: String) {
-        materialDatabaseSource.deleteAll(url)
+    suspend fun delete(url: String, table: Table) {
+        materialDatabaseSource.deleteAll(url, table)
     }
 
     suspend fun insert(
         materialObject: JsonObject,
         url: String,
-        weakLifetime: Lifetime,
         visibility: Visibility,
+        weakLifetime: Lifetime,
     ) {
-        val parts = coroutineScopes.parser.await {
+        val nodes = coroutineScopes.parser.await {
             materialBreaker.process(
                 materialObject = materialObject,
-                versioningEntityFactory = { pageSetting ->
-                    val settingScope = pageSetting?.withScope(PageSettingSchema::Scope)
-                    val ttlScope = settingScope?.ttl?.withScope(PageSettingSchema.Ttl::Scope)
-                    val lifetime = if (ttlScope != null) {
-                        val strategy = ttlScope.strategy
-                        when (strategy) {
-                            PageSettingSchema.Ttl.Value.Strategy.transient -> {
-                                val expirationDateTime =
-                                    ttlScope.transientValue
-                                        ?.let { expirationDateTimeRectifier.process(it) }
-                                        ?.let { Instant.parse(it) }
-                                        ?: throw DataException.Default("ttl transient, missing property transient-value")
-                                Lifetime.Transient(weakLifetime.validityKey, expirationDateTime)
-                                // ttlScope.transientOption //TODO: "stale-while-revalidate / stale-if-error"
-                            }
-
-                            PageSettingSchema.Ttl.Value.Strategy.noStore -> {
-                                val expirationDateTime = Clock.System.now()
-                                Lifetime.Transient(weakLifetime.validityKey, expirationDateTime)
-                                //TODO: should be removed from table as soon as used.
-                                // It would not really respect because if not used right away, it will seat in database...
-                            }
-
-                            else -> throw DataException.Default("unknown ttl strategy $strategy")
-                        }
-                    } else null
-                    VersioningEntity(
-                        url = url,
-                        rootPrimaryKey = null,
-                        visibility = visibility,
-                        lifetime = lifetime ?: weakLifetime,
-                    )
-                },
-                jsonObjectEntityTreeProducer = { jsonObject ->
-                    val idScope = jsonObject.onScope(IdSchema::Scope)
-                    JsonObjectEntity(
-                        type = jsonObject.withScope(TypeSchema::Scope).self
-                            ?: throw DataException.Default("Missing type, so there is surely something missing in the rectifier for $this"),
-                        url = url,
-                        id = idScope.value
-                            ?: throw DataException.Default("Missing Id, so there is surely something missing in the rectifier for $this"),
-                        idFrom = idScope.source,
-                        jsonObject = jsonObject
-                    ).let(::JsonObjectEntityTree)
-                }
             )
         }
         coroutineScopes.database.await {
-            with(parts) {
-                val rootPrimaryKey = rootJsonObjectEntity?.let { root ->
-                    materialDatabaseSource.insert(root)
+            with(nodes) {
+                val table = if (visibility is Visibility.Contextual) Table.Contextual
+                else Table.Common
+                val rootPrimaryKey = rootJsonObjectNode?.let {
+                    materialDatabaseSource.insert(it.toEntity(url), table)
                 }
-                versionEntity.copy(
+                HookEntity(
+                    url = url,
                     rootPrimaryKey = rootPrimaryKey,
-                ).also { materialDatabaseSource.insertOrUpdate(it) }
-                jsonElementTree
-                    .asSequence()
-                    .flatMap { it.flatten() }
-                    .forEach {
-                        materialDatabaseSource.insert(it.content)
-                    }
-
+                    visibility = visibility,
+                    lifetime = lifetimeResolver.invoke(
+                        pageSetting = materialObject.withScope(MaterialSchema::Scope).pageSetting,
+                        weakLifetime = weakLifetime,
+                    ),
+                ).also { materialDatabaseSource.insert(it) }
+                jsonElementNodes.asSequence().flatMap { it.flatten() }
+                    .forEach { materialDatabaseSource.insert(it.toEntity(url), table) }
             }
         }
+    }
+
+    private fun JsonObjectNode.toEntity(
+        url: String,
+    ): JsonObjectEntity {
+        val idScope = content.onScope(IdSchema::Scope)
+        return JsonObjectEntity(
+            type = content.withScope(TypeSchema::Scope).self
+                ?: throw DataException.Default("Missing type, so there is surely something missing in the rectifier for $this"),
+            url = url,
+            id = idScope.value
+                ?: throw DataException.Default("Missing Id, so there is surely something missing in the rectifier for $this"),
+            idFrom = idScope.source,
+            jsonObject = content
+        )
     }
 
     suspend fun enroll(
@@ -131,7 +101,7 @@ class MaterialCacheLocalSource(
         visibility: Visibility,
     ) {
         coroutineScopes.database.await {
-            VersioningEntity(
+            HookEntity(
                 url = url,
                 rootPrimaryKey = null,
                 visibility = visibility,
@@ -141,10 +111,10 @@ class MaterialCacheLocalSource(
     }
 
     suspend fun getLifetime(url: String) = coroutineScopes.database.await {
-        materialDatabaseSource.getVersioningEntityOrNull(url)?.lifetime
+        materialDatabaseSource.getHookEntityOrNull(url)?.lifetime
     }
 
-    suspend fun read(url: String): JsonObject? {
+    suspend fun assemble(url: String): JsonObject? {
         val entity = coroutineScopes.database.await {
             materialDatabaseSource.getRootJsonObjectEntityOrNull(url)
         } ?: return null
@@ -153,7 +123,7 @@ class MaterialCacheLocalSource(
                 materialObject = entity.jsonObject,
                 findAllRefOrNullFetcher = { from, type ->
                     coroutineScopes.database.await {
-                        materialDatabaseSource.getAllRefOrNull(from, url, type)
+                        materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
                     }
                 }
             )

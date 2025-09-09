@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.MaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
-import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandDefinitionShadowerMaterialSource
+import com.tezov.tuucho.core.data.source.shadower.ContextualShadowerMaterialSource
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import org.koin.core.module.Module
@@ -70,7 +70,7 @@ object MaterialRepositoryModule {
                 materialDatabaseSource = get(),
                 materialBreaker = get(),
                 materialAssembler = get(),
-                expirationDateTimeRectifier = get(),
+                lifetimeResolver = get(),
             )
         }
 
@@ -105,13 +105,12 @@ object MaterialRepositoryModule {
     private fun Module.compositeSource() {
         factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
             listOf(
-                RetrieveOnDemandDefinitionShadowerMaterialSource(
+                ContextualShadowerMaterialSource(
                     coroutineScopes = get(),
-                    materialNetworkSource = get(),
-                    materialRectifier = get(),
                     materialCacheLocalSource = get(),
+                    materialRemoteSource = get(),
                     materialAssembler = get(),
-                    materialDatabaseSource = get(),
+                    materialDatabaseSource = get()
                 )
             )
         }

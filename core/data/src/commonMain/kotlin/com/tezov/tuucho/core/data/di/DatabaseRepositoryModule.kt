@@ -3,11 +3,11 @@ package com.tezov.tuucho.core.data.di
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.DatabaseTransactionFactory
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.dao.HookQueries
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
-import com.tezov.tuucho.core.data.database.dao.VersioningQueries
+import com.tezov.tuucho.core.data.database.table.HookEntry
+import com.tezov.tuucho.core.data.database.table.JsonObjectCommonEntry
 import com.tezov.tuucho.core.data.database.table.JsonObjectContextualEntry
-import com.tezov.tuucho.core.data.database.table.JsonObjectEntry
-import com.tezov.tuucho.core.data.database.table.VersioningEntry
 import com.tezov.tuucho.core.data.database.type.adapter.JsonObjectAdapter
 import com.tezov.tuucho.core.data.database.type.adapter.LifetimeAdapter
 import com.tezov.tuucho.core.data.database.type.adapter.VisibilityAdapter
@@ -34,13 +34,13 @@ object DatabaseRepositoryModule {
         single<Database> {
             Database(
                 driver = get(),
-                jsonObjectEntryAdapter = JsonObjectEntry.Adapter(
+                jsonObjectCommonEntryAdapter = JsonObjectCommonEntry.Adapter(
                     jsonObjectAdapter = get<JsonObjectAdapter>()
                 ),
                 jsonObjectContextualEntryAdapter = JsonObjectContextualEntry.Adapter(
                     jsonObjectAdapter = get<JsonObjectAdapter>()
                 ),
-                versioningEntryAdapter = VersioningEntry.Adapter(
+                hookEntryAdapter = HookEntry.Adapter(
                     visibilityAdapter = get<VisibilityAdapter>(),
                     lifetimeAdapter = get<LifetimeAdapter>()
                 ),
@@ -53,8 +53,8 @@ object DatabaseRepositoryModule {
             )
         }
 
-        factory<VersioningQueries> {
-            VersioningQueries(
+        factory<HookQueries> {
+            HookQueries(
                 database = get()
             )
         }
@@ -68,7 +68,7 @@ object DatabaseRepositoryModule {
         factory<MaterialDatabaseSource> {
             MaterialDatabaseSource(
                 transactionFactory = get(),
-                versioningQueries = get(),
+                hookQueries = get(),
                 jsonObjectQueries = get()
             )
         }

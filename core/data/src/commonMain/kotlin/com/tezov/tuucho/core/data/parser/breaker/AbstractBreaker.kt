@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.data.parser.breaker
 
 import com.tezov.tuucho.core.data.exception.DataException
-import com.tezov.tuucho.core.data.parser._system.JsonArrayEntityTree
-import com.tezov.tuucho.core.data.parser._system.JsonElementTree
-import com.tezov.tuucho.core.data.parser._system.JsonObjectEntityTree
-import com.tezov.tuucho.core.data.parser.breaker._system.JsonObjectEntityTreeFactoryProtocol
+import com.tezov.tuucho.core.data.parser._system.JsonArrayNode
+import com.tezov.tuucho.core.data.parser._system.JsonElementNode
+import com.tezov.tuucho.core.data.parser._system.JsonObjectNode
 import com.tezov.tuucho.core.data.parser.breaker._system.MatcherBreakerProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
@@ -38,32 +38,28 @@ abstract class AbstractBreaker : MatcherBreakerProtocol, KoinComponent {
     fun process(
         path: JsonElementPath,
         element: JsonElement,
-        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
-    ): JsonElementTree = with(element.find(path)) {
+    ): JsonElementNode = with(element.find(path)) {
         when (this) {
-            is JsonArray -> processArray(jsonEntityObjectTreeProducer)
-            is JsonObject -> processObject(path, element, jsonEntityObjectTreeProducer)
+            is JsonArray -> processArray()
+            is JsonObject -> processObject(path, element)
             else -> throw DataException.Default("Primitive to JsonEntity is not allowed by design")
         }
     }
 
-    private fun JsonArray.processArray(
-        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
-    ) = map { entry ->
+    private fun JsonArray.processArray() = map { entry ->
         (entry as? JsonObject)
             ?: throw DataException.Default("By design element inside array must be object, so there is surely something missing in the rectifier for $entry ")
-        entry.processObject("".toPath(), entry, jsonEntityObjectTreeProducer)
-    }.let { JsonArrayEntityTree(it) }
+        entry.processObject("".toPath(), entry)
+    }.let { JsonArrayNode(it) }
 
     private fun JsonObject.processObject(
         path: JsonElementPath,
         element: JsonElement,
-        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
-    ): JsonObjectEntityTree {
+    ): JsonObjectNode {
         if (childProcessors.isEmpty()) {
-            return jsonEntityObjectTreeProducer.invoke(this)
+            return JsonObjectNode(this)
         }
-        val mapEntity = mutableMapOf<String, JsonElementTree>()
+        val mapEntity = mutableMapOf<String, JsonElementNode>()
         keys.forEach { childKey ->
             val childPath = path.child(childKey)
             childProcessors
@@ -71,32 +67,31 @@ abstract class AbstractBreaker : MatcherBreakerProtocol, KoinComponent {
                 .singleOrThrow(path)
                 ?.let {
                     mapEntity[childKey] =
-                        it.process(childPath, element, jsonEntityObjectTreeProducer)
+                        it.process(childPath, element)
                 }
         }
-        return processObject(mapEntity, jsonEntityObjectTreeProducer)
+        return processObject(mapEntity)
     }
 
     private fun JsonObject.processObject(
-        map: Map<String, JsonElementTree>,
-        jsonEntityObjectTreeProducer: JsonObjectEntityTreeFactoryProtocol,
-    ): JsonObjectEntityTree {
+        map: Map<String, JsonElementNode>,
+    ): JsonObjectNode {
         if (map.isEmpty()) {
-            return jsonEntityObjectTreeProducer.invoke(this)
+            return JsonObjectNode(this)
         }
         var _element = this as JsonElement
         val children = buildList {
             map.forEach { (key, value) ->
                 val newValue = when (value) {
-                    is JsonArrayEntityTree -> value.map { entry ->
-                        (entry as? JsonObjectEntityTree)?.let {
+                    is JsonArrayNode -> value.map { entry ->
+                        (entry as? JsonObjectNode)?.let {
                             add(entry)
                             entry.toJsonObjectRef()
                         }
                             ?: throw DataException.Default("By design element inside array must be object")
                     }.let(::JsonArray)
 
-                    is JsonObjectEntityTree -> {
+                    is JsonObjectNode -> {
                         add(value)
                         value.toJsonObjectRef()
                     }
@@ -104,18 +99,17 @@ abstract class AbstractBreaker : MatcherBreakerProtocol, KoinComponent {
                 _element = _element.replaceOrInsert(key.toPath(), newValue)
             }
         }
-        return _element.jsonObject
-            .let { jsonEntityObjectTreeProducer.invoke(it) }
+        return JsonObjectNode(_element.jsonObject)
             .apply { this.children = children }
     }
 
-    private fun JsonObjectEntityTree.toJsonObjectRef() = JsonNull.withScope(::SchemaScope).apply {
+    private fun JsonObjectNode.toJsonObjectRef() = JsonNull.withScope(::SchemaScope).apply {
         withScope(TypeSchema::Scope).apply {
-            self = content.type
+            self = content.withScope(TypeSchema::Scope).self
         }
         withScope(IdSchema::Scope).apply {
             self = onScope(IdSchema::Scope).apply {
-                source = content.id
+                source = content.onScope(IdSchema::Scope).value
             }.collect()
         }
     }.collect()

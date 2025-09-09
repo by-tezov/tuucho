@@ -15,12 +15,12 @@ object ComponentSettingSchema {
     object Key {
         const val id = IdSchema.root
         const val type = TypeSchema.root
-        const val onDemandDefinitionUrl = "on-demand-definition-url"
+        const val urlContextual = "url-contextual"
     }
 
     object Value {
-        object OnDemandDefinitionUrl {
-            const val suffix = "-on-demand-definition"
+        object UrlContextual {
+            const val suffix = "-contextual"
         }
     }
 
@@ -32,17 +32,17 @@ object ComponentSettingSchema {
 
         var id by delegate<JsonElement?>(Key.id)
         var type by delegate<String?>(Key.type)
-        var onDemandDefinitionUrl by delegate<String?>(Key.onDemandDefinitionUrl)
+        var urlContextual by delegate<String?>(Key.urlContextual)
     }
 
     object Root {
         object Key {
-            const val disableOnDemandDefinitionShadower = "disable-on-demand-definition-shadower"
+            const val disableContextualShadower = "disable-contextual-shadower"
             const val navigation = ComponentSettingNavigationSchema.root
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument) {
-            var disableOnDemandDefinitionShadower by delegate<Boolean?>(Key.disableOnDemandDefinitionShadower)
+            var disableContextualShadower by delegate<Boolean?>(Key.disableContextualShadower)
             var navigation by delegate<JsonObject?>(Key.navigation)
         }
     }

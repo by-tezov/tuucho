@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.domain.business.usecase
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
@@ -55,11 +56,19 @@ class NavigateToUrlUseCase(
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.option
                 )
                 newRoute?.let {
-                    navigationStackScreenRepository.forward(
-                        route = it,
+                    val newScreen = navigationStackScreenRepository.forward(
+                        route = newRoute,
                         componentObject = componentObject
                     )
-                    //shadowerMaterialRepository.process(url, componentObject) //TODO
+                    coroutineScopes.navigation.async {
+                        shadowerMaterialRepository.process(url, componentObject)
+                            .filter { it.type == Shadower.Type.contextual }
+                            .forEach {
+                                coroutineScopes.renderer.await {
+                                    newScreen.update(it.jsonObject)
+                                }
+                        }
+                    }
                 }
                 navigationStackTransitionRepository.forward(
                     routes = navigationStackRouteRepository.routes(),

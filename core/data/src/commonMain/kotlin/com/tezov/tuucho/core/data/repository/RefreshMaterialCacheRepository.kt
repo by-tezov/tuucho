@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository
 
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
@@ -12,7 +13,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.config.ConfigSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
@@ -36,7 +36,11 @@ class RefreshMaterialCacheRepository(
         }
     }
 
-    private suspend fun downloadAndCache(url: String, validityKey: String, visibility: Visibility) {
+    private suspend fun downloadAndCache(
+        url: String,
+        validityKey: String,
+        visibility: Visibility,
+    ) {
         materialRemoteSource.process(url).let { material ->
             materialCacheLocalSource.insert(
                 materialObject = material,
@@ -47,7 +51,11 @@ class RefreshMaterialCacheRepository(
         }
     }
 
-    private suspend fun enroll(url: String, validityKey: String, visibility: Visibility) {
+    private suspend fun enroll(
+        url: String,
+        validityKey: String,
+        visibility: Visibility,
+    ) {
         materialCacheLocalSource.enroll(
             url = url,
             validityKey = validityKey,
@@ -64,7 +72,7 @@ class RefreshMaterialCacheRepository(
                     val validityKey = configScope.validityKey
                         ?: throw DataException.Default("missing validity key in global material $this")
                     if (materialCacheLocalSource.isCacheValid(url, validityKey)) continue
-                    materialCacheLocalSource.delete(url)
+                    materialCacheLocalSource.delete(url, Table.Common)
                     if (configScope.preDownload.isTrueOrNull) {
                         downloadAndCache(url, validityKey, Visibility.Global)
                     } else {
@@ -84,7 +92,7 @@ class RefreshMaterialCacheRepository(
                     val validityKey = configScope.validityKey
                         ?: throw DataException.Default("missing validity key in local material $this")
                     if (materialCacheLocalSource.isCacheValid(url, validityKey)) continue
-                    materialCacheLocalSource.delete(url)
+                    materialCacheLocalSource.delete(url, Table.Common)
                     if (configScope.preDownload.isTrueOrNull) {
                         downloadAndCache(url, validityKey, Visibility.Local)
                     } else {
@@ -102,16 +110,12 @@ class RefreshMaterialCacheRepository(
                     val urlOrigin = configScope.urlOrigin
                         ?: throw DataException.Default("missing urlOrigin in contextual material $this")
                     val url = configScope.url
-                        ?: "${urlOrigin}${ComponentSettingSchema.Value.OnDemandDefinitionUrl.suffix}"
+                        ?: "${urlOrigin}${ComponentSettingSchema.Value.UrlContextual.suffix}"
                     val validityKey = configScope.validityKey
                         ?: throw DataException.Default("missing validity key in contextual material $this")
                     if (materialCacheLocalSource.isCacheValid(url, validityKey)) continue
-                    materialCacheLocalSource.delete(url)
-                    if (configScope.preDownload.isTrue) {
-                        downloadAndCache(url, validityKey, Visibility.Local)
-                    } else {
-                        enroll(url, validityKey, Visibility.Local)
-                    }
+                    materialCacheLocalSource.delete(url, Table.Contextual)
+                    enroll(url, validityKey, Visibility.Contextual(urlOrigin = urlOrigin))
                 }
             }
         }

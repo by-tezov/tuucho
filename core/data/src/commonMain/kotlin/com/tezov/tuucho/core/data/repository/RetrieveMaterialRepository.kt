@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository
 
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
@@ -16,19 +17,19 @@ class RetrieveMaterialRepository(
     override suspend fun process(url: String): JsonObject {
         val lifetime = materialCacheLocalSource.getLifetime(url)
         if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
-            materialCacheLocalSource.read(url)?.let {
+            materialCacheLocalSource.assemble(url)?.let {
                 return it
             }
         }
         val remoteMaterialObject = materialRemoteSource.process(url)
-        materialCacheLocalSource.delete(url)
+        materialCacheLocalSource.delete(url, Table.Common)
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
             weakLifetime = lifetime ?: Lifetime.Unlimited(validityKey = null),
             visibility = Visibility.Local
         )
-        return materialCacheLocalSource.read(url)
+        return materialCacheLocalSource.assemble(url)
             ?: throw DataException.Default("Retrieved url $url returned nothing")
     }
 

@@ -1,31 +1,30 @@
 package com.tezov.tuucho.core.data.source.shadower
 
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
-import com.tezov.tuucho.core.data.network.MaterialNetworkSource
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
+import com.tezov.tuucho.core.data.database.type.Lifetime
+import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
-import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.MaterialRemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.JsonObject
+import kotlin.time.Clock
 
-class RetrieveOnDemandDefinitionShadowerMaterialSource(
+class ContextualShadowerMaterialSource(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val materialNetworkSource: MaterialNetworkSource,
-    private val materialRectifier: MaterialRectifier,
     private val materialCacheLocalSource: MaterialCacheLocalSource,
+    private val materialRemoteSource: MaterialRemoteSource,
     private val materialAssembler: MaterialAssembler,
     private val materialDatabaseSource: MaterialDatabaseSource,
 ) : ShadowerMaterialSourceProtocol {
 
-    override val type = Shadower.Type.onDemandDefinition
+    override val type = Shadower.Type.contextual
 
     override var isCancelled = false
         private set
@@ -34,14 +33,10 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
     private lateinit var map: MutableMap<String, MutableList<JsonObject>>
 
     override suspend fun onStart(url: String, materialElement: JsonObject) {
-        if (materialElement.onScope(ComponentSettingSchema.Root::Scope).disableOnDemandDefinitionShadower == true) {
+        if (materialElement.onScope(ComponentSettingSchema.Root::Scope).disableContextualShadower == true) {
             isCancelled = true
             return
         }
-// TODO
-//        materialDatabaseSource.deleteAllTransient(
-//            Lifetime.Transient(null, url)
-//        )
         this.urlOrigin = url
         map = mutableMapOf()
     }
@@ -50,41 +45,34 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
         val idScope = jsonObject.onScope(IdSchema::Scope)
         idScope.source ?: return
         val url = jsonObject.onScope(ComponentSettingSchema::Scope)
-            .onDemandDefinitionUrl?.replace("\${current}", urlOrigin)
-            ?: "$urlOrigin${ComponentSettingSchema.Value.OnDemandDefinitionUrl.suffix}"
-        map[url] = (map[url] ?: mutableListOf())
-            .apply { add(jsonObject) }
+            .urlContextual?.replace("\${current}", urlOrigin)
+            ?: "$urlOrigin${ComponentSettingSchema.Value.UrlContextual.suffix}"
+        map[url] = (map[url] ?: mutableListOf()).apply { add(jsonObject) }
     }
 
-    override suspend fun onDone() = flow {
-        coroutineScope {
-            map.map { (url, jsonObjects) ->
-                async {
-                    refreshTransientDatabaseCache(url)
-                    jsonObjects.assembleAll(url)
-                }
-            }
-        }.awaitAll()
-            .flatten()
-            .forEach { emit(it) }
-    }
+    override suspend fun onDone() = map.map { (url, jsonObjects) ->
+        coroutineScopes.parser.async {
+            downloadAndCache(url)
+            jsonObjects.assembleAll(url)
+        }
+    }.awaitAll().flatten()
 
-    private suspend fun refreshTransientDatabaseCache(
-        url: String,
-    ) {
-        val material = coroutineScopes.network.await {
-            materialNetworkSource.retrieve(url)
-        }.let { materialRectifier.process(it) }
-//        refreshMaterialCacheLocalSource.process(
-//            materialObject = material,
-//            url = url,
-//            validityKey = null,
-//            visibility = Visibility.Local,
-//            lifetime = Lifetime.Transient(
-//                urlOrigin = urlOrigin
-//            )
-//        )
-        TODO()
+    private suspend fun downloadAndCache(url: String) {
+        val lifetime = materialCacheLocalSource.getLifetime(url)
+        if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
+            return
+        }
+        val remoteMaterialObject = materialRemoteSource.process(url)
+        materialCacheLocalSource.delete(url, Table.Contextual)
+        materialCacheLocalSource.insert(
+            materialObject = remoteMaterialObject,
+            url = url,
+            weakLifetime = lifetime ?: Lifetime.Transient(
+                validityKey = null,
+                expirationDateTime = Clock.System.now()
+            ),
+            visibility = Visibility.Contextual(urlOrigin = urlOrigin)
+        )
     }
 
     private suspend fun List<JsonObject>.assembleAll(url: String) = mapNotNull { jsonObject ->
@@ -95,8 +83,8 @@ class RetrieveOnDemandDefinitionShadowerMaterialSource(
                     materialDatabaseSource.getAllRefOrNull(
                         from = from,
                         url = url,
-//                        urlOrigin = urlOrigin,
-                        type = type
+                        type = type,
+                        visibility = Visibility.Contextual(urlOrigin = urlOrigin)
                     )
                 }
             }

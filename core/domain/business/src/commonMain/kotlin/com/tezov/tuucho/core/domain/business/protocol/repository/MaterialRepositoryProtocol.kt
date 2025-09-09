@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
-import com.tezov.tuucho.core.domain.tool.async.Notifier.Collector
 import kotlinx.serialization.json.JsonObject
 
 sealed interface MaterialRepositoryProtocol {
@@ -19,15 +18,14 @@ sealed interface MaterialRepositoryProtocol {
 
     interface Shadower : MaterialRepositoryProtocol {
 
-        data class Event(
+        data class Output(
             val type: String,
             val url: String,
             val jsonObject: JsonObject,
         )
 
-        val events: Collector<Event>
+        suspend fun process(url: String, materialObject: JsonObject): List<Output>
 
-        fun process(url: String, materialObject: JsonObject)
     }
 
 }

@@ -16,3 +16,6 @@ SELECT last_insert_rowid();
 
 getByPrimaryKey:
 SELECT * FROM jsonObjectContextualEntry WHERE primaryKey = ?;
+
+getByTypeUrlId:
+SELECT * FROM jsonObjectContextualEntry WHERE type = ? AND url = ? AND id = ?;

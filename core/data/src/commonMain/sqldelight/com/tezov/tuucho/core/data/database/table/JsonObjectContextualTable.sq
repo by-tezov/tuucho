@@ -3,7 +3,7 @@ import kotlinx.serialization.json.JsonObject;
 CREATE TABLE jsonObjectContextualEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL,
-    url TEXT NOT NULL REFERENCES versioningEntry(url) ON DELETE CASCADE,
+    url TEXT NOT NULL REFERENCES hookEntry(url) ON DELETE CASCADE,
     id TEXT NOT NULL,
     idFrom TEXT,
     jsonObject TEXT AS JsonObject NOT NULL,

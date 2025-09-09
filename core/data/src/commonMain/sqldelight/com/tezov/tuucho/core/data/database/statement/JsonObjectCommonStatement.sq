@@ -1,0 +1,21 @@
+selectAll:
+SELECT * FROM jsonObjectCommonEntry;
+
+deleteAll:
+DELETE FROM jsonObjectCommonEntry;
+
+deleteByUrl:
+DELETE FROM jsonObjectCommonEntry WHERE url = ?;
+
+insert:
+INSERT INTO jsonObjectCommonEntry(type, url, id, idFrom, jsonObject)
+VALUES (?, ?, ?, ?, ?);
+
+lastInsertedId:
+SELECT last_insert_rowid();
+
+getByPrimaryKey:
+SELECT * FROM jsonObjectCommonEntry WHERE primaryKey = ?;
+
+getByTypeUrlId:
+SELECT * FROM jsonObjectCommonEntry WHERE type = ? AND url = ? AND id = ?;
