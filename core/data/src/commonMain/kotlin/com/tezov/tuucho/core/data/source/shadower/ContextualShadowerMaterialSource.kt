@@ -67,10 +67,12 @@ class ContextualShadowerMaterialSource(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
-            weakLifetime = lifetime ?: Lifetime.Transient(
-                validityKey = null,
-                expirationDateTime = Clock.System.now()
-            ),
+            weakLifetime = if (lifetime == null || lifetime is Lifetime.Enrolled) {
+                Lifetime.Transient(
+                    validityKey = lifetime?.validityKey,
+                    expirationDateTime = Clock.System.now()
+                )
+            } else lifetime,
             visibility = Visibility.Contextual(urlOrigin = urlOrigin)
         )
     }
