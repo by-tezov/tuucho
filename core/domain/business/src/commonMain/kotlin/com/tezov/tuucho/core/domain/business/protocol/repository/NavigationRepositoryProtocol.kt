@@ -18,7 +18,7 @@ sealed interface NavigationRepositoryProtocol {
 
         suspend fun backward(
             route: NavigationRoute,
-        )
+        ): NavigationRoute?
 
     }
 
@@ -35,12 +35,11 @@ sealed interface NavigationRepositoryProtocol {
         suspend fun forward(
             route: NavigationRoute,
             componentObject: JsonObject,
-        ):ScreenProtocol
+        )
 
         suspend fun backward(
             routes: List<NavigationRoute>,
         )
-
     }
 
     interface StackTransition {
@@ -62,8 +61,6 @@ sealed interface NavigationRepositoryProtocol {
         }
 
         suspend fun routes(): List<NavigationRoute>
-
-        suspend fun isBusy(): Boolean
 
         val events: Notifier.Collector<Event>
 

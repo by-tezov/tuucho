@@ -26,7 +26,7 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldForm
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.tool.json.string
-import com.tezov.tuucho.core.presentation.ui.renderer.view.View
+import com.tezov.tuucho.core.presentation.ui.renderer.view.AbstractView
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import kotlinx.serialization.json.JsonObject
 
@@ -55,7 +55,7 @@ class FieldViewFactory(
 class FieldView(
     componentObject: JsonObject,
     fieldFormView: FieldFormView,
-) : View(componentObject), FieldFormViewProtocol.Extension {
+) : AbstractView(componentObject), FieldFormViewProtocol.Extension {
 
     override val formView = fieldFormView.also { it.attach(this) }
 

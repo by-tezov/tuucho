@@ -14,10 +14,13 @@ class ShadowerMaterialRepository(
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
 ) : Shadower, KoinComponent {
 
-    override suspend fun process(url: String, materialObject: JsonObject) =
+    override suspend fun process(url: String, materialObject: JsonObject, types: List<String>) =
         buildList {
             coroutineScopes.parser.await {
-                shadowerMaterialSources.forEach { it.onStart(url, materialObject) }
+                shadowerMaterialSources
+                    .asSequence()
+                    .filter { types.contains(it.type) }
+                    .forEach { it.onStart(url, materialObject) }
                 materialShadower.process(
                     materialObject = materialObject,
                     jsonObjectConsumer = object : JsonObjectConsumerProtocol {
@@ -25,14 +28,14 @@ class ShadowerMaterialRepository(
                         override suspend fun onNext(jsonObject: JsonObject) {
                             shadowerMaterialSources
                                 .asSequence()
-                                .filter { !it.isCancelled }
+                                .filter { !it.isCancelled && types.contains(it.type) }
                                 .forEach { it.onNext(jsonObject) }
                         }
 
                         override suspend fun onDone() {
                             shadowerMaterialSources
                                 .asSequence()
-                                .filter { !it.isCancelled }
+                                .filter { !it.isCancelled && types.contains(it.type) }
                                 .forEach {
                                     it.onDone().map { jsonObject ->
                                         Shadower.Output(

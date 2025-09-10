@@ -4,5 +4,7 @@ import kotlinx.serialization.json.JsonObject
 
 interface ViewProtocol {
 
+    val componentObject: JsonObject
+
     suspend fun update(jsonObject: JsonObject)
 }

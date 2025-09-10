@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol as DomainViewProtocol
 
 class Screen(
-    private val view: ViewProtocol,
+    override val view: ViewProtocol,
     override val route: NavigationRoute,
 ) : ScreenProtocol {
 

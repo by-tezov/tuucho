@@ -9,6 +9,8 @@ interface ScreenProtocol {
 
     val route: NavigationRoute
 
+    val view: ViewProtocol
+
     suspend fun update(jsonObject: JsonObject)
 
     fun <V : ViewProtocol> views(klass: KClass<V>): List<V>
