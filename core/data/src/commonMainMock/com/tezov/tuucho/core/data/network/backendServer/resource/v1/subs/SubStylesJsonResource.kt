@@ -10,7 +10,6 @@ class SubStylesJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "styles": [
     {
       "id": "title-label",

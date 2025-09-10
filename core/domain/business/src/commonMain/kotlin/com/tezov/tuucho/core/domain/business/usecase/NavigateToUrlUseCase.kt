@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRouteIdGenerator
@@ -16,6 +17,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -38,10 +40,7 @@ class NavigateToUrlUseCase(
 
     override fun invoke(input: Input) {
         coroutineScopes.navigation.async {
-            if (navigationStackTransitionRepository.isBusy()) {
-                //throw DomainException.Default("Navigation is not ready to accept new request")
-                return@async
-            }
+            //TODO need to protect navigation from monkey click
             with(input) {
                 val componentObject = retrieveMaterialRepository.process(url)
                 val navigationSettingObject = componentObject
@@ -56,19 +55,11 @@ class NavigateToUrlUseCase(
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.option
                 )
                 newRoute?.let {
-                    val newScreen = navigationStackScreenRepository.forward(
+                    navigationStackScreenRepository.forward(
                         route = newRoute,
                         componentObject = componentObject
                     )
-                    coroutineScopes.navigation.async {
-                        shadowerMaterialRepository.process(url, componentObject)
-                            .filter { it.type == Shadower.Type.contextual }
-                            .forEach {
-                                coroutineScopes.renderer.await {
-                                    newScreen.update(it.jsonObject)
-                                }
-                        }
-                    }
+                    newRoute.runShadower()
                 }
                 navigationStackTransitionRepository.forward(
                     routes = navigationStackRouteRepository.routes(),
@@ -77,9 +68,6 @@ class NavigateToUrlUseCase(
                         ?.extra,
                     navigationTransitionObject = navigationDefinitionObject
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.transition,
-                )
-                navigationStackScreenRepository.backward(
-                    routes = navigationStackRouteRepository.routes()
                 )
             }
         }
@@ -90,7 +78,8 @@ class NavigateToUrlUseCase(
         ?.let { it as? JsonObject }
 
     private suspend fun JsonObject.accept(): Boolean {
-        val selector = withScope(ComponentSettingNavigationSchema.Definition::Scope).selector ?: return true
+        val selector =
+            withScope(ComponentSettingNavigationSchema.Definition::Scope).selector ?: return true
         return useCaseExecutor.invokeSuspend(
             useCase = navigationOptionSelectorFactory,
             input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(
@@ -106,6 +95,35 @@ class NavigateToUrlUseCase(
         }
 
         else -> throw DomainException.Default("Unknown navigation option selector $this")
+    }
+
+    private suspend fun NavigationRoute.runShadower() {
+        val url = (this as? NavigationRoute.Url)?.value ?: return
+        val view = navigationStackScreenRepository.getScreenOrNull(this)?.view ?: return
+        val componentObject = view.componentObject
+        val componentSettingScope = componentObject
+            .onScope(ComponentSettingSchema.Root::Scope)
+        val settingShadowerScope = componentSettingScope
+            .contextualShadower
+            ?.withScope(SettingComponentShadowerSchema::Scope)
+            ?.navigateForward
+            ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
+        if (settingShadowerScope?.enable.isTrue) {
+            val job = coroutineScopes.navigation.async {
+                shadowerMaterialRepository.process(
+                    url = url,
+                    materialObject = componentObject,
+                    types = listOf(Shadower.Type.contextual)
+                ).forEach {
+                    coroutineScopes.renderer.await {
+                        view.update(it.jsonObject)
+                    }
+                }
+            }
+            if (settingShadowerScope?.waitDoneToRender.isTrue) {
+                job.await()
+            }
+        }
     }
 
 }

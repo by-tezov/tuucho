@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.source
 
-import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.MaterialDatabaseSourceProtocol
 import com.tezov.tuucho.core.data.database.entity.HookEntity
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
@@ -11,7 +11,7 @@ import com.tezov.tuucho.core.data.parser._system.JsonObjectNode
 import com.tezov.tuucho.core.data.parser._system.flatten
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssemblerProtocol
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreakerProtocol
-import com.tezov.tuucho.core.data.source._system.LifetimeResolver
+import com.tezov.tuucho.core.data.source._system.LifetimeResolverProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
@@ -20,23 +20,28 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlin.time.Clock
+import kotlin.time.Instant
 
 class MaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val materialDatabaseSource: MaterialDatabaseSource,
+    private val materialDatabaseSource: MaterialDatabaseSourceProtocol,
     private val materialBreaker: MaterialBreakerProtocol,
     private val materialAssembler: MaterialAssemblerProtocol,
-    private val lifetimeResolver: LifetimeResolver,
+    private val lifetimeResolver: LifetimeResolverProtocol,
 ) {
 
-    suspend fun isCacheValid(url: String, remoteValidityKey: String?): Boolean {
+    suspend fun isCacheValid(
+        url: String,
+        remoteValidityKey: String?,
+        now: () -> Instant = { Clock.System.now() },
+    ): Boolean {
         materialDatabaseSource.getLifetimeOrNull(url)?.let { lifetime ->
             if (lifetime.validityKey != remoteValidityKey) {
                 return false
             }
             return when (lifetime) {
                 is Lifetime.Unlimited -> true
-                is Lifetime.Transient -> lifetime.expirationDateTime >= Clock.System.now()
+                is Lifetime.Transient -> lifetime.expirationDateTime >= now.invoke()
                 is Lifetime.Enrolled -> false
             }
         }
@@ -107,7 +112,7 @@ class MaterialCacheLocalSource(
                 visibility = visibility,
                 lifetime = Lifetime.Enrolled(validityKey),
             )
-        }
+        }.also { materialDatabaseSource.insert(it) }
     }
 
     suspend fun getLifetime(url: String) = coroutineScopes.database.await {

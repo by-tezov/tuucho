@@ -12,7 +12,6 @@ class PageBJsonResource : JsonResourceProtocol {
 {
   "root": {
     "setting": {
-      "disable-contextual-shadower": true,
       "navigation": {
         "definition": [
           {
@@ -106,5 +105,6 @@ class PageBJsonResource : JsonResourceProtocol {
     }
   ]
 }
+
 """
 }

@@ -40,7 +40,7 @@ class SpacerViewFactory : AbstractViewFactory() {
 
 class SpacerView(
     componentObject: JsonObject,
-) : View(componentObject) {
+) : AbstractView(componentObject) {
 
     private var _width: JsonObject? = null
     private var _height: JsonObject? = null

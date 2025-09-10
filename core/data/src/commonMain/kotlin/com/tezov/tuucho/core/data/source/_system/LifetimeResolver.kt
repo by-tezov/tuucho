@@ -9,11 +9,18 @@ import kotlinx.serialization.json.JsonObject
 import kotlin.time.Clock
 import kotlin.time.Instant
 
+interface LifetimeResolverProtocol {
+    fun invoke(
+        pageSetting: JsonObject?,
+        weakLifetime: Lifetime,
+    ): Lifetime
+}
+
 class LifetimeResolver(
     private val expirationDateTimeRectifier: ExpirationDateTimeRectifier,
-) {
+) : LifetimeResolverProtocol {
 
-    fun invoke(
+    override fun invoke(
         pageSetting: JsonObject?,
         weakLifetime: Lifetime,
     ): Lifetime {

@@ -10,7 +10,6 @@ class SubContentsJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "contents": [
     {
       "id": "input-field-age-content",

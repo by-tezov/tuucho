@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.data.di
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.DatabaseTransactionFactory
 import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.MaterialDatabaseSourceProtocol
 import com.tezov.tuucho.core.data.database.dao.HookQueries
 import com.tezov.tuucho.core.data.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.database.table.HookEntry
@@ -65,7 +66,7 @@ object DatabaseRepositoryModule {
             )
         }
 
-        factory<MaterialDatabaseSource> {
+        factory<MaterialDatabaseSourceProtocol> {
             MaterialDatabaseSource(
                 transactionFactory = get(),
                 hookQueries = get(),

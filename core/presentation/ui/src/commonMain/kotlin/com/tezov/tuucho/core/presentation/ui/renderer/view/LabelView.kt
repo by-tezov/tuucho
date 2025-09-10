@@ -42,7 +42,7 @@ class LabelViewFactory : AbstractViewFactory() {
 
 class LabelView(
     componentObject: JsonObject,
-) : View(componentObject) {
+) : AbstractView(componentObject) {
 
     private val _value = mutableStateOf<JsonObject?>(null)
     private var _fontColor: JsonObject? = null

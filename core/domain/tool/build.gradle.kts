@@ -28,9 +28,5 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.kotlin.datetime)
         }
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-            implementation(libs.kotlinx.coroutines.test)
-        }
     }
 }

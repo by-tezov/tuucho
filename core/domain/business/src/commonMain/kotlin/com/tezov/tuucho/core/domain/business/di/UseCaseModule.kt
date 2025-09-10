@@ -53,7 +53,8 @@ object UseCaseModule {
                 coroutineScopes = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
-                navigationStackTransitionRepository = get()
+                navigationStackTransitionRepository = get(),
+                shadowerMaterialRepository = get()
             )
         }
 

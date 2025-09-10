@@ -10,7 +10,6 @@ class PageHomeContextualJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "components": [
     {
       "id": "input-field-on-demand",
@@ -20,7 +19,7 @@ class PageHomeContextualJsonResource : JsonResourceProtocol {
       },
       "content": {
         "id": "input-field-age-content",
-        "title": "hbbies",
+        "title": "hobbies",
         "placeholder": "cook dead body parts",
         "message-error": "can't be null, i'm sure you have secret"
       }
