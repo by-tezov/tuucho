@@ -10,6 +10,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
             pluginManager.apply(plugin(PluginId.kover))
             if(version("flavor") == "mock") {
+                pluginManager.apply(plugin(PluginId.allOpen))
                 pluginManager.apply(plugin(PluginId.mokkery))
             }
         }

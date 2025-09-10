@@ -3,12 +3,6 @@ plugins {
 }
 
 android {
-    namespace = "com.tezov.tuucho.core.domain.business"
-
-    defaultConfig {
-
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false

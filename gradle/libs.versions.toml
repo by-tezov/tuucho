@@ -1,7 +1,7 @@
 [versions]
 #project
-#flavor = "mock"
-flavor = "prod"
+flavor = "mock"
+#flavor = "prod"
 versionCode = "1"
 versionName = "0.0.1-alpha10"
 javaVersion = "17"
@@ -10,20 +10,20 @@ targetSdk = "36"
 compileSdk = "36"
 #plugin
 kover-plugin = "0.9.1"
-android-plugin = "8.12.2"
-kotlin-plugin = "2.2.10"
+android-plugin = "8.12.3"
+kotlin-plugin = "2.2.10" # can't launch unit test when upgrade to 2.2.20
 compose-plugin = "1.8.2"
 kotlin-serialization-plugin = "2.2.10"
-ksp-plugin = "2.2.0-2.0.2"
+ksp-plugin = "2.2.10-2.0.2"
 #lib - android
-compose-activity = "1.10.1"
+compose-activity = "1.11.0"
 #lib - kmm
 kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
 kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.1.0"
 ktor = "3.2.3"
-koin = "4.1.0"
+koin = "4.1.1"
 kotlin-datetime = "0.7.1"
 #test
 mokkery = "3.0.0-Beta1"
@@ -56,6 +56,8 @@ sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver"
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 #test
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-couroutine" }
+mokkery = { module = "dev.mokkery:mokkery-gradle", version.ref = "mokkery" }
+all-open = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin-plugin" }
 
 [plugins]
 #convention
@@ -75,4 +77,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
 #test
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
+all-open = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin-plugin" }
 

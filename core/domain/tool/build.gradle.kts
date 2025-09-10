@@ -3,12 +3,6 @@ plugins {
 }
 
 android {
-    namespace = "com.tezov.tuucho.core.domain.tool"
-
-    defaultConfig {
-
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -25,7 +19,6 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
-            implementation(libs.koin.core)
             implementation(libs.kotlin.datetime)
         }
     }
