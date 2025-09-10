@@ -6,7 +6,7 @@ interface ValidatorProtocol<T : Any> {
 
     fun updateValidity(value: T)
 
-    fun isValid(): Boolean
+    val isValid: Boolean
 }
 
 interface FormValidatorProtocol<T : Any> : ValidatorProtocol<T> {

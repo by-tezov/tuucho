@@ -123,8 +123,7 @@ object UseCaseModule {
             RegisterUpdateViewEventUseCase(
                 coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
-                formUpdateActionProcessor = get(),
-                shadowerMaterialRepository = get()
+                formUpdateActionProcessor = get()
             )
         }
 

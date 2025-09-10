@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.presentation.ui.renderer.view.ButtonViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view.LabelViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view.LayoutLinearViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view.SpacerViewFactory
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view.fieldView.FieldViewFactory
 import org.koin.core.module.Module
 import org.koin.dsl.bind
@@ -47,7 +47,7 @@ object MaterialRendererModule {
 
     private fun Module.viewModule() {
 
-        factory<List<ViewFactory>> {
+        factory<List<AbstractViewFactory>> {
             listOf(
                 get<LabelViewFactory>(),
                 get<FieldViewFactory>(),

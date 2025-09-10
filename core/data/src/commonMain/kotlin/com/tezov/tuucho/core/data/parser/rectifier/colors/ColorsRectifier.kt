@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier.colors
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ColorSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
@@ -20,9 +20,9 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class ColorsRectifier : Rectifier() {
+class ColorsRectifier : AbstractRectifier() {
 
-    override val childProcessors: List<Rectifier> by inject(
+    override val childProcessors: List<AbstractRectifier> by inject(
         Name.Processor.COLORS
     )
 

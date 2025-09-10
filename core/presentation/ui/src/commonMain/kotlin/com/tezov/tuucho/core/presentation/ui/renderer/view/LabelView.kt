@@ -21,10 +21,10 @@ import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import kotlinx.serialization.json.JsonObject
 
-class LabelViewFactory : ViewFactory() {
+class LabelViewFactory : AbstractViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&

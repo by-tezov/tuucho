@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.button.content.label
 
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonElement
 
-class ContentButtonLabelRectifier : Rectifier() {
+class ContentButtonLabelRectifier : AbstractRectifier() {
 
     private val matcher = ContentButtonLabelMatcher()
 

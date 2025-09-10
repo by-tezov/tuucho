@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.parser.rectifier.dimensions
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
 import com.tezov.tuucho.core.data.parser._system.isTypeOf
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -22,12 +22,12 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
-class DimensionRectifier : Rectifier() {
+class DimensionRectifier : AbstractRectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.DIMENSION
     )
-    override val childProcessors: List<Rectifier> by inject(
+    override val childProcessors: List<AbstractRectifier> by inject(
         Name.Processor.DIMENSION
     )
 

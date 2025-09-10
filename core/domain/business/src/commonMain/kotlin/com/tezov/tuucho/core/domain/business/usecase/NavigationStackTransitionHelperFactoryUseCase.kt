@@ -2,8 +2,8 @@ package com.tezov.tuucho.core.domain.business.usecase
 
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
 import com.tezov.tuucho.core.domain.business.navigation.transition.DefaultNavigationTransitionStackHelper
 import com.tezov.tuucho.core.domain.business.navigation.transition.FadeNavigationTransitionStackHelper
 import com.tezov.tuucho.core.domain.business.protocol.NavigationTransitionStackHelperProtocol
@@ -25,7 +25,7 @@ class NavigationStackTransitionHelperFactoryUseCase : UseCaseProtocol.Sync<Input
     @Suppress("UNCHECKED_CAST")
     override fun invoke(input: Input) = with(input) {
         Output(
-            helper = prototypeObject.withScope(SettingNavigationTransitionSchema.Spec::Scope)
+            helper = prototypeObject.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
                 .let { scope ->
                     when (scope.type) {
                         Type.fade -> FadeNavigationTransitionStackHelper()

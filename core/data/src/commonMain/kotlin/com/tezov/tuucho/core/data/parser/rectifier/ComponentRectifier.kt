@@ -14,12 +14,12 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
-class ComponentRectifier : Rectifier() {
+class ComponentRectifier : AbstractRectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.COMPONENT
     )
-    override val childProcessors: List<Rectifier> by inject(
+    override val childProcessors: List<AbstractRectifier> by inject(
         Name.Processor.COMPONENT
     )
 

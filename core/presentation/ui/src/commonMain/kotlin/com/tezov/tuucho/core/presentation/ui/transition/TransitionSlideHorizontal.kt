@@ -14,14 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.SpecSlide.Value.Effect
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.SpecSlide.Value.Entrance
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
+import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionNavigation
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
-import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
 import kotlinx.serialization.json.JsonObject
 
 object TransitionSlideHorizontal {
@@ -34,7 +34,7 @@ object TransitionSlideHorizontal {
     ) {
         companion object {
             fun from(specObject: JsonObject?) = specObject
-                ?.withScope(SettingNavigationTransitionSchema.SpecSlide::Scope)
+                ?.withScope(SettingComponentNavigationTransitionSchema.SpecSlide::Scope)
                 .let {
                     Spec(
                         duration = it?.duration?.toIntOrNull() ?: 350,
@@ -82,7 +82,7 @@ object TransitionSlideHorizontal {
     class FlatSlideModifier(
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
-    ) : ModifierTransition() {
+    ) : AbstractModifierTransition() {
 
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)
@@ -127,7 +127,7 @@ object TransitionSlideHorizontal {
     class LayerSlideModifier(
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
-    ) : ModifierTransition() {
+    ) : AbstractModifierTransition() {
 
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.layout.linear
 
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
@@ -12,7 +12,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-class ContentLayoutLinearItemsRectifier : Rectifier() {
+class ContentLayoutLinearItemsRectifier : AbstractRectifier() {
 
     private val matcher = ContentLayoutLinearItemsMatcher()
 

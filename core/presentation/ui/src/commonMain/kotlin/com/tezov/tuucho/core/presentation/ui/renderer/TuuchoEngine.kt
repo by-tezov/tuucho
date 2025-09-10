@@ -9,8 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
 import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
@@ -30,14 +30,16 @@ import com.tezov.tuucho.core.presentation.ui.transition.TransitionFade.fade
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionNone.none
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideHorizontal.slideHorizontal
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideVertical.slideVertical
-import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
+import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import org.koin.compose.currentKoinScope
 
 interface TuuchoEngineProtocol {
 
-    suspend fun init(configUrl: String, initialUrl: String)
+    suspend fun load(url: String)
+    
+    suspend fun start(url: String)
 
     @Composable
     fun display()
@@ -65,13 +67,16 @@ class TuuchoEngine(
     private var transitionRequested = false
     private val redrawTrigger = mutableStateOf(0)
 
-    override suspend fun init(configUrl: String, initialUrl: String) {
+    override suspend fun load(url: String) {
         useCaseExecutor.invokeSuspend(
             useCase = refreshMaterialCache,
             input = RefreshMaterialCacheUseCase.Input(
-                url = configUrl
+                url = url
             )
         )
+    }
+    
+    override suspend fun start(url: String) {
         useCaseExecutor.invoke(
             useCase = registerUpdateViewEvent,
             input = Unit
@@ -98,7 +103,7 @@ class TuuchoEngine(
         useCaseExecutor.invoke(
             useCase = navigateToUrl,
             input = NavigateToUrlUseCase.Input(
-                url = initialUrl
+                url = url
             )
         )
     }
@@ -138,7 +143,7 @@ class TuuchoEngine(
                 )
             ).screens as List<ScreenProtocol>,
             transitionSpecObject = JsonNull
-                .withScope(SettingNavigationTransitionSchema.Spec::Scope)
+                .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
                 .apply { type = Type.none }
                 .collect()
         )
@@ -215,7 +220,7 @@ class TuuchoEngine(
     private fun ModifierTransition(
         animationProgress: AnimationProgress,
         spec: JsonObject,
-    ): ModifierTransition = spec.withScope(SettingNavigationTransitionSchema.Spec::Scope)
+    ): AbstractModifierTransition = spec.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
         .let { scope ->
             when (scope.type) {
                 Type.fade -> animationProgress.fade(

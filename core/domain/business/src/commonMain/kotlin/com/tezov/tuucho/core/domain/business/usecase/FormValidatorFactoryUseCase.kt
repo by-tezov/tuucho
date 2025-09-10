@@ -35,18 +35,18 @@ class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
             validator = prototypeObject.withScope(FormValidatorSchema::Scope).let {
                 when (it.type) {
                     Type.stringMinLength -> StringMinLengthFormValidator(
-                        length = it.length!!.toInt(),
-                        errorMessages = it.messageError!!
+                        errorMessages = it.messageError!!,
+                        length = it.length!!.toInt()
                     )
 
                     Type.stringMaxLength -> StringMaxLengthFieldFormValidator(
-                        length = it.length!!.toInt(),
-                        errorMessages = it.messageError!!
+                        errorMessages = it.messageError!!,
+                        length = it.length!!.toInt()
                     )
 
                     Type.stringMinDigitLength -> StringMinDigitLengthFormValidator(
-                        length = it.length!!.toInt(),
-                        errorMessages = it.messageError!!
+                        errorMessages = it.messageError!!,
+                        length = it.length!!.toInt()
                     )
 
                     Type.stringOnlyDigits -> StringOnlyDigitsFormValidator(
@@ -63,12 +63,12 @@ class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
 
                     Type.stringMinValue -> StringMinValueFormValidator(
                         errorMessages = it.messageError!!,
-                        minValue = it.value!!.toInt(),
+                        minValue = it.value!!.toInt()
                     )
 
                     Type.stringMaxValue -> StringMaxValueFormValidator(
                         errorMessages = it.messageError!!,
-                        maxValue = it.value!!.toInt(),
+                        maxValue = it.value!!.toInt()
                     )
 
                     else -> throw DomainException.Default("Validator $prototypeObject can't be resolved")

@@ -12,7 +12,7 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
@@ -20,7 +20,7 @@ import org.koin.core.component.inject
 class ButtonViewFactory(
     private val useCaseExecutor: UseCaseExecutor,
     private val actionHandler: ProcessActionUseCase,
-) : ViewFactory() {
+) : AbstractViewFactory() {
 
     private val labelUiComponentFactory: LabelViewFactory by inject()
 

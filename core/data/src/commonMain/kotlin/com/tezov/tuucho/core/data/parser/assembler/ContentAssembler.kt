@@ -14,7 +14,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
-class ContentAssembler : Assembler() {
+class ContentAssembler : AbstractAssembler() {
 
     override val schemaType: String = TypeSchema.Value.content
 
@@ -22,7 +22,7 @@ class ContentAssembler : Assembler() {
         Name.Matcher.CONTENT
     )
 
-    override val childProcessors: List<Assembler> by inject(
+    override val childProcessors: List<AbstractAssembler> by inject(
         Name.Processor.CONTENT
     )
 

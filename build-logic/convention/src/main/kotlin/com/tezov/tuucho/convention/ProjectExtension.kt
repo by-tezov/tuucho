@@ -4,6 +4,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.File
@@ -27,8 +28,11 @@ internal fun Project.version(name: String): String = libs.findVersion(name)
     .get()
     .requiredVersion
 
-internal fun Project.javaVersionInt() = version("javaVersion").toInt()
+internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
+
+internal fun Project.javaVersionInt() = jvmTarget().target.toInt()
 
 internal fun Project.javaVersion() = JavaVersion.toVersion(javaVersionInt())
 
-internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
+internal fun Project.javaLanguageVersion() = JavaLanguageVersion.of(javaVersionInt())
+

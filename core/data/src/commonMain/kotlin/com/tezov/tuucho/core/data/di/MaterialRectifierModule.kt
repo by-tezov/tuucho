@@ -1,9 +1,10 @@
 package com.tezov.tuucho.core.data.di
 
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifierProtocol
 import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StateRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._element.button.content.action.ActionButtonMatcher
@@ -32,8 +33,8 @@ import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.dimensions.DimensionsRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdMatcher
 import com.tezov.tuucho.core.data.parser.rectifier.id.IdRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingNavigationRectifier
-import com.tezov.tuucho.core.data.parser.rectifier.setting.SettingRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.setting.component.SettingComponentNavigationRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.setting.component.SettingComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.texts.TextsRectifier
 import org.koin.core.module.Module
@@ -78,7 +79,7 @@ object MaterialRectifierModule {
     }
 
     internal operator fun invoke() = module {
-        single<MaterialRectifier> { MaterialRectifier() }
+        single<MaterialRectifierProtocol> { MaterialRectifier() }
         idModule()
         componentModule()
         settingModule()
@@ -117,10 +118,10 @@ object MaterialRectifierModule {
             )
         }
 
-        single<List<Rectifier>>(Name.Processor.COMPONENT) {
+        single<List<AbstractRectifier>>(Name.Processor.COMPONENT) {
             listOf(
                 get<IdRectifier>(),
-                get<SettingRectifier>(),
+                get<SettingComponentRectifier>(),
                 get<ContentRectifier>(),
                 get<StyleRectifier>(),
                 get<OptionRectifier>(),
@@ -129,16 +130,16 @@ object MaterialRectifierModule {
     }
 
     private fun Module.settingModule() {
-        single<SettingRectifier> { SettingRectifier() }
+        single<SettingComponentRectifier> { SettingComponentRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
             emptyList()
         }
 
-        single<List<Rectifier>>(Name.Processor.SETTING) {
+        single<List<AbstractRectifier>>(Name.Processor.SETTING) {
             listOf(
                 get<IdRectifier>(),
-                SettingNavigationRectifier(),
+                SettingComponentNavigationRectifier(),
             )
         }
     }
@@ -150,7 +151,7 @@ object MaterialRectifierModule {
             emptyList()
         }
 
-        single<List<Rectifier>>(Name.Processor.CONTENT) {
+        single<List<AbstractRectifier>>(Name.Processor.CONTENT) {
             listOf(
                 get<IdRectifier>(),
                 ContentLayoutLinearItemsRectifier(),
@@ -170,7 +171,7 @@ object MaterialRectifierModule {
             emptyList()
         }
 
-        single<List<Rectifier>>(Name.Processor.STYLE) {
+        single<List<AbstractRectifier>>(Name.Processor.STYLE) {
             listOf(
                 get<IdRectifier>(),
                 get<ColorRectifier>(),
@@ -186,7 +187,7 @@ object MaterialRectifierModule {
             emptyList()
         }
 
-        single<List<Rectifier>>(Name.Processor.OPTION) {
+        single<List<AbstractRectifier>>(Name.Processor.OPTION) {
             listOf(
                 get<IdRectifier>(),
                 get<FormValidatorRectifier>(),
@@ -201,7 +202,7 @@ object MaterialRectifierModule {
             emptyList()
         }
 
-        single<List<Rectifier>>(Name.Processor.STATE) {
+        single<List<AbstractRectifier>>(Name.Processor.STATE) {
             listOf(
                 get<IdRectifier>()
             )
@@ -211,7 +212,7 @@ object MaterialRectifierModule {
     private fun Module.textModule() {
         single<TextsRectifier> { TextsRectifier() }
 
-        single<List<Rectifier>>(Name.Processor.TEXTS) {
+        single<List<AbstractRectifier>>(Name.Processor.TEXTS) {
             listOf(get<TextRectifier>())
         }
 
@@ -226,7 +227,7 @@ object MaterialRectifierModule {
             )
         }
 
-        single<List<Rectifier>>(Name.Processor.TEXT) {
+        single<List<AbstractRectifier>>(Name.Processor.TEXT) {
             listOf(get<IdRectifier>())
         }
     }
@@ -234,7 +235,7 @@ object MaterialRectifierModule {
     private fun Module.colorModule() {
         single<ColorsRectifier> { ColorsRectifier() }
 
-        single<List<Rectifier>>(Name.Processor.COLORS) {
+        single<List<AbstractRectifier>>(Name.Processor.COLORS) {
             listOf(get<ColorRectifier>())
         }
 
@@ -247,7 +248,7 @@ object MaterialRectifierModule {
             )
         }
 
-        single<List<Rectifier>>(Name.Processor.COLOR) {
+        single<List<AbstractRectifier>>(Name.Processor.COLOR) {
             listOf(get<IdRectifier>())
         }
     }
@@ -255,7 +256,7 @@ object MaterialRectifierModule {
     private fun Module.dimensionModule() {
         single<DimensionsRectifier> { DimensionsRectifier() }
 
-        single<List<Rectifier>>(Name.Processor.DIMENSIONS) {
+        single<List<AbstractRectifier>>(Name.Processor.DIMENSIONS) {
             listOf(get<DimensionRectifier>())
         }
 
@@ -268,7 +269,7 @@ object MaterialRectifierModule {
             )
         }
 
-        single<List<Rectifier>>(Name.Processor.DIMENSION) {
+        single<List<AbstractRectifier>>(Name.Processor.DIMENSION) {
             listOf(get<IdRectifier>())
         }
     }
@@ -282,7 +283,7 @@ object MaterialRectifierModule {
             )
         }
 
-        single<List<Rectifier>>(Name.Processor.ACTION) {
+        single<List<AbstractRectifier>>(Name.Processor.ACTION) {
             emptyList()
         }
     }
@@ -296,7 +297,7 @@ object MaterialRectifierModule {
             )
         }
 
-        single<List<Rectifier>>(Name.Processor.FIELD_VALIDATOR) {
+        single<List<AbstractRectifier>>(Name.Processor.FIELD_VALIDATOR) {
             emptyList()
         }
     }

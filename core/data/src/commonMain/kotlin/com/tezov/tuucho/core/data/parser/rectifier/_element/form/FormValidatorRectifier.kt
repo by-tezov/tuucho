@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier._element.form
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -20,13 +20,13 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class FormValidatorRectifier : Rectifier() {
+class FormValidatorRectifier : AbstractRectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.FIELD_VALIDATOR
     )
 
-    override val childProcessors: List<Rectifier> by inject(
+    override val childProcessors: List<AbstractRectifier> by inject(
         MaterialRectifierModule.Name.Processor.FIELD_VALIDATOR
     )
 

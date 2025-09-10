@@ -9,7 +9,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 
-abstract class ModifierTransition : Modifier {
+abstract class AbstractModifierTransition : Modifier {
 
     private val modifier = Modifier.composed {
         val size = remember { mutableStateOf(Size.Unspecified) }

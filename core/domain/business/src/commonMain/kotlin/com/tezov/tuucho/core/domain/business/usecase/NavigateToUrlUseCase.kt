@@ -3,8 +3,9 @@ package com.tezov.tuucho.core.domain.business.usecase
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRouteIdGenerator
 import com.tezov.tuucho.core.domain.business.navigation.selector.PageBreadCrumbNavigationDefinitionSelectorMatcher
@@ -44,30 +45,38 @@ class NavigateToUrlUseCase(
             with(input) {
                 val componentObject = retrieveMaterialRepository.process(url)
                 val navigationSettingObject = componentObject
-                    .onScope(SettingSchema.Root::Scope)
+                    .onScope(ComponentSettingSchema.Root::Scope)
                     .navigation
                 val navigationDefinitionObject = navigationSettingObject
-                    ?.withScope(SettingNavigationSchema::Scope)
+                    ?.withScope(ComponentSettingNavigationSchema::Scope)
                     ?.definition?.navigationResolver()
                 val newRoute = navigationStackRouteRepository.forward(
                     route = NavigationRoute.Url(navigationRouteIdGenerator.generate(), url),
                     navigationOptionObject = navigationDefinitionObject
-                        ?.withScope(SettingNavigationSchema.Definition::Scope)?.option
+                        ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.option
                 )
                 newRoute?.let {
-                    navigationStackScreenRepository.forward(
-                        route = it,
+                    val newScreen = navigationStackScreenRepository.forward(
+                        route = newRoute,
                         componentObject = componentObject
                     )
-                    shadowerMaterialRepository.process(url, componentObject) //TODO
+                    coroutineScopes.navigation.async {
+                        shadowerMaterialRepository.process(url, componentObject)
+                            .filter { it.type == Shadower.Type.contextual }
+                            .forEach {
+                                coroutineScopes.renderer.await {
+                                    newScreen.update(it.jsonObject)
+                                }
+                        }
+                    }
                 }
                 navigationStackTransitionRepository.forward(
                     routes = navigationStackRouteRepository.routes(),
                     navigationExtraObject = navigationSettingObject
-                        ?.withScope(SettingNavigationSchema::Scope)
+                        ?.withScope(ComponentSettingNavigationSchema::Scope)
                         ?.extra,
                     navigationTransitionObject = navigationDefinitionObject
-                        ?.withScope(SettingNavigationSchema.Definition::Scope)?.transition,
+                        ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.transition,
                 )
                 navigationStackScreenRepository.backward(
                     routes = navigationStackRouteRepository.routes()
@@ -81,7 +90,7 @@ class NavigateToUrlUseCase(
         ?.let { it as? JsonObject }
 
     private suspend fun JsonObject.accept(): Boolean {
-        val selector = withScope(SettingNavigationSchema.Definition::Scope).selector ?: return true
+        val selector = withScope(ComponentSettingNavigationSchema.Definition::Scope).selector ?: return true
         return useCaseExecutor.invokeSuspend(
             useCase = navigationOptionSelectorFactory,
             input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(

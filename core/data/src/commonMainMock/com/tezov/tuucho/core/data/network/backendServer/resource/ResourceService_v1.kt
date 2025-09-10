@@ -10,8 +10,8 @@ import com.tezov.tuucho.core.data.network.backendServer.resource.v1.PageConfirma
 import com.tezov.tuucho.core.data.network.backendServer.resource.v1.PageDJsonResource
 import com.tezov.tuucho.core.data.network.backendServer.resource.v1.PageEJsonResource
 import com.tezov.tuucho.core.data.network.backendServer.resource.v1.PageHelpJsonResource
+import com.tezov.tuucho.core.data.network.backendServer.resource.v1.PageHomeContextualJsonResource
 import com.tezov.tuucho.core.data.network.backendServer.resource.v1.PageHomeJsonResource
-import com.tezov.tuucho.core.data.network.backendServer.resource.v1.PageHomeOnDemandDefinitionJsonResource
 import com.tezov.tuucho.core.data.network.backendServer.resource.v1.subs.SubComponentsJsonResource
 import com.tezov.tuucho.core.data.network.backendServer.resource.v1.subs.SubContentsJsonResource
 import com.tezov.tuucho.core.data.network.backendServer.resource.v1.subs.SubStylesJsonResource
@@ -37,7 +37,7 @@ class ResourceService_v1 : ServiceProtocol {
         //root
         ConfigJsonResource(),
         PageHomeJsonResource(),
-        PageHomeOnDemandDefinitionJsonResource(),
+        PageHomeContextualJsonResource(),
         PageHelpJsonResource(),
         PageConfirmationJsonResource(),
         PageAJsonResource(),

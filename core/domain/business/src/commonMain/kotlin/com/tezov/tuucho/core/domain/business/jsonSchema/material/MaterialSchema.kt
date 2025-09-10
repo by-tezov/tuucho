@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page.PageSettingSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -9,7 +10,7 @@ import kotlinx.serialization.json.JsonObject
 object MaterialSchema {
 
     object Key {
-        const val version = "version"
+        const val pageSetting = PageSettingSchema.root
         const val rootComponent = "root"
         const val components = "components"
         const val contents = "contents"
@@ -22,6 +23,7 @@ object MaterialSchema {
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        var pageSetting by delegate<JsonObject?>(Key.pageSetting)
         var rootComponent by delegate<JsonObject?>(Key.rootComponent)
 
         var components by delegate<JsonArray?>(Key.components)

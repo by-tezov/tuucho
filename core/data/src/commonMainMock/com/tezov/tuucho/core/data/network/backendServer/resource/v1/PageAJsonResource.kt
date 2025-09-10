@@ -10,10 +10,15 @@ class PageAJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
+  "setting": {
+    "ttl": {
+      "strategy": "transient",
+      "transient-value": "10s"
+    }
+  },
   "root": {
     "setting": {
-      "disable-on-demand-definition-shadower": true,
+      "disable-contextual-shadower": true,
       "navigation": {
         "extra": {
           "is-background-solid": true

@@ -19,10 +19,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.Spacer
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.presentation.tool.modifier.onNotNull
 import com.tezov.tuucho.core.presentation.tool.modifier.then
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import kotlinx.serialization.json.JsonObject
 
-class SpacerViewFactory : ViewFactory() {
+class SpacerViewFactory : AbstractViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&

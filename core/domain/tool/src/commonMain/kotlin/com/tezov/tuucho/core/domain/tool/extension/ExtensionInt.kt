@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.domain.tool.extension
 
+import kotlin.math.abs
+
 
 object ExtensionInt {
 
@@ -9,7 +11,7 @@ object ExtensionInt {
         block(this)
     } else null
 
-    fun Int.isOdd() = this % 2 == 1
+    fun Int.isOdd() = abs(this % 2) == 1
 
     fun <T> Int.onOdd(block: (Int) -> T) = if (isOdd()) {
         block(this)

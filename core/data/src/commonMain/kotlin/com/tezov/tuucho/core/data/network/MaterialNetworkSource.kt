@@ -4,12 +4,19 @@ import com.tezov.tuucho.core.data.exception.DataException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
+interface MaterialNetworkSourceProtocol {
+
+    suspend fun retrieve(url: String): JsonObject
+
+    suspend fun send(url: String, data: JsonObject): JsonObject?
+}
+
 class MaterialNetworkSource(
     private val networkHttpRequest: NetworkHttpRequest,
     private val jsonConverter: Json
-) {
+):MaterialNetworkSourceProtocol {
 
-    suspend fun retrieve(url: String): JsonObject {
+    override suspend fun retrieve(url: String): JsonObject {
         val response = networkHttpRequest.getResource(url)
         val data = response.json ?: throw DataException.Default("failed to retrieve the url $url")
         val jsonElement = jsonConverter.decodeFromString(
@@ -19,7 +26,7 @@ class MaterialNetworkSource(
         return jsonElement
     }
 
-    suspend fun send(url: String, data: JsonObject): JsonObject? {
+    override suspend fun send(url: String, data: JsonObject): JsonObject? {
         val json = jsonConverter.encodeToString(
             serializer = JsonObject.Companion.serializer(),
             value = data

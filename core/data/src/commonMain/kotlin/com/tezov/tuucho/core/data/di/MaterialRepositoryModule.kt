@@ -4,12 +4,11 @@ import com.tezov.tuucho.core.data.repository.RefreshMaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.RetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.SendDataAndRetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.ShadowerMaterialRepository
-import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
-import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
-import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.MaterialRemoteSource
 import com.tezov.tuucho.core.data.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.data.source.SendDataAndRetrieveMaterialRemoteSource
-import com.tezov.tuucho.core.data.source.shadower.RetrieveOnDemandDefinitionShadowerMaterialSource
+import com.tezov.tuucho.core.data.source.shadower.ContextualShadowerMaterialSource
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import org.koin.core.module.Module
@@ -36,16 +35,15 @@ object MaterialRepositoryModule {
             RefreshMaterialCacheRepository(
                 coroutineScopes = get(),
                 retrieveObjectRemoteSource = get(),
-                retrieveMaterialRemoteSource = get(),
-                refreshMaterialCacheLocalSource = get()
+                materialRemoteSource = get(),
+                materialCacheLocalSource = get()
             )
         }
 
         factory<MaterialRepositoryProtocol.Retrieve> {
             RetrieveMaterialRepository(
-                retrieveMaterialCacheLocalSource = get(),
-                retrieveMaterialRemoteSource = get(),
-                refreshMaterialCacheLocalSource = get(),
+                materialCacheLocalSource = get(),
+                materialRemoteSource = get()
             )
         }
 
@@ -66,27 +64,22 @@ object MaterialRepositoryModule {
 
     private fun Module.localSource() {
 
-        factory<RefreshMaterialCacheLocalSource> {
-            RefreshMaterialCacheLocalSource(
+        factory<MaterialCacheLocalSource> {
+            MaterialCacheLocalSource(
                 coroutineScopes = get(),
                 materialDatabaseSource = get(),
-                materialBreaker = get()
+                materialBreaker = get(),
+                materialAssembler = get(),
+                lifetimeResolver = get(),
             )
         }
 
-        factory<RetrieveMaterialCacheLocalSource> {
-            RetrieveMaterialCacheLocalSource(
-                coroutineScopes = get(),
-                materialDatabaseSource = get(),
-                materialAssembler = get()
-            )
-        }
     }
 
     private fun Module.remoteSource() {
 
-        factory<RetrieveMaterialRemoteSource> {
-            RetrieveMaterialRemoteSource(
+        factory<MaterialRemoteSource> {
+            MaterialRemoteSource(
                 coroutineScopes = get(),
                 materialNetworkSource = get(),
                 materialRectifier = get()
@@ -112,13 +105,12 @@ object MaterialRepositoryModule {
     private fun Module.compositeSource() {
         factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
             listOf(
-                RetrieveOnDemandDefinitionShadowerMaterialSource(
+                ContextualShadowerMaterialSource(
                     coroutineScopes = get(),
-                    materialNetworkSource = get(),
-                    materialRectifier = get(),
-                    refreshMaterialCacheLocalSource = get(),
+                    materialCacheLocalSource = get(),
+                    materialRemoteSource = get(),
                     materialAssembler = get(),
-                    materialDatabaseSource = get(),
+                    materialDatabaseSource = get()
                 )
             )
         }

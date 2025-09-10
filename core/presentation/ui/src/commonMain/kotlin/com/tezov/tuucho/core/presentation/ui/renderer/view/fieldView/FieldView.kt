@@ -27,13 +27,13 @@ import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.renderer.view.View
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import kotlinx.serialization.json.JsonObject
 
 class FieldViewFactory(
     private val useCaseExecutor: UseCaseExecutor,
     private val fieldValidatorFactory: FormValidatorFactoryUseCase,
-) : ViewFactory() {
+) : AbstractViewFactory() {
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
@@ -206,7 +206,7 @@ class FieldView(
             supportingText = {
                 if (showError) {
                     Column {
-                        formView.validators?.filter { !it.isValid() }?.forEach {
+                        formView.validators?.filter { !it.isValid }?.forEach {
                             Text(
                                 //TODO language retrieve by Composition Local
                                 it.getErrorMessage(LanguageModelDomain.Default),

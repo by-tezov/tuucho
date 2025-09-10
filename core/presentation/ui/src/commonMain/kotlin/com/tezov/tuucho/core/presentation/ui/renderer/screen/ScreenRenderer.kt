@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -18,7 +18,7 @@ class ScreenRenderer(
     private val coroutineScopes: CoroutineScopesProtocol,
 ) : ScreenRendererProtocol, KoinComponent {
 
-    private val viewFactories: List<ViewFactory> by inject()
+    private val viewFactories: List<AbstractViewFactory> by inject()
 
     override suspend fun process(route: NavigationRoute, componentObject: JsonObject) = coroutineScopes.renderer.await {
         val type = componentObject.withScope(TypeSchema::Scope).self

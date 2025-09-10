@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.database.entity
 
-import com.tezov.tuucho.core.data.database.table.JsonObjectEntry
-import com.tezov.tuucho.core.data.database.table.JsonObjectTransientEntry
+import com.tezov.tuucho.core.data.database.table.JsonObjectCommonEntry
+import com.tezov.tuucho.core.data.database.table.JsonObjectContextualEntry
 import kotlinx.serialization.json.JsonObject
 
 data class JsonObjectEntity(
@@ -11,9 +11,14 @@ data class JsonObjectEntity(
     val id: String,
     val idFrom: String?,
     val jsonObject: JsonObject,
-)
+) {
+    enum class Table {
+        Common,
+        Contextual
+    }
+}
 
-fun JsonObjectEntry.toEntity() = JsonObjectEntity(
+fun JsonObjectCommonEntry.toEntity() = JsonObjectEntity(
     primaryKey = primaryKey,
     type = type,
     url = url,
@@ -22,7 +27,7 @@ fun JsonObjectEntry.toEntity() = JsonObjectEntity(
     jsonObject = jsonObject
 )
 
-fun JsonObjectTransientEntry.toEntity() = JsonObjectEntity(
+fun JsonObjectContextualEntry.toEntity() = JsonObjectEntity(
     primaryKey = primaryKey,
     type = type,
     url = url,
