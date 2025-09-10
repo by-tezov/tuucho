@@ -16,6 +16,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -44,9 +45,8 @@ class NavigateToUrlUseCase(
             }
             with(input) {
                 val componentObject = retrieveMaterialRepository.process(url)
-                val navigationSettingObject = componentObject
-                    .onScope(ComponentSettingSchema.Root::Scope)
-                    .navigation
+                val componentSettingScope = componentObject.onScope(ComponentSettingSchema.Root::Scope)
+                val navigationSettingObject = componentSettingScope.navigation
                 val navigationDefinitionObject = navigationSettingObject
                     ?.withScope(ComponentSettingNavigationSchema::Scope)
                     ?.definition?.navigationResolver()
@@ -60,7 +60,7 @@ class NavigateToUrlUseCase(
                         route = newRoute,
                         componentObject = componentObject
                     )
-                    coroutineScopes.navigation.async {
+                    val job = coroutineScopes.navigation.async {
                         shadowerMaterialRepository.process(url, componentObject)
                             .filter { it.type == Shadower.Type.contextual }
                             .forEach {
@@ -68,6 +68,9 @@ class NavigateToUrlUseCase(
                                     newScreen.update(it.jsonObject)
                                 }
                         }
+                    }
+                    if(componentSettingScope.waitContextualShadower.isTrue){
+                        job.await()
                     }
                 }
                 navigationStackTransitionRepository.forward(
