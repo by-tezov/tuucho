@@ -21,6 +21,16 @@ class PageHomeJsonResource : JsonResourceProtocol {
       "value": "page-home"
     },
     "setting": {
+      "shadower": {
+        "navigate-forward": {
+          "wait-done-to-render": false,
+          "enable": true
+        },
+        "navigate-backward": {
+          "wait-done-to-render": false,
+          "enable": true
+        }
+      },
       "navigation": {
         "definition": {
           "option": {

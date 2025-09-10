@@ -10,7 +10,6 @@ class SubComponentsJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "components": [
     {
       "id": "item-spacer",

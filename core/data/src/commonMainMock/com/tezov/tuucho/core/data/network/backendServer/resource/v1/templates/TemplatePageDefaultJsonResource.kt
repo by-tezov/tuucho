@@ -10,7 +10,6 @@ class TemplatePageDefaultJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "root": {
     "id": "template-page-default",
     "subset": "layout-linear",

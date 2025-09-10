@@ -12,7 +12,6 @@ class PageEJsonResource : JsonResourceProtocol {
 {
   "root": {
     "setting": {
-      "disable-contextual-shadower": true,
       "navigation": {
         "definition": {
           "option": { "single": true },
