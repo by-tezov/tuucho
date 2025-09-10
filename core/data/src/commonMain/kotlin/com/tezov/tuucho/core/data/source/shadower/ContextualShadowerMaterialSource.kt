@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.source.shadower
 
-import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.MaterialDatabaseSourceProtocol
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
@@ -21,7 +21,7 @@ class ContextualShadowerMaterialSource(
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
     private val materialAssembler: MaterialAssemblerProtocol,
-    private val materialDatabaseSource: MaterialDatabaseSource,
+    private val materialDatabaseSource: MaterialDatabaseSourceProtocol,
 ) : ShadowerMaterialSourceProtocol {
 
     override val type = Shadower.Type.contextual
