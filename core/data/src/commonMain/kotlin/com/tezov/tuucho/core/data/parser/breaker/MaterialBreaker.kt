@@ -9,7 +9,19 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MaterialBreaker : KoinComponent {
+interface MaterialBreakerProtocol : KoinComponent {
+
+    data class Nodes(
+        val rootJsonObjectNode: JsonObjectNode?,
+        val jsonElementNodes: List<JsonElementNode>,
+    )
+
+    suspend fun process(
+        materialObject: JsonObject,
+    ): Nodes
+}
+
+class MaterialBreaker : MaterialBreakerProtocol {
 
     private val componentBreaker: ComponentBreaker by inject()
     private val contentBreaker: ContentBreaker by inject()
@@ -20,16 +32,10 @@ class MaterialBreaker : KoinComponent {
     private val dimensionBreaker: DimensionBreaker by inject()
     private val textBreaker: TextBreaker by inject()
 
-    data class Nodes(
-        val rootJsonObjectNode: JsonObjectNode?,
-        val jsonElementNodes: List<JsonElementNode>,
-    )
-
-    @Suppress("RedundantSuspendModifier")
-    suspend fun process(
+    override suspend fun process(
         materialObject: JsonObject,
     ) = with(materialObject.withScope(MaterialSchema::Scope)) {
-        Nodes(
+        MaterialBreakerProtocol.Nodes(
             rootJsonObjectNode = rootComponent?.let(::JsonObjectNode),
             jsonElementNodes = buildList {
                 components?.let {

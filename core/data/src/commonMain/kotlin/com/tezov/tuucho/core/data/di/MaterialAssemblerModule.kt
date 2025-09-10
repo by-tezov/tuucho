@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.data.parser.assembler.ComponentAssembler
 import com.tezov.tuucho.core.data.parser.assembler.ContentAssembler
 import com.tezov.tuucho.core.data.parser.assembler.DimensionAssembler
 import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
+import com.tezov.tuucho.core.data.parser.assembler.MaterialAssemblerProtocol
 import com.tezov.tuucho.core.data.parser.assembler.OptionAssembler
 import com.tezov.tuucho.core.data.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.parser.assembler.TextAssembler
@@ -52,7 +53,7 @@ object MaterialAssemblerModule {
             )
         }
 
-        single<MaterialAssembler> {
+        single<MaterialAssemblerProtocol> {
             MaterialAssembler()
         }
         single<JsonObjectMerger> {

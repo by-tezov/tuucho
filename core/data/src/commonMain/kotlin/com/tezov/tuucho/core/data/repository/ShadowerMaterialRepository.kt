@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository
 
-import com.tezov.tuucho.core.data.parser.shadower.MaterialShadower
+import com.tezov.tuucho.core.data.parser.shadower.MaterialShadowerProtocol
 import com.tezov.tuucho.core.data.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 
 class ShadowerMaterialRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val materialShadower: MaterialShadower,
+    private val materialShadower: MaterialShadowerProtocol,
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
 ) : Shadower, KoinComponent {
 

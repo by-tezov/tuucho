@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.data.di
 
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.network.MaterialNetworkSource
+import com.tezov.tuucho.core.data.network.MaterialNetworkSourceProtocol
 import com.tezov.tuucho.core.data.network.NetworkHttpRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
@@ -48,7 +49,7 @@ object NetworkRepositoryModule {
             )
         }
 
-        single<MaterialNetworkSource> {
+        single<MaterialNetworkSourceProtocol> {
             MaterialNetworkSource(
                 networkHttpRequest = get(),
                 jsonConverter = get()

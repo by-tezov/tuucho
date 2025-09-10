@@ -11,13 +11,20 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MaterialAssembler() : KoinComponent {
+interface MaterialAssemblerProtocol : KoinComponent {
+    suspend fun process(
+        materialObject: JsonObject,
+        findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol,
+    ): JsonObject?
+}
+
+class MaterialAssembler() : MaterialAssemblerProtocol {
 
     private val assemblers: List<AbstractAssembler> by inject(Name.ASSEMBLERS)
 
-    suspend fun process(
+    override suspend fun process(
         materialObject: JsonObject,
-        findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol
+        findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol,
     ): JsonObject? {
         val type = materialObject.withScope(TypeSchema::Scope).self
             ?: throw DataException.Default("Missing type in material $materialObject")

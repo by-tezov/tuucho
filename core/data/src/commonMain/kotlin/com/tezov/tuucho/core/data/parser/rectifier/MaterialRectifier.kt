@@ -14,7 +14,11 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MaterialRectifier : KoinComponent {
+interface MaterialRectifierProtocol : KoinComponent {
+    suspend fun process(materialObject: JsonObject): JsonObject
+}
+
+open class MaterialRectifier : MaterialRectifierProtocol {
 
     private val componentRectifier: ComponentRectifier by inject()
     private val contentRectifier: ContentRectifier by inject()
@@ -25,12 +29,7 @@ class MaterialRectifier : KoinComponent {
     private val colorsRectifier: ColorsRectifier by inject()
     private val dimensionsRectifier: DimensionsRectifier by inject()
 
-    @Suppress("RedundantSuspendModifier")
-    suspend fun process(materialObject: JsonObject): JsonObject = materialObject.withScope(MaterialSchema::Scope).apply {
-
-//        logAll("*******************************")
-//        logAll(element)
-
+    override suspend fun process(materialObject: JsonObject) = materialObject.withScope(MaterialSchema::Scope).apply {
         rootComponent?.let { rootComponent = componentRectifier.process("".toPath(), it).jsonObject }
         components?.let { components = componentRectifier.process("".toPath(), it).jsonArray }
         contents?.let { contents = contentRectifier.process("".toPath(), it).jsonArray }
@@ -39,10 +38,6 @@ class MaterialRectifier : KoinComponent {
         texts?.takeIf { it != JsonNull }?.let { texts = textsRectifier.process("".toPath(), it).jsonArray }
         colors?.takeIf { it != JsonNull }?.let { colors = colorsRectifier.process("".toPath(), it).jsonArray }
         dimensions?.takeIf { it != JsonNull }?.let { dimensions = dimensionsRectifier.process("".toPath(), it).jsonArray }
-
-//        logAll(collect())
-//        logAll("\n")
-
     }.collect()
 
 }

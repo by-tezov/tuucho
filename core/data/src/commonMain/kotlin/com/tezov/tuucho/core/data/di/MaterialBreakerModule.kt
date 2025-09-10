@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.data.parser.breaker.ComponentBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ContentBreaker
 import com.tezov.tuucho.core.data.parser.breaker.DimensionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
+import com.tezov.tuucho.core.data.parser.breaker.MaterialBreakerProtocol
 import com.tezov.tuucho.core.data.parser.breaker.OptionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.parser.breaker.TextBreaker
@@ -39,7 +40,7 @@ object MaterialBreakerModule {
     }
 
     internal operator fun invoke() = module {
-        single<MaterialBreaker> { MaterialBreaker() }
+        single<MaterialBreakerProtocol> { MaterialBreaker() }
         componentModule()
         contentModule()
         styleModule()

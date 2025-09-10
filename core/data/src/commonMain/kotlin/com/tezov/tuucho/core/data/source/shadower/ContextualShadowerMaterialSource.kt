@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
-import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
+import com.tezov.tuucho.core.data.parser.assembler.MaterialAssemblerProtocol
 import com.tezov.tuucho.core.data.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.source.MaterialRemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
@@ -20,7 +20,7 @@ class ContextualShadowerMaterialSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
-    private val materialAssembler: MaterialAssembler,
+    private val materialAssembler: MaterialAssemblerProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
 ) : ShadowerMaterialSourceProtocol {
 

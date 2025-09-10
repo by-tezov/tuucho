@@ -9,8 +9,8 @@ import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
 import com.tezov.tuucho.core.data.parser._system.JsonObjectNode
 import com.tezov.tuucho.core.data.parser._system.flatten
-import com.tezov.tuucho.core.data.parser.assembler.MaterialAssembler
-import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
+import com.tezov.tuucho.core.data.parser.assembler.MaterialAssemblerProtocol
+import com.tezov.tuucho.core.data.parser.breaker.MaterialBreakerProtocol
 import com.tezov.tuucho.core.data.source._system.LifetimeResolver
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -24,8 +24,8 @@ import kotlin.time.Clock
 class MaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
-    private val materialBreaker: MaterialBreaker,
-    private val materialAssembler: MaterialAssembler,
+    private val materialBreaker: MaterialBreakerProtocol,
+    private val materialAssembler: MaterialAssemblerProtocol,
     private val lifetimeResolver: LifetimeResolver,
 ) {
 

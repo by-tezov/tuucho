@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.data.source
 
-import com.tezov.tuucho.core.data.network.MaterialNetworkSource
+import com.tezov.tuucho.core.data.network.MaterialNetworkSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveObjectRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val materialNetworkSource: MaterialNetworkSource,
+    private val materialNetworkSource: MaterialNetworkSourceProtocol,
 ) {
 
     suspend fun process(url: String): JsonObject = coroutineScopes.network.await {

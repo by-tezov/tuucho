@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.data.di
 import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifier
+import com.tezov.tuucho.core.data.parser.rectifier.MaterialRectifierProtocol
 import com.tezov.tuucho.core.data.parser.rectifier.OptionRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StateRectifier
 import com.tezov.tuucho.core.data.parser.rectifier.StyleRectifier
@@ -78,7 +79,7 @@ object MaterialRectifierModule {
     }
 
     internal operator fun invoke() = module {
-        single<MaterialRectifier> { MaterialRectifier() }
+        single<MaterialRectifierProtocol> { MaterialRectifier() }
         idModule()
         componentModule()
         settingModule()

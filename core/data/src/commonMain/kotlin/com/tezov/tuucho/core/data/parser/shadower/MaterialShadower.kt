@@ -6,13 +6,21 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MaterialShadower : KoinComponent {
-
-    private val componentShadower: ComponentShadower by inject()
+interface MaterialShadowerProtocol : KoinComponent {
 
     suspend fun process(
         materialObject: JsonObject,
-        jsonObjectConsumer: JsonObjectConsumerProtocol
+        jsonObjectConsumer: JsonObjectConsumerProtocol,
+    )
+}
+
+class MaterialShadower : MaterialShadowerProtocol {
+
+    private val componentShadower: ComponentShadower by inject()
+
+    override suspend fun process(
+        materialObject: JsonObject,
+        jsonObjectConsumer: JsonObjectConsumerProtocol,
     ) {
         componentShadower.process(
             path = "".toPath(),
