@@ -20,7 +20,7 @@ import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 
-abstract class View(
+abstract class AbstractView(
     componentObject: JsonObject,
 ) : ViewProtocol {
 
@@ -31,7 +31,7 @@ abstract class View(
     private val typeIds = mutableMapOf<String, String>()
     private val _canBeRendered = mutableStateOf(false)
 
-    var componentObject = componentObject
+    override var componentObject = componentObject
         protected set(value) {
             if (field.idValue != value.idValue) {
                 throw UiException.Default("You can't change the id, new data set must have the same original id")

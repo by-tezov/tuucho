@@ -49,7 +49,7 @@ class ButtonView(
     private val useCaseExecutor: UseCaseExecutor,
     private val labelUiComponentFactory: LabelViewFactory,
     private val actionHandler: ProcessActionUseCase,
-) : View(componentObject) {
+) : AbstractView(componentObject) {
 
     override val children: List<ViewProtocol>?
         get() = labelView?.let { listOf(it) }

@@ -26,7 +26,11 @@ class RetrieveMaterialRepository(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
-            weakLifetime = lifetime ?: Lifetime.Unlimited(validityKey = null),
+            weakLifetime = if (lifetime == null || lifetime is Lifetime.Enrolled) {
+                Lifetime.Unlimited(
+                    validityKey = lifetime?.validityKey
+                )
+            } else lifetime,
             visibility = Visibility.Local
         )
         return materialCacheLocalSource.assemble(url)

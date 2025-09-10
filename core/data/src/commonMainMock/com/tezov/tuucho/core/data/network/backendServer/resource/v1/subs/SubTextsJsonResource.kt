@@ -10,7 +10,6 @@ class SubTextsJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "texts": {
     "common": {
       "text-body-content-help": "There is no help available at the moment"

@@ -12,7 +12,6 @@ class PageDJsonResource : JsonResourceProtocol {
 {
   "root": {
     "setting": {
-      "disable-contextual-shadower": true,
       "navigation": {
         "extra": {
           "is-background-solid": false
@@ -94,5 +93,6 @@ class PageDJsonResource : JsonResourceProtocol {
     }
   ]
 }
+
 """
 }

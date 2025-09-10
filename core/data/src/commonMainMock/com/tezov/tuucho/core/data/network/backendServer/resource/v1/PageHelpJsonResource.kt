@@ -11,9 +11,6 @@ class PageHelpJsonResource : JsonResourceProtocol {
     override val jsonString = """
 {
   "root": {
-    "setting": {
-      "disable-contextual-shadower": true
-    },
     "id": "*template-page-default"
   },
   "contents": [

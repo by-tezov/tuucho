@@ -37,12 +37,12 @@ object ComponentSettingSchema {
 
     object Root {
         object Key {
-            const val disableContextualShadower = "disable-contextual-shadower"
+            const val shadower = SettingComponentShadowerSchema.root
             const val navigation = ComponentSettingNavigationSchema.root
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument) {
-            var disableContextualShadower by delegate<Boolean?>(Key.disableContextualShadower)
+            var contextualShadower by delegate<JsonObject?>(Key.shadower)
             var navigation by delegate<JsonObject?>(Key.navigation)
         }
     }

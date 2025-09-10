@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.source.shadower
 
-import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.MaterialDatabaseSourceProtocol
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
@@ -21,22 +21,17 @@ class ContextualShadowerMaterialSource(
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
     private val materialAssembler: MaterialAssemblerProtocol,
-    private val materialDatabaseSource: MaterialDatabaseSource,
+    private val materialDatabaseSource: MaterialDatabaseSourceProtocol,
 ) : ShadowerMaterialSourceProtocol {
 
     override val type = Shadower.Type.contextual
 
-    override var isCancelled = false
-        private set
+    override val isCancelled = false
 
     private lateinit var urlOrigin: String
     private lateinit var map: MutableMap<String, MutableList<JsonObject>>
 
     override suspend fun onStart(url: String, materialElement: JsonObject) {
-        if (materialElement.onScope(ComponentSettingSchema.Root::Scope).disableContextualShadower == true) {
-            isCancelled = true
-            return
-        }
         this.urlOrigin = url
         map = mutableMapOf()
     }
@@ -67,10 +62,12 @@ class ContextualShadowerMaterialSource(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
-            weakLifetime = lifetime ?: Lifetime.Transient(
-                validityKey = null,
-                expirationDateTime = Clock.System.now()
-            ),
+            weakLifetime = if (lifetime == null || lifetime is Lifetime.Enrolled) {
+                Lifetime.Transient(
+                    validityKey = lifetime?.validityKey,
+                    expirationDateTime = Clock.System.now()
+                )
+            } else lifetime,
             visibility = Visibility.Contextual(urlOrigin = urlOrigin)
         )
     }

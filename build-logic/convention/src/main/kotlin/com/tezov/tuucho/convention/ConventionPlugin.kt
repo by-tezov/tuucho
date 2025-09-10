@@ -18,10 +18,12 @@ abstract class ConventionPlugin : Plugin<Project> {
         const val androidLibrary = "android.library"
         const val koltinAndroid = "kotlin.android"
         const val koltinMultiplatform = "kotlin.multiplatform"
-        const val kover = "kover"
-        const val mokkery = "mokkery"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
+        // reporting
+        const val kover = "kover"
+        // test
+        const val mokkery = "mokkery"
     }
 
     companion object {
@@ -103,21 +105,23 @@ abstract class ConventionPlugin : Plugin<Project> {
                         }
                     }
                 }
+
+
             }
         }
 
         internal fun configureSourceSetMultiplatform(project: Project) = with(project) {
             extensions.configure(KotlinMultiplatformExtension::class.java) {
-                val flavor = version("flavor").replaceFirstChar { it.uppercaseChar() }
+                val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
                 sourceSets {
                     androidMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavor")
+                        kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavorCapitalized")
                     }
                     iosMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavor")
+                        kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavorCapitalized")
                     }
                     commonMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavor")
+                        kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavorCapitalized")
                     }
                 }
             }
@@ -144,6 +148,21 @@ abstract class ConventionPlugin : Plugin<Project> {
                 val debugTest = tasks.findByName("debugUnitTest")
                 if (debugTest != null) {
                     dependsOn(debugTest)
+                }
+            }
+        }
+
+        internal fun configureTest(project: Project) = with(project) {
+            if(version("flavor") != "mock") return@with
+            extensions.configure(KotlinMultiplatformExtension::class.java) {
+                sourceSets {
+                    commonTest {
+                        dependencies{
+                            implementation(kotlin("test"))
+                            implementation(library("kotlinx.coroutines.test"))
+                        }
+                    }
+
                 }
             }
         }

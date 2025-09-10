@@ -1,32 +1,66 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 class NavigateBackUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
+    private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
 ) : UseCaseProtocol.Sync<Unit, Unit> {
 
     override fun invoke(input: Unit) {
         coroutineScopes.navigation.async {
-            if(navigationStackTransitionRepository.isBusy()){
-                //throw DomainException.Default("Navigation is not ready to accept new request")
-                return@async
-            }
-            navigationStackRouteRepository.backward(
+            //TODO need to protect navigation from monkey click
+            val restoredRoute = navigationStackRouteRepository.backward(
                 route = NavigationRoute.Back
             )
+            restoredRoute?.runShadower()
             navigationStackTransitionRepository.backward(
                 routes = navigationStackRouteRepository.routes(),
             )
             navigationStackScreenRepository.backward(
                 routes = navigationStackRouteRepository.routes(),
             )
+        }
+    }
+
+    private suspend fun NavigationRoute.runShadower() {
+        val url = (this as? NavigationRoute.Url)?.value ?: return
+        val view = navigationStackScreenRepository.getScreenOrNull(this)?.view ?: return
+        val componentObject = view.componentObject
+        val componentSettingScope = componentObject.onScope(ComponentSettingSchema.Root::Scope)
+        val settingShadowerScope = componentSettingScope
+            .contextualShadower
+            ?.withScope(SettingComponentShadowerSchema::Scope)
+            ?.navigateBackward
+            ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
+        if (settingShadowerScope?.enable.isTrue) {
+            val job = coroutineScopes.navigation.async {
+                shadowerMaterialRepository.process(
+                    url = url,
+                    materialObject = componentObject,
+                    types = listOf(Shadower.Type.contextual)
+                ).forEach {
+                    coroutineScopes.renderer.await {
+                        view.update(it.jsonObject)
+                    }
+                }
+            }
+            if (settingShadowerScope?.waitDoneToRender.isTrue) {
+                job.await()
+            }
         }
     }
 

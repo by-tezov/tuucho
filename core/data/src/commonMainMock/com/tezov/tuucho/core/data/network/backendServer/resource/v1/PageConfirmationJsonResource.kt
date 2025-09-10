@@ -11,9 +11,6 @@ class PageConfirmationJsonResource : JsonResourceProtocol {
     override val jsonString = """
 {
   "root": {
-    "setting": {
-      "disable-contextual-shadower": true
-    },
     "subset": "layout-linear",
     "style": {
       "orientation": "vertical",
@@ -72,5 +69,6 @@ class PageConfirmationJsonResource : JsonResourceProtocol {
     }
   ]
 }
+
 """
 }

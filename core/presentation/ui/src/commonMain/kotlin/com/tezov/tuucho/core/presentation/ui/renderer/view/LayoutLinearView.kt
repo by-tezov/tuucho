@@ -51,7 +51,7 @@ class LayoutLinearView(
     private val route: NavigationRoute,
     componentObject: JsonObject,
     private val viewFactories: List<AbstractViewFactory>,
-) : View(componentObject) {
+) : AbstractView(componentObject) {
 
     override val children: List<ViewProtocol>?
         get() = _itemViews.value
