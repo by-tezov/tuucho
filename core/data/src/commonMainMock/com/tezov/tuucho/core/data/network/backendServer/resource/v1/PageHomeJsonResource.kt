@@ -10,7 +10,12 @@ class PageHomeJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
+  "setting": {
+    "ttl": {
+      "strategy": "transient",
+      "transient-value": "1mn"
+    }
+  },
   "root": {
     "id": {
       "value": "page-home"
@@ -247,7 +252,7 @@ class PageHomeJsonResource : JsonResourceProtocol {
   ],
   "texts": {
     "common": {
-      "text-title": "Home Page Mocked",
+      "text-title": "Home Page v3",
       "text-body": "bienvenue sur la page d'accueil"
     },
     "form": {
@@ -259,5 +264,6 @@ class PageHomeJsonResource : JsonResourceProtocol {
     }
   }
 }
+
 """
 }

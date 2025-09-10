@@ -10,41 +10,54 @@ class ConfigJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "preload": {
-    "subs": [
-      {
-        "validity-key": "1",
-        "url":"subs/sub-texts"
-      },
-      {
-        "validity-key": "1",
-        "url":"subs/sub-styles"
-      },
-      {
-        "validity-key": "1",
-        "url":"subs/sub-contents"
-      },
-      {
-        "validity-key": "1",
-        "url":"subs/sub-components"
-      }
-    ],
-    "templates": [
-      {
-        "validity-key": "1",
-        "url":"templates/template-page-default"
-      }
-    ],
-    "pages": [
-      {
-        "validity-key": "1",
-        "url":"page-home"
-      },
-      {
-        "validity-key": "1",
-        "url":"page-help"
-      }
-    ]  
+  "material-resource": {
+    "global": {
+      "subs": [
+        {
+          "validity-key": "2",
+          "url": "subs/sub-texts"
+        },
+        {
+          "validity-key": "2",
+          "url": "subs/sub-styles"
+        },
+        {
+          "validity-key": "2",
+          "url": "subs/sub-contents"
+        },
+        {
+          "validity-key": "2",
+          "url": "subs/sub-components"
+        }
+      ],
+      "templates": [
+        {
+          "validity-key": "2",
+          "url": "templates/template-page-default"
+        }
+      ]
+    },
+    "local": {
+      "pages": [
+        {
+          "validity-key": "1",
+          "url": "page-home"
+        },
+        {
+          "validity-key": "3",
+          "url": "page-help",
+          "pre-download": false
+        }
+      ]
+    },
+    "contextual": {
+      "all": [
+        {
+          "validity-key": "1",
+          "urlOrigin": "page-home"
+        }
+      ]
+    }
   }
 }
 """

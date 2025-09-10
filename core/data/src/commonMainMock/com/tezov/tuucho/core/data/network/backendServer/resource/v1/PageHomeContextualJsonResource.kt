@@ -2,9 +2,9 @@ package com.tezov.tuucho.core.data.network.backendServer.resource.v1
 
 import com.tezov.tuucho.core.data.network.backendServer.resource.JsonResourceProtocol
 
-class PageHomeOnDemandDefinitionJsonResource : JsonResourceProtocol {
+class PageHomeContextualJsonResource : JsonResourceProtocol {
 
-    override val url = "page-home-on-demand-definition"
+    override val url = "page-home-contextual"
 
     override val statusCode = 200
 
