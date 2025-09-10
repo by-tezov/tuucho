@@ -19,99 +19,70 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
-class SendDataAndRetrieveMaterialRemoteSourceTest {
+class MaterialRemoteSourceTest {
 
     private lateinit var currentScope: CoroutineScope
     private lateinit var coroutineScopes: CoroutineScopesProtocol
     private lateinit var materialNetworkSource: MaterialNetworkSourceProtocol
     private lateinit var materialRectifier: MaterialRectifierProtocol
-
-    private lateinit var sut: SendDataAndRetrieveMaterialRemoteSource
+    private lateinit var sut: MaterialRemoteSource
 
     @BeforeTest
     fun setup() {
-        currentScope = CoroutineScope(
-            context = EmptyCoroutineContext,
-        )
+        currentScope = CoroutineScope(EmptyCoroutineContext)
 
-        materialNetworkSource = mock<MaterialNetworkSourceProtocol>()
-        materialRectifier = mock<MaterialRectifierProtocol>()
+        materialNetworkSource = mock()
+        materialRectifier = mock()
 
-        coroutineScopes = mock<CoroutineScopesProtocol> {
+        coroutineScopes = mock {
             val networkContext = mock<CoroutineContextProtocol> {
-                everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject?>()) } calls {
-                    (block: suspend CoroutineScope.() -> JsonObject?) -> block(currentScope)
+                everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject>()) } calls {
+                        (block: suspend CoroutineScope.() -> JsonObject) -> block(currentScope)
                 }
             }
             every { network } returns networkContext
 
             val parserContext = mock<CoroutineContextProtocol> {
-                everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject?>()) } calls {
-                    (block: suspend CoroutineScope.() -> JsonObject?) -> block(currentScope)
+                everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject>()) } calls {
+                        (block: suspend CoroutineScope.() -> JsonObject) -> block(currentScope)
                 }
             }
             every { parser } returns parserContext
         }
 
-        sut = SendDataAndRetrieveMaterialRemoteSource(
+        sut = MaterialRemoteSource(
             coroutineScopes = coroutineScopes,
             materialNetworkSource = materialNetworkSource,
             materialRectifier = materialRectifier
         )
     }
 
-    @AfterTest
-    fun tearDown() {
-        // verifyNoMoreCalls(materialNetworkSource, materialRectifier, coroutineScopes)
-        // does not work as expected:
-        // - materialNetworkSource and materialRectifier are not consumed by verify
-        // - coroutineScopes considere to not check the nested as error
-    }
-
     @Test
-    fun `process returns rectified object when network responds`() = runTest {
+    fun `process retrieves and rectifies response`() = runTest {
         val url = "http://server.com/api"
-        val input = buildJsonObject { put("key", "value") }
-        val networkResponse = buildJsonObject { put("network", "response") }
+        val networkResponse = buildJsonObject { put("raw", "data") }
         val expected = buildJsonObject { put("rectified", "ok") }
 
-        everySuspend { materialNetworkSource.send(url, input) } returns networkResponse
+        everySuspend { materialNetworkSource.retrieve(url) } returns networkResponse
         everySuspend { materialRectifier.process(networkResponse) } returns expected
 
-        val result = sut.process(url, input)
+        val result = sut.process(url)
+
         assertEquals(expected, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineScopes.network
-            materialNetworkSource.send(url, input)
+            materialNetworkSource.retrieve(url)
             coroutineScopes.parser
             materialRectifier.process(networkResponse)
         }
         verify(VerifyMode.exactly(1)) { coroutineScopes.network }
-        verifySuspend(VerifyMode.exactly(1)) { materialNetworkSource.send(url, input) }
+        verifySuspend(VerifyMode.exactly(1)) { materialNetworkSource.retrieve(url) }
         verify(VerifyMode.exactly(1)) { coroutineScopes.parser }
         verifySuspend(VerifyMode.exactly(1)) { materialRectifier.process(networkResponse) }
-    }
-
-    @Test
-    fun `process returns null when network response is null`() = runTest {
-        val url = "http://server.com/api"
-        val input = buildJsonObject { put("key", "value") }
-
-        everySuspend { materialNetworkSource.send(url, input) } returns null
-
-        val result = sut.process(url, input)
-        assertNull(result)
-
-        verify(VerifyMode.exactly(1)) { coroutineScopes.network }
-        verifySuspend(VerifyMode.exactly(1)) { materialNetworkSource.send(url, input) }
-        verify(VerifyMode.exactly(0)) { coroutineScopes.parser }
-        verifySuspend(VerifyMode.exactly(0)) { materialRectifier.process(any()) }
     }
 }
