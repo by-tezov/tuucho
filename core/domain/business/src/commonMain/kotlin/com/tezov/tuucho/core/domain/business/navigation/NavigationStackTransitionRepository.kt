@@ -40,10 +40,6 @@ class NavigationStackTransitionRepository(
     private var stack = mutableListOf<Item>()
     private val stackLock = Mutex()
 
-    override suspend fun isBusy() = coroutineScopes.event.await {
-        stackLock.withLock { lastEvent !is StackTransition.Event.Idle }
-    }
-
     override suspend fun routes() = coroutineScopes.navigation.await {
         stackLock.withLock { stack.map { it.route } }
     }

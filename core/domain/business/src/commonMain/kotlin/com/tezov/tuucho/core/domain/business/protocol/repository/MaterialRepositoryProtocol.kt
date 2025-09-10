@@ -24,7 +24,11 @@ sealed interface MaterialRepositoryProtocol {
             val jsonObject: JsonObject,
         )
 
-        suspend fun process(url: String, materialObject: JsonObject): List<Output>
+        suspend fun process(
+            url: String,
+            materialObject: JsonObject,
+            types: List<String>,
+        ): List<Output>
 
     }
 

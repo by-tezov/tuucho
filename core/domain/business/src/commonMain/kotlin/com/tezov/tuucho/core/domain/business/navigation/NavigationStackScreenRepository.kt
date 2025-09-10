@@ -42,12 +42,14 @@ class NavigationStackScreenRepository(
     override suspend fun forward(
         route: NavigationRoute,
         componentObject: JsonObject,
-    ) = coroutineScopes.navigation.await {
-        screenRenderer.process(
-            route = route,
-            componentObject = componentObject
-        ).also {
-            stackLock.withLock { stack.add(it) }
+    ) {
+        coroutineScopes.navigation.await {
+            screenRenderer.process(
+                route = route,
+                componentObject = componentObject
+            ).also {
+                stackLock.withLock { stack.add(it) }
+            }
         }
     }
 

@@ -43,25 +43,24 @@ class NavigationStackRouteRepository(
         }
     }
 
-    override suspend fun backward(route: NavigationRoute) {
-        coroutineScopes.navigation.await {
-            stackLock.withLock {
-                when (route) {
-                    is NavigationRoute.Back -> navigateBack()
-                    is NavigationRoute.Finish -> navigateFinish()
-                    else -> throw DomainException.Default("Route $route can't be spitted, maybe you should use swallow")
-                }
-                return@await null
+    override suspend fun backward(route: NavigationRoute) = coroutineScopes.navigation.await {
+        stackLock.withLock {
+            when (route) {
+                is NavigationRoute.Back -> navigateBack()
+                is NavigationRoute.Finish -> navigateFinish()
+                else -> throw DomainException.Default("Route $route can't be spitted, maybe you should use swallow")
             }
         }
     }
 
-    private fun navigateBack() {
+    private fun navigateBack(): NavigationRoute? {
         stack.removeLastOrNull()
+        return stack.lastOrNull()
     }
 
-    private fun navigateFinish() {
+    private fun navigateFinish(): NavigationRoute? {
         stack.clear()
+        return null
     }
 
     private fun navigateUrl(

@@ -26,17 +26,12 @@ class ContextualShadowerMaterialSource(
 
     override val type = Shadower.Type.contextual
 
-    override var isCancelled = false
-        private set
+    override val isCancelled = false
 
     private lateinit var urlOrigin: String
     private lateinit var map: MutableMap<String, MutableList<JsonObject>>
 
     override suspend fun onStart(url: String, materialElement: JsonObject) {
-        if (materialElement.onScope(ComponentSettingSchema.Root::Scope).disableContextualShadower == true) {
-            isCancelled = true
-            return
-        }
         this.urlOrigin = url
         map = mutableMapOf()
     }
