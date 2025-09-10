@@ -3,11 +3,6 @@ plugins {
 }
 
 android {
-    namespace = "com.tezov.tuucho.kmm"
-
-    defaultConfig {
-
-    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -31,7 +26,7 @@ kotlin {
             implementation(project(":core:domain:business"))
             implementation(project(":core:domain:tool"))
             implementation(project(":core:presentation:ui"))
-            implementation(project(":core:data"))
+            implementation(project(":core:data:repository"))
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -41,10 +36,6 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-        }
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

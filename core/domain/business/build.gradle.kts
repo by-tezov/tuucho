@@ -3,12 +3,6 @@ plugins {
 }
 
 android {
-    namespace = "com.tezov.tuucho.core.domain.business"
-
-    defaultConfig {
-
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -27,10 +21,6 @@ kotlin {
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
-        }
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

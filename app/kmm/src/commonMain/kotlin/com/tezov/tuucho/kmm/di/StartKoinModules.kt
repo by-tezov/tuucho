@@ -1,7 +1,7 @@
 package com.tezov.tuucho.kmm.di
 
 import androidx.compose.runtime.Composable
-import com.tezov.tuucho.core.data.di.SystemCoreDataModules
+import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
 import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
 import org.koin.compose.KoinApplication

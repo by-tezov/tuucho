@@ -9,7 +9,10 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
             pluginManager.apply(plugin(PluginId.kover))
-            pluginManager.apply(plugin(PluginId.mokkery))
+            if(version("flavor") == "mock") {
+                pluginManager.apply(plugin(PluginId.allOpen))
+                pluginManager.apply(plugin(PluginId.mokkery))
+            }
         }
     }
 
@@ -19,6 +22,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
         configureLibraryMultiplatform(project)
         configureSourceSetMultiplatform(project)
         configureKover(project)
+        configureTest(project)
     }
 
 }
