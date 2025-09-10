@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.ContentSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.SettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -17,7 +17,7 @@ object ComponentSchema {
         const val content = ContentSchema.root
         const val style = StyleSchema.root
         const val option = OptionSchema.root
-        const val setting = SettingSchema.root
+        const val setting = ComponentSettingSchema.root
         const val state = OptionSchema.root
         const val message = MessageSchema.root
     }

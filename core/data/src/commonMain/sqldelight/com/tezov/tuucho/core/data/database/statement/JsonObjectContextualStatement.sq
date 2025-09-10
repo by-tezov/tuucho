@@ -1,0 +1,21 @@
+selectAll:
+SELECT * FROM jsonObjectContextualEntry;
+
+deleteAll:
+DELETE FROM jsonObjectContextualEntry;
+
+deleteByUrl:
+DELETE FROM jsonObjectContextualEntry WHERE url = ?;
+
+insert:
+INSERT INTO jsonObjectContextualEntry(type, url, id, idFrom, jsonObject)
+VALUES (?, ?, ?, ?, ?);
+
+lastInsertedId:
+SELECT last_insert_rowid();
+
+getByPrimaryKey:
+SELECT * FROM jsonObjectContextualEntry WHERE primaryKey = ?;
+
+getByTypeUrlId:
+SELECT * FROM jsonObjectContextualEntry WHERE type = ? AND url = ? AND id = ?;

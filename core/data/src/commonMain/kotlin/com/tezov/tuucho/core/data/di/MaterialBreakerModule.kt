@@ -1,11 +1,12 @@
 package com.tezov.tuucho.core.data.di
 
-import com.tezov.tuucho.core.data.parser.breaker.Breaker
+import com.tezov.tuucho.core.data.parser.breaker.AbstractBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ColorBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ComponentBreaker
 import com.tezov.tuucho.core.data.parser.breaker.ContentBreaker
 import com.tezov.tuucho.core.data.parser.breaker.DimensionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.MaterialBreaker
+import com.tezov.tuucho.core.data.parser.breaker.MaterialBreakerProtocol
 import com.tezov.tuucho.core.data.parser.breaker.OptionBreaker
 import com.tezov.tuucho.core.data.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.parser.breaker.TextBreaker
@@ -14,9 +15,6 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-// For now, breaker matcher and child processor are not used,
-// only root and subs are broken into database
-// TODO, if decided to not used it forever, code shrink should be done
 object MaterialBreakerModule {
 
     object Name {
@@ -42,7 +40,7 @@ object MaterialBreakerModule {
     }
 
     internal operator fun invoke() = module {
-        single<MaterialBreaker> { MaterialBreaker() }
+        single<MaterialBreakerProtocol> { MaterialBreaker() }
         componentModule()
         contentModule()
         styleModule()
@@ -59,7 +57,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.COMPONENT) {
+        single<List<AbstractBreaker>>(Name.Processor.COMPONENT) {
             emptyList()
         }
     }
@@ -71,7 +69,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.CONTENT) {
+        single<List<AbstractBreaker>>(Name.Processor.CONTENT) {
             emptyList()
         }
     }
@@ -83,7 +81,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.STYLE) {
+        single<List<AbstractBreaker>>(Name.Processor.STYLE) {
             emptyList()
         }
     }
@@ -95,7 +93,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.OPTION) {
+        single<List<AbstractBreaker>>(Name.Processor.OPTION) {
             emptyList()
         }
     }
@@ -107,7 +105,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.TEXT) {
+        single<List<AbstractBreaker>>(Name.Processor.TEXT) {
             emptyList()
         }
     }
@@ -119,7 +117,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.COLOR) {
+        single<List<AbstractBreaker>>(Name.Processor.COLOR) {
             emptyList()
         }
     }
@@ -131,7 +129,7 @@ object MaterialBreakerModule {
             emptyList()
         }
 
-        single<List<Breaker>>(Name.Processor.DIMENSION) {
+        single<List<AbstractBreaker>>(Name.Processor.DIMENSION) {
             emptyList()
         }
     }

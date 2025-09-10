@@ -8,13 +8,13 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
-class ComponentShadower: Shadower() {
+class ComponentShadower: AbstractShadower() {
 
     override val matchers: List<MatcherShadowerProtocol> by inject(
         Name.Matcher.COMPONENT
     )
 
-    override val childProcessors: List<Shadower> by inject(
+    override val childProcessors: List<AbstractShadower> by inject(
         Name.Processor.COMPONENT
     )
 

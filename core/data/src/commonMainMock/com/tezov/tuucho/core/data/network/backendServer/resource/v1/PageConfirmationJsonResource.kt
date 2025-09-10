@@ -10,10 +10,9 @@ class PageConfirmationJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "root": {
     "setting": {
-      "disable-on-demand-definition-shadower": true
+      "disable-contextual-shadower": true
     },
     "subset": "layout-linear",
     "style": {

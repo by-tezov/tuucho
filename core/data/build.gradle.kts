@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.convention.library)
     alias(libs.plugins.sql.delight)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -50,6 +51,7 @@ kotlin {
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
+            implementation(libs.kotlin.datetime)
 
             implementation(libs.koin.core)
 

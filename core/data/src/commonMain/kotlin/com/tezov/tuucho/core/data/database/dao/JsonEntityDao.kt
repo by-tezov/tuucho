@@ -2,71 +2,72 @@ package com.tezov.tuucho.core.data.database.dao
 
 import com.tezov.tuucho.core.data.database.Database
 import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.entity.toEntity
-import com.tezov.tuucho.core.data.database.type.Lifetime
+import com.tezov.tuucho.core.data.database.type.Visibility
 
-class JsonObjectQueries(private val database: Database) {
+class JsonObjectQueries(
+    private val database: Database,
+) {
 
-    private val queries get() = database.jsonObjectStatementQueries
+    private val queriesCommon get() = database.jsonObjectCommonStatementQueries
 
-    private val queriesTransient get() = database.jsonObjectTransientStatementQueries
+    private val queriesContextual get() = database.jsonObjectContextualStatementQueries
 
-    private val queriesShared get() = database.sharedStatementQueries
+    private val queriesJoin get() = database.joinStatementQueries
 
-    fun deleteAll() {
-        queries.deleteAll()
-        queriesTransient.deleteAll()
-    }
-
-    fun deleteTransient(urls: List<String>) {
-        urls.forEach {
-            queriesTransient.deleteByUrl(it)
+    fun deleteAll(url: String, table: Table) {
+        when (table) {
+            Table.Common -> queriesCommon.deleteByUrl(url)
+            Table.Contextual -> queriesContextual.deleteByUrl(url)
         }
     }
 
-    fun deleteAll(url: String) {
-        queries.deleteByUrl(url)
-    }
-
-    fun insert(entity: JsonObjectEntity, lifetime: Lifetime) = when (lifetime) {
-        Lifetime.Unlimited -> {
-            queries.insert(
+    fun insert(entity: JsonObjectEntity, table: Table) = when (table) {
+        Table.Common -> {
+            queriesCommon.insert(
                 type = entity.type,
                 url = entity.url,
                 id = entity.id,
                 idFrom = entity.idFrom,
                 jsonObject = entity.jsonObject
             )
-            queries.lastInsertedId().executeAsOne()
+            queriesCommon.lastInsertedId().executeAsOne()
         }
 
-        is Lifetime.Transient -> {
-            queriesTransient.insert(
+        Table.Contextual -> {
+            queriesContextual.insert(
                 type = entity.type,
                 url = entity.url,
-                urlOrigin = lifetime.urlOrigin,
                 id = entity.id,
                 idFrom = entity.idFrom,
                 jsonObject = entity.jsonObject
             )
-            queriesTransient.lastInsertedId().executeAsOne()
+            queriesContextual.lastInsertedId().executeAsOne()
         }
     }
 
-    fun get(primaryKey: Long): JsonObjectEntity? =
-        queries.getByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
+    fun getCommonOrNull(primaryKey: Long) =
+        queriesCommon.getByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
 
-    fun get(type: String, url: String, id: String): JsonObjectEntity? =
-        queries.getByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
+    fun getCommonOrNull(
+        type: String,
+        url: String,
+        id: String,
+    ) = queriesCommon.getByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
 
-    fun findShared(type: String, id: String, urlOrigin: String?) = queriesShared
-        .getGlobalUnlimitedByTypeId(type, id)
+    fun getCommonGlobalOrNull(type: String, id: String) = queriesJoin
+        .getCommonByTypeIdVisibility(Visibility.Global, type, id)
         .executeAsOneOrNull()?.toEntity()
-        ?: urlOrigin?.let {
-            queriesShared
-                .getLocalTransientByTypeIdUrlOrigin(type, id, urlOrigin)
-                .executeAsOneOrNull()?.toEntity()
-        }
+
+    fun getContextualOrNull(
+        type: String,
+        url: String,
+        id: String,
+        visibility: Visibility,
+    ) = queriesJoin
+        .getContextualByTypeUrlIdVisibility(visibility, type, url, id)
+        .executeAsOneOrNull()?.toEntity()
 }
 
 

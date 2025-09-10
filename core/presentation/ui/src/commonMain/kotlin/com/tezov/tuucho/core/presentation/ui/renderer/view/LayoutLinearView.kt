@@ -21,15 +21,15 @@ import com.tezov.tuucho.core.presentation.tool.modifier.onTrue
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
-import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewFactory
+import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class LayoutLinearViewFactory : ViewFactory() {
+class LayoutLinearViewFactory : AbstractViewFactory() {
 
-    private val viewFactories: List<ViewFactory> by inject()
+    private val viewFactories: List<AbstractViewFactory> by inject()
 
     override fun accept(componentElement: JsonObject) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
@@ -50,7 +50,7 @@ class LayoutLinearViewFactory : ViewFactory() {
 class LayoutLinearView(
     private val route: NavigationRoute,
     componentObject: JsonObject,
-    private val viewFactories: List<ViewFactory>,
+    private val viewFactories: List<AbstractViewFactory>,
 ) : View(componentObject) {
 
     override val children: List<ViewProtocol>?

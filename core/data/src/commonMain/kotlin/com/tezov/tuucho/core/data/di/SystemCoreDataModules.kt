@@ -7,6 +7,7 @@ expect fun SystemCoreDataModules.platformInvoke():List<Module>
 object SystemCoreDataModules {
 
     operator fun invoke():List<Module> = listOf(
+        MiscModule(),
         MaterialRectifierModule(),
         MaterialBreakerModule(),
         MaterialAssemblerModule(),

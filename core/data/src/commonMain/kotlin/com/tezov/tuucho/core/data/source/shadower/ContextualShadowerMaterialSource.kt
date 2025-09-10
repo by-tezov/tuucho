@@ -1,0 +1,93 @@
+package com.tezov.tuucho.core.data.source.shadower
+
+import com.tezov.tuucho.core.data.database.MaterialDatabaseSource
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
+import com.tezov.tuucho.core.data.database.type.Lifetime
+import com.tezov.tuucho.core.data.database.type.Visibility
+import com.tezov.tuucho.core.data.parser.assembler.MaterialAssemblerProtocol
+import com.tezov.tuucho.core.data.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.MaterialRemoteSource
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import kotlinx.coroutines.awaitAll
+import kotlinx.serialization.json.JsonObject
+import kotlin.time.Clock
+
+class ContextualShadowerMaterialSource(
+    private val coroutineScopes: CoroutineScopesProtocol,
+    private val materialCacheLocalSource: MaterialCacheLocalSource,
+    private val materialRemoteSource: MaterialRemoteSource,
+    private val materialAssembler: MaterialAssemblerProtocol,
+    private val materialDatabaseSource: MaterialDatabaseSource,
+) : ShadowerMaterialSourceProtocol {
+
+    override val type = Shadower.Type.contextual
+
+    override var isCancelled = false
+        private set
+
+    private lateinit var urlOrigin: String
+    private lateinit var map: MutableMap<String, MutableList<JsonObject>>
+
+    override suspend fun onStart(url: String, materialElement: JsonObject) {
+        if (materialElement.onScope(ComponentSettingSchema.Root::Scope).disableContextualShadower == true) {
+            isCancelled = true
+            return
+        }
+        this.urlOrigin = url
+        map = mutableMapOf()
+    }
+
+    override suspend fun onNext(jsonObject: JsonObject) {
+        val idScope = jsonObject.onScope(IdSchema::Scope)
+        idScope.source ?: return
+        val url = jsonObject.onScope(ComponentSettingSchema::Scope)
+            .urlContextual?.replace("\${current}", urlOrigin)
+            ?: "$urlOrigin${ComponentSettingSchema.Value.UrlContextual.suffix}"
+        map[url] = (map[url] ?: mutableListOf()).apply { add(jsonObject) }
+    }
+
+    override suspend fun onDone() = map.map { (url, jsonObjects) ->
+        coroutineScopes.parser.async {
+            downloadAndCache(url)
+            jsonObjects.assembleAll(url)
+        }
+    }.awaitAll().flatten()
+
+    private suspend fun downloadAndCache(url: String) {
+        val lifetime = materialCacheLocalSource.getLifetime(url)
+        if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
+            return
+        }
+        val remoteMaterialObject = materialRemoteSource.process(url)
+        materialCacheLocalSource.delete(url, Table.Contextual)
+        materialCacheLocalSource.insert(
+            materialObject = remoteMaterialObject,
+            url = url,
+            weakLifetime = lifetime ?: Lifetime.Transient(
+                validityKey = null,
+                expirationDateTime = Clock.System.now()
+            ),
+            visibility = Visibility.Contextual(urlOrigin = urlOrigin)
+        )
+    }
+
+    private suspend fun List<JsonObject>.assembleAll(url: String) = mapNotNull { jsonObject ->
+        materialAssembler.process(
+            materialObject = jsonObject,
+            findAllRefOrNullFetcher = { from, type ->
+                coroutineScopes.database.await {
+                    materialDatabaseSource.getAllRefOrNull(
+                        from = from,
+                        url = url,
+                        type = type,
+                        visibility = Visibility.Contextual(urlOrigin = urlOrigin)
+                    )
+                }
+            }
+        )
+    }
+}

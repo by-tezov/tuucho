@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
-class DimensionAssembler : Assembler() {
+class DimensionAssembler : AbstractAssembler() {
 
     override val schemaType: String = TypeSchema.Value.dimension
 
@@ -16,7 +16,7 @@ class DimensionAssembler : Assembler() {
         Name.Matcher.DIMENSION
     )
 
-    override val childProcessors: List<Assembler> by inject(
+    override val childProcessors: List<AbstractAssembler> by inject(
         Name.Processor.DIMENSION
     )
 

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.parser.rectifier.id
 
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.parser.rectifier._system.RectifierIdGenerator
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
@@ -16,7 +16,7 @@ import org.koin.core.component.inject
 
 class IdRectifier(
     private val idGenerator: RectifierIdGenerator
-) : Rectifier() {
+) : AbstractRectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.ID

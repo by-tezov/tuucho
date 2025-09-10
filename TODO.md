@@ -1,10 +1,10 @@
 ## In progress
 
-- IOS build for e2e with fastlane (check my old way for the command line)
-- Do the pipeline up to the test
-- Inside the mac-agent-installer, need to check if fastlane is present, else install it
 
-- Auto-Purge + TTL
+- TTL
+  - look the validity validityDateTime on refresh cache and retrieve
+  - then think how I can do for on demand definition
+
 
 **** ****
  - add language management

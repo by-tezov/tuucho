@@ -1,0 +1,10 @@
+import com.tezov.tuucho.core.data.database.type.Lifetime;
+import com.tezov.tuucho.core.data.database.type.Visibility;
+
+CREATE TABLE hookEntry (
+    primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
+    url TEXT NOT NULL UNIQUE,
+    rootPrimaryKey INTEGER REFERENCES jsonObjectCommonEntry(primaryKey),
+    visibility TEXT AS Visibility NOT NULL,
+    lifetime TEXT AS Lifetime NOT NULL
+);

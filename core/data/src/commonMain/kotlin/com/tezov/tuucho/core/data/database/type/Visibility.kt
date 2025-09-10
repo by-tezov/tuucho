@@ -1,17 +1,37 @@
 package com.tezov.tuucho.core.data.database.type
 
-enum class Visibility(val value:String) {
-    Local("local"),
-    Global("global");
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-    companion object {
+@Serializable
+sealed class Visibility {
 
-        fun from(value: String): Visibility {
-            return Visibility.entries.first { it.value == value }
-        }
+    companion object Type {
+        const val local = "local"
+        const val global = "global"
+        const val contextual = "contextual"
     }
 
-    fun to(): String {
-        return value
+    abstract val name: String
+
+    @Serializable
+    @SerialName(local)
+    data object Local : Visibility() {
+        override val name = local
     }
+
+    @Serializable
+    @SerialName(global)
+    data object Global : Visibility() {
+        override val name = global
+    }
+
+    @Serializable
+    @SerialName(contextual)
+    data class Contextual(
+        val urlOrigin: String,
+    ) : Visibility() {
+        override val name = contextual
+    }
+
 }

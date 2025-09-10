@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.domain.business.navigation
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionNavigation
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.DirectionScreen
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationTransitionSchema.Spec.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition
 import com.tezov.tuucho.core.domain.business.usecase.NavigationStackTransitionHelperFactoryUseCase
@@ -65,12 +65,12 @@ class NavigationStackTransitionRepository(
         directionNavigation: String,
         directionScreen: String,
     ) = transitionObject
-        ?.withScope(SettingNavigationTransitionSchema::Scope)
+        ?.withScope(SettingComponentNavigationTransitionSchema::Scope)
         ?.let { it[directionNavigation] }
-        ?.withScope(SettingNavigationTransitionSchema.Set::Scope)
+        ?.withScope(SettingComponentNavigationTransitionSchema.Set::Scope)
         ?.let { it[directionScreen] as? JsonObject }
         ?: run {
-            JsonNull.withScope(SettingNavigationTransitionSchema.Spec::Scope).apply {
+            JsonNull.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope).apply {
                 type = Type.none
             }.collect()
         }
@@ -85,7 +85,7 @@ class NavigationStackTransitionRepository(
     } ?: true
 
     private fun Item.isBackgroundSolid() = extraObject
-        ?.withScope(SettingNavigationSchema.Extra::Scope)
+        ?.withScope(ComponentSettingNavigationSchema.Extra::Scope)
         ?.isBackgroundSolid ?: true
 
     override suspend fun forward(

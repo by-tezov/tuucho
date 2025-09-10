@@ -1,0 +1,11 @@
+getCommonByTypeIdVisibility:
+SELECT jsonObject.*
+FROM jsonObjectCommonEntry jsonObject
+JOIN hookEntry hook ON jsonObject.url = hook.url
+WHERE hook.visibility = ? AND jsonObject.type = ? AND jsonObject.id = ?;
+
+getContextualByTypeUrlIdVisibility:
+SELECT jsonObject.*
+FROM jsonObjectContextualEntry jsonObject
+JOIN hookEntry hook ON jsonObject.url = hook.url
+WHERE hook.visibility = ? AND jsonObject.type = ? AND jsonObject.url = ? AND jsonObject.id = ?;

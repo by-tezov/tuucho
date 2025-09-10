@@ -5,6 +5,7 @@ import com.android.build.api.dsl.CommonExtension
 import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
@@ -27,6 +28,7 @@ abstract class ConventionPlugin : Plugin<Project> {
         internal fun ListProperty<String>.configureOptIn() {
             add("kotlin.uuid.ExperimentalUuidApi")
             add("kotlin.ExperimentalUnsignedTypes")
+            add("kotlin.time.ExperimentalTime")
         }
 
         internal fun configureAndroidCommon(
@@ -48,6 +50,11 @@ abstract class ConventionPlugin : Plugin<Project> {
                     targetCompatibility = javaVersion()
                 }
             }
+            project.extensions.findByType(JavaPluginExtension::class.java)!!.apply {
+                toolchain {
+                    languageVersion.set(javaLanguageVersion())
+                }
+            }
         }
 
         internal fun configureApplication(
@@ -62,6 +69,7 @@ abstract class ConventionPlugin : Plugin<Project> {
             }
             project.extensions.findByType(KotlinAndroidProjectExtension::class.java)!!.apply {
                 jvmToolchain(this@with.javaVersionInt())
+                compilerOptions.jvmTarget.set(this@with.jvmTarget())
                 compilerOptions.optIn.configureOptIn()
                 compilerOptions.allWarningsAsErrors.set(true)
             }
@@ -69,6 +77,7 @@ abstract class ConventionPlugin : Plugin<Project> {
 
         internal fun configureLibraryMultiplatform(project: Project) = with(project) {
             extensions.configure(KotlinMultiplatformExtension::class.java) {
+                jvmToolchain(this@with.javaVersionInt())
                 compilerOptions.optIn.configureOptIn()
                 compilerOptions.allWarningsAsErrors.set(true)
 

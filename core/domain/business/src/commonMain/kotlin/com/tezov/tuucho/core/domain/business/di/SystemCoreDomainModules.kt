@@ -4,6 +4,7 @@ object SystemCoreDomainModules {
 
     operator fun invoke() = listOf(
         MiscModule(),
+        NavigationModule(),
         ActionProcessorModule(),
         UseCaseModule()
     )

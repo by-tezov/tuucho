@@ -35,7 +35,7 @@ sealed interface NavigationRepositoryProtocol {
         suspend fun forward(
             route: NavigationRoute,
             componentObject: JsonObject,
-        )
+        ):ScreenProtocol
 
         suspend fun backward(
             routes: List<NavigationRoute>,

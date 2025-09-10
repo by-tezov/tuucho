@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.parser.rectifier.content
 import com.tezov.tuucho.core.data.di.MaterialRectifierModule
 import com.tezov.tuucho.core.data.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.parser._system.parentIsTypeOf
-import com.tezov.tuucho.core.data.parser.rectifier.Rectifier
+import com.tezov.tuucho.core.data.parser.rectifier.AbstractRectifier
 import com.tezov.tuucho.core.data.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
@@ -23,13 +23,13 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
-class ContentRectifier : Rectifier() {
+class ContentRectifier : AbstractRectifier() {
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.CONTENT
     )
 
-    override val childProcessors: List<Rectifier> by inject(
+    override val childProcessors: List<AbstractRectifier> by inject(
         MaterialRectifierModule.Name.Processor.CONTENT
     )
 

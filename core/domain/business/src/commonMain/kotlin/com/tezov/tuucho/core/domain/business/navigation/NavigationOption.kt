@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.navigation
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.navigationSchema.SettingNavigationOptionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationOptionSchema
 import kotlinx.serialization.json.JsonObject
 
 data class NavigationOption(
@@ -19,15 +19,15 @@ data class NavigationOption(
 
     companion object {
         fun from(optionObject: JsonObject) =
-            with(optionObject.withScope(SettingNavigationOptionSchema::Scope)) {
+            with(optionObject.withScope(ComponentSettingNavigationOptionSchema::Scope)) {
                 NavigationOption(
                     single = single ?: false,
                     reuse = reuse?.let {
                         if (it.toBooleanStrictOrNull() == true) {
-                            SettingNavigationOptionSchema.Value.Reuse.last
+                            ComponentSettingNavigationOptionSchema.Value.Reuse.last
                         } else it
                     },
-                    popUpTo = popupTo?.withScope(SettingNavigationOptionSchema.PopUpTo::Scope)
+                    popUpTo = popupTo?.withScope(ComponentSettingNavigationOptionSchema.PopUpTo::Scope)
                         ?.let {
                             PopUpTo(
                                 route = NavigationRoute.Url(

@@ -10,10 +10,9 @@ class PageHelpJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "root": {
     "setting": {
-      "disable-on-demand-definition-shadower": true
+      "disable-contextual-shadower": true
     },
     "id": "*template-page-default"
   },
@@ -40,5 +39,6 @@ class PageHelpJsonResource : JsonResourceProtocol {
     }
   }
 }
+
 """
 }

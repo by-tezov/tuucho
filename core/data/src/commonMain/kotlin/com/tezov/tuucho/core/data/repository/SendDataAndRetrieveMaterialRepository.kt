@@ -11,4 +11,5 @@ class SendDataAndRetrieveMaterialRepository(
     override suspend fun process(url: String, jsonObject: JsonObject): JsonObject? {
         return sendObjectAndRetrieveMaterialRemoteSource.process(url, jsonObject)
     }
+
 }

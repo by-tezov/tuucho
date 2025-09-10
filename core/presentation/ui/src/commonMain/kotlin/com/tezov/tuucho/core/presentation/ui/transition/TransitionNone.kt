@@ -5,14 +5,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
-import com.tezov.tuucho.core.presentation.ui.transition._system.ModifierTransition
+import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 
 object TransitionNone {
 
     @Composable
     fun AnimationProgress.none() = remember { NoneModifier() }
 
-    class NoneModifier() : ModifierTransition() {
+    class NoneModifier() : AbstractModifierTransition() {
         @Composable
         override fun Modifier.animate(boundaries: Size) = this
     }

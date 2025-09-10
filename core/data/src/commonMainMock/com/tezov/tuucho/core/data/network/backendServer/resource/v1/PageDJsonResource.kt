@@ -10,10 +10,9 @@ class PageDJsonResource : JsonResourceProtocol {
 
     override val jsonString = """
 {
-  "version": "1",
   "root": {
     "setting": {
-      "disable-on-demand-definition-shadower": true,
+      "disable-contextual-shadower": true,
       "navigation": {
         "extra": {
           "is-background-solid": false

@@ -1,33 +1,36 @@
 package com.tezov.tuucho.core.data.repository
 
+import com.tezov.tuucho.core.data.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.database.type.Lifetime
 import com.tezov.tuucho.core.data.database.type.Visibility
 import com.tezov.tuucho.core.data.exception.DataException
-import com.tezov.tuucho.core.data.source.RefreshMaterialCacheLocalSource
-import com.tezov.tuucho.core.data.source.RetrieveMaterialCacheLocalSource
-import com.tezov.tuucho.core.data.source.RetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.source.MaterialRemoteSource
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 
 class RetrieveMaterialRepository(
-    private val retrieveMaterialCacheLocalSource: RetrieveMaterialCacheLocalSource,
-    private val retrieveMaterialRemoteSource: RetrieveMaterialRemoteSource,
-    private val refreshMaterialCacheLocalSource: RefreshMaterialCacheLocalSource,
+    private val materialCacheLocalSource: MaterialCacheLocalSource,
+    private val materialRemoteSource: MaterialRemoteSource,
 ) : MaterialRepositoryProtocol.Retrieve {
 
     override suspend fun process(url: String): JsonObject {
-        val materialObject = retrieveMaterialCacheLocalSource.process(url)
-            ?: run {
-                val material = retrieveMaterialRemoteSource.process(url)
-                refreshMaterialCacheLocalSource.process(
-                    materialObject = material,
-                    url = url,
-                    visibility = Visibility.Local,
-                    lifetime = Lifetime.Unlimited
-                )
-                retrieveMaterialCacheLocalSource.process(url)
-                    ?: throw DataException.Default("Retrieved url $url returned nothing")
+        val lifetime = materialCacheLocalSource.getLifetime(url)
+        if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
+            materialCacheLocalSource.assemble(url)?.let {
+                return it
             }
-        return materialObject
+        }
+        val remoteMaterialObject = materialRemoteSource.process(url)
+        materialCacheLocalSource.delete(url, Table.Common)
+        materialCacheLocalSource.insert(
+            materialObject = remoteMaterialObject,
+            url = url,
+            weakLifetime = lifetime ?: Lifetime.Unlimited(validityKey = null),
+            visibility = Visibility.Local
+        )
+        return materialCacheLocalSource.assemble(url)
+            ?: throw DataException.Default("Retrieved url $url returned nothing")
     }
+
 }
