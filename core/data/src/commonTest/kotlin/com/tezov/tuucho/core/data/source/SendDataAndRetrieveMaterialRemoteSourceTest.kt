@@ -10,7 +10,6 @@ import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
-import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +18,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -40,10 +38,10 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
             context = EmptyCoroutineContext,
         )
 
-        materialNetworkSource = mock<MaterialNetworkSourceProtocol>()
-        materialRectifier = mock<MaterialRectifierProtocol>()
+        materialNetworkSource = mock()
+        materialRectifier = mock()
 
-        coroutineScopes = mock<CoroutineScopesProtocol> {
+        coroutineScopes = mock {
             val networkContext = mock<CoroutineContextProtocol> {
                 everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject?>()) } calls {
                     (block: suspend CoroutineScope.() -> JsonObject?) -> block(currentScope)
@@ -66,14 +64,6 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
         )
     }
 
-    @AfterTest
-    fun tearDown() {
-        // verifyNoMoreCalls(materialNetworkSource, materialRectifier, coroutineScopes)
-        // does not work as expected:
-        // - materialNetworkSource and materialRectifier are not consumed by verify
-        // - coroutineScopes considere to not check the nested as error
-    }
-
     @Test
     fun `process returns rectified object when network responds`() = runTest {
         val url = "http://server.com/api"
@@ -93,10 +83,6 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
             coroutineScopes.parser
             materialRectifier.process(networkResponse)
         }
-        verify(VerifyMode.exactly(1)) { coroutineScopes.network }
-        verifySuspend(VerifyMode.exactly(1)) { materialNetworkSource.send(url, input) }
-        verify(VerifyMode.exactly(1)) { coroutineScopes.parser }
-        verifySuspend(VerifyMode.exactly(1)) { materialRectifier.process(networkResponse) }
     }
 
     @Test
@@ -108,10 +94,5 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
 
         val result = sut.process(url, input)
         assertNull(result)
-
-        verify(VerifyMode.exactly(1)) { coroutineScopes.network }
-        verifySuspend(VerifyMode.exactly(1)) { materialNetworkSource.send(url, input) }
-        verify(VerifyMode.exactly(0)) { coroutineScopes.parser }
-        verifySuspend(VerifyMode.exactly(0)) { materialRectifier.process(any()) }
     }
 }

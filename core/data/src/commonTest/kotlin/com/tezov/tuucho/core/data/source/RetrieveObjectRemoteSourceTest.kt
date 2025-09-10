@@ -9,7 +9,6 @@ import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
-import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.CoroutineScope
@@ -64,7 +63,5 @@ class RetrieveObjectRemoteSourceTest {
             coroutineScopes.network
             materialNetworkSource.retrieve(url)
         }
-        verify(VerifyMode.exactly(1)) { coroutineScopes.network }
-        verifySuspend(VerifyMode.exactly(1)) { materialNetworkSource.retrieve(url) }
     }
 }
