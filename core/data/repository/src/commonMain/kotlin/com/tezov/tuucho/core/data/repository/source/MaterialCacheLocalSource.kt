@@ -40,7 +40,7 @@ class MaterialCacheLocalSource(
                 return false
             }
             return when (lifetime) {
-                is Lifetime.Unlimited -> true
+                is Lifetime.Unlimited, is Lifetime.SingleUse -> true
                 is Lifetime.Transient -> lifetime.expirationDateTime >= now.invoke()
                 is Lifetime.Enrolled -> false
             }

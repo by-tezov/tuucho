@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page.Pa
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import kotlinx.serialization.json.JsonObject
-import kotlin.time.Clock
 import kotlin.time.Instant
 
 @OpenForTest
@@ -32,14 +31,10 @@ class LifetimeResolver(
                                 ?.let { Instant.Companion.parse(it) }
                                 ?: throw DataException.Default("ttl transient, missing property transient-value")
                         Lifetime.Transient(weakLifetime.validityKey, expirationDateTime)
-                        // ttlScope.transientOption //TODO: "stale-while-revalidate / stale-if-error"
                     }
 
-                    PageSettingSchema.Ttl.Value.Strategy.noStore -> {
-                        val expirationDateTime = Clock.System.now()
-                        Lifetime.Transient(weakLifetime.validityKey, expirationDateTime)
-                        //TODO: should be removed from table as soon as used.
-                        // It would not really respect because if not used right away, it will seat in database...
+                    PageSettingSchema.Ttl.Value.Strategy.singleUse -> {
+                        Lifetime.SingleUse(weakLifetime.validityKey)
                     }
 
                     else -> throw DataException.Default("unknown ttl strategy $strategy")

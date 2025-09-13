@@ -12,6 +12,7 @@ sealed class Lifetime {
         const val enrolled = "enrolled"
         const val unlimited = "unlimited"
         const val transient = "transient"
+        const val singleUse = "single-use"
     }
 
     abstract val name: String
@@ -38,6 +39,14 @@ sealed class Lifetime {
         @Contextual val expirationDateTime: Instant,
     ) : Lifetime() {
         override val name = transient
+    }
+
+    @Serializable
+    @SerialName(singleUse)
+    data class SingleUse(
+        override val validityKey: String?,
+    ) : Lifetime() {
+        override val name = singleUse
     }
 
 }

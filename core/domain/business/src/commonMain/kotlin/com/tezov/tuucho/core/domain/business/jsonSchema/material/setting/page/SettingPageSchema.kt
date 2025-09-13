@@ -27,19 +27,14 @@ object PageSettingSchema {
         object Key {
             const val strategy = "strategy"
             const val transientValue = "transient-value"
-            const val transientOption = "transient-option"
         }
 
         object Value {
             object Strategy {
                 const val transient = "transient"
-                const val noStore = "no-store"
+                const val singleUse = "single-use"
             }
 
-            object TransientOption {
-                const val staleWhileRevalidate = "stale-while-revalidate"
-                const val staleIfError = "stale-if-error"
-            }
         }
 
 
@@ -48,7 +43,6 @@ object PageSettingSchema {
 
             var strategy by delegate<String?>(Key.strategy)
             var transientValue by delegate<String?>(Key.transientValue)
-            var transientOption by delegate<String?>(Key.transientOption)
         }
     }
 

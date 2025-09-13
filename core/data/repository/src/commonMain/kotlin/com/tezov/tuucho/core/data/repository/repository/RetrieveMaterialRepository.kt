@@ -18,6 +18,9 @@ class RetrieveMaterialRepository(
         val lifetime = materialCacheLocalSource.getLifetime(url)
         if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
             materialCacheLocalSource.assemble(url)?.let {
+                if (lifetime is Lifetime.SingleUse) {
+                    materialCacheLocalSource.delete(url, Table.Common)
+                }
                 return it
             }
         }
@@ -33,8 +36,12 @@ class RetrieveMaterialRepository(
             } else lifetime,
             visibility = Visibility.Local
         )
-        return materialCacheLocalSource.assemble(url)
-            ?: throw DataException.Default("Retrieved url $url returned nothing")
+        return materialCacheLocalSource.assemble(url).also {
+            val lifetime = materialCacheLocalSource.getLifetime(url)
+            if (lifetime is Lifetime.SingleUse) {
+                materialCacheLocalSource.delete(url, Table.Common)
+            }
+        } ?: throw DataException.Default("Retrieved url $url returned nothing")
     }
 
 }

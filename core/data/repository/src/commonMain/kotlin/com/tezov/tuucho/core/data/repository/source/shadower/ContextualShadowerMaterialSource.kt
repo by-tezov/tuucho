@@ -48,7 +48,12 @@ class ContextualShadowerMaterialSource(
     override suspend fun onDone() = map.map { (url, jsonObjects) ->
         coroutineScopes.parser.async {
             downloadAndCache(url)
-            jsonObjects.assembleAll(url)
+            jsonObjects.assembleAll(url).also {
+                val lifetime = materialCacheLocalSource.getLifetime(url)
+                if (lifetime is Lifetime.SingleUse) {
+                    materialCacheLocalSource.delete(url, Table.Common)
+                }
+            }
         }
     }.awaitAll().flatten()
 
