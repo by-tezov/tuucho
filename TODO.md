@@ -1,5 +1,7 @@
 ## In progress
 
+- cascade delete
+- update documentation
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)
