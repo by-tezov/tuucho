@@ -24,10 +24,6 @@ sqldelight {
     }
 }
 
-kover {
-
-}
-
 kotlin {
     sourceSets {
         androidMain.dependencies {

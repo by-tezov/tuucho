@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     base
-    alias(libs.plugins.kover) apply true
+    id("jacoco")
     alias(libs.plugins.mokkery) apply false
     alias(libs.plugins.all.open) apply false
     alias(libs.plugins.android.application) apply false
@@ -12,12 +12,11 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.sql.delight) apply false
-
 }
 
-tasks.register<TestReport>("allUnitTestsDebug") {
+tasks.register<TestReport>("rootDebugUnitTest") {
     group = "verification"
-    description = "Aggregates Html unit test reports from all modules into root build folder"
+    description = "Unit test and Aggregates Html unit test reports from all modules into root build folder"
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     val debugUnitTestTasks = subprojects.flatMap { sub ->
         sub.tasks.withType<Test>().matching { it.name.contains("DebugUnitTest") }
@@ -26,15 +25,33 @@ tasks.register<TestReport>("allUnitTestsDebug") {
     testResults.from(debugUnitTestTasks.map { it.binaryResultsDirectory })
 }
 
-dependencies {
-    subprojects.forEach { sub ->
-        if (sub.path == ":app:android") return@forEach
-        if (sub.path == ":app:ios") return@forEach
-        val buildFile = sub.file("build.gradle.kts")
-        if (buildFile.exists()) {
-            kover(sub)
-        }
-    }
+extensions.configure(JacocoPluginExtension::class.java) {
+    toolVersion = libs.versions.jacoco.get()
 }
 
+tasks.register<JacocoReport>("rootDebugCoverageReport") {
+    group = "verification"
+    description = "Aggregates Html coverage report from all modules into root build folder"
+
+    val reportsList = subprojects
+        .filterNot {
+            it.path in listOf(":app:android", ":app:ios") ||
+            !it.file("build.gradle.kts").exists()
+        }
+        .mapNotNull { sub ->
+            sub.tasks.findByName("coverageDebugTestReport") as? JacocoReport
+        }
+//    dependsOn(reportsList)
+
+    executionData.setFrom(reportsList.flatMap { it.executionData.files })
+    classDirectories.setFrom(reportsList.flatMap { it.classDirectories.files })
+    sourceDirectories.setFrom(reportsList.flatMap { it.sourceDirectories.files })
+
+    reports {
+        xml.required.set(true)
+        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoRootReport.xml"))
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/html"))
+    }
+}
 

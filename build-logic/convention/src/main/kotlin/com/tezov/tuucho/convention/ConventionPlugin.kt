@@ -4,12 +4,15 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.tezov.tuucho.convention.ConventionPlugin.Constant.domain
-import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
+import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.invoke
+import org.gradle.kotlin.dsl.withType
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
+import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -27,8 +30,6 @@ abstract class ConventionPlugin : Plugin<Project> {
         const val koltinMultiplatform = "kotlin.multiplatform"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
-        // reporting
-        const val kover = "kover"
         // test
         const val allOpen = "all.open"
         const val mokkery = "mokkery"
@@ -159,21 +160,48 @@ abstract class ConventionPlugin : Plugin<Project> {
             }
         }
 
-        internal fun configureKover(project: Project) = with(project) {
-            extensions.configure(KoverProjectExtension::class.java) {
-                reports { verify { rule { } } }
+        internal fun configureCoverage(project: Project) = with(project) {
+            if(version("flavor") != "mock") return@with
+            extensions.configure(JacocoPluginExtension::class.java) {
+                toolVersion = version("jacoco")
             }
-            tasks.named("koverHtmlReport") {
-                dependsOn.clear()
-                val debugTest = tasks.findByName("debugUnitTest")
-                if (debugTest != null) {
-                    dependsOn(debugTest)
+            tasks.register("coverageDebugTestReport", JacocoReport::class.java) {
+                val debugUnitTestTasks = tasks.withType<Test>()
+                    .filter { it.name.contains("DebugUnitTest") }
+                dependsOn(debugUnitTestTasks)
+
+                executionData.setFrom(
+                    debugUnitTestTasks.map {
+                        it.extensions
+                            .getByType(org.gradle.testing.jacoco.plugins.JacocoTaskExtension::class.java)
+                            .destinationFile
+                    }
+                )
+                classDirectories.setFrom(
+                    fileTree("$buildDirectory/tmp/kotlin-classes/debug") {
+                        exclude(
+                            "**/R.class",
+                            "**/R$*.class",
+                            "**/BuildConfig.*",
+                            "**/Manifest*.*",
+                            "**/*Test*.*"
+                        )
+                    }
+                )
+                sourceDirectories.setFrom(files("$projectDir/src/commonMain/kotlin"))
+
+                reports {
+                    xml.required.set(true)
+                    html.required.set(true)
                 }
             }
         }
 
         internal fun configureTest(project: Project) = with(project) {
             if(version("flavor") != "mock") return@with
+            extensions.configure(AllOpenExtension::class.java) {
+                annotation("$domain.core.domain.test._system.OpenForTest")
+            }
             extensions.configure(KotlinMultiplatformExtension::class.java) {
                 sourceSets {
                     commonTest {
@@ -183,9 +211,6 @@ abstract class ConventionPlugin : Plugin<Project> {
                         }
                     }
                 }
-            }
-            extensions.configure(AllOpenExtension::class.java) {
-                annotation("$domain.core.domain.test._system.OpenForTest")
             }
         }
     }
