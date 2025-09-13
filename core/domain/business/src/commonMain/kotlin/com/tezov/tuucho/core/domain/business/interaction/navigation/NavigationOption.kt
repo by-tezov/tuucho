@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.navigation
+package com.tezov.tuucho.core.domain.business.interaction.navigation
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope

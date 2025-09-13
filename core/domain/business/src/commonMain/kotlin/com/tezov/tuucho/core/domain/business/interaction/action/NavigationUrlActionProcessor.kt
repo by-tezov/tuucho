@@ -1,18 +1,17 @@
-package com.tezov.tuucho.core.domain.business.action
+package com.tezov.tuucho.core.domain.business.interaction.action
 
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.tool.async.Notifier
+import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import kotlinx.serialization.json.JsonElement
 
 class NavigationUrlActionProcessor(
-    private val coroutineScopes: CoroutineScopesProtocol,
+    private val useCaseExecutor: UseCaseExecutor,
+    private val navigateForward: NavigateToUrlUseCase,
 ) : ActionProcessorProtocol {
-    private val _events = Notifier.Emitter<String>()
-    val events get() = _events.createCollector
 
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
@@ -30,8 +29,13 @@ class NavigationUrlActionProcessor(
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {
-        action.target?.let {
-            coroutineScopes.event.async { _events.emit(it) }
+        action.target?.let { url ->
+            useCaseExecutor.invokeSuspend(
+                useCase = navigateForward,
+                input = NavigateToUrlUseCase.Input(
+                    url = url
+                )
+            )
         }
     }
 

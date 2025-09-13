@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.presentation.ui.renderer.view
 
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
@@ -9,7 +10,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionSchema
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory

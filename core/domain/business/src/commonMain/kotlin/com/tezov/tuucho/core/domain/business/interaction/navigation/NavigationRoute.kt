@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.navigation
+package com.tezov.tuucho.core.domain.business.interaction.navigation
 
 sealed class NavigationRoute(
     open val id: String,

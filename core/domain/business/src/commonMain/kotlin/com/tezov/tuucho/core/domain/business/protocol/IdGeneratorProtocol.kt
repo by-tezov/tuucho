@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+interface IdGeneratorProtocol {
 
-interface AnimationProtocol {
-
+    fun generate(): String
 
 }

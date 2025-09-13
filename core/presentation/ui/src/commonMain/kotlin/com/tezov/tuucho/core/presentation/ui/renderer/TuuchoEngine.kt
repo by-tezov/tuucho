@@ -17,9 +17,7 @@ import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.rememberAnimationProgress
@@ -49,8 +47,6 @@ class TuuchoEngine(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
     private val refreshMaterialCache: RefreshMaterialCacheUseCase,
-    private val registerUpdateViewEvent: RegisterUpdateViewEventUseCase,
-    private val registerToNavigationUrlActionEvent: RegisterToNavigationUrlActionEventUseCase,
     private val registerToScreenTransitionEvent: RegisterToScreenTransitionEventUseCase,
     private val notifyNavigationTransitionCompleted: NotifyNavigationTransitionCompletedUseCase,
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
@@ -77,14 +73,6 @@ class TuuchoEngine(
     }
     
     override suspend fun start(url: String) {
-        useCaseExecutor.invoke(
-            useCase = registerUpdateViewEvent,
-            input = Unit
-        )
-        useCaseExecutor.invoke(
-            useCase = registerToNavigationUrlActionEvent,
-            input = Unit
-        )
         useCaseExecutor.invoke(
             useCase = registerToScreenTransitionEvent,
             input = RegisterToScreenTransitionEventUseCase.Input(

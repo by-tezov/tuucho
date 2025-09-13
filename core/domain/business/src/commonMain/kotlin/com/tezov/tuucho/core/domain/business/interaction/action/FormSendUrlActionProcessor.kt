@@ -1,5 +1,6 @@
-package com.tezov.tuucho.core.domain.business.action
+package com.tezov.tuucho.core.domain.business.interaction.action
 
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
@@ -7,7 +8,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
@@ -19,7 +19,7 @@ class ProcessActionUseCase(
     )
 
     override suspend fun invoke(input: Input) {
-        coroutineScopes.event.await {
+        coroutineScopes.useCase.await {
             with(input) {
                 handlers
                     .asSequence()

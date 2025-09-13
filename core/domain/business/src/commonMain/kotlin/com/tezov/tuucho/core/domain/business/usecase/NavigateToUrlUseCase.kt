@@ -1,18 +1,19 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.interaction.navigation.selector.PageBreadCrumbNavigationDefinitionSelectorMatcher
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRouteIdGenerator
-import com.tezov.tuucho.core.domain.business.navigation.selector.PageBreadCrumbNavigationDefinitionSelectorMatcher
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.ActionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase.Input
@@ -26,12 +27,13 @@ class NavigateToUrlUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
     private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve,
-    private val navigationRouteIdGenerator: NavigationRouteIdGenerator,
+    private val navigationRouteIdGenerator: IdGeneratorProtocol,
     private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
+    private val actionLockRepository: ActionLockRepositoryProtocol,
 ) : UseCaseProtocol.Sync<Input, Unit> {
 
     data class Input(
@@ -40,7 +42,9 @@ class NavigateToUrlUseCase(
 
     override fun invoke(input: Input) {
         coroutineScopes.navigation.async {
-            //TODO need to protect navigation from monkey click
+            val interactionHandle = actionLockRepository
+                .tryLock(ActionLockRepositoryProtocol.Type.Navigation)
+                ?: return@async
             with(input) {
                 val componentObject = retrieveMaterialRepository.process(url)
                 val navigationSettingObject = componentObject
@@ -68,6 +72,10 @@ class NavigateToUrlUseCase(
                         ?.extra,
                     navigationTransitionObject = navigationDefinitionObject
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.transition,
+                )
+                actionLockRepository.unLock(
+                    ActionLockRepositoryProtocol.Type.Navigation,
+                    interactionHandle
                 )
             }
         }

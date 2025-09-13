@@ -94,11 +94,9 @@ object MaterialRectifierModule {
     }
 
     private fun Module.idModule() {
-        single<RectifierIdGenerator> { RectifierIdGenerator() }
-
         single<IdRectifier> {
             IdRectifier(
-                get<RectifierIdGenerator>()
+                idGenerator = RectifierIdGenerator()
             )
         }
 

@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.navigation.transition
+package com.tezov.tuucho.core.domain.business.interaction.navigation.transition
 
 import com.tezov.tuucho.core.domain.business.protocol.NavigationTransitionStackHelperProtocol
 import kotlinx.serialization.json.JsonObject

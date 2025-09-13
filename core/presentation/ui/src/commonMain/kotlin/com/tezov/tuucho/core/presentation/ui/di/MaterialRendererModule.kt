@@ -34,8 +34,6 @@ object MaterialRendererModule {
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
                 refreshMaterialCache = get(),
-                registerUpdateViewEvent = get(),
-                registerToNavigationUrlActionEvent = get(),
                 registerToScreenTransitionEvent = get(),
                 notifyNavigationTransitionCompleted = get(),
                 getScreensFromRoutes = get(),

@@ -1,6 +1,7 @@
-package com.tezov.tuucho.core.domain.business.action
+package com.tezov.tuucho.core.domain.business.interaction.action
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
@@ -8,27 +9,18 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.F
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.Action
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.tool.async.Notifier
+import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
+import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.KoinComponent
 
 class FormUpdateActionProcessor(
-    private val coroutineScopes: CoroutineScopesProtocol,
+    private val useCaseExecutor: UseCaseExecutor,
+    private val updateView: UpdateViewUseCase,
 ) : ActionProcessorProtocol, KoinComponent {
-
-    data class Event(
-        val route: NavigationRoute,
-        val jsonObject: JsonObject,
-    )
-
-    private val _events = Notifier.Emitter<Event>()
-    val events get() = _events.createCollector
 
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
@@ -65,14 +57,13 @@ class FormUpdateActionProcessor(
                     messageErrorExtra = it
                 }
             }.collect()
-            coroutineScopes.event.async {
-                _events.emit(
-                    Event(
-                        route = route,
-                        jsonObject = message
-                    )
+            useCaseExecutor.invokeSuspend(
+                useCase = updateView,
+                input = UpdateViewUseCase.Input(
+                    route = route,
+                    jsonObject = message
                 )
-            }
+            )
         }
     }
 

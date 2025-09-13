@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.navigation.selector
+package com.tezov.tuucho.core.domain.business.interaction.navigation.selector
 
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 

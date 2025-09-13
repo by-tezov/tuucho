@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.action.FormSendUrlActionProcessor
-import com.tezov.tuucho.core.domain.business.action.FormUpdateActionProcessor
-import com.tezov.tuucho.core.domain.business.action.NavigationLocalDestinationActionProcessor
-import com.tezov.tuucho.core.domain.business.action.NavigationUrlActionProcessor
+import com.tezov.tuucho.core.domain.business.interaction.action.FormSendUrlActionProcessor
+import com.tezov.tuucho.core.domain.business.interaction.action.FormUpdateActionProcessor
+import com.tezov.tuucho.core.domain.business.interaction.action.NavigationLocalDestinationActionProcessor
+import com.tezov.tuucho.core.domain.business.interaction.action.NavigationUrlActionProcessor
 import org.koin.dsl.module
 
 object ActionProcessorModule {
@@ -19,7 +19,8 @@ object ActionProcessorModule {
 
         single<FormUpdateActionProcessor> {
             FormUpdateActionProcessor(
-                coroutineScopes = get(),
+                useCaseExecutor = get(),
+                updateView = get()
             )
         }
 
@@ -32,7 +33,8 @@ object ActionProcessorModule {
 
         single<NavigationUrlActionProcessor> {
             NavigationUrlActionProcessor(
-                coroutineScopes = get(),
+                useCaseExecutor = get(),
+                navigateForward = get()
             )
         }
 
