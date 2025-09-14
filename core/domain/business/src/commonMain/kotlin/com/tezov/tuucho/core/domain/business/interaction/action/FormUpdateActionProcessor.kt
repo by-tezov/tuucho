@@ -53,7 +53,7 @@ class FormUpdateActionProcessor(
                 id = param.withScope(IdSchema::Scope).self
                 type = TypeSchema.Value.message
                 subset = FormSchema.Message.Value.Subset.updateErrorState
-                param.withScope(FormSendResponseSchema.Result::Scope).failureReason?.let {
+                param.withScope(FormSendResponseSchema.FailureResult::Scope).reason?.let {
                     messageErrorExtra = it
                 }
             }.collect()

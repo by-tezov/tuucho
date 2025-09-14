@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.Action
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
@@ -19,6 +20,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -58,17 +60,15 @@ class FormSendUrlActionProcessor(
             ).jsonObject
             response?.let {
                 val responseScope = response.withScope(FormSendResponseSchema::Scope)
-                val isAllSuccess = responseScope.isAllSuccess == true
-                if (isAllSuccess) {
-                    jsonElement?.actionValidated(route)
+                if (responseScope.type == Type.allSucceed) {
+                    responseScope.processValidRemoteForm(route, jsonElement)
                 } else {
-                    responseScope.processInvalidRemoteForm(route)
+                    responseScope.processInvalidRemoteForm(route, jsonElement)
                 }
             }
         } else {
             formView.processInvalidLocalForm(route)
         }
-
     }
 
     private suspend fun NavigationRoute.getAllFormView() =
@@ -90,57 +90,57 @@ class FormSendUrlActionProcessor(
         }
     }.let(::JsonObject)
 
-    private suspend fun List<FormViewProtocol>.processInvalidLocalForm(route: NavigationRoute) {
+    private suspend fun List<FormViewProtocol>.processInvalidLocalForm(
+        route: NavigationRoute,
+    ) {
         val results = filter { it.isValid() == false }
             .map {
                 JsonNull.withScope(IdSchema::Scope).apply {
-                    self = JsonNull.withScope(IdSchema::Scope)
-                        .apply { value = it.getId() }.collect()
+                    self = JsonNull.withScope(IdSchema::Scope).apply {
+                        value = it.getId()
+                    }.collect()
                 }.collect()
-
             }.let(::JsonArray)
-        actionDenied(route, results)
+        dispatchActionCommandError(route, results)
     }
 
     private suspend fun FormSendResponseSchema.Scope.processInvalidRemoteForm(
         route: NavigationRoute,
+        jsonElement: JsonElement?,
     ) {
-        val results = results?.map { result ->
-            val resultScope = result.withScope(FormSendResponseSchema.Result::Scope)
-            val resultFailureReason = resultScope.failureReason
+        jsonElement?.withScope(ActionFormSchema.Send::Scope)
+            ?.actionDenied?.dispatchAction(route, collect())
+            ?: dispatchActionCommandError(route, toFailureResult())
+    }
+
+    private suspend fun FormSendResponseSchema.Scope.processValidRemoteForm(
+        route: NavigationRoute,
+        jsonElement: JsonElement?,
+    ) {
+        jsonElement?.withScope(ActionFormSchema.Send::Scope)
+            ?.actionValidated?.dispatchAction(route, collect())
+    }
+
+    private fun FormSendResponseSchema.Scope.toFailureResult() = content
+        ?.takeIf { type == Type.failureResult }
+        ?.jsonArray
+        ?.map { result ->
+            val resultScope = result.withScope(FormSendResponseSchema.FailureResult::Scope)
             JsonNull.withScope(::SchemaScope).apply {
                 withScope(IdSchema::Scope).apply {
                     self = JsonNull.withScope(IdSchema::Scope).apply {
                         value = resultScope.id
                     }.collect()
                 }
-                resultFailureReason?.let {
-                    withScope(FormSendResponseSchema.Result::Scope).apply {
-                        failureReason = it
+                resultScope.reason?.let {
+                    withScope(FormSendResponseSchema.FailureResult::Scope).apply {
+                        reason = it
                     }
                 }
             }.collect()
         }?.let(::JsonArray)
-        actionDenied(route, results)
-    }
 
-    private suspend fun JsonElement.actionValidated(route: NavigationRoute) {
-        val actionValidated = withScope(ActionFormSchema.Send::Scope).actionValidated
-        actionValidated?.let {
-            useCaseExecutor.invokeSuspend(
-                useCase = actionHandler,
-                input = ProcessActionUseCase.Input(
-                    route = route,
-                    action = ActionModelDomain.from(it)
-                ),
-            )
-        }
-    }
-
-    private suspend fun actionDenied(
-        route: NavigationRoute,
-        results: JsonElement?,
-    ) {
+    private suspend fun dispatchActionCommandError(route: NavigationRoute, results: JsonElement?) {
         useCaseExecutor.invokeSuspend(
             useCase = actionHandler,
             input = ProcessActionUseCase.Input(
@@ -151,6 +151,17 @@ class FormSendUrlActionProcessor(
                     target = Action.Form.Update.Target.error
                 ),
                 jsonElement = results
+            ),
+        )
+    }
+
+    private suspend fun String.dispatchAction(route: NavigationRoute, jsonElement: JsonElement?) {
+        useCaseExecutor.invokeSuspend(
+            useCase = actionHandler,
+            input = ProcessActionUseCase.Input(
+                route = route,
+                action = ActionModelDomain.from(this),
+                jsonElement = jsonElement
             ),
         )
     }
