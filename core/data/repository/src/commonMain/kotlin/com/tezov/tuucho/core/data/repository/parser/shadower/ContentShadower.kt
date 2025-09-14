@@ -19,7 +19,7 @@ class ContentShadower : AbstractShadower() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement
+        path: JsonElementPath, element: JsonElement,
     ) = path.isTypeOf(element, TypeSchema.Value.content) || super.accept(path, element)
 
 }

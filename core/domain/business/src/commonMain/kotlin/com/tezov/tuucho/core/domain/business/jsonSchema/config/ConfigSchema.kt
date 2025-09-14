@@ -32,12 +32,11 @@ object ConfigSchema {
         }
     }
 
-
     object MaterialItem {
         object Key {
             const val validityKey = "validity-key"
             const val url = "url"
-            const val urlOrigin = "urlOrigin"
+            const val urlOrigin = "url-origin"
             const val preDownload = "pre-download"
         }
 
@@ -48,6 +47,5 @@ object ConfigSchema {
             var preDownload by delegate<Boolean?>(Key.preDownload)
         }
     }
-
 }
 

@@ -50,7 +50,7 @@ class NavigateBackUseCase(
         val componentObject = view.componentObject
         val componentSettingScope = componentObject.onScope(ComponentSettingSchema.Root::Scope)
         val settingShadowerScope = componentSettingScope
-            .contextualShadower
+            .shadower
             ?.withScope(SettingComponentShadowerSchema::Scope)
             ?.navigateBackward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
@@ -58,7 +58,7 @@ class NavigateBackUseCase(
             val job = coroutineScopes.navigation.async {
                 shadowerMaterialRepository.process(
                     url = url,
-                    materialObject = componentObject,
+                    componentObject = componentObject,
                     types = listOf(Shadower.Type.contextual)
                 ).forEach {
                     coroutineScopes.renderer.await {

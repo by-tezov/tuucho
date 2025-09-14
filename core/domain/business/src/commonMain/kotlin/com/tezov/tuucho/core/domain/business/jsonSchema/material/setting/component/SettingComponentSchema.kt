@@ -15,13 +15,6 @@ object ComponentSettingSchema {
     object Key {
         const val id = IdSchema.root
         const val type = TypeSchema.root
-        const val urlContextual = "url-contextual"
-    }
-
-    object Value {
-        object UrlContextual {
-            const val suffix = "-contextual"
-        }
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
@@ -32,7 +25,6 @@ object ComponentSettingSchema {
 
         var id by delegate<JsonElement?>(Key.id)
         var type by delegate<String?>(Key.type)
-        var urlContextual by delegate<String?>(Key.urlContextual)
     }
 
     object Root {
@@ -42,7 +34,7 @@ object ComponentSettingSchema {
         }
 
         class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument) {
-            var contextualShadower by delegate<JsonObject?>(Key.shadower)
+            var shadower by delegate<JsonObject?>(Key.shadower)
             var navigation by delegate<JsonObject?>(Key.navigation)
         }
     }

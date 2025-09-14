@@ -112,7 +112,7 @@ class NavigateToUrlUseCase(
         val componentSettingScope = componentObject
             .onScope(ComponentSettingSchema.Root::Scope)
         val settingShadowerScope = componentSettingScope
-            .contextualShadower
+            .shadower
             ?.withScope(SettingComponentShadowerSchema::Scope)
             ?.navigateForward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
@@ -120,7 +120,7 @@ class NavigateToUrlUseCase(
             val job = coroutineScopes.navigation.async {
                 shadowerMaterialRepository.process(
                     url = url,
-                    materialObject = componentObject,
+                    componentObject = componentObject,
                     types = listOf(Shadower.Type.contextual)
                 ).forEach {
                     coroutineScopes.renderer.await {

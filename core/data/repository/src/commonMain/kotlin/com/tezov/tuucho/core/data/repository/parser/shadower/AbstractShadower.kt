@@ -58,6 +58,7 @@ abstract class AbstractShadower : MatcherShadowerProtocol, KoinComponent {
                     .forEach { it.process(childPath, element, jsonObjectConsumer) }
             }
         }
-        jsonObjectConsumer.onNext(this)
+        jsonObjectConsumer.onNext(this, null)
     }
+
 }

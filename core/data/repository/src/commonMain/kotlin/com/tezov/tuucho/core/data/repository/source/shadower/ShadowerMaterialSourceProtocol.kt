@@ -10,7 +10,7 @@ interface ShadowerMaterialSourceProtocol {
 
     suspend fun onStart(url: String, materialElement: JsonObject)
 
-    suspend fun onNext(jsonObject: JsonObject)
+    suspend fun onNext(jsonObject: JsonObject, settingObject: JsonObject?)
 
     suspend fun onDone(): List<JsonObject>
 }

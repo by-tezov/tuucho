@@ -10,7 +10,8 @@ import com.tezov.tuucho.core.data.repository.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.config.ConfigSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Contextual
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Contextual.replaceUrlOriginToken
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
@@ -109,8 +110,8 @@ class RefreshMaterialCacheRepository(
                 element.withScope(ConfigSchema.MaterialItem::Scope).let { configScope ->
                     val urlOrigin = configScope.urlOrigin
                         ?: throw DataException.Default("missing urlOrigin in contextual material $this")
-                    val url = configScope.url
-                        ?: "${urlOrigin}${ComponentSettingSchema.Value.UrlContextual.suffix}"
+                    val url = configScope.url?.replaceUrlOriginToken(urlOrigin)
+                        ?: Contextual.defaultUrl(urlOrigin)
                     val validityKey = configScope.validityKey
                         ?: throw DataException.Default("missing validity key in contextual material $this")
                     if (materialCacheLocalSource.isCacheValid(url, validityKey)) continue

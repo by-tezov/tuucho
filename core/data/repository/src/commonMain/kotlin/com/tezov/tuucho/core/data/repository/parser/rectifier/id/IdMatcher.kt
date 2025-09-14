@@ -17,9 +17,12 @@ class IdMatcher : MatcherRectifierProtocol, KoinComponent {
         TypeSchema.Value.content,
         TypeSchema.Value.style,
         TypeSchema.Value.option,
+        TypeSchema.Value.Setting.component,
+        TypeSchema.Value.Setting.page,
         TypeSchema.Value.text,
         TypeSchema.Value.color,
-        TypeSchema.Value.dimension
+        TypeSchema.Value.dimension,
+        TypeSchema.Value.state
     )
 
     override fun accept(

@@ -23,6 +23,7 @@ object TypeSchema {
         const val text = "text"
         const val dimension = "dimension"
         const val color = "color"
+
         const val state = "state"
         const val message = "message"
     }

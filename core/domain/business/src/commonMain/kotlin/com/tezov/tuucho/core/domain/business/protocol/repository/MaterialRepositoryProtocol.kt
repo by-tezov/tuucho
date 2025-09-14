@@ -26,7 +26,7 @@ sealed interface MaterialRepositoryProtocol {
 
         suspend fun process(
             url: String,
-            materialObject: JsonObject,
+            componentObject: JsonObject,
             types: List<String>,
         ): List<Output>
 
