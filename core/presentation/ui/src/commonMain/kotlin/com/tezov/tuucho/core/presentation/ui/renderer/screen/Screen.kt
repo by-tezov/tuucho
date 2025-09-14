@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.presentation.ui.renderer.screen
 
 import androidx.compose.runtime.Composable
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject

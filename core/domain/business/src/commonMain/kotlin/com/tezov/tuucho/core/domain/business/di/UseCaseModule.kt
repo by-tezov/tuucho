@@ -1,9 +1,6 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.action.FormSendUrlActionProcessor
-import com.tezov.tuucho.core.domain.business.action.FormUpdateActionProcessor
-import com.tezov.tuucho.core.domain.business.action.NavigationLocalDestinationActionProcessor
-import com.tezov.tuucho.core.domain.business.action.NavigationUrlActionProcessor
+import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
@@ -15,10 +12,9 @@ import com.tezov.tuucho.core.domain.business.usecase.NavigationStackTransitionHe
 import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToNavigationUrlActionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterUpdateViewEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import org.koin.dsl.module
 
@@ -54,7 +50,8 @@ object UseCaseModule {
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
-                shadowerMaterialRepository = get()
+                shadowerMaterialRepository = get(),
+                actionLockRepository = get()
             )
         }
 
@@ -63,12 +60,13 @@ object UseCaseModule {
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
                 retrieveMaterialRepository = get(),
-                navigationRouteIdGenerator = get(),
+                navigationRouteIdGenerator = get(Name.ID_GENERATOR),
                 navigationOptionSelectorFactory = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
+                actionLockRepository = get(),
             )
         }
 
@@ -89,27 +87,13 @@ object UseCaseModule {
         factory<ProcessActionUseCase> {
             ProcessActionUseCase(
                 coroutineScopes = get(),
-                handlers = listOf(
-                    get<NavigationUrlActionProcessor>(),
-                    get<NavigationLocalDestinationActionProcessor>(),
-                    get<FormSendUrlActionProcessor>(),
-                    get<FormUpdateActionProcessor>(),
-                )
+                actionProcessors = get(ActionProcessorModule.Name.PROCESSORS)
             )
         }
 
         factory<RefreshMaterialCacheUseCase> {
             RefreshMaterialCacheUseCase(
                 refreshMaterialCacheRepository = get()
-            )
-        }
-
-        factory<RegisterToNavigationUrlActionEventUseCase> {
-            RegisterToNavigationUrlActionEventUseCase(
-                coroutineScopes = get(),
-                useCaseExecutor = get(),
-                navigationUrlActionProcessor = get(),
-                navigateForward = get(),
             )
         }
 
@@ -120,11 +104,10 @@ object UseCaseModule {
             )
         }
 
-        factory<RegisterUpdateViewEventUseCase> {
-            RegisterUpdateViewEventUseCase(
+        factory<UpdateViewUseCase> {
+            UpdateViewUseCase(
                 coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
-                formUpdateActionProcessor = get()
             )
         }
 

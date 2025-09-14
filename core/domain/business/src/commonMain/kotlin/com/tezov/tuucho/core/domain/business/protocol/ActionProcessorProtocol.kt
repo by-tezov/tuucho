@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import kotlinx.serialization.json.JsonElement
 
 interface ActionProcessorProtocol {

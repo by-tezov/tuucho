@@ -3,12 +3,6 @@ plugins {
 }
 
 android {
-    namespace = "com.tezov.tuucho.core.presentation.ui"
-
-    defaultConfig {
-
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -26,6 +20,7 @@ kotlin {
             implementation(project(":core:domain:business"))
             implementation(project(":core:domain:tool"))
             implementation(project(":core:presentation:tool"))
+
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
