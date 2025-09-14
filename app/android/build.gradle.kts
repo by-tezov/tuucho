@@ -3,12 +3,6 @@ plugins {
 }
 
 android {
-    namespace = "com.tezov.tuucho.demo"
-
-    defaultConfig {
-        applicationId = "com.tezov.demo.tuucho.android"
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -22,7 +16,7 @@ android {
 
 dependencies {
     implementation(project(":app:kmm"))
-    implementation(project(":core:data"))
+    implementation(project(":core:data:repository"))
     implementation(libs.compose.activity)
     implementation(libs.koin.core)
 }

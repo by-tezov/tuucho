@@ -11,3 +11,4 @@
 /build-logic/.kotlin/errors/
 /app/ios/fastlane/report.xml
 /app/ios/fastlane/Appfile
+/build-logic/build/

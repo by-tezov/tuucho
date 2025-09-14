@@ -1,13 +1,14 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.ActionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
@@ -18,11 +19,14 @@ class NavigateBackUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
+    private val actionLockRepository: ActionLockRepositoryProtocol,
 ) : UseCaseProtocol.Sync<Unit, Unit> {
 
     override fun invoke(input: Unit) {
         coroutineScopes.navigation.async {
-            //TODO need to protect navigation from monkey click
+            val interactionHandle = actionLockRepository
+                .tryLock(ActionLockRepositoryProtocol.Type.Navigation)
+                ?: return@async
             val restoredRoute = navigationStackRouteRepository.backward(
                 route = NavigationRoute.Back
             )
@@ -32,6 +36,10 @@ class NavigateBackUseCase(
             )
             navigationStackScreenRepository.backward(
                 routes = navigationStackRouteRepository.routes(),
+            )
+            actionLockRepository.unLock(
+                ActionLockRepositoryProtocol.Type.Navigation,
+                interactionHandle
             )
         }
     }

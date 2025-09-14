@@ -19,10 +19,10 @@ class CoroutineScopes(
 
     override val navigation: CoroutineContextProtocol = object :
         CoroutineContext("Navigation", Dispatchers.Default) {},
-    override val event: CoroutineContextProtocol = object :
-        CoroutineContext("Event", Dispatchers.Default) {},
     override val useCase: CoroutineContextProtocol = object :
         CoroutineContext("UseCase", Dispatchers.Default) {},
+    override val event: CoroutineContextProtocol = object :
+        CoroutineContext("Event", Dispatchers.Default) {},
 
     override val default: CoroutineContextProtocol = object :
         CoroutineContext("Default", Dispatchers.Default) {},

@@ -8,8 +8,8 @@ interface CoroutineScopesProtocol {
     val parser: CoroutineContextProtocol
     val renderer: CoroutineContextProtocol
     val navigation: CoroutineContextProtocol
-    val event: CoroutineContextProtocol
     val useCase: CoroutineContextProtocol
+    val event: CoroutineContextProtocol
 
     val default: CoroutineContextProtocol
     val main: CoroutineContextProtocol

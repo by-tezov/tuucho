@@ -2,16 +2,26 @@ package com.tezov.tuucho.convention
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
-import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
+import com.android.build.api.dsl.LibraryExtension
+import com.tezov.tuucho.convention.ConventionPlugin.Constant.domain
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
+import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.invoke
+import org.gradle.kotlin.dsl.withType
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
+import org.gradle.testing.jacoco.tasks.JacocoReport
+import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 abstract class ConventionPlugin : Plugin<Project> {
+
+    object Constant {
+        const val domain = "com.tezov.tuucho"
+    }
 
     object PluginId {
         const val androidApplication = "android.application"
@@ -20,9 +30,8 @@ abstract class ConventionPlugin : Plugin<Project> {
         const val koltinMultiplatform = "kotlin.multiplatform"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
-        // reporting
-        const val kover = "kover"
         // test
+        const val allOpen = "all.open"
         const val mokkery = "mokkery"
     }
 
@@ -36,7 +45,7 @@ abstract class ConventionPlugin : Plugin<Project> {
         internal fun configureAndroidCommon(
             project: Project,
         ) = with(project) {
-            extensions.findByType(CommonExtension::class.java)!!.apply {
+            extensions.configure(CommonExtension::class.java) {
                 compileSdk = version("compileSdk").toInt()
 
                 buildFeatures {
@@ -52,7 +61,7 @@ abstract class ConventionPlugin : Plugin<Project> {
                     targetCompatibility = javaVersion()
                 }
             }
-            project.extensions.findByType(JavaPluginExtension::class.java)!!.apply {
+            project.extensions.configure(JavaPluginExtension::class.java) {
                 toolchain {
                     languageVersion.set(javaLanguageVersion())
                 }
@@ -62,14 +71,17 @@ abstract class ConventionPlugin : Plugin<Project> {
         internal fun configureApplication(
             project: Project,
         ) = with(project) {
-            extensions.findByType(ApplicationExtension::class.java)!!.apply {
+            extensions.configure(ApplicationExtension::class.java) {
+                namespace = namespace()
+
                 defaultConfig {
+                    applicationId = "${namespace()}.android"
                     targetSdk = version("targetSdk").toInt()
                     versionCode = version("versionCode").toInt()
                     versionName = version("versionName")
                 }
             }
-            project.extensions.findByType(KotlinAndroidProjectExtension::class.java)!!.apply {
+            project.extensions.configure(KotlinAndroidProjectExtension::class.java) {
                 jvmToolchain(this@with.javaVersionInt())
                 compilerOptions.jvmTarget.set(this@with.jvmTarget())
                 compilerOptions.optIn.configureOptIn()
@@ -78,10 +90,19 @@ abstract class ConventionPlugin : Plugin<Project> {
         }
 
         internal fun configureLibraryMultiplatform(project: Project) = with(project) {
+            extensions.configure(LibraryExtension::class.java) {
+                namespace = namespace()
+            }
             extensions.configure(KotlinMultiplatformExtension::class.java) {
                 jvmToolchain(this@with.javaVersionInt())
-                compilerOptions.optIn.configureOptIn()
-                compilerOptions.allWarningsAsErrors.set(true)
+
+                compilerOptions {
+                    optIn.configureOptIn()
+                    allWarningsAsErrors.set(true)
+//                    freeCompilerArgs.add("-Xexpect-actual-classes")
+//                    freeCompilerArgs.add("-Xlint:unchecked")
+//                    freeCompilerArgs.add("-Xlint:deprecation")
+                }
 
                 val androidTargets = listOf(androidTarget())
                 androidTargets.forEach {
@@ -130,7 +151,7 @@ abstract class ConventionPlugin : Plugin<Project> {
         internal fun configureCompose(
             project: Project,
         ) = with(project) {
-            extensions.findByType(CommonExtension::class.java)!!.apply {
+            extensions.configure(CommonExtension::class.java) {
                 lint {
                     disable.apply {
                         add("ComposableNaming")
@@ -139,21 +160,48 @@ abstract class ConventionPlugin : Plugin<Project> {
             }
         }
 
-        internal fun configureKover(project: Project) = with(project) {
-            extensions.configure(KoverProjectExtension::class.java) {
-                reports { verify { rule { } } }
+        internal fun configureCoverage(project: Project) = with(project) {
+            if(version("flavor") != "mock") return@with
+            extensions.configure(JacocoPluginExtension::class.java) {
+                toolVersion = version("jacoco")
             }
-            tasks.named("koverHtmlReport") {
-                dependsOn.clear()
-                val debugTest = tasks.findByName("debugUnitTest")
-                if (debugTest != null) {
-                    dependsOn(debugTest)
+            tasks.register("coverageDebugTestReport", JacocoReport::class.java) {
+                val debugUnitTestTasks = tasks.withType<Test>()
+                    .filter { it.name.contains("DebugUnitTest") }
+                dependsOn(debugUnitTestTasks)
+
+                executionData.setFrom(
+                    debugUnitTestTasks.map {
+                        it.extensions
+                            .getByType(org.gradle.testing.jacoco.plugins.JacocoTaskExtension::class.java)
+                            .destinationFile
+                    }
+                )
+                classDirectories.setFrom(
+                    fileTree("$buildDirectory/tmp/kotlin-classes/debug") {
+                        exclude(
+                            "**/R.class",
+                            "**/R$*.class",
+                            "**/BuildConfig.*",
+                            "**/Manifest*.*",
+                            "**/*Test*.*"
+                        )
+                    }
+                )
+                sourceDirectories.setFrom(files("$projectDir/src/commonMain/kotlin"))
+
+                reports {
+                    xml.required.set(true)
+                    html.required.set(true)
                 }
             }
         }
 
         internal fun configureTest(project: Project) = with(project) {
             if(version("flavor") != "mock") return@with
+            extensions.configure(AllOpenExtension::class.java) {
+                annotation("$domain.core.domain.test._system.OpenForTest")
+            }
             extensions.configure(KotlinMultiplatformExtension::class.java) {
                 sourceSets {
                     commonTest {
@@ -162,7 +210,6 @@ abstract class ConventionPlugin : Plugin<Project> {
                             implementation(library("kotlinx.coroutines.test"))
                         }
                     }
-
                 }
             }
         }

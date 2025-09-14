@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase
 
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol

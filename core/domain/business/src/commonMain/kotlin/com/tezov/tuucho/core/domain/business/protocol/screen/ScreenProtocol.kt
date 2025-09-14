@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.protocol.screen
 
-import com.tezov.tuucho.core.domain.business.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass

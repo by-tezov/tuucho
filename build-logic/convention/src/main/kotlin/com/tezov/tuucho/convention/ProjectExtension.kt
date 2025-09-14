@@ -1,5 +1,6 @@
 package com.tezov.tuucho.convention
 
+import com.tezov.tuucho.convention.ConventionPlugin.Constant.domain
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
@@ -7,15 +8,14 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.io.File
 
-internal val Project.buildDirectory : File
+internal val Project.buildDirectory
     get() = layout.buildDirectory.get().asFile
 
 internal val Project.libs
     get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-internal fun Project.plugin(name: String) : String =
+internal fun Project.plugin(name: String) =
     libs.findPlugin(name).get().get().pluginId
 
 internal fun Project.library(name: String) =
@@ -24,7 +24,9 @@ internal fun Project.library(name: String) =
 internal fun Project.bundle(name: String) =
     libs.findBundle(name).get()
 
-internal fun Project.version(name: String): String = libs.findVersion(name)
+internal fun Project.namespace() = "$domain${path.replace(":", ".")}"
+
+internal fun Project.version(name: String) = libs.findVersion(name)
     .get()
     .requiredVersion
 

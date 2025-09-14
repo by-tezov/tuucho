@@ -21,6 +21,7 @@ CI command (use label 'trigger CI' after update)
 - **flavor type**:
   - [x] : mock
   - [ ] : prod
+- [x] : unit-test
 ---
 **QA branch name** : master
 - [ ] : create visual baseline
