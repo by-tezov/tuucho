@@ -12,11 +12,11 @@ object StartKoinModules {
 
     @Composable
     internal operator fun invoke(
-        moduleDeclaration: ModuleDeclaration,
+        applicationModuleDeclaration: ModuleDeclaration,
         content: @Composable () -> Unit,
     ) = KoinApplication(application = {
         allowOverride(override = false)
-        modules(module { moduleDeclaration() })
+        modules(module { applicationModuleDeclaration() })
         modules(SystemCoreDomainModules())
         modules(SystemCoreDataModules())
         modules(SystemCoreUiModules())

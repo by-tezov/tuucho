@@ -40,6 +40,7 @@ object MaterialBreakerModule {
 
     internal operator fun invoke() = module {
         single<MaterialBreaker> { MaterialBreaker() }
+
         componentModule()
         contentModule()
         styleModule()

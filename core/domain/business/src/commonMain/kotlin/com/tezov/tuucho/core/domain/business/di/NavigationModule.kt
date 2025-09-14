@@ -26,6 +26,7 @@ object NavigationModule {
                 coroutineScopes = get(),
             )
         }
+
         single<NavigationRepositoryProtocol.StackScreen> {
             NavigationStackScreenRepository(
                 coroutineScopes = get(),

@@ -9,7 +9,7 @@ import kotlinx.serialization.json.JsonElement
 
 class ProcessActionUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val handlers: List<ActionProcessorProtocol>,
+    private val actionProcessors: List<ActionProcessorProtocol>,
 ) : UseCaseProtocol.Async<ProcessActionUseCase.Input, Unit> {
 
     data class Input(
@@ -21,7 +21,7 @@ class ProcessActionUseCase(
     override suspend fun invoke(input: Input) {
         coroutineScopes.useCase.await {
             with(input) {
-                handlers
+                actionProcessors
                     .asSequence()
                     .filter { it.accept(route, action, jsonElement) }
                     .sortedBy { it.priority }

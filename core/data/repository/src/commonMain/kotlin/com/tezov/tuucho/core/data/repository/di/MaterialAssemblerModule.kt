@@ -58,6 +58,7 @@ object MaterialAssemblerModule {
         single<JsonObjectMerger> {
             JsonObjectMerger()
         }
+
         componentModule()
         contentModule()
         styleModule()
@@ -131,11 +132,7 @@ object MaterialAssemblerModule {
         single<TextAssembler> { TextAssembler() }
 
         single<List<MatcherAssemblerProtocol>>(Name.Matcher.TEXT) {
-            listOf(
-//                ContentLabelTextMatcher(),
-//                ContentFieldTextMatcher(),
-//                ContentFieldTextErrorMatcher(),
-            )
+            listOf()
         }
 
         single<List<AbstractAssembler>>(Name.Processor.TEXT) {
@@ -166,8 +163,6 @@ object MaterialAssemblerModule {
             emptyList()
         }
     }
-
-
 }
 
 

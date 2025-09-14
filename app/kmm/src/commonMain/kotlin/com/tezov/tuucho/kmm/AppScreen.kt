@@ -8,8 +8,8 @@ import org.koin.dsl.ModuleDeclaration
 
 @Composable
 fun AppScreen(
-    moduleDeclaration: ModuleDeclaration
-) = StartKoinModules(moduleDeclaration) {
+    applicationModuleDeclaration: ModuleDeclaration
+) = StartKoinModules(applicationModuleDeclaration) {
     val tuuchoEngine = rememberTuuchoEngine()
     LaunchedEffect(Unit) {
         tuuchoEngine.load(url = "config")

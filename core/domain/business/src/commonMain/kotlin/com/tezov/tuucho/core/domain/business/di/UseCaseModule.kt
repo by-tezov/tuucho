@@ -1,10 +1,6 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
-import com.tezov.tuucho.core.domain.business.interaction.action.FormSendUrlActionProcessor
-import com.tezov.tuucho.core.domain.business.interaction.action.FormUpdateActionProcessor
-import com.tezov.tuucho.core.domain.business.interaction.action.NavigationLocalDestinationActionProcessor
-import com.tezov.tuucho.core.domain.business.interaction.action.NavigationUrlActionProcessor
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
@@ -91,12 +87,7 @@ object UseCaseModule {
         factory<ProcessActionUseCase> {
             ProcessActionUseCase(
                 coroutineScopes = get(),
-                handlers = listOf(
-                    get<NavigationUrlActionProcessor>(),
-                    get<NavigationLocalDestinationActionProcessor>(),
-                    get<FormSendUrlActionProcessor>(),
-                    get<FormUpdateActionProcessor>(),
-                )
+                actionProcessors = get(ActionProcessorModule.Name.PROCESSORS)
             )
         }
 

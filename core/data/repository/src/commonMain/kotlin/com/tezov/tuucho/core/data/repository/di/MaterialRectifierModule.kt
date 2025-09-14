@@ -79,6 +79,7 @@ object MaterialRectifierModule {
 
     internal operator fun invoke() = module {
         single<MaterialRectifier> { MaterialRectifier() }
+
         idModule()
         componentModule()
         settingModule()

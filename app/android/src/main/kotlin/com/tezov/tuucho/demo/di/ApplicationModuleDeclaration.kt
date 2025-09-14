@@ -4,7 +4,7 @@ import android.content.Context
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModuleAndroid
 import org.koin.dsl.ModuleDeclaration
 
-object ModuleDeclarationAndroid {
+object ApplicationModuleDeclaration {
 
     operator fun invoke(
         applicationContext: Context,

@@ -29,6 +29,7 @@ object MaterialShadowerModule {
 
     internal operator fun invoke() = module {
         single<MaterialShadower> { MaterialShadower() }
+
         componentModule()
         contentModule()
         textModule()

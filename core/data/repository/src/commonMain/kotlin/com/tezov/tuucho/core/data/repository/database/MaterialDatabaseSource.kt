@@ -23,7 +23,7 @@ class MaterialDatabaseSource(
     suspend fun deleteAll(url: String, table: Table) {
         transactionFactory.transaction {
             hookQueries.delete(url)
-//            jsonObjectQueries.deleteAll(url, table) // since delete cascade is active, this one is not needed
+            jsonObjectQueries.deleteAll(url, table) // since delete cascade is active, this one is not needed
         }
     }
 
