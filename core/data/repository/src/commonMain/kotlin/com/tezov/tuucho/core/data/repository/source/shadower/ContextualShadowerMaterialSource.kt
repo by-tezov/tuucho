@@ -8,13 +8,17 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.source.MaterialRemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Contextual
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Contextual.replaceUrlOriginToken
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.coroutines.awaitAll
 import kotlinx.serialization.json.JsonObject
-import kotlin.time.Clock
 
 class ContextualShadowerMaterialSource(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -36,12 +40,14 @@ class ContextualShadowerMaterialSource(
         map = mutableMapOf()
     }
 
-    override suspend fun onNext(jsonObject: JsonObject) {
+    override suspend fun onNext(jsonObject: JsonObject, settingObject: JsonObject?) {
         val idScope = jsonObject.onScope(IdSchema::Scope)
         idScope.source ?: return
-        val url = jsonObject.onScope(ComponentSettingSchema::Scope)
-            .urlContextual?.replace("\${current}", urlOrigin)
-            ?: "$urlOrigin${ComponentSettingSchema.Value.UrlContextual.suffix}"
+        val type = jsonObject.withScope(TypeSchema::Scope).self
+        val url = idScope.urlSource?.replaceUrlOriginToken(urlOrigin)
+            ?: settingObject?.withScope(SettingComponentShadowerSchema.Contextual::Scope)
+                ?.url?.get(type).stringOrNull?.replaceUrlOriginToken(urlOrigin)
+            ?: Contextual.defaultUrl(urlOrigin)
         map[url] = (map[url] ?: mutableListOf()).apply { add(jsonObject) }
     }
 
@@ -68,9 +74,8 @@ class ContextualShadowerMaterialSource(
             materialObject = remoteMaterialObject,
             url = url,
             weakLifetime = if (lifetime == null || lifetime is Lifetime.Enrolled) {
-                Lifetime.Transient(
-                    validityKey = lifetime?.validityKey,
-                    expirationDateTime = Clock.System.now()
+                Lifetime.SingleUse(
+                    validityKey = lifetime?.validityKey
                 )
             } else lifetime,
             visibility = Visibility.Contextual(urlOrigin = urlOrigin)

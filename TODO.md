@@ -1,6 +1,5 @@
 ## In progress
 
-- cascade delete (to test)
 - demo
 - update documentation
 
