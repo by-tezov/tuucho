@@ -21,5 +21,4 @@ class ComponentShadower: AbstractShadower() {
     override fun accept(
         path: JsonElementPath, element: JsonElement
     ) = path.isTypeOf(element, TypeSchema.Value.component) || super.accept(path, element)
-
 }

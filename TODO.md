@@ -1,8 +1,7 @@
 ## In progress
 
-- cascade delete (to test)
-- demo
 - update documentation
+- update mock with TTL
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)
@@ -13,4 +12,3 @@
 - Improve: solution for JsonObject low storage update easy ?
 - rectifier after array, never return null and so over work on replace maybe not needed
 - add config to remove hard string inside di
-

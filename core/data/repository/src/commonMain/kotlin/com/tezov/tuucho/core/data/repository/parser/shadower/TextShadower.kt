@@ -19,7 +19,7 @@ class TextShadower : AbstractShadower() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement
+        path: JsonElementPath, element: JsonElement,
     ) = path.isTypeOf(element, TypeSchema.Value.text) || super.accept(path, element)
 
 }

@@ -34,7 +34,8 @@ object ComponentSchema {
         var content by delegate<JsonObject?>(Key.content)
         var style by delegate<JsonObject?>(Key.style)
         var option by delegate<JsonObject?>(Key.option)
-        var state by delegate<JsonObject?>(Key.option)
+        var setting by delegate<JsonObject?>(Key.setting)
+        var state by delegate<JsonObject?>(Key.state)
         var message by delegate<JsonObject?>(Key.message)
 
     }
