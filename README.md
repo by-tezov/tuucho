@@ -22,14 +22,44 @@ Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap/) for full details
 
 ---
 
-## Current Capabilities
+### Supported Features
 
-- **LayoutLinear**: Build flexible vertical or horizontal layouts for structuring your UI.
-- **Button**: Interactive buttons with built-in support for navigation and action triggers.
-- **Label**: Display styled text with customizable fonts and colors.
-- **Spacer**: Control spacing and alignment with flexible or fixed-sized spacers, both vertical and horizontal.
+- **Json Content**
+    - 100% of the application is driven by the server
+    - Definable components with unique IDs allowing shared references to reduce JSON payload size. This applies to content, styles, text, and more.
+    - Intelligent caching: JSON objects are cached locally to minimize repeated network requests. Content is fetched over the network only when necessary.
+    - Dynamic context data fetch asynchronously with TTL capabilities
 
-- **Stack navigation with Transition Animations**
+- **Navigation Stack**  
+  TUUCHO provides its own navigation stack and supports all capabilities offered by Compose Navigation, including:
+    - Clear Stack
+    - Single Top
+    - Reuse (do not create a new one, bring back an existing one)
+    - PopUpTo (inclusive or not)
+
+- **Transition Animations**  
+  TUUCHO supports transition animations between screens:
+    - Fade
+    - Slide Vertically
+    - Slide Horizontally
+
+- **Cache control**
+    - Time To Live components, contents and texts group and individual
+
+- **Form submission**
+    - Local validator and remote controls with user feedback
+    - Custom command on success or failure
+
+### Supported Components
+
+- **Linear Layout** (vertical or horizontal orientation)
+- **Button** with built-in actions:
+    - Navigation
+    - Form submission
+- **Label**
+- **Input Field** (form element)
+- **Spacer**
+
 ---
 
 ## Why Choose TUUCHO?
@@ -46,7 +76,7 @@ Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap/) for full details
 
 For comprehensive documentation, examples, and developer guides, visit:
 
-[Full Documentation](https://doc.tuucho.com/0.0.1-alpha7/)
+[Full Documentation](https://doc.tuucho.com/0.0.1-alpha11/)
 
 ---
 
