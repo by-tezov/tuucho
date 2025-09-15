@@ -8,7 +8,7 @@ A **page** JSON describes a full screen layout.
 
 ```json
 {
-  "version": "1",
+  "setting": { ... },
   "root": { ... },
   "components": [ ... ],
   "styles": [ ... ],
@@ -26,6 +26,7 @@ A **page** JSON describes a full screen layout.
 
 Refer to the following for detailed definitions of each object type:
 
+-  [Setting](../object-definition/page-setting.md)
 -  [Components](../components-definition/index.md)
 -  [Styles](../object-definition/style.md)
 -  [Options](../object-definition/option.md)

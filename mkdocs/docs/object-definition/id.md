@@ -8,13 +8,17 @@ The `id` field plays a **dual role** in defining components within the UI render
 
 - `value`: A **unique ID** to target the component (for animations or logic)
 - `source`: A **reference** to reuse a shared or predefined component
+- `url-source`: Optional field that allow to define a custom url and method where the rest of data is.
 
 Example:
 
 ```json
 "id": {
   "value": "button-form-confirm",
-  "source": "*shared-button-primary"
+  "source": "*shared-button-primary",
+  "url-source": {
+     "contextual": "${url-origin}-contextual-texts"
+  }
 }
 ```
 
@@ -22,6 +26,7 @@ In this example:
 
 - `"button-form-confirm"` is the unique ID you can target in animations or logic.
 - `"*shared-button-primary"` is a pointer referencing a shared component defined elsewhere.
+- `url-source` with `contextual` method inform to retrieve the missing data at this url.
 
 This pattern combines reusability with precise control, useful when you want to interact with a reused component as a distinct element.
 

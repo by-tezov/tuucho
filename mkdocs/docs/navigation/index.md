@@ -5,7 +5,7 @@ comments: true
 # TUUCHO Navigation System
 
 > TUUCHO provides a flexible navigation system for each page using JSON definitions.  
-> Navigation is defined under `root.setting.navigation` in every page's JSON file.
+> Navigation is defined under `root/setting/navigation`.
 
 ---
 

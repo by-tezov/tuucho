@@ -13,9 +13,11 @@ comments: true
 
 Work in progress:
 
-- **Cache Management Enhancements**
-  - Add TTL (time-to-live) options to avoid indefinite cache persistence.
-  - Implement versioning and automatic cache purging for consistency and efficiency.
+- **Data store**  
+  Add a way for the server to record data key/value on device and use them.
+
+- **Images / Assets store**  
+  Add a way for the server to add cache images and use them (or remote assets)
 
 ---
 
@@ -25,14 +27,16 @@ Work in progress:
   Complete support for configuration files to allow application-wide settings.
 
 - **Real time Data Support**  
-  Introduce dynamic data binding to enable real-time content updates within the UI.
+  Introduce bi-directional communication to enable real-time content updates within the UI.
 
 - **Advanced UI Components**  
   Add comprehensive, fully tested UI components to cover a wider range of application needs.
 
-- **Action, Validator, Navigation, other useful solvable by pointer**  
+- **Actions, Validators, Navigation, Settings, other useful solvable by pointer**  
 
-- **Module Exception instead of all at Default**
+- **Exception handlers / Loader Screen**
+
+- **Add useful device feature (gps, permissions, ...)**
 
 ---
 
@@ -54,7 +58,7 @@ Work in progress:
   Explore cache indexing, metadata, or other innovative techniques to accelerate JSON parsing and rendering.
 
 - **Unit Tests + E2E Tests**  
-  Before production validation to protect from any regression.
+  Add as many and meaningful tests before production validation to protect from any regression.
 
 - **Documentation**  
   Add developer documentation for creating user modules and custom components.
@@ -63,13 +67,23 @@ Work in progress:
 
 ## ✅ Realized
 
-- **Navigation Stack Implementation**  
-  Enhance navigation capabilities with a robust stack system to manage screen transitions. (2025-08)
+- **Cache Management Enhancements** (2025-08)
+  - Add TTL (time-to-live) options to avoid indefinite cache persistence.
+  - Implement versioning and automatic cache purging for consistency and efficiency.
 
-- **Context Data Support**  
-  Introduce dynamic data binding to enable context content resolution within the UI. (2025-07)
+- **Add CI Jenkins pipeline** (2025-08)
+  - unit testing
+  - end to end testing
+  - visual regression testing
+  - all command accessible through github description + statuses feedback on pull request
 
-- 🎉 **KMM Integration & iOS Support** (2025-06)
+- **Navigation Stack Implementation** (2025-08)
+  Enhance navigation capabilities with a robust stack system to manage screen transitions.
+
+- **Contextual Data Support** (2025-07)
+  Introduce dynamic data binding to enable context content resolution within the UI.
+
+- **KMM Integration & iOS Support** (2025-06)
   Full Kotlin Multiplatform Mobile support implemented.
 
 ---
