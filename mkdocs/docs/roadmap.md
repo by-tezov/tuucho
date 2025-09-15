@@ -68,23 +68,23 @@ Work in progress:
 ## ✅ Realized
 
 - **Cache Management Enhancements** (2025-08)
-  - Add TTL (time-to-live) options to avoid indefinite cache persistence.
-  - Implement versioning and automatic cache purging for consistency and efficiency.
+    - Add TTL (time-to-live) options to avoid indefinite cache persistence.
+    - Implement versioning and automatic cache purging for consistency and efficiency.
 
 - **Add CI Jenkins pipeline** (2025-08)
-  - unit testing
-  - end to end testing
-  - visual regression testing
-  - all command accessible through github description + statuses feedback on pull request
+    - unit testing
+    - end to end testing
+    - visual regression testing
+    - all command accessible through github description + statuses feedback on pull request
 
 - **Navigation Stack Implementation** (2025-08)
-  Enhance navigation capabilities with a robust stack system to manage screen transitions.
+    - Enhance navigation capabilities with a robust stack system to manage screen transitions.
 
 - **Contextual Data Support** (2025-07)
-  Introduce dynamic data binding to enable context content resolution within the UI.
+    - Introduce dynamic data binding to enable context content resolution within the UI.
 
 - **KMM Integration & iOS Support** (2025-06)
-  Full Kotlin Multiplatform Mobile support implemented.
+    - Full Kotlin Multiplatform Mobile support implemented.
 
 ---
 
