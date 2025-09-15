@@ -6,7 +6,6 @@ All subs must be referenced by id pointer where they are needed as replacement �
 
 ```json
 {
-  "version": "1",
   "components": [ ... ],
   "styles": [ ... ],
   "options": { ... },
@@ -27,16 +26,12 @@ Each `subs` file can contain any combination of the following keys:
 - `contents` – Logical structures for fields (title, placeholder, error messages). See [Content Object Definition](../object-definition/content.md).
 - `components` – UI building blocks composed from content, style, and logic. See [Component Object Definition](../object-definition/component.md).
 
-Each file also includes a required `version` field, used for cache invalidation and updates.  
-**It must match the version inside the config file.**
-
 ---
 
 ## 🔤 Texts
 
 ```json
 {
-  "version": "1",
   "texts": {
     "common": {
       "text-body-content-help": "There is no help available at the moment",
@@ -59,7 +54,6 @@ Texts are grouped under categories (`common`, `form`, etc.) and are accessed via
 
 ```json
 {
-  "version": "1",
   "colors": {
     "common": {
       "black": "#FF000000",
@@ -89,7 +83,6 @@ Colors are grouped (e.g. `common`, `background`) and accessed using references l
 
 ```json
 {
-  "version": "1",
   "dimensions": {
     "font": {
       "title": "32",
@@ -116,7 +109,6 @@ Dimensions are numeric or fractional values grouped by purpose (`font`, `padding
 
 ```json
 {
-  "version": "1",
   "styles": [
     {
       "id": "title-label",
@@ -135,7 +127,6 @@ Styles are reusable visual definitions.
 
 ```json
 {
-  "version": "1",
   "contents": [
     {
       "id": "input-field-age-content",
@@ -154,7 +145,6 @@ Contents define reusable content blocks. A content entry can reference another b
 
 ```json
 {
-  "version": "1",
   "components": [
     {
       "id": "button-label-help-to-home",

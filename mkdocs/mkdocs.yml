@@ -57,6 +57,7 @@ markdown_extensions:
       custom_checkbox: true
   - attr_list
 
+
 nav:
   - Home: index.md
   - Roadmap: roadmap.md
@@ -67,6 +68,8 @@ nav:
   - Object:
       - Overview: object-definition/index.md
       - Id: object-definition/id.md
+      - Page-Setting: object-definition/page-setting.md
+      - Component-Setting: object-definition/component-setting.md
       - Component: object-definition/component.md
       - Option: object-definition/option.md
       - Style: object-definition/style.md
@@ -97,5 +100,7 @@ nav:
           - Page Home: pages-definition/page-home.md
           - Page Help: pages-definition/page-help.md
           - Page Confirmation: pages-definition/page-confirmation.md
+  - Cache: cache.md
+  - Dynamic Loading: shadower-contextual.md
   - ChangeLog: changelog.md
   - Contact: contact.md

@@ -14,7 +14,8 @@ Example for the `form-send` action:
 ```json
 "action": {
   "value": "form-send://url/form-from-page-home",
-  "action-validated": "navigate://url/page-confirmation"
+  "action-validated": "navigate://url/page-confirmation",
+  "action-denied": "navigate://url/page-failure"
 }
 ```
 
