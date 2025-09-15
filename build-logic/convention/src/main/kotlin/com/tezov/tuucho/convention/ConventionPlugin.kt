@@ -136,13 +136,13 @@ abstract class ConventionPlugin : Plugin<Project> {
                 val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
                 sourceSets {
                     androidMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavorCapitalized")
+                        kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavorCapitalized/kotlin")
                     }
                     iosMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavorCapitalized")
+                        kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavorCapitalized/kotlin")
                     }
                     commonMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavorCapitalized")
+                        kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavorCapitalized/kotlin")
                     }
                 }
             }
