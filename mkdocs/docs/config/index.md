@@ -4,13 +4,51 @@ comments: true
 
 # Config Definition
 
-The `config` JSON file is the main configuration container for the application. It organizes the resources and assets that the app needs to load, manage, and cache.
+The `config` JSON file allow you do define material resource url in order to load, manage, and cache. This (or these files) will be called before to call a page. Any change in the validity key will invalid the corresponding cache.
 
 Additional keys and options will be added as the system evolves.
 
+**material-resource** structure, resources are grouped into **global**, **local**, and **contextual** scopes.
+
 ```json
 {
-  "preload": { /* preload object */ }
+  "material-resource": {
+    "global": {
+      "subs": [
+        {
+          "validity-key": "any-string",
+          "url": "subs/sub-texts",
+          "pre-download": true(default)/false
+        },...
+      ],
+      "templates": [
+        {
+          "validity-key": "1",
+          "url": "templates/template-page-default",
+          "pre-download": true(default)/false
+        },...
+      ]
+    },
+    "local": {
+      "pages": [
+        {
+          "validity-key": "any-string",
+          "url": "page-b",
+          "pre-download": true(default)/false
+        },...
+      ]
+    },
+    "contextual": {
+      "all": [
+        {
+          "validity-key": "any-string",
+          "url-origin": "page-home",
+          "url": "${url-origin}-contextual-texts",
+          "pre-download": true/false(default)
+        },...
+      ]
+    }
+  }
 }
 ```
 
@@ -52,37 +90,58 @@ The `preload` key specifies collections of resources that the application should
 }
 ```
 
-The `preload` object contains three main arrays:
+---
 
-??? "`subs`: Modular reusable chunks (styles, options, texts, components)"
+## 1. Global Resources
 
-    The `subs` array includes modular chunks of data or objects such as styles, options, texts, dimensions, colors, contents, or complete components. These are referenced by pages or other objects via ID pointers.
+`global` defines reusable content that can be referenced by **any page**.  
+All keys under `global` are arbitrary (you can choose meaningful names like `subs`, `templates`, `shared`, etc.), but each must map to an **array of config objects**.
 
-    - Each `sub` object includes a `version` and a `url`.
-    - The app checks the version to determine if an update is required.
-    - These chunks are reusable building blocks.
+- Global resources are not wrapped by a `root component` key.
+- Typical usage includes `subs`, `templates`, or other reusable building blocks.
 
-    For more details, see the [Subs Definition](subs.md).
+---
 
+## 2. Local Resources
 
-??? "`templates`: Full page templates with replaceable parts"
+`local` defines resources bound to specific **page**.
 
-    The `templates` array contains full page templates with replaceable or referenceable parts.
+- Each entry **must include a `root component` key**.
+- All other keys (like `pages`, `views`, `dialogs`) are arbitrary, but must resolve to arrays.
 
-    - Each `template` has a `version` and a `url`.
-    - The app verifies versions to detect updates.
-    - Pages can source these templates and override or extend parts such as content or style.
+---
 
-    Refer to the [Templates Definition](templates.md) for detailed information and examples.
+## 3. Contextual Resources
 
-??? "`pages`: Complete page descriptions"
+`contextual` defines resources whose resolution depends on contextual data.
 
-    The `pages` array lists complete page descriptions to preload.
+- Each object must include a mandatory `url-origin`.
+- `url` is optional:
+    - If defined, it will be used directly. You can use ${url-origin} as replacement token
+    - If omitted, it defaults to `"${url-origin}-contextual"`.
 
-    - Each page entry contains a `version` and a `url`.
-    - The app checks versions to ensure resources are up to date.
+---
 
-    For detailed page structure and usage, see the [Pages Definition](../pages-definition/index.md).
+## 4. Validity and Caching
 
+- **`validity-key`**:
+    - string used to explicitly invalidate a cached resource.
+    - When the key changes, the cache entry is replaced with a fresh downloaded content.
 
+- **Without `validity-key`**:
+    - The system relies on **TTL (Time-to-Live)**.
+    - If you don’t set TTL, the resource will be cached **forever**.
 
+## 4. Pre Download (optional)
+
+- **`pre-download`**:
+    - Boolean flag (`true` / `false`).
+    - If `true`, the resource is downloaded and cached immediately at startup.
+    - If `false`, it’s fetched on first use.
+
+---
+
+Refer to the [Templates Definition](templates.md) for detailed information and examples.
+For detailed page structure and usage, see the [Pages Definition](../pages-definition/index.md).
+For more details, see the [Subs Definition](subs.md).
+ 
