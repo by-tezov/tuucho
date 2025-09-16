@@ -52,6 +52,8 @@ kotlin {
 
             implementation(libs.sql.delight.runtime)
             implementation(libs.sql.delight.coroutines)
+
+            implementation(libs.okio)
         }
         commonTest.dependencies {
 

@@ -1,13 +1,14 @@
 package com.tezov.tuucho.core.data.repository.network.backendServer
 
 import com.tezov.tuucho.core.data.repository.di.serverUrlEndpoint
-import com.tezov.tuucho.core.data.repository.network.backendServer.service.ResourceService
-import com.tezov.tuucho.core.data.repository.network.backendServer.service.SendService
+import com.tezov.tuucho.core.data.repository.network.backendServer.protocol.ServiceProtocol
 import io.ktor.http.Headers
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Url
 
-class BackendServer {
+class BackendServer(
+    private val services: List<ServiceProtocol>,
+) {
 
     data class Request(
         val url: String,
@@ -19,11 +20,6 @@ class BackendServer {
         val statusCode: HttpStatusCode,
         val headers: Headers,
         val body: String?,
-    )
-
-    private val services = listOf(
-        ResourceService(),
-        SendService()
     )
 
     suspend fun process(request: Request): Response {

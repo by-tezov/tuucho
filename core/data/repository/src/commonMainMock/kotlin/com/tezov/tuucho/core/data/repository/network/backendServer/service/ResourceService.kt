@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.network.backendServer.service
 
-import com.tezov.tuucho.core.data.repository.assets.readResourceFile
+import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
 import com.tezov.tuucho.core.data.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.core.data.repository.network.backendServer.protocol.ServiceProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Type
@@ -11,9 +11,13 @@ import io.ktor.http.headersOf
 import io.ktor.http.withCharset
 import io.ktor.utils.io.charsets.Charsets
 import kotlinx.coroutines.delay
+import okio.buffer
+import okio.use
 import kotlin.random.Random
 
-class ResourceService : ServiceProtocol {
+class ResourceService(
+    private val assets: AssetsProtocol,
+) : ServiceProtocol {
 
     override val url = "resource"
 
@@ -22,7 +26,9 @@ class ResourceService : ServiceProtocol {
         request: BackendServer.Request,
     ) = when (version) {
         "v1" -> {
-            val jsonString = readResourceFile("backend/$version/${request.url}.json")
+            val jsonString = assets
+                .readFile("backend/$version/${request.url}.json")
+                .buffer().use { it.readUtf8() }
             if (request.url.endsWith("-${Type.contextual}") || request.url.contains("-${Type.contextual}-")) {
                 delay(Random.nextLong(500, 3000))
             }

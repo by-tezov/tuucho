@@ -127,8 +127,6 @@ abstract class ConventionPlugin : Plugin<Project> {
                         }
                     }
                 }
-
-
             }
         }
 
@@ -150,8 +148,8 @@ abstract class ConventionPlugin : Plugin<Project> {
             }
             extensions.configure(CommonExtension::class.java) {
                 sourceSets["main"].assets.srcDirs(
-                    "src/commonMain/resources",
-                    "src/commonMain$flavorCapitalized/resources",
+                    "src/commonMain/assets",
+                    "src/commonMain$flavorCapitalized/assets",
                 )
             }
         }

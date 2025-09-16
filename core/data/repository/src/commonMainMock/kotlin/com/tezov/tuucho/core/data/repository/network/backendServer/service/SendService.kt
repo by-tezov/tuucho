@@ -9,7 +9,7 @@ import io.ktor.http.headersOf
 import io.ktor.http.withCharset
 import io.ktor.utils.io.charsets.Charsets
 
-class SendService : ServiceProtocol {
+class SendService() : ServiceProtocol {
 
     override val url = "send"
 
