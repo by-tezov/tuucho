@@ -1,14 +1,3 @@
-package com.tezov.tuucho.core.data.repository.network.backendServer.resource.v1.subs
-
-import com.tezov.tuucho.core.data.repository.network.backendServer.resource.JsonResourceProtocol
-
-class SubComponentsJsonResource : JsonResourceProtocol {
-
-    override val url = "subs/sub-components"
-
-    override val statusCode = 200
-
-    override val jsonString = """
 {
   "components": [
     {
@@ -39,6 +28,4 @@ class SubComponentsJsonResource : JsonResourceProtocol {
       }
     }
   ]
-}
-"""
 }

@@ -9,6 +9,7 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
@@ -132,19 +133,26 @@ abstract class ConventionPlugin : Plugin<Project> {
         }
 
         internal fun configureSourceSetMultiplatform(project: Project) = with(project) {
+            val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
             extensions.configure(KotlinMultiplatformExtension::class.java) {
-                val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
                 sourceSets {
                     androidMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavorCapitalized/kotlin")
+                        kotlin.srcDirs("${project.projectDir.path}/src/androidMain$flavorCapitalized/kotlin")
                     }
                     iosMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavorCapitalized/kotlin")
+                        kotlin.srcDirs("${project.projectDir.path}/src/iosMain$flavorCapitalized/kotlin")
                     }
                     commonMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavorCapitalized/kotlin")
+                        kotlin.srcDirs("${project.projectDir.path}/src/commonMain$flavorCapitalized/kotlin")
                     }
                 }
+                sourceSets.commonMain
+            }
+            extensions.configure(CommonExtension::class.java) {
+                sourceSets["main"].assets.srcDirs(
+                    "src/commonMain/resources",
+                    "src/commonMain$flavorCapitalized/resources",
+                )
             }
         }
 

@@ -39,7 +39,7 @@ class MaterialRemoteSourceTest {
     @Test
     fun `process retrieves and rectifies response`() = runTest {
         val url = "http://server.com/api"
-        val networkResponse = buildJsonObject { put("raw", "data") }
+        val networkResponse = buildJsonObject { put("files", "data") }
         val expected = buildJsonObject { put("rectified", "ok") }
 
         everySuspend { materialNetworkSource.retrieve(url) } returns networkResponse

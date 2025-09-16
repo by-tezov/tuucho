@@ -7,8 +7,6 @@ interface ServiceProtocol {
 
     val url: String
 
-    val version: String
-
-    fun process(request: Request): Response
+    suspend fun process(version: String, request: Request): Response
 
 }

@@ -1,14 +1,3 @@
-package com.tezov.tuucho.core.data.repository.network.backendServer.resource.v1
-
-import com.tezov.tuucho.core.data.repository.network.backendServer.resource.JsonResourceProtocol
-
-class PageConfirmationJsonResource : JsonResourceProtocol {
-
-    override val url = "page-confirmation"
-
-    override val statusCode = 200
-
-    override val jsonString = """
 {
   "root": {
     "subset": "layout-linear",
@@ -68,7 +57,4 @@ class PageConfirmationJsonResource : JsonResourceProtocol {
       }
     }
   ]
-}
-
-"""
 }

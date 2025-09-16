@@ -1,21 +1,4 @@
-package com.tezov.tuucho.core.data.repository.network.backendServer.resource.v1
-
-import com.tezov.tuucho.core.data.repository.network.backendServer.resource.JsonResourceProtocol
-
-class PageHomeJsonResource : JsonResourceProtocol {
-
-    override val url = "page-home"
-
-    override val statusCode = 200
-
-    override val jsonString = """
 {
-  "setting": {
-    "ttl": {
-      "strategy": "transient",
-      "transient-value": "1mn"
-    }
-  },
   "root": {
     "id": {
       "value": "page-home"
@@ -26,9 +9,10 @@ class PageHomeJsonResource : JsonResourceProtocol {
           "wait-done-to-render": false,
           "enable": true
         },
-        "navigate-backward": {
-          "wait-done-to-render": false,
-          "enable": true
+        "contextual": {
+          "url": {
+            "component": "${url-origin}-contextual-components"
+          }
         }
       },
       "navigation": {
@@ -93,15 +77,22 @@ class PageHomeJsonResource : JsonResourceProtocol {
           "subset": "label",
           "style": "*title-section",
           "content": {
-            "value": "*fake-value-content"
+            "value": {
+              "id": {
+                "source": "*title-section",
+                "url-source": {
+                  "contextual": "${url-origin}-contextual-texts"
+                }
+              }
+            }
           }
         },
         {
+          "subset": "form-field",
           "id": {
             "value": "hobbies",
             "source": "*input-field-on-demand"
-          },
-          "subset": "form-field"
+          }
         },
         {
           "id": "*item-spacer"
@@ -273,7 +264,4 @@ class PageHomeJsonResource : JsonResourceProtocol {
       "text-form-age-placeholder": "27"
     }
   }
-}
-
-"""
 }

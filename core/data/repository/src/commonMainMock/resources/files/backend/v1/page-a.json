@@ -1,45 +1,59 @@
-package com.tezov.tuucho.core.data.repository.network.backendServer.resource.v1
-
-import com.tezov.tuucho.core.data.repository.network.backendServer.resource.JsonResourceProtocol
-
-class PageDJsonResource : JsonResourceProtocol {
-
-    override val url = "page-d"
-
-    override val statusCode = 200
-
-    override val jsonString = """
 {
+  "setting": {
+    "ttl": {
+      "strategy": "transient",
+      "transient-value": "10s"
+    }
+  },
   "root": {
     "setting": {
       "navigation": {
         "extra": {
-          "is-background-solid": false
+          "is-background-solid": true
         },
-        "definition": {
-          "option": { "single": true },
-          "transition": {
-            "type": "slide-vertical",
-            "entrance": "from-top",
-            "effect": "cover"
+        "definition": [
+          {
+            "selector": {
+              "type": "page-bread-crumb",
+              "value": "page-c"
+            },
+            "transition": {
+              "type": "slide-vertical",
+              "entrance": "from-bottom",
+              "effect": "cover"
+            }
+          },
+          {
+            "option": {
+              "single": true,
+              "reuse": true
+            },
+            "transition": "slide-horizontal"
           }
-        }
+        ]
       }
     },
     "subset": "layout-linear",
     "style": {
       "orientation": "vertical",
-      "background-color": "*background:aqua-splash",
+      "background-color": "*background:sunny-yellow",
       "fill-max-size": true
     },
     "content": {
       "items": [
-        "*item-spacer",
         {
           "subset": "label",
           "style": "*title-label",
           "content": {
-            "value": "Page-D - with not solid background"
+            "value": "Page-A"
+          }
+        },
+        "*item-spacer",
+        {
+          "subset": "label",
+          "style": "*title-body",
+          "content": {
+            "value": "Page TLL of 10s"
           }
         },
         "*item-spacer",
@@ -56,7 +70,7 @@ class PageDJsonResource : JsonResourceProtocol {
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": { "id": "*label-main-button-back" },
                     "content": {
                       "value": "BACK"
                     }
@@ -69,12 +83,12 @@ class PageDJsonResource : JsonResourceProtocol {
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": { "id": "*label-main-button-back" },
                     "content": {
-                      "value": "Page-E"
+                      "value": "Page-B"
                     }
                   },
-                  "action": "navigate://url/page-e"
+                  "action": "navigate://url/page-b"
                 }
               }
             ]
@@ -92,7 +106,4 @@ class PageDJsonResource : JsonResourceProtocol {
       }
     }
   ]
-}
-
-"""
 }

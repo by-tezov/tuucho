@@ -1,24 +1,16 @@
-package com.tezov.tuucho.core.data.repository.network.backendServer.resource.v1
-
-import com.tezov.tuucho.core.data.repository.network.backendServer.resource.JsonResourceProtocol
-
-class PageEJsonResource : JsonResourceProtocol {
-
-    override val url = "page-e"
-
-    override val statusCode = 200
-
-    override val jsonString = """
 {
   "root": {
     "setting": {
       "navigation": {
+        "extra": {
+          "is-background-solid": false
+        },
         "definition": {
           "option": { "single": true },
           "transition": {
             "type": "slide-vertical",
             "entrance": "from-top",
-            "effect": "cover-push"
+            "effect": "cover"
           }
         }
       }
@@ -26,16 +18,17 @@ class PageEJsonResource : JsonResourceProtocol {
     "subset": "layout-linear",
     "style": {
       "orientation": "vertical",
-      "background-color": "*background:electric-pink",
+      "background-color": "*background:aqua-splash",
       "fill-max-size": true
     },
     "content": {
       "items": [
+        "*item-spacer",
         {
           "subset": "label",
           "style": "*title-label",
           "content": {
-            "value": "Page-E"
+            "value": "Page-D - with not solid background"
           }
         },
         "*item-spacer",
@@ -59,6 +52,19 @@ class PageEJsonResource : JsonResourceProtocol {
                   },
                   "action": "navigate://local-destination/back"
                 }
+              },
+              "*item-spacer",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": "*label-main-button-default",
+                    "content": {
+                      "value": "Page-E"
+                    }
+                  },
+                  "action": "navigate://url/page-e"
+                }
               }
             ]
           }
@@ -75,7 +81,4 @@ class PageEJsonResource : JsonResourceProtocol {
       }
     }
   ]
-}
-
-"""
 }
