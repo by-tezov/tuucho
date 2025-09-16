@@ -1,5 +1,6 @@
 [versions]
 #project
+domain = "com.tezov.tuucho"
 flavor = "mock"
 #flavor = "prod"
 versionCode = "1"
@@ -62,9 +63,11 @@ all-open = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotl
 
 [plugins]
 #convention
-convention-application = { id = "com.tezov.tuucho.convention.application", version = "unspecified" }
-convention-library = { id = "com.tezov.tuucho.convention.library", version = "unspecified" }
-convention-library-ui = { id = "com.tezov.tuucho.convention.library-ui", version = "unspecified" }
+convention-application-android = { id = "com.tezov.tuucho.project.application-android", version = "unspecified" }
+convention-application-ios = { id = "com.tezov.tuucho.project.application-ios", version = "unspecified" }
+convention-library = { id = "com.tezov.tuucho.project.library", version = "unspecified" }
+convention-library-plain = { id = "com.tezov.tuucho.project.library-plain", version = "unspecified" }
+convention-library-ui = { id = "com.tezov.tuucho.project.library-ui", version = "unspecified" }
 #project
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }

@@ -14,16 +14,24 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-group = "com.tezov.tuucho.convention"
+group = "com.tezov.tuucho.project"
 
 gradlePlugin {
     plugins{
-        register("ConventionApplicationPlugin") {
-            id = "${group}.application"
+        register("ConventionApplicationAndroidPlugin") {
+            id = "${group}.application-android"
+            implementationClass = "${group}.${name}"
+        }
+        register("ConventionApplicationIosPlugin") {
+            id = "${group}.application-ios"
             implementationClass = "${group}.${name}"
         }
         register("ConventionLibraryPlugin") {
             id = "${group}.library"
+            implementationClass = "${group}.${name}"
+        }
+        register("ConventionLibraryPlainPlugin") {
+            id = "${group}.library-plain"
             implementationClass = "${group}.${name}"
         }
         register("ConventionLibraryUiPlugin") {

@@ -1,3 +1,7 @@
+plugins {
+    alias(libs.plugins.convention.application.ios)
+}
+
 // Helper functions
 fun logSuccess(text: String) {
     println("\u001B[32m$text\u001B[0m")
@@ -59,11 +63,12 @@ fun createSimulator(deviceName: String, devices: Map<String, List<String>>? = nu
     if (deviceId == null) {
         val model: String
         val core: String
-        when(deviceName) {
+        when (deviceName) {
             "iphone_16-18.5-simulator" -> {
                 model = "iPhone 16"
                 core = "com.apple.CoreSimulator.SimRuntime.iOS-18-5"
             }
+
             else -> throw GradleException("invalid device name $deviceName")
         }
 
@@ -95,7 +100,8 @@ tasks.register<Exec>("createSimulatorApp") {
         logInfo("createSimulatorApp:: xcodeproj: $xcodeproj, scheme: $scheme, device: $device")
 
         val deviceId = createSimulator(device)
-        commandLine("bundle", "exec", "fastlane", "buildDebug",
+        commandLine(
+            "bundle", "exec", "fastlane", "buildDebug",
             "xcodeproj:${xcodeproj}",
             "scheme:${scheme}",
             "deviceId:${deviceId}"
@@ -124,4 +130,3 @@ tasks.register<Exec>("assembleDebug") {
         )
     }
 }
-

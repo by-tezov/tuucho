@@ -1,8 +1,8 @@
-package com.tezov.tuucho.convention
+package com.tezov.tuucho.project
 
 import org.gradle.api.Project
 
-class ConventionLibraryUiPlugin : ConventionLibraryPlugin() {
+class ConventionLibraryUiPlugin : ConventionLibraryPlainPlugin() {
 
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)

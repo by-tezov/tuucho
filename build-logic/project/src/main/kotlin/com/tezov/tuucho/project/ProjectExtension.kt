@@ -1,6 +1,5 @@
-package com.tezov.tuucho.convention
+package com.tezov.tuucho.project
 
-import com.tezov.tuucho.convention.ConventionPlugin.Constant.domain
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
@@ -24,11 +23,16 @@ internal fun Project.library(name: String) =
 internal fun Project.bundle(name: String) =
     libs.findBundle(name).get()
 
-internal fun Project.namespace() = "$domain${path.replace(":", ".")}"
-
 internal fun Project.version(name: String) = libs.findVersion(name)
-    .get()
-    .requiredVersion
+    .get().requiredVersion
+
+internal fun Project.domain() = version("domain")
+
+internal fun Project.flavor() = version("flavor")
+
+internal fun Project.flavorCapitalized() = flavor().replaceFirstChar { it.uppercaseChar() }
+
+internal fun Project.namespace() = "${domain()}${path.replace(":", ".")}"
 
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
 
@@ -37,4 +41,11 @@ internal fun Project.javaVersionInt() = jvmTarget().target.toInt()
 internal fun Project.javaVersion() = JavaVersion.toVersion(javaVersionInt())
 
 internal fun Project.javaLanguageVersion() = JavaLanguageVersion.of(javaVersionInt())
+
+internal fun Project.targetSdk() = version("targetSdk").toInt()
+
+internal fun Project.versionCode() = version("versionCode").toInt()
+
+internal fun Project.versionName() = version("versionName")
+
 

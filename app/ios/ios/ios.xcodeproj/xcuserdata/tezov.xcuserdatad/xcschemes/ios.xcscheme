@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A1D106CB2E30193700A7103E"
-               BuildableName = "ios"
+               BuildableName = "ios.app"
                BlueprintName = "ios"
                ReferencedContainer = "container:ios.xcodeproj">
             </BuildableReference>
@@ -43,11 +43,15 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A1D106CB2E30193700A7103E"
-            BuildableName = "ios"
+            BuildableName = "ios.app"
             BlueprintName = "ios"
             ReferencedContainer = "container:ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <LocationScenarioReference
+         identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
+         referenceType = "1">
+      </LocationScenarioReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
