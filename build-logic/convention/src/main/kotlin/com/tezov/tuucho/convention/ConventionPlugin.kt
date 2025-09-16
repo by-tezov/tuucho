@@ -144,14 +144,42 @@ abstract class ConventionPlugin : Plugin<Project> {
                         kotlin.srcDirs("${project.projectDir.path}/src/commonMain$flavorCapitalized/kotlin")
                     }
                 }
-                sourceSets.commonMain
             }
+            // Android assets
             extensions.configure(CommonExtension::class.java) {
                 sourceSets["main"].assets.srcDirs(
                     "src/commonMain/assets",
                     "src/commonMain$flavorCapitalized/assets",
                 )
             }
+            // Ios assets
+//            extensions.configure(KotlinMultiplatformExtension::class.java) {
+//                val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
+//                val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
+//                iosTargets.forEach { target ->
+//                    target.binaries.withType(Framework::class.java).configureEach {
+//                        isStatic = false
+//                        val targetName = target.name.replaceFirstChar { it.uppercaseChar() }
+//                        val buildType = this.buildType.name.replaceFirstChar { it.uppercaseChar() }
+//                        val stageDir = layout.buildDirectory.dir("iosAssets/$targetName/$buildType")
+//                        val copyAssets = tasks.register("stage${targetName}${buildType}Assets", Copy::class.java) {
+//                            from("src/commonMain/assets", "src/commonMain$flavorCapitalized/assets")
+//                            into(stageDir)
+//                        }
+//                        linkTaskProvider.configure {
+//                            dependsOn(copyAssets)
+//                            doLast {
+//                                val frameworkDir = outputFile.get().asFile.parentFile
+//                                val resourcesDir = frameworkDir.resolve("${baseName}.framework/Resources")
+//                                project.copy {
+//                                    from(stageDir)
+//                                    into(resourcesDir)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
 
         internal fun configureCompose(
