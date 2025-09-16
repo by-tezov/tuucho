@@ -38,7 +38,6 @@ Using the template loaded with subs 📖 [Subs Definition](../config/subs.md).
 
 ```json
 {
-  "version": "1",
   "root": {
     "id": "template-page-default",
     "subset": "layout-linear",

@@ -7,6 +7,8 @@ comments: true
 This section describes the primary JSON keys used in the TUUCHO rendering engine. You will find each fundamental object’s capabilities and its intended purpose.
 
 - [id](id.md) — Object identifiers
+- [page-setting](page-setting.md) — Page Setting definitions
+- [component-setting](component-setting.md) — Component Setting definitions
 - [component](component.md) — Component definitions (the base of all UI elements)
 - [option](option.md) — Option definitions for components (parameters to modify or extend features)
 - [style](style.md) — Style definitions for components (all visual appearance settings)

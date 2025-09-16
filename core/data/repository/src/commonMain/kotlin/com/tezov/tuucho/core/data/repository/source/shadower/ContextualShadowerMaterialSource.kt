@@ -19,6 +19,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.coroutines.awaitAll
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 
 class ContextualShadowerMaterialSource(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -44,7 +45,8 @@ class ContextualShadowerMaterialSource(
         val idScope = jsonObject.onScope(IdSchema::Scope)
         idScope.source ?: return
         val type = jsonObject.withScope(TypeSchema::Scope).self
-        val url = idScope.urlSource?.replaceUrlOriginToken(urlOrigin)
+        val url = idScope.urlSource?.jsonObject
+            ?.get(type)?.stringOrNull?.replaceUrlOriginToken(urlOrigin)
             ?: settingObject?.withScope(SettingComponentShadowerSchema.Contextual::Scope)
                 ?.url?.get(type).stringOrNull?.replaceUrlOriginToken(urlOrigin)
             ?: Contextual.defaultUrl(urlOrigin)

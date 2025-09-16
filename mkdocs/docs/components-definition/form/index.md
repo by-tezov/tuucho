@@ -16,6 +16,7 @@ The `form-send` action is used to submit form data to a server endpoint. It is t
 
 - `value`: `form-send://url/{the_server_endpoint}`
 - `action-validated`: A follow-up action (commonly a navigation) to trigger after a successful server response.
+- `action-denied`: A follow-up action to trigger after a successful server response, by default if you don't defined denied action, the error user feedback will be shown. This field is useful only if you want define a custom behavior. ...Documentation do not explain how yet...
 
 ### Example
 
@@ -66,7 +67,7 @@ The server must return one of the following:
 
 ```json
 {
-  "isAllSuccess": true
+  "type": "all-succeed"
 }
 ```
 
@@ -77,18 +78,19 @@ The server must return one of the following:
 
 ```json
 {
-  "results": [
+  "type": "failure-result",
+  "content": [
     {
       "id": "id of invalid field",
-      "failure-reason": /* Text object */
+      "reason": /* Text object */
     },...
   ]
 }
 ```
 
 - Indicates that the server rejected the submission, despite successful local validation.
-- `results`: a list of rejected inputs, each with an optional `failure-reason` [Text object](../../object-definition/text.md) that can be displayed in the UI to guide the user.
-- If no `failure-reason` is provided for an input that is locally valid, the application will ignore the server feedback for that input.  
+- `content`: a list of rejected inputs, each with an optional `reason` [Text object](../../object-definition/text.md) that can be displayed in the UI to guide the user.
+- If no `reason` is provided for an input that is locally valid, the application will ignore the server feedback for that input.  
   **Always provide a reason** to ensure the user receives feedback about the error.
 
 

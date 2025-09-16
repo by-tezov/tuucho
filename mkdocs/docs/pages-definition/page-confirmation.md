@@ -2,7 +2,6 @@
 
 ```json
 {
-  "version": "1",
   "root": {
     "subset": "layout-linear",
     "style": {

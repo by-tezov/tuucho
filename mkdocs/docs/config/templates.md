@@ -4,7 +4,6 @@ Here is a full template JSON example. For details on components and references, 
 
 ```json
 {
-  "version": "1",
   "root": {
     "id": "template-page-default",
     "subset": "layout-linear",
