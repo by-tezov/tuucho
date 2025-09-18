@@ -46,7 +46,7 @@ class ContextualShadowerMaterialSource(
         idScope.source ?: return
         val type = jsonObject.withScope(TypeSchema::Scope).self
         val url = idScope.urlSource?.jsonObject
-            ?.get(type)?.stringOrNull?.replaceUrlOriginToken(urlOrigin)
+            ?.get(this.type)?.stringOrNull?.replaceUrlOriginToken(urlOrigin)
             ?: settingObject?.withScope(SettingComponentShadowerSchema.Contextual::Scope)
                 ?.url?.get(type).stringOrNull?.replaceUrlOriginToken(urlOrigin)
             ?: Contextual.defaultUrl(urlOrigin)

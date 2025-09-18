@@ -9,6 +9,7 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
@@ -16,6 +17,8 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFrameworkTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 
 abstract class ConventionPlugin : Plugin<Project> {
 
@@ -126,26 +129,53 @@ abstract class ConventionPlugin : Plugin<Project> {
                         }
                     }
                 }
-
-
             }
         }
 
         internal fun configureSourceSetMultiplatform(project: Project) = with(project) {
+            val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
             extensions.configure(KotlinMultiplatformExtension::class.java) {
-                val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
                 sourceSets {
                     androidMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${androidMain.name}$flavorCapitalized")
+                        kotlin.srcDirs("${project.projectDir.path}/src/androidMain$flavorCapitalized/kotlin")
                     }
                     iosMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${iosMain.name}$flavorCapitalized")
+                        kotlin.srcDirs("${project.projectDir.path}/src/iosMain$flavorCapitalized/kotlin")
                     }
                     commonMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/${commonMain.name}$flavorCapitalized")
+                        kotlin.srcDirs("${project.projectDir.path}/src/commonMain$flavorCapitalized/kotlin")
                     }
                 }
             }
+            // Android assets
+            extensions.configure(CommonExtension::class.java) {
+                sourceSets["main"].assets.srcDirs(
+                    "src/commonMain/assets",
+                    "src/commonMain$flavorCapitalized/assets",
+                )
+            }
+            // Ios assets
+//            tasks.withType(KotlinNativeLink::class.java).configureEach {
+//                doLast {
+//                    outputs.files.forEach { outputDir ->
+//                        // TODO only for current build
+//                        // Take only from KMM but not all module...
+//                        outputDir.listFiles { f -> f.isDirectory && f.extension == "framework" }
+//                            ?.forEach { frameworkDir ->
+//                                val resourcesDir = frameworkDir.resolve("Resources")
+//                                resourcesDir.mkdirs()
+//                                project.copy {
+//                                    from("src/commonMain/assets")
+//                                    into(resourcesDir)
+//                                }
+//                                project.copy {
+//                                    from("src/commonMain$flavorCapitalized/assets")
+//                                    into(resourcesDir)
+//                                }
+//                            }
+//                    }
+//                }
+//            }
         }
 
         internal fun configureCompose(
