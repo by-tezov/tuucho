@@ -1,5 +1,4 @@
 import SwiftUI
-import AppKmmFramework
 
 @main
 struct iosApp: App {

@@ -7,6 +7,7 @@ import platform.Foundation.NSBundle
 
 class AssetsIos : AssetsProtocol {
     override fun readFile(path: String): Source {
+        println(path)
         val parts = "files/$path".split("/")
         val name = parts.last().substringBeforeLast(".")
         val ext = parts.last().substringAfterLast(".")

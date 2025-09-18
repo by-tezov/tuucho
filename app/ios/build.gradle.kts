@@ -125,3 +125,9 @@ tasks.register<Exec>("assembleDebug") {
     }
 }
 
+rootProject.tasks.named("clean") {
+    val cleanIosBuild = tasks.register("cleanIosBuild") {
+        delete("./build")
+    }
+    dependsOn(cleanIosBuild)
+}

@@ -17,6 +17,8 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFrameworkTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 
 abstract class ConventionPlugin : Plugin<Project> {
 
@@ -153,33 +155,29 @@ abstract class ConventionPlugin : Plugin<Project> {
                 )
             }
             // Ios assets
-//            extensions.configure(KotlinMultiplatformExtension::class.java) {
-//                val flavorCapitalized = version("flavor").replaceFirstChar { it.uppercaseChar() }
-//                val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
-//                iosTargets.forEach { target ->
-//                    target.binaries.withType(Framework::class.java).configureEach {
-//                        isStatic = false
-//                        val targetName = target.name.replaceFirstChar { it.uppercaseChar() }
-//                        val buildType = this.buildType.name.replaceFirstChar { it.uppercaseChar() }
-//                        val stageDir = layout.buildDirectory.dir("iosAssets/$targetName/$buildType")
-//                        val copyAssets = tasks.register("stage${targetName}${buildType}Assets", Copy::class.java) {
-//                            from("src/commonMain/assets", "src/commonMain$flavorCapitalized/assets")
-//                            into(stageDir)
-//                        }
-//                        linkTaskProvider.configure {
-//                            dependsOn(copyAssets)
-//                            doLast {
-//                                val frameworkDir = outputFile.get().asFile.parentFile
-//                                val resourcesDir = frameworkDir.resolve("${baseName}.framework/Resources")
-//                                project.copy {
-//                                    from(stageDir)
-//                                    into(resourcesDir)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            tasks.withType(KotlinNativeLink::class.java).configureEach {
+                doLast {
+                    outputs.files.forEach { outputDir ->
+
+                        // TODO only for current build
+                        // Take only from KMM but not all module...
+
+                        outputDir.listFiles { f -> f.isDirectory && f.extension == "framework" }
+                            ?.forEach { frameworkDir ->
+                                val resourcesDir = frameworkDir.resolve("Resources")
+                                resourcesDir.mkdirs()
+                                project.copy {
+                                    from("src/commonMain/assets")
+                                    into(resourcesDir)
+                                }
+                                project.copy {
+                                    from("src/commonMain$flavorCapitalized/assets")
+                                    into(resourcesDir)
+                                }
+                            }
+                    }
+                }
+            }
         }
 
         internal fun configureCompose(
