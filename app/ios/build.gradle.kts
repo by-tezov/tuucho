@@ -131,3 +131,21 @@ rootProject.tasks.named("clean") {
     }
     dependsOn(cleanIosBuild)
 }
+
+gradle.projectsEvaluated {
+    project(":app:kmm").tasks.named("linkDebugFrameworkIosSimulatorArm64").configure {
+        doLast {
+            val appDir = file("${project(":app:ios").buildDir}/Products/Debug-iphonesimulator/ios.app")
+            if (!appDir.exists()) {
+                println(">>> ios.app not found at $appDir")
+                return@doLast
+            }
+
+            val dummyDir = appDir.resolve("dummy")
+            dummyDir.mkdirs()
+            val dummyFile = dummyDir.resolve("hello.txt")
+            dummyFile.writeText("Hello from Gradle at ${System.currentTimeMillis()}")
+            println(">>> Wrote dummy file to $dummyFile")
+        }
+    }
+}

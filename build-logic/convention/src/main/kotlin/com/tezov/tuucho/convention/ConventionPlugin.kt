@@ -155,29 +155,27 @@ abstract class ConventionPlugin : Plugin<Project> {
                 )
             }
             // Ios assets
-            tasks.withType(KotlinNativeLink::class.java).configureEach {
-                doLast {
-                    outputs.files.forEach { outputDir ->
-
-                        // TODO only for current build
-                        // Take only from KMM but not all module...
-
-                        outputDir.listFiles { f -> f.isDirectory && f.extension == "framework" }
-                            ?.forEach { frameworkDir ->
-                                val resourcesDir = frameworkDir.resolve("Resources")
-                                resourcesDir.mkdirs()
-                                project.copy {
-                                    from("src/commonMain/assets")
-                                    into(resourcesDir)
-                                }
-                                project.copy {
-                                    from("src/commonMain$flavorCapitalized/assets")
-                                    into(resourcesDir)
-                                }
-                            }
-                    }
-                }
-            }
+//            tasks.withType(KotlinNativeLink::class.java).configureEach {
+//                doLast {
+//                    outputs.files.forEach { outputDir ->
+//                        // TODO only for current build
+//                        // Take only from KMM but not all module...
+//                        outputDir.listFiles { f -> f.isDirectory && f.extension == "framework" }
+//                            ?.forEach { frameworkDir ->
+//                                val resourcesDir = frameworkDir.resolve("Resources")
+//                                resourcesDir.mkdirs()
+//                                project.copy {
+//                                    from("src/commonMain/assets")
+//                                    into(resourcesDir)
+//                                }
+//                                project.copy {
+//                                    from("src/commonMain$flavorCapitalized/assets")
+//                                    into(resourcesDir)
+//                                }
+//                            }
+//                    }
+//                }
+//            }
         }
 
         internal fun configureCompose(
