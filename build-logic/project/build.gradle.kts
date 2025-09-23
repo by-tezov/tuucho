@@ -60,12 +60,6 @@ val generateProjectBuildConfig by tasks.registering {
 
     doFirst {
         val rootTasks = gradle.parent?.startParameter?.taskNames.orEmpty()
-
-        println("taskNames")
-        rootTasks.forEach {
-            println(it)
-        }
-
         val regexes = listOf(
             Regex("""^assemble(.*)$"""),
             Regex("""^root(.*)UnitTest$"""),
