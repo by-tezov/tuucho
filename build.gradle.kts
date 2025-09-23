@@ -29,30 +29,27 @@ extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
 
-//TODO fix
+tasks.register<JacocoReport>("rootMockCoverageReport") {
+    group = "verification"
+    description = "Aggregates Html coverage report from all modules into root build folder"
 
-//tasks.register<JacocoReport>("rootMockCoverageReport") {
-//    group = "verification"
-//    description = "Aggregates Html coverage report from all modules into root build folder"
-//
-//    val reportsList = subprojects
-//        .filterNot {
-//            it.path in listOf(":app:android", ":app:ios") ||
-//            !it.file("build.gradle.kts").exists()
-//        }
-//        .mapNotNull { sub ->
-//            sub.tasks.findByName("coverageDebugTestReport") as? JacocoReport
-//        }
-//    dependsOn(reportsList)
-//
-//    executionData.setFrom(reportsList.flatMap { it.executionData.files })
-//    classDirectories.setFrom(reportsList.flatMap { it.classDirectories.files })
-//    sourceDirectories.setFrom(reportsList.flatMap { it.sourceDirectories.files })
-//
-//    reports {
-//        xml.required.set(true)
-//        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoRootReport.xml"))
-//        html.required.set(true)
-//        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/html"))
-//    }
-//}
+    val reportsList = subprojects
+        .filterNot {
+            it.path in listOf(":app:android", ":app:ios") ||
+            !it.file("build.gradle.kts").exists()
+        }
+        .mapNotNull { sub ->
+            sub.tasks.findByName("coverageMockTestReport") as? JacocoReport
+        }
+
+    executionData.setFrom(reportsList.flatMap { it.executionData.files })
+    classDirectories.setFrom(reportsList.flatMap { it.classDirectories.files })
+    sourceDirectories.setFrom(reportsList.flatMap { it.sourceDirectories.files })
+
+    reports {
+        xml.required.set(true)
+        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoRootReport.xml"))
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/html"))
+    }
+}
