@@ -9,6 +9,9 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 open class ConventionLibraryPlugin : ConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
+
+        //TODO here retrieve the current build type
+
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
@@ -59,7 +62,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
     }
 
     private fun configureSourceSetMultiplatform(project: Project) = with(project) {
-        val flavorCapitalized = flavorCapitalized()
+        val flavorCapitalized = buildTypeCapitalized()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
                 androidMain {

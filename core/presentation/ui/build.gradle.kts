@@ -2,18 +2,6 @@ plugins {
     alias(libs.plugins.convention.library.ui)
 }
 
-android {
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-}
-
 kotlin {
     sourceSets {
         commonMain.dependencies {

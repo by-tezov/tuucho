@@ -52,10 +52,10 @@ class ConventionApplicationIosPlugin : Plugin<Project> {
     }
 
     private fun mergeAllProjectAssets(iosProject: Project) = with(iosProject) {
-        val flavorCapitalized = flavorCapitalized()
+        val flavorCapitalized = buildTypeCapitalized()
         val mergedAssetsDir = Files.createTempDirectory("mergedAssets").toFile()
         rootProject.subprojects
-            .filter { it.extra.has("hasAssets") }
+            .filter { it.extra.has("hasAssets") && extra.get("hasAssets") == true }
             .forEach { project ->
                 collectProjectAssets(project, flavorCapitalized)
                     .forEach { file ->

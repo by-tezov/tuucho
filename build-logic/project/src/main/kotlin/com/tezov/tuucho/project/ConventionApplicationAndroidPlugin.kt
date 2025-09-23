@@ -56,9 +56,9 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
     }
 
     private fun configureAndroidAssets(androidProject: Project) = with(androidProject) {
-        val flavorCapitalized = flavorCapitalized()
+        val flavorCapitalized = buildTypeCapitalized()
         gradle.afterProject {
-            if (extra.has("hasAssets")) {
+            if (extra.has("hasAssets") && extra.get("hasAssets") == true) {
                 extensions.configure(CommonExtension::class.java) {
                     sourceSets["main"].assets.srcDirs(
                         "src/commonMain/assets",

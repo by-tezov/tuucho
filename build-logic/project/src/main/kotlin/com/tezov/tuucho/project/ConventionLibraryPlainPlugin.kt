@@ -16,7 +16,7 @@ open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
         with(project) {
-            if (flavor() == "mock") {
+            if (buildType() == "mock") {
                 pluginManager.apply("jacoco")
                 pluginManager.apply(plugin(PluginId.allOpen))
                 pluginManager.apply(plugin(PluginId.mokkery))
@@ -34,7 +34,7 @@ open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
     }
 
     private fun configureCoverage(project: Project) = with(project) {
-        if (flavor() != "mock") return@with
+        if (buildType() != "mock") return@with
         extensions.configure(JacocoPluginExtension::class.java) {
             toolVersion = version("jacoco")
         }
@@ -71,7 +71,7 @@ open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
     }
 
     private fun configureTest(project: Project) = with(project) {
-        if (version("flavor") != "mock") return@with
+        if (buildType() != "mock") return@with
         extensions.configure(AllOpenExtension::class.java) {
             annotation("${domain()}.core.domain.test._system.OpenForTest")
         }

@@ -3,7 +3,7 @@ default_platform(:ios)
 platform :ios do
 
   desc "Build debug App locally"
-  lane :buildDebug do |options|
+  lane :buildMock do |options|
         xcodeproj = options[:xcodeproj]
         scheme = options[:scheme]
         deviceId = options[:deviceId]

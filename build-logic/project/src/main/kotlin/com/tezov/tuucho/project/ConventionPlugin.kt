@@ -1,10 +1,12 @@
 package com.tezov.tuucho.project
 
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
+import org.gradle.kotlin.dsl.extra
 
 abstract class ConventionPlugin : Plugin<Project> {
 
@@ -44,6 +46,7 @@ abstract class ConventionPlugin : Plugin<Project> {
     final override fun apply(project: Project) {
         applyPlugins(project)
         configureAndroidCommon(project)
+        configureBuildType(project)
         configure(project)
     }
 
@@ -73,6 +76,43 @@ abstract class ConventionPlugin : Plugin<Project> {
         project.extensions.configure(JavaPluginExtension::class.java) {
             toolchain {
                 languageVersion.set(javaLanguageVersion())
+            }
+        }
+    }
+
+    internal fun configureBuildType(
+        project: Project,
+    ) = with(project) {
+        extensions.configure(CommonExtension::class.java) {
+            buildTypes {
+                create("prod") {
+                    initWith(getByName("release"))
+                    matchingFallbacks += listOf("release")
+                    isMinifyEnabled = true
+//                    proguardFiles(
+//                        getDefaultProguardFile("proguard-android-optimize.txt"),
+//                        "proguard-rules.pro"
+//                    )
+                }
+                create("stage") {
+                    initWith(getByName("debug"))
+                    matchingFallbacks += listOf("debug")
+                }
+                create("dev") {
+                    initWith(getByName("debug"))
+                    matchingFallbacks += listOf("debug")
+                }
+                create("mock") {
+                    initWith(getByName("debug"))
+                    matchingFallbacks += listOf("debug")
+                }
+            }
+        }
+        extensions.configure(AndroidComponentsExtension::class.java) {
+            beforeVariants { builder ->
+                if (builder.buildType == "debug" || builder.buildType == "release") {
+                    builder.enable = false
+                }
             }
         }
     }

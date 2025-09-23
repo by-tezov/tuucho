@@ -14,22 +14,22 @@ plugins {
     alias(libs.plugins.sql.delight) apply false
 }
 
-tasks.register<TestReport>("rootDebugUnitTest") {
+tasks.register<TestReport>("rootMockUnitTest") {
     group = "verification"
     description = "Unit test and Aggregates Html unit test reports from all modules into root build folder"
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
-    val debugUnitTestTasks = subprojects.flatMap { sub ->
-        sub.tasks.withType<Test>().matching { it.name.contains("DebugUnitTest") }
+    val unitTestTasks = subprojects.flatMap { sub ->
+        sub.tasks.withType<Test>().matching { it.name.contains("MockUnitTest") }
     }
-    dependsOn(debugUnitTestTasks)
-    testResults.from(debugUnitTestTasks.map { it.binaryResultsDirectory })
+    dependsOn(unitTestTasks)
+    testResults.from(unitTestTasks.map { it.binaryResultsDirectory })
 }
 
 extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
 
-tasks.register<JacocoReport>("rootDebugCoverageReport") {
+tasks.register<JacocoReport>("rootMockCoverageReport") {
     group = "verification"
     description = "Aggregates Html coverage report from all modules into root build folder"
 
@@ -39,9 +39,8 @@ tasks.register<JacocoReport>("rootDebugCoverageReport") {
             !it.file("build.gradle.kts").exists()
         }
         .mapNotNull { sub ->
-            sub.tasks.findByName("coverageDebugTestReport") as? JacocoReport
+            sub.tasks.findByName("coverageMockTestReport") as? JacocoReport
         }
-//    dependsOn(reportsList)
 
     executionData.setFrom(reportsList.flatMap { it.executionData.files })
     classDirectories.setFrom(reportsList.flatMap { it.classDirectories.files })
@@ -54,4 +53,3 @@ tasks.register<JacocoReport>("rootDebugCoverageReport") {
         html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/html"))
     }
 }
-
