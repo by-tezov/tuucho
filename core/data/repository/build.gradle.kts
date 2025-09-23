@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.library)
+    alias(libs.plugins.convention.library.plain)
     alias(libs.plugins.sql.delight)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -52,6 +52,8 @@ kotlin {
 
             implementation(libs.sql.delight.runtime)
             implementation(libs.sql.delight.coroutines)
+
+            implementation(libs.okio)
         }
         commonTest.dependencies {
 
