@@ -15,8 +15,8 @@ platform :ios do
           skip_package_ipa: true,
           skip_archive: true,
           destination: "id=#{deviceId}",
+          derived_data_path: "./build"
         )
     end
-
 end
 
