@@ -18,7 +18,7 @@ val packageName = "com.tezov.tuucho.project"
 group = packageName
 
 gradlePlugin {
-    plugins{
+    plugins {
         register("ConventionApplicationAndroidPlugin") {
             id = "${packageName}.application-android"
             implementationClass = "${packageName}.${name}"
@@ -60,11 +60,24 @@ val generateProjectBuildConfig by tasks.registering {
 
     doFirst {
         val rootTasks = gradle.parent?.startParameter?.taskNames.orEmpty()
+
+        println("taskNames")
+        rootTasks.forEach {
+            println(it)
+        }
+
+        val regexes = listOf(
+            Regex("""^assemble(.*)$"""),
+            Regex("""^root(.*)UnitTest$"""),
+            Regex("""^root(.*)CoverageReport$""")
+        )
         val buildTypeFound = rootTasks
             .map { it.substringAfterLast(":") }
-            .firstOrNull { it.startsWith("assemble", ignoreCase = true) }
-            ?.removePrefix("assemble")
-            ?.takeIf { it.isNotEmpty() }
+            .firstNotNullOfOrNull { task ->
+                regexes.firstNotNullOfOrNull { regex ->
+                    regex.matchEntire(task)?.groupValues?.get(1)
+                }
+            }
             ?.lowercase()
 
         val file = outputDir.file("com/tezov/tuucho/project/BuildConfig.kt").asFile
@@ -73,8 +86,12 @@ val generateProjectBuildConfig by tasks.registering {
             !file.exists() -> buildTypeFound ?: "mock".also {
                 println("⚠️ buildType not found and BuildConfig didn't exist → create BuildConfig.kt with 'mock' build type")
             }
-            buildTypeFound != null -> buildTypeFound
-            else -> null
+
+            buildTypeFound == null -> null.also {
+                println("⚠️ buildType not found but BuildConfig exist → keep BuildConfig.kt current build type")
+            }
+
+            else -> buildTypeFound
         }
         if (buildTypeResolved != null) {
             file.writeText(buildConfigContent(packageName, buildTypeResolved))
@@ -85,7 +102,7 @@ val generateProjectBuildConfig by tasks.registering {
             val currentValue = match?.groupValues?.get(1)
             println("Current BuildConfig BUILD_TYPE = $currentValue")
         } else {
-            println("BuildConfig.kt not found at ${file.absolutePath}")
+            error("BuildConfig.kt not found at ${file.absolutePath}")
         }
     }
 }
