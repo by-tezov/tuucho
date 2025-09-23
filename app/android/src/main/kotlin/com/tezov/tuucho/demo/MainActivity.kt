@@ -13,6 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent { AppScreen(ApplicationModuleDeclaration.invoke(applicationContext)) }
+//        BuildConfig
     }
 
 }

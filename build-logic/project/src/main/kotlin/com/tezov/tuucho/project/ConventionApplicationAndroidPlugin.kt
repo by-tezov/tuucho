@@ -2,6 +2,7 @@ package com.tezov.tuucho.project
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
+import com.tezov.tuucho.project.buildTypeCapitalized
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.get
@@ -56,13 +57,13 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
     }
 
     private fun configureAndroidAssets(androidProject: Project) = with(androidProject) {
-        val flavorCapitalized = flavorCapitalized()
+        val buildTypeCapitalized = buildTypeCapitalized()
         gradle.afterProject {
-            if (extra.has("hasAssets")) {
+            if (extra.has("hasAssets") && extra.get("hasAssets") == true) {
                 extensions.configure(CommonExtension::class.java) {
                     sourceSets["main"].assets.srcDirs(
                         "src/commonMain/assets",
-                        "src/commonMain$flavorCapitalized/assets",
+                        "src/commonMain$buildTypeCapitalized/assets",
                     )
                 }
             }

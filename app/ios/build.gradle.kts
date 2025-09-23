@@ -88,7 +88,7 @@ tasks.register<Exec>("bundleInstall") {
     }
 }
 
-tasks.register<Exec>("createSimulatorApp") {
+tasks.register<Exec>("createSimulatorAppMock") {
     group = "build"
     description = "Create simulator application"
 
@@ -97,11 +97,11 @@ tasks.register<Exec>("createSimulatorApp") {
         val scheme = project.findProperty("scheme") as String
         val device = project.findProperty("device") as String
 
-        logInfo("createSimulatorApp:: xcodeproj: $xcodeproj, scheme: $scheme, device: $device")
+        logInfo("createSimulatorAppMock:: xcodeproj: $xcodeproj, scheme: $scheme, device: $device")
 
         val deviceId = createSimulator(device)
         commandLine(
-            "bundle", "exec", "fastlane", "buildDebug",
+            "bundle", "exec", "fastlane", "buildMock",
             "xcodeproj:${xcodeproj}",
             "scheme:${scheme}",
             "deviceId:${deviceId}"
@@ -110,19 +110,19 @@ tasks.register<Exec>("createSimulatorApp") {
 }
 
 // Helper tasks
-tasks.register<Exec>("assembleDebug") {
+tasks.register<Exec>("assembleMock") {
     group = "build"
     description = "assemble scheme debug for e2e test"
 
     doFirst {
         val device = project.findProperty("device") as String
 
-        logInfo("assembleDebug:: device: $device")
+        logInfo("assembleMock:: device: $device")
 
         workingDir = project.rootDir
         commandLine(
             "./gradlew",
-            "app:ios:createSimulatorApp",
+            "app:ios:createSimulatorAppMock",
             "-Pxcodeproj=ios/ios.xcodeproj",
             "-Pscheme=ios",
             "-Pdevice=$device",

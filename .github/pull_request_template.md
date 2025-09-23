@@ -16,11 +16,8 @@ CI command (use label 'trigger CI' after update)
 ---
 - [ ] : push trigger CI when on draft
 - **build type**:
-  - [x] : debug
-  - [ ] : release
-- **flavor type**:
   - [x] : mock
-  - [ ] : prod
+  - [ ] : dev
 - [x] : unit-test
 ---
 **QA branch name** : master

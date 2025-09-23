@@ -16,7 +16,7 @@ open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
         with(project) {
-            if (flavor() == "mock") {
+            if (buildType() == "mock") {
                 pluginManager.apply("jacoco")
                 pluginManager.apply(plugin(PluginId.allOpen))
                 pluginManager.apply(plugin(PluginId.mokkery))
@@ -34,24 +34,24 @@ open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
     }
 
     private fun configureCoverage(project: Project) = with(project) {
-        if (flavor() != "mock") return@with
+        if (buildType() != "mock") return@with
         extensions.configure(JacocoPluginExtension::class.java) {
             toolVersion = version("jacoco")
         }
-        tasks.register("coverageDebugTestReport", JacocoReport::class.java) {
-            val debugUnitTestTasks = tasks.withType<Test>()
-                .filter { it.name.contains("DebugUnitTest") }
-            dependsOn(debugUnitTestTasks)
+        tasks.register("coverageMockTestReport", JacocoReport::class.java) {
+            val unitTestTasks = tasks.withType<Test>()
+                .filter { it.name.contains("MockUnitTest") }
+            dependsOn(unitTestTasks)
 
             executionData.setFrom(
-                debugUnitTestTasks.map {
+                unitTestTasks.map {
                     it.extensions
                         .getByType(JacocoTaskExtension::class.java)
                         .destinationFile
                 }
             )
             classDirectories.setFrom(
-                fileTree("$buildDirectory/tmp/kotlin-classes/debug") {
+                fileTree("$buildDirectory/tmp/kotlin-classes/mock") {
                     exclude(
                         "**/R.class",
                         "**/R$*.class",
@@ -71,7 +71,7 @@ open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
     }
 
     private fun configureTest(project: Project) = with(project) {
-        if (version("flavor") != "mock") return@with
+        if (buildType() != "mock") return@with
         extensions.configure(AllOpenExtension::class.java) {
             annotation("${domain()}.core.domain.test._system.OpenForTest")
         }
