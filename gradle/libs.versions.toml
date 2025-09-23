@@ -1,8 +1,6 @@
 [versions]
 #project
 domain = "com.tezov.tuucho"
-flavor = "mock"
-#flavor = "prod"
 versionCode = "1"
 versionName = "0.0.1-alpha11"
 javaVersion = "17"

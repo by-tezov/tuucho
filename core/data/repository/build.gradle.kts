@@ -4,18 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-}
-
 sqldelight {
     databases {
         create("Database") {

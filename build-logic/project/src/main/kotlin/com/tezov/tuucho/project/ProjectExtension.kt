@@ -7,6 +7,7 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.tezov.tuucho.project.BuildConfig
 
 internal val Project.buildDirectory
     get() = layout.buildDirectory.get().asFile
@@ -28,9 +29,9 @@ internal fun Project.version(name: String) = libs.findVersion(name)
 
 internal fun Project.domain() = version("domain")
 
-internal fun Project.flavor() = version("flavor")
+internal fun Project.buildType() = BuildConfig.BUILD_TYPE
 
-internal fun Project.flavorCapitalized() = flavor().replaceFirstChar { it.uppercaseChar() }
+internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.uppercaseChar() }
 
 internal fun Project.namespace() = "${domain()}${path.replace(":", ".")}"
 

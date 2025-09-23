@@ -9,6 +9,9 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 open class ConventionLibraryPlugin : ConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
+
+        //TODO here retrieve the current build type
+
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
@@ -59,17 +62,17 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
     }
 
     private fun configureSourceSetMultiplatform(project: Project) = with(project) {
-        val flavorCapitalized = flavorCapitalized()
+        val buildTypeCapitalized = buildTypeCapitalized()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
                 androidMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/androidMain$flavorCapitalized/kotlin")
+                    kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
                 }
                 iosMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/iosMain$flavorCapitalized/kotlin")
+                    kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")
                 }
                 commonMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/commonMain$flavorCapitalized/kotlin")
+                    kotlin.srcDirs("${project.projectDir.path}/src/commonMain$buildTypeCapitalized/kotlin")
                 }
             }
         }

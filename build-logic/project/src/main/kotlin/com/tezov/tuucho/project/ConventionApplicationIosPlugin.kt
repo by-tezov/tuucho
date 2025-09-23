@@ -1,5 +1,6 @@
 package com.tezov.tuucho.project
 
+import com.tezov.tuucho.project.buildTypeCapitalized
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
@@ -52,12 +53,13 @@ class ConventionApplicationIosPlugin : Plugin<Project> {
     }
 
     private fun mergeAllProjectAssets(iosProject: Project) = with(iosProject) {
-        val flavorCapitalized = flavorCapitalized()
+        val buildTypeCapitalized = buildTypeCapitalized()
         val mergedAssetsDir = Files.createTempDirectory("mergedAssets").toFile()
         rootProject.subprojects
-            .filter { it.extra.has("hasAssets") }
+            .filter {
+                it.extra.has("hasAssets") && it.extra.get("hasAssets") == true }
             .forEach { project ->
-                collectProjectAssets(project, flavorCapitalized)
+                collectProjectAssets(project, buildTypeCapitalized)
                     .forEach { file ->
                         val idx = file.path.indexOf("assets")
                         val relativePath = file.path.substring(idx + "assets".length + 1)
