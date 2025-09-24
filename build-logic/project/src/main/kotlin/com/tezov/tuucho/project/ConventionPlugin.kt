@@ -89,10 +89,6 @@ abstract class ConventionPlugin : Plugin<Project> {
                     initWith(getByName("release"))
                     matchingFallbacks += listOf("release")
                     isMinifyEnabled = true
-//                    proguardFiles(
-//                        getDefaultProguardFile("proguard-android-optimize.txt"),
-//                        "proguard-rules.pro"
-//                    )
                 }
                 create("stage") {
                     initWith(getByName("debug"))

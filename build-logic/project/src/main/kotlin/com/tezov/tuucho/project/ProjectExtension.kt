@@ -35,6 +35,8 @@ internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.
 
 internal fun Project.namespace() = "${domain()}${path.replace(":", ".")}"
 
+internal fun Project.keystorePropertiesFilePath() = version("keystorePropertiesFilePath")
+
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
 
 internal fun Project.javaVersionInt() = jvmTarget().target.toInt()
