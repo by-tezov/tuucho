@@ -18,6 +18,8 @@ CI command (use label 'trigger CI' after update)
 - **build type**:
   - [x] : mock
   - [ ] : dev
+  - [ ] : stage
+  - [ ] : release
 - [x] : unit-test
 ---
 **QA branch name** : master
