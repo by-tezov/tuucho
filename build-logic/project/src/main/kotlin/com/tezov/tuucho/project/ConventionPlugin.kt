@@ -6,7 +6,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
-import org.gradle.kotlin.dsl.extra
 
 abstract class ConventionPlugin : Plugin<Project> {
 
@@ -45,8 +44,8 @@ abstract class ConventionPlugin : Plugin<Project> {
 
     final override fun apply(project: Project) {
         applyPlugins(project)
-        configureAndroidCommon(project)
-        configureBuildType(project)
+        configureCommonAndroid(project)
+        configureCommonBuildType(project)
         configure(project)
     }
 
@@ -54,7 +53,7 @@ abstract class ConventionPlugin : Plugin<Project> {
 
     protected open fun configure(project: Project) {}
 
-    private fun configureAndroidCommon(
+    private fun configureCommonAndroid(
         project: Project,
     ) = with(project) {
         extensions.configure(CommonExtension::class.java) {
@@ -80,7 +79,7 @@ abstract class ConventionPlugin : Plugin<Project> {
         }
     }
 
-    internal fun configureBuildType(
+    internal fun configureCommonBuildType(
         project: Project,
     ) = with(project) {
         extensions.configure(CommonExtension::class.java) {
@@ -88,11 +87,10 @@ abstract class ConventionPlugin : Plugin<Project> {
                 create("prod") {
                     initWith(getByName("release"))
                     matchingFallbacks += listOf("release")
-                    isMinifyEnabled = true
                 }
                 create("stage") {
-                    initWith(getByName("debug"))
-                    matchingFallbacks += listOf("debug")
+                    initWith(getByName("release"))
+                    matchingFallbacks += listOf("release")
                 }
                 create("dev") {
                     initWith(getByName("debug"))

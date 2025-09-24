@@ -22,10 +22,11 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
     override fun configure(
         project: Project,
     ) {
-        configureAndroidApplication(project)
+        configureApplication(project)
+        configureProguard(project)
         configureCompose(project)
-        configureAndroidAssets(project)
-        configureAndroidSigning(project)
+        configureAssets(project)
+        configureSigning(project)
 //            packaging {
 //                resources {
 //                    excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -36,7 +37,7 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
 //            }
     }
 
-    private fun configureAndroidApplication(
+    private fun configureApplication(
         project: Project,
     ) = with(project) {
         extensions.configure(ApplicationExtension::class.java) {
@@ -57,7 +58,23 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
         }
     }
 
-    private fun configureAndroidAssets(androidProject: Project) = with(androidProject) {
+    private fun configureProguard(project: Project) = with(project) {
+        extensions.configure(ApplicationExtension::class.java) {
+            buildTypes {
+                getByName("prod") {
+                    isMinifyEnabled = true
+                    isShrinkResources = true
+                    isDebuggable = false
+                    proguardFiles(
+                        getDefaultProguardFile("proguard-android-optimize.txt"),
+                        "proguard-rules.pro"
+                    )
+                }
+            }
+        }
+    }
+
+    private fun configureAssets(androidProject: Project) = with(androidProject) {
         val buildTypeCapitalized = buildTypeCapitalized()
         gradle.afterProject {
             if (extra.has("hasAssets") && extra.get("hasAssets") == true) {
@@ -71,11 +88,11 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
         }
     }
 
-    private fun configureAndroidSigning(
+    private fun configureSigning(
         project: Project,
     ) = with(project) {
         val keystorePropertiesFile = rootProject.file(keystorePropertiesFilePath())
-        if (keystorePropertiesFile.exists()) {
+        if (!keystorePropertiesFile.exists()) {
             println("⚠️ No keystore.properties found. Signing will be skipped.")
             return@with
         }
@@ -83,9 +100,9 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
             signingConfigs {
                 with(Properties()) {
                     load(keystorePropertiesFile.inputStream())
-                    val storePath = getProperty("keystorePath")
+                    val storePath = getProperty("keystoreFilePath")
                         ?: error("Missing property: keystorePath in keystore.properties")
-                    val storeFile = file(storePath)
+                    val storeFile = rootProject.file(storePath)
                     if (!storeFile.exists()) {
                         error("Keystore file '$storePath' not found.")
                     }
@@ -97,8 +114,7 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
                         this.storePassword = storePassword
                         keyAlias = getProperty("keyAliasProd")
                             ?: error("Missing property: keyAliasProd")
-                        keyPassword = getProperty("keyPasswordProd")
-                            ?: error("Missing property: keyPasswordProd")
+                        keyPassword = storePassword
                     }
 
                     create("stage") {
@@ -106,8 +122,7 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
                         this.storePassword = storePassword
                         keyAlias = getProperty("keyAliasStage")
                             ?: error("Missing property: keyAliasStage")
-                        keyPassword = getProperty("keyPasswordStage")
-                            ?: error("Missing property: keyPasswordStage")
+                        keyPassword = storePassword
                     }
 
                     create("dev") {
@@ -115,8 +130,7 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
                         this.storePassword = storePassword
                         keyAlias = getProperty("keyAliasDev")
                             ?: error("Missing property: keyAliasDev")
-                        keyPassword = getProperty("keyPasswordDev")
-                            ?: error("Missing property: keyPasswordDev")
+                        keyPassword = storePassword
                     }
 
                     create("mock") {
@@ -124,8 +138,7 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
                         this.storePassword = storePassword
                         keyAlias = getProperty("keyAliasDev")
                             ?: error("Missing property: keyAliasDev")
-                        keyPassword = getProperty("keyPasswordDev")
-                            ?: error("Missing property: keyPasswordDev")
+                        keyPassword = storePassword
                     }
                 }
             }

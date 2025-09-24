@@ -66,6 +66,7 @@ val generateProjectBuildConfig by tasks.registering {
             Regex("""^root(.*)CoverageReport$""")
         )
         val buildTypeFound = rootTasks
+            .asSequence()
             .map { it.substringAfterLast(":") }
             .firstNotNullOfOrNull { task ->
                 regexes.firstNotNullOfOrNull { regex ->

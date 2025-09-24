@@ -1,4 +1,5 @@
 /keystore.properties
+/keystore.jks
 .DS_Store
 *.iml
 .gradle/
