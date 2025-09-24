@@ -2,7 +2,7 @@
 #project
 domain = "com.tezov.tuucho"
 versionCode = "1"
-versionName = "0.0.1-alpha11"
+versionName = "0.0.1-alpha12"
 javaVersion = "17"
 minSdk = "24"
 targetSdk = "36"
@@ -20,13 +20,13 @@ kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
 kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.1.0"
-ktor = "3.2.3"
+ktor = "3.3.0"
 koin = "4.1.1"
 kotlin-datetime = "0.7.1"
 okio = "3.16.0"
 #test
 jacoco = "0.8.12"
-mokkery = "3.0.0-Beta1"
+mokkery = "3.0.0-Beta2"
 
 [libraries]
 #build-logic
