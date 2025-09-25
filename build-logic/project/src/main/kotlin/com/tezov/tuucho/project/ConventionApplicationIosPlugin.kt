@@ -1,6 +1,5 @@
 package com.tezov.tuucho.project
 
-import com.tezov.tuucho.project.buildTypeCapitalized
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
@@ -10,11 +9,11 @@ import java.nio.file.Files
 class ConventionApplicationIosPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
-        configureIosTask(project)
-        configureIosAsset(project)
+        configureCleanTask(project)
+        configureAssets(project)
     }
 
-    private fun configureIosTask(iosProject: Project) = with(iosProject) {
+    private fun configureCleanTask(iosProject: Project) = with(iosProject) {
         rootProject.tasks.named("clean") {
             val cleanIosBuild = tasks.register("cleanIosBuild") {
                 delete("./build")
@@ -23,7 +22,7 @@ class ConventionApplicationIosPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureIosAsset(iosProject: Project) = with(iosProject) {
+    private fun configureAssets(iosProject: Project) = with(iosProject) {
         val syncIosAssets = tasks.register("syncIosAssets") {
             doLast {
                 val app = resolveIosApp()

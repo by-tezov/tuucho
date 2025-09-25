@@ -1,6 +1,7 @@
 [versions]
 #project
 domain = "com.tezov.tuucho"
+keystorePropertiesFilePath = "keystore.properties"
 versionCode = "1"
 versionName = "0.0.1-alpha12"
 javaVersion = "17"
@@ -25,7 +26,7 @@ koin = "4.1.1"
 kotlin-datetime = "0.7.1"
 okio = "3.16.0"
 #test
-jacoco = "0.8.12"
+jacoco = "0.8.13"
 mokkery = "3.0.0-Beta2"
 
 [libraries]

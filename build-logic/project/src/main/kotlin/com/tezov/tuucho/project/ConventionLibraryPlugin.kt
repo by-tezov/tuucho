@@ -9,9 +9,6 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 open class ConventionLibraryPlugin : ConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
-
-        //TODO here retrieve the current build type
-
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
@@ -21,11 +18,24 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
     override fun configure(
         project: Project,
     ) {
-        configureLibraryMultiplatform(project)
-        configureSourceSetMultiplatform(project)
+        configureProguard(project)
+        configureMultiplatform(project)
+        configureSourceSets(project)
     }
 
-    private fun configureLibraryMultiplatform(project: Project) = with(project) {
+    private fun configureProguard(project: Project) = with(project) {
+        extensions.configure(LibraryExtension::class.java) {
+            buildTypes {
+                getByName("prod") {
+                    consumerProguardFiles(
+                        "proguard-rules.pro"
+                    )
+                }
+            }
+        }
+    }
+
+    private fun configureMultiplatform(project: Project) = with(project) {
         extensions.configure(LibraryExtension::class.java) {
             namespace = namespace()
         }
@@ -61,7 +71,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
         }
     }
 
-    private fun configureSourceSetMultiplatform(project: Project) = with(project) {
+    private fun configureSourceSets(project: Project) = with(project) {
         val buildTypeCapitalized = buildTypeCapitalized()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
