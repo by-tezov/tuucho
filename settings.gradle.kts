@@ -20,9 +20,11 @@ dependencyResolutionManagement {
 rootProject.name = "tuucho"
 include("sample:android")
 include("sample:ios")
-listOf("core/data", "core/domain", "core/presentation").forEach { basePath ->
+listOf("platform", "core/data", "core/domain", "core/presentation").forEach { basePath ->
     file(basePath).listFiles()
-        ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
+        ?.filter {
+            (it.isDirectory && File(it, "build.gradle.kts").exists()) || (it.name == "build.gradle.kts")
+        }
         ?.map {
             val relative = it.relativeTo(rootDir).invariantSeparatorsPath
             ":${relative.replace("/", ":")}"

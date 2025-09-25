@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.convention.library.ui)
+    alias(libs.plugins.convention.maven)
 }
 
 kotlin {

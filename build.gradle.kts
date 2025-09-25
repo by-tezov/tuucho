@@ -1,7 +1,10 @@
+import java.util.Properties
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     base
     id("jacoco")
+    alias(libs.plugins.maven) apply false
     alias(libs.plugins.mokkery) apply false
     alias(libs.plugins.all.open) apply false
     alias(libs.plugins.android.application) apply false

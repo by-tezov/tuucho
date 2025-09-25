@@ -7,9 +7,10 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
 
-abstract class ConventionPlugin : Plugin<Project> {
+abstract class AbstractConventionPlugin : Plugin<Project> {
 
     object PluginId {
+        const val maven = "maven"
         const val androidApplication = "android.application"
         const val androidLibrary = "android.library"
         const val koltinAndroid = "kotlin.android"

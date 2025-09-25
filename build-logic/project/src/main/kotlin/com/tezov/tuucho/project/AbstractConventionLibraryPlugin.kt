@@ -1,12 +1,14 @@
 package com.tezov.tuucho.project
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-open class ConventionLibraryPlugin : ConventionPlugin() {
+abstract class AbstractConventionLibraryPlugin : AbstractConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
         with(project) {
@@ -55,7 +57,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
             // iOS
             val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
             project.afterEvaluate {
-                val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace
+                val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace!!
                 val baseName = project.path.split(":")
                     .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
                 iosTargets.forEach { iosTarget ->
@@ -87,6 +89,7 @@ open class ConventionLibraryPlugin : ConventionPlugin() {
             }
         }
     }
+
 }
 
 

@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.get
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import java.util.Properties
 
-open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
+class ConventionApplicationAndroidPlugin : AbstractConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
         with(project) {

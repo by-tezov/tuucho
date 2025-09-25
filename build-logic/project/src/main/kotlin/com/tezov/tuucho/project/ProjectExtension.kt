@@ -29,11 +29,13 @@ internal fun Project.version(name: String) = libs.findVersion(name)
 
 internal fun Project.domain() = version("domain")
 
+internal fun Project.name() = version("name")
+
+internal fun Project.namespace() = "${version("domain")}.${version("name")}${path.replace(":", ".")}"
+
 internal fun Project.buildType() = BuildConfig.BUILD_TYPE
 
 internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.uppercaseChar() }
-
-internal fun Project.namespace() = "${domain()}${path.replace(":", ".")}"
 
 internal fun Project.keystorePropertiesFilePath() = version("keystorePropertiesFilePath")
 

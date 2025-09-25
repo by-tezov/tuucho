@@ -11,7 +11,7 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
+open class ConventionLibraryPlainPlugin : AbstractConventionLibraryPlugin() {
 
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
@@ -73,7 +73,7 @@ open class ConventionLibraryPlainPlugin : ConventionLibraryPlugin() {
     private fun configureTest(project: Project) = with(project) {
         if (buildType() != "mock") return@with
         extensions.configure(AllOpenExtension::class.java) {
-            annotation("${domain()}.core.domain.test._system.OpenForTest")
+            annotation("${namespace()}.core.domain.test._system.OpenForTest")
         }
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {

@@ -1,6 +1,9 @@
 /keystore.properties
 /keystore.jks
-/key.gpg
+/maven-key-no-armor.gpg
+/maven-key-armor.gpg
+/maven-setting.xml
+/maven.properties
 .DS_Store
 *.iml
 .gradle/
