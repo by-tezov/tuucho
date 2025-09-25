@@ -1,6 +1,7 @@
 ## In progress
 
 - add config to remove hard string inside di
+- builtType should be able to put only main if multiple are same code ?
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

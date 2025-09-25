@@ -44,7 +44,7 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
             namespace = namespace()
 
             defaultConfig {
-                applicationId = "${namespace()}.android"
+                applicationId = namespace
                 targetSdk = targetSdk()
                 versionCode = versionCode()
                 versionName = versionName()

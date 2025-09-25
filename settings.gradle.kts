@@ -18,7 +18,9 @@ dependencyResolutionManagement {
 //enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "tuucho"
-listOf("app", "core", "core/data", "core/domain", "core/presentation").forEach { basePath ->
+include("sample:android")
+include("sample:ios")
+listOf("core/data", "core/domain", "core/presentation").forEach { basePath ->
     file(basePath).listFiles()
         ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
         ?.map {
