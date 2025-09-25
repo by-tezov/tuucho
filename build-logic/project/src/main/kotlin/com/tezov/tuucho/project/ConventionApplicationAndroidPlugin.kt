@@ -2,11 +2,11 @@ package com.tezov.tuucho.project
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
-import com.tezov.tuucho.project.buildTypeCapitalized
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.get
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import java.util.Properties
 
 open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
 
@@ -22,9 +22,11 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
     override fun configure(
         project: Project,
     ) {
-        configureAndroidApplication(project)
+        configureApplication(project)
+        configureProguard(project)
         configureCompose(project)
-        configureAndroidAssets(project)
+        configureAssets(project)
+        configureSigning(project)
 //            packaging {
 //                resources {
 //                    excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -35,7 +37,7 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
 //            }
     }
 
-    private fun configureAndroidApplication(
+    private fun configureApplication(
         project: Project,
     ) = with(project) {
         extensions.configure(ApplicationExtension::class.java) {
@@ -56,7 +58,23 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
         }
     }
 
-    private fun configureAndroidAssets(androidProject: Project) = with(androidProject) {
+    private fun configureProguard(project: Project) = with(project) {
+        extensions.configure(ApplicationExtension::class.java) {
+            buildTypes {
+                getByName("prod") {
+                    isMinifyEnabled = true
+                    isShrinkResources = true
+                    isDebuggable = false
+                    proguardFiles(
+                        getDefaultProguardFile("proguard-android-optimize.txt"),
+                        "proguard-rules.pro"
+                    )
+                }
+            }
+        }
+    }
+
+    private fun configureAssets(androidProject: Project) = with(androidProject) {
         val buildTypeCapitalized = buildTypeCapitalized()
         gradle.afterProject {
             if (extra.has("hasAssets") && extra.get("hasAssets") == true) {
@@ -65,6 +83,79 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
                         "src/commonMain/assets",
                         "src/commonMain$buildTypeCapitalized/assets",
                     )
+                }
+            }
+        }
+    }
+
+    private fun configureSigning(
+        project: Project,
+    ) = with(project) {
+        val keystorePropertiesFile = rootProject.file(keystorePropertiesFilePath())
+        if (!keystorePropertiesFile.exists()) {
+            println("⚠️ No keystore.properties found. Signing will be skipped.")
+            return@with
+        }
+        extensions.configure(ApplicationExtension::class.java) {
+            signingConfigs {
+                with(Properties()) {
+                    load(keystorePropertiesFile.inputStream())
+                    val storePath = getProperty("keystoreFilePath")
+                        ?: error("Missing property: keystorePath in keystore.properties")
+                    val storeFile = rootProject.file(storePath)
+                    if (!storeFile.exists()) {
+                        error("Keystore file '$storePath' not found.")
+                    }
+                    val storePassword = getProperty("keystorePassword")
+                        ?: error("Missing property: keystorePassword")
+
+                    create("prod") {
+                        this.storeFile = storeFile
+                        this.storePassword = storePassword
+                        keyAlias = getProperty("keyAliasProd")
+                            ?: error("Missing property: keyAliasProd")
+                        keyPassword = storePassword
+                    }
+
+                    create("stage") {
+                        this.storeFile = storeFile
+                        this.storePassword = storePassword
+                        keyAlias = getProperty("keyAliasStage")
+                            ?: error("Missing property: keyAliasStage")
+                        keyPassword = storePassword
+                    }
+
+                    create("dev") {
+                        this.storeFile = storeFile
+                        this.storePassword = storePassword
+                        keyAlias = getProperty("keyAliasDev")
+                            ?: error("Missing property: keyAliasDev")
+                        keyPassword = storePassword
+                    }
+
+                    create("mock") {
+                        this.storeFile = storeFile
+                        this.storePassword = storePassword
+                        keyAlias = getProperty("keyAliasDev")
+                            ?: error("Missing property: keyAliasDev")
+                        keyPassword = storePassword
+                    }
+                }
+            }
+            buildTypes {
+                buildTypes {
+                    getByName("prod") {
+                        signingConfig = signingConfigs.getByName("prod")
+                    }
+                    getByName("stage") {
+                        signingConfig = signingConfigs.getByName("stage")
+                    }
+                    getByName("dev") {
+                        signingConfig = signingConfigs.getByName("dev")
+                    }
+                    getByName("mock") {
+                        signingConfig = signingConfigs.getByName("mock")
+                    }
                 }
             }
         }

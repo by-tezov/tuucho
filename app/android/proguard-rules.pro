@@ -1,3 +1,9 @@
+#-whyareyoukeeping class com.tezov.tuucho.
+#-dontusemixedcaseclassnames
+#-dontoptimize
+#-dontshrink
+#-dontobfuscate
+
 # Add project specific ProGuard rules here.
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.
@@ -19,3 +25,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-repackageclasses 'android.oav'
+#-allowaccessmodification
+-renamesourcefileattribute SourceFile
+-printmapping './build/proguard/mapping.txt'
+-printconfiguration './build/proguard/configuration.txt'
+
+
