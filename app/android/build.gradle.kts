@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":app:kmm"))
+    implementation(project(":core:platform"))
     implementation(project(":core:data:repository"))
     implementation(libs.compose.activity)
     implementation(libs.koin.core)

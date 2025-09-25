@@ -1,5 +1,6 @@
 /keystore.properties
 /keystore.jks
+/key.gpg
 .DS_Store
 *.iml
 .gradle/
@@ -14,3 +15,4 @@
 /app/ios/fastlane/report.xml
 /app/ios/fastlane/Appfile
 /build-logic/build/
+

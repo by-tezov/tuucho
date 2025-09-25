@@ -1,4 +1,4 @@
-package com.tezov.tuucho.kmm.di
+package com.tezov.tuucho.platform.di
 
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
@@ -20,7 +20,7 @@ object StartKoinModules {
         modules(SystemCoreDomainModules())
         modules(SystemCoreDataModules())
         modules(SystemCoreUiModules())
-        modules(SystemKmmModules())
+        modules(SystemPlatformModules())
     }, content = content)
 
 }

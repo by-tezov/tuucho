@@ -16,7 +16,7 @@ kotlin-serialization-plugin = "2.2.10"
 ksp-plugin = "2.2.10-2.0.2"
 #lib - android
 compose-activity = "1.11.0"
-#lib - kmm
+#lib - platform
 kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
 kotlin-collections-immutable = "0.4.0"
@@ -35,7 +35,7 @@ android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", ve
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
-#lib - kmm
+#lib - platform
 kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }

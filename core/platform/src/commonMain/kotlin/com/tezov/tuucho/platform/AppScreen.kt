@@ -1,9 +1,9 @@
-package com.tezov.tuucho.kmm
+package com.tezov.tuucho.platform
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.tezov.tuucho.core.presentation.ui.renderer.rememberTuuchoEngine
-import com.tezov.tuucho.kmm.di.StartKoinModules
+import com.tezov.tuucho.platform.di.StartKoinModules
 import org.koin.dsl.ModuleDeclaration
 
 @Composable

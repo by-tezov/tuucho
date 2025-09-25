@@ -1,4 +1,4 @@
-package com.tezov.tuucho.kmm
+package com.tezov.tuucho.platform
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

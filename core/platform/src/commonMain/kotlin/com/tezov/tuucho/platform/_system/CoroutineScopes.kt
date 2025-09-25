@@ -1,4 +1,4 @@
-package com.tezov.tuucho.kmm._system
+package com.tezov.tuucho.platform._system
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContext
