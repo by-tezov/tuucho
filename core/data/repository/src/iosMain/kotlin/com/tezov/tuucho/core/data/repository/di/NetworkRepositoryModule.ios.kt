@@ -6,8 +6,6 @@ actual fun serverUrlEndpoint() = "http://127.0.0.1:3000"
 
 object NetworkRepositoryModuleIos {
 
-    internal operator fun invoke() = module {
-        NetworkRepositoryModuleIosFlavor.invoke(this)
-    }
+    internal operator fun invoke() = NetworkRepositoryModuleIosFlavor.invoke()
 
 }

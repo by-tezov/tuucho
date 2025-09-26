@@ -4,8 +4,6 @@ import org.koin.core.module.Module
 
 object NetworkRepositoryModuleIosFlavor {
 
-    operator fun invoke(module: Module) = module.apply {
-        NetworkRepositoryModuleFlavor.invoke(module)
-    }
+    operator fun invoke() = NetworkRepositoryModuleFlavor.invoke()
 
 }

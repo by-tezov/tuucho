@@ -1,11 +1,7 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import org.koin.core.module.Module
-
 object NetworkRepositoryModuleAndroidFlavor {
 
-    operator fun invoke(module: Module) = module.apply {
-        NetworkRepositoryModuleFlavor.invoke(module)
-    }
+    operator fun invoke() = NetworkRepositoryModuleFlavor.invoke()
 
 }

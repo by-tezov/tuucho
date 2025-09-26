@@ -9,10 +9,11 @@ import com.tezov.tuucho.core.data.repository.network.backendServer.service.SendS
 import io.ktor.client.engine.HttpClientEngineFactory
 import org.koin.core.module.Module
 import org.koin.dsl.bind
+import org.koin.dsl.module
 
 object NetworkRepositoryModuleFlavor {
 
-    operator fun invoke(module: Module) = module.apply {
+    operator fun invoke() = module {
 
         services()
 

@@ -7,7 +7,7 @@ import org.koin.dsl.module
 
 object NetworkRepositoryModuleAndroidFlavor {
 
-    operator fun invoke(module: Module) = module.apply {
+    operator fun invoke() = module {
 
         factory <HttpClientEngineFactory<*>> {
             OkHttp

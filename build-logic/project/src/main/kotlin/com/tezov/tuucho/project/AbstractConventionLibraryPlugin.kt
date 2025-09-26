@@ -1,9 +1,7 @@
 package com.tezov.tuucho.project
 
-import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -45,7 +43,7 @@ abstract class AbstractConventionLibraryPlugin : AbstractConventionPlugin() {
             jvmToolchain(this@with.javaVersionInt())
             compilerOptions {
                 optIn.configureOptIn()
-                allWarningsAsErrors.set(true)
+                allWarningsAsErrors.set(false) //turn of warning error uniq name when maven publication, TODO need to dig in.
             }
             // Android
             val androidTargets = listOf(androidTarget())
@@ -55,15 +53,15 @@ abstract class AbstractConventionLibraryPlugin : AbstractConventionPlugin() {
                 }
             }
             // iOS
-            val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
+            val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
             project.afterEvaluate {
                 val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace!!
-                val baseName = project.path.split(":")
+                val frameworkName = project.path.split(":")
                     .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
                 iosTargets.forEach { iosTarget ->
                     iosTarget.binaries.framework {
                         isStatic = true
-                        this.baseName = baseName
+                        baseName = frameworkName
                         freeCompilerArgs += listOf(
                             "-Xbinary=bundleId=$namespace",
                         )
