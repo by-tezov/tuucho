@@ -14,9 +14,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-object MaterialRendererModule {
+internal object MaterialRendererModule {
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         viewModule()
         screenModule()
     }

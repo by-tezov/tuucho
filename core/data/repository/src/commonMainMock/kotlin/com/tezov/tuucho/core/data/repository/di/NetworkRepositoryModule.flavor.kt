@@ -11,9 +11,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-object NetworkRepositoryModuleFlavor {
+internal object NetworkRepositoryModuleFlavor {
 
-    operator fun invoke() = module {
+    fun invoke() = module {
 
         services()
 

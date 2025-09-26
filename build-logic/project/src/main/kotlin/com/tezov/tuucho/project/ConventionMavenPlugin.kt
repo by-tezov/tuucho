@@ -4,7 +4,10 @@ import com.android.build.gradle.LibraryExtension
 import com.tezov.tuucho.project.AbstractConventionPlugin.PluginId
 import com.vanniktech.maven.publish.AndroidMultiVariantLibrary
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.VersionCatalog
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Exec
@@ -72,22 +75,35 @@ class ConventionMavenPlugin : Plugin<Project> {
     }
 
     private fun configureMaven(project: Project) = with(project) {
+        extensions.configure(LibraryExtension::class.java) {
+            publishing {
+                singleVariant("prod")
+            }
+        }
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             androidTarget {
                 publishLibraryVariants("prod")
             }
         }
         extensions.configure(MavenPublishBaseExtension::class.java) {
-            configure(
-                AndroidSingleVariantLibrary(
-                    variant = "prod",
-                    sourcesJar = true,
-                    publishJavadocJar = false
-                )
-            )
             publishToMavenCentral(automaticRelease = false)
             signAllPublications()
             coordinates(groupId = domain(), artifactId = name(), version = versionName())
+//            configure(
+//                AndroidSingleVariantLibrary(
+//                    variant = "prod",
+//                    sourcesJar = true,
+//                    publishJavadocJar = false
+//                )
+//            )
+//            configure(
+//                KotlinMultiplatform(
+//                    javadocJar = JavadocJar.Empty(),
+//                    sourcesJar = true,
+//                    androidVariantsToPublish = listOf("prod"),
+//                )
+//            )
+//            configure(VersionCatalog())
             pom {
                 name.set("tuucho")
                 description.set("KMM rendering engine")

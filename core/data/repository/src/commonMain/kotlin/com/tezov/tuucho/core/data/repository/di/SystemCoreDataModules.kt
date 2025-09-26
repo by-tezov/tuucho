@@ -6,15 +6,15 @@ expect fun SystemCoreDataModules.platformInvoke():List<Module>
 
 object SystemCoreDataModules {
 
-    operator fun invoke():List<Module> = listOf(
-        MiscModule(),
-        MaterialRectifierModule(),
-        MaterialBreakerModule(),
-        MaterialAssemblerModule(),
-        MaterialShadowerModule(),
-        MaterialRepositoryModule(),
-        DatabaseRepositoryModule(),
-        NetworkRepositoryModule(),
+    fun invoke():List<Module> = listOf(
+        MiscModule.invoke(),
+        MaterialRectifierModule.invoke(),
+        MaterialBreakerModule.invoke(),
+        MaterialAssemblerModule.invoke(),
+        MaterialShadowerModule.invoke(),
+        MaterialRepositoryModule.invoke(),
+        DatabaseRepositoryModule.invoke(),
+        NetworkRepositoryModule.invoke(),
     ) + platformInvoke()
 
 }

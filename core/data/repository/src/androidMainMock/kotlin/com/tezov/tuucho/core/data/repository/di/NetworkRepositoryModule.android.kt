@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.di
 
-object NetworkRepositoryModuleAndroidFlavor {
+internal object NetworkRepositoryModuleAndroidFlavor {
 
-    operator fun invoke() = NetworkRepositoryModuleFlavor.invoke()
+    fun invoke() = NetworkRepositoryModuleFlavor.invoke()
 
 }

@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.tezov.tuucho.sample.di.ApplicationModuleDeclaration
-import com.tezov.tuucho.data.platform.AppScreen
+import com.tezov.tuucho.platform.AppScreen
 
 class MainActivity : ComponentActivity() {
 

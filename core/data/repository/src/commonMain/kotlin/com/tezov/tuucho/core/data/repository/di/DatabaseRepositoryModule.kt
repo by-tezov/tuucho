@@ -15,9 +15,9 @@ import org.koin.dsl.module
 
 const val localDatabaseName = "database.db" //TODO external config file (android, ios, common)
 
-object DatabaseRepositoryModule {
+internal object DatabaseRepositoryModule {
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
 
         factory<JsonObjectAdapter> {
             JsonObjectAdapter(json = get())

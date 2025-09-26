@@ -1,4 +1,4 @@
-package com.tezov.tuucho.data.platform
+package com.tezov.tuucho.platform
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

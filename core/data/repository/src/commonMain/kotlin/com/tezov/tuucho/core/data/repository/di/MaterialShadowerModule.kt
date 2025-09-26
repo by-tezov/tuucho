@@ -11,7 +11,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-object MaterialShadowerModule {
+internal object MaterialShadowerModule {
 
     object Name {
         object Processor {
@@ -27,7 +27,7 @@ object MaterialShadowerModule {
         }
     }
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         single<MaterialShadower> { MaterialShadower() }
 
         componentModule()

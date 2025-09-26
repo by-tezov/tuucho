@@ -5,9 +5,9 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.tezov.tuucho.core.data.repository.database.Database
 import org.koin.dsl.module
 
-object DatabaseRepositoryModuleIos {
+internal object DatabaseRepositoryModuleIos {
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
 
         factory<SqlDriver> {
             NativeSqliteDriver(

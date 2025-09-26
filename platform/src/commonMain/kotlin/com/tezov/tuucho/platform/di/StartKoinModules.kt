@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
 import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
+import com.tezov.tuucho.platform.di.SystemPlatformModules
 import org.koin.compose.KoinApplication
 import org.koin.dsl.ModuleDeclaration
 import org.koin.dsl.module
@@ -17,10 +18,10 @@ object StartKoinModules {
     ) = KoinApplication(application = {
         allowOverride(override = false)
         modules(module { applicationModuleDeclaration() })
-        modules(SystemCoreDomainModules())
-        modules(SystemCoreDataModules())
-        modules(SystemCoreUiModules())
-        modules(SystemPlatformModules())
+        modules(SystemCoreDomainModules.invoke())
+        modules(SystemCoreDataModules.invoke())
+        modules(SystemCoreUiModules.invoke())
+        modules(SystemPlatformModules.invoke())
     }, content = content)
 
 }

@@ -77,7 +77,7 @@ object MaterialRectifierModule {
         }
     }
 
-    internal operator fun invoke() = module {
+    internal fun invoke() = module {
         single<MaterialRectifier> { MaterialRectifier() }
 
         idModule()

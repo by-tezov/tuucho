@@ -20,7 +20,9 @@ tasks.register<TestReport>("rootMockUnitTest") {
     description = "Unit test and Aggregates Html unit test reports from all modules into root build folder"
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     val unitTestTasks = subprojects.flatMap { sub ->
-        sub.tasks.withType<Test>().matching { it.name.contains("MockUnitTest") }
+        sub.tasks.withType<Test>().matching {
+            it.name.contains("MockUnitTest")
+        }
     }
     dependsOn(unitTestTasks)
     testResults.from(unitTestTasks.map { it.binaryResultsDirectory })

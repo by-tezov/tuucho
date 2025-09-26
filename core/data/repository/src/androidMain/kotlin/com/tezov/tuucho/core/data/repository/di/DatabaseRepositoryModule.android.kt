@@ -13,7 +13,7 @@ object DatabaseRepositoryModuleAndroid {
         val APPLICATION_CONTEXT = named("DatabaseRepositoryModuleAndroid.Name.APPLICATION_CONTEXT")
     }
 
-    internal operator fun invoke() = module {
+    internal fun invoke() = module {
 
         factory<SqlDriver> {
             AndroidSqliteDriver(
