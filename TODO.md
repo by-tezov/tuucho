@@ -2,6 +2,9 @@
 
 - add config to remove hard string inside di
 - builtType should be able to put only main if multiple are same code ?
+- pipeline jenkins publication with key and so. should not be inside this project even with git ignore (if not CI disable publication signed, only local allowed)
+- class to add doc and respect maven guide-line
+- add signing key
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

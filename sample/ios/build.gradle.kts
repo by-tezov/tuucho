@@ -122,7 +122,7 @@ tasks.register<Exec>("assembleMock") {
         workingDir = project.rootDir
         commandLine(
             "./gradlew",
-            "app:ios:createSimulatorAppMock",
+            "sample:ios:createSimulatorAppMock",
             "-Pxcodeproj=ios/ios.xcodeproj",
             "-Pscheme=ios",
             "-Pdevice=$device",

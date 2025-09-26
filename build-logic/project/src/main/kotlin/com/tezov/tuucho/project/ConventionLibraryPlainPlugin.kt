@@ -73,7 +73,8 @@ open class ConventionLibraryPlainPlugin : AbstractConventionLibraryPlugin() {
     private fun configureTest(project: Project) = with(project) {
         if (buildType() != "mock") return@with
         extensions.configure(AllOpenExtension::class.java) {
-            annotation("${namespace()}.core.domain.test._system.OpenForTest")
+            println()
+            annotation("${namespaceBase()}.core.domain.test._system.OpenForTest")
         }
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {

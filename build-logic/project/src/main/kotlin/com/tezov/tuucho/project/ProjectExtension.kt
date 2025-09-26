@@ -30,7 +30,9 @@ internal fun Project.domain() = version("domain")
 
 internal fun Project.name() = version("name")
 
-internal fun Project.namespace() = "${version("domain")}.${version("name")}${path.replace(":", ".")}"
+internal fun Project.namespaceBase() = "${version("domain")}.${version("name")}"
+
+internal fun Project.namespace() = "${namespaceBase()}${path.replace(":", ".")}"
 
 internal fun Project.buildType() = BuildConfig.BUILD_TYPE
 
