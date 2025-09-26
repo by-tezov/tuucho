@@ -1,10 +1,11 @@
 ## In progress
 
-- add config to remove hard string inside di
-- builtType should be able to put only main if multiple are same code ?
-- pipeline jenkins publication with key and so. should not be inside this project even with git ignore (if not CI disable publication signed, only local allowed)
-- class to add doc and respect maven guide-line
-- add signing key
+
+- Add a Shared module inside sample
+- rename platform to barrel
+- then fix the logic to allow the config
+
+- retrieve key and update jenkins logic to make use of it + save.
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

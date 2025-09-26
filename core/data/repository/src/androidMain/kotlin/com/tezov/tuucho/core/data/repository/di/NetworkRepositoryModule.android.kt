@@ -4,8 +4,6 @@ import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.engine.okhttp.OkHttp
 import org.koin.dsl.module
 
-actual fun serverUrlEndpoint() = "http://10.0.2.2:3000"
-
 internal object NetworkRepositoryModuleAndroid {
 
     object FlavorDefault {

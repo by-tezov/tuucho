@@ -40,7 +40,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-object MaterialRectifierModule {
+internal object MaterialRectifierModule {
 
     object Name {
 
@@ -77,7 +77,7 @@ object MaterialRectifierModule {
         }
     }
 
-    internal fun invoke() = module {
+    fun invoke() = module {
         single<MaterialRectifier> { MaterialRectifier() }
 
         idModule()

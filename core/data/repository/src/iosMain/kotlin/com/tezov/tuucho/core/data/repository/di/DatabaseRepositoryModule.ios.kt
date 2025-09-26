@@ -12,7 +12,7 @@ internal object DatabaseRepositoryModuleIos {
         factory<SqlDriver> {
             NativeSqliteDriver(
                 schema = Database.Schema,
-                name = localDatabaseName
+                name = get<SystemCoreDataModules.Config>().localDatabaseFile
             )
         }
     }

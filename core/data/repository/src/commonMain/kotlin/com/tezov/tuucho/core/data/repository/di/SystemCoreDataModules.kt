@@ -6,6 +6,11 @@ expect fun SystemCoreDataModules.platformInvoke():List<Module>
 
 object SystemCoreDataModules {
 
+    interface Config {
+        val localDatabaseFile: String
+        val serverUrl: String
+    }
+
     fun invoke():List<Module> = listOf(
         MiscModule.invoke(),
         MaterialRectifierModule.invoke(),

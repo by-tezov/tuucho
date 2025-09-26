@@ -2,7 +2,6 @@
 /keystore.jks
 /maven-key-no-armor.gpg
 /maven-key-armor.gpg
-/maven-setting.xml
 /maven.properties
 .DS_Store
 *.iml
@@ -14,3 +13,4 @@
 /mkdocs/site/
 /.kotlin/
 /build-logic/.kotlin/errors/
+/sample/config.properties

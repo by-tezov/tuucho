@@ -19,7 +19,7 @@ object DatabaseRepositoryModuleAndroid {
             AndroidSqliteDriver(
                 schema = Database.Schema,
                 context = get(Name.APPLICATION_CONTEXT),
-                name = localDatabaseName
+                name = get<SystemCoreDataModules.Config>().localDatabaseFile
             )
         }
     }
