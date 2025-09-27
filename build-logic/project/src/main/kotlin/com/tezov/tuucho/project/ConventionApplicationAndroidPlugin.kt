@@ -5,10 +5,9 @@ import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.get
-import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import java.util.Properties
 
-open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
+class ConventionApplicationAndroidPlugin : AbstractConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
         with(project) {
@@ -24,7 +23,6 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
     ) {
         configureApplication(project)
         configureProguard(project)
-        configureCompose(project)
         configureAssets(project)
         configureSigning(project)
 //            packaging {
@@ -44,17 +42,11 @@ open class ConventionApplicationAndroidPlugin : ConventionPlugin() {
             namespace = namespace()
 
             defaultConfig {
-                applicationId = "${namespace()}.android"
+                applicationId = namespace
                 targetSdk = targetSdk()
                 versionCode = versionCode()
                 versionName = versionName()
             }
-        }
-        project.extensions.configure(KotlinAndroidProjectExtension::class.java) {
-            jvmToolchain(this@with.javaVersionInt())
-            compilerOptions.jvmTarget.set(this@with.jvmTarget())
-            compilerOptions.optIn.configureOptIn()
-            compilerOptions.allWarningsAsErrors.set(true)
         }
     }
 

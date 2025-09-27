@@ -2,11 +2,11 @@ package com.tezov.tuucho.core.domain.business.di
 
 object SystemCoreDomainModules {
 
-    operator fun invoke() = listOf(
-        MiscModule(),
-        NavigationModule(),
-        ActionProcessorModule(),
-        UseCaseModule()
+    fun invoke() = listOf(
+        MiscModule.invoke(),
+        NavigationModule.invoke(),
+        ActionProcessorModule.invoke(),
+        UseCaseModule.invoke()
     )
 
 }

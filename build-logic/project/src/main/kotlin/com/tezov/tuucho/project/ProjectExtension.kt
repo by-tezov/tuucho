@@ -7,7 +7,6 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import com.tezov.tuucho.project.BuildConfig
 
 internal val Project.buildDirectory
     get() = layout.buildDirectory.get().asFile
@@ -29,13 +28,19 @@ internal fun Project.version(name: String) = libs.findVersion(name)
 
 internal fun Project.domain() = version("domain")
 
+internal fun Project.name() = version("name")
+
+internal fun Project.namespaceBase() = "${version("domain")}.${version("name")}"
+
+internal fun Project.namespace() = "${namespaceBase()}${path.replace(":", ".")}"
+
 internal fun Project.buildType() = BuildConfig.BUILD_TYPE
 
 internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.uppercaseChar() }
 
-internal fun Project.namespace() = "${domain()}${path.replace(":", ".")}"
-
 internal fun Project.keystorePropertiesFilePath() = version("keystorePropertiesFilePath")
+
+internal fun Project.mavenPropertiesFilePath() = version("mavenPropertiesFilePath")
 
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
 

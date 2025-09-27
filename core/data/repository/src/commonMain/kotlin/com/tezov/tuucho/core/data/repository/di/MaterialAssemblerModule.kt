@@ -17,7 +17,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-object MaterialAssemblerModule {
+internal object MaterialAssemblerModule {
 
     object Name {
         val ASSEMBLERS = named("MaterialAssemblerModule.Name.ASSEMBLERS")
@@ -43,7 +43,7 @@ object MaterialAssemblerModule {
         }
     }
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         factory<List<AbstractAssembler>>(Name.ASSEMBLERS) {
             listOf(
                 get<ComponentAssembler>(),

@@ -1,17 +1,7 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.engine.darwin.Darwin
-import org.koin.dsl.module
+internal object NetworkRepositoryModuleIosFlavor {
 
-object NetworkRepositoryModuleIosFlavor {
-
-    internal operator fun invoke() = module {
-
-        factory<HttpClientEngineFactory<*>> {
-            Darwin
-        }
-
-    }
+    fun invoke() = NetworkRepositoryModuleIos.FlavorDefault.invoke()
 
 }

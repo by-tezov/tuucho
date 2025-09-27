@@ -1,5 +1,8 @@
 /keystore.properties
 /keystore.jks
+/maven-key-no-armor.gpg
+/maven-key-armor.gpg
+/maven.properties
 .DS_Store
 *.iml
 .gradle/
@@ -9,8 +12,5 @@
 /.venv/
 /mkdocs/site/
 /.kotlin/
-/app/ios/build/
 /build-logic/.kotlin/errors/
-/app/ios/fastlane/report.xml
-/app/ios/fastlane/Appfile
-/build-logic/build/
+/sample/config.properties

@@ -9,13 +9,13 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-object NavigationModule {
+internal object NavigationModule {
 
     object Name {
         val ID_GENERATOR = named("NavigationModule.Name.ID_GENERATOR")
     }
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
 
         single<IdGeneratorProtocol>(Name.ID_GENERATOR) {
             NavigationRouteIdGenerator()

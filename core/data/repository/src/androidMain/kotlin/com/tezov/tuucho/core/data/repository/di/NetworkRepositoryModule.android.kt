@@ -1,13 +1,22 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.engine.okhttp.OkHttp
 import org.koin.dsl.module
 
-actual fun serverUrlEndpoint() = "http://10.0.2.2:3000"
+internal object NetworkRepositoryModuleAndroid {
 
-object NetworkRepositoryModuleAndroid {
+    object FlavorDefault {
 
-    internal operator fun invoke() = module {
-        NetworkRepositoryModuleAndroidFlavor.invoke(this)
+        fun invoke() = module {
+
+            factory <HttpClientEngineFactory<*>> {
+                OkHttp
+            }
+        }
+
     }
+
+    fun invoke() = NetworkRepositoryModuleAndroidFlavor.invoke()
 
 }

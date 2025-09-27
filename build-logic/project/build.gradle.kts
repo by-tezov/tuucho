@@ -5,8 +5,8 @@ plugins {
 dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
-//    compileOnly(libs.mokkery)
     compileOnly(libs.all.open)
+    compileOnly(libs.maven)
 }
 
 java {
@@ -27,8 +27,12 @@ gradlePlugin {
             id = "${packageName}.application-ios"
             implementationClass = "${packageName}.${name}"
         }
-        register("ConventionLibraryPlugin") {
-            id = "${packageName}.library"
+        register("ConventionMavenPlugin") {
+            id = "${packageName}.maven"
+            implementationClass = "${packageName}.${name}"
+        }
+        register("ConventionLibraryTestPlugin") {
+            id = "${packageName}.library-test"
             implementationClass = "${packageName}.${name}"
         }
         register("ConventionLibraryPlainPlugin") {
@@ -61,10 +65,12 @@ val generateProjectBuildConfig by tasks.registering {
     doFirst {
         val rootTasks = gradle.parent?.startParameter?.taskNames.orEmpty()
         val regexes = listOf(
-            Regex("""^assemble(.*)$"""),
-            Regex("""^root(.*)UnitTest$"""),
-            Regex("""^root(.*)CoverageReport$""")
+            Regex("""^assemble(.+)$"""),
+            Regex("""^root(.+)UnitTest$"""),
+            Regex("""^root(.+)CoverageReport$"""),
+            Regex("""^publish(.+)ToMavenLocal$""")
         )
+
         val buildTypeFound = rootTasks
             .asSequence()
             .map { it.substringAfterLast(":") }
