@@ -5,7 +5,6 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.api.provider.ListProperty
 
 abstract class AbstractConventionPlugin : Plugin<Project> {
 
@@ -24,29 +23,18 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
     }
 
     companion object {
-        internal fun ListProperty<String>.configureOptIn() {
-            add("kotlin.uuid.ExperimentalUuidApi")
-            add("kotlin.ExperimentalUnsignedTypes")
-            add("kotlin.time.ExperimentalTime")
-        }
 
-        internal fun configureCompose(
-            project: Project,
-        ) = with(project) {
-            extensions.configure(CommonExtension::class.java) {
-                lint {
-                    disable.apply {
-                        add("ComposableNaming")
-                    }
-                }
-            }
-        }
+        private fun lintDisabled() = setOf(
+            "ComposableNaming"
+        )
+
     }
 
     final override fun apply(project: Project) {
         applyPlugins(project)
         configureCommonAndroid(project)
         configureCommonBuildType(project)
+        configureLint(project)
         configure(project)
     }
 
@@ -80,7 +68,7 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
         }
     }
 
-    internal fun configureCommonBuildType(
+    private fun configureCommonBuildType(
         project: Project,
     ) = with(project) {
         extensions.configure(CommonExtension::class.java) {
@@ -108,6 +96,16 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
                 if (builder.buildType == "debug" || builder.buildType == "release") {
                     builder.enable = false
                 }
+            }
+        }
+    }
+
+    private fun configureLint(
+        project: Project,
+    ) = with(project) {
+        extensions.configure(CommonExtension::class.java) {
+            lint {
+                disable.addAll(lintDisabled())
             }
         }
     }

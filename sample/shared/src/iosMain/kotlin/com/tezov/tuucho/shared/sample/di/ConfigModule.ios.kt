@@ -1,6 +1,7 @@
 package com.tezov.tuucho.shared.sample.di
 
 import com.tezov.tuucho.barrel.di.SystemBarrelModules
+import com.tezov.tuucho.sample.shared.BuildKonfig
 import org.koin.dsl.ModuleDeclaration
 
 internal object ConfigModuleIos {
@@ -8,8 +9,8 @@ internal object ConfigModuleIos {
     fun invoke(): ModuleDeclaration = {
         single<SystemBarrelModules.Config> {
             object : SystemBarrelModules.Config {
-                override val localDatabaseFile = "database.db"
-                override val serverUrl = "http://127.0.0.1:3000"
+                override val localDatabaseFile = BuildKonfig.localDatabaseFile
+                override val serverUrl = BuildKonfig.serverUrl
             }
         }
     }

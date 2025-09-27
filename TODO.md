@@ -1,10 +1,7 @@
 ## In progress
 
-- Add a Shared module inside sample
-- rename platform to barrel
-- then fix the logic to allow the config
-
-- retrieve key and update jenkins logic to make use of it + save.
+- sample should use maven local or maven central to use the dependency
+- should a very standalone project (build-logic belongs to tuucho)
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

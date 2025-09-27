@@ -8,6 +8,19 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 abstract class AbstractConventionLibraryPlugin : AbstractConventionPlugin() {
 
+    companion object {
+        private fun optIn() = listOf(
+            "kotlin.uuid.ExperimentalUuidApi",
+            "kotlin.ExperimentalUnsignedTypes",
+            "kotlin.time.ExperimentalTime",
+//            "kotlin.ExperimentalMultiplatform",
+        ).asIterable()
+
+        private fun compilerOption() = listOf(
+            "-Xexpect-actual-classes",
+        )
+    }
+
     override fun applyPlugins(project: Project) {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
@@ -42,7 +55,8 @@ abstract class AbstractConventionLibraryPlugin : AbstractConventionPlugin() {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             jvmToolchain(this@with.javaVersionInt())
             compilerOptions {
-                optIn.configureOptIn()
+                optIn.addAll(optIn())
+                freeCompilerArgs.addAll(compilerOption())
                 allWarningsAsErrors.set(false) //turn of warning error uniq name when maven publication, TODO need to dig in.
             }
             // Android
@@ -68,6 +82,7 @@ abstract class AbstractConventionLibraryPlugin : AbstractConventionPlugin() {
                     }
                 }
             }
+            applyDefaultHierarchyTemplate()
         }
     }
 

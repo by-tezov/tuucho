@@ -1,16 +1,18 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.convention.library.ui)
+    alias(libs.plugins.build.konfig)
 }
 
-android {
+buildkonfig {
+    packageName = android.namespace
 
     val configPropertiesFile = project.file("../config.properties")
     if (!configPropertiesFile.exists()) {
         error("⚠️ No config.properties found")
     }
-
     with(Properties()) {
         load(configPropertiesFile.inputStream())
 
@@ -20,25 +22,22 @@ android {
         val serverUrlAndroid = getProperty("serverUrlAndroid")
             ?: error("Missing property: serverUrlAndroid in config.properties")
 
-        buildTypes {
-            getByName("prod") {
-                buildConfigField("String", "localDatabaseFile", localDatabaseFile)
-                buildConfigField("String", "serverUrl", serverUrlAndroid)
-            }
-            getByName("stage") {
-                buildConfigField("String", "localDatabaseFile", localDatabaseFile)
-                buildConfigField("String", "serverUrl", serverUrlAndroid)
-            }
-            getByName("dev") {
-                buildConfigField("String", "localDatabaseFile", localDatabaseFile)
-                buildConfigField("String", "serverUrl", serverUrlAndroid)
-            }
-            getByName("mock") {
-                buildConfigField("String", "localDatabaseFile", localDatabaseFile)
-                buildConfigField("String", "serverUrl", serverUrlAndroid)
-            }
+        val serverUrlIos = getProperty("serverUrlIos")
+            ?: error("Missing property: serverUrlIos in config.properties")
+
+        defaultConfigs {
+            buildConfigField(FieldSpec.Type.STRING, "localDatabaseFile", localDatabaseFile)
         }
 
+        targetConfigs {
+            create("android") {
+                buildConfigField(FieldSpec.Type.STRING, "serverUrl", serverUrlAndroid)
+            }
+
+            create("ios") {
+                buildConfigField(FieldSpec.Type.STRING, "serverUrl", serverUrlIos)
+            }
+        }
     }
 }
 

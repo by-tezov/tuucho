@@ -3,6 +3,7 @@ plugins {
     base
     id("jacoco")
     alias(libs.plugins.maven) apply false
+    alias(libs.plugins.build.konfig) apply false
     alias(libs.plugins.mokkery) apply false
     alias(libs.plugins.all.open) apply false
     alias(libs.plugins.android.application) apply false
