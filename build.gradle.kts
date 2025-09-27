@@ -39,7 +39,7 @@ tasks.register<JacocoReport>("rootMockCoverageReport") {
 
     val reportsList = subprojects
         .filterNot {
-            it.path in listOf(":app:android", ":app:ios") ||
+            it.path in listOf(":sample:android", ":sample:ios") ||
             !it.file("build.gradle.kts").exists()
         }
         .mapNotNull { sub ->
