@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.tezov.tuucho.sample.di.ApplicationModuleDeclaration
-import com.tezov.tuucho.platform.AppScreen
+import com.tezov.tuucho.shared.sample.AppScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -13,7 +13,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent { AppScreen(ApplicationModuleDeclaration.invoke(applicationContext)) }
-//        BuildConfig
     }
 
 }

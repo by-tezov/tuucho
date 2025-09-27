@@ -1,6 +1,5 @@
 ## In progress
 
-
 - Add a Shared module inside sample
 - rename platform to barrel
 - then fix the logic to allow the config

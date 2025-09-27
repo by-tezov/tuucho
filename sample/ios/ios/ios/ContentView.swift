@@ -1,13 +1,11 @@
 import SwiftUI
 import UIKit
-import PlatformFramework
+import SampleSharedFramework
 
 struct ComposeView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
-        MainScreen_iosKt.uiView(
-            //here how to supply koin ? Not possible, must be done in KMM
-        )
+        MainScreen_iosKt.uiView()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
