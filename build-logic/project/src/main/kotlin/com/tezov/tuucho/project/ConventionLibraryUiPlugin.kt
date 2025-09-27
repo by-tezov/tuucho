@@ -11,12 +11,5 @@ class ConventionLibraryUiPlugin : ConventionLibraryPlainPlugin() {
             pluginManager.apply(plugin(PluginId.composeCompiler))
         }
     }
-
-    override fun configure(
-        project: Project,
-    ) {
-        super.configure(project)
-        configureCompose(project)
-    }
 }
 

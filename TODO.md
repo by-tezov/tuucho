@@ -1,6 +1,7 @@
 ## In progress
 
-- add config to remove hard string inside di
+- sample should use maven local or maven central to use the dependency
+- should a very standalone project (build-logic belongs to tuucho)
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

@@ -14,7 +14,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-object MaterialBreakerModule {
+internal object MaterialBreakerModule {
 
     object Name {
         object Processor {
@@ -38,7 +38,7 @@ object MaterialBreakerModule {
         }
     }
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         single<MaterialBreaker> { MaterialBreaker() }
 
         componentModule()

@@ -18,9 +18,9 @@ import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import org.koin.dsl.module
 
-object UseCaseModule {
+internal object UseCaseModule {
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
 
         single<UseCaseExecutor> {
             UseCaseExecutor(

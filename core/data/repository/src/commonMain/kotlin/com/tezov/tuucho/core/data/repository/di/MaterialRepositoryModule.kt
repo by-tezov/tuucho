@@ -16,13 +16,13 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-object MaterialRepositoryModule {
+internal object MaterialRepositoryModule {
 
     object Name {
         val SHADOWER_SOURCE = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
     }
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         localSource()
         remoteSource()
         compositeSource()

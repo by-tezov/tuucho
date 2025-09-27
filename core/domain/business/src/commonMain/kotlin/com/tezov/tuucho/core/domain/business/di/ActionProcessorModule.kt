@@ -9,13 +9,13 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-object ActionProcessorModule {
+internal object ActionProcessorModule {
 
     object Name {
         val PROCESSORS = named("ActionProcessorModule.Name.PROCESSORS")
     }
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         factory<List<ActionProcessorProtocol>>(Name.PROCESSORS) {
             getAll<ActionProcessorProtocol>()
         }

@@ -3,9 +3,9 @@ package com.tezov.tuucho.core.data.repository.di
 import com.tezov.tuucho.core.data.repository.source._system.LifetimeResolver
 import org.koin.dsl.module
 
-object MiscModule {
+internal object MiscModule {
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         factory<LifetimeResolver> {
             LifetimeResolver(
                 expirationDateTimeRectifier = get()

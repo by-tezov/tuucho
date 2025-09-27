@@ -10,9 +10,9 @@ import kotlinx.serialization.modules.SerializersModule
 import org.koin.dsl.module
 import kotlin.time.Instant
 
-object MiscModule {
+internal object MiscModule {
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         single<Json> {
             Json {
                 ignoreUnknownKeys = true

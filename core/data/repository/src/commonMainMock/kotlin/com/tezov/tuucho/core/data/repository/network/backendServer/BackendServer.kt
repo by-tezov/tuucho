@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.data.repository.network.backendServer
 
-import com.tezov.tuucho.core.data.repository.di.serverUrlEndpoint
 import com.tezov.tuucho.core.data.repository.network.backendServer.protocol.ServiceProtocol
 import io.ktor.http.Headers
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Url
 
 class BackendServer(
+    private val serverUrl: String,
     private val services: List<ServiceProtocol>,
 ) {
 
@@ -24,7 +24,7 @@ class BackendServer(
 
     suspend fun process(request: Request): Response {
         val parsedUrl = Url(request.url)
-        val baseUrl = Url(serverUrlEndpoint())
+        val baseUrl = Url(serverUrl)
         val endpoint = parsedUrl.encodedPath
             .removePrefix(baseUrl.encodedPath)
             .trimStart('/')
