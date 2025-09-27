@@ -1,0 +1,76 @@
+[versions]
+#convention
+domain = "com.tezov"
+name = "tuucho.sample"
+keystorePropertiesFilePath = "keystore.properties"
+versionCode = "1"
+versionName = "0.0.1-alpha12"
+javaVersion = "17"
+minSdk = "24"
+targetSdk = "36"
+compileSdk = "36"
+
+#plugin
+android-plugin = "8.12.3"
+kotlin-plugin = "2.2.10" # can't launch unit test when upgrade to 2.2.20
+compose-plugin = "1.8.2"
+kotlin-serialization-plugin = "2.2.10"
+build-konfig-plugin = "0.17.1"
+
+#lib - android
+compose-activity = "1.11.0"
+
+#lib - platform
+kotlin-couroutine = "1.10.2"
+kotlin-serialization-json = "1.9.0"
+kotlin-collections-immutable = "0.4.0"
+sql-delight = "2.1.0"
+ktor = "3.3.0"
+koin = "4.1.1"
+kotlin-datetime = "0.7.1"
+okio = "3.16.0"
+
+[libraries]
+#build-logic
+android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-plugin" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
+#compose - android
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
+#lib - platform
+kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
+kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+sql-delight-runtime = { group = "app.cash.sqldelight", name = "runtime", version.ref = "sql-delight" }
+sql-delight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sql-delight" }
+ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-cio = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-collections-immutable" }
+kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlin-datetime" }
+okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+#lib - android
+sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
+ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+#lib - android
+sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
+ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+#test
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-couroutine" }
+
+[plugins]
+#convention
+convention-application-android = { id = "com.tezov.tuucho.convention.application-android", version = "unspecified" }
+convention-application-ios = { id = "com.tezov.tuucho.convention.application-ios", version = "unspecified" }
+convention-library-ui = { id = "com.tezov.tuucho.convention.library-ui", version = "unspecified" }
+#convention
+build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig-plugin" }
+android-application = { id = "com.android.application", version.ref = "android-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }
+sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }

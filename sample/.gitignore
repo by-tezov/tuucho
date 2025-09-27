@@ -1,0 +1,14 @@
+/keystore.properties
+/keystore.jks
+/build
+/config.properties
+.DS_Store
+*.iml
+.gradle/
+gradlew
+gradlew.bat
+/gradle/wrapper/
+.kotlin/
+/local.properties
+/.idea/
+/build-logic/.kotlin/errors/

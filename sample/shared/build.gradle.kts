@@ -44,14 +44,14 @@ buildkonfig {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-
+//            implementation("com.tezov:tuucho-android-prod:0.0.1-alpha12")
         }
         iosMain.dependencies {
 
         }
         commonMain.dependencies {
-            implementation(project(":barrel"))
-            implementation(project(":core:presentation:ui"))
+
+            implementation("com.tezov:tuucho:0.0.1-alpha12")
 
             implementation(compose.runtime)
             implementation(compose.foundation)

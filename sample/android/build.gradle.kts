@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":sample:shared"))
-    implementation(project(":core:data:repository"))
+    implementation(project(":shared"))
+//    implementation(project(":core:data:repository")) //TODO
     implementation(libs.compose.activity)
     implementation(libs.koin.core)
 }

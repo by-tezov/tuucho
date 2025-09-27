@@ -5,8 +5,6 @@ plugins {
 dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
-    compileOnly(libs.all.open)
-    compileOnly(libs.maven)
 }
 
 java {
@@ -14,21 +12,17 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-val packageName = "com.tezov.tuucho.convention.project"
+val packageName = "com.tezov.tuucho.convention"
 group = packageName
 
 gradlePlugin {
     plugins {
-        register("MavenPlugin") {
-            id = "${packageName}.maven"
+        register("ApplicationAndroidPlugin") {
+            id = "${packageName}.application-android"
             implementationClass = "${packageName}.${name}"
         }
-        register("LibraryTestPlugin") {
-            id = "${packageName}.library-test"
-            implementationClass = "${packageName}.${name}"
-        }
-        register("LibraryPlainPlugin") {
-            id = "${packageName}.library-plain"
+        register("ApplicationIosPlugin") {
+            id = "${packageName}.application-ios"
             implementationClass = "${packageName}.${name}"
         }
         register("LibraryUiPlugin") {
@@ -60,7 +54,7 @@ val generateProjectBuildConfig by tasks.registering {
             Regex("""^assemble(.+)$"""),
             Regex("""^root(.+)UnitTest$"""),
             Regex("""^root(.+)CoverageReport$"""),
-            Regex("""^rootPublish(.+)ToMavenLocal$""")
+            Regex("""^publish(.+)ToMavenLocal$""")
         )
 
         val buildTypeFound = rootTasks
@@ -73,7 +67,7 @@ val generateProjectBuildConfig by tasks.registering {
             }
             ?.lowercase()
 
-        val file = outputDir.file("com/tezov/tuucho/project/BuildConfig.kt").asFile
+        val file = outputDir.file("com/tezov/tuucho/convention/BuildConfig.kt").asFile
         file.parentFile.mkdirs()
         val buildTypeResolved: String? = when {
             !file.exists() -> buildTypeFound ?: "mock".also {
