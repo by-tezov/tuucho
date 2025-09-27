@@ -1,5 +1,7 @@
 ## In progress
 
+- NOW: fix Jenkins with properties files + backup
+
 - sample should use maven local or maven central to use the dependency
 - should a very standalone project (build-logic belongs to tuucho)
 
