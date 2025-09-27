@@ -13,11 +13,9 @@ import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapt
 import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
 import org.koin.dsl.module
 
-const val localDatabaseName = "database.db" //TODO external config file (android, ios, common)
+internal object DatabaseRepositoryModule {
 
-object DatabaseRepositoryModule {
-
-    internal operator fun invoke() = module {
+    fun invoke() = module {
 
         factory<JsonObjectAdapter> {
             JsonObjectAdapter(json = get())

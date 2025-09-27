@@ -18,9 +18,11 @@ dependencyResolutionManagement {
 //enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "tuucho"
-listOf("app", "core/data", "core/domain", "core/presentation").forEach { basePath ->
+listOf("sample","barrel", "core/data", "core/domain", "core/presentation").forEach { basePath ->
     file(basePath).listFiles()
-        ?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
+        ?.filter {
+            (it.isDirectory && File(it, "build.gradle.kts").exists()) || (it.name == "build.gradle.kts")
+        }
         ?.map {
             val relative = it.relativeTo(rootDir).invariantSeparatorsPath
             ":${relative.replace("/", ":")}"

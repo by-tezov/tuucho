@@ -1,22 +1,28 @@
 [versions]
 #project
-domain = "com.tezov.tuucho"
+domain = "com.tezov"
+name = "tuucho"
 keystorePropertiesFilePath = "keystore.properties"
+mavenPropertiesFilePath = "maven.properties"
 versionCode = "1"
 versionName = "0.0.1-alpha12"
 javaVersion = "17"
 minSdk = "24"
 targetSdk = "36"
 compileSdk = "36"
+
 #plugin
 android-plugin = "8.12.3"
 kotlin-plugin = "2.2.10" # can't launch unit test when upgrade to 2.2.20
 compose-plugin = "1.8.2"
 kotlin-serialization-plugin = "2.2.10"
-ksp-plugin = "2.2.10-2.0.2"
+maven-plugin = "0.34.0"
+build-konfig-plugin = "0.17.1"
+
 #lib - android
 compose-activity = "1.11.0"
-#lib - kmm
+
+#lib - platform
 kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
 kotlin-collections-immutable = "0.4.0"
@@ -25,6 +31,7 @@ ktor = "3.3.0"
 koin = "4.1.1"
 kotlin-datetime = "0.7.1"
 okio = "3.16.0"
+
 #test
 jacoco = "0.8.13"
 mokkery = "3.0.0-Beta2"
@@ -33,9 +40,10 @@ mokkery = "3.0.0-Beta2"
 #build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-plugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
+maven = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "maven-plugin" }
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
-#lib - kmm
+#lib - platform
 kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
@@ -64,10 +72,13 @@ all-open = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotl
 #convention
 convention-application-android = { id = "com.tezov.tuucho.project.application-android", version = "unspecified" }
 convention-application-ios = { id = "com.tezov.tuucho.project.application-ios", version = "unspecified" }
-convention-library = { id = "com.tezov.tuucho.project.library", version = "unspecified" }
+convention-maven = { id = "com.tezov.tuucho.project.maven", version = "unspecified" }
+convention-library-test = { id = "com.tezov.tuucho.project.library-test", version = "unspecified" }
 convention-library-plain = { id = "com.tezov.tuucho.project.library-plain", version = "unspecified" }
 convention-library-ui = { id = "com.tezov.tuucho.project.library-ui", version = "unspecified" }
 #project
+maven = { id = "com.vanniktech.maven.publish", version.ref = "maven-plugin" }
+build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig-plugin" }
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }

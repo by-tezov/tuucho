@@ -5,9 +5,9 @@ import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModuleAndroid.Name
 import org.koin.dsl.module
 
-object AssetsModuleAndroid {
+internal object AssetsModuleAndroid {
 
-    internal operator fun invoke() = module {
+    fun invoke() = module {
         factory<AssetsProtocol> {
             AssetsAndroid(
                 context = get(Name.APPLICATION_CONTEXT),

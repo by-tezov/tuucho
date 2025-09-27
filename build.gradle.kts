@@ -2,6 +2,8 @@
 plugins {
     base
     id("jacoco")
+    alias(libs.plugins.maven) apply false
+    alias(libs.plugins.build.konfig) apply false
     alias(libs.plugins.mokkery) apply false
     alias(libs.plugins.all.open) apply false
     alias(libs.plugins.android.application) apply false
@@ -19,7 +21,9 @@ tasks.register<TestReport>("rootMockUnitTest") {
     description = "Unit test and Aggregates Html unit test reports from all modules into root build folder"
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     val unitTestTasks = subprojects.flatMap { sub ->
-        sub.tasks.withType<Test>().matching { it.name.contains("MockUnitTest") }
+        sub.tasks.withType<Test>().matching {
+            it.name.contains("MockUnitTest")
+        }
     }
     dependsOn(unitTestTasks)
     testResults.from(unitTestTasks.map { it.binaryResultsDirectory })
@@ -35,7 +39,7 @@ tasks.register<JacocoReport>("rootMockCoverageReport") {
 
     val reportsList = subprojects
         .filterNot {
-            it.path in listOf(":app:android", ":app:ios") ||
+            it.path in listOf(":sample:android", ":sample:ios") ||
             !it.file("build.gradle.kts").exists()
         }
         .mapNotNull { sub ->
