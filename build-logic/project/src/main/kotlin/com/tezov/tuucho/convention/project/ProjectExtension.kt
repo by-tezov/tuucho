@@ -50,4 +50,8 @@ internal fun Project.javaLanguageVersion() = JavaLanguageVersion.of(javaVersionI
 
 internal fun Project.versionName() = version("versionName")
 
+internal fun isCI() = System.getenv()["IS_CI"] == "true"
+
+
+
 

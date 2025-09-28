@@ -7,8 +7,11 @@ kotlin {
         androidMain.dependencies {
             implementation(project(":core:data:__core.data__repository"))
         }
-        iosMain.dependencies {
-            implementation(project(":core:data:__core.data__repository"))
+        val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
+        if (isMacOs) {
+            iosMain.dependencies {
+                implementation(project(":core:data:__core.data__repository"))
+            }
         }
         commonMain.dependencies {
             implementation(project(":core:domain:__core.domain__test"))

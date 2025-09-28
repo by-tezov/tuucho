@@ -14,7 +14,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         ).asIterable()
 
         private fun compilerOption() = listOf(
-            "-Xexpect-actual-classes",
+            "-Xexpect-actual-classes", // Needed by BuildKonfig
         )
     }
 
@@ -64,22 +64,25 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
                 }
             }
             // iOS
-            val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
-            project.afterEvaluate {
-                val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace!!
-                val frameworkName = project.path.split(":")
-                    .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
-                iosTargets.forEach { iosTarget ->
-                    iosTarget.binaries.framework {
-                        isStatic = true
-                        baseName = frameworkName
-                        freeCompilerArgs += listOf(
-                            "-Xbinary=bundleId=$namespace",
-                        )
+            val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
+            if (isMacOs) {
+                val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
+                project.afterEvaluate {
+                    val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace!!
+                    val frameworkName = project.path.split(":")
+                        .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
+                    iosTargets.forEach { iosTarget ->
+                        iosTarget.binaries.framework {
+                            isStatic = true
+                            baseName = frameworkName
+                            freeCompilerArgs += listOf(
+                                "-Xbinary=bundleId=$namespace",
+                            )
+                        }
                     }
                 }
+                applyDefaultHierarchyTemplate() //Needed by BuildKonfig
             }
-            applyDefaultHierarchyTemplate()
         }
     }
 
@@ -90,8 +93,11 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
                 androidMain {
                     kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
                 }
-                iosMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")
+                val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
+                if (isMacOs) {
+                    iosMain {
+                        kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")
+                    }
                 }
                 commonMain {
                     kotlin.srcDirs("${project.projectDir.path}/src/commonMain$buildTypeCapitalized/kotlin")

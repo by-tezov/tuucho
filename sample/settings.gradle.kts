@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -24,6 +25,9 @@ dependencyResolutionManagement {
 //enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "tuucho-sample"
-include(":android")
-include(":ios")
-include(":shared")
+include(":app:android")
+val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
+if (isMacOs) {
+    include(":app:ios")
+}
+include(":app:shared")

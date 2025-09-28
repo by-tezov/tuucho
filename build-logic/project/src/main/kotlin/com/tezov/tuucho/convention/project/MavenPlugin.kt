@@ -7,7 +7,6 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.plugins.signing.SigningExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import java.util.Properties
 
 class MavenPlugin : Plugin<Project> {
 
@@ -15,7 +14,9 @@ class MavenPlugin : Plugin<Project> {
         with(project) {
             if (buildType() == "prod") {
                 pluginManager.apply(plugin(PluginId.maven))
-                pluginManager.apply(plugin(PluginId.signing))
+                if(isCI()) {
+                    pluginManager.apply(plugin(PluginId.signing))
+                }
                 configureMaven(project)
             }
         }
@@ -31,11 +32,13 @@ class MavenPlugin : Plugin<Project> {
         }
         extensions.configure(PublishingExtension::class.java) {
             repositories {
-                mavenLocal()
+                if(isCI()) {
 //                maven {
 //                    name = "mavenCentral"
 //                    url = uri("https://repo.maven.apache.org/maven2/")
 //                }
+                }
+                mavenLocal()
             }
             publications {
                 (publications.getByName("kotlinMultiplatform") as MavenPublication).apply {
@@ -73,41 +76,26 @@ class MavenPlugin : Plugin<Project> {
             extensions.configure(PublishingExtension::class.java) {
                 publications.withType(MavenPublication::class.java).configureEach {
                     val artifactId = namespace().removePrefix("${domain()}.")
-                    when (this.name) {
+                    when (name) {
                         "kotlinMultiplatform" -> this.artifactId = artifactId
                         "androidProd" -> this.artifactId = "$artifactId-android"
-                        "iosProd" -> this.artifactId = "$artifactId-ios"
+                        "iosArm64" -> this.artifactId = "$artifactId-iosArm64"
+                        "iosSimulatorArm64" -> this.artifactId = "$artifactId-iosSimulatorArm64"
+                        "iosX64" -> this.artifactId = "$artifactId-iosX64"
                     }
                 }
             }
         }
-
-        val mavenPropertiesFile = rootProject.file("maven.properties")
-        if (!mavenPropertiesFile.exists()) {
-            println("⚠️ No maven.properties found, no artefact signing will be allowed")
-            return@with
-        }
-        with(Properties()) {
-            load(mavenPropertiesFile.inputStream())
-
-            val userId = getProperty("userId")
-                ?: error("Missing property: userId in maven.properties")
-            val userPassword = getProperty("userPassword")
-                ?: error("Missing property: userPassword in maven.properties")
-            val keyId = getProperty("keyId")
-                ?: error("Missing property: keyId in maven.properties")
-            val keyPassword = getProperty("keyPassword")
-                ?: error("Missing property: keyPassword in maven.properties")
-
-            val keyArmorFilePath = getProperty("keyArmorFilePath")
-                ?: error("Missing property: keyArmorFilePath in maven.properties")
-            val keyArmorFile = rootProject.file(keyArmorFilePath)
-            if (!keyArmorFile.exists()) {
-                error("⚠️ No $keyArmorFilePath found")
-            }
+        if(isCI()) {
             extensions.configure(SigningExtension::class.java) {
-                useInMemoryPgpKeys(keyArmorFile.readText(), keyPassword)
                 sign(extensions.getByType(PublishingExtension::class.java).publications)
+                val keyArmored = System.getenv("MAVEN_SIGNING_KEY").takeIf {
+                    it.isNotBlank()
+                } ?: error("Missing env: MAVEN_SIGNING_KEY")
+                val keyPassword = System.getenv("MAVEN_SIGNING_PASSWORD").takeIf {
+                    it.isNotBlank()
+                } ?: error("Missing env: MAVEN_SIGNING_PASSWORD")
+                useInMemoryPgpKeys(keyArmored, keyPassword)
             }
         }
     }

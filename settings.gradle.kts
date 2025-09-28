@@ -54,3 +54,5 @@ listOf(
             }
         }
 }
+
+includeBuild("sample")

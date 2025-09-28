@@ -18,10 +18,13 @@ kotlin {
             implementation(libs.ktor.okhttp)
             implementation(libs.sql.delight.driver.android)
         }
-        iosMain.dependencies {
-            implementation(libs.ktor.darwin)
-            implementation(libs.sql.delight.driver.ios)
-            implementation(libs.kotlin.couroutine)
+        val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
+        if (isMacOs) {
+            iosMain.dependencies {
+                implementation(libs.ktor.darwin)
+                implementation(libs.sql.delight.driver.ios)
+                implementation(libs.kotlin.couroutine)
+            }
         }
         commonMain.dependencies {
             implementation(project(":core:domain:__core.domain__test"))

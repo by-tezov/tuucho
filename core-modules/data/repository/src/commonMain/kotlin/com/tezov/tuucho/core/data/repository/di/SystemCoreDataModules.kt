@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.di
 
 import org.koin.core.module.Module
 
-expect fun SystemCoreDataModules.platformInvoke():List<Module>
+internal expect fun SystemCoreDataModules.platformInvoke():List<Module>
 
 object SystemCoreDataModules {
 

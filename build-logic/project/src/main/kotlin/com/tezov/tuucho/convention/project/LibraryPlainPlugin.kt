@@ -28,13 +28,16 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         project: Project,
     ) {
         super.configure(project)
-        project.extra["hasAssets"] = true
-        configureCoverage(project)
-        configureTest(project)
+        with(project) {
+            extra["hasAssets"] = true
+            if (buildType() == "mock") {
+                configureCoverage(project)
+                configureTest(project)
+            }
+        }
     }
 
     private fun configureCoverage(project: Project) = with(project) {
-        if (buildType() != "mock") return@with
         extensions.configure(JacocoPluginExtension::class.java) {
             toolVersion = version("jacoco")
         }
@@ -71,7 +74,6 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
     }
 
     private fun configureTest(project: Project) = with(project) {
-        if (buildType() != "mock") return@with
         extensions.configure(AllOpenExtension::class.java) {
             annotation("${namespaceBase()}.core.domain.test._system.OpenForTest")
         }

@@ -54,7 +54,8 @@ val generateProjectBuildConfig by tasks.registering {
             Regex("""^assemble(.+)$"""),
             Regex("""^root(.+)UnitTest$"""),
             Regex("""^root(.+)CoverageReport$"""),
-            Regex("""^publish(.+)ToMavenLocal$""")
+            Regex("""^publish(.+)ToMavenLocal$"""),
+            Regex("""^launch(.+)SimulatorApp$""")
         )
 
         val buildTypeFound = rootTasks

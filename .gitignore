@@ -1,5 +1,3 @@
-/maven-key-no-armor.gpg
-/maven-key-armor.gpg
 /maven.properties
 .DS_Store
 *.iml

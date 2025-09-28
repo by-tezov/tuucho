@@ -56,21 +56,12 @@ tasks.register<JacocoReport>("rootMockCoverageReport") {
     }
 }
 
-tasks.register("rootPublishProdToMavenLocal", Exec::class.java) {
-    group = "maven"
-    description = "Publish kmm lib prod to maven local"
+tasks.register("rootPublishProdToMavenLocal") {
+    group = "publishing"
+    description = "Publish tuucho prod to maven local"
 
-    commandLine(
-        "./gradlew",
-        "publishToMavenLocal",
-//        "publishAndReleaseToMavenCentral",
-        "--no-configuration-cache"
-    )
-
-    doFirst {
-        val mavenPropertiesFile = file("maven.properties")
-        if (!mavenPropertiesFile.exists()) {
-            error("⚠️ No maven.properties found")
-        }
+    val publishTasks = subprojects.flatMap { sub ->
+        sub.tasks.withType<PublishToMavenLocal>()
     }
+    dependsOn(publishTasks)
 }
