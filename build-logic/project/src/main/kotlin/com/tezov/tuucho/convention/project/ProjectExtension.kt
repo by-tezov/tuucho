@@ -32,7 +32,9 @@ internal fun Project.name() = version("name")
 
 internal fun Project.namespaceBase() = "${version("domain")}.${version("name")}"
 
-internal fun Project.namespace() = "${namespaceBase()}${path.replace(":", ".").replace("-", "_")}"
+internal fun Project.namespace() = "${namespaceBase()}${path
+    .replace(Regex("__.*?__"), "")
+    .replace(":", ".")}"
 
 internal fun Project.buildType() = BuildConfig.BUILD_TYPE
 

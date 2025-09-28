@@ -5,18 +5,18 @@ plugins {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            implementation(project(":core:data:core-data-repository"))
+            implementation(project(":core:data:__core.data__repository"))
         }
         iosMain.dependencies {
-            implementation(project(":core:data:core-data-repository"))
+            implementation(project(":core:data:__core.data__repository"))
         }
         commonMain.dependencies {
-            implementation(project(":core:domain:core-domain-test"))
-            implementation(project(":core:domain:core-domain-tool"))
-            implementation(project(":core:domain:core-domain-business"))
-            implementation(project(":core:data:core-data-repository"))
-            implementation(project(":core:presentation:core-presentation-tool"))
-            implementation(project(":core:presentation:core-presentation-ui"))
+            implementation(project(":core:domain:__core.domain__test"))
+            implementation(project(":core:domain:__core.domain__tool"))
+            implementation(project(":core:domain:__core.domain__business"))
+            implementation(project(":core:data:__core.data__repository"))
+            implementation(project(":core:presentation:__core.presentation__tool"))
+            implementation(project(":core:presentation:__core.presentation__ui"))
 
             implementation(compose.runtime)
             implementation(compose.foundation)

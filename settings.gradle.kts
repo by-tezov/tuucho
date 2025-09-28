@@ -42,7 +42,14 @@ listOf(
             val projectPath = ":${id.replace("/", ":")}"
             include(projectPath)
             project(projectPath).apply {
-                name = id.replace("/", "-")
+                val idx = id.lastIndexOf('/')
+                name = if (idx == -1) {
+                    id
+                } else {
+                    val prefix = id.substring(0, idx).replace('/', '.')
+                    val name = id.substring(idx + 1)
+                    "__${prefix}__$name"
+                }
                 projectDir = file(it)
             }
         }

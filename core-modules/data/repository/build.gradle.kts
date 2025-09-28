@@ -24,9 +24,9 @@ kotlin {
             implementation(libs.kotlin.couroutine)
         }
         commonMain.dependencies {
-            implementation(project(":core:domain:core-domain-test"))
-            implementation(project(":core:domain:core-domain-tool"))
-            implementation(project(":core:domain:core-domain-business"))
+            implementation(project(":core:domain:__core.domain__test"))
+            implementation(project(":core:domain:__core.domain__tool"))
+            implementation(project(":core:domain:__core.domain__business"))
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)

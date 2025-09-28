@@ -1,5 +1,3 @@
-import java.util.Properties
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     base
@@ -73,33 +71,6 @@ tasks.register("rootPublishProdToMavenLocal", Exec::class.java) {
         val mavenPropertiesFile = file("maven.properties")
         if (!mavenPropertiesFile.exists()) {
             error("⚠️ No maven.properties found")
-        }
-        with(Properties()) {
-            load(mavenPropertiesFile.inputStream())
-
-            val userId = getProperty("userId")
-                ?: error("Missing property: userId in maven.properties")
-            val userPassword = getProperty("userPassword")
-                ?: error("Missing property: userPassword in maven.properties")
-            val keyId = getProperty("keyId")
-                ?: error("Missing property: keyId in maven.properties")
-            val keyPassword = getProperty("keyPassword")
-                ?: error("Missing property: keyPassword in maven.properties")
-
-            val keyArmorFilePath = getProperty("keyArmorFilePath")
-                ?: error("Missing property: keyArmorFilePath in maven.properties")
-            val keyArmorFile = file(keyArmorFilePath)
-            if (!keyArmorFile.exists()) {
-                error("⚠️ No $keyArmorFilePath found")
-            }
-
-            environment(
-                "ORG_GRADLE_PROJECT_mavenCentralUsername" to userId,
-                "ORG_GRADLE_PROJECT_mavenCentralPassword" to userPassword,
-                "ORG_GRADLE_PROJECT_signingInMemoryKeyId" to keyId,
-                "ORG_GRADLE_PROJECT_signingInMemoryKeyPassword" to keyPassword,
-                "ORG_GRADLE_PROJECT_signingInMemoryKey" to keyArmorFile.readText()
-            )
         }
     }
 }
