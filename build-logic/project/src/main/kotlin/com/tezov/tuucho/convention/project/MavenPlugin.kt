@@ -14,7 +14,7 @@ class MavenPlugin : Plugin<Project> {
         with(project) {
             if (buildType() == "prod") {
                 pluginManager.apply(plugin(PluginId.maven))
-                if(isCI()) {
+                if (isCI()) {
                     pluginManager.apply(plugin(PluginId.signing))
                 }
                 configureMaven(project)
@@ -23,8 +23,9 @@ class MavenPlugin : Plugin<Project> {
     }
 
     private fun configureMaven(project: Project) = with(project) {
+        val versionName = "${versionName()}${if (isSnapshot()) "-SNAPSHOT" else ""}"
         group = domain()
-        version = versionName()
+        version = versionName
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             androidTarget {
                 publishLibraryVariants("prod")
@@ -32,22 +33,38 @@ class MavenPlugin : Plugin<Project> {
         }
         extensions.configure(PublishingExtension::class.java) {
             repositories {
-                if(isCI()) {
-//                maven {
-//                    name = "mavenCentral"
-//                    url = uri("https://repo.maven.apache.org/maven2/")
-//                }
+                if (isCI()) {
+                    maven {
+                        val username = System.getenv("MAVEN_USER_ID")
+                        val password = System.getenv("MAVEN_PASSWORD")
+                        if(username != null && password != null) {
+//                            name = "mavenCentral"
+//                            url = uri(
+//                                if (isSnapshot())
+//                                    "https://central.sonatype.com/repository/maven-snapshots/"
+//                                else
+//                                    "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+//                            )
+                            credentials {
+                                this.username = username
+                                this.password = password
+                            }
+                        }
+                    }
                 }
-                mavenLocal()
+                maven {
+                    name = "projectMaven"
+                    url = uri("${rootProject.projectDir}/.m2")
+                }
             }
             publications {
                 (publications.getByName("kotlinMultiplatform") as MavenPublication).apply {
                     groupId = domain()
-                    version = versionName()
+                    version = versionName
                     pom {
                         name.set("tuucho")
                         description.set("KMM rendering engine")
-                        url.set("https://github.com/by-tezov/tuucho")
+                        url.set("https://doc.tuucho.com/latest/")
                         inceptionYear.set("2025")
                         licenses {
                             license {
@@ -86,7 +103,7 @@ class MavenPlugin : Plugin<Project> {
                 }
             }
         }
-        if(isCI()) {
+        if (isCI()) {
             extensions.configure(SigningExtension::class.java) {
                 sign(extensions.getByType(PublishingExtension::class.java).publications)
                 val keyArmored = System.getenv("MAVEN_SIGNING_KEY").takeIf {

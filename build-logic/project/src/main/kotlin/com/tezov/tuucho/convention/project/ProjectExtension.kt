@@ -52,6 +52,8 @@ internal fun Project.versionName() = version("versionName")
 
 internal fun isCI() = System.getenv()["IS_CI"] == "true"
 
+internal fun Project.isSnapshot() = version("isSnapshot") == "true"
+
 
 
 

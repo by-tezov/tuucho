@@ -1,7 +1,10 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        mavenLocal()
+        maven {
+            name = "projectMaven"
+            url = uri("${rootDir}/../.m2")
+        }
         google()
         mavenCentral()
         gradlePluginPortal()
@@ -16,7 +19,10 @@ dependencyResolutionManagement {
     }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        mavenLocal()
+        maven {
+            name = "projectMaven"
+            url = uri("${rootDir}/../.m2")
+        }
         google()
         mavenCentral()
     }

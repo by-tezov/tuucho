@@ -5,9 +5,6 @@
 .DS_Store
 *.iml
 .gradle/
-gradlew
-gradlew.bat
-/gradle/wrapper/
 .kotlin/
 /local.properties
 /.idea/

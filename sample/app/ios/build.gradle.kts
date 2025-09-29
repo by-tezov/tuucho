@@ -107,8 +107,7 @@ tasks.register<Exec>("iosCreateSimulatorApp") {
         )
     }
 }
-
-tasks.register<Exec>("iosAssembleDebug") {
+val iosAssembleDebugTask by tasks.registering(Exec::class) {
     group = "build"
     description = "assemble scheme ios for e2e test"
 
@@ -130,15 +129,15 @@ tasks.register<Exec>("iosAssembleDebug") {
 }
 
 // Ci helper tasks
-tasks.register<Exec>("iosAssembleMock") {
+tasks.register("assembleMock") {
     group = "build"
     description = "assemble Mock scheme ios for e2e test"
 
-    dependsOn(tasks.named(":app:ios:iosAssembleDebug"))
+    dependsOn(iosAssembleDebugTask)
 }
-tasks.register<Exec>("iosAssembleDev") {
+tasks.register("assembleDev") {
     group = "build"
     description = "assemble Dev scheme ios for e2e test"
 
-    dependsOn(tasks.named(":app:ios:iosAssembleDebug"))
+    dependsOn(iosAssembleDebugTask)
 }

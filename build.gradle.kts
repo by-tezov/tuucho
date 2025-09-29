@@ -61,7 +61,9 @@ tasks.register("rootPublishProdToMavenLocal") {
     description = "Publish tuucho prod to maven local"
 
     val publishTasks = subprojects.flatMap { sub ->
-        sub.tasks.withType<PublishToMavenLocal>()
+        sub.tasks.withType<PublishToMavenRepository>()
+            .matching { it.name.endsWith("ToProjectMavenRepository") }
     }
+
     dependsOn(publishTasks)
 }

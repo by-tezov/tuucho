@@ -32,7 +32,7 @@ gradlePlugin {
     }
 }
 
-val generateProjectBuildConfig by tasks.registering {
+val generateProjectBuildConfigTask by tasks.registering {
     group = "build setup"
     description = "Generate build config file"
 
@@ -95,6 +95,6 @@ val generateProjectBuildConfig by tasks.registering {
     }
 }
 tasks.named("checkKotlinGradlePluginConfigurationErrors") {
-    dependsOn(generateProjectBuildConfig)
+    dependsOn(generateProjectBuildConfigTask)
 }
-sourceSets["main"].kotlin.srcDir(generateProjectBuildConfig.map { it.outputs.files })
+sourceSets["main"].kotlin.srcDir(generateProjectBuildConfigTask.map { it.outputs.files })
