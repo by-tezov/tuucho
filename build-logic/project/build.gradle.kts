@@ -14,39 +14,31 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-val packageName = "com.tezov.tuucho.project"
+val packageName = "com.tezov.tuucho.convention.project"
 group = packageName
 
 gradlePlugin {
     plugins {
-        register("ConventionApplicationAndroidPlugin") {
-            id = "${packageName}.application-android"
-            implementationClass = "${packageName}.${name}"
-        }
-        register("ConventionApplicationIosPlugin") {
-            id = "${packageName}.application-ios"
-            implementationClass = "${packageName}.${name}"
-        }
-        register("ConventionMavenPlugin") {
+        register("MavenPlugin") {
             id = "${packageName}.maven"
             implementationClass = "${packageName}.${name}"
         }
-        register("ConventionLibraryTestPlugin") {
+        register("LibraryTestPlugin") {
             id = "${packageName}.library-test"
             implementationClass = "${packageName}.${name}"
         }
-        register("ConventionLibraryPlainPlugin") {
+        register("LibraryPlainPlugin") {
             id = "${packageName}.library-plain"
             implementationClass = "${packageName}.${name}"
         }
-        register("ConventionLibraryUiPlugin") {
+        register("LibraryUiPlugin") {
             id = "${packageName}.library-ui"
             implementationClass = "${packageName}.${name}"
         }
     }
 }
 
-val generateProjectBuildConfig by tasks.registering {
+val generateProjectBuildConfigTask by tasks.registering {
     group = "build setup"
     description = "Generate build config file"
 
@@ -68,7 +60,7 @@ val generateProjectBuildConfig by tasks.registering {
             Regex("""^assemble(.+)$"""),
             Regex("""^root(.+)UnitTest$"""),
             Regex("""^root(.+)CoverageReport$"""),
-            Regex("""^publish(.+)ToMavenLocal$""")
+            Regex("""^rootPublish(.+)ToMavenLocal$""")
         )
 
         val buildTypeFound = rootTasks
@@ -108,6 +100,6 @@ val generateProjectBuildConfig by tasks.registering {
     }
 }
 tasks.named("checkKotlinGradlePluginConfigurationErrors") {
-    dependsOn(generateProjectBuildConfig)
+    dependsOn(generateProjectBuildConfigTask)
 }
-sourceSets["main"].kotlin.srcDir(generateProjectBuildConfig.map { it.outputs.files })
+sourceSets["main"].kotlin.srcDir(generateProjectBuildConfigTask.map { it.outputs.files })

@@ -1,11 +1,8 @@
-/keystore.properties
-/keystore.jks
-/maven-key-no-armor.gpg
-/maven-key-armor.gpg
 /maven.properties
 .DS_Store
 *.iml
 .gradle/
+.m2/
 /local.properties
 /.idea/
 /build
@@ -13,4 +10,3 @@
 /mkdocs/site/
 /.kotlin/
 /build-logic/.kotlin/errors/
-/sample/config.properties

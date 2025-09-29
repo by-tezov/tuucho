@@ -1,0 +1,52 @@
+[versions]
+#convention
+domain = "com.tezov"
+name = "tuucho.sample"
+keystorePropertiesFilePath = "keystore.properties"
+versionCode = "1"
+versionName = "0.0.1-alpha13_2.2.10-SNAPSHOT"
+javaVersion = "17"
+minSdk = "24"
+targetSdk = "36"
+compileSdk = "36"
+
+#plugin
+android-plugin = "8.12.3"
+kotlin-plugin = "2.2.10" # can't launch unit test when upgrade to 2.2.20
+compose-plugin = "1.8.2"
+build-konfig-plugin = "0.17.1"
+
+#lib - android
+compose-activity = "1.11.0"
+
+#lib - platform
+kotlin-couroutine = "1.10.2"
+koin = "4.1.1"
+
+[libraries]
+#build-logic
+android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-plugin" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
+#tuucho
+tuucho = { group = "com.tezov", name = "tuucho.core", version.ref = "versionName" }
+tuucho-android = { group = "com.tezov", name = "tuucho.core-android", version.ref = "versionName" }
+#compose - android
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
+#lib - platform
+kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+
+[plugins]
+#convention
+convention-application-android = { id = "com.tezov.tuucho.convention.application-android", version = "unspecified" }
+convention-application-ios = { id = "com.tezov.tuucho.convention.application-ios", version = "unspecified" }
+convention-library-ui = { id = "com.tezov.tuucho.convention.library-ui", version = "unspecified" }
+#convention
+build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig-plugin" }
+android-application = { id = "com.android.application", version.ref = "android-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }

@@ -1,3 +1,3 @@
-localDatabaseFile="database.db"
-serverUrlAndroid="http://10.0.2.2:3000"
-serverUrlIos="http://127.0.0.1:3000"
+localDatabaseFile=database.db
+serverUrlAndroid=http://10.0.2.2:3000
+serverUrlIos=http://127.0.0.1:3000

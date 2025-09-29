@@ -1,0 +1,11 @@
+/keystore.properties
+/keystore.jks
+/build
+/config.properties
+.DS_Store
+*.iml
+.gradle/
+.kotlin/
+/local.properties
+/.idea/
+/build-logic/.kotlin/errors/
