@@ -1,6 +1,13 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
+//        maven {
+//            name = "Central Portal Snapshots"
+//            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+//            content {
+//                includeModule("com.tezov", "tuucho.core")
+//            }
+//        }
         maven {
             name = "projectMaven"
             url = uri("${rootDir}/../.m2")

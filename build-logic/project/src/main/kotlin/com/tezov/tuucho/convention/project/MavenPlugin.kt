@@ -24,6 +24,8 @@ class MavenPlugin : Plugin<Project> {
 
     private fun configureMaven(project: Project) = with(project) {
         val versionName = "${versionName()}${if (isSnapshot()) "-SNAPSHOT" else ""}"
+        val artifactId = namespace().removePrefix("${domain()}.")
+
         group = domain()
         version = versionName
         extensions.configure(KotlinMultiplatformExtension::class.java) {
@@ -33,32 +35,15 @@ class MavenPlugin : Plugin<Project> {
         }
         extensions.configure(PublishingExtension::class.java) {
             repositories {
-                if (isCI()) {
-                    maven {
-                        val username = System.getenv("MAVEN_USER_ID")
-                        val password = System.getenv("MAVEN_PASSWORD")
-                        if(username != null && password != null) {
-//                            name = "mavenCentral"
-//                            url = uri(
-//                                if (isSnapshot())
-//                                    "https://central.sonatype.com/repository/maven-snapshots/"
-//                                else
-//                                    "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-//                            )
-                            credentials {
-                                this.username = username
-                                this.password = password
-                            }
-                        }
-                    }
-                }
                 maven {
                     name = "projectMaven"
                     url = uri("${rootProject.projectDir}/.m2")
                 }
             }
-            publications {
-                (publications.getByName("kotlinMultiplatform") as MavenPublication).apply {
+        }
+        afterEvaluate {
+            extensions.configure(PublishingExtension::class.java) {
+                publications.withType(MavenPublication::class.java).configureEach {
                     groupId = domain()
                     version = versionName
                     pom {
@@ -86,13 +71,6 @@ class MavenPlugin : Plugin<Project> {
                             }
                         }
                     }
-                }
-            }
-        }
-        afterEvaluate {
-            extensions.configure(PublishingExtension::class.java) {
-                publications.withType(MavenPublication::class.java).configureEach {
-                    val artifactId = namespace().removePrefix("${domain()}.")
                     when (name) {
                         "kotlinMultiplatform" -> this.artifactId = artifactId
                         "androidProd" -> this.artifactId = "$artifactId-android"
