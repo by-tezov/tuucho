@@ -1,13 +1,6 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-//        maven {
-//            name = "Central Portal Snapshots"
-//            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-//            content {
-//                includeModule("com.tezov", "tuucho.core")
-//            }
-//        }
         maven {
             name = "projectMaven"
             url = uri("${rootDir}/../.m2")
@@ -39,7 +32,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "tuucho-sample"
 include(":app:android")
-val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
+val isMacOs = System.getProperty("os.name")
+    .startsWith("Mac", ignoreCase = true)
 if (isMacOs) {
     include(":app:ios")
 }

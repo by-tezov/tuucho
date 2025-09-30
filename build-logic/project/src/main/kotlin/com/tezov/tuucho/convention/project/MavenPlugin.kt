@@ -5,6 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.jvm.tasks.Jar
 import org.gradle.plugins.signing.SigningExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
@@ -41,9 +42,42 @@ class MavenPlugin : Plugin<Project> {
                 }
             }
         }
+        if (isCI()) {
+            tasks.register("placeholderJavadocJar", Jar::class.java) {
+                archiveClassifier.set("javadoc")
+                val readme = layout.buildDirectory.file("generated/javadoc/README.md")
+                doFirst {
+                    val file = readme.get().asFile
+                    file.parentFile.mkdirs()
+                    file.writeText(
+                        """
+                            Tuucho rendering engine project:
+                            - Documentation: https://doc.tuucho.com/latest/
+                            - Repository: https://github.com/by-tezov/tuucho
+                            - Contact: tezov.app@gmail.com
+                        """.trimIndent()
+                    )
+                }
+                from(readme)
+            }
+
+            extensions.configure(SigningExtension::class.java) {
+                sign(extensions.getByType(PublishingExtension::class.java).publications)
+                val keyArmored = System.getenv("MAVEN_SIGNING_KEY").takeIf {
+                    it.isNotBlank()
+                } ?: error("Missing env: MAVEN_SIGNING_KEY")
+                val keyPassword = System.getenv("MAVEN_SIGNING_PASSWORD").takeIf {
+                    it.isNotBlank()
+                } ?: error("Missing env: MAVEN_SIGNING_PASSWORD")
+                useInMemoryPgpKeys(keyArmored, keyPassword)
+            }
+        }
+
         afterEvaluate {
             extensions.configure(PublishingExtension::class.java) {
                 publications.withType(MavenPublication::class.java).configureEach {
+                    tasks.findByName("placeholderJavadocJar")?.let { artifact(it) }
+
                     groupId = domain()
                     version = versionName
                     pom {
@@ -79,18 +113,6 @@ class MavenPlugin : Plugin<Project> {
                         "iosX64" -> this.artifactId = "$artifactId-iosX64"
                     }
                 }
-            }
-        }
-        if (isCI()) {
-            extensions.configure(SigningExtension::class.java) {
-                sign(extensions.getByType(PublishingExtension::class.java).publications)
-                val keyArmored = System.getenv("MAVEN_SIGNING_KEY").takeIf {
-                    it.isNotBlank()
-                } ?: error("Missing env: MAVEN_SIGNING_KEY")
-                val keyPassword = System.getenv("MAVEN_SIGNING_PASSWORD").takeIf {
-                    it.isNotBlank()
-                } ?: error("Missing env: MAVEN_SIGNING_PASSWORD")
-                useInMemoryPgpKeys(keyArmored, keyPassword)
             }
         }
     }

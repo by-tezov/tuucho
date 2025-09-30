@@ -10,10 +10,10 @@ class ApplicationIosPlugin : Plugin<Project> {
     }
 
     private fun configureCleanTask(iosProject: Project) = with(iosProject) {
+        val cleanIosBuild = tasks.register("cleanIosBuild") {
+            delete("./build")
+        }
         rootProject.tasks.named("clean") {
-            val cleanIosBuild = tasks.register("cleanIosBuild") {
-                delete("./build")
-            }
             dependsOn(cleanIosBuild)
         }
     }
