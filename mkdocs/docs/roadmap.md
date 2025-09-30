@@ -23,9 +23,6 @@ Work in progress:
 
 ## 🎯 Medium-Term Goals
 
-- **Configuration File Support**  
-  Complete support for configuration files to allow application-wide settings.
-
 - **Real time Data Support**  
   Introduce bi-directional communication to enable real-time content updates within the UI.
 
@@ -66,6 +63,12 @@ Work in progress:
 ---
 
 ## ✅ Realized
+
+- **Migration to library architecture in order to be publish on Maven Central** (2025-09)
+  Refactor Jenkins pipelines to support the new architecture.
+
+- **Configuration File Support** (2025-09)
+  Complete support for configuration files to allow application-wide settings.
 
 - **Cache Management Enhancements** (2025-08)
     - Add TTL (time-to-live) options to avoid indefinite cache persistence.
