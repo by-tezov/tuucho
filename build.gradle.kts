@@ -75,10 +75,4 @@ tasks.register("rootPublishProdToMavenLocal") {
         it.dependsOn(cleanMavenLocal)
     }
     dependsOn(publishTasks)
-
-    doLast {
-
-
-
-    }
 }
