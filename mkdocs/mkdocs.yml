@@ -61,6 +61,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Roadmap: roadmap.md
+  - Quick start: quick-start.md
   - Config:
       - Overview: config/index.md
       - Subs: config/subs.md
