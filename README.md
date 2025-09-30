@@ -20,6 +20,10 @@ Expect ongoing changes, new features, and improvements as the project evolves.
 
 Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap/) for full details.
 
+## ⚠️ Quick Start
+
+[Quick Start Documentation](https://doc.tuucho.com/latest/quick-start/)
+
 ---
 
 ### Supported Features
@@ -76,7 +80,7 @@ Check out the [Roadmap](https://doc.tuucho.com/latest/roadmap/) for full details
 
 For comprehensive documentation, examples, and developer guides, visit:
 
-[Full Documentation](https://doc.tuucho.com/0.0.1-alpha11/)
+[Full Documentation](https://doc.tuucho.com/0.0.1-alpha13/)
 
 ---
 
