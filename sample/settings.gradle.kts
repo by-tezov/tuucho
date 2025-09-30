@@ -5,8 +5,8 @@ pluginManagement {
             name = "projectMaven"
             url = uri("${rootDir}/../.m2")
         }
-        google()
         mavenCentral()
+        google()
         gradlePluginPortal()
     }
 }
@@ -23,8 +23,8 @@ dependencyResolutionManagement {
             name = "projectMaven"
             url = uri("${rootDir}/../.m2")
         }
-        google()
         mavenCentral()
+        google()
     }
 }
 
