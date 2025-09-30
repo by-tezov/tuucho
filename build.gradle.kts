@@ -31,6 +31,13 @@ extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
 
+val cleanMavenLocal by tasks.registering {
+    delete(".m2")
+}
+rootProject.tasks.named("clean") {
+    dependsOn(cleanMavenLocal)
+}
+
 tasks.register<JacocoReport>("rootMockCoverageReport") {
     group = "verification"
     description = "Aggregates Html coverage report from all modules into root build folder"
@@ -64,6 +71,8 @@ tasks.register("rootPublishProdToMavenLocal") {
         sub.tasks.withType<PublishToMavenRepository>()
             .matching { it.name.endsWith("ToProjectMavenRepository") }
     }
-
+    publishTasks.forEach {
+        it.dependsOn(cleanMavenLocal)
+    }
     dependsOn(publishTasks)
 }
