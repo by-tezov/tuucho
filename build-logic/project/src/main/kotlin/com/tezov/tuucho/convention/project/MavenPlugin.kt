@@ -5,6 +5,10 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
+import org.gradle.jvm.tasks.Jar
+import org.gradle.kotlin.dsl.withType
+import org.gradle.plugins.signing.Sign
 import org.gradle.plugins.signing.SigningExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
@@ -24,6 +28,8 @@ class MavenPlugin : Plugin<Project> {
 
     private fun configureMaven(project: Project) = with(project) {
         val versionName = "${versionName()}${if (isSnapshot()) "-SNAPSHOT" else ""}"
+        val artifactId = namespace().removePrefix("${domain()}.")
+
         group = domain()
         version = versionName
         extensions.configure(KotlinMultiplatformExtension::class.java) {
@@ -33,32 +39,53 @@ class MavenPlugin : Plugin<Project> {
         }
         extensions.configure(PublishingExtension::class.java) {
             repositories {
-                if (isCI()) {
-                    maven {
-                        val username = System.getenv("MAVEN_USER_ID")
-                        val password = System.getenv("MAVEN_PASSWORD")
-                        if(username != null && password != null) {
-//                            name = "mavenCentral"
-//                            url = uri(
-//                                if (isSnapshot())
-//                                    "https://central.sonatype.com/repository/maven-snapshots/"
-//                                else
-//                                    "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-//                            )
-                            credentials {
-                                this.username = username
-                                this.password = password
-                            }
-                        }
-                    }
-                }
                 maven {
                     name = "projectMaven"
                     url = uri("${rootProject.projectDir}/.m2")
                 }
             }
-            publications {
-                (publications.getByName("kotlinMultiplatform") as MavenPublication).apply {
+        }
+
+        afterEvaluate {
+            if (isCI()) {
+                tasks.register("placeholderJavadocJar", Jar::class.java) {
+                    archiveClassifier.set("javadoc")
+                    val readme = layout.buildDirectory.file("generated/javadoc/README.md")
+                    doFirst {
+                        val file = readme.get().asFile
+                        file.parentFile.mkdirs()
+                        file.writeText(
+                            """
+                            Tuucho rendering engine project:
+                            - Documentation: https://doc.tuucho.com/latest/
+                            - Repository: https://github.com/by-tezov/tuucho
+                            - Contact: tezov.app@gmail.com
+                        """.trimIndent()
+                        )
+                    }
+                    from(readme)
+                }
+
+                extensions.configure(SigningExtension::class.java) {
+                    sign(extensions.getByType(PublishingExtension::class.java).publications)
+                    val keyArmored = System.getenv("MAVEN_SIGNING_KEY").takeIf {
+                        it.isNotBlank()
+                    } ?: error("Missing env: MAVEN_SIGNING_KEY")
+                    val keyPassword = System.getenv("MAVEN_SIGNING_PASSWORD").takeIf {
+                        it.isNotBlank()
+                    } ?: error("Missing env: MAVEN_SIGNING_PASSWORD")
+                    useInMemoryPgpKeys(keyArmored, keyPassword)
+                }
+
+                tasks.withType<PublishToMavenRepository>().configureEach {
+                    dependsOn(tasks.withType<Sign>())
+                }
+            }
+
+            extensions.configure(PublishingExtension::class.java) {
+                publications.withType(MavenPublication::class.java).configureEach {
+                    tasks.findByName("placeholderJavadocJar")?.let { artifact(it) }
+
                     groupId = domain()
                     version = versionName
                     pom {
@@ -86,13 +113,6 @@ class MavenPlugin : Plugin<Project> {
                             }
                         }
                     }
-                }
-            }
-        }
-        afterEvaluate {
-            extensions.configure(PublishingExtension::class.java) {
-                publications.withType(MavenPublication::class.java).configureEach {
-                    val artifactId = namespace().removePrefix("${domain()}.")
                     when (name) {
                         "kotlinMultiplatform" -> this.artifactId = artifactId
                         "androidProd" -> this.artifactId = "$artifactId-android"
@@ -101,18 +121,6 @@ class MavenPlugin : Plugin<Project> {
                         "iosX64" -> this.artifactId = "$artifactId-iosX64"
                     }
                 }
-            }
-        }
-        if (isCI()) {
-            extensions.configure(SigningExtension::class.java) {
-                sign(extensions.getByType(PublishingExtension::class.java).publications)
-                val keyArmored = System.getenv("MAVEN_SIGNING_KEY").takeIf {
-                    it.isNotBlank()
-                } ?: error("Missing env: MAVEN_SIGNING_KEY")
-                val keyPassword = System.getenv("MAVEN_SIGNING_PASSWORD").takeIf {
-                    it.isNotBlank()
-                } ?: error("Missing env: MAVEN_SIGNING_PASSWORD")
-                useInMemoryPgpKeys(keyArmored, keyPassword)
             }
         }
     }
