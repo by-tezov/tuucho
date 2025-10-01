@@ -7,6 +7,7 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.jvm.tasks.Jar
+import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.signing.Sign
 import org.gradle.plugins.signing.SigningExtension
@@ -84,7 +85,9 @@ class MavenPlugin : Plugin<Project> {
 
             extensions.configure(PublishingExtension::class.java) {
                 publications.withType(MavenPublication::class.java).configureEach {
-                    tasks.findByName("placeholderJavadocJar")?.let { artifact(it) }
+                    if (isCI()) {
+                        artifact(tasks.named("placeholderJavadocJar"))
+                    }
 
                     groupId = domain()
                     version = versionName
@@ -113,12 +116,13 @@ class MavenPlugin : Plugin<Project> {
                             }
                         }
                     }
-                    when (name) {
-                        "kotlinMultiplatform" -> this.artifactId = artifactId
-                        "androidProd" -> this.artifactId = "$artifactId-android"
-                        "iosArm64" -> this.artifactId = "$artifactId-iosArm64"
-                        "iosSimulatorArm64" -> this.artifactId = "$artifactId-iosSimulatorArm64"
-                        "iosX64" -> this.artifactId = "$artifactId-iosX64"
+                    this.artifactId = when (name) {
+                        "kotlinMultiplatform" -> artifactId
+                        "androidProd" -> "$artifactId-android"
+                        "iosArm64" -> "$artifactId-iosArm64"
+                        "iosSimulatorArm64" -> "$artifactId-iosSimulatorArm64"
+                        "iosX64" -> "$artifactId-iosX64"
+                        else -> error("unknown publication name: $name")
                     }
                 }
             }
