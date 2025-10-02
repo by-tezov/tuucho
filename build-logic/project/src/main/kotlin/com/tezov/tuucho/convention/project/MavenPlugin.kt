@@ -1,6 +1,6 @@
 package com.tezov.tuucho.convention.project
 
-import com.tezov.tuucho.convention.project.AbstractConventionPlugin.PluginId
+import com.tezov.tuucho.convention.project.AbstractLibraryPlugin.PluginId
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension

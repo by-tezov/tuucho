@@ -11,9 +11,9 @@ targetSdk = "36"
 compileSdk = "36"
 
 #plugin
-android-plugin = "8.12.3"
-kotlin-plugin = "2.2.10" # can't launch unit test when upgrade to 2.2.20
-compose-plugin = "1.8.2"
+android-plugin = "8.13.0"
+kotlin-plugin = "2.2.20" # can't launch unit test when upgrade to 2.2.20
+compose-plugin = "1.9.0"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
