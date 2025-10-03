@@ -20,6 +20,8 @@ object MaterialSchema {
         const val texts = "texts"
         const val colors = "colors"
         const val dimensions = "dimensions"
+
+        const val actions = "actions"
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
@@ -34,6 +36,8 @@ object MaterialSchema {
         var texts by delegate<JsonElement?>(Key.texts)
         var colors by delegate<JsonElement?>(Key.colors)
         var dimensions by delegate<JsonElement?>(Key.dimensions)
+
+        var actions by delegate<JsonElement?>(Key.actions)
     }
 }
 

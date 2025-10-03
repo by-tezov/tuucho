@@ -8,6 +8,7 @@ object SystemCoreDataModules {
 
     interface Config {
         val localDatabaseFile: String
+        val localDatastoreFile: String
         val serverUrl: String
     }
 

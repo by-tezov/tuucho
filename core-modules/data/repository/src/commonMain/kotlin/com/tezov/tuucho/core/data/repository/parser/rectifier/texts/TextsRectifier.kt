@@ -29,19 +29,17 @@ class TextsRectifier : AbstractRectifier() {
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ): JsonArray {
-        return buildList {
-            element.find(path).jsonObject.forEach { (group, texts) ->
-                texts.jsonObject.forEach { (key, text) ->
-                    when (text) {
-                        is JsonPrimitive -> alterPrimitiveText(key, group, text)
-                        is JsonObject -> alterObjectText(key, group, text)
-                        else -> error("type not managed")
-                    }.let(::add)
-                }
+    ) = buildList {
+        element.find(path).jsonObject.forEach { (group, texts) ->
+            texts.jsonObject.forEach { (key, text) ->
+                when (text) {
+                    is JsonPrimitive -> alterPrimitiveText(key, group, text)
+                    is JsonObject -> alterObjectText(key, group, text)
+                    else -> error("type not managed")
+                }.let(::add)
             }
-        }.let(::JsonArray)
-    }
+        }
+    }.let(::JsonArray)
 
     private fun alterPrimitiveText(
         key: String,
