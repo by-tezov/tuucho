@@ -27,15 +27,18 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
 
     final override fun apply(project: Project) {
         applyPlugins(project)
-        configureCommonAndroid(project)
-        configureCommonBuildType(project)
-        configureLint(project)
         configure(project)
     }
 
-    protected abstract fun applyPlugins(project: Project)
+    protected open fun applyPlugins(project: Project) {
 
-    protected open fun configure(project: Project) {}
+    }
+
+    protected open fun configure(project: Project) {
+        configureCommonAndroid(project)
+        configureBuildType(project)
+        configureLint(project)
+    }
 
     private fun configureCommonAndroid(
         project: Project,
@@ -63,7 +66,7 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureCommonBuildType(
+    private fun configureBuildType(
         project: Project,
     ) = with(project) {
         extensions.configure(CommonExtension::class.java) {

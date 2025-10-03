@@ -19,6 +19,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
     }
 
     override fun applyPlugins(project: Project) {
+        super.applyPlugins(project)
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
@@ -28,6 +29,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
     override fun configure(
         project: Project,
     ) {
+        super.configure(project)
         configureProguard(project)
         configureMultiplatform(project)
         configureSourceSets(project)
