@@ -2,13 +2,38 @@ package com.tezov.tuucho.convention.project
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.variant.AndroidComponentsExtension
+import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
+abstract class AbstractLibraryPlugin : Plugin<Project> {
+
+
+    object PluginId {
+        const val maven = "maven"
+        const val signing = "signing"
+        const val androidLibrary = "android.library"
+        const val koltinMultiplatform = "kotlin.multiplatform"
+        const val compose = "compose"
+        const val composeCompiler = "compose.compiler"
+
+        // test
+        const val allOpen = "all.open"
+        const val mokkery = "mokkery"
+
+        // convention
+        const val conventionMaven = "convention.maven"
+    }
 
     companion object {
+
+        private fun lintDisabled() = setOf(
+            "ComposableNaming"
+        )
+
         private fun optIn() = listOf(
             "kotlin.uuid.ExperimentalUuidApi",
             "kotlin.ExperimentalUnsignedTypes",
@@ -21,7 +46,13 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         )
     }
 
-    override fun applyPlugins(project: Project) {
+    final override fun apply(project: Project) {
+        applyPlugins(project)
+
+        configure(project)
+    }
+
+    protected open fun applyPlugins(project: Project) {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
@@ -29,12 +60,82 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         }
     }
 
-    override fun configure(
-        project: Project,
-    ) {
+    protected open fun configure(project: Project) {
+        configureCommonAndroid(project)
+        configureBuildType(project)
+        configureLint(project)
         configureProguard(project)
         configureMultiplatform(project)
         configureSourceSets(project)
+
+    }
+
+    private fun configureCommonAndroid(
+        project: Project,
+    ) = with(project) {
+        extensions.configure(CommonExtension::class.java) {
+            compileSdk = version("compileSdk").toInt()
+
+            buildFeatures {
+                buildConfig = true
+            }
+
+            defaultConfig {
+                minSdk = version("minSdk").toInt()
+            }
+
+            compileOptions {
+                sourceCompatibility = javaVersion()
+                targetCompatibility = javaVersion()
+            }
+        }
+        project.extensions.configure(JavaPluginExtension::class.java) {
+            toolchain {
+                languageVersion.set(javaLanguageVersion())
+            }
+        }
+    }
+
+    private fun configureBuildType(
+        project: Project,
+    ) = with(project) {
+        extensions.configure(CommonExtension::class.java) {
+            buildTypes {
+                create("prod") {
+                    initWith(getByName("release"))
+                    matchingFallbacks += listOf("release")
+                }
+                create("stage") {
+                    initWith(getByName("release"))
+                    matchingFallbacks += listOf("release")
+                }
+                create("dev") {
+                    initWith(getByName("debug"))
+                    matchingFallbacks += listOf("debug")
+                }
+                create("mock") {
+                    initWith(getByName("debug"))
+                    matchingFallbacks += listOf("debug")
+                }
+            }
+        }
+        extensions.configure(AndroidComponentsExtension::class.java) {
+            beforeVariants { builder ->
+                if (builder.buildType == "debug" || builder.buildType == "release") {
+                    builder.enable = false
+                }
+            }
+        }
+    }
+
+    private fun configureLint(
+        project: Project,
+    ) = with(project) {
+        extensions.configure(CommonExtension::class.java) {
+            lint {
+                disable.addAll(lintDisabled())
+            }
+        }
     }
 
     private fun configureProguard(project: Project) = with(project) {
@@ -86,8 +187,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
                     }
                 }
                 applyDefaultHierarchyTemplate()
-            }
-            else {
+            } else {
                 println("⚠️ mac os target disable")
             }
         }

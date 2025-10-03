@@ -7,6 +7,7 @@ import java.util.Properties
 class ApplicationAndroidPlugin : AbstractConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
+        super.applyPlugins(project)
         with(project) {
             pluginManager.apply(plugin(PluginId.androidApplication))
             pluginManager.apply(plugin(PluginId.koltinAndroid))
@@ -18,6 +19,7 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
     override fun configure(
         project: Project,
     ) {
+        super.configure(project)
         configureApplication(project)
         configureProguard(project)
         configureSigning(project)
