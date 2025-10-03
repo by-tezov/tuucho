@@ -17,9 +17,6 @@ compose-plugin = "1.9.0"
 kotlin-serialization-plugin = "2.2.20"
 maven-plugin = "0.34.0"
 
-#lib - android
-compose-activity = "1.11.0"
-
 #lib - platform
 kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
@@ -29,6 +26,10 @@ ktor = "3.3.0"
 koin = "4.1.1"
 kotlin-datetime = "0.7.1"
 okio = "3.16.0"
+
+#lib - android
+compose-activity = "1.11.0"
+datastore-preferences = "1.1.1"
 
 #test
 jacoco = "0.8.13"
@@ -57,8 +58,8 @@ okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
 #lib - android
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-#lib - android
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore-preferences" }
+#lib - ios
 sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 #test

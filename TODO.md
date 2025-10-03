@@ -1,8 +1,16 @@
 ## In progress
 
-- Will need to fix mock server
+- ad hook to allow send login hash from store on request url
+- use @ instead of : for groupd separator
+- 
+- do the rectifier actions + resolve
+- do rectifier on response form received
+- 
+- state initial value parser rectifier not done
 
-- maven guideline, test SNAPSHOT publication, done.
+- still need to fix mock server
+
+- contribution doc
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

@@ -10,6 +10,7 @@ internal object ConfigModuleIos {
         single<SystemCoreDataModules.Config> {
             object : SystemCoreDataModules.Config {
                 override val localDatabaseFile = BuildKonfig.localDatabaseFile
+                override val localDatastoreFile = BuildKonfig.localDatastoreFile
                 override val serverUrl = BuildKonfig.serverUrl
             }
         }

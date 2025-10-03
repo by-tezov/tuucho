@@ -20,9 +20,12 @@ object TypeSchema {
         const val content = "content"
         const val style = "style"
         const val option = "option"
+
         const val text = "text"
         const val dimension = "dimension"
         const val color = "color"
+
+        const val action = "action"
 
         const val state = "state"
         const val message = "message"

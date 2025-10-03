@@ -1,0 +1,12 @@
+{
+  "material-resource": {
+    "local": {
+      "pages": [
+        {
+          "validity-key": "1",
+          "url": "page-login"
+        }
+      ]
+    }
+  }
+}

@@ -19,6 +19,9 @@ buildkonfig {
         val localDatabaseFile = getProperty("localDatabaseFile")
             ?: error("Missing property: localDatabaseFile in config.properties")
 
+        val localDatastoreFile = getProperty("localDatastoreFile")
+            ?: error("Missing property: localDatastoreFile in config.properties")
+
         val serverUrlAndroid = getProperty("serverUrlAndroid")
             ?: error("Missing property: serverUrlAndroid in config.properties")
 
@@ -27,6 +30,7 @@ buildkonfig {
 
         defaultConfigs {
             buildConfigField(FieldSpec.Type.STRING, "localDatabaseFile", localDatabaseFile)
+            buildConfigField(FieldSpec.Type.STRING, "localDatastoreFile", localDatastoreFile)
         }
 
         targetConfigs {

@@ -6,6 +6,7 @@ object SystemCoreDataModules {
 
     interface Config {
         val localDatabaseFile: String
+        val localDatastoreFile: String
         val serverUrl: String
     }
 
@@ -14,6 +15,7 @@ object SystemCoreDataModules {
             object : com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules.Config {
                 val config = get<Config>()
                 override val localDatabaseFile = config.localDatabaseFile
+                override val localDatastoreFile = config.localDatastoreFile
                 override val serverUrl = config.serverUrl
             }
         }
