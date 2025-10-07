@@ -17,6 +17,7 @@
 - add language management
 - add selector management + on text language too (not only dimension/color)
 - add bottom/top screen not react to transition
+- add Dokka documentation coverage for every Kotlin source file
 
 
 - Improve: update view have a knowledge of previous element and next element to avoid overhear job (aka generate validators)
