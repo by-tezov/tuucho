@@ -6,27 +6,34 @@ import com.tezov.tuucho.core.data.repository.network.NetworkHttpRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.plugin
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-private const val serverConnectTimeoutMillis = 5000L
-private const val serverSocketTimeoutMillis = 5000L
+object NetworkRepositoryModule {
 
-internal object NetworkRepositoryModule {
+    interface KtorRequestInterceptor {
+        suspend fun intercept(builder: HttpRequestBuilder)
+    }
 
-    fun invoke() = module {
+    internal fun invoke() = module {
         factory<HttpClient> {
             HttpClient(get<HttpClientEngineFactory<*>>()) {
                 install(ContentNegotiation) {
                     json(get<Json>())
                 }
                 install(HttpTimeout) {
-                    connectTimeoutMillis = serverConnectTimeoutMillis
-                    socketTimeoutMillis = serverSocketTimeoutMillis
+                    with(get<SystemCoreDataModules.Config>()) {
+                        connectTimeoutMillis = serverConnectTimeoutMillis
+                        socketTimeoutMillis = serverSocketTimeoutMillis
+                    }
                 }
+
                 HttpResponseValidator {
                     validateResponse { response ->
                         val statusCode = response.status.value
@@ -35,6 +42,14 @@ internal object NetworkRepositoryModule {
                         }
                     }
                     handleResponseExceptionWithRequest { cause, _ -> throw cause }
+                }
+            }.apply {
+                val interceptors = getAll<KtorRequestInterceptor>()
+                if(interceptors.isNotEmpty()) {
+                    plugin(HttpSend).intercept { requestBuilder ->
+                        interceptors.forEach { it.intercept(requestBuilder) }
+                        execute(requestBuilder)
+                    }
                 }
             }
         }

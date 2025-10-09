@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.business.interaction.action.FormSendUrlActio
 import com.tezov.tuucho.core.domain.business.interaction.action.FormUpdateActionProcessor
 import com.tezov.tuucho.core.domain.business.interaction.action.NavigationLocalDestinationActionProcessor
 import com.tezov.tuucho.core.domain.business.interaction.action.NavigationUrlActionProcessor
+import com.tezov.tuucho.core.domain.business.interaction.action.StoreActionProcessor
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
@@ -46,6 +47,14 @@ internal object ActionProcessorModule {
             NavigationUrlActionProcessor(
                 useCaseExecutor = get(),
                 navigateForward = get()
+            )
+        } bind ActionProcessorProtocol::class
+
+        factory<StoreActionProcessor> {
+            StoreActionProcessor(
+                useCaseExecutor = get(),
+                saveKeyValueToStore = get(),
+                removeKeyValueFromStore = get()
             )
         } bind ActionProcessorProtocol::class
     }

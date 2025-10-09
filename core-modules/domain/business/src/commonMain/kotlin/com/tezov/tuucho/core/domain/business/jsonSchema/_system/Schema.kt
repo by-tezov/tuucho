@@ -1,10 +1,12 @@
 package com.tezov.tuucho.core.domain.business.jsonSchema._system
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -124,6 +126,8 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
         mapOperator.write(key, value)
     }
 
+    fun keys(): Set<String> = (element as? JsonObject)?.keys ?: emptySet()
+
     fun remove(key: String) {
         mapOperator.remove(key)
     }
@@ -140,7 +144,7 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
 
     fun collect() = mapOperator.collect()
 
-    fun collectChangedOrNull() = if(hasBeenChanged) mapOperator.collect() else null
+    fun collectChangedOrNull() = if (hasBeenChanged) mapOperator.collect() else null
 
     override fun toString(): String {
         return "initial=$element\ncurrent=${collect()}"

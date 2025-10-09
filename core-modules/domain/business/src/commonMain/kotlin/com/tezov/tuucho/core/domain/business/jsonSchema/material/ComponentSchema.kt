@@ -18,7 +18,7 @@ object ComponentSchema {
         const val style = StyleSchema.root
         const val option = OptionSchema.root
         const val setting = ComponentSettingSchema.root
-        const val state = OptionSchema.root
+        const val state = StateSchema.root
         const val message = MessageSchema.root
     }
 

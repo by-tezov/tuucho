@@ -15,8 +15,9 @@ fun AppScreen(
 ) {
     val tuuchoEngine = rememberTuuchoEngine()
     LaunchedEffect(Unit) {
-        tuuchoEngine.load(url = "config")
-        tuuchoEngine.start(url = "page-home")
+        tuuchoEngine.load(url = "lobby/_config")
+        tuuchoEngine.load(url = "auth/_config")
+        tuuchoEngine.start(url = "lobby/page-login")
     }
     tuuchoEngine.display()
 }
