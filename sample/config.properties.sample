@@ -1,6 +1,11 @@
-localDatabaseFile=database.db
-localDatastoreFile=user_preference
-serverUrlAndroid=http://10.0.2.2:3000
-serverUrlIos=http://localhost:3000
-serverConnectTimeoutMillis=5000
-serverSocketTimeoutMillis=5000
+
+localDatabaseFileName=database.db
+
+localDatastoreFileName=user_preference.pref
+
+serverTimeoutMillis=5000
+serverVersion=v1
+serverBaseUrlAndroid=http://10.0.2.2:3000
+serverBaseUrlIos=http://localhost:3000
+serverResourceEndpoint=resource
+serverSendEndpoint=send

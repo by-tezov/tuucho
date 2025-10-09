@@ -17,8 +17,16 @@ import org.koin.dsl.module
 
 object NetworkRepositoryModule {
 
-    interface KtorRequestInterceptor {
+    interface RequestInterceptor {
         suspend fun intercept(builder: HttpRequestBuilder)
+    }
+
+    interface Config {
+        val timeoutMillis: Long
+        val version: String
+        val baseUrl: String
+        val resourceEndpoint: String
+        val sendEndpoint: String
     }
 
     internal fun invoke() = module {
@@ -28,9 +36,9 @@ object NetworkRepositoryModule {
                     json(get<Json>())
                 }
                 install(HttpTimeout) {
-                    with(get<SystemCoreDataModules.Config>()) {
-                        connectTimeoutMillis = serverConnectTimeoutMillis
-                        socketTimeoutMillis = serverSocketTimeoutMillis
+                    with(get<Config>()) {
+                        connectTimeoutMillis = timeoutMillis
+                        socketTimeoutMillis = timeoutMillis
                     }
                 }
 
@@ -44,7 +52,7 @@ object NetworkRepositoryModule {
                     handleResponseExceptionWithRequest { cause, _ -> throw cause }
                 }
             }.apply {
-                val interceptors = getAll<KtorRequestInterceptor>()
+                val interceptors = getAll<RequestInterceptor>()
                 if(interceptors.isNotEmpty()) {
                     plugin(HttpSend).intercept { requestBuilder ->
                         interceptors.forEach { it.intercept(requestBuilder) }
@@ -57,7 +65,7 @@ object NetworkRepositoryModule {
         factory<NetworkHttpRequest> {
             NetworkHttpRequest(
                 httpClient = get(),
-                baseUrl = get<SystemCoreDataModules.Config>().serverUrl
+                config = get<Config>()
             )
         }
 

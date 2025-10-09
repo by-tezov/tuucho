@@ -1,12 +1,13 @@
 ## In progress
 
-Issues:
-- put the url in query doesn't allow to filter build-in nestJS Controller -> let the user define his base endpoint
-- Need a way to know that the Token is missing or invalid to redirect to login page (cancel ongoing request ?)
+- Need a way to known when i can load auth/config
+- When token is wrong or missing to redirect to login page
 
 - do the rectifier actions + resolve
 - do rectifier on response form received
 - state initial value parser rectifier not done
+
+- add API validator
 
 - still need to fix mock server
 

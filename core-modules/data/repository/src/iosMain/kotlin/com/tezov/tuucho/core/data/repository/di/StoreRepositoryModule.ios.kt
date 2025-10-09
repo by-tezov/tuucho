@@ -11,7 +11,7 @@ internal object StoreRepositoryModuleIos {
         single<KeyValueStoreRepositoryProtocol> {
             KeyValueStoreRepository(
                 userDefaults = NSUserDefaults(
-                    suiteName = get<SystemCoreDataModules.Config>().localDatastoreFile
+                    suiteName = get<StoreRepositoryModule.Config>().localDatastoreFile
                 )!!
             )
         }

@@ -58,5 +58,5 @@ listOf(
 }
 
 if(System.getenv()["IS_CI"] != "true" && System.getProperty("os.name").contains("Linux", ignoreCase = true)) {
-//    includeBuild("sample")
+    includeBuild("sample")
 }

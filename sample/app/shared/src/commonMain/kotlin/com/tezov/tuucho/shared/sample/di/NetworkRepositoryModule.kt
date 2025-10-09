@@ -5,18 +5,29 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import com.tezov.tuucho.core.domain.business.usecase.GeyValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.http.encodedPath
 import org.koin.dsl.ModuleDeclaration
 
 object NetworkRepositoryModule {
 
     fun invoke(): ModuleDeclaration = {
-        factory<NetworkRepositoryModule.KtorRequestInterceptor> {
-            object : NetworkRepositoryModule.KtorRequestInterceptor {
+        factory<NetworkRepositoryModule.RequestInterceptor> {
+            object : NetworkRepositoryModule.RequestInterceptor {
+                private val config = get<NetworkRepositoryModule.Config>()
                 private val useCaseExecutor = get<UseCaseExecutor>()
                 private val geyValueOrNullFromStore = get<GeyValueOrNullFromStoreUseCase>()
 
                 override suspend fun intercept(builder: HttpRequestBuilder) {
-                    val route = builder.url.parameters["url"] ?: return
+                    val route = builder.url
+                        .encodedPath
+                        .removePrefix("/${config.version}/")
+                        .let {
+                            when  {
+                                it.startsWith(config.resourceEndpoint) -> it.removePrefix("${config.resourceEndpoint}/")
+                                it.startsWith(config.sendEndpoint) -> it.removePrefix("${config.sendEndpoint}/")
+                                else -> it
+                            }
+                        }
                     if (!route.startsWith("auth/")) return
                     useCaseExecutor.invokeSuspend(
                         useCase = geyValueOrNullFromStore,

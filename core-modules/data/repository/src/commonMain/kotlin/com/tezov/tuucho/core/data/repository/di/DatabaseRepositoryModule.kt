@@ -13,9 +13,13 @@ import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapt
 import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
 import org.koin.dsl.module
 
-internal object DatabaseRepositoryModule {
+object DatabaseRepositoryModule {
 
-    fun invoke() = module {
+    interface Config {
+        val fileName: String
+    }
+
+    internal fun invoke() = module {
 
         factory<JsonObjectAdapter> {
             JsonObjectAdapter(json = get())
