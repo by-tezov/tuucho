@@ -1,3 +1,4 @@
 localDatabaseFile=database.db
+localDatastoreFile=user_preference
 serverUrlAndroid=http://10.0.2.2:3000
-serverUrlIos=http://127.0.0.1:3000
+serverUrlIos=http://localhost:3000
