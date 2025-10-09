@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action
+package com.tezov.tuucho.core.domain.business.model
 
 object Action {
 
@@ -22,12 +22,31 @@ object Action {
 
         object Send {
             const val authority = "send-url"
+
+            object ActionLabel {
+//                const val before = "before"
+//                const val after = "after"
+                const val validated = "validated"
+                const val denied = "denied"
+            }
         }
 
         object Update {
             const val authority = "update"
             object Target {
                 const val error = "error"
+            }
+        }
+    }
+
+    object Store {
+        const val command = "store"
+
+        object KeyValue {
+            const val authority = "key-value"
+            object Target {
+                const val save = "save"
+                const val remove = "remove"
             }
         }
     }

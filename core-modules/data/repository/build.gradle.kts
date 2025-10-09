@@ -17,6 +17,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.okhttp)
             implementation(libs.sql.delight.driver.android)
+            implementation(libs.datastore.preferences)
         }
         val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
         if (isMacOs) {

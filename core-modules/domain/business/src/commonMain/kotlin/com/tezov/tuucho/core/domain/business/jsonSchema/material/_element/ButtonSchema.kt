@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.ContentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionSchema
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 object ButtonSchema {
@@ -21,13 +22,8 @@ object ButtonSchema {
         }
 
         class Scope(argument: SchemaScopeArgument) : ContentSchema.OpenScope<Scope>(argument) {
-
             var label by delegate<JsonObject?>(Key.label)
             var action by delegate<JsonObject?>(Key.action)
-
         }
-
     }
-
-
 }

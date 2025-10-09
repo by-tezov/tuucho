@@ -1,44 +1,78 @@
 package com.tezov.tuucho.core.domain.business.model
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 
-class ActionModelDomain private constructor(
+data class ActionModelDomain(
     val command: String,
     val authority: String?,
     val target: String?,
+    val query: JsonElement?,
 ) {
 
     companion object {
         private val COMMAND_SEPARATOR = Regex.escape("://")
         private val AUTHORITY_SEPARATOR = Regex.escape("/")
+        private val QUERY_SEPARATOR = Regex.escape("?")
 
-        private fun String.command(): String {
-            val regex = Regex("^(.+?)$COMMAND_SEPARATOR")
-            return regex.find(this)?.groupValues?.get(1)
-                ?: throw DomainException.Default("missing action in string")
-        }
-
-        private fun String.authority(): String? {
-            val pattern = "^.+?$COMMAND_SEPARATOR(.+?)(?:$AUTHORITY_SEPARATOR|$)"
-            val regex = Regex(pattern)
-            return regex.find(this)?.groupValues?.get(1)
-        }
-
-        private fun String.target(): String? {
-            val pattern = "^.+?$COMMAND_SEPARATOR.+?$AUTHORITY_SEPARATOR(.*)"
-            return pattern.toRegex().find(this)?.groupValues?.get(1)
-        }
-
-        fun from(value: String) = ActionModelDomain(
-            command = value.command(),
-            authority = value.authority(),
-            target = value.target(),
+        private val ACTION_REGEX = Regex(
+            pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""
         )
 
-        fun from(command: String, authority: String?, target: String?) = ActionModelDomain(
+        private fun String.toQueryToMap(): JsonElement? {
+            if (isEmpty()) return null
+
+            return when {
+                contains("=") -> {
+                    val pairs = split("&")
+                        .mapNotNull {
+                            val parts = it.split("=", limit = 2)
+                            if (parts.size == 2) parts[0] to JsonPrimitive(parts[1]) else null
+                        }
+                    JsonObject(pairs.toMap())
+                }
+
+                contains(",") -> {
+                    val items = split(",").map { JsonPrimitive(it) }
+                    JsonArray(items)
+                }
+
+                else -> JsonPrimitive(this)
+            }
+        }
+
+        fun from(value: String): ActionModelDomain {
+            val match = ACTION_REGEX.matchEntire(value)
+                ?: throw DomainException.Default("invalid action")
+            return ActionModelDomain(
+                command = match.groups[1]?.value
+                    ?: throw DomainException.Default("command can't be null"),
+                authority = match.groups[2]?.value,
+                target = match.groups[3]?.value,
+                query = match.groups[4]?.value?.toQueryToMap(),
+            )
+        }
+
+        fun from(
+            command: String,
+            authority: String?,
+            target: String?,
+            query: String? = null,
+        ) = from(command, authority, target, query?.toQueryToMap())
+
+        fun from(
+            command: String,
+            authority: String?,
+            target: String?,
+            query: JsonElement?,
+        ) = ActionModelDomain(
             command = command,
             authority = authority,
             target = target,
+            query = query,
         )
     }
 

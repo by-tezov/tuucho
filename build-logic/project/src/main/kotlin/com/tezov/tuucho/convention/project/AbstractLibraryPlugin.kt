@@ -6,8 +6,13 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.kotlin.dsl.extra
+import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import java.io.File
+import java.nio.file.Files
+import kotlin.collections.forEach
 
 abstract class AbstractLibraryPlugin : Plugin<Project> {
 
@@ -42,7 +47,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         ).asIterable()
 
         private fun compilerOption() = listOf<String>(
-
+//            "-Xnested-type-aliases"
         )
     }
 
@@ -67,7 +72,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         configureProguard(project)
         configureMultiplatform(project)
         configureSourceSets(project)
-
     }
 
     private fun configureCommonAndroid(
@@ -212,6 +216,98 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             }
         }
     }
+
+/* Need to find a way to fix that
+private fun configureAndroidAssets(project: Project) = with(project) {
+    val buildTypeCapitalized = buildTypeCapitalized()
+    gradle.afterProject {
+        if (extra.has("hasAssets") && extra.get("hasAssets") == true) {
+            extensions.configure(CommonExtension::class.java) {
+                sourceSets["main"].assets.srcDirs(
+                    "src/commonMain/assets",
+                    "src/commonMain$buildTypeCapitalized/assets",
+                )
+            }
+        }
+    }
+}
+
+private fun configureIosAsset(project: Project) = with(project) {
+    fun resolveIosApp(): File {
+        val targetBuildDir = System.getenv("TARGET_BUILD_DIR")
+            ?: error("TARGET_BUILD_DIR not set")
+        val contentsFolderPath = System.getenv("CONTENTS_FOLDER_PATH")
+            ?: error("CONTENTS_FOLDER_PATH not set")
+        val app = File(targetBuildDir, contentsFolderPath)
+        if (!app.exists()) {
+            error(">>> ios.app not found at $app")
+        }
+        return app
+    }
+
+    fun collectProjectAssets(project: Project, flavorCapitalized: String): List<File> {
+        val baseDir = project.projectDir
+        val dirs = listOf(
+            File(baseDir, "src/commonMain/assets"),
+            File(baseDir, "src/commonMain$flavorCapitalized/assets")
+        )
+        return dirs.filter { it.exists() && it.isDirectory }
+            .flatMap { dir -> dir.walkTopDown().filter { it.isFile }.toList() }
+    }
+
+    fun mergeAllProjectAssets(project: Project) = with(project) {
+        val buildTypeCapitalized = buildTypeCapitalized()
+        val mergedAssetsDir = Files.createTempDirectory("mergedAssets").toFile()
+        rootProject.subprojects
+            .filter {
+                it.extra.has("hasAssets") && it.extra.get("hasAssets") == true }
+            .forEach { project ->
+                collectProjectAssets(project, buildTypeCapitalized)
+                    .forEach { file ->
+                        val idx = file.path.indexOf("assets")
+                        val relativePath = file.path.substring(idx + "assets".length + 1)
+                        val target = File(mergedAssetsDir, relativePath)
+                        if (target.exists()) {
+                            println("Overwriting asset: $relativePath (from ${project.path})")
+                        }
+                        target.parentFile.mkdirs()
+                        file.copyTo(target, overwrite = true)
+                    }
+            }
+        mergedAssetsDir
+    }
+
+    fun syncAssetsIntoApp(mergedAssetsDir: File, app: File) {
+        val assetsDirInApp = File(app, "assets")
+        assetsDirInApp.mkdirs()
+        val pb = ProcessBuilder(
+            "rsync", "-a", "--delete",
+            "${mergedAssetsDir.absolutePath}/",
+            assetsDirInApp.absolutePath
+        )
+        pb.inheritIO()
+        val result = pb.start().waitFor()
+        if (result != 0) {
+            error("rsync failed syncing assets into $assetsDirInApp")
+        }
+    }
+
+    val syncIosAssets = tasks.register("syncIosAssets") {
+        doLast {
+            val app = resolveIosApp()
+            val mergedAssetsDir = mergeAllProjectAssets(project)
+            syncAssetsIntoApp(mergedAssetsDir, app)
+            mergedAssetsDir.deleteRecursively()
+        }
+    }
+    gradle.rootProject.allprojects.forEach { project ->
+        project.tasks.matching { it.name == "syncComposeResourcesForIos" }
+            .configureEach {
+                finalizedBy(syncIosAssets.get())
+            }
+    }
+}
+*/
 
 }
 

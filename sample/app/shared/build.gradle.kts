@@ -19,14 +19,26 @@ buildkonfig {
         val localDatabaseFile = getProperty("localDatabaseFile")
             ?: error("Missing property: localDatabaseFile in config.properties")
 
+        val localDatastoreFile = getProperty("localDatastoreFile")
+            ?: error("Missing property: localDatastoreFile in config.properties")
+
         val serverUrlAndroid = getProperty("serverUrlAndroid")
             ?: error("Missing property: serverUrlAndroid in config.properties")
 
         val serverUrlIos = getProperty("serverUrlIos")
             ?: error("Missing property: serverUrlIos in config.properties")
 
+        val serverConnectTimeoutMillis = getProperty("serverConnectTimeoutMillis")
+            ?: error("Missing property: serverConnectTimeoutMillis in config.properties")
+
+        val serverSocketTimeoutMillis = getProperty("serverSocketTimeoutMillis")
+            ?: error("Missing property: serverSocketTimeoutMillis in config.properties")
+
         defaultConfigs {
             buildConfigField(FieldSpec.Type.STRING, "localDatabaseFile", localDatabaseFile)
+            buildConfigField(FieldSpec.Type.STRING, "localDatastoreFile", localDatastoreFile)
+            buildConfigField(FieldSpec.Type.LONG, "serverConnectTimeoutMillis", serverConnectTimeoutMillis)
+            buildConfigField(FieldSpec.Type.LONG, "serverSocketTimeoutMillis", serverSocketTimeoutMillis)
         }
 
         targetConfigs {
@@ -61,6 +73,8 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+
+            implementation(libs.ktor.core)
         }
     }
 }

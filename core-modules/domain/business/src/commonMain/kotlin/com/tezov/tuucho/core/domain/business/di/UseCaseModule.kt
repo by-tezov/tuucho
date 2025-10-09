@@ -5,6 +5,9 @@ import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GeyValueFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GeyValueOrNullFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.HasKeyInStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigationDefinitionSelectorMatcherFactoryUseCase
@@ -13,6 +16,8 @@ import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionC
 import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.RemoveKeyValueFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
@@ -41,6 +46,27 @@ internal object UseCaseModule {
         factory<GetScreensFromRoutesUseCase> {
             GetScreensFromRoutesUseCase(
                 navigationStackScreenRepository = get(),
+            )
+        }
+
+        factory<GeyValueFromStoreUseCase> {
+            GeyValueFromStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
+
+        factory<GeyValueOrNullFromStoreUseCase> {
+            GeyValueOrNullFromStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
+
+        factory<HasKeyInStoreUseCase> {
+            HasKeyInStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
             )
         }
 
@@ -101,6 +127,20 @@ internal object UseCaseModule {
             RegisterToScreenTransitionEventUseCase(
                 coroutineScopes = get(),
                 navigationAnimatorStackRepository = get()
+            )
+        }
+
+        factory<RemoveKeyValueFromStoreUseCase> {
+            RemoveKeyValueFromStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
+
+        factory<SaveKeyValueToStoreUseCase> {
+            SaveKeyValueToStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
             )
         }
 

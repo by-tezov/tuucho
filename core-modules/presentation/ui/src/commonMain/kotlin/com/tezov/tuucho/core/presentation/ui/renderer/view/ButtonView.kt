@@ -12,8 +12,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
@@ -84,18 +86,17 @@ class ButtonView(
 
     private val action
         get():() -> Unit = ({
-            _action?.withScope(ActionSchema::Scope)?.run {
-                value?.let { value ->
+            _action?.withScope(ActionSchema::Scope)
+                ?.primary?.forEach {
                     useCaseExecutor.invoke(
                         useCase = actionHandler,
                         input = ProcessActionUseCase.Input(
                             route = route,
-                            action = ActionModelDomain.Companion.from(value),
-                            jsonElement = element
+                            action = ActionModelDomain.from(it.string),
+                            jsonElement = _action
                         )
                     )
                 }
-            }
         })
 
     @Composable

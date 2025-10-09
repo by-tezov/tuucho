@@ -2,13 +2,23 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 
 object ActionSchema {
 
     const val root = "action"
 
     object Key {
-        const val value = "value"
+        const val id = IdSchema.root
+        const val type = TypeSchema.root
+
+        const val primary = "primary"
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
@@ -17,6 +27,9 @@ object ActionSchema {
         OpenSchemaScope<T>(argument) {
         override val root = ActionSchema.root
 
-        var value by delegate<String?>(Key.value)
+        var id by delegate<JsonElement>(Key.id)
+        var type by delegate<String?>(Key.type)
+
+        var primary by delegate<JsonArray?>(Key.primary)
     }
 }

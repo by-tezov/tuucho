@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.interaction.action
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.Action
+import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase

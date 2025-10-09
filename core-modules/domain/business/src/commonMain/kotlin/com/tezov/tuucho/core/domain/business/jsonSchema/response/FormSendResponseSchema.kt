@@ -3,26 +3,22 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.response
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
-import kotlinx.serialization.json.JsonElement
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionSchema
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 object FormSendResponseSchema {
 
     object Key {
-        const val type = "type"
-        const val content = "content"
-    }
-
-    object Value {
-        object Type {
-            const val allSucceed = "all-succeed"
-            const val failureResult = FailureResult.root
-        }
+        const val allSucceed = "all-succeed"
+        const val failureResult = FailureResult.root
+        const val action = ActionSchema.root
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-        var type by delegate<String?>(Key.type)
-        var content by delegate<JsonElement?>(Key.content)
+        var allSucceed by delegate<Boolean?>(Key.allSucceed)
+        var failureResult by delegate<JsonArray?>(Key.failureResult)
+        var action by delegate<JsonObject?>(Key.action)
     }
 
     object FailureResult {
