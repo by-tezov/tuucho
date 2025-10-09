@@ -47,12 +47,12 @@ data class ActionModelDomain(
         fun from(value: String): ActionModelDomain {
             val match = ACTION_REGEX.matchEntire(value)
                 ?: throw DomainException.Default("invalid action")
-            val (command: String, authority: String?, target: String?, query: String?) = match.destructured
             return ActionModelDomain(
-                command = command,
-                authority = authority,
-                target = target,
-                query = query?.toQueryToMap(),
+                command = match.groups[1]?.value
+                    ?: throw DomainException.Default("command can't be null"),
+                authority = match.groups[2]?.value,
+                target = match.groups[3]?.value,
+                query = match.groups[4]?.value?.toQueryToMap(),
             )
         }
 

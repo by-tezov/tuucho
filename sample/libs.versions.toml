@@ -20,7 +20,7 @@ build-konfig-plugin = "0.17.1"
 compose-activity = "1.11.0"
 
 #lib - platform
-kotlin-couroutine = "1.10.2"
+ktor = "3.3.0"
 koin = "4.1.1"
 
 [libraries]
@@ -33,9 +33,9 @@ tuucho-android = { group = "com.tezov", name = "tuucho.core-android", version.re
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - platform
-kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 
 [plugins]
 #convention

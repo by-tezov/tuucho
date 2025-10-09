@@ -47,7 +47,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         ).asIterable()
 
         private fun compilerOption() = listOf<String>(
-
+//            "-Xnested-type-aliases"
         )
     }
 
