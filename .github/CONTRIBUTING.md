@@ -46,13 +46,14 @@ You’ll need Node.js v22 or later. Check `How to Install Node.js` section just 
 1. Open the **`sample`** folder.
 2. At the root of the sample project, open `libs.versions.toml` and ensure its `versionName` matches the one from the **Tuucho** project.  
    Both must be identical for testing your code.
-3. Run the **Android** or **iOS** application to test your development changes.
+3. Copy config.properties.sample and name it config.properties (update the value if needed)
+4. Run the **Android** or **iOS** application to test your development changes.
 
-That’s it — you’re ready to build, run, and test your contribution.
+That’s it — you’re ready to build, run, and test your contribution. Don't hesitate to request help.
 
 Note: 
-- inside `settings.gradle.kts` file from **Tuucho** project, you can uncomment the line `includeBuild("sample")`. This allows you to develop and test using only one Android Studio window.
-- If you see the warning `Using JDK 21 but 17 is declared in the project`
+- inside `settings.gradle.kts` file from **Tuucho** project, you can uncomment the line `includeBuild("sample")`. This allows you to develop and test using only one Android Studio instance.
+- If you see the warning `You are using JDK 21 but 17 is declared in the project`
 Follow these steps to fix it:
 1. Open Android Studio Settings
 2. Go to Build, Execution, Deployment
@@ -117,7 +118,6 @@ Run all unit tests before opening your pull request:  ./gradlew rootMockUnitTest
 
 ## 🧭 Need Ideas or Help?
 
-- If you’re unsure what to contribute, check the **`BACKLOG.md`** file in the repo.
 - For questions or guidance, you can contact:  
   📩 **tezov.app@gmail.com**
 
