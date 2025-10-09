@@ -1,8 +1,16 @@
 ## In progress
 
-- Will need to fix mock server
+Issues:
+- put the url in query doesn't allow to filter build-in nestJS Controller -> let the user define his base endpoint
+- Need a way to know that the Token is missing or invalid to redirect to login page (cancel ongoing request ?)
 
-- maven guideline, test SNAPSHOT publication, done.
+- do the rectifier actions + resolve
+- do rectifier on response form received
+- state initial value parser rectifier not done
+
+- still need to fix mock server
+
+Add api validator
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

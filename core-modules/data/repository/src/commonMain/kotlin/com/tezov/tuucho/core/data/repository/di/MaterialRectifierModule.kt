@@ -26,7 +26,8 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRec
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.RectifierIdGenerator
 import com.tezov.tuucho.core.data.repository.parser.rectifier.colors.ColorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.colors.ColorsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.content.ActionRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.actions.ActionRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.actions.ActionsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.content.ContentRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.dimensions.DimensionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.dimensions.DimensionsRectifier
@@ -57,6 +58,7 @@ internal object MaterialRectifierModule {
             val COLOR = named("MaterialRectifierModule.Name.Processor.COLOR")
             val DIMENSIONS = named("MaterialRectifierModule.Name.Processor.DIMENSIONS")
             val DIMENSION = named("MaterialRectifierModule.Name.Processor.DIMENSION")
+            val ACTIONS = named("MaterialRectifierModule.Name.Processor.ACTIONS")
             val ACTION = named("MaterialRectifierModule.Name.Processor.ACTION")
             val FIELD_VALIDATOR = named("MaterialRectifierModule.Name.Processor.FIELD_VALIDATOR")
         }
@@ -273,6 +275,12 @@ internal object MaterialRectifierModule {
     }
 
     private fun Module.actionModule() {
+        single<ActionsRectifier> { ActionsRectifier() }
+
+        single<List<AbstractRectifier>>(Name.Processor.ACTIONS) {
+            listOf(get<ActionRectifier>())
+        }
+
         single<ActionRectifier> { ActionRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.ACTION) {

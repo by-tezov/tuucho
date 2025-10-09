@@ -8,7 +8,10 @@ object SystemCoreDataModules {
 
     interface Config {
         val localDatabaseFile: String
+        val localDatastoreFile: String
         val serverUrl: String
+        val serverConnectTimeoutMillis: Long
+        val serverSocketTimeoutMillis: Long
     }
 
     fun invoke():List<Module> = listOf(
