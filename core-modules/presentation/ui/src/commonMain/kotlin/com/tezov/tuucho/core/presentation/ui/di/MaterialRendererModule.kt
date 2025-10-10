@@ -33,7 +33,6 @@ internal object MaterialRendererModule {
             TuuchoEngine(
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
-                refreshMaterialCache = get(),
                 registerToScreenTransitionEvent = get(),
                 notifyNavigationTransitionCompleted = get(),
                 getScreensFromRoutes = get(),

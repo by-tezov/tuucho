@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.HookProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
@@ -18,6 +19,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isFalse
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -34,6 +36,8 @@ class NavigateToUrlUseCase(
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: ActionLockRepositoryProtocol,
+    private val hookBeforeNavigation: HookProtocol.BeforeNavigateToUrl?,
+    private val hookAfterNavigation: HookProtocol.AfterNavigateToUrl?,
 ) : UseCaseProtocol.Sync<Input, Unit> {
 
     data class Input(
@@ -46,6 +50,17 @@ class NavigateToUrlUseCase(
                 .tryLock(ActionLockRepositoryProtocol.Type.Navigation)
                 ?: return@async
             with(input) {
+                val result = hookBeforeNavigation?.onEvent(
+                    currentUrl = (navigationStackRouteRepository.currentRoute() as? NavigationRoute.Url)?.value,
+                    nextUrl = url
+                )
+                if (result.isFalse) {
+                    actionLockRepository.unLock(
+                        ActionLockRepositoryProtocol.Type.Navigation,
+                        interactionHandle
+                    )
+                    return@async
+                }
                 val componentObject = retrieveMaterialRepository.process(url)
                 val navigationSettingObject = componentObject
                     .onScope(ComponentSettingSchema.Root::Scope)
@@ -73,11 +88,12 @@ class NavigateToUrlUseCase(
                     navigationTransitionObject = navigationDefinitionObject
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.transition,
                 )
-                actionLockRepository.unLock(
-                    ActionLockRepositoryProtocol.Type.Navigation,
-                    interactionHandle
-                )
             }
+            actionLockRepository.unLock(
+                ActionLockRepositoryProtocol.Type.Navigation,
+                interactionHandle
+            )
+            hookAfterNavigation?.onEvent(currentUrl = input.url)
         }
     }
 
@@ -133,5 +149,4 @@ class NavigateToUrlUseCase(
             }
         }
     }
-
 }

@@ -13,6 +13,7 @@ object NetworkRepositoryModule {
     fun invoke(): ModuleDeclaration = {
         factory<NetworkRepositoryModule.RequestInterceptor> {
             object : NetworkRepositoryModule.RequestInterceptor {
+
                 private val config = get<NetworkRepositoryModule.Config>()
                 private val useCaseExecutor = get<UseCaseExecutor>()
                 private val geyValueOrNullFromStore = get<GeyValueOrNullFromStoreUseCase>()

@@ -2,8 +2,8 @@ package com.tezov.tuucho.shared.sample
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.tezov.tuucho.core.presentation.rememberTuuchoEngine
 import com.tezov.tuucho.core.barrel.di.StartKoinModules
+import com.tezov.tuucho.core.presentation.rememberTuuchoEngine
 import com.tezov.tuucho.shared.sample.di.SystemSharedModules
 import org.koin.dsl.ModuleDeclaration
 
@@ -15,7 +15,6 @@ fun AppScreen(
 ) {
     val tuuchoEngine = rememberTuuchoEngine()
     LaunchedEffect(Unit) {
-        tuuchoEngine.load(url = "lobby/_config")
         tuuchoEngine.start(url = "lobby/page-login")
     }
     tuuchoEngine.display()

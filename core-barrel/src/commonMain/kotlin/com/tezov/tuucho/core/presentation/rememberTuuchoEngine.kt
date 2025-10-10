@@ -5,8 +5,6 @@ import androidx.compose.runtime.remember
 
 interface TuuchoEngineProtocol {
 
-    suspend fun load(url: String)
-
     suspend fun start(url: String)
 
     @Composable
@@ -18,10 +16,6 @@ fun rememberTuuchoEngine(): TuuchoEngineProtocol {
     val engine = com.tezov.tuucho.core.presentation.ui.renderer.rememberTuuchoEngine()
     return remember {
         object : TuuchoEngineProtocol {
-
-            override suspend fun load(url: String) {
-                engine.load(url)
-            }
 
             override suspend fun start(url: String) {
                 engine.start(url)

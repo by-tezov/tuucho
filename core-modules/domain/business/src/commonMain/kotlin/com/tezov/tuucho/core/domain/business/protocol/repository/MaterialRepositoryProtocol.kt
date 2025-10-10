@@ -2,21 +2,21 @@ package com.tezov.tuucho.core.domain.business.protocol.repository
 
 import kotlinx.serialization.json.JsonObject
 
-sealed interface MaterialRepositoryProtocol {
+object MaterialRepositoryProtocol {
 
-    interface RefreshCache : MaterialRepositoryProtocol {
+    interface RefreshCache {
         suspend fun process(url: String)
     }
 
-    interface Retrieve : MaterialRepositoryProtocol {
+    interface Retrieve {
         suspend fun process(url: String): JsonObject
     }
 
-    interface SendDataAndRetrieve : MaterialRepositoryProtocol {
+    interface SendDataAndRetrieve {
         suspend fun process(url: String, jsonObject: JsonObject): JsonObject?
     }
 
-    interface Shadower : MaterialRepositoryProtocol {
+    interface Shadower {
 
         data class Output(
             val type: String,

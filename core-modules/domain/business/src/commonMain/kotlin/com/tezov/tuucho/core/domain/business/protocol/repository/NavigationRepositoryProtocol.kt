@@ -5,9 +5,13 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 
-sealed interface NavigationRepositoryProtocol {
+object NavigationRepositoryProtocol {
 
     interface StackRoute {
+
+        suspend fun currentRoute(): NavigationRoute?
+
+        suspend fun priorRoute(): NavigationRoute?
 
         suspend fun routes(): List<NavigationRoute>
 

@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
+import com.tezov.tuucho.core.domain.business.protocol.HookProtocol
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
@@ -77,7 +78,9 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                actionLockRepository = get()
+                actionLockRepository = get(),
+                hookBeforeNavigation = getOrNull(),
+                hookAfterNavigation = getOrNull(),
             )
         }
 
@@ -93,6 +96,8 @@ internal object UseCaseModule {
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
                 actionLockRepository = get(),
+                hookBeforeNavigation = getOrNull(),
+                hookAfterNavigation = getOrNull(),
             )
         }
 

@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonElement
 
 class NavigationUrlActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
-    private val navigateForward: NavigateToUrlUseCase,
+    private val navigateToUrl: NavigateToUrlUseCase,
 ) : ActionProcessorProtocol {
 
     override val priority: Int
@@ -31,7 +31,7 @@ class NavigationUrlActionProcessor(
     ) {
         action.target?.let { url ->
             useCaseExecutor.invokeSuspend(
-                useCase = navigateForward,
+                useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(
                     url = url
                 )
