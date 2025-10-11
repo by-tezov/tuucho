@@ -12,6 +12,7 @@
 -update doc and close the release
 
 - still need to fix mock server
+- Need a way to let core barrel on dev without fail because test lib are not here.
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)
