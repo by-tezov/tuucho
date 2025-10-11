@@ -57,6 +57,6 @@ listOf(
         }
 }
 
-if(System.getenv()["IS_CI"] != "true" && System.getProperty("os.name").contains("Linux", ignoreCase = true)) {
+if(System.getenv()["IS_CI"] != "true") {
 //    includeBuild("sample")
 }

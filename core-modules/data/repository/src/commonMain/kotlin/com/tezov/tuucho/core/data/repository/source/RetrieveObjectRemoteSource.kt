@@ -10,7 +10,7 @@ class RetrieveObjectRemoteSource(
 ) {
 
     suspend fun process(url: String): JsonObject = coroutineScopes.network.await {
-        materialNetworkSource.retrieve(url)
+        materialNetworkSource.resource(url)
     }
 
 }

@@ -46,7 +46,7 @@ internal object ActionProcessorModule {
         factory<NavigationUrlActionProcessor> {
             NavigationUrlActionProcessor(
                 useCaseExecutor = get(),
-                navigateForward = get()
+                navigateToUrl = get()
             )
         } bind ActionProcessorProtocol::class
 

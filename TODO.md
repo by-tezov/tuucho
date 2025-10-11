@@ -1,16 +1,18 @@
 ## In progress
 
-Issues:
-- put the url in query doesn't allow to filter build-in nestJS Controller -> let the user define his base endpoint
-- Need a way to know that the Token is missing or invalid to redirect to login page (cancel ongoing request ?)
+- on network error hook -> cf credential not valid, need to redirect
+
+- why remember need to be duplicated on Barrel while interface and class not
 
 - do the rectifier actions + resolve
 - do rectifier on response form received
 - state initial value parser rectifier not done
+- add API validator
+
+-update doc and close the release
 
 - still need to fix mock server
-
-Add api validator
+- Need a way to let core barrel on dev without fail because test lib are not here.
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

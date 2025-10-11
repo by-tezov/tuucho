@@ -7,11 +7,16 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.HookProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ActionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isFalse
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import kotlin.getValue
 
 class NavigateBackUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -20,13 +25,28 @@ class NavigateBackUseCase(
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: ActionLockRepositoryProtocol,
-) : UseCaseProtocol.Sync<Unit, Unit> {
+) : UseCaseProtocol.Sync<Unit, Unit>, KoinComponent {
+
+    private val hookBeforeNavigation by lazy { getKoin().getOrNull<HookProtocol.BeforeNavigateBack>() }
+    private val hookAfterNavigation by lazy { getKoin().getOrNull<HookProtocol.AfterNavigateBack>() }
 
     override fun invoke(input: Unit) {
         coroutineScopes.navigation.async {
             val interactionHandle = actionLockRepository
                 .tryLock(ActionLockRepositoryProtocol.Type.Navigation)
                 ?: return@async
+            val result = hookBeforeNavigation?.onEvent(
+                currentUrl = (navigationStackRouteRepository.currentRoute() as? NavigationRoute.Url)?.value
+                    ?: "",
+                nextUrl = (navigationStackRouteRepository.priorRoute() as? NavigationRoute.Url)?.value
+            )
+            if (result.isFalse) {
+                actionLockRepository.unLock(
+                    ActionLockRepositoryProtocol.Type.Navigation,
+                    interactionHandle
+                )
+                return@async
+            }
             val restoredRoute = navigationStackRouteRepository.backward(
                 route = NavigationRoute.Back
             )
@@ -40,6 +60,9 @@ class NavigateBackUseCase(
             actionLockRepository.unLock(
                 ActionLockRepositoryProtocol.Type.Navigation,
                 interactionHandle
+            )
+            hookAfterNavigation?.onEvent(
+                (navigationStackRouteRepository.currentRoute() as? NavigationRoute.Url)?.value
             )
         }
     }

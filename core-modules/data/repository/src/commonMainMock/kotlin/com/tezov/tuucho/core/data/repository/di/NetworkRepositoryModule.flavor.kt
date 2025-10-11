@@ -19,7 +19,7 @@ internal object NetworkRepositoryModuleFlavor {
 
         single<BackendServer> {
             BackendServer(
-                serverUrl = get<SystemCoreDataModules.Config>().serverUrl,
+                serverUrl = get<NetworkRepositoryModule.Config>().baseUrl,
                 services = getAll<ServiceProtocol>()
             )
         }
