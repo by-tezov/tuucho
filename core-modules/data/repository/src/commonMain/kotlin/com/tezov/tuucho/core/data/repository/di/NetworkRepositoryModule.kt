@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheckSource
 import com.tezov.tuucho.core.data.repository.network.MaterialNetworkSource
+import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheckSource
 import com.tezov.tuucho.core.data.repository.network.NetworkHttpRequest
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import io.ktor.client.HttpClient
@@ -56,7 +56,7 @@ object NetworkRepositoryModule {
                 }
             }.apply {
                 val interceptors = getAll<RequestInterceptor>()
-                if(interceptors.isNotEmpty()) {
+                if (interceptors.isNotEmpty()) {
                     plugin(HttpSend).intercept { requestBuilder ->
                         interceptors.forEach { it.intercept(requestBuilder) }
                         execute(requestBuilder)
@@ -82,7 +82,8 @@ object NetworkRepositoryModule {
         factory<ServerHealthCheckProtocol> {
             NetworkHealthCheckSource(
                 coroutineScopes = get(),
-                materialNetworkSource = get()
+                networkHttpRequest = get(),
+                jsonConverter = get()
             )
         }
     }

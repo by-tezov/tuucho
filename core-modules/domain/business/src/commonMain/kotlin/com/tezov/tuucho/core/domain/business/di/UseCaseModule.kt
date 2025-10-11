@@ -1,13 +1,12 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
-import com.tezov.tuucho.core.domain.business.protocol.HookProtocol
 import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GeyValueFromStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GeyValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.HasKeyInStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
@@ -58,8 +57,8 @@ internal object UseCaseModule {
             )
         }
 
-        factory<GeyValueOrNullFromStoreUseCase> {
-            GeyValueOrNullFromStoreUseCase(
+        factory<GetValueOrNullFromStoreUseCase> {
+            GetValueOrNullFromStoreUseCase(
                 coroutineScopes = get(),
                 keyValueRepository = get()
             )

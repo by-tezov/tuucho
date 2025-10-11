@@ -1,8 +1,6 @@
 ## In progress
 
-- add a single for page-login and popUp when going to home
 - on network error hook -> cf credential not valid, need to redirect
-
 
 - why remember need to be duplicated on Barrel while interface and class not
 
@@ -11,9 +9,9 @@
 - state initial value parser rectifier not done
 - add API validator
 
-- still need to fix mock server
+-update doc and close the release
 
-Add api validator
+- still need to fix mock server
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)

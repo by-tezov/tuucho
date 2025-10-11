@@ -11,16 +11,6 @@ class MaterialNetworkSource(
     private val jsonConverter: Json
 ) {
 
-    suspend fun health(url: String): JsonObject {
-        val response = networkHttpRequest.getHealth(url)
-        val data = response.json ?: throw DataException.Default("failed to check health at url $url")
-        val jsonElement = jsonConverter.decodeFromString(
-            deserializer = JsonObject.Companion.serializer(),
-            string = data
-        )
-        return jsonElement
-    }
-
     suspend fun resource(url: String): JsonObject {
         val response = networkHttpRequest.getResource(url)
         val data = response.json ?: throw DataException.Default("failed to retrieve resource at url $url")
