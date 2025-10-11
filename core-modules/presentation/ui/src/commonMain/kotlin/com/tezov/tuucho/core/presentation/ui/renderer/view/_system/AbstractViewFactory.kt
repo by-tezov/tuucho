@@ -7,7 +7,7 @@ import org.koin.core.component.KoinComponent
 abstract class AbstractViewFactory : MatcherViewFactoryProtocol, KoinComponent {
 
     abstract suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         componentObject: JsonObject,
     ): ViewProtocol
 

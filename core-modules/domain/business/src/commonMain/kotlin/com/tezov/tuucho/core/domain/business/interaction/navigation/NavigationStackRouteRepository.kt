@@ -13,7 +13,7 @@ class NavigationStackRouteRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
 ) : StackRoute {
 
-    private val stack = mutableListOf<NavigationRoute>()
+    private val stack = mutableListOf<NavigationRoute.Url>()
     private val stackLock = Mutex()
 
     override suspend fun currentRoute() = coroutineScopes.navigation.await {
@@ -29,7 +29,7 @@ class NavigationStackRouteRepository(
     }
 
     override suspend fun forward(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         navigationOptionObject: JsonObject?,
     ) = coroutineScopes.navigation.await {
         val option = navigationOptionObject?.let {
@@ -41,14 +41,7 @@ class NavigationStackRouteRepository(
             clearStack = false
         )
         stackLock.withLock {
-            when (route) {
-                is NavigationRoute.Url -> navigateUrl(route, option)?.let {
-                    return@await it
-                }
-
-                else -> throw DomainException.Default("Route $route can't be swallowed, maybe you should use spit")
-            }
-            return@await null
+            navigateUrl(route, option)
         }
     }
 
@@ -62,12 +55,12 @@ class NavigationStackRouteRepository(
         }
     }
 
-    private fun navigateBack(): NavigationRoute? {
+    private fun navigateBack(): NavigationRoute.Url? {
         stack.removeLastOrNull()
         return stack.lastOrNull()
     }
 
-    private fun navigateFinish(): NavigationRoute? {
+    private fun navigateFinish(): NavigationRoute.Url? {
         stack.clear()
         return null
     }
@@ -75,7 +68,7 @@ class NavigationStackRouteRepository(
     private fun navigateUrl(
         route: NavigationRoute,
         option: NavigationOption?,
-    ): NavigationRoute? {
+    ): NavigationRoute.Url? {
         val route = (route as NavigationRoute.Url)
         val reusableRoute = option?.reuse?.let { reuse ->
             when (reuse) {

@@ -6,20 +6,12 @@ import com.tezov.tuucho.core.domain.business.interaction.action.NavigationLocalD
 import com.tezov.tuucho.core.domain.business.interaction.action.NavigationUrlActionProcessor
 import com.tezov.tuucho.core.domain.business.interaction.action.StoreActionProcessor
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
-import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 internal object ActionProcessorModule {
 
-    object Name {
-        val PROCESSORS = named("ActionProcessorModule.Name.PROCESSORS")
-    }
-
     fun invoke() = module {
-        factory<List<ActionProcessorProtocol>>(Name.PROCESSORS) {
-            getAll<ActionProcessorProtocol>()
-        }
 
         factory<FormSendUrlActionProcessor> {
             FormSendUrlActionProcessor(

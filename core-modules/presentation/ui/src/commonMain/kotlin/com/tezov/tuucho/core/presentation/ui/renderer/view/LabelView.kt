@@ -32,7 +32,7 @@ class LabelViewFactory : AbstractViewFactory() {
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         componentObject: JsonObject,
     ) =
         LabelView(

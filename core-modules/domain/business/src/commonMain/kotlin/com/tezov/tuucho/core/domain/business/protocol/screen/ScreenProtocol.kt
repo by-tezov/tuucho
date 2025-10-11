@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 
 interface ScreenProtocol {
 
-    val route: NavigationRoute
+    val route: NavigationRoute.Url
 
     val view: ViewProtocol
 

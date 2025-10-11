@@ -10,12 +10,11 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionSchema
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
-import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
@@ -34,7 +33,7 @@ class ButtonViewFactory(
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         componentObject: JsonObject,
     ) = ButtonView(
         route = route,
@@ -46,7 +45,7 @@ class ButtonViewFactory(
 }
 
 class ButtonView(
-    private val route: NavigationRoute,
+    private val route: NavigationRoute.Url,
     componentObject: JsonObject,
     private val useCaseExecutor: UseCaseExecutor,
     private val labelUiComponentFactory: LabelViewFactory,

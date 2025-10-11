@@ -1,0 +1,36 @@
+package com.tezov.tuucho.core.domain.business.usecase.withNetwork
+
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
+import kotlinx.serialization.json.JsonElement
+
+class ProcessActionUseCase(
+    private val coroutineScopes: CoroutineScopesProtocol,
+    private val actionProcessors: List<ActionProcessorProtocol>,
+) : UseCaseProtocol.Async<ProcessActionUseCase.Input, Unit> {
+
+    data class Input(
+        val route: NavigationRoute.Url,
+        val action: ActionModelDomain,
+        val jsonElement: JsonElement? = null,
+    )
+
+    override suspend fun invoke(input: Input) {
+        coroutineScopes.useCase.await {
+            with(input) {
+                actionProcessors
+                    .asSequence()
+                    .filter { it.accept(route, action, jsonElement) }
+                    .sortedBy { it.priority }
+                    .let {
+                        for (handler in it) {
+                            handler.process(route, action, jsonElement)
+                        }
+                    }
+            }
+        }
+    }
+}

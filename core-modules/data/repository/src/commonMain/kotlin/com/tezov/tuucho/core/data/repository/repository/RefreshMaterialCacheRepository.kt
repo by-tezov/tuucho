@@ -4,9 +4,9 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.data.repository.source.MaterialCacheLocalSource
-import com.tezov.tuucho.core.data.repository.source.MaterialRemoteSource
-import com.tezov.tuucho.core.data.repository.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.config.ConfigSchema

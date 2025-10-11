@@ -10,7 +10,8 @@ import com.tezov.tuucho.core.data.repository.mock.mockCoroutineScope
 import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
 import com.tezov.tuucho.core.data.repository.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
-import com.tezov.tuucho.core.data.repository.source._system.LifetimeResolver
+import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import dev.mokkery.answering.returns
 import dev.mokkery.every

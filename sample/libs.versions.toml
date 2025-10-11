@@ -20,7 +20,7 @@ build-konfig-plugin = "0.17.1"
 compose-activity = "1.11.0"
 
 #lib - platform
-ktor = "3.3.0"
+ktor = "3.3.1"
 koin = "4.1.1"
 
 [libraries]

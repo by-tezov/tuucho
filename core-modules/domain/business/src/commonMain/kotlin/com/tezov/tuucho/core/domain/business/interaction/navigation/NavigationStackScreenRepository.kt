@@ -21,7 +21,7 @@ class NavigationStackScreenRepository(
         stackLock.withLock { stack.map { it.route } }
     }
 
-    override suspend fun getScreens(routes: List<NavigationRoute>) =
+    override suspend fun getScreens(routes: List<NavigationRoute.Url>) =
         coroutineScopes.navigation.await {
             stackLock.withLock {
                 stack.filter { screen ->
@@ -30,7 +30,7 @@ class NavigationStackScreenRepository(
             }
         }
 
-    override suspend fun getScreenOrNull(route: NavigationRoute) =
+    override suspend fun getScreenOrNull(route: NavigationRoute.Url) =
         coroutineScopes.navigation.await {
             stackLock.withLock { stack.firstOrNull { route.id == it.route.id } }
         }
@@ -40,7 +40,7 @@ class NavigationStackScreenRepository(
     }
 
     override suspend fun forward(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         componentObject: JsonObject,
     ) {
         coroutineScopes.navigation.await {
@@ -54,7 +54,7 @@ class NavigationStackScreenRepository(
     }
 
     override suspend fun backward(
-        routes: List<NavigationRoute>,
+        routes: List<NavigationRoute.Url>,
     ) {
         coroutineScopes.navigation.await {
             stackLock.withLock {
