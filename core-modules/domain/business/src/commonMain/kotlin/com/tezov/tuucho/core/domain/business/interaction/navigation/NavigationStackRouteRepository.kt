@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationOptionSchema.Value.Reuse
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionList.priorLastOrNull
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
@@ -14,6 +15,14 @@ class NavigationStackRouteRepository(
 
     private val stack = mutableListOf<NavigationRoute>()
     private val stackLock = Mutex()
+
+    override suspend fun currentRoute() = coroutineScopes.navigation.await {
+        stackLock.withLock { stack.lastOrNull() }
+    }
+
+    override suspend fun priorRoute() = coroutineScopes.navigation.await {
+        stackLock.withLock { stack.priorLastOrNull() }
+    }
 
     override suspend fun routes() = coroutineScopes.navigation.await {
         stackLock.withLock { stack.toList() }

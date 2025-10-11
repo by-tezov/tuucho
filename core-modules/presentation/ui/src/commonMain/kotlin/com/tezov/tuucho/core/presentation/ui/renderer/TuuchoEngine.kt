@@ -35,8 +35,6 @@ import org.koin.compose.currentKoinScope
 
 interface TuuchoEngineProtocol {
 
-    suspend fun load(url: String)
-    
     suspend fun start(url: String)
 
     @Composable
@@ -46,7 +44,6 @@ interface TuuchoEngineProtocol {
 class TuuchoEngine(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
-    private val refreshMaterialCache: RefreshMaterialCacheUseCase,
     private val registerToScreenTransitionEvent: RegisterToScreenTransitionEventUseCase,
     private val notifyNavigationTransitionCompleted: NotifyNavigationTransitionCompletedUseCase,
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
@@ -63,15 +60,6 @@ class TuuchoEngine(
     private var transitionRequested = false
     private val redrawTrigger = mutableStateOf(0)
 
-    override suspend fun load(url: String) {
-        useCaseExecutor.invokeSuspend(
-            useCase = refreshMaterialCache,
-            input = RefreshMaterialCacheUseCase.Input(
-                url = url
-            )
-        )
-    }
-    
     override suspend fun start(url: String) {
         useCaseExecutor.invoke(
             useCase = registerToScreenTransitionEvent,

@@ -42,7 +42,7 @@ class MaterialRemoteSourceTest {
         val networkResponse = buildJsonObject { put("files", "data") }
         val expected = buildJsonObject { put("rectified", "ok") }
 
-        everySuspend { materialNetworkSource.retrieve(url) } returns networkResponse
+        everySuspend { materialNetworkSource.resource(url) } returns networkResponse
         everySuspend { materialRectifier.process(networkResponse) } returns expected
 
         val result = sut.process(url)
@@ -51,7 +51,7 @@ class MaterialRemoteSourceTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineScopes.network
-            materialNetworkSource.retrieve(url)
+            materialNetworkSource.resource(url)
             coroutineScopes.parser
             materialRectifier.process(networkResponse)
         }

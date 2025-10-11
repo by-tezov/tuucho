@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
+import com.tezov.tuucho.core.domain.business.usecase.GetValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.GeyValueFromStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GeyValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.HasKeyInStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
@@ -19,6 +19,7 @@ import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionE
 import com.tezov.tuucho.core.domain.business.usecase.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import org.koin.dsl.module
@@ -56,8 +57,8 @@ internal object UseCaseModule {
             )
         }
 
-        factory<GeyValueOrNullFromStoreUseCase> {
-            GeyValueOrNullFromStoreUseCase(
+        factory<GetValueOrNullFromStoreUseCase> {
+            GetValueOrNullFromStoreUseCase(
                 coroutineScopes = get(),
                 keyValueRepository = get()
             )
@@ -92,7 +93,7 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                actionLockRepository = get(),
+                actionLockRepository = get()
             )
         }
 
@@ -148,6 +149,13 @@ internal object UseCaseModule {
             UpdateViewUseCase(
                 coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
+            )
+        }
+
+        factory<ServerHealthCheckUseCase> {
+            ServerHealthCheckUseCase(
+                coroutineScopes = get(),
+                serverHealthCheck = get(),
             )
         }
 

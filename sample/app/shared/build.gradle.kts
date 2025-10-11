@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
 import java.util.Properties
 
 plugins {
@@ -13,42 +14,35 @@ buildkonfig {
     if (!configPropertiesFile.exists()) {
         error("⚠️ No config.properties found")
     }
-    with(Properties()) {
+
+    val props = Properties().apply {
         load(configPropertiesFile.inputStream())
+    }
 
-        val localDatabaseFile = getProperty("localDatabaseFile")
-            ?: error("Missing property: localDatabaseFile in config.properties")
+    fun TargetConfigDsl.field(propertyKey: String, type: FieldSpec.Type, key: String? = null) {
+        val property = props.getProperty(propertyKey)
+            ?: error("Missing property: $propertyKey in config.properties")
+        buildConfigField(type, key ?: propertyKey, property)
+    }
 
-        val localDatastoreFile = getProperty("localDatastoreFile")
-            ?: error("Missing property: localDatastoreFile in config.properties")
+    defaultConfigs {
+        field("localDatabaseFileName", FieldSpec.Type.STRING)
+        field("localDatastoreFileName", FieldSpec.Type.STRING)
 
-        val serverUrlAndroid = getProperty("serverUrlAndroid")
-            ?: error("Missing property: serverUrlAndroid in config.properties")
+        field("serverTimeoutMillis", FieldSpec.Type.LONG)
+        field("serverVersion", FieldSpec.Type.STRING)
+        field("serverHealthEndpoint", FieldSpec.Type.STRING)
+        field("serverResourceEndpoint", FieldSpec.Type.STRING)
+        field("serverSendEndpoint", FieldSpec.Type.STRING)
+    }
 
-        val serverUrlIos = getProperty("serverUrlIos")
-            ?: error("Missing property: serverUrlIos in config.properties")
-
-        val serverConnectTimeoutMillis = getProperty("serverConnectTimeoutMillis")
-            ?: error("Missing property: serverConnectTimeoutMillis in config.properties")
-
-        val serverSocketTimeoutMillis = getProperty("serverSocketTimeoutMillis")
-            ?: error("Missing property: serverSocketTimeoutMillis in config.properties")
-
-        defaultConfigs {
-            buildConfigField(FieldSpec.Type.STRING, "localDatabaseFile", localDatabaseFile)
-            buildConfigField(FieldSpec.Type.STRING, "localDatastoreFile", localDatastoreFile)
-            buildConfigField(FieldSpec.Type.LONG, "serverConnectTimeoutMillis", serverConnectTimeoutMillis)
-            buildConfigField(FieldSpec.Type.LONG, "serverSocketTimeoutMillis", serverSocketTimeoutMillis)
+    targetConfigs {
+        create("android") {
+            field("serverBaseUrlAndroid", FieldSpec.Type.STRING, "serverBaseUrl")
         }
 
-        targetConfigs {
-            create("android") {
-                buildConfigField(FieldSpec.Type.STRING, "serverUrl", serverUrlAndroid)
-            }
-
-            create("ios") {
-                buildConfigField(FieldSpec.Type.STRING, "serverUrl", serverUrlIos)
-            }
+        create("ios") {
+            field("serverBaseUrlAndroid", FieldSpec.Type.STRING, "serverBaseUrl")
         }
     }
 }

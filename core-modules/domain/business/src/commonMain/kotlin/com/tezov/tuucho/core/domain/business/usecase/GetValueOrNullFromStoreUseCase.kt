@@ -3,10 +3,10 @@ package com.tezov.tuucho.core.domain.business.usecase
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.GeyValueOrNullFromStoreUseCase.Input
-import com.tezov.tuucho.core.domain.business.usecase.GeyValueOrNullFromStoreUseCase.Output
+import com.tezov.tuucho.core.domain.business.usecase.GetValueOrNullFromStoreUseCase.Input
+import com.tezov.tuucho.core.domain.business.usecase.GetValueOrNullFromStoreUseCase.Output
 
-class GeyValueOrNullFromStoreUseCase(
+class GetValueOrNullFromStoreUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val keyValueRepository: KeyValueStoreRepositoryProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {

@@ -23,7 +23,7 @@ internal object StoreRepositoryModuleAndroid {
                 scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
             ) {
                 context.preferencesDataStoreFile(
-                    get<SystemCoreDataModules.Config>().localDatastoreFile
+                    get<StoreRepositoryModule.Config>().fileName
                 )
             }
         }
