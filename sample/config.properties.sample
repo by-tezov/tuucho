@@ -7,5 +7,6 @@ serverTimeoutMillis=5000
 serverVersion=v1
 serverBaseUrlAndroid=http://10.0.2.2:3000
 serverBaseUrlIos=http://localhost:3000
+serverHealthEndpoint=health
 serverResourceEndpoint=resource
 serverSendEndpoint=send

@@ -1,8 +1,8 @@
 ## In progress
 
-- app why redirect can't work, koin error
 - add a single for page-login and popUp when going to home
 - on network error hook -> cf credential not valid, need to redirect
+
 
 - why remember need to be duplicated on Barrel while interface and class not
 

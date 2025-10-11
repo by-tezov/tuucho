@@ -24,6 +24,8 @@ import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class NavigateToUrlUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -36,9 +38,10 @@ class NavigateToUrlUseCase(
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: ActionLockRepositoryProtocol,
-    private val hookBeforeNavigation: HookProtocol.BeforeNavigateToUrl?,
-    private val hookAfterNavigation: HookProtocol.AfterNavigateToUrl?,
-) : UseCaseProtocol.Sync<Input, Unit> {
+) : UseCaseProtocol.Sync<Input, Unit>, KoinComponent {
+
+    private val hookBeforeNavigation by lazy { getKoin().getOrNull<HookProtocol.BeforeNavigateToUrl>() }
+    private val hookAfterNavigation by lazy { getKoin().getOrNull<HookProtocol.AfterNavigateToUrl>() }
 
     data class Input(
         val url: String,

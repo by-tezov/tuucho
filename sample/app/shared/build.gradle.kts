@@ -31,6 +31,7 @@ buildkonfig {
 
         field("serverTimeoutMillis", FieldSpec.Type.LONG)
         field("serverVersion", FieldSpec.Type.STRING)
+        field("serverHealthEndpoint", FieldSpec.Type.STRING)
         field("serverResourceEndpoint", FieldSpec.Type.STRING)
         field("serverSendEndpoint", FieldSpec.Type.STRING)
     }

@@ -28,6 +28,7 @@ internal object ConfigModuleAndroid {
                 override val timeoutMillis = BuildKonfig.serverTimeoutMillis
                 override val version = BuildKonfig.serverVersion
                 override val baseUrl = BuildKonfig.serverBaseUrl
+                override val healthEndpoint = BuildKonfig.serverHealthEndpoint
                 override val resourceEndpoint = BuildKonfig.serverResourceEndpoint
                 override val sendEndpoint = BuildKonfig.serverSendEndpoint
             }

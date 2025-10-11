@@ -14,6 +14,7 @@ object NetworkRepositoryModule {
         factory<NetworkRepositoryModule.RequestInterceptor> {
             object : NetworkRepositoryModule.RequestInterceptor {
 
+                private val authRegex = Regex("^/auth(?:/.*)?$")
                 private val config = get<NetworkRepositoryModule.Config>()
                 private val useCaseExecutor = get<UseCaseExecutor>()
                 private val geyValueOrNullFromStore = get<GeyValueOrNullFromStoreUseCase>()
@@ -24,12 +25,13 @@ object NetworkRepositoryModule {
                         .removePrefix("/${config.version}/")
                         .let {
                             when  {
-                                it.startsWith(config.resourceEndpoint) -> it.removePrefix("${config.resourceEndpoint}/")
-                                it.startsWith(config.sendEndpoint) -> it.removePrefix("${config.sendEndpoint}/")
+                                it.startsWith(config.healthEndpoint) -> it.removePrefix(config.healthEndpoint)
+                                it.startsWith(config.resourceEndpoint) -> it.removePrefix(config.resourceEndpoint)
+                                it.startsWith(config.sendEndpoint) -> it.removePrefix(config.sendEndpoint)
                                 else -> it
                             }
                         }
-                    if (!route.startsWith("auth/")) return
+                    if (!route.matches(authRegex)) return
                     useCaseExecutor.invokeSuspend(
                         useCase = geyValueOrNullFromStore,
                         input = GeyValueOrNullFromStoreUseCase.Input(

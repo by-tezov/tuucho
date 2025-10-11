@@ -37,7 +37,7 @@ class RetrieveObjectRemoteSourceTest {
         val url = "http://server.com/api"
         val expected = buildJsonObject { put("result", "ok") }
 
-        everySuspend { materialNetworkSource.retrieve(url) } returns expected
+        everySuspend { materialNetworkSource.resource(url) } returns expected
 
         val result = sut.process(url)
 
@@ -45,7 +45,7 @@ class RetrieveObjectRemoteSourceTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineScopes.network
-            materialNetworkSource.retrieve(url)
+            materialNetworkSource.resource(url)
         }
     }
 }

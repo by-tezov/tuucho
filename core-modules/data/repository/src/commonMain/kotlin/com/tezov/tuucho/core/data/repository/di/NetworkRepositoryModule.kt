@@ -1,8 +1,10 @@
 package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheckSource
 import com.tezov.tuucho.core.data.repository.network.MaterialNetworkSource
 import com.tezov.tuucho.core.data.repository.network.NetworkHttpRequest
+import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
@@ -25,6 +27,7 @@ object NetworkRepositoryModule {
         val timeoutMillis: Long
         val version: String
         val baseUrl: String
+        val healthEndpoint: String
         val resourceEndpoint: String
         val sendEndpoint: String
     }
@@ -65,7 +68,7 @@ object NetworkRepositoryModule {
         factory<NetworkHttpRequest> {
             NetworkHttpRequest(
                 httpClient = get(),
-                config = get<Config>()
+                config = get()
             )
         }
 
@@ -73,6 +76,13 @@ object NetworkRepositoryModule {
             MaterialNetworkSource(
                 networkHttpRequest = get(),
                 jsonConverter = get()
+            )
+        }
+
+        factory<ServerHealthCheckProtocol> {
+            NetworkHealthCheckSource(
+                coroutineScopes = get(),
+                materialNetworkSource = get()
             )
         }
     }

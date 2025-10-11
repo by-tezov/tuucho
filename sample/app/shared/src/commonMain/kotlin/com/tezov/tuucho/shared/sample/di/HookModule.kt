@@ -17,11 +17,12 @@ object HookModule {
 
         factory<BeforeNavigateToUrlHook> {
             BeforeNavigateToUrlHook(
-//                coroutineScopes = get(),
+                coroutineScopes = get(),
                 useCaseExecutor = get(),
+                serverHealthCheck = get(),
                 refreshMaterialCache = get(),
                 geyValueOrNullFromStore = get(),
-//                navigateToUrl = get(),
+                navigateToUrl = get(),
             )
         } bind HookProtocol.BeforeNavigateToUrl::class
     }

@@ -20,6 +20,7 @@ import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionE
 import com.tezov.tuucho.core.domain.business.usecase.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import org.koin.dsl.module
@@ -78,9 +79,7 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                actionLockRepository = get(),
-                hookBeforeNavigation = getOrNull(),
-                hookAfterNavigation = getOrNull(),
+                actionLockRepository = get()
             )
         }
 
@@ -95,9 +94,7 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                actionLockRepository = get(),
-                hookBeforeNavigation = getOrNull(),
-                hookAfterNavigation = getOrNull(),
+                actionLockRepository = get()
             )
         }
 
@@ -153,6 +150,13 @@ internal object UseCaseModule {
             UpdateViewUseCase(
                 coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
+            )
+        }
+
+        factory<ServerHealthCheckUseCase> {
+            ServerHealthCheckUseCase(
+                coroutineScopes = get(),
+                serverHealthCheck = get(),
             )
         }
 

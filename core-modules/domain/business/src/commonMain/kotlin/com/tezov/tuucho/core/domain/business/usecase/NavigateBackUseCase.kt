@@ -14,6 +14,9 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isFalse
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import kotlin.getValue
 
 class NavigateBackUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -22,9 +25,10 @@ class NavigateBackUseCase(
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: ActionLockRepositoryProtocol,
-    private val hookBeforeNavigation: HookProtocol.BeforeNavigateBack?,
-    private val hookAfterNavigation: HookProtocol.AfterNavigateBack?,
-) : UseCaseProtocol.Sync<Unit, Unit> {
+) : UseCaseProtocol.Sync<Unit, Unit>, KoinComponent {
+
+    private val hookBeforeNavigation by lazy { getKoin().getOrNull<HookProtocol.BeforeNavigateBack>() }
+    private val hookAfterNavigation by lazy { getKoin().getOrNull<HookProtocol.AfterNavigateBack>() }
 
     override fun invoke(input: Unit) {
         coroutineScopes.navigation.async {

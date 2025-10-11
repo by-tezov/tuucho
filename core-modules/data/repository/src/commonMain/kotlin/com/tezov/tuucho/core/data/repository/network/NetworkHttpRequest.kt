@@ -15,6 +15,15 @@ class NetworkHttpRequest(
     private val config: NetworkRepositoryModule.Config,
 ) {
 
+    suspend fun getHealth(url: String): RemoteResponse {
+        val response = httpClient.get("${config.baseUrl}/${config.version}/${config.healthEndpoint}/$url")
+        return RemoteResponse(
+            url = response.request.url.toString(),
+            code = response.status.value,
+            json = response.bodyAsText()
+        )
+    }
+
     suspend fun getResource(url: String): RemoteResponse {
         val response = httpClient.get("${config.baseUrl}/${config.version}/${config.resourceEndpoint}/$url")
         return RemoteResponse(
