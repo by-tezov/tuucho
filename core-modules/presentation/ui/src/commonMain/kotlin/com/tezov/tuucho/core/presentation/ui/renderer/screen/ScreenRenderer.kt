@@ -20,7 +20,7 @@ class ScreenRenderer(
 
     private val viewFactories: List<AbstractViewFactory> by inject()
 
-    override suspend fun process(route: NavigationRoute, componentObject: JsonObject) = coroutineScopes.renderer.await {
+    override suspend fun process(route: NavigationRoute.Url, componentObject: JsonObject) = coroutineScopes.renderer.await {
         val type = componentObject.withScope(TypeSchema::Scope).self
         if (type != TypeSchema.Value.component) {
             throw UiException.Default("object is not a component $componentObject")

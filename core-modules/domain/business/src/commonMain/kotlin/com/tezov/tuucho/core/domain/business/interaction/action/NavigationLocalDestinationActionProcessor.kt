@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
-import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import kotlinx.serialization.json.JsonElement
 
 class NavigationLocalDestinationActionProcessor(
@@ -18,7 +18,7 @@ class NavigationLocalDestinationActionProcessor(
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ): Boolean {
@@ -26,7 +26,7 @@ class NavigationLocalDestinationActionProcessor(
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {

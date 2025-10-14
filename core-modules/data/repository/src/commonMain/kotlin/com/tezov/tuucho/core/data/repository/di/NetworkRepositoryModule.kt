@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.data.repository.network.MaterialNetworkSource
-import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheckSource
-import com.tezov.tuucho.core.data.repository.network.NetworkHttpRequest
+import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
+import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
+import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
@@ -65,24 +65,24 @@ object NetworkRepositoryModule {
             }
         }
 
-        factory<NetworkHttpRequest> {
-            NetworkHttpRequest(
+        factory<NetworkHttpRequestSource> {
+            NetworkHttpRequestSource(
                 httpClient = get(),
                 config = get()
             )
         }
 
-        single<MaterialNetworkSource> {
-            MaterialNetworkSource(
-                networkHttpRequest = get(),
+        single<NetworkJsonObject> {
+            NetworkJsonObject(
+                networkHttpRequestSource = get(),
                 jsonConverter = get()
             )
         }
 
         factory<ServerHealthCheckProtocol> {
-            NetworkHealthCheckSource(
+            NetworkHealthCheck(
                 coroutineScopes = get(),
-                networkHttpRequest = get(),
+                networkHttpRequestSource = get(),
                 jsonConverter = get()
             )
         }

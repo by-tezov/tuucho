@@ -13,12 +13,11 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSettin
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
-import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.rememberAnimationProgress
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
@@ -49,6 +48,13 @@ class TuuchoEngine(
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
     private val navigateToUrl: NavigateToUrlUseCase,
 ) : TuuchoEngineProtocol {
+
+    companion object {
+        @Composable
+        fun rememberTuuchoEngine(): TuuchoEngineProtocol = currentKoinScope().let { scope ->
+            remember(scope) { scope.get(TuuchoEngineProtocol::class, null) }
+        }
+    }
 
     private data class Group(
         val screens: List<ScreenProtocol>,
@@ -218,7 +224,8 @@ class TuuchoEngine(
         }
 }
 
-@Composable
-fun rememberTuuchoEngine(): TuuchoEngineProtocol = currentKoinScope().let { scope ->
-    remember(scope) { scope.get(TuuchoEngineProtocol::class, null) }
-}
+
+
+
+
+

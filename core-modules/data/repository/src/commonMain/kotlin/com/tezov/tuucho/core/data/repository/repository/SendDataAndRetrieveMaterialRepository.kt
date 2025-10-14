@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.repository
 
-import com.tezov.tuucho.core.data.repository.source.SendDataAndRetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 

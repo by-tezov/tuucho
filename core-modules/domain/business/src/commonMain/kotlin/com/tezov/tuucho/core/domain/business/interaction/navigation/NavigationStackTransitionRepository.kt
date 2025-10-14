@@ -8,8 +8,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSettin
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition
-import com.tezov.tuucho.core.domain.business.usecase.NavigationStackTransitionHelperFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.sync.Mutex
@@ -32,7 +32,7 @@ class NavigationStackTransitionRepository(
     override val events get() = _events.createCollector
 
     private data class Item(
-        val route: NavigationRoute,
+        val route: NavigationRoute.Url,
         val extraObject: JsonObject?,
         val transitionObject: JsonObject?,
     )
@@ -85,7 +85,7 @@ class NavigationStackTransitionRepository(
         ?.isBackgroundSolid ?: true
 
     override suspend fun forward(
-        routes: List<NavigationRoute>,
+        routes: List<NavigationRoute.Url>,
         navigationExtraObject: JsonObject?,
         navigationTransitionObject: JsonObject?,
     ) {
@@ -114,7 +114,7 @@ class NavigationStackTransitionRepository(
         }
     }
 
-    override suspend fun backward(routes: List<NavigationRoute>) {
+    override suspend fun backward(routes: List<NavigationRoute.Url>) {
         emit(StackTransition.Event.PrepareTransition)
         coroutineScopes.navigation.await {
             val listenerDeferred = listenEndOfTransition(routes)

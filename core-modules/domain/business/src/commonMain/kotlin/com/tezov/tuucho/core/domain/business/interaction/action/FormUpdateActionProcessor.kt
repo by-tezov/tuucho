@@ -6,12 +6,12 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
-import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
@@ -26,7 +26,7 @@ class FormUpdateActionProcessor(
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ): Boolean {
@@ -34,7 +34,7 @@ class FormUpdateActionProcessor(
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {
@@ -45,7 +45,7 @@ class FormUpdateActionProcessor(
     }
 
     private suspend fun updateErrorState(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         jsonElement: JsonElement?,
     ) {
         jsonElement?.jsonArray?.forEach { param ->

@@ -5,5 +5,5 @@ import kotlinx.serialization.json.JsonObject
 
 interface ScreenRendererProtocol {
 
-    suspend fun process(route: NavigationRoute, componentObject: JsonObject): ScreenProtocol
+    suspend fun process(route: NavigationRoute.Url, componentObject: JsonObject): ScreenProtocol
 }

@@ -7,9 +7,9 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
-import com.tezov.tuucho.core.domain.business.usecase.RemoveKeyValueFromStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
@@ -25,7 +25,7 @@ class StoreActionProcessor(
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ): Boolean {
@@ -33,7 +33,7 @@ class StoreActionProcessor(
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {

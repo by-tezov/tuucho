@@ -1,15 +1,12 @@
 ## In progress
 
-- on network error hook -> cf credential not valid, need to redirect
-
-- why remember need to be duplicated on Barrel while interface and class not
-
 - do the rectifier actions + resolve
 - do rectifier on response form received
+- 
 - state initial value parser rectifier not done
+- 
 - add API validator
-
--update doc and close the release
+- update doc and close the release
 
 - still need to fix mock server
 - Need a way to let core barrel on dev without fail because test lib are not here.

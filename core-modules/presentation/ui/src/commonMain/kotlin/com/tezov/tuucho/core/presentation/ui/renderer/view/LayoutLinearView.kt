@@ -37,7 +37,7 @@ class LayoutLinearViewFactory : AbstractViewFactory() {
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         componentObject: JsonObject,
     ) =
         LayoutLinearView(
@@ -48,7 +48,7 @@ class LayoutLinearViewFactory : AbstractViewFactory() {
 }
 
 class LayoutLinearView(
-    private val route: NavigationRoute,
+    private val route: NavigationRoute.Url,
     componentObject: JsonObject,
     private val viewFactories: List<AbstractViewFactory>,
 ) : AbstractView(componentObject) {
