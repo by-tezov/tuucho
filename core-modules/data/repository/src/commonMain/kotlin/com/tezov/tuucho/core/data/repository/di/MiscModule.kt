@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.data.repository.source._system.LifetimeResolver
+import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver
 import org.koin.dsl.module
 
 internal object MiscModule {

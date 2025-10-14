@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.interaction.lock.ActionLockIdGenerator
-import com.tezov.tuucho.core.domain.business.interaction.lock.ActionLockRepository
-import com.tezov.tuucho.core.domain.business.protocol.repository.ActionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.interaction.lock.InterractionLockRepository
+import com.tezov.tuucho.core.domain.business.protocol.repository.InterractionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import com.tezov.tuucho.core.domain.tool.json.InstantSerializer
 import kotlinx.serialization.json.Json
@@ -29,8 +29,8 @@ internal object MiscModule {
             ExpirationDateTimeRectifier()
         }
 
-        single<ActionLockRepositoryProtocol> {
-            ActionLockRepository(
+        single<InterractionLockRepositoryProtocol> {
+            InterractionLockRepository(
                 idGenerator = ActionLockIdGenerator()
             )
         }

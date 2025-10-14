@@ -22,14 +22,14 @@ kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
 kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.1.0"
-ktor = "3.3.0"
+ktor = "3.3.1"
 koin = "4.1.1"
 kotlin-datetime = "0.7.1"
-okio = "3.16.0"
+okio = "3.16.1"
 
 #lib - android
 compose-activity = "1.11.0"
-datastore-preferences = "1.1.1"
+datastore-preferences = "1.1.7"
 
 #test
 jacoco = "0.8.13"

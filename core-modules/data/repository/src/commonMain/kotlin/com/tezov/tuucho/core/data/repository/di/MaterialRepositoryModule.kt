@@ -4,12 +4,12 @@ import com.tezov.tuucho.core.data.repository.repository.RefreshMaterialCacheRepo
 import com.tezov.tuucho.core.data.repository.repository.RetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.repository.SendDataAndRetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.repository.ShadowerMaterialRepository
-import com.tezov.tuucho.core.data.repository.source.MaterialCacheLocalSource
-import com.tezov.tuucho.core.data.repository.source.MaterialRemoteSource
-import com.tezov.tuucho.core.data.repository.source.RetrieveObjectRemoteSource
-import com.tezov.tuucho.core.data.repository.source.SendDataAndRetrieveMaterialRemoteSource
-import com.tezov.tuucho.core.data.repository.source.shadower.ContextualShadowerMaterialSource
-import com.tezov.tuucho.core.data.repository.source.shadower.ShadowerMaterialSourceProtocol
+import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.shadower.ContextualShadowerMaterialSource
+import com.tezov.tuucho.core.data.repository.repository.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -81,7 +81,7 @@ internal object MaterialRepositoryModule {
         factory<MaterialRemoteSource> {
             MaterialRemoteSource(
                 coroutineScopes = get(),
-                materialNetworkSource = get(),
+                networkJsonObject = get(),
                 materialRectifier = get()
             )
         }
@@ -89,14 +89,14 @@ internal object MaterialRepositoryModule {
         factory<RetrieveObjectRemoteSource> {
             RetrieveObjectRemoteSource(
                 coroutineScopes = get(),
-                materialNetworkSource = get()
+                networkJsonObject = get()
             )
         }
 
         factory<SendDataAndRetrieveMaterialRemoteSource> {
             SendDataAndRetrieveMaterialRemoteSource(
                 coroutineScopes = get(),
-                materialNetworkSource = get(),
+                networkJsonObject = get(),
                 materialRectifier = get()
             )
         }

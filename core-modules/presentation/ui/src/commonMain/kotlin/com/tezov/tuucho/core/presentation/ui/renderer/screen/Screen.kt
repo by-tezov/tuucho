@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol a
 
 class Screen(
     override val view: ViewProtocol,
-    override val route: NavigationRoute,
+    override val route: NavigationRoute.Url,
 ) : ScreenProtocol {
 
     @Composable

@@ -15,13 +15,13 @@ interface ActionProcessorProtocol {
     val priority: Int
 
     fun accept(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ): Boolean
 
     suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     )

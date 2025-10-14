@@ -1,7 +1,8 @@
 package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.mock.mockCoroutineScope
-import com.tezov.tuucho.core.data.repository.network.MaterialNetworkSource
+import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
+import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRemoteSource
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
@@ -18,17 +19,17 @@ import kotlin.test.assertEquals
 class RetrieveObjectRemoteSourceTest {
 
     private lateinit var coroutineScopes: CoroutineScopesProtocol
-    private lateinit var materialNetworkSource: MaterialNetworkSource
+    private lateinit var networkJsonObject: NetworkJsonObject
     private lateinit var sut: RetrieveObjectRemoteSource
 
     @BeforeTest
     fun setup() {
         coroutineScopes = mockCoroutineScope()
-        materialNetworkSource = mock()
+        networkJsonObject = mock()
 
         sut = RetrieveObjectRemoteSource(
             coroutineScopes = coroutineScopes,
-            materialNetworkSource = materialNetworkSource
+            networkJsonObject = networkJsonObject
         )
     }
 
@@ -37,7 +38,7 @@ class RetrieveObjectRemoteSourceTest {
         val url = "http://server.com/api"
         val expected = buildJsonObject { put("result", "ok") }
 
-        everySuspend { materialNetworkSource.resource(url) } returns expected
+        everySuspend { networkJsonObject.resource(url) } returns expected
 
         val result = sut.process(url)
 
@@ -45,7 +46,7 @@ class RetrieveObjectRemoteSourceTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineScopes.network
-            materialNetworkSource.resource(url)
+            networkJsonObject.resource(url)
         }
     }
 }

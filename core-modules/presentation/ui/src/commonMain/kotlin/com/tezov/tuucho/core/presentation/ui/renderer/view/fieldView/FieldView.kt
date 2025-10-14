@@ -23,8 +23,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.F
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldFormViewProtocol
-import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.renderer.view.AbstractView
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
@@ -41,7 +41,7 @@ class FieldViewFactory(
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         componentObject: JsonObject,
     ) = FieldView(
         componentObject = componentObject,

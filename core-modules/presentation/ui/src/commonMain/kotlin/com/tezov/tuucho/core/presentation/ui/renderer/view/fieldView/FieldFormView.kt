@@ -6,8 +6,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.F
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldFormViewProtocol
-import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject

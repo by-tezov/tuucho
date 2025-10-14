@@ -1,27 +1,29 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
-import com.tezov.tuucho.core.domain.business.usecase.FormValidatorFactoryUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetLanguageUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetScreensFromRoutesUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GetValueOrNullFromStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.GeyValueFromStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.HasKeyInStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NavigateBackUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NavigateToUrlUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NavigationDefinitionSelectorMatcherFactoryUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NavigationStackTransitionHelperFactoryUseCase
-import com.tezov.tuucho.core.domain.business.usecase.NotifyNavigationTransitionCompletedUseCase
-import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RegisterToScreenTransitionEventUseCase
-import com.tezov.tuucho.core.domain.business.usecase.RemoveKeyValueFromStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.SaveKeyValueToStoreUseCase
-import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
-import com.tezov.tuucho.core.domain.business.usecase.ServerHealthCheckUseCase
-import com.tezov.tuucho.core.domain.business.usecase.UpdateViewUseCase
+import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetLanguageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.HasKeyInStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 internal object UseCaseModule {
@@ -34,6 +36,67 @@ internal object UseCaseModule {
             )
         }
 
+        withNetworkModule()
+        withoutNetworkModule()
+    }
+
+    private fun Module.withNetworkModule() {
+        factory<NavigateBackUseCase> {
+            NavigateBackUseCase(
+                coroutineScopes = get(),
+                navigationStackRouteRepository = get(),
+                navigationStackScreenRepository = get(),
+                navigationStackTransitionRepository = get(),
+                shadowerMaterialRepository = get(),
+                actionLockRepository = get(),
+                navigationMiddlewares = getAll()
+            )
+        }
+
+        factory<NavigateToUrlUseCase> {
+            NavigateToUrlUseCase(
+                coroutineScopes = get(),
+                useCaseExecutor = get(),
+                retrieveMaterialRepository = get(),
+                navigationRouteIdGenerator = get(Name.ID_GENERATOR),
+                navigationOptionSelectorFactory = get(),
+                navigationStackRouteRepository = get(),
+                navigationStackScreenRepository = get(),
+                navigationStackTransitionRepository = get(),
+                shadowerMaterialRepository = get(),
+                actionLockRepository = get(),
+                navigationMiddlewares = getAll()
+            )
+        }
+
+        factory<ProcessActionUseCase> {
+            ProcessActionUseCase(
+                coroutineScopes = get(),
+                actionProcessors = getAll<ActionProcessorProtocol>()
+            )
+        }
+
+        factory<RefreshMaterialCacheUseCase> {
+            RefreshMaterialCacheUseCase(
+                refreshMaterialCacheRepository = get()
+            )
+        }
+
+        factory<ServerHealthCheckUseCase> {
+            ServerHealthCheckUseCase(
+                coroutineScopes = get(),
+                serverHealthCheck = get(),
+            )
+        }
+
+        factory<SendDataUseCase> {
+            SendDataUseCase(
+                sendDataAndRetrieveMaterialRepository = get()
+            )
+        }
+    }
+
+    private fun Module.withoutNetworkModule() {
         factory<FormValidatorFactoryUseCase> { FormValidatorFactoryUseCase() }
 
         factory<GetLanguageUseCase> { GetLanguageUseCase() }
@@ -50,8 +113,8 @@ internal object UseCaseModule {
             )
         }
 
-        factory<GeyValueFromStoreUseCase> {
-            GeyValueFromStoreUseCase(
+        factory<GetValueFromStoreUseCase> {
+            GetValueFromStoreUseCase(
                 coroutineScopes = get(),
                 keyValueRepository = get()
             )
@@ -71,32 +134,6 @@ internal object UseCaseModule {
             )
         }
 
-        factory<NavigateBackUseCase> {
-            NavigateBackUseCase(
-                coroutineScopes = get(),
-                navigationStackRouteRepository = get(),
-                navigationStackScreenRepository = get(),
-                navigationStackTransitionRepository = get(),
-                shadowerMaterialRepository = get(),
-                actionLockRepository = get()
-            )
-        }
-
-        factory<NavigateToUrlUseCase> {
-            NavigateToUrlUseCase(
-                coroutineScopes = get(),
-                useCaseExecutor = get(),
-                retrieveMaterialRepository = get(),
-                navigationRouteIdGenerator = get(Name.ID_GENERATOR),
-                navigationOptionSelectorFactory = get(),
-                navigationStackRouteRepository = get(),
-                navigationStackScreenRepository = get(),
-                navigationStackTransitionRepository = get(),
-                shadowerMaterialRepository = get(),
-                actionLockRepository = get()
-            )
-        }
-
         factory<NavigationDefinitionSelectorMatcherFactoryUseCase> {
             NavigationDefinitionSelectorMatcherFactoryUseCase()
         }
@@ -108,19 +145,6 @@ internal object UseCaseModule {
         factory<NotifyNavigationTransitionCompletedUseCase> {
             NotifyNavigationTransitionCompletedUseCase(
                 navigationAnimatorStackRepository = get()
-            )
-        }
-
-        factory<ProcessActionUseCase> {
-            ProcessActionUseCase(
-                coroutineScopes = get(),
-                actionProcessors = get(ActionProcessorModule.Name.PROCESSORS)
-            )
-        }
-
-        factory<RefreshMaterialCacheUseCase> {
-            RefreshMaterialCacheUseCase(
-                refreshMaterialCacheRepository = get()
             )
         }
 
@@ -151,21 +175,8 @@ internal object UseCaseModule {
                 navigationScreenStackRepository = get(),
             )
         }
-
-        factory<ServerHealthCheckUseCase> {
-            ServerHealthCheckUseCase(
-                coroutineScopes = get(),
-                serverHealthCheck = get(),
-            )
-        }
-
-        factory<SendDataUseCase> {
-            SendDataUseCase(
-                sendDataAndRetrieveMaterialRepository = get()
-            )
-        }
-
     }
+
 }
 
 

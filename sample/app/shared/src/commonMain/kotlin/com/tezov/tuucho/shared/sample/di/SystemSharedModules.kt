@@ -9,7 +9,7 @@ object SystemSharedModules {
     fun invoke(): List<ModuleDeclaration> =
         listOf(
             NetworkRepositoryModule.invoke(),
-            HookModule.invoke()
+            MiddlewareModule.invoke()
         ) + platformInvoke()
 
 }

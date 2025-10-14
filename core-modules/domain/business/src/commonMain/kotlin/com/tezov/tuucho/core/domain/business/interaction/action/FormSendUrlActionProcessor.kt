@@ -5,15 +5,15 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionFormSchema
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
-import com.tezov.tuucho.core.domain.business.usecase.GetScreenOrNullUseCase
-import com.tezov.tuucho.core.domain.business.usecase.ProcessActionUseCase
-import com.tezov.tuucho.core.domain.business.usecase.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonArray
@@ -37,7 +37,7 @@ class FormSendUrlActionProcessor(
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ): Boolean {
@@ -45,7 +45,7 @@ class FormSendUrlActionProcessor(
     }
 
     override suspend fun process(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     ) {
@@ -71,7 +71,7 @@ class FormSendUrlActionProcessor(
         }
     }
 
-    private suspend fun NavigationRoute.getAllFormView() =
+    private suspend fun NavigationRoute.Url.getAllFormView() =
         useCaseExecutor.invokeSuspend(
             useCase = getOrNullScreen,
             input = GetScreenOrNullUseCase.Input(
@@ -91,7 +91,7 @@ class FormSendUrlActionProcessor(
     }.let(::JsonObject)
 
     private suspend fun List<FormViewProtocol>.processInvalidLocalForm(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
     ) {
         val results = filter { it.isValid() == false }
             .map {
@@ -105,7 +105,7 @@ class FormSendUrlActionProcessor(
     }
 
     private suspend fun FormSendResponseSchema.Scope.processInvalidRemoteForm(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
@@ -124,7 +124,7 @@ class FormSendUrlActionProcessor(
     }
 
     private suspend fun FormSendResponseSchema.Scope.processValidRemoteForm(
-        route: NavigationRoute,
+        route: NavigationRoute.Url,
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
@@ -159,7 +159,7 @@ class FormSendUrlActionProcessor(
             }.collect()
         }?.let(::JsonArray)
 
-    private suspend fun dispatchActionCommandError(route: NavigationRoute, results: JsonElement?) {
+    private suspend fun dispatchActionCommandError(route: NavigationRoute.Url, results: JsonElement?) {
         useCaseExecutor.invokeSuspend(
             useCase = actionHandler,
             input = ProcessActionUseCase.Input(
@@ -174,7 +174,7 @@ class FormSendUrlActionProcessor(
         )
     }
 
-    private suspend fun String.dispatchAction(route: NavigationRoute, jsonElement: JsonElement?) {
+    private suspend fun String.dispatchAction(route: NavigationRoute.Url, jsonElement: JsonElement?) {
         useCaseExecutor.invokeSuspend(
             useCase = actionHandler,
             input = ProcessActionUseCase.Input(

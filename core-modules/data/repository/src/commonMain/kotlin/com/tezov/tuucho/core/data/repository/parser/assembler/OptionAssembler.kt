@@ -47,7 +47,8 @@ class OptionAssembler : AbstractAssembler() {
     ): JsonObject? {
         withScope(SubsetSchema::Scope).self ?: return null
         val parentSubset = element.find(path.parent())
-            .withScope(SubsetSchema::Scope).self!!
+            .withScope(SubsetSchema::Scope).self
+        require(parentSubset != null) { "parentSubset is null" }
         return rectify(parentSubset)
     }
 
@@ -56,7 +57,9 @@ class OptionAssembler : AbstractAssembler() {
         element: JsonElement
     ): List<JsonObject>? {
         if (!any { it.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
-        val parentSubset = element.find(path.parent()).withScope(SubsetSchema::Scope).self!!
+        val parentSubset = element.find(path.parent())
+            .withScope(SubsetSchema::Scope).self
+        require(parentSubset != null) { "parentSubset is null" }
         return map { current ->
             if (current.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown) {
                 current.rectify(parentSubset)
