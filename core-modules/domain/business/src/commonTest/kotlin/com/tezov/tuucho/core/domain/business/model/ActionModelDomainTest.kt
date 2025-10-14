@@ -27,9 +27,6 @@ class ActionModelDomainTest {
     @Test
     fun `from parses string with command only`() {
         val action = ActionModelDomain.Companion.from("open://")
-
-        println(action)
-
         assertEquals("open", action.command)
         assertNull(action.authority)
         assertNull(action.target)

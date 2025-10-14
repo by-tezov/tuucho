@@ -96,8 +96,7 @@ internal object MaterialRepositoryModule {
         factory<SendDataAndRetrieveMaterialRemoteSource> {
             SendDataAndRetrieveMaterialRemoteSource(
                 coroutineScopes = get(),
-                networkJsonObject = get(),
-                materialRectifier = get()
+                networkJsonObject = get()
             )
         }
     }

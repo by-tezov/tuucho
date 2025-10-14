@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.parser.shadower.AbstractShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.ComponentShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.ContentShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.MaterialShadower
+import com.tezov.tuucho.core.data.repository.parser.shadower.StateShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.TextShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
@@ -17,12 +18,14 @@ internal object MaterialShadowerModule {
         object Processor {
             val COMPONENT = named("MaterialShadowerModule.Name.Processor.COMPONENT")
             val CONTENT = named("MaterialShadowerModule.Name.Processor.CONTENT")
+            val STATE = named("MaterialShadowerModule.Name.Processor.STATE")
             val TEXT = named("MaterialShadowerModule.Name.Processor.TEXT")
         }
 
         object Matcher {
             val COMPONENT = named("MaterialShadowerModule.Name.Matcher.COMPONENT")
             val CONTENT = named("MaterialShadowerModule.Name.Matcher.CONTENT")
+            val STATE = named("MaterialShadowerModule.Name.Matcher.STATE")
             val TEXT = named("MaterialShadowerModule.Name.Matcher.TEXT")
         }
     }
@@ -32,6 +35,7 @@ internal object MaterialShadowerModule {
 
         componentModule()
         contentModule()
+        stateModule()
         textModule()
     }
 
@@ -63,6 +67,18 @@ internal object MaterialShadowerModule {
                 get<ComponentShadower>(),
                 get<TextShadower>()
             )
+        }
+    }
+
+    private fun Module.stateModule() {
+        single<StateShadower> { StateShadower() }
+
+        single<List<MatcherShadowerProtocol>>(Name.Matcher.STATE) {
+            emptyList()
+        }
+
+        single<List<AbstractShadower>>(Name.Processor.STATE) {
+            emptyList()
         }
     }
 

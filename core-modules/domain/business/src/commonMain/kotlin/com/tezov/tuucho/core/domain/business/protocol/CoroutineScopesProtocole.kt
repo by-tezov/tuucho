@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
 
 interface CoroutineScopesProtocol {
     val database: CoroutineContextProtocol
+    val datastore: CoroutineContextProtocol
     val network: CoroutineContextProtocol
     val parser: CoroutineContextProtocol
     val renderer: CoroutineContextProtocol

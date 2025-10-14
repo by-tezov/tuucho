@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.TypeResponseSchema
 import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
@@ -59,13 +60,15 @@ class FormSendUrlActionProcessor(
                     jsonObject = formView.data()
                 )
             ).jsonObject
-            response?.withScope(FormSendResponseSchema::Scope)?.let { responseScope ->
-                if (responseScope.allSucceed.isTrue) {
-                    responseScope.processValidRemoteForm(route, jsonElement)
-                } else {
-                    responseScope.processInvalidRemoteForm(route, jsonElement)
+            response?.withScope(FormSendResponseSchema::Scope)
+                ?.takeIf { it.type == TypeResponseSchema.Value.form }
+                ?.run {
+                    if (allSucceed.isTrue) {
+                        processValidRemoteForm(route, jsonElement)
+                    } else {
+                        processInvalidRemoteForm(route, jsonElement)
+                    }
                 }
-            }
         } else {
             formView.processInvalidLocalForm(route)
         }
@@ -111,16 +114,16 @@ class FormSendUrlActionProcessor(
         val responseCollect = collect()
         val responseActionScope = action?.withScope(ActionFormSchema.Send::Scope)
         responseActionScope?.before?.forEach {
-                it.string.dispatchAction(route, responseCollect)
-            }
+            it.string.dispatchAction(route, responseCollect)
+        }
         dispatchActionCommandError(route, toFailureResult())
         jsonElement?.withScope(ActionFormSchema.Send::Scope)
             ?.denied?.forEach {
                 it.string.dispatchAction(route, responseCollect)
             }
         responseActionScope?.after?.forEach {
-                it.string.dispatchAction(route, responseCollect)
-            }
+            it.string.dispatchAction(route, responseCollect)
+        }
     }
 
     private suspend fun FormSendResponseSchema.Scope.processValidRemoteForm(
@@ -130,15 +133,15 @@ class FormSendUrlActionProcessor(
         val responseCollect = collect()
         val responseActionScope = action?.withScope(ActionFormSchema.Send::Scope)
         responseActionScope?.before?.forEach {
-                it.string.dispatchAction(route, responseCollect)
-            }
+            it.string.dispatchAction(route, responseCollect)
+        }
         jsonElement?.withScope(ActionFormSchema.Send::Scope)
             ?.validated?.forEach {
                 it.string.dispatchAction(route, responseCollect)
             }
         responseActionScope?.after?.forEach {
-                it.string.dispatchAction(route, responseCollect)
-            }
+            it.string.dispatchAction(route, responseCollect)
+        }
     }
 
     private fun FormSendResponseSchema.Scope.toFailureResult() = failureResult
@@ -159,7 +162,10 @@ class FormSendUrlActionProcessor(
             }.collect()
         }?.let(::JsonArray)
 
-    private suspend fun dispatchActionCommandError(route: NavigationRoute.Url, results: JsonElement?) {
+    private suspend fun dispatchActionCommandError(
+        route: NavigationRoute.Url,
+        results: JsonElement?
+    ) {
         useCaseExecutor.invokeSuspend(
             useCase = actionHandler,
             input = ProcessActionUseCase.Input(
@@ -174,7 +180,10 @@ class FormSendUrlActionProcessor(
         )
     }
 
-    private suspend fun String.dispatchAction(route: NavigationRoute.Url, jsonElement: JsonElement?) {
+    private suspend fun String.dispatchAction(
+        route: NavigationRoute.Url,
+        jsonElement: JsonElement?
+    ) {
         useCaseExecutor.invokeSuspend(
             useCase = actionHandler,
             input = ProcessActionUseCase.Input(

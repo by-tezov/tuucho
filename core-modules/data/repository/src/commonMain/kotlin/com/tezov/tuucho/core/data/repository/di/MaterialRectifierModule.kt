@@ -1,42 +1,46 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.data.repository.parser.rectifier.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.ComponentRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.MaterialRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.OptionRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.StateRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.StyleRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action.ActionButtonMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.FormValidatorRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.StateFormTextMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content.ContentFormFieldTextMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.option.OptionFormFieldValidatorMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.state.StateFormFieldTextMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.content.ContentLabelTextMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.style.StyleLabelColorMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.style.StyleLabelDimensionMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear.ContentLayoutLinearItemsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear.StyleLayoutLinearColorMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.spacer.StyleSpacerDimensionMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.RectifierIdGenerator
-import com.tezov.tuucho.core.data.repository.parser.rectifier.colors.ColorRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.colors.ColorsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.actions.ActionRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.actions.ActionsRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.action.ActionRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.action.ActionsRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.color.ColorRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.color.ColorsRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.component.ComponentRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.component.ComponentsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.content.ContentRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.dimensions.DimensionRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.dimensions.DimensionsRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.content.ContentsRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.dimension.DimensionRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.dimension.DimensionsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.id.IdMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.id.IdRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.option.OptionRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.option.OptionsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component.SettingComponentNavigationRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component.SettingComponentRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.texts.TextRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.texts.TextsRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.state.StateRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.state.StatesRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StyleRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StylesRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextsRectifier
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -52,13 +56,9 @@ internal object MaterialRectifierModule {
             val STYLE = named("MaterialRectifierModule.Name.Processor.STYLE")
             val OPTION = named("MaterialRectifierModule.Name.Processor.OPTION")
             val STATE = named("MaterialRectifierModule.Name.Processor.STATE")
-            val TEXTS = named("MaterialRectifierModule.Name.Processor.TEXTS")
             val TEXT = named("MaterialRectifierModule.Name.Processor.TEXT")
-            val COLORS = named("MaterialRectifierModule.Name.Processor.COLORS")
             val COLOR = named("MaterialRectifierModule.Name.Processor.COLOR")
-            val DIMENSIONS = named("MaterialRectifierModule.Name.Processor.DIMENSIONS")
             val DIMENSION = named("MaterialRectifierModule.Name.Processor.DIMENSION")
-            val ACTIONS = named("MaterialRectifierModule.Name.Processor.ACTIONS")
             val ACTION = named("MaterialRectifierModule.Name.Processor.ACTION")
             val FIELD_VALIDATOR = named("MaterialRectifierModule.Name.Processor.FIELD_VALIDATOR")
         }
@@ -109,11 +109,12 @@ internal object MaterialRectifierModule {
     }
 
     private fun Module.componentModule() {
+        single<ComponentsRectifier> { ComponentsRectifier() }
+
         single<ComponentRectifier> { ComponentRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.COMPONENT) {
             listOf(
-                ContentLayoutLinearItemsMatcher(),
                 ContentButtonLabelMatcher(),
             )
         }
@@ -145,6 +146,8 @@ internal object MaterialRectifierModule {
     }
 
     private fun Module.contentModule() {
+        single<ContentsRectifier> { ContentsRectifier() }
+
         single<ContentRectifier> { ContentRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.CONTENT) {
@@ -165,6 +168,8 @@ internal object MaterialRectifierModule {
     }
 
     private fun Module.styleModule() {
+        single<StylesRectifier> { StylesRectifier() }
+
         single<StyleRectifier> { StyleRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.STYLE) {
@@ -181,6 +186,8 @@ internal object MaterialRectifierModule {
     }
 
     private fun Module.optionModule() {
+        single<OptionsRectifier> { OptionsRectifier() }
+
         single<OptionRectifier> { OptionRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.OPTION) {
@@ -196,6 +203,8 @@ internal object MaterialRectifierModule {
     }
 
     private fun Module.stateModule() {
+        single<StatesRectifier> { StatesRectifier() }
+
         single<StateRectifier> { StateRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.STATE) {
@@ -212,10 +221,6 @@ internal object MaterialRectifierModule {
     private fun Module.textModule() {
         single<TextsRectifier> { TextsRectifier() }
 
-        single<List<AbstractRectifier>>(Name.Processor.TEXTS) {
-            listOf(get<TextRectifier>())
-        }
-
         single<TextRectifier> { TextRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.TEXT) {
@@ -223,7 +228,7 @@ internal object MaterialRectifierModule {
                 ContentLabelTextMatcher(),
                 ContentFormFieldTextMatcher(),
                 ContentFormFieldTextErrorMatcher(),
-                StateFormTextMatcher(),
+                StateFormFieldTextMatcher(),
             )
         }
 
@@ -234,10 +239,6 @@ internal object MaterialRectifierModule {
 
     private fun Module.colorModule() {
         single<ColorsRectifier> { ColorsRectifier() }
-
-        single<List<AbstractRectifier>>(Name.Processor.COLORS) {
-            listOf(get<ColorRectifier>())
-        }
 
         single<ColorRectifier> { ColorRectifier() }
 
@@ -256,10 +257,6 @@ internal object MaterialRectifierModule {
     private fun Module.dimensionModule() {
         single<DimensionsRectifier> { DimensionsRectifier() }
 
-        single<List<AbstractRectifier>>(Name.Processor.DIMENSIONS) {
-            listOf(get<DimensionRectifier>())
-        }
-
         single<DimensionRectifier> { DimensionRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.DIMENSION) {
@@ -277,10 +274,6 @@ internal object MaterialRectifierModule {
     private fun Module.actionModule() {
         single<ActionsRectifier> { ActionsRectifier() }
 
-        single<List<AbstractRectifier>>(Name.Processor.ACTIONS) {
-            listOf(get<ActionRectifier>())
-        }
-
         single<ActionRectifier> { ActionRectifier() }
 
         single<List<MatcherRectifierProtocol>>(Name.Matcher.ACTION) {
@@ -290,7 +283,7 @@ internal object MaterialRectifierModule {
         }
 
         single<List<AbstractRectifier>>(Name.Processor.ACTION) {
-            emptyList()
+            listOf(get<IdRectifier>())
         }
     }
 

@@ -10,12 +10,14 @@ import kotlinx.serialization.json.JsonObject
 object FormSendResponseSchema {
 
     object Key {
+        const val type = TypeResponseSchema.root
         const val allSucceed = "all-succeed"
         const val failureResult = FailureResult.root
         const val action = ActionSchema.root
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        var type by delegate<String?>(Key.type)
         var allSucceed by delegate<Boolean?>(Key.allSucceed)
         var failureResult by delegate<JsonArray?>(Key.failureResult)
         var action by delegate<JsonObject?>(Key.action)

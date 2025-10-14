@@ -1,8 +1,7 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier.texts
+package com.tezov.tuucho.core.data.repository.parser.rectifier.text
 
 import com.tezov.tuucho.core.data.repository.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
-import com.tezov.tuucho.core.data.repository.parser.rectifier.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -14,12 +13,9 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
-import com.tezov.tuucho.core.domain.tool.json.toPath
-import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
 class TextRectifier : AbstractRectifier() {
@@ -32,25 +28,19 @@ class TextRectifier : AbstractRectifier() {
         Name.Processor.TEXT
     )
 
-    override fun accept(
-        path: JsonElementPath, element: JsonElement,
-    ) = (path.lastSegment() == null &&
-            element is JsonArray &&
-            element.all { it.isTypeOf(TypeSchema.Value.text) }) || super.accept(path, element)
-
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
     ) = element.find(path).withScope(TextSchema::Scope).apply {
         type = TypeSchema.Value.text
-        val value = this.element.string
         //TODO add escaper on "ID_REF_INDICATOR" to allow string user content to start with it
-        if(value.startsWith(SymbolData.ID_REF_INDICATOR)) {
-            id = JsonPrimitive(value)
+        val stringValue = this.element.string
+        if(stringValue.startsWith(SymbolData.ID_REF_INDICATOR)) {
+            id = JsonPrimitive(stringValue)
         }
         else {
             id = JsonNull
-            default = value
+            default = stringValue
         }
     }.collect()
 
@@ -61,13 +51,6 @@ class TextRectifier : AbstractRectifier() {
         type = TypeSchema.Value.text
         id ?: run { id = JsonNull }
     }.collect()
-
-    override fun beforeAlterArray(
-        path: JsonElementPath,
-        element: JsonElement,
-    ) = with(element.find(path).jsonArray) {
-        JsonArray(this.map { process("".toPath(), it) })
-    }
 
     override fun afterAlterObject(
         path: JsonElementPath,

@@ -14,6 +14,12 @@ object OptionSchema {
         const val subset = SubsetSchema.root
     }
 
+    object Value {
+        object Group {
+            const val common = "common"
+        }
+    }
+
     class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
 
     open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :

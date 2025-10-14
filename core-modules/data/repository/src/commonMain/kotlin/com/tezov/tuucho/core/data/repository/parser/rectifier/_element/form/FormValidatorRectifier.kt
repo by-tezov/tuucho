@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form
 
 import com.tezov.tuucho.core.data.repository.di.MaterialRectifierModule
-import com.tezov.tuucho.core.data.repository.parser.rectifier.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -17,7 +17,6 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
 class FormValidatorRectifier : AbstractRectifier() {
@@ -34,17 +33,19 @@ class FormValidatorRectifier : AbstractRectifier() {
         path: JsonElementPath,
         element: JsonElement,
     ) = beforeAlterObject(
-        "".toPath(), element.find(path)
-            .withScope(FormValidatorSchema::Scope).apply {
+        path = "".toPath(),
+        element = element.find(path)
+            .withScope(FormValidatorSchema::Scope)
+            .apply {
                 type = this.element.string
-            }
-            .collect())
+            }.collect()
+    )
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
-        add(element.find(path).jsonObject)
+        add(element.find(path))
     }.let(::JsonArray)
 
     override fun beforeAlterArray(
@@ -55,25 +56,19 @@ class FormValidatorRectifier : AbstractRectifier() {
         if (!jsonArray.any { it is JsonPrimitive }) return null
         return JsonArray(jsonArray.map {
             if (it is JsonPrimitive) {
-                it.withScope(FormValidatorSchema::Scope).apply {
-                    type = this.element.string
-                }.collect()
+                it.withScope(FormValidatorSchema::Scope)
+                    .apply {
+                        type = this.element.string
+                    }.collect()
             } else it
         })
     }
 
     override fun afterAlterArray(
         path: JsonElementPath,
-        element: JsonElement,
-    ) = element.find(path).jsonArray.map {
-        afterAlterObject("".toPath(), it) ?: it
-    }.let(::JsonArray)
-
-    override fun afterAlterObject(
-        path: JsonElementPath,
-        element: JsonElement,
-    ): JsonElement? {
-        val scope = element.withScope(FormValidatorSchema::Scope)
+        element: JsonElement
+    ) = JsonArray(element.find(path).jsonArray.map { jsonObject ->
+        val scope = jsonObject.withScope(FormValidatorSchema::Scope)
         var idMessageErrorRectified: String? = null
         with(scope) {
             if (idMessageError?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
@@ -87,8 +82,7 @@ class FormValidatorRectifier : AbstractRectifier() {
         idMessageErrorRectified?.let {
             scope.idMessageError = idMessageErrorRectified
         }
-        return scope.collectChangedOrNull()
-    }
-
+        scope.collect()
+    })
 
 }

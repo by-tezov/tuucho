@@ -4,10 +4,11 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContext
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 internal class CoroutineScopes(
     override val database: CoroutineContextProtocol = object :
+        CoroutineContext("Database", Dispatchers.IO) {},
+    override val datastore: CoroutineContextProtocol = object :
         CoroutineContext("Database", Dispatchers.IO) {},
     override val network: CoroutineContextProtocol = object :
         CoroutineContext("Network", Dispatchers.IO) {},
