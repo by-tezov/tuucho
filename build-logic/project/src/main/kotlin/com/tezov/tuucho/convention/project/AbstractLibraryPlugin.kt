@@ -6,13 +6,8 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import java.io.File
-import java.nio.file.Files
-import kotlin.collections.forEach
 
 abstract class AbstractLibraryPlugin : Plugin<Project> {
 
@@ -53,7 +48,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
 
     final override fun apply(project: Project) {
         applyPlugins(project)
-
         configure(project)
     }
 
