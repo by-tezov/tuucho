@@ -1,14 +1,16 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.data.repository.parser.breaker.AbstractBreaker
+import com.tezov.tuucho.core.data.repository.parser.breaker.ActionBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.ColorBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.ComponentBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.ContentBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.DimensionBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.OptionBreaker
+import com.tezov.tuucho.core.data.repository.parser.breaker.StateBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.TextBreaker
+import com.tezov.tuucho.core.data.repository.parser.breaker._system.AbstractBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker._system.MatcherBreakerProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -22,9 +24,11 @@ internal object MaterialBreakerModule {
             val CONTENT = named("MaterialBreakerModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialBreakerModule.Name.Processor.STYLE")
             val OPTION = named("MaterialBreakerModule.Name.Processor.OPTION")
+            val STATE = named("MaterialBreakerModule.Name.Processor.STATE")
             val TEXT = named("MaterialBreakerModule.Name.Processor.TEXT")
             val COLOR = named("MaterialBreakerModule.Name.Processor.COLOR")
             val DIMENSION = named("MaterialBreakerModule.Name.Processor.DIMENSION")
+            val ACTION = named("MaterialBreakerModule.Name.Processor.ACTION")
         }
 
         object Matcher {
@@ -32,22 +36,25 @@ internal object MaterialBreakerModule {
             val CONTENT = named("MaterialBreakerModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialBreakerModule.Name.Matcher.STYLE")
             val OPTION = named("MaterialBreakerModule.Name.Matcher.OPTION")
+            val STATE = named("MaterialBreakerModule.Name.Matcher.STATE")
             val TEXT = named("MaterialBreakerModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialBreakerModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialBreakerModule.Name.Matcher.DIMENSION")
+            val ACTION = named("MaterialBreakerModule.Name.Matcher.ACTION")
         }
     }
 
     fun invoke() = module {
         single<MaterialBreaker> { MaterialBreaker() }
-
         componentModule()
         contentModule()
         styleModule()
         optionModule()
+        stateModule()
         textModule()
         colorModule()
         dimensionModule()
+        actionModule()
     }
 
     private fun Module.componentModule() {
@@ -98,6 +105,18 @@ internal object MaterialBreakerModule {
         }
     }
 
+    private fun Module.stateModule() {
+        single<StateBreaker> { StateBreaker() }
+
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.STATE) {
+            emptyList()
+        }
+
+        single<List<AbstractBreaker>>(Name.Processor.STATE) {
+            emptyList()
+        }
+    }
+
     private fun Module.textModule() {
         single<TextBreaker> { TextBreaker() }
 
@@ -130,6 +149,18 @@ internal object MaterialBreakerModule {
         }
 
         single<List<AbstractBreaker>>(Name.Processor.DIMENSION) {
+            emptyList()
+        }
+    }
+
+    private fun Module.actionModule() {
+        single<ActionBreaker> { ActionBreaker() }
+
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.ACTION) {
+            emptyList()
+        }
+
+        single<List<AbstractBreaker>>(Name.Processor.ACTION) {
             emptyList()
         }
     }

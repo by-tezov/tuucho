@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MessageSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.OptionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.StateSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
@@ -27,21 +26,6 @@ object FormSchema {
             OptionSchema.OpenScope<T>(argument) {
 
             var validator by delegate<JsonArray?>(Key.validator)
-
-        }
-    }
-
-    object State {
-        object Key {
-            const val initialValue = "initial-value"
-        }
-
-        class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
-
-        open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
-            StateSchema.OpenScope<T>(argument) {
-
-            var initialValue by delegate<JsonObject?>(Key.initialValue)
 
         }
     }

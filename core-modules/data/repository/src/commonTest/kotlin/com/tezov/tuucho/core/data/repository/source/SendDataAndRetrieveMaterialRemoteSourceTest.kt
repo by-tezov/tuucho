@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.mock.mockCoroutineScope
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
-import com.tezov.tuucho.core.data.repository.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import dev.mokkery.answering.returns
@@ -22,7 +21,6 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
 
     private lateinit var coroutineScopes: CoroutineScopesProtocol
     private lateinit var networkJsonObject: NetworkJsonObject
-    private lateinit var materialRectifier: MaterialRectifier
 
     private lateinit var sut: SendDataAndRetrieveMaterialRemoteSource
 
@@ -30,12 +28,10 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
     fun setup() {
         coroutineScopes = mockCoroutineScope()
         networkJsonObject = mock()
-        materialRectifier = mock()
 
         sut = SendDataAndRetrieveMaterialRemoteSource(
             coroutineScopes = coroutineScopes,
             networkJsonObject = networkJsonObject,
-            materialRectifier = materialRectifier
         )
     }
 
@@ -43,11 +39,9 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
     fun `process returns rectified object when network responds`() = runTest {
         val url = "http://server.com/api"
         val input = buildJsonObject { put("key", "value") }
-        val networkResponse = buildJsonObject { put("network", "response") }
-        val expected = buildJsonObject { put("rectified", "ok") }
+        val expected = buildJsonObject { put("network", "response") }
 
-        everySuspend { networkJsonObject.send(url, input) } returns networkResponse
-        everySuspend { materialRectifier.process(networkResponse) } returns expected
+        everySuspend { networkJsonObject.send(url, input) } returns expected
 
         val result = sut.process(url, input)
         assertEquals(expected, result)
@@ -55,8 +49,6 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineScopes.network
             networkJsonObject.send(url, input)
-            coroutineScopes.parser
-            materialRectifier.process(networkResponse)
         }
     }
 

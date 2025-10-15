@@ -26,6 +26,7 @@ class MaterialBreaker : KoinComponent {
     private val colorBreaker: ColorBreaker by inject()
     private val dimensionBreaker: DimensionBreaker by inject()
     private val textBreaker: TextBreaker by inject()
+    private val actionBreaker: ActionBreaker by inject()
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
@@ -56,6 +57,9 @@ class MaterialBreaker : KoinComponent {
                 }?.also(::add)
                 dimensions?.let {
                     dimensionBreaker.process("".toPath(), it)
+                }?.also(::add)
+                actions?.let {
+                    actionBreaker.process("".toPath(), it)
                 }?.also(::add)
             }
         )

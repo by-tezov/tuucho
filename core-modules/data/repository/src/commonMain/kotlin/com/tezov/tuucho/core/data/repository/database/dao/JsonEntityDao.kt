@@ -16,6 +16,11 @@ class JsonObjectQueries(
 
     private val queriesJoin get() = database.joinStatementQueries
 
+    fun deleteAll() {
+        queriesCommon.deleteAll()
+        queriesContextual.deleteAll()
+    }
+
     fun deleteAll(url: String, table: Table) {
         when (table) {
             Table.Common -> queriesCommon.deleteByUrl(url)

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.id
 
 import com.tezov.tuucho.core.data.repository.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.repository.parser.rectifier.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope

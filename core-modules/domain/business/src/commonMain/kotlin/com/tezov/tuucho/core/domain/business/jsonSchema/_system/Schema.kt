@@ -1,12 +1,10 @@
 package com.tezov.tuucho.core.domain.business.jsonSchema._system
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonObject
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -84,8 +82,7 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
                     return (_map as? MutableMap<String, JsonElement>) ?: when (val element =
                         element) {
                         is JsonObject -> element.toMutableMap()
-                        is JsonPrimitive -> mutableMapOf()
-                        else -> throw DomainException.Default("element ${element::class.simpleName} can't be resolved as Mutable Map")
+                        is JsonPrimitive, is JsonArray -> mutableMapOf()
                     }.also { _map = it }
                 }
 
@@ -93,8 +90,7 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
                 get() {
                     return _map ?: when (val element = element) {
                         is JsonObject -> element
-                        is JsonPrimitive -> emptyMap()
-                        else -> throw DomainException.Default("element ${element::class.simpleName} can't be resolved as Map")
+                        is JsonPrimitive, is JsonArray -> emptyMap()
                     }.also { _map = it }
                 }
 

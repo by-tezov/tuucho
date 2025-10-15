@@ -83,6 +83,17 @@ class FieldView(
                     )
                 }
             }
+        //TODO: need to add the rectifier for initialValue text
+//        componentObject.stateOrNull
+//            ?.withScope(FormFieldSchema.State::Scope)?.run {
+//                initialValue?.idValue?.let {
+//                    addTypeIdForKey(
+//                        type = TypeSchema.Value.text,
+//                        id = it,
+//                        key = FormFieldSchema.State.Key.initialValue
+//                    )
+//                }
+//            }
         addTypeId(TypeSchema.Value.message, id = componentObject.idValue)
     }
 
@@ -109,7 +120,7 @@ class FieldView(
     }
 
     override suspend fun JsonObject.processState() {
-        withScope(FormSchema.State::Scope).run {
+        withScope(FormFieldSchema.State::Scope).run {
             initialValue?.get(LanguageModelDomain.Default.code)?.string?.let {
                 _value.value = it
             }

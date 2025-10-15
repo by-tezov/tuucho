@@ -1,6 +1,5 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier
+package com.tezov.tuucho.core.data.repository.parser.rectifier._system
 
-import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert

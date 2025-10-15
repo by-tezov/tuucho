@@ -7,10 +7,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModuleAndroid.Name
 import com.tezov.tuucho.core.data.repository.repository.KeyValueStoreRepository
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import org.koin.dsl.module
 
 internal object StoreRepositoryModuleAndroid {
@@ -20,12 +18,13 @@ internal object StoreRepositoryModuleAndroid {
         single<DataStore<Preferences>> {
             val context: Context = get(Name.APPLICATION_CONTEXT)
             PreferenceDataStoreFactory.create(
-                scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-            ) {
-                context.preferencesDataStoreFile(
-                    get<StoreRepositoryModule.Config>().fileName
-                )
-            }
+                scope = get<CoroutineScopesProtocol>().datastore.scope,
+                produceFile = {
+                    context.preferencesDataStoreFile(
+                        get<StoreRepositoryModule.Config>().fileName
+                    )
+                }
+            )
         }
 
 

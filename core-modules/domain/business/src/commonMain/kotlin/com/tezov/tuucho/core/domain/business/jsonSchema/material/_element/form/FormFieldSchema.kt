@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.StateSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.ContentSchema
 import kotlinx.serialization.json.JsonArray
@@ -26,6 +27,21 @@ object FormFieldSchema {
             var title by delegate<JsonObject?>(Key.title)
             var placeholder by delegate<JsonObject?>(Key.placeholder)
             var messageError by delegate<JsonArray?>(Key.messageError)
+
+        }
+    }
+
+    object State {
+        object Key {
+            const val initialValue = "initial-value"
+        }
+
+        class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
+
+        open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
+            StateSchema.OpenScope<T>(argument) {
+
+            var initialValue by delegate<JsonObject?>(Key.initialValue)
 
         }
     }

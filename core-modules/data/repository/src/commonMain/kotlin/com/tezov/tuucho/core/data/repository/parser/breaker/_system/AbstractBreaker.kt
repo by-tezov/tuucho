@@ -1,10 +1,9 @@
-package com.tezov.tuucho.core.data.repository.parser.breaker
+package com.tezov.tuucho.core.data.repository.parser.breaker._system
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser._system.JsonArrayNode
 import com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode
 import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
-import com.tezov.tuucho.core.data.repository.parser.breaker._system.MatcherBreakerProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -113,6 +112,5 @@ abstract class AbstractBreaker : MatcherBreakerProtocol, KoinComponent {
             }.collect()
         }
     }.collect()
-
 
 }
