@@ -56,7 +56,3 @@ listOf(
             }
         }
 }
-
-if(System.getenv()["IS_CI"] != "true") {
-//    includeBuild("sample")
-}

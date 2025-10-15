@@ -3,7 +3,6 @@ package com.tezov.tuucho.shared.sample.di
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
-import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
 import com.tezov.tuucho.sample.app.shared.BuildKonfig
 import org.koin.dsl.ModuleDeclaration
 

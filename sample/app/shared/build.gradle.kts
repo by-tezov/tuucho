@@ -42,7 +42,7 @@ buildkonfig {
         }
 
         create("ios") {
-            field("serverBaseUrlAndroid", FieldSpec.Type.STRING, "serverBaseUrl")
+            field("serverBaseUrlIos", FieldSpec.Type.STRING, "serverBaseUrl")
         }
     }
 }
