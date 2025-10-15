@@ -1,11 +1,14 @@
 ## In progress
 
+- fix IOS and test end to end
 - update doc and close the release
+- add network error management around the other use case
 
 *** ***
 - still need to fix mock server
 - Need a way to let core barrel on dev without fail because test lib are not here.
 - form field initial value inside state, need to make the matcher for the text and uncomment id update register
+    - fix state error with "" or just string ?
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 
 **** ****
