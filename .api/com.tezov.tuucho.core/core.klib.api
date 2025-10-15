@@ -1,0 +1,20 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.tezov:core>
+final object com.tezov.tuucho.core.barrel.di/StartKoinModules { // com.tezov.tuucho.core.barrel.di/StartKoinModules|null[0]
+    final fun invoke(kotlin.collections/List<kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>>, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.barrel.di/StartKoinModules.invoke|invoke(kotlin.collections.List<kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>>;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+final object com.tezov.tuucho.core.barrel.di/SystemCoreModules // com.tezov.tuucho.core.barrel.di/SystemCoreModules|null[0]
+
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_StartKoinModules$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_StartKoinModules$stableprop|#static{}com_tezov_tuucho_core_barrel_di_StartKoinModules$stableprop[0]
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_SystemCoreModules$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_SystemCoreModules$stableprop|#static{}com_tezov_tuucho_core_barrel_di_SystemCoreModules$stableprop[0]
+
+final fun (com.tezov.tuucho.core.barrel.di/SystemCoreModules).com.tezov.tuucho.core.barrel.di/platformInvoke(): kotlin.collections/List<org.koin.core.module/Module> // com.tezov.tuucho.core.barrel.di/platformInvoke|platformInvoke@com.tezov.tuucho.core.barrel.di.SystemCoreModules(){}[0]
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_StartKoinModules$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_StartKoinModules$stableprop_getter|com_tezov_tuucho_core_barrel_di_StartKoinModules$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_SystemCoreModules$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_SystemCoreModules$stableprop_getter|com_tezov_tuucho_core_barrel_di_SystemCoreModules$stableprop_getter(){}[0]

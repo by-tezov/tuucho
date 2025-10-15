@@ -100,7 +100,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
             extensions.configure(AbiValidationMultiplatformExtension::class.java) {
                 enabled.set(true)
                 legacyDump {
-                    val rootApiDir = rootProject.layout.projectDirectory.dir("api/${namespace()}")
+                    val rootApiDir = rootProject.layout.projectDirectory.dir(".api/${namespace()}")
                     referenceDumpDir.set(rootApiDir)
                 }
             }

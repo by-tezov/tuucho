@@ -10,7 +10,7 @@ import com.tezov.tuucho.shared.sample.AppScreen
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent { AppScreen(ApplicationModuleDeclaration.invoke(applicationContext)) }
     }
