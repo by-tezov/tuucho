@@ -1,7 +1,10 @@
 ## In progress
 
-- add API validator
 - update doc and close the release
+
+- update Jenkins to check Api
+./gradlew updateLegacyAbi
+./gradlew checkLegacyAbi
 
 - still need to fix mock server
 - Need a way to let core barrel on dev without fail because test lib are not here.
