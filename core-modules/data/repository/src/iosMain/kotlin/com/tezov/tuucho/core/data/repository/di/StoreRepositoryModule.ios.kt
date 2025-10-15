@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.data.repository.di
 import com.tezov.tuucho.core.data.repository.repository.KeyValueStoreRepository
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
 import org.koin.dsl.module
+import platform.Foundation.NSUserDefaults
 
 internal object StoreRepositoryModuleIos {
 
@@ -11,8 +12,8 @@ internal object StoreRepositoryModuleIos {
         single<KeyValueStoreRepositoryProtocol> {
             KeyValueStoreRepository(
                 userDefaults = NSUserDefaults(
-                    suiteName = get<StoreRepositoryModule.Config>().localDatastoreFile
-                )!!
+                    suiteName = get<StoreRepositoryModule.Config>().fileName
+                )
             )
         }
     }

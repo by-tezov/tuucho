@@ -31,11 +31,11 @@ extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
 
-val cleanMavenLocal by tasks.registering {
+val cleanMavenLocalFolder by tasks.registering {
     delete(".m2")
 }
 rootProject.tasks.named("clean") {
-    dependsOn(cleanMavenLocal)
+    dependsOn(cleanMavenLocalFolder)
 }
 
 tasks.register<JacocoReport>("rootMockCoverageReport") {
@@ -72,7 +72,31 @@ tasks.register("rootPublishProdToMavenLocal") {
             .matching { it.name.endsWith("ToProjectMavenRepository") }
     }
     publishTasks.forEach {
-        it.dependsOn(cleanMavenLocal)
+        it.dependsOn(cleanMavenLocalFolder)
     }
     dependsOn(publishTasks)
+}
+
+tasks.register("rootValidateProdApi") {
+    group = "validating"
+    description = "Validate tuucho prod API"
+    val abiTasks = subprojects.flatMap { sub ->
+        sub.tasks.matching { it.name.equals("checkLegacyAbi", ignoreCase = true) }
+    }
+    dependsOn(abiTasks)
+}
+
+val cleanApiFolder by tasks.registering {
+    delete("api")
+}
+tasks.register("rootUpdateProdApi") {
+    group = "validating"
+    description = "Update tuucho prod API"
+    val abiTasks = subprojects.flatMap { sub ->
+        sub.tasks.matching { it.name.equals("updateLegacyAbi", ignoreCase = true) }
+    }
+    abiTasks.forEach {
+        it.dependsOn(cleanApiFolder)
+    }
+    dependsOn(abiTasks)
 }
