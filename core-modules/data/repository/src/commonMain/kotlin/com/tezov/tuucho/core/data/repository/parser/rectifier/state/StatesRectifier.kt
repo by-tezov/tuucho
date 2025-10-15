@@ -1,66 +1,61 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier.dimensions
+package com.tezov.tuucho.core.data.repository.parser.rectifier.state
 
-import com.tezov.tuucho.core.data.repository.di.MaterialRectifierModule.Name
-import com.tezov.tuucho.core.data.repository.parser.rectifier.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.StateSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
+import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class DimensionsRectifier : AbstractRectifier() {
+class StatesRectifier : AbstractRectifier() {
 
-    override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.DIMENSIONS
-    )
+    private val stateRectifier: StateRectifier by inject()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ): JsonArray {
-        return buildList {
-            element.find(path).jsonObject.forEach { (group, dimensions) ->
-                dimensions.jsonObject.forEach { (key, dimension) ->
-                    when (dimension) {
-                        is JsonPrimitive -> alterPrimitiveDimension(key, group, dimension)
-                        is JsonObject -> alterObjectDimension(key, group, dimension)
-                        else -> error("type not managed")
-                    }.let(::add)
-                }
+    ) = buildList {
+        element.find(path).jsonObject.forEach { (group, states) ->
+            states.jsonObject.forEach { (key, state) ->
+                when (state) {
+                    is JsonPrimitive -> alterPrimitive(key, group, state)
+                    is JsonObject -> alterObject(key, group, state)
+                    else -> error("type not managed")
+                }.let(::add)
             }
-        }.let(::JsonArray)
-    }
+        }
+    }.let(::JsonArray)
 
-    private fun alterPrimitiveDimension(
+    private fun alterPrimitive(
         key: String,
         group: String,
-        dimension: JsonPrimitive,
-    ) = dimension.withScope(DimensionSchema::Scope).apply {
-        type = TypeSchema.Value.dimension
+        jsonPrimitive: JsonPrimitive,
+    ) = jsonPrimitive.withScope(StateSchema::Scope).apply {
+        val stringValue = this.element.string.requireIsRef()
         id = onScope(IdSchema::Scope).apply {
             value = key.addGroup(group)
+            source = stringValue
         }.collect()
-        default = this.element.string
     }.collect()
 
-    private fun alterObjectDimension(
+    private fun alterObject(
         key: String,
         group: String,
-        dimension: JsonObject,
-    ) = dimension.withScope(DimensionSchema::Scope).apply {
-        type = TypeSchema.Value.dimension
+        jsonObject: JsonObject,
+    ) = jsonObject.withScope(StateSchema::Scope).apply {
         id = onScope(IdSchema::Scope).apply {
             when (val id = id) {
                 is JsonNull, null -> value = key.addGroup(group)
@@ -79,5 +74,12 @@ class DimensionsRectifier : AbstractRectifier() {
             }
         }.collect()
     }.collect()
+
+    override fun afterAlterArray(
+        path: JsonElementPath,
+        element: JsonElement
+    ) = element.find(path).jsonArray.map {
+        stateRectifier.process("".toPath(), it)
+    }.let(::JsonArray)
 
 }

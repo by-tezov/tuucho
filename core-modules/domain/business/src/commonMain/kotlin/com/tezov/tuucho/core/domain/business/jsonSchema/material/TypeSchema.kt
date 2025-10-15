@@ -29,6 +29,7 @@ object TypeSchema {
 
         const val state = "state"
         const val message = "message"
+
     }
 
     class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {

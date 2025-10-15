@@ -27,6 +27,9 @@ class ExceptionNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
         try {
             next?.invoke(context)
         } catch (exception: Throwable) {
+
+            println(exception)
+
             //TODO: check exception and design action in accord with exception
             if (attempt < maxRetries) {
                 val delayMs = (1000L * (1 shl attempt)).coerceAtMost(5000L)

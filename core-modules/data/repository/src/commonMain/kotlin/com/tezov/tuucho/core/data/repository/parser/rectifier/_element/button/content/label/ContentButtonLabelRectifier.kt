@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label
 
-import com.tezov.tuucho.core.data.repository.parser.rectifier.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema

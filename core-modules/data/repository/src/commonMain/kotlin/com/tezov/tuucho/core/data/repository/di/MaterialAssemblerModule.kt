@@ -2,12 +2,14 @@ package com.tezov.tuucho.core.data.repository.di
 
 
 import com.tezov.tuucho.core.data.repository.parser.assembler.AbstractAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ColorAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ComponentAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ContentAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.DimensionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.OptionAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.StateAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.TextAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
@@ -27,9 +29,11 @@ internal object MaterialAssemblerModule {
             val CONTENT = named("MaterialAssemblerModule.Name.Processor.CONTENT")
             val STYLE = named("MaterialAssemblerModule.Name.Processor.STYLE")
             val OPTION = named("MaterialAssemblerModule.Name.Processor.OPTION")
+            val STATE = named("MaterialAssemblerModule.Name.Processor.STATE")
             val TEXT = named("MaterialAssemblerModule.Name.Processor.TEXT")
             val COLOR = named("MaterialAssemblerModule.Name.Processor.COLOR")
             val DIMENSION = named("MaterialAssemblerModule.Name.Processor.DIMENSION")
+            val ACTION = named("MaterialAssemblerModule.Name.Processor.ACTION")
         }
 
         object Matcher {
@@ -37,9 +41,11 @@ internal object MaterialAssemblerModule {
             val CONTENT = named("MaterialAssemblerModule.Name.Matcher.CONTENT")
             val STYLE = named("MaterialAssemblerModule.Name.Matcher.STYLE")
             val OPTION = named("MaterialAssemblerModule.Name.Matcher.OPTION")
+            val STATE = named("MaterialAssemblerModule.Name.Matcher.STATE")
             val TEXT = named("MaterialAssemblerModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialAssemblerModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialAssemblerModule.Name.Matcher.DIMENSION")
+            val ACTION = named("MaterialAssemblerModule.Name.Matcher.ACTION")
         }
     }
 
@@ -48,6 +54,7 @@ internal object MaterialAssemblerModule {
             listOf(
                 get<ComponentAssembler>(),
                 get<ContentAssembler>(),
+                get<StateAssembler>(),
                 get<TextAssembler>(),
             )
         }
@@ -63,9 +70,11 @@ internal object MaterialAssemblerModule {
         contentModule()
         styleModule()
         optionModule()
+        stateModule()
         textModule()
         colorModule()
         dimensionModule()
+        actionModule()
     }
 
     private fun Module.componentModule() {
@@ -82,6 +91,7 @@ internal object MaterialAssemblerModule {
                 get<ContentAssembler>(),
                 get<StyleAssembler>(),
                 get<OptionAssembler>(),
+                get<StateAssembler>(),
             )
         }
     }
@@ -96,6 +106,7 @@ internal object MaterialAssemblerModule {
         single<List<AbstractAssembler>>(Name.Processor.CONTENT) {
             listOf(
                 get<TextAssembler>(),
+                get<ActionAssembler>(),
                 get<ComponentAssembler>()
             )
         }
@@ -124,6 +135,18 @@ internal object MaterialAssemblerModule {
         }
 
         single<List<AbstractAssembler>>(Name.Processor.OPTION) {
+            emptyList()
+        }
+    }
+
+    private fun Module.stateModule() {
+        single<StateAssembler> { StateAssembler() }
+
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.STATE) {
+            emptyList()
+        }
+
+        single<List<AbstractAssembler>>(Name.Processor.STATE) {
             emptyList()
         }
     }
@@ -160,6 +183,18 @@ internal object MaterialAssemblerModule {
         }
 
         single<List<AbstractAssembler>>(Name.Processor.DIMENSION) {
+            emptyList()
+        }
+    }
+
+    private fun Module.actionModule() {
+        single<ActionAssembler> { ActionAssembler() }
+
+        single<List<MatcherAssemblerProtocol>>(Name.Matcher.ACTION) {
+            emptyList()
+        }
+
+        single<List<AbstractAssembler>>(Name.Processor.ACTION) {
             emptyList()
         }
     }

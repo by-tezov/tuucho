@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.id
 
-
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsAnyTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
@@ -17,12 +16,13 @@ class IdMatcher : MatcherRectifierProtocol, KoinComponent {
         TypeSchema.Value.content,
         TypeSchema.Value.style,
         TypeSchema.Value.option,
-        TypeSchema.Value.Setting.component,
-        TypeSchema.Value.Setting.page,
+        TypeSchema.Value.state,
         TypeSchema.Value.text,
         TypeSchema.Value.color,
         TypeSchema.Value.dimension,
-        TypeSchema.Value.state
+        TypeSchema.Value.action,
+        TypeSchema.Value.Setting.component,
+        TypeSchema.Value.Setting.page,
     )
 
     override fun accept(

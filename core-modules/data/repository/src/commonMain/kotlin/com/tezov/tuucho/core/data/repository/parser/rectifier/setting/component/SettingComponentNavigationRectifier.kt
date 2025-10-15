@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component
 
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
-import com.tezov.tuucho.core.data.repository.parser.rectifier.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
