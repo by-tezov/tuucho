@@ -33,4 +33,4 @@ CI command (use label 'trigger CI' after update)
   - [ ] : android-36-simulator-standalone
 - [ ] : iOS test
   **device**:
-  - [x] : iphone_16-18.5-simulator
+  - [x] : iphone_16-26.0-simulator
