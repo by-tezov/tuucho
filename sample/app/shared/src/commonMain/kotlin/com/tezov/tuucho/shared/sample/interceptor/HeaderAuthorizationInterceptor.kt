@@ -34,7 +34,7 @@ class HeaderAuthorizationInterceptor(
                 key = "login-authorization".toKey()
             )
         ).value?.value?.let { authorizationKey ->
-            builder.headers.append("Authorization", "Bearer $authorizationKey")
+            builder.headers.append("authorization", "Bearer $authorizationKey")
         }
     }
 }

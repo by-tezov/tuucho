@@ -63,7 +63,7 @@ fun createSimulator(deviceName: String, devices: Map<String, List<String>>? = nu
         val model: String
         val core: String
         when (deviceName) {
-            "iphone_16-26-simulator" -> {
+            "iphone_16-26.0-simulator" -> {
                 model = "iPhone 16"
                 core = "com.apple.CoreSimulator.SimRuntime.iOS-26-0"
             }
