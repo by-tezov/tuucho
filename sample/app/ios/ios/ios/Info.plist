@@ -1,21 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>NSAppTransportSecurity</key>
     <dict>
-        <key>CADisableMinimumFrameDurationOnPhone</key>
-        <true />
-        <key>NSAppTransportSecurity</key>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSExceptionDomains</key>
         <dict>
-            <key>NSExceptionDomains</key>
+            <key>192.168.1.10</key>
             <dict>
-                <key>192.168.1.10</key>
-                <dict>
-                    <key>NSIncludesSubdomains</key>
-                    <true />
-                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                    <true />
-                </dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
             </dict>
         </dict>
     </dict>
+</dict>
 </plist>
+
