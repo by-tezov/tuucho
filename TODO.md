@@ -1,7 +1,10 @@
 ## In progress
 
-- fix IOS and test end to end
-- update doc and close the release
+- clean and save ci/cd
+- update doc and close the release / Update the roadmap (readme on sample app)
+
+- fix module split / module declaration to allow getAll to work on those needed
+
 - add network error management around the other use case
 
 *** ***
