@@ -1,15 +1,16 @@
 # Template Example
 
-Here is a full template JSON example. For details on components and references, see 📖 [`object-definition/id.md`](../object-definition/id.md) and [`components-definition/index.md`](../components-definition/index.md).
+Here is a full template JSON example.  
+For details on components and references, see 📖 [`object-definition/id.md`](../object-definition/id.md) and [`components-definition/index.md`](../components-definition/index.md).
 
-```json
+```Json
 {
   "root": {
     "id": "template-page-default",
     "subset": "layout-linear",
     "style": {
       "orientation": "vertical",
-      "background-color": { "id": "*background:why-not-color" },
+      "background-color": { "id": "*background@why-not-color" },
       "fill-max-size": true
     },
     "content": {
@@ -58,7 +59,7 @@ Here is a full template JSON example. For details on components and references, 
 
 This template is then used by supplying local declarations to fulfill the referenced IDs:
 
-```json
+```Json
 {
   "root": {
     "id": "*template-page-default"
@@ -96,4 +97,3 @@ This template is then used by supplying local declarations to fulfill the refere
 - The usage JSON provides local declarations for these IDs inside `contents` and `texts`.
 - Any referenced ID not found locally will be resolved from the shared preloaded `subs` objects. 📖 [`components-definition/index.md`](subs.md)
 - This allows flexible reuse and override of content per page while keeping a common structure.
-

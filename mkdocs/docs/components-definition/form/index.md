@@ -14,9 +14,9 @@ The `form-send` action is used to submit form data to a server endpoint. It is t
 
 ## 🔧 Action Format
 
-- `value`: `form-send://url/{the_server_endpoint}`
-- `action-validated`: A follow-up action (commonly a navigation) to trigger after a successful server response.
-- `action-denied`: A follow-up action to trigger after a successful server response, by default if you don't defined denied action, the error user feedback will be shown. This field is useful only if you want define a custom behavior. ...Documentation do not explain how yet...
+- `primary`: `form-send://url/{the_server_endpoint}`
+- `validated`: A follow-up action (commonly a navigation) to trigger after a successful server response.
+- `denied`: A follow-up action to trigger after a successful server response, by default if you don't defined denied action, the error user feedback will be shown. This field is useful only if you want define a custom behavior. ...Documentation do not explain how yet...
 
 ### Example
 
@@ -24,8 +24,8 @@ Used in a `Button` component:
 
 ```json
 "action": {
-  "value": "form-send://url/form-from-page-home",
-  "action-validated": "navigate://url/page-confirmation"
+  "primary": "form-send://url/form-from-page-home",
+  "validated": "navigate://url/page-confirmation"
 }
 ```
 
@@ -67,34 +67,51 @@ The server must return one of the following:
 
 ```json
 {
-  "type": "all-succeed"
+  "type": "form",
+  "all-succeed": true,
+  "action": {
+    "before": ["store://key-value/save?login-authorization=${token}"],
+    "after": ["store://key-value/save?foo=bar"]
+  }
 }
 ```
 
 - Indicates that the form submission was accepted.
-- Triggers the optional `action-validated` from the original action (e.g., navigating to a confirmation page).
+- Triggers the optional `validated` from sending action (e.g., navigating to a confirmation page).
+- `before` action will be executed before the `validated` from the sending action.
+- `after` action will be executed after the `validated` from the sending action.
 
 ### Error Response
 
 ```json
 {
-  "type": "failure-result",
-  "content": [
+  "type": "form",
+  "all-succeed": false,
+  "failure-result": [
     {
       "id": "id of invalid field",
       "reason": /* Text object */
     },...
-  ]
+  ],
+  "action": {
+    "before": ["store://key-value/save?fail-login=3"],
+    "after": ["store://key-value/save?foo=bar"]
+  }
 }
 ```
 
 - Indicates that the server rejected the submission, despite successful local validation.
-- `content`: a list of rejected inputs, each with an optional `reason` [Text object](../../object-definition/text.md) that can be displayed in the UI to guide the user.
+- `failure-result`: a list of rejected inputs, each with an optional `reason` [Text object](../../object-definition/text.md) that can be displayed in the UI to guide the user.
 - If no `reason` is provided for an input that is locally valid, the application will ignore the server feedback for that input.  
   **Always provide a reason** to ensure the user receives feedback about the error.
+- Triggers the optional `denied` from sending action (e.g., navigating to a confirmation page).
+- `before` action will be executed before the `denied` from the sending action.
+- `after` action will be executed after the `denied` from the sending action.
 
+For more on actions, see the 
 
-For more on actions, see the [Action object](../../object-definition/action.md) and [Button component](../../components-definition/button.md)
+- [Action object](../../object-definition/action.md) 
+- [Button component](../../components-definition/button.md)
 
 
 

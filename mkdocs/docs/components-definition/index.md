@@ -6,11 +6,11 @@ comments: true
 
 List of supported UI components:
 
-- [LayoutLinear](layout-linear.md) (`subset`: `layout-linear`)
-- [Label](label.md) (`subset`: `label`)
+- [Button](button.md) (`subset`: `button`)
 - [Form](form/index.md)
   - [Form-Field](form/field.md) (`subset`: `form-field`)
-- [Button](button.md) (`subset`: `button`)
+- [Label](label.md) (`subset`: `label`)
+- [LayoutLinear](layout-linear.md) (`subset`: `layout-linear`)
 - [Spacer](spacer.md) (`subset`: `spacer`)
 
 ---

@@ -68,27 +68,27 @@ nav:
       - Templates: config/templates.md
   - Object:
       - Overview: object-definition/index.md
-      - Id: object-definition/id.md
-      - Page-Setting: object-definition/page-setting.md
-      - Component-Setting: object-definition/component-setting.md
-      - Component: object-definition/component.md
-      - Option: object-definition/option.md
-      - Style: object-definition/style.md
-      - Content: object-definition/content.md
-      - State: object-definition/state.md
-      - Text: object-definition/text.md
-      - Color: object-definition/color.md
-      - Dimension: object-definition/dimension.md
       - Action: object-definition/action.md
+      - Color: object-definition/color.md
+      - Component: object-definition/component.md
+      - Component-Setting: object-definition/component-setting.md
+      - Content: object-definition/content.md
+      - Dimension: object-definition/dimension.md
       - Form-Validator: object-definition/form-validator.md
+      - Id: object-definition/id.md
+      - Option: object-definition/option.md
+      - Page-Setting: object-definition/page-setting.md
+      - State: object-definition/state.md
+      - Style: object-definition/style.md
+      - Text: object-definition/text.md
   - Components:
       - Overview: components-definition/index.md
-      - LayoutLinear: components-definition/layout-linear.md
-      - Label: components-definition/label.md
-      - Form:
-        - Overview: components-definition/form/index.md
-        - Field: components-definition/form/field.md
       - Button: components-definition/button.md
+      - Form:
+          - Overview: components-definition/form/index.md
+          - Field: components-definition/form/field.md
+      - Label: components-definition/label.md
+      - LayoutLinear: components-definition/layout-linear.md
       - Spacer: components-definition/spacer.md
   - Navigation:
       - Overview: navigation/index.md
@@ -104,4 +104,5 @@ nav:
   - Cache: cache.md
   - Dynamic Loading: shadower-contextual.md
   - ChangeLog: changelog.md
+  - Contribute: contribute.md
   - Contact: contact.md

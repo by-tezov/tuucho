@@ -51,15 +51,16 @@
       ]
     }
   },
-  "components": [
-    {
-      "id": "item-spacer-half",
-      "subset": "spacer",
-      "style": {
-        "weight": "0.5"
+  "components": {
+    "common" : {
+      "item-spacer-half": {
+        "subset": "spacer",
+        "style": {
+          "weight": "0.5"
+        }
       }
     }
-  ]
+  }
 }
 
 ```

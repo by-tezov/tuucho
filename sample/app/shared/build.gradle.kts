@@ -69,7 +69,6 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-
             implementation(libs.ktor.core)
         }
     }

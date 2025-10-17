@@ -1,10 +1,9 @@
 package com.tezov.tuucho.core.domain.business.jsonSchema.material._element
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ContentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.ContentSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionSchema
-import kotlinx.serialization.json.JsonArray
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
 import kotlinx.serialization.json.JsonObject
 
 object ButtonSchema {
