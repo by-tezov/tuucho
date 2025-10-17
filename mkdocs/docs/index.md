@@ -112,17 +112,18 @@ flowchart TD
 {
   "setting": { /* page setting */ },
   "root": { /* component */ },
-  "components": [ /* component */ ],
-  "styles": [ /* style */ ],
-  "options": [ /* option */ ],
-  "contents": [ /* content */ ],
-  "texts": [ /* text */ ],
-  "colors": [ /* color */ ],
-  "dimensions": [ /* dimension */ ]
+  "components": { /* component */ },
+  "styles": { /* style */ },
+  "options": { /* option */ },
+  "contents": { /* content */ },
+  "texts": { /* text */ },
+  "colors": { /* color */ },
+  "dimensions": { /* dimension */ },
+  "actions": { /* action */ }
 }
 ```
 
-Each **PAGE** and **TEMPLATE** **must** include a `root` key, which defines the top-level component of the screen. Other keys such as `components`, `contents`, `styles`, `options`, `texts`, `colors`, and `dimensions` are optional. Note that the `root` key is **not** required for **SUBS** content.
+Each **PAGE** and **TEMPLATE** **must** include a `root` key, which defines the top-level component of the screen. Other keys such as `components`, `contents`, `styles`, `options`, `texts`, `colors`, `dimensions` and `actions` are optional. Note that the `root` key is **not** required for **SUBS** content.
 
 - **PAGE** represents a full-screen rendered component.
 - **TEMPLATE** represents a full-screen rendered component with no content. They can be used multiple times with different contents
@@ -176,7 +177,7 @@ This ensures:
 - Smooth transition as dynamic data becomes available.
 - Flexible modular content delivery that doesn’t block page rendering due to partial data.
 
-In the setting, you can also make all this process synchronous and wait all data available before to render.
+In the setting, **you can also make all this process synchronous** and wait all data available before to render.
 
 ---
 

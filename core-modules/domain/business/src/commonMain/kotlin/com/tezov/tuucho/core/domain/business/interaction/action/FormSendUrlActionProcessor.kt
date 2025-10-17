@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionFormSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.TypeResponseSchema
 import com.tezov.tuucho.core.domain.business.model.Action
@@ -112,7 +112,7 @@ class FormSendUrlActionProcessor(
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
-        val responseActionScope = action?.withScope(ActionFormSchema.Send::Scope)
+        val responseActionScope = action?.withScope(FormSendResponseSchema.Action::Scope)
         responseActionScope?.before?.forEach {
             it.string.dispatchAction(route, responseCollect)
         }
@@ -131,7 +131,7 @@ class FormSendUrlActionProcessor(
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
-        val responseActionScope = action?.withScope(ActionFormSchema.Send::Scope)
+        val responseActionScope = action?.withScope(FormSendResponseSchema.Action::Scope)
         responseActionScope?.before?.forEach {
             it.string.dispatchAction(route, responseCollect)
         }

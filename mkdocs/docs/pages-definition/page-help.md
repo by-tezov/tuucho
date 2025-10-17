@@ -5,21 +5,20 @@
   "root": {
     "id": "*template-page-default"
   },
-  "contents": [
-    {
-      "id": "title-content",
-      "value": { "id": "*text-body-title" }
-    },
-    {
-      "id": "body-content",
-      "value": { "id": "*text-body-content" }
-    },
-    {
-      "id": "action-content",
-      "label": { "id": "*button-label-help-to-home" },
-      "action": "navigate://url/page-home"
+  "contents": {
+    "common": {
+      "title-content": {
+        "value": { "id": "*text-body-title" }
+      },
+      "body-content": {
+        "value": "*common@text-body-content"
+      },
+      "action-content": {
+        "label": { "id": { "value" : "*button-label-help-to-home"} },
+        "action": "navigate://url/page-home"
+      }
     }
-  ],
+  },
   "texts": {
     "common": {
       "text-body-title": "Looking for help?",
@@ -58,22 +57,16 @@ Using the template loaded with subs 📖 [Subs Definition](../config/subs.md).
             "id": "*title-content"
           }
         },
-        {
-          "id": "*item-spacer"
-        },
+        "*item-spacer",
         {
           "subset": "label",
           "style": {
             "font-size": "18",
             "font-color": {"id":"*blue"}
           },
-          "content": {
-            "id": "*body-content"
-          }
+          "content": "*body-content"
         },
-        {
-          "id": "*item-spacer"
-        },
+        "*item-spacer",
         {
           "subset": "button",
           "content": {

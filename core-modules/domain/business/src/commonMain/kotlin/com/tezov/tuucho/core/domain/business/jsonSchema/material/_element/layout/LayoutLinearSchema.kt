@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ContentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.ContentSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 

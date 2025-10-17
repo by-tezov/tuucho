@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema.contentOrNull
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ContentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.idSourceOrNull
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.idValue
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema.type
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.ContentSchema
 import com.tezov.tuucho.core.presentation.ui.composable.shimmerComposable
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
