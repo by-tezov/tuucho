@@ -16,9 +16,9 @@ class HeaderAuthorizationInterceptor(
     private val authRegex = Regex("^/auth(?:/.*)?$")
 
     override suspend fun intercept(builder: HttpRequestBuilder) {
-        val route = builder.url
-            .encodedPath
-            .removePrefix("/${config.version}/")
+        val route = builder.url.toString()
+            .removePrefix("${config.baseUrl}/")
+            .removePrefix("${config.version}/")
             .let {
                 when  {
                     it.startsWith(config.healthEndpoint) -> it.removePrefix(config.healthEndpoint)
@@ -34,7 +34,7 @@ class HeaderAuthorizationInterceptor(
                 key = "login-authorization".toKey()
             )
         ).value?.value?.let { authorizationKey ->
-            builder.headers.append("Authorization", "Bearer $authorizationKey")
+            builder.headers.append("authorization", "Bearer $authorizationKey")
         }
     }
 }

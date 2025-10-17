@@ -38,10 +38,12 @@ buildkonfig {
 
     targetConfigs {
         create("android") {
+            field("headerPlatformAndroid", FieldSpec.Type.STRING, "headerPlatform")
             field("serverBaseUrlAndroid", FieldSpec.Type.STRING, "serverBaseUrl")
         }
 
         create("ios") {
+            field("headerPlatformIos", FieldSpec.Type.STRING, "headerPlatform")
             field("serverBaseUrlIos", FieldSpec.Type.STRING, "serverBaseUrl")
         }
     }
