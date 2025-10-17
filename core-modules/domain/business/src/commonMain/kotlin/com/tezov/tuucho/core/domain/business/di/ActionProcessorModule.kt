@@ -12,7 +12,6 @@ import org.koin.dsl.module
 internal object ActionProcessorModule {
 
     fun invoke() = module {
-
         factory<FormSendUrlActionProcessor> {
             FormSendUrlActionProcessor(
                 useCaseExecutor = get(),

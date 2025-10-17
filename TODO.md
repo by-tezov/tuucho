@@ -1,11 +1,17 @@
 ## In progress
 
-- update doc and close the release
+- clean and save ci/cd
+- update doc and close the release / Update the roadmap (readme on sample app)
+
+- fix module split / module declaration to allow getAll to work on those needed
+
+- add network error management around the other use case
 
 *** ***
 - still need to fix mock server
 - Need a way to let core barrel on dev without fail because test lib are not here.
 - form field initial value inside state, need to make the matcher for the text and uncomment id update register
+    - fix state error with "" or just string ?
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 
 **** ****
