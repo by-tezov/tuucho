@@ -12,9 +12,10 @@ In your **shared module** (`commonMain`) you need the Tuucho core library plus i
 
 ```kotlin
  commonMain.dependencies {
-    implementation("com.tezov:tuucho.core:0.0.1-alpha13_2.2.10") // for kotlin 2.2.10     
+    implementation("com.tezov:tuucho.core:0.0.1-alpha16_2.2.20") // for kotlin 2.2.20     
     implementation("io.insert-koin:koin-core:4.1.1")     
     implementation("io.insert-koin:koin-compose:4.1.1")
+    implementation("io.ktor:ktor-client-core:3.3.1")
 
     implementation(compose.runtime)
     implementation(compose.foundation)
@@ -35,33 +36,51 @@ fun AppScreen(
 ) {
     val tuuchoEngine = rememberTuuchoEngine()
     LaunchedEffect(Unit) {
-        tuuchoEngine.load(url = "config")
         tuuchoEngine.start(url = "page-home")
     }
     tuuchoEngine.display()
 }
 ```
 
-The sample repository uses this pattern – the `AppScreen` composable calls `rememberTuuchoEngine`, loads a configuration to preload / cache or update content. Take a look to [Config details](config/index.md)
+> The sample repository uses this pattern – the `AppScreen` composable calls `rememberTuuchoEngine`.
+> Configuration are preloaded and cached with the help of a middleware to detect if we are on unauthenticated zone or authenticated zone.
+> Take a look to [Config details](config/index.md) to understand the config file format.
+
 
 ## 3 Supply configuration via Koin in the shared module
 
-Tuucho needs the database file name and base url of your backend.  Define a Koin module that provides a `SystemCoreDataModules.Config` instance.  In the shared module you can implement this interface with your own values:
+Tuucho needs configuration properties, like you server base url, endpoint, database file name.  Define a Koin module that provides a `SystemCoreDataModules.Config` instance.  In the shared module you can implement this interface with your own values:
 
 ```kotlin
 val configurationModuleDeclaration: ModuleDeclaration = {
-        factory<SystemCoreDataModules.Config> {
-            object : SystemCoreDataModules.Config {
-            override val localDatabaseFile: String = "database.db"
-            override val serverUrl: String = "http://localhost:3000/"
+
+    factory<StoreRepositoryModule.Config> {
+        object : StoreRepositoryModule.Config {
+            override val fileName = "datastore"
+        }
+    }
+    factory<DatabaseRepositoryModule.Config> {
+        object : DatabaseRepositoryModule.Config {
+            override val fileName = "database"
+        }
+    }
+    
+    factory<NetworkRepositoryModule.Config> {
+        object : NetworkRepositoryModule.Config {
+            override val timeoutMillis = 5000
+            override val version = "v1"
+            override val baseUrl = "http://localhost:3000/"
+            override val healthEndpoint = "health"
+            override val resourceEndpoint = "resource"
+            override val sendEndpoint = "send"
         }
     }
 }
 ```
 
-The core module defines the `Config` interface with two properties (`localDatabaseFile` and `serverUrl`).  
+The core module defines the `Config` interface for `StoreRepositoryModule`, `DatabaseRepositoryModule` and `NetworkRepositoryModule`.  
 
-The sample application uses `BuildKonfig` to generate these values per platform.
+> The sample application uses `BuildKonfig` to generate these values per platform.
 
 ## 4 Android integration
 
@@ -72,7 +91,7 @@ First you need the to add the dependencies
 ```kotlin
  dependencies {
     implementation(project(":app:shared"))
-    implementation("com.tezov:tuucho.core-android:0.0.1-alpha13_2.2.10") // for kotlin 2.2.10   
+    implementation("com.tezov:tuucho.core-android:0.0.1-alpha16_2.2.20") // for kotlin 2.2.20   
 
     implementation("androidx.activity:activity-compose:1.11.0")
     implementation("io.insert-koin:koin-core:4.1.1")
@@ -139,7 +158,7 @@ Present `ContentView` from your root view controller and Tuucho will render the 
 
 ## 6 Backend
 
-Tuucho renders its UI from a backend server.  For a quick test you can run the [tuucho‑backend](https://github.com/by-tezov/tuucho-backend) repository with a version matching your Tuucho client.
+Tuucho renders its UI from a backend server.  For a quick test you can run the [tuucho‑backend](https://github.com/by-tezov/tuucho-backend) dev repository locally with a version matching your Tuucho client.
 
 The engine is under active development.  At the time of writing the UI components are limited to basic primitives (fields, labels, linear layouts, buttons and spacers).  The ability to register custom views and provide richer UI will evolve in future releases.
 

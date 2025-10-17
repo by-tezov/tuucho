@@ -1,10 +1,5 @@
 ## In progress
 
-- clean and save ci/cd
-- update doc and close the release / Update the roadmap (readme on sample app)
-
-- fix module split / module declaration to allow getAll to work on those needed
-
 - add network error management around the other use case
 
 *** ***
@@ -16,9 +11,6 @@
 
 **** ****
 - add lock on command (mke it smart and easy for nested lock... and always released, cf throw on network)
-- add language management
-- add selector management + on text language too (also for dimension/color)
 - add bottom/top screen not react to transition
-
 - Improve: update view have a knowledge of previous element and next element to avoid overhear job (aka generate validators)
 - Improve: solution for JsonObject low storage update easy ?

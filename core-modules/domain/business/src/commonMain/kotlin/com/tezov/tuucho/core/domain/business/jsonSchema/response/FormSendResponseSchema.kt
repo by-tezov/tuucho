@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.response
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.action.ActionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
@@ -36,6 +36,18 @@ object FormSendResponseSchema {
 
             var id by delegate<String?>(Key.id)
             var reason by delegate<JsonObject?>(Key.reason)
+        }
+    }
+
+    object Action {
+        object Key {
+            const val before = "before"
+            const val after = "after"
+        }
+
+        class Scope(argument: SchemaScopeArgument) : ActionSchema.OpenScope<Scope>(argument) {
+            var before by delegate<JsonArray?>(Key.before)
+            var after by delegate<JsonArray?>(Key.after)
         }
     }
 

@@ -7,7 +7,7 @@
     "subset": "layout-linear",
     "style": {
       "orientation": "vertical",
-      "background-color": { "id": "*background:gray-light" },
+      "background-color": { "id": "*background@gray-light" },
       "fill-max-size": true
     },
     "content": {
@@ -20,7 +20,7 @@
           "subset": "label",
           "style": "*title-section",
           "content": {
-            "value": "*form:text-form-section-title"
+            "value": "*form@text-form-section-title"
           }
         },
         {
@@ -57,7 +57,7 @@
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
-            "background-color": "*background:funny-color",
+            "background-color": "*background@funny-color",
             "fill-max-width": true
           },
           "content": {
@@ -95,84 +95,82 @@
       ]
     }
   },
-  "components": [
-    {
-      "id": "title",
-      "subset": "label",
-      "style": "*title-label",
-      "content": {
-        "value": { "id": "*text-title" }
-      }
-    },
-    {
-      "id": "body",
-      "subset": "label",
-      "style": {
-        "id": "*title-body"
+  "components": {
+    "common": {
+      "title": {
+        "subset": "label",
+        "style": "*title-label",
+        "content": {
+          "value": { "id": "*text-title" }
+        }
       },
-      "content": {
-        "value": { "id": "*text-body" }
-      }
-    },
-    {
-      "id": "input-field-age",
-      "subset": "field",
-      "option": {
-        "validator": [
-          {
-            "type": "string-min-value",
-            "value": "18",
-            "id-message-error": "*validator-1"
-          },
-          {
-            "type": "string-max-value",
-            "value": "65",
-            "id-message-error": "*validator-2"
-          },
-          {
-            "type": "string-not-null",
-            "id-message-error": "*validator-4"
-          }
-        ]
+      "body": {
+        "subset": "label",
+        "style": {
+          "id": "*title-body"
+        },
+        "content": {
+          "value": { "id": "*text-body" }
+        }
       },
-      "content": {
-        "title": "*form:text-form-age-title",
-        "placeholder": "*form:text-form-age-placeholder",
-        "message-error": [
-          {
-            "id": "validator-1",
-            "default": "you must have at least 18 years"
-          },
-          {
-            "id": "validator-2",
-            "default": "you must have at most 65 years"
-          },
-          {
-            "id": "validator-4",
-            "default": "age can't be empty"
-          }
-        ]
-      }
-    },
-    {
-      "id": "input-field-email",
-      "subset": "field",
-      "option": {
-        "validator": [
-          {
-            "type": "string-email",
-            "id-message-error": "*validator-1"
-          },
-          {
-            "type": "string-not-null",
-            "id-message-error": "*validator-2"
-          }
-        ]
+      "input-field-age": {
+        "subset": "field",
+        "option": {
+          "validator": [
+            {
+              "type": "string-min-value",
+              "value": "18",
+              "id-message-error": "*validator-1"
+            },
+            {
+              "type": "string-max-value",
+              "value": "65",
+              "id-message-error": "*validator-2"
+            },
+            {
+              "type": "string-not-null",
+              "id-message-error": "*validator-4"
+            }
+          ]
+        },
+        "content": {
+          "title": "*form@text-form-age-title",
+          "placeholder": "*form@text-form-age-placeholder",
+          "message-error": [
+            {
+              "id": "validator-1",
+              "default": "you must have at least 18 years"
+            },
+            {
+              "id": "validator-2",
+              "default": "you must have at most 65 years"
+            },
+            {
+              "id": "validator-4",
+              "default": "age can't be empty"
+            }
+          ]
+        }
       },
-      "content": "*input-field-age-content"
+      "input-field-email": {
+        "subset": "field",
+        "option": {
+          "validator": [
+            {
+              "type": "string-email",
+              "id-message-error": "*validator-1"
+            },
+            {
+              "type": "string-not-null",
+              "id-message-error": "*validator-2"
+            }
+          ]
+        },
+        "content": "*input-field-age-content"
+      }
     }
-  ],
-  "styles": [
+  },
+  "styles": [ //instead of object where key is id, we use can use the array format
     {
       "id": "title-section",
       "font-size": "18",

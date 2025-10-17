@@ -1,17 +1,15 @@
 sudo apt install python3-pip -y
 python3 -m venv .venv
-
 source .venv/bin/activate
 pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin pymdown-extensions mkdocs-redirects mkdocs-minify-plugin mkdocs-macros-plugin mike
 
-pip freeze > requirements.txt
 mkdocs serve -a 127.0.0.1:8001
 
+mike set-default 0.0.1-alpha
 mike deploy x.x.x
 mike deploy x.x.x --update-aliases latest
-
 mike deploy --update x.x.x
-mike set-default v2
 mike serve -a 127.0.0.1:8001
 
 ffmpeg -i input.flv output.mp4
+pip freeze > requirements.txt

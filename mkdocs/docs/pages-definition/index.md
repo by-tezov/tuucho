@@ -12,11 +12,12 @@ A **page** JSON describes a full screen layout.
   "root": { ... },
   "components": [ ... ],
   "styles": [ ... ],
-  "options": { ... },
+  "options": [ ... ],
   "contents": [ ... ],
-  "texts": { ... },
-  "colors": { ... },
-  "dimensions": { ... }
+  "texts": [ ... ],
+  "colors": [ ... ],
+  "dimensions": [ ... ],
+  "actions": [ ... ]
 }
 ```
 
@@ -26,14 +27,15 @@ A **page** JSON describes a full screen layout.
 
 Refer to the following for detailed definitions of each object type:
 
--  [Setting](../object-definition/page-setting.md)
--  [Components](../components-definition/index.md)
--  [Styles](../object-definition/style.md)
--  [Options](../object-definition/option.md)
--  [Contents](../object-definition/content.md)
--  [Texts](../object-definition/text.md)
+-  [Actions](../object-definition/action.md)
 -  [Colors](../object-definition/color.md)
+-  [Components](../components-definition/index.md)
+-  [Contents](../object-definition/content.md)
 -  [Dimensions](../object-definition/dimension.md)
+-  [Options](../object-definition/option.md)
+-  [Setting](../object-definition/page-setting.md)
+-  [Styles](../object-definition/style.md)
+-  [Texts](../object-definition/text.md)
 
 All available components can be browsed [here](../components-definition/index.md).
 

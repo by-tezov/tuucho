@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.content.ContentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
