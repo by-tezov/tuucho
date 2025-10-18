@@ -16,13 +16,15 @@ CI command (use label 'trigger CI' after update)
 ---
 - [ ] : push trigger CI when on draft
 - **build type**:
-  - [x] : mock
-  - [ ] : dev
-  - [ ] : stage
-  - [ ] : release
-- [x] : unit-test
+  - [ ] ~~mock~~ broken
+  - [x] dev
+  - [ ] ~~stage~~ not available yet
+  - [ ] ~~release~~
+- [x] : unit-test not available yet
 ---
 **QA branch name** : master
+
+**Backend branch name** : master
 - [ ] : create visual baseline
 - **language**:
   - [x] : en
