@@ -19,8 +19,8 @@ CI command (use label 'trigger CI' after update)
   - [ ] ~~mock~~ broken
   - [x] dev
   - [ ] ~~stage~~ not available yet
-  - [ ] ~~release~~
-- [x] : unit-test not available yet
+  - [ ] ~~release~~ not available yet
+- [x] : unit-test 
 ---
 **QA branch name** : master
 
