@@ -23,6 +23,7 @@ CI command (use label 'trigger CI' after update)
 - [x] : unit-test
 ---
 **QA branch name** : master
+**Backend branch name** : master
 - [ ] : create visual baseline
 - **language**:
   - [x] : en
