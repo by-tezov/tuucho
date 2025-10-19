@@ -2,7 +2,6 @@
 #convention
 domain = "com.tezov"
 name = "tuucho"
-mavenPropertiesFilePath = "maven.properties"
 versionCode = "1"
 versionName = "0.0.1-alpha18_2.2.20"
 isSnapshot = "false"
