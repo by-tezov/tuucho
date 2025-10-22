@@ -9,11 +9,15 @@ internal object StoreRepositoryModuleIos {
 
     fun invoke() = module {
 
-        single<KeyValueStoreRepositoryProtocol> {
+        single<NSUserDefaults> {
+            NSUserDefaults(
+                suiteName = get<StoreRepositoryModule.Config>().fileName
+            )
+        }
+
+        factory<KeyValueStoreRepositoryProtocol> {
             KeyValueStoreRepository(
-                userDefaults = NSUserDefaults(
-                    suiteName = get<StoreRepositoryModule.Config>().fileName
-                )
+                userDefaults = get()
             )
         }
     }

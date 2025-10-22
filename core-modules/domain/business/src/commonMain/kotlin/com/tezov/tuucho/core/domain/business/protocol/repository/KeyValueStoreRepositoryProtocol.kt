@@ -6,10 +6,8 @@ interface KeyValueStoreRepositoryProtocol {
         val value: String
 
         companion object {
-            fun String.toKey(): Key {
-                return object : Key {
-                    override val value: String = this@toKey
-                }
+            fun String.toKey() = object : Key {
+                override val value: String = this@toKey
             }
         }
     }
@@ -18,10 +16,8 @@ interface KeyValueStoreRepositoryProtocol {
         val value: String
 
         companion object {
-            fun String.toValue(): Value {
-                return object : Value {
-                    override val value: String = this@toValue
-                }
+            fun String.toValue() = object : Value {
+                override val value: String = this@toValue
             }
         }
     }
