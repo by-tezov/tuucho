@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
@@ -12,7 +13,7 @@ import org.koin.core.component.KoinComponent
 class NavigationStackScreenRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val screenRenderer: ScreenRendererProtocol,
-) : StackScreen, KoinComponent {
+) : StackScreen, TuuchoKoinComponent {
 
     private val stack = mutableListOf<ScreenProtocol>()
     private val stackLock = Mutex()

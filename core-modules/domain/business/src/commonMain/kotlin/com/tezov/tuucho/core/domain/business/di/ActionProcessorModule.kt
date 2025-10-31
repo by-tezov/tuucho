@@ -6,48 +6,56 @@ import com.tezov.tuucho.core.domain.business.interaction.action.NavigationLocalD
 import com.tezov.tuucho.core.domain.business.interaction.action.NavigationUrlActionProcessor
 import com.tezov.tuucho.core.domain.business.interaction.action.StoreActionProcessor
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import org.koin.core.module.Module
 import org.koin.dsl.bind
-import org.koin.dsl.module
 
 internal object ActionProcessorModule {
 
-    fun invoke() = module {
-        factory<FormSendUrlActionProcessor> {
-            FormSendUrlActionProcessor(
-                useCaseExecutor = get(),
-                getOrNullScreen = get(),
-                sendData = get()
-            )
-        } bind ActionProcessorProtocol::class
+    fun invoke() = object : ModuleProtocol {
 
-        factory<FormUpdateActionProcessor> {
-            FormUpdateActionProcessor(
-                useCaseExecutor = get(),
-                updateView = get()
-            )
-        } bind ActionProcessorProtocol::class
+        override val group = ModuleGroupDomain.ActionProcessor
 
-        factory<NavigationLocalDestinationActionProcessor> {
-            NavigationLocalDestinationActionProcessor(
-                useCaseExecutor = get(),
-                navigateBack = get()
-            )
-        } bind ActionProcessorProtocol::class
+        override fun Module.declaration() {
 
-        factory<NavigationUrlActionProcessor> {
-            NavigationUrlActionProcessor(
-                useCaseExecutor = get(),
-                navigateToUrl = get()
-            )
-        } bind ActionProcessorProtocol::class
+            factory<FormSendUrlActionProcessor> {
+                FormSendUrlActionProcessor(
+                    useCaseExecutor = get(),
+                    getOrNullScreen = get(),
+                    sendData = get()
+                )
+            } bind ActionProcessorProtocol::class
 
-        factory<StoreActionProcessor> {
-            StoreActionProcessor(
-                useCaseExecutor = get(),
-                saveKeyValueToStore = get(),
-                removeKeyValueFromStore = get()
-            )
-        } bind ActionProcessorProtocol::class
+            factory<FormUpdateActionProcessor> {
+                FormUpdateActionProcessor(
+                    useCaseExecutor = get(),
+                    updateView = get()
+                )
+            } bind ActionProcessorProtocol::class
+
+            factory<NavigationLocalDestinationActionProcessor> {
+                NavigationLocalDestinationActionProcessor(
+                    useCaseExecutor = get(),
+                    navigateBack = get()
+                )
+            } bind ActionProcessorProtocol::class
+
+            factory<NavigationUrlActionProcessor> {
+                NavigationUrlActionProcessor(
+                    useCaseExecutor = get(),
+                    navigateToUrl = get()
+                )
+            } bind ActionProcessorProtocol::class
+
+            factory<StoreActionProcessor> {
+                StoreActionProcessor(
+                    useCaseExecutor = get(),
+                    saveKeyValueToStore = get(),
+                    removeKeyValueFromStore = get()
+                )
+            } bind ActionProcessorProtocol::class
+
+        }
     }
 }
 

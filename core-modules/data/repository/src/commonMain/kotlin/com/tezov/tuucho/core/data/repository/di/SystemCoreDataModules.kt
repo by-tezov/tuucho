@@ -1,12 +1,15 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import org.koin.core.module.Module
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import kotlin.collections.List
+import kotlin.collections.listOf
+import kotlin.collections.plus
 
-internal expect fun SystemCoreDataModules.platformInvoke():List<Module>
+internal expect fun SystemCoreDataModules.platformInvoke(): List<ModuleProtocol>
 
 object SystemCoreDataModules {
 
-    fun invoke():List<Module> = listOf(
+    fun invoke(): List<ModuleProtocol> = listOf(
         MiscModule.invoke(),
         MaterialRectifierModule.invoke(),
         MaterialBreakerModule.invoke(),

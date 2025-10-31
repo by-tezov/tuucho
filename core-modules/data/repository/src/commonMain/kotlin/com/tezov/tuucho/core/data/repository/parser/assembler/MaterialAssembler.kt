@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.data.repository.parser.assembler
 import com.tezov.tuucho.core.data.repository.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
@@ -13,7 +14,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OpenForTest
-class MaterialAssembler() : KoinComponent {
+class MaterialAssembler() : TuuchoKoinComponent {
 
     private val assemblers: List<AbstractAssembler> by inject(Name.ASSEMBLERS)
 

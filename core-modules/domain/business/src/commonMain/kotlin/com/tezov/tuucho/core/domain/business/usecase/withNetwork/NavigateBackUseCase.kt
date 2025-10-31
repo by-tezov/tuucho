@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
@@ -25,7 +26,7 @@ class NavigateBackUseCase(
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: InterractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
-) : UseCaseProtocol.Sync<Unit, Unit>, KoinComponent {
+) : UseCaseProtocol.Sync<Unit, Unit>, TuuchoKoinComponent {
 
     override fun invoke(input: Unit) {
         coroutineScopes.useCase.async {

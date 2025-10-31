@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.JsonObjectMerger
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.MatcherAssemblerProtocol
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
@@ -12,10 +13,9 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class AbstractAssembler : MatcherAssemblerProtocol, KoinComponent {
+abstract class AbstractAssembler : MatcherAssemblerProtocol, TuuchoKoinComponent {
     abstract val schemaType: String
 
     private val jsonObjectMerger: JsonObjectMerger by inject()

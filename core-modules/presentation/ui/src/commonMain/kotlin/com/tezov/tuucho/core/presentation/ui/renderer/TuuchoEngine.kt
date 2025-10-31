@@ -30,7 +30,6 @@ import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideVertical.
 import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
-import org.koin.compose.currentKoinScope
 
 interface TuuchoEngineProtocol {
 
@@ -48,13 +47,6 @@ class TuuchoEngine(
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
     private val navigateToUrl: NavigateToUrlUseCase,
 ) : TuuchoEngineProtocol {
-
-    companion object {
-        @Composable
-        fun rememberTuuchoEngine(): TuuchoEngineProtocol = currentKoinScope().let { scope ->
-            remember(scope) { scope.get(TuuchoEngineProtocol::class, null) }
-        }
-    }
 
     private data class Group(
         val screens: List<ScreenProtocol>,
@@ -202,26 +194,27 @@ class TuuchoEngine(
     private fun ModifierTransition(
         animationProgress: AnimationProgress,
         spec: JsonObject,
-    ): AbstractModifierTransition = spec.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
-        .let { scope ->
-            when (scope.type) {
-                Type.fade -> animationProgress.fade(
-                    specObject = spec,
-                )
+    ): AbstractModifierTransition =
+        spec.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
+            .let { scope ->
+                when (scope.type) {
+                    Type.fade -> animationProgress.fade(
+                        specObject = spec,
+                    )
 
-                Type.slideHorizontal -> animationProgress.slideHorizontal(
-                    specObject = spec
-                )
+                    Type.slideHorizontal -> animationProgress.slideHorizontal(
+                        specObject = spec
+                    )
 
-                Type.slideVertical -> animationProgress.slideVertical(
-                    specObject = spec
-                )
+                    Type.slideVertical -> animationProgress.slideVertical(
+                        specObject = spec
+                    )
 
-                Type.none -> animationProgress.none()
+                    Type.none -> animationProgress.none()
 
-                else -> throw UiException.Default("unknown transition type ${scope.type}")
+                    else -> throw UiException.Default("unknown transition type ${scope.type}")
+                }
             }
-        }
 }
 
 

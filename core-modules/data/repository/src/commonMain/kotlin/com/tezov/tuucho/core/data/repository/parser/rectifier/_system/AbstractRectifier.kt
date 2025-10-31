@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier._system
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
@@ -12,7 +13,7 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
 //Improve add meta data 'path' for breaker, assembler and shadower to improve speed
-abstract class AbstractRectifier : MatcherRectifierProtocol, KoinComponent {
+abstract class AbstractRectifier : MatcherRectifierProtocol, TuuchoKoinComponent {
     protected open val matchers: List<MatcherRectifierProtocol> = emptyList()
     protected open val childProcessors: List<AbstractRectifier> = emptyList()
 

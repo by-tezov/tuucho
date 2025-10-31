@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser._system.JsonArrayNode
 import com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode
 import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -20,7 +21,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.KoinComponent
 
-abstract class AbstractBreaker : MatcherBreakerProtocol, KoinComponent {
+abstract class AbstractBreaker : MatcherBreakerProtocol, TuuchoKoinComponent {
     protected open val matchers: List<MatcherBreakerProtocol> = emptyList()
     protected open val childProcessors: List<AbstractBreaker> = emptyList()
 

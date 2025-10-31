@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.data.repository.parser.breaker
 
 import com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode
 import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
@@ -11,7 +12,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OpenForTest
-class MaterialBreaker : KoinComponent {
+class MaterialBreaker : TuuchoKoinComponent {
 
     data class Nodes(
         val rootJsonObjectNode: JsonObjectNode?,

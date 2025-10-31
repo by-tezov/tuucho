@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.action
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -20,7 +21,7 @@ import org.koin.core.component.KoinComponent
 class FormUpdateActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val updateView: UpdateViewUseCase,
-) : ActionProcessorProtocol, KoinComponent {
+) : ActionProcessorProtocol, TuuchoKoinComponent {
 
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT

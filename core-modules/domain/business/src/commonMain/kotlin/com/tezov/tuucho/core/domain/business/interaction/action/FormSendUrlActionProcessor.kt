@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.action
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -30,7 +31,7 @@ class FormSendUrlActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val getOrNullScreen: GetScreenOrNullUseCase,
     private val sendData: SendDataUseCase,
-) : ActionProcessorProtocol, KoinComponent {
+) : ActionProcessorProtocol, TuuchoKoinComponent {
 
     private val actionHandler: ProcessActionUseCase by inject()
 

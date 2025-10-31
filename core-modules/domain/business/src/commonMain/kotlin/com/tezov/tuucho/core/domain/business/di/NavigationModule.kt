@@ -5,9 +5,10 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationSt
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackScreenRepository
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackTransitionRepository
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import org.koin.core.module.Module
 import org.koin.core.qualifier.named
-import org.koin.dsl.module
 
 internal object NavigationModule {
 
@@ -15,33 +16,36 @@ internal object NavigationModule {
         val ID_GENERATOR = named("NavigationModule.Name.ID_GENERATOR")
     }
 
-    fun invoke() = module {
+    fun invoke() = object : ModuleProtocol {
 
-        single<IdGeneratorProtocol>(Name.ID_GENERATOR) {
-            NavigationRouteIdGenerator()
+        override val group = ModuleGroupDomain.Main
+
+        override fun Module.declaration() {
+            single<IdGeneratorProtocol>(Name.ID_GENERATOR) {
+                NavigationRouteIdGenerator()
+            }
+
+            single<NavigationRepositoryProtocol.StackRoute> {
+                NavigationStackRouteRepository(
+                    coroutineScopes = get(),
+                )
+            }
+
+            single<NavigationRepositoryProtocol.StackScreen> {
+                NavigationStackScreenRepository(
+                    coroutineScopes = get(),
+                    screenRenderer = get()
+                )
+            }
+
+            single<NavigationRepositoryProtocol.StackTransition> {
+                NavigationStackTransitionRepository(
+                    coroutineScopes = get(),
+                    useCaseExecutor = get(),
+                    navigationStackTransitionHelperFactory = get(),
+                )
+            }
         }
-
-        single<NavigationRepositoryProtocol.StackRoute> {
-            NavigationStackRouteRepository(
-                coroutineScopes = get(),
-            )
-        }
-
-        single<NavigationRepositoryProtocol.StackScreen> {
-            NavigationStackScreenRepository(
-                coroutineScopes = get(),
-                screenRenderer = get()
-            )
-        }
-
-        single<NavigationRepositoryProtocol.StackTransition> {
-            NavigationStackTransitionRepository(
-                coroutineScopes = get(),
-                useCaseExecutor = get(),
-                navigationStackTransitionHelperFactory = get(),
-            )
-        }
-
     }
 
 }

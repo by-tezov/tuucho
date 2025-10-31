@@ -11,7 +11,8 @@ import com.tezov.tuucho.core.data.repository.database.table.JsonObjectContextual
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
-import org.koin.dsl.module
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import org.koin.core.module.Module
 
 object DatabaseRepositoryModule {
 
@@ -19,60 +20,65 @@ object DatabaseRepositoryModule {
         val fileName: String
     }
 
-    internal fun invoke() = module {
+    internal fun invoke() = object : ModuleProtocol {
 
-        factory<JsonObjectAdapter> {
-            JsonObjectAdapter(json = get())
-        }
+        override val group = ModuleGroupData.Main
 
-        factory<LifetimeAdapter> {
-            LifetimeAdapter(json = get())
-        }
+        override fun Module.declaration() {
 
-        factory<VisibilityAdapter> {
-            VisibilityAdapter(json = get())
-        }
+            factory<JsonObjectAdapter> {
+                JsonObjectAdapter(json = get())
+            }
 
-        single<Database> {
-            Database(
-                driver = get(),
-                jsonObjectCommonEntryAdapter = JsonObjectCommonEntry.Adapter(
-                    jsonObjectAdapter = get<JsonObjectAdapter>()
-                ),
-                jsonObjectContextualEntryAdapter = JsonObjectContextualEntry.Adapter(
-                    jsonObjectAdapter = get<JsonObjectAdapter>()
-                ),
-                hookEntryAdapter = HookEntry.Adapter(
-                    visibilityAdapter = get<VisibilityAdapter>(),
-                    lifetimeAdapter = get<LifetimeAdapter>()
-                ),
-            )
-        }
+            factory<LifetimeAdapter> {
+                LifetimeAdapter(json = get())
+            }
 
-        factory<JsonObjectQueries> {
-            JsonObjectQueries(
-                database = get()
-            )
-        }
+            factory<VisibilityAdapter> {
+                VisibilityAdapter(json = get())
+            }
 
-        factory<HookQueries> {
-            HookQueries(
-                database = get()
-            )
-        }
+            single<Database> {
+                Database(
+                    driver = get(),
+                    jsonObjectCommonEntryAdapter = JsonObjectCommonEntry.Adapter(
+                        jsonObjectAdapter = get<JsonObjectAdapter>()
+                    ),
+                    jsonObjectContextualEntryAdapter = JsonObjectContextualEntry.Adapter(
+                        jsonObjectAdapter = get<JsonObjectAdapter>()
+                    ),
+                    hookEntryAdapter = HookEntry.Adapter(
+                        visibilityAdapter = get<VisibilityAdapter>(),
+                        lifetimeAdapter = get<LifetimeAdapter>()
+                    ),
+                )
+            }
 
-        factory<DatabaseTransactionFactory> {
-            DatabaseTransactionFactory(
-                database = get()
-            )
-        }
+            factory<JsonObjectQueries> {
+                JsonObjectQueries(
+                    database = get()
+                )
+            }
 
-        factory<MaterialDatabaseSource> {
-            MaterialDatabaseSource(
-                transactionFactory = get(),
-                hookQueries = get(),
-                jsonObjectQueries = get()
-            )
+            factory<HookQueries> {
+                HookQueries(
+                    database = get()
+                )
+            }
+
+            factory<DatabaseTransactionFactory> {
+                DatabaseTransactionFactory(
+                    database = get()
+                )
+            }
+
+            factory<MaterialDatabaseSource> {
+                MaterialDatabaseSource(
+                    transactionFactory = get(),
+                    hookQueries = get(),
+                    jsonObjectQueries = get()
+                )
+            }
         }
     }
 

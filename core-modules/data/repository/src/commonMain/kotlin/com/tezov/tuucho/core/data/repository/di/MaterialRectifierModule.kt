@@ -41,9 +41,9 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StyleRectifi
 import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StylesRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextsRectifier
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
-import org.koin.dsl.module
 
 internal object MaterialRectifierModule {
 
@@ -79,228 +79,232 @@ internal object MaterialRectifierModule {
         }
     }
 
-    fun invoke() = module {
-        single<MaterialRectifier> { MaterialRectifier() }
+    fun invoke() = object : ModuleProtocol {
 
-        idModule()
-        componentModule()
-        settingModule()
-        contentModule()
-        styleModule()
-        optionModule()
-        stateModule()
-        textModule()
-        colorModule()
-        dimensionModule()
-        actionModule()
-        fieldValidatorModule()
+        override val group = ModuleGroupData.Rectifier
+
+        override fun Module.declaration() {
+            single<MaterialRectifier> { MaterialRectifier() }
+
+            idModule()
+            componentModule()
+            settingModule()
+            contentModule()
+            styleModule()
+            optionModule()
+            stateModule()
+            textModule()
+            colorModule()
+            dimensionModule()
+            actionModule()
+            fieldValidatorModule()
+        }
+
+        private fun Module.idModule() {
+            single<IdRectifier> {
+                IdRectifier(
+                    idGenerator = RectifierIdGenerator()
+                )
+            }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.ID) {
+                listOf(IdMatcher())
+            }
+        }
+
+        private fun Module.componentModule() {
+            single<ComponentsRectifier> { ComponentsRectifier() }
+
+            single<ComponentRectifier> { ComponentRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.COMPONENT) {
+                listOf(
+                    ContentButtonLabelMatcher(),
+                )
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.COMPONENT) {
+                listOf(
+                    get<IdRectifier>(),
+                    get<SettingComponentRectifier>(),
+                    get<ContentRectifier>(),
+                    get<StyleRectifier>(),
+                    get<OptionRectifier>(),
+                )
+            }
+        }
+
+        private fun Module.settingModule() {
+            single<SettingComponentRectifier> { SettingComponentRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
+                emptyList()
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.SETTING) {
+                listOf(
+                    get<IdRectifier>(),
+                    SettingComponentNavigationRectifier(),
+                )
+            }
+        }
+
+        private fun Module.contentModule() {
+            single<ContentsRectifier> { ContentsRectifier() }
+
+            single<ContentRectifier> { ContentRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.CONTENT) {
+                emptyList()
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.CONTENT) {
+                listOf(
+                    get<IdRectifier>(),
+                    ContentLayoutLinearItemsRectifier(),
+                    ContentButtonLabelRectifier(),
+                    ContentFormFieldTextErrorRectifier(),
+                    get<ActionRectifier>(),
+                    get<TextRectifier>(),
+                    get<ComponentRectifier>(),
+                )
+            }
+        }
+
+        private fun Module.styleModule() {
+            single<StylesRectifier> { StylesRectifier() }
+
+            single<StyleRectifier> { StyleRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.STYLE) {
+                emptyList()
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.STYLE) {
+                listOf(
+                    get<IdRectifier>(),
+                    get<ColorRectifier>(),
+                    get<DimensionRectifier>()
+                )
+            }
+        }
+
+        private fun Module.optionModule() {
+            single<OptionsRectifier> { OptionsRectifier() }
+
+            single<OptionRectifier> { OptionRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.OPTION) {
+                emptyList()
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.OPTION) {
+                listOf(
+                    get<IdRectifier>(),
+                    get<FormValidatorRectifier>(),
+                )
+            }
+        }
+
+        private fun Module.stateModule() {
+            single<StatesRectifier> { StatesRectifier() }
+
+            single<StateRectifier> { StateRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.STATE) {
+                emptyList()
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.STATE) {
+                listOf(
+                    get<IdRectifier>()
+                )
+            }
+        }
+
+        private fun Module.textModule() {
+            single<TextsRectifier> { TextsRectifier() }
+
+            single<TextRectifier> { TextRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.TEXT) {
+                listOf(
+                    ContentLabelTextMatcher(),
+                    ContentFormFieldTextMatcher(),
+                    ContentFormFieldTextErrorMatcher(),
+                    StateFormFieldTextMatcher(),
+                )
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.TEXT) {
+                listOf(get<IdRectifier>())
+            }
+        }
+
+        private fun Module.colorModule() {
+            single<ColorsRectifier> { ColorsRectifier() }
+
+            single<ColorRectifier> { ColorRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.COLOR) {
+                listOf(
+                    StyleLabelColorMatcher(),
+                    StyleLayoutLinearColorMatcher(),
+                )
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.COLOR) {
+                listOf(get<IdRectifier>())
+            }
+        }
+
+        private fun Module.dimensionModule() {
+            single<DimensionsRectifier> { DimensionsRectifier() }
+
+            single<DimensionRectifier> { DimensionRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.DIMENSION) {
+                listOf(
+                    StyleLabelDimensionMatcher(),
+                    StyleSpacerDimensionMatcher(),
+                )
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.DIMENSION) {
+                listOf(get<IdRectifier>())
+            }
+        }
+
+        private fun Module.actionModule() {
+            single<ActionsRectifier> { ActionsRectifier() }
+
+            single<ActionRectifier> { ActionRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.ACTION) {
+                listOf(
+                    ActionButtonMatcher()
+                )
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.ACTION) {
+                listOf(get<IdRectifier>())
+            }
+        }
+
+        private fun Module.fieldValidatorModule() {
+            single<FormValidatorRectifier> { FormValidatorRectifier() }
+
+            single<List<MatcherRectifierProtocol>>(Name.Matcher.FIELD_VALIDATOR) {
+                listOf(
+                    OptionFormFieldValidatorMatcher()
+                )
+            }
+
+            single<List<AbstractRectifier>>(Name.Processor.FIELD_VALIDATOR) {
+                emptyList()
+            }
+        }
     }
-
-    private fun Module.idModule() {
-        single<IdRectifier> {
-            IdRectifier(
-                idGenerator = RectifierIdGenerator()
-            )
-        }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.ID) {
-            listOf(IdMatcher())
-        }
-    }
-
-    private fun Module.componentModule() {
-        single<ComponentsRectifier> { ComponentsRectifier() }
-
-        single<ComponentRectifier> { ComponentRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.COMPONENT) {
-            listOf(
-                ContentButtonLabelMatcher(),
-            )
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.COMPONENT) {
-            listOf(
-                get<IdRectifier>(),
-                get<SettingComponentRectifier>(),
-                get<ContentRectifier>(),
-                get<StyleRectifier>(),
-                get<OptionRectifier>(),
-            )
-        }
-    }
-
-    private fun Module.settingModule() {
-        single<SettingComponentRectifier> { SettingComponentRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
-            emptyList()
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.SETTING) {
-            listOf(
-                get<IdRectifier>(),
-                SettingComponentNavigationRectifier(),
-            )
-        }
-    }
-
-    private fun Module.contentModule() {
-        single<ContentsRectifier> { ContentsRectifier() }
-
-        single<ContentRectifier> { ContentRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.CONTENT) {
-            emptyList()
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.CONTENT) {
-            listOf(
-                get<IdRectifier>(),
-                ContentLayoutLinearItemsRectifier(),
-                ContentButtonLabelRectifier(),
-                ContentFormFieldTextErrorRectifier(),
-                get<ActionRectifier>(),
-                get<TextRectifier>(),
-                get<ComponentRectifier>(),
-            )
-        }
-    }
-
-    private fun Module.styleModule() {
-        single<StylesRectifier> { StylesRectifier() }
-
-        single<StyleRectifier> { StyleRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.STYLE) {
-            emptyList()
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.STYLE) {
-            listOf(
-                get<IdRectifier>(),
-                get<ColorRectifier>(),
-                get<DimensionRectifier>()
-            )
-        }
-    }
-
-    private fun Module.optionModule() {
-        single<OptionsRectifier> { OptionsRectifier() }
-
-        single<OptionRectifier> { OptionRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.OPTION) {
-            emptyList()
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.OPTION) {
-            listOf(
-                get<IdRectifier>(),
-                get<FormValidatorRectifier>(),
-            )
-        }
-    }
-
-    private fun Module.stateModule() {
-        single<StatesRectifier> { StatesRectifier() }
-
-        single<StateRectifier> { StateRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.STATE) {
-            emptyList()
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.STATE) {
-            listOf(
-                get<IdRectifier>()
-            )
-        }
-    }
-
-    private fun Module.textModule() {
-        single<TextsRectifier> { TextsRectifier() }
-
-        single<TextRectifier> { TextRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.TEXT) {
-            listOf(
-                ContentLabelTextMatcher(),
-                ContentFormFieldTextMatcher(),
-                ContentFormFieldTextErrorMatcher(),
-                StateFormFieldTextMatcher(),
-            )
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.TEXT) {
-            listOf(get<IdRectifier>())
-        }
-    }
-
-    private fun Module.colorModule() {
-        single<ColorsRectifier> { ColorsRectifier() }
-
-        single<ColorRectifier> { ColorRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.COLOR) {
-            listOf(
-                StyleLabelColorMatcher(),
-                StyleLayoutLinearColorMatcher(),
-            )
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.COLOR) {
-            listOf(get<IdRectifier>())
-        }
-    }
-
-    private fun Module.dimensionModule() {
-        single<DimensionsRectifier> { DimensionsRectifier() }
-
-        single<DimensionRectifier> { DimensionRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.DIMENSION) {
-            listOf(
-                StyleLabelDimensionMatcher(),
-                StyleSpacerDimensionMatcher(),
-            )
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.DIMENSION) {
-            listOf(get<IdRectifier>())
-        }
-    }
-
-    private fun Module.actionModule() {
-        single<ActionsRectifier> { ActionsRectifier() }
-
-        single<ActionRectifier> { ActionRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.ACTION) {
-            listOf(
-                ActionButtonMatcher()
-            )
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.ACTION) {
-            listOf(get<IdRectifier>())
-        }
-    }
-
-    private fun Module.fieldValidatorModule() {
-        single<FormValidatorRectifier> { FormValidatorRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.FIELD_VALIDATOR) {
-            listOf(
-                OptionFormFieldValidatorMatcher()
-            )
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.FIELD_VALIDATOR) {
-            emptyList()
-        }
-    }
-
 
 }
 

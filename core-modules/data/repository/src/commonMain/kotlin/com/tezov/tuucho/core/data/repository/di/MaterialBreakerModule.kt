@@ -12,9 +12,9 @@ import com.tezov.tuucho.core.data.repository.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.TextBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker._system.AbstractBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker._system.MatcherBreakerProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
-import org.koin.dsl.module
 
 internal object MaterialBreakerModule {
 
@@ -44,127 +44,131 @@ internal object MaterialBreakerModule {
         }
     }
 
-    fun invoke() = module {
-        single<MaterialBreaker> { MaterialBreaker() }
-        componentModule()
-        contentModule()
-        styleModule()
-        optionModule()
-        stateModule()
-        textModule()
-        colorModule()
-        dimensionModule()
-        actionModule()
+    fun invoke() = object : ModuleProtocol {
+
+        override val group = ModuleGroupData.Breaker
+
+        override fun Module.declaration() {
+            single<MaterialBreaker> { MaterialBreaker() }
+            componentModule()
+            contentModule()
+            styleModule()
+            optionModule()
+            stateModule()
+            textModule()
+            colorModule()
+            dimensionModule()
+            actionModule()
+        }
+
+        private fun Module.componentModule() {
+            single<ComponentBreaker> { ComponentBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.COMPONENT) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.COMPONENT) {
+                emptyList()
+            }
+        }
+
+        private fun Module.contentModule() {
+            single<ContentBreaker> { ContentBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.CONTENT) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.CONTENT) {
+                emptyList()
+            }
+        }
+
+        private fun Module.styleModule() {
+            single<StyleBreaker> { StyleBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.STYLE) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.STYLE) {
+                emptyList()
+            }
+        }
+
+        private fun Module.optionModule() {
+            single<OptionBreaker> { OptionBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.OPTION) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.OPTION) {
+                emptyList()
+            }
+        }
+
+        private fun Module.stateModule() {
+            single<StateBreaker> { StateBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.STATE) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.STATE) {
+                emptyList()
+            }
+        }
+
+        private fun Module.textModule() {
+            single<TextBreaker> { TextBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.TEXT) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.TEXT) {
+                emptyList()
+            }
+        }
+
+        private fun Module.colorModule() {
+            single<ColorBreaker> { ColorBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.COLOR) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.COLOR) {
+                emptyList()
+            }
+        }
+
+        private fun Module.dimensionModule() {
+            single<DimensionBreaker> { DimensionBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.DIMENSION) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.DIMENSION) {
+                emptyList()
+            }
+        }
+
+        private fun Module.actionModule() {
+            single<ActionBreaker> { ActionBreaker() }
+
+            single<List<MatcherBreakerProtocol>>(Name.Matcher.ACTION) {
+                emptyList()
+            }
+
+            single<List<AbstractBreaker>>(Name.Processor.ACTION) {
+                emptyList()
+            }
+        }
     }
-
-    private fun Module.componentModule() {
-        single<ComponentBreaker> { ComponentBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.COMPONENT) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.COMPONENT) {
-            emptyList()
-        }
-    }
-
-    private fun Module.contentModule() {
-        single<ContentBreaker> { ContentBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.CONTENT) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.CONTENT) {
-            emptyList()
-        }
-    }
-
-    private fun Module.styleModule() {
-        single<StyleBreaker> { StyleBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.STYLE) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.STYLE) {
-            emptyList()
-        }
-    }
-
-    private fun Module.optionModule() {
-        single<OptionBreaker> { OptionBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.OPTION) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.OPTION) {
-            emptyList()
-        }
-    }
-
-    private fun Module.stateModule() {
-        single<StateBreaker> { StateBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.STATE) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.STATE) {
-            emptyList()
-        }
-    }
-
-    private fun Module.textModule() {
-        single<TextBreaker> { TextBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.TEXT) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.TEXT) {
-            emptyList()
-        }
-    }
-
-    private fun Module.colorModule() {
-        single<ColorBreaker> { ColorBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.COLOR) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.COLOR) {
-            emptyList()
-        }
-    }
-
-    private fun Module.dimensionModule() {
-        single<DimensionBreaker> { DimensionBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.DIMENSION) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.DIMENSION) {
-            emptyList()
-        }
-    }
-
-    private fun Module.actionModule() {
-        single<ActionBreaker> { ActionBreaker() }
-
-        single<List<MatcherBreakerProtocol>>(Name.Matcher.ACTION) {
-            emptyList()
-        }
-
-        single<List<AbstractBreaker>>(Name.Processor.ACTION) {
-            emptyList()
-        }
-    }
-
 }
 
 

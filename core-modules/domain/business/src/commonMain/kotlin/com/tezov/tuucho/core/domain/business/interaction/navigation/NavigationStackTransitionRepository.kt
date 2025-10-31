@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation
@@ -22,7 +23,7 @@ class NavigationStackTransitionRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
     private val navigationStackTransitionHelperFactory: NavigationStackTransitionHelperFactoryUseCase,
-) : StackTransition, KoinComponent {
+) : StackTransition, TuuchoKoinComponent {
 
     private var lastEvent: StackTransition.Event = StackTransition.Event.Idle(routes = emptyList())
     private val _events = Notifier.Emitter<StackTransition.Event>(

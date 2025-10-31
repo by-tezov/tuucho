@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.interaction.navigation.selector.PageBreadCrumbNavigationDefinitionSelectorMatcher
@@ -39,7 +40,7 @@ class NavigateToUrlUseCase(
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: InterractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
-) : UseCaseProtocol.Sync<Input, Unit>, KoinComponent {
+) : UseCaseProtocol.Sync<Input, Unit>, TuuchoKoinComponent {
 
     data class Input(
         val url: String,

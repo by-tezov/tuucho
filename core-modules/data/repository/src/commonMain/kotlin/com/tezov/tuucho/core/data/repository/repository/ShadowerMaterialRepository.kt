@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.data.repository.repository
 import com.tezov.tuucho.core.data.repository.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ShadowerMaterialSourceProtocol
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
@@ -15,7 +16,7 @@ class ShadowerMaterialRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialShadower: MaterialShadower,
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
-) : Shadower, KoinComponent {
+) : Shadower, TuuchoKoinComponent {
 
     override suspend fun process(url: String, componentObject: JsonObject, types: List<String>) =
         buildList {

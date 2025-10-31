@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.renderer.screen
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -16,7 +17,7 @@ import org.koin.core.component.inject
 
 class ScreenRenderer(
     private val coroutineScopes: CoroutineScopesProtocol,
-) : ScreenRendererProtocol, KoinComponent {
+) : ScreenRendererProtocol, TuuchoKoinComponent {
 
     private val viewFactories: List<AbstractViewFactory> by inject()
 

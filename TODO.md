@@ -1,5 +1,8 @@
 ## In progress
 
+- Koin Library Scope
+- ATTENTION proguard protection Middle ware and RequestInterceptor
+
 - add network error management around the other use case
 
 *** ***
