@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
-
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema
@@ -20,7 +19,6 @@ import com.tezov.tuucho.core.domain.business.validator.formValidator.StringOnlyD
 import kotlinx.serialization.json.JsonObject
 
 class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
-
     data class Input(
         val prototypeObject: JsonObject,
     )
@@ -30,7 +28,9 @@ class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
     )
 
     @Suppress("UNCHECKED_CAST")
-    override fun invoke(input: Input) = with(input) {
+    override fun invoke(
+        input: Input
+    ) = with(input) {
         Output(
             validator = prototypeObject.withScope(FormValidatorSchema::Scope).let {
                 when (it.type) {
@@ -76,5 +76,4 @@ class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
             } as FormValidatorProtocol<Any>
         )
     }
-
 }

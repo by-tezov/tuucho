@@ -15,52 +15,58 @@ internal class ShadowerMaterialRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialShadower: MaterialShadower,
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
-) : Shadower, TuuchoKoinComponent {
-
-    override suspend fun process(url: String, componentObject: JsonObject, types: List<String>) =
-        buildList {
-            coroutineScopes.parser.await {
-                shadowerMaterialSources
-                    .asSequence()
-                    .filter { types.contains(it.type) }
-                    .forEach { it.onStart(url, componentObject) }
-                materialShadower.process(
-                    componentObject = componentObject,
-                    jsonObjectConsumer = object : JsonObjectConsumerProtocol {
-
-                        override suspend fun onNext(
-                            jsonObject: JsonObject,
-                            shadowerSettingObject: JsonObject?,
-                        ) {
-                            shadowerMaterialSources
-                                .asSequence()
-                                .filter { !it.isCancelled && types.contains(it.type) }
-                                .forEach {
-                                    it.onNext(
-                                        jsonObject = jsonObject,
-                                        settingObject = shadowerSettingObject?.withScope(
+) : Shadower,
+    TuuchoKoinComponent {
+    override suspend fun process(
+        url: String,
+        componentObject: JsonObject,
+        types: List<String>
+    ) = buildList {
+        coroutineScopes.parser.await {
+            shadowerMaterialSources
+                .asSequence()
+                .filter { types.contains(it.type) }
+                .forEach { it.onStart(url, componentObject) }
+            materialShadower.process(
+                componentObject = componentObject,
+                jsonObjectConsumer = object : JsonObjectConsumerProtocol {
+                    override suspend fun onNext(
+                        jsonObject: JsonObject,
+                        shadowerSettingObject: JsonObject?,
+                    ) {
+                        shadowerMaterialSources
+                            .asSequence()
+                            .filter { !it.isCancelled && types.contains(it.type) }
+                            .forEach {
+                                it.onNext(
+                                    jsonObject = jsonObject,
+                                    settingObject = shadowerSettingObject
+                                        ?.withScope(
                                             SettingComponentShadowerSchema::Scope
-                                        )?.get(it.type)?.jsonObject
-                                    )
-                                }
-                        }
+                                        )?.get(it.type)
+                                        ?.jsonObject
+                                )
+                            }
+                    }
 
-                        override suspend fun onDone() {
-                            shadowerMaterialSources
-                                .asSequence()
-                                .filter { !it.isCancelled && types.contains(it.type) }
-                                .forEach {
-                                    it.onDone().map { jsonObject ->
+                    override suspend fun onDone() {
+                        shadowerMaterialSources
+                            .asSequence()
+                            .filter { !it.isCancelled && types.contains(it.type) }
+                            .forEach {
+                                it
+                                    .onDone()
+                                    .map { jsonObject ->
                                         Shadower.Output(
                                             type = it.type,
                                             url = url,
                                             jsonObject = jsonObject
                                         )
                                     }.let(::addAll)
-                                }
-                        }
+                            }
                     }
-                )
-            }
+                }
+            )
         }
+    }
 }

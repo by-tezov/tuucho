@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class Visibility {
-
     companion object Type {
         const val local = "local"
         const val global = "global"
@@ -33,5 +32,4 @@ sealed class Visibility {
     ) : Visibility() {
         override val name = contextual
     }
-
 }

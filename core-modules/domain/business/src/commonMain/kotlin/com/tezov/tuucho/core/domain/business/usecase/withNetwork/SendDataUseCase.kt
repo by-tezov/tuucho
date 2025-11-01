@@ -7,7 +7,6 @@ import kotlinx.serialization.json.JsonObject
 class SendDataUseCase(
     private val sendDataAndRetrieveMaterialRepository: MaterialRepositoryProtocol.SendDataAndRetrieve,
 ) : UseCaseProtocol.Async<SendDataUseCase.Input, SendDataUseCase.Output> {
-
     data class Input(
         val url: String,
         val jsonObject: JsonObject,
@@ -17,10 +16,11 @@ class SendDataUseCase(
         val jsonObject: JsonObject?,
     )
 
-    override suspend fun invoke(input: Input) = with(input) {
+    override suspend fun invoke(
+        input: Input
+    ) = with(input) {
         Output(
             jsonObject = sendDataAndRetrieveMaterialRepository.process(url, jsonObject)
         )
     }
-
 }

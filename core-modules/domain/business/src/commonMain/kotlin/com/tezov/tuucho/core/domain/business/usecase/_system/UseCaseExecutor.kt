@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.business.usecase._system
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
@@ -7,7 +9,6 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 class UseCaseExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
 ) {
-
     fun <INPUT : Any, OUTPUT : Any> invoke(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
@@ -32,7 +33,8 @@ class UseCaseExecutor(
                         it.onResult()
                     }
                 }
-            })
+            }
+        )
     }
 
     suspend fun <INPUT : Any, OUTPUT : Any> invokeSuspend(
@@ -53,6 +55,4 @@ class UseCaseExecutor(
             }
         }
     }
-
 }
-

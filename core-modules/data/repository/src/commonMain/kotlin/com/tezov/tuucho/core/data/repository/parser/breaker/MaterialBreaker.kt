@@ -8,12 +8,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OpenForTest
 class MaterialBreaker : TuuchoKoinComponent {
-
     data class Nodes(
         val rootJsonObjectNode: JsonObjectNode?,
         val jsonElementNodes: List<JsonElementNode>,
@@ -36,34 +34,41 @@ class MaterialBreaker : TuuchoKoinComponent {
         Nodes(
             rootJsonObjectNode = rootComponent?.let(::JsonObjectNode),
             jsonElementNodes = buildList {
-                components?.let {
-                    componentBreaker.process("".toPath(), it)
-                }?.also(::add)
+                components
+                    ?.let {
+                        componentBreaker.process("".toPath(), it)
+                    }?.also(::add)
 
-                contents?.let {
-                    contentBreaker.process("".toPath(), it)
-                }?.also(::add)
-                styles?.let {
-                    styleBreaker.process("".toPath(), it)
-                }?.also(::add)
-                options?.let {
-                    optionBreaker.process("".toPath(), it)
-                }?.also(::add)
+                contents
+                    ?.let {
+                        contentBreaker.process("".toPath(), it)
+                    }?.also(::add)
+                styles
+                    ?.let {
+                        styleBreaker.process("".toPath(), it)
+                    }?.also(::add)
+                options
+                    ?.let {
+                        optionBreaker.process("".toPath(), it)
+                    }?.also(::add)
 
-                texts?.let {
-                    textBreaker.process("".toPath(), it)
-                }?.also(::add)
-                colors?.let {
-                    colorBreaker.process("".toPath(), it)
-                }?.also(::add)
-                dimensions?.let {
-                    dimensionBreaker.process("".toPath(), it)
-                }?.also(::add)
-                actions?.let {
-                    actionBreaker.process("".toPath(), it)
-                }?.also(::add)
+                texts
+                    ?.let {
+                        textBreaker.process("".toPath(), it)
+                    }?.also(::add)
+                colors
+                    ?.let {
+                        colorBreaker.process("".toPath(), it)
+                    }?.also(::add)
+                dimensions
+                    ?.let {
+                        dimensionBreaker.process("".toPath(), it)
+                    }?.also(::add)
+                actions
+                    ?.let {
+                        actionBreaker.process("".toPath(), it)
+                    }?.also(::add)
             }
         )
     }
-
 }

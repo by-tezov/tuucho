@@ -12,12 +12,12 @@ data class ActionModelDomain(
     val target: String?,
     val query: JsonElement?,
 ) {
-
     companion object {
         private val COMMAND_SEPARATOR = Regex.escape("://")
         private val AUTHORITY_SEPARATOR = Regex.escape("/")
         private val QUERY_SEPARATOR = Regex.escape("?")
 
+        @Suppress("ktlint:standard:max-line-length")
         private val ACTION_REGEX = Regex(
             pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""
         )
@@ -40,11 +40,15 @@ data class ActionModelDomain(
                     JsonArray(items)
                 }
 
-                else -> JsonPrimitive(this)
+                else -> {
+                    JsonPrimitive(this)
+                }
             }
         }
 
-        fun from(value: String): ActionModelDomain {
+        fun from(
+            value: String
+        ): ActionModelDomain {
             val match = ACTION_REGEX.matchEntire(value)
                 ?: throw DomainException.Default("invalid action")
             return ActionModelDomain(
@@ -75,5 +79,4 @@ data class ActionModelDomain(
             query = query,
         )
     }
-
 }

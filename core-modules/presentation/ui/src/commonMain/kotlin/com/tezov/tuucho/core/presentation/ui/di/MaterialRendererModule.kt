@@ -15,9 +15,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 
 internal object MaterialRendererModule {
-
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupPresentation.Main
 
         override fun Module.declaration() {
@@ -26,7 +24,6 @@ internal object MaterialRendererModule {
         }
 
         private fun Module.screenModule() {
-
             factory<ScreenRenderer> {
                 ScreenRenderer(
                     coroutineScopes = get(),
@@ -43,11 +40,9 @@ internal object MaterialRendererModule {
                     navigateToUrl = get()
                 )
             }
-
         }
 
         private fun Module.viewModule() {
-
             factory<List<AbstractViewFactory>> {
                 listOf(
                     get<LabelViewFactory>(),
@@ -85,9 +80,4 @@ internal object MaterialRendererModule {
             }
         }
     }
-
-
-
 }
-
-

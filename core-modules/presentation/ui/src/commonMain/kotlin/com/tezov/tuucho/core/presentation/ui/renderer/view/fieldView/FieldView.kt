@@ -34,10 +34,11 @@ class FieldViewFactory(
     private val useCaseExecutor: UseCaseExecutor,
     private val fieldValidatorFactory: FormValidatorFactoryUseCase,
 ) : AbstractViewFactory() {
-
-    override fun accept(componentElement: JsonObject) = componentElement.let {
+    override fun accept(
+        componentElement: JsonObject
+    ) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
-                it.withScope(SubsetSchema::Scope).self == FormFieldSchema.Component.Value.subset
+            it.withScope(SubsetSchema::Scope).self == FormFieldSchema.Component.Value.subset
     }
 
     override suspend fun process(
@@ -55,8 +56,8 @@ class FieldViewFactory(
 class FieldView(
     componentObject: JsonObject,
     fieldFormView: FieldFormView,
-) : AbstractView(componentObject), FieldFormViewProtocol.Extension {
-
+) : AbstractView(componentObject),
+    FieldFormViewProtocol.Extension {
     override val formView = fieldFormView.also { it.attach(this) }
 
     private val _title = mutableStateOf<JsonObject?>(null)
@@ -67,7 +68,8 @@ class FieldView(
 
     override fun onInit() {
         componentObject.contentOrNull
-            ?.withScope(FormFieldSchema.Content::Scope)?.run {
+            ?.withScope(FormFieldSchema.Content::Scope)
+            ?.run {
                 title?.idValue?.let {
                     addTypeIdForKey(
                         type = TypeSchema.Value.text,
@@ -83,7 +85,7 @@ class FieldView(
                     )
                 }
             }
-        //TODO: need to add the rectifier for initialValue text
+        // TODO: need to add the rectifier for initialValue text
 //        componentObject.stateOrNull
 //            ?.withScope(FormFieldSchema.State::Scope)?.run {
 //                initialValue?.idValue?.let {
@@ -116,7 +118,8 @@ class FieldView(
     override suspend fun JsonObject.processOption() {
         componentObject.contentOrNull
             ?.withScope(FormFieldSchema.Content::Scope)
-            ?.messageError?.let { processValidator() }
+            ?.messageError
+            ?.let { processValidator() }
     }
 
     override suspend fun JsonObject.processState() {
@@ -127,7 +130,9 @@ class FieldView(
         }
     }
 
-    override suspend fun JsonObject.processText(key: String) {
+    override suspend fun JsonObject.processText(
+        key: String
+    ) {
         when (key) {
             FormFieldSchema.Content.Key.title -> _title.value = this
             FormFieldSchema.Content.Key.placeholder -> _placeholder.value = this
@@ -159,19 +164,18 @@ class FieldView(
 
                 messageError?.let {
                     formView.buildValidator(validators, messageError)
-
                 }
             }
         }
     }
 
     private val title
-        get():String {
+        get(): String {
             return _title.value?.get(LanguageModelDomain.Default.code)?.string ?: ""
         }
 
     private val placeholder
-        get():String {
+        get(): String {
             return _placeholder.value?.get(LanguageModelDomain.Default.code)?.string ?: ""
         }
 
@@ -192,8 +196,10 @@ class FieldView(
         get() = _messageErrorExtra.value?.get(LanguageModelDomain.Default.code)?.string
 
     @Composable
-    override fun displayComponent(scope: Any?) {
-        //TODO validators:
+    override fun displayComponent(
+        scope: Any?
+    ) {
+        // TODO validators:
         //  - when lost focus, if not empty test validator and update the error status
         //  - when gain focus and user write, remove the error while user is typing
 
@@ -219,15 +225,15 @@ class FieldView(
                     Column {
                         formView.validators?.filter { !it.isValid }?.forEach {
                             Text(
-                                //TODO language retrieve by Composition Local
+                                // TODO language retrieve by Composition Local
                                 it.getErrorMessage(LanguageModelDomain.Default),
-                                fontSize = 13.sp //TODO
+                                fontSize = 13.sp // TODO
                             )
                         }
                         messageErrorExtra?.let {
                             Text(
                                 it,
-                                fontSize = 13.sp //TODO
+                                fontSize = 13.sp // TODO
                             )
                         }
                     }
@@ -235,6 +241,4 @@ class FieldView(
             }
         )
     }
-
 }
-

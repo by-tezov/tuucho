@@ -20,8 +20,8 @@ import kotlinx.serialization.json.jsonArray
 internal class FormUpdateActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val updateView: UpdateViewUseCase,
-) : ActionProcessorProtocol, TuuchoKoinComponent {
-
+) : ActionProcessorProtocol,
+    TuuchoKoinComponent {
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
@@ -29,9 +29,7 @@ internal class FormUpdateActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return action.command == Action.Form.command && action.authority == Action.Form.Update.authority
-    }
+    ): Boolean = action.command == Action.Form.command && action.authority == Action.Form.Update.authority
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -49,14 +47,16 @@ internal class FormUpdateActionProcessor(
         jsonElement: JsonElement?,
     ) {
         jsonElement?.jsonArray?.forEach { param ->
-            val message = JsonNull.withScope(FormSchema.Message::Scope).apply {
-                id = param.withScope(IdSchema::Scope).self
-                type = TypeSchema.Value.message
-                subset = FormSchema.Message.Value.Subset.updateErrorState
-                param.withScope(FormSendResponseSchema.FailureResult::Scope).reason?.let {
-                    messageErrorExtra = it
-                }
-            }.collect()
+            val message = JsonNull
+                .withScope(FormSchema.Message::Scope)
+                .apply {
+                    id = param.withScope(IdSchema::Scope).self
+                    type = TypeSchema.Value.message
+                    subset = FormSchema.Message.Value.Subset.updateErrorState
+                    param.withScope(FormSendResponseSchema.FailureResult::Scope).reason?.let {
+                        messageErrorExtra = it
+                    }
+                }.collect()
             useCaseExecutor.invokeSuspend(
                 useCase = updateView,
                 input = UpdateViewUseCase.Input(
@@ -66,5 +66,4 @@ internal class FormUpdateActionProcessor(
             )
         }
     }
-
 }

@@ -15,11 +15,11 @@ val MaterialTheme.bordersExtended
     @ReadOnlyComposable
     get() = ThemeBordersExtended.localBorders.current
 
-infix fun MaterialTheme.provides(value: ThemeBordersExtended.Common) =
-    ThemeBordersExtended.localBorders provides value
+infix fun MaterialTheme.provides(
+    value: ThemeBordersExtended.Common
+) = ThemeBordersExtended.localBorders provides value
 
 object ThemeBordersExtended {
-
     class Common(
         cluster: OutfitPaletteSize<OutfitBorderStateColor>? = null,
         block: OutfitPaletteSize<OutfitBorderStateColor>? = null,
@@ -28,7 +28,6 @@ object ThemeBordersExtended {
         button: OutfitPaletteSize<OutfitBorderStateColor>? = null,
         icon: OutfitPaletteSize<OutfitBorderStateColor>? = null,
     ) {
-
         private val delegates =
             DelegateNullFallBack.Group<OutfitPaletteSize<OutfitBorderStateColor>>()
         val cluster: OutfitPaletteSize<OutfitBorderStateColor> by delegates.ref(cluster)
@@ -43,12 +42,9 @@ object ThemeBordersExtended {
                 ThemeColorsExtended.Dummy.outfitBorderState.asPaletteSize
             }
         }
-
     }
 
     internal val localBorders: ProvidableCompositionLocal<Common> = staticCompositionLocalOf {
         error("not provided")
     }
-
-
 }

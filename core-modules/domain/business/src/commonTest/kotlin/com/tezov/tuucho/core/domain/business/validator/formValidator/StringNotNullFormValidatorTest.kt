@@ -7,7 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class StringNotNullFormValidatorTest {
-
     private lateinit var sut: StringNotNullFormValidator
 
     @BeforeTest

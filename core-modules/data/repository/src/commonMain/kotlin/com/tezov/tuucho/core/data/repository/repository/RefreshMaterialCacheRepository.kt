@@ -24,11 +24,13 @@ internal class RefreshMaterialCacheRepository(
     private val materialRemoteSource: MaterialRemoteSource,
     private val materialCacheLocalSource: MaterialCacheLocalSource,
 ) : MaterialRepositoryProtocol.RefreshCache {
-
-    override suspend fun process(url: String) {
+    override suspend fun process(
+        url: String
+    ) {
         val configModelDomain = retrieveObjectRemoteSource.process(url)
         coroutineScopes.parser.await {
-            configModelDomain.onScope(ConfigSchema.MaterialResource::Scope)
+            configModelDomain
+                .onScope(ConfigSchema.MaterialResource::Scope)
                 .let { materialResourceScope ->
                     materialResourceScope.global?.refreshGlobalCache()
                     materialResourceScope.local?.refreshLocalCache()
@@ -121,7 +123,4 @@ internal class RefreshMaterialCacheRepository(
             }
         }
     }
-
 }
-
-

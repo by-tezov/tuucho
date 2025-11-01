@@ -5,8 +5,9 @@ import kotlinx.serialization.json.JsonObject
 class StringOnlyDigitsFormValidator(
     errorMessages: JsonObject,
 ) : AbstractFormValidator<String>(errorMessages) {
-
-    override fun updateValidity(value: String) {
+    override fun updateValidity(
+        value: String
+    ) {
         isValid = value.isEmpty() || value.all { it.isDigit() }
     }
 }

@@ -15,17 +15,14 @@ import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import org.koin.core.module.Module
 
 object DatabaseRepositoryModule {
-
     interface Config {
         val fileName: String
     }
 
     internal fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Main
 
         override fun Module.declaration() {
-
             factory<JsonObjectAdapter> {
                 JsonObjectAdapter(json = get())
             }
@@ -81,5 +78,4 @@ object DatabaseRepositoryModule {
             }
         }
     }
-
 }

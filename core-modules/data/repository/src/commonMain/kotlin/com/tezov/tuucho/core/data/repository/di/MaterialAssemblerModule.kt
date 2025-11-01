@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.repository.di
 
-
 import com.tezov.tuucho.core.data.repository.parser.assembler.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ColorAssembler
@@ -20,7 +19,6 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
 internal object MaterialAssemblerModule {
-
     object Name {
         val ASSEMBLERS = named("MaterialAssemblerModule.Name.ASSEMBLERS")
 
@@ -50,7 +48,6 @@ internal object MaterialAssemblerModule {
     }
 
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Assembler
 
         override fun Module.declaration() {
@@ -204,5 +201,3 @@ internal object MaterialAssemblerModule {
         }
     }
 }
-
-

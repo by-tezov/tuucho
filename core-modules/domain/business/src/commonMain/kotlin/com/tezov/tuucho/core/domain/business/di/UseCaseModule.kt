@@ -27,13 +27,10 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUs
 import org.koin.core.module.Module
 
 internal object UseCaseModule {
-
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupDomain.UseCase
 
         override fun Module.declaration() {
-
             single<UseCaseExecutor> {
                 UseCaseExecutor(
                     coroutineScopes = get()
@@ -41,7 +38,6 @@ internal object UseCaseModule {
             }
             withNetworkModule()
             withoutNetworkModule()
-
         }
 
         private fun Module.withNetworkModule() {
@@ -182,5 +178,3 @@ internal object UseCaseModule {
         }
     }
 }
-
-

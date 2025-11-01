@@ -19,9 +19,10 @@ import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 
 object NetworkRepositoryModule {
-
     interface RequestInterceptor {
-        suspend fun intercept(builder: HttpRequestBuilder)
+        suspend fun intercept(
+            builder: HttpRequestBuilder
+        )
     }
 
     interface Config {
@@ -34,7 +35,6 @@ object NetworkRepositoryModule {
     }
 
     internal fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Main
 
         override fun Module.declaration() {

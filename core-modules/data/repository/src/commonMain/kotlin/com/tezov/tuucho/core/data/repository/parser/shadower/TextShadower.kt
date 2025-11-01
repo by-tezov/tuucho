@@ -9,7 +9,6 @@ import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
 class TextShadower : AbstractShadower() {
-
     override val matchers: List<MatcherShadowerProtocol> by inject(
         Name.Matcher.TEXT
     )
@@ -19,7 +18,7 @@ class TextShadower : AbstractShadower() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement,
+        path: JsonElementPath,
+        element: JsonElement,
     ) = path.isTypeOf(element, TypeSchema.Value.text) || super.accept(path, element)
-
 }

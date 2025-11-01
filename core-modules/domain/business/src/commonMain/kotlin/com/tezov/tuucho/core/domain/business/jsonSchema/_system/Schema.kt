@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.business.jsonSchema._system
 
 import kotlinx.serialization.json.JsonArray
@@ -19,7 +21,9 @@ fun <T : OpenSchemaScope<T>> JsonElement.withScope(
     }
     return scopeFactory(
         SchemaScopeArgument(
-            element = this, moveOnRoot = false, mapOperator = mapOperator
+            element = this,
+            moveOnRoot = false,
+            mapOperator = mapOperator
         )
     )
 }
@@ -33,7 +37,9 @@ fun <T : OpenSchemaScope<T>> JsonElement.onScope(
     }
     return scopeFactory(
         SchemaScopeArgument(
-            element = this, moveOnRoot = true, mapOperator = null
+            element = this,
+            moveOnRoot = true,
+            mapOperator = null
         )
     )
 }
@@ -46,8 +52,15 @@ data class SchemaScopeArgument(
 
 interface SchemaScopeMapOperator : DelegateSchemaKey.MapOperator {
     val hasBeenChanged: Boolean
-    fun contains(key: String): Boolean
-    fun remove(key: String)
+
+    fun contains(
+        key: String
+    ): Boolean
+
+    fun remove(
+        key: String
+    )
+
     fun collect(): JsonObject
 }
 
@@ -70,12 +83,13 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
 
     protected val mapOperator = argument.mapOperator ?: run {
         object : SchemaScopeMapOperator {
-
             private var _map: Map<String, JsonElement>? = null
 
             override val hasBeenChanged get() = _map is MutableMap
 
-            override fun contains(key: String) = resolveMap.contains(key)
+            override fun contains(
+                key: String
+            ) = resolveMap.contains(key)
 
             private val resolveMutableMap: MutableMap<String, JsonElement>
                 get() {
@@ -94,13 +108,20 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
                     }.also { _map = it }
                 }
 
-            override fun read(key: String) = resolveMap[key]
+            override fun read(
+                key: String
+            ) = resolveMap[key]
 
-            override fun write(key: String, jsonElement: JsonElement) {
+            override fun write(
+                key: String,
+                jsonElement: JsonElement
+            ) {
                 resolveMutableMap[key] = jsonElement
             }
 
-            override fun remove(key: String) {
+            override fun remove(
+                key: String
+            ) {
                 resolveMutableMap.remove(key)
             }
 
@@ -112,19 +133,26 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
 
     val hasBeenChanged get() = mapOperator.hasBeenChanged
 
-    fun contains(key: String) = mapOperator.contains(key)
+    fun contains(
+        key: String
+    ) = mapOperator.contains(key)
 
-    operator fun get(key: String): JsonElement? {
-        return mapOperator.read(key)
-    }
+    operator fun get(
+        key: String
+    ): JsonElement? = mapOperator.read(key)
 
-    operator fun set(key: String, value: JsonElement) {
+    operator fun set(
+        key: String,
+        value: JsonElement
+    ) {
         mapOperator.write(key, value)
     }
 
     fun keys(): Set<String> = (element as? JsonObject)?.keys ?: emptySet()
 
-    fun remove(key: String) {
+    fun remove(
+        key: String
+    ) {
         mapOperator.remove(key)
     }
 
@@ -132,19 +160,17 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
         key: String? = null,
     ) = DelegateSchemaKey<T>(mapOperator, T::class, key)
 
-    fun <T : OpenSchemaScope<T>> withScope(scopeFactory: (argument: SchemaScopeArgument) -> T) =
-        element.withScope(scopeFactory, mapOperator)
+    fun <T : OpenSchemaScope<T>> withScope(
+        scopeFactory: (argument: SchemaScopeArgument) -> T
+    ) = element.withScope(scopeFactory, mapOperator)
 
-    fun <T : OpenSchemaScope<T>> onScope(scopeFactory: (argument: SchemaScopeArgument) -> T) =
-        element.onScope(scopeFactory)
+    fun <T : OpenSchemaScope<T>> onScope(
+        scopeFactory: (argument: SchemaScopeArgument) -> T
+    ) = element.onScope(scopeFactory)
 
     fun collect() = mapOperator.collect()
 
     fun collectChangedOrNull() = if (hasBeenChanged) mapOperator.collect() else null
 
-    override fun toString(): String {
-        return "initial=$element\ncurrent=${collect()}"
-    }
-
+    override fun toString(): String = "initial=$element\ncurrent=${collect()}"
 }
-

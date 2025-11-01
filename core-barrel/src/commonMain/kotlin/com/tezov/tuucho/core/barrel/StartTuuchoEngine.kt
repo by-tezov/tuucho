@@ -11,8 +11,10 @@ fun StartTuuchoEngine(
     applicationModules: List<ModuleProtocol>,
     onStartUrl: String
 ) {
-    val tuuchoEngine = SystemCoreModules.remember(applicationModules)
-        .koin.get<TuuchoEngineProtocol>()
+    val tuuchoEngine = SystemCoreModules
+        .remember(applicationModules)
+        .koin
+        .get<TuuchoEngineProtocol>()
     LaunchedEffect(Unit) {
         tuuchoEngine.start(url = onStartUrl)
     }

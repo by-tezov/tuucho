@@ -5,6 +5,3 @@ internal data class RemoteResponse(
     val code: Int,
     val json: String?,
 )
-
-
-

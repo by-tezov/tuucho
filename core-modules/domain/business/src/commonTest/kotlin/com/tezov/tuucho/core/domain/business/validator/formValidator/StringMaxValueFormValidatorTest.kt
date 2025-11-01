@@ -7,7 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class StringMaxValueFormValidatorTest {
-
     private lateinit var sut: StringMaxValueFormValidator
 
     @BeforeTest

@@ -14,6 +14,18 @@ public final class com/tezov/tuucho/core/presentation/ui/composable/SkimmerCompo
 	public static final fun shimmerComposable (Landroidx/compose/ui/Modifier;FILandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
 }
 
+public abstract class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation : com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
+	public static final field $stable I
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$Main : com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$Main;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/di/SystemCoreUiModules {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/SystemCoreUiModules;
@@ -36,14 +48,9 @@ public final class com/tezov/tuucho/core/presentation/ui/exception/UiException$D
 
 public final class com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngine : com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngineProtocol {
 	public static final field $stable I
-	public static final field Companion Lcom/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngine$Companion;
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/RegisterToScreenTransitionEventUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NotifyNavigationTransitionCompletedUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreensFromRoutesUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase;)V
 	public fun display (Landroidx/compose/runtime/Composer;I)V
 	public fun start (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngine$Companion {
-	public final fun rememberTuuchoEngine (Landroidx/compose/runtime/Composer;I)Lcom/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngineProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngineProtocol {
@@ -66,7 +73,7 @@ public final class com/tezov/tuucho/core/presentation/ui/renderer/screen/ScreenK
 	public static final fun flatten (Lcom/tezov/tuucho/core/presentation/ui/renderer/view/_system/ViewProtocol;)Ljava/util/List;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/renderer/screen/ScreenRenderer : com/tezov/tuucho/core/domain/business/protocol/screen/ScreenRendererProtocol, org/koin/core/component/KoinComponent {
+public final class com/tezov/tuucho/core/presentation/ui/renderer/screen/ScreenRenderer : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/screen/ScreenRendererProtocol {
 	public static final field $stable I
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
@@ -176,7 +183,7 @@ public final class com/tezov/tuucho/core/presentation/ui/renderer/view/SpacerVie
 	public fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract class com/tezov/tuucho/core/presentation/ui/renderer/view/_system/AbstractViewFactory : com/tezov/tuucho/core/presentation/ui/renderer/view/_system/MatcherViewFactoryProtocol, org/koin/core/component/KoinComponent {
+public abstract class com/tezov/tuucho/core/presentation/ui/renderer/view/_system/AbstractViewFactory : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/presentation/ui/renderer/view/_system/MatcherViewFactoryProtocol {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun getKoin ()Lorg/koin/core/Koin;

@@ -9,7 +9,6 @@ import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
 class ActionAssembler : AbstractAssembler() {
-
     override val schemaType: String = TypeSchema.Value.action
 
     override val matchers: List<MatcherAssemblerProtocol> by inject(
@@ -21,7 +20,7 @@ class ActionAssembler : AbstractAssembler() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement
+        path: JsonElementPath,
+        element: JsonElement
     ) = path.isTypeOf(element, TypeSchema.Value.action) || super.accept(path, element)
-
 }

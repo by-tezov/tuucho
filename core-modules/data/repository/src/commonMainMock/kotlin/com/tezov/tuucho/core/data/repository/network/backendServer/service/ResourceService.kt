@@ -18,7 +18,6 @@ import kotlin.random.Random
 class ResourceService(
     private val assets: AssetsProtocol,
 ) : ServiceProtocol {
-
     override val url = "resource"
 
     override suspend fun process(
@@ -28,7 +27,8 @@ class ResourceService(
         "v1" -> {
             val jsonString = assets
                 .readFile("backend/$version/${request.url}.json")
-                .buffer().use { it.readUtf8() }
+                .buffer()
+                .use { it.readUtf8() }
             if (request.url.endsWith("-${Type.contextual}") || request.url.contains("-${Type.contextual}-")) {
                 delay(Random.nextLong(500, 3000))
             }
@@ -36,12 +36,16 @@ class ResourceService(
                 statusCode = HttpStatusCode.Companion.fromValue(200),
                 headers = headersOf(
                     name = HttpHeaders.ContentType,
-                    value = ContentType.Application.Json.withCharset(Charsets.UTF_8).toString()
+                    value = ContentType.Application.Json
+                        .withCharset(Charsets.UTF_8)
+                        .toString()
                 ),
                 body = jsonString
             )
         }
 
-        else -> throw Exception("unknown version $version")
+        else -> {
+            throw Exception("unknown version $version")
+        }
     }
 }

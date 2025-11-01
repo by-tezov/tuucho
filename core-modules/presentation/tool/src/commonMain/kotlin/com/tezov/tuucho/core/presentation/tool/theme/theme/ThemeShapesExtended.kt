@@ -18,11 +18,11 @@ val MaterialTheme.shapesExtended
     @ReadOnlyComposable
     get() = ThemeShapesExtended.localCommon.current
 
-infix fun MaterialTheme.provides(value: ThemeShapesExtended.Common) =
-    ThemeShapesExtended.localCommon provides value
+infix fun MaterialTheme.provides(
+    value: ThemeShapesExtended.Common
+) = ThemeShapesExtended.localCommon provides value
 
 object ThemeShapesExtended {
-
     class Common(
         cluster: OutfitPaletteSize<OutfitShapeStateColor>? = null,
         block: OutfitPaletteSize<OutfitShapeStateColor>? = null,
@@ -32,7 +32,6 @@ object ThemeShapesExtended {
         icon: OutfitPaletteSize<OutfitShapeStateColor>? = null,
         clip: OutfitPaletteSize<Shape>? = null,
     ) {
-
         private val delegates =
             DelegateNullFallBack.Group<OutfitPaletteSize<OutfitShapeStateColor>>()
         val cluster: OutfitPaletteSize<OutfitShapeStateColor> by delegates.ref(cluster)
@@ -50,11 +49,9 @@ object ThemeShapesExtended {
                 ThemeColorsExtended.Dummy.outfitShapeState.asPaletteSize
             }
         }
-
     }
 
     internal val localCommon: ProvidableCompositionLocal<Common> = staticCompositionLocalOf {
         error("not provided")
     }
-
 }

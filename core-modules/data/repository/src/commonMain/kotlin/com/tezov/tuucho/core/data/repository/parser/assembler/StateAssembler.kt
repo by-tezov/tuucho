@@ -15,7 +15,6 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 class StateAssembler : AbstractAssembler() {
-
     override val schemaType: String = TypeSchema.Value.state
 
     override val matchers: List<MatcherAssemblerProtocol> by inject(
@@ -29,15 +28,17 @@ class StateAssembler : AbstractAssembler() {
     private val rectifier: StateRectifier by inject()
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement
+        path: JsonElementPath,
+        element: JsonElement
     ) = path.isTypeOf(element, TypeSchema.Value.state) || super.accept(path, element)
 
     private fun JsonObject.rectify(
         parentSubset: String
     ): JsonObject {
-        val altered = withScope(SubsetSchema::Scope).apply {
-            self = parentSubset
-        }.collect()
+        val altered = withScope(SubsetSchema::Scope)
+            .apply {
+                self = parentSubset
+            }.collect()
         return rectifier.process("".toPath(), altered) as JsonObject
     }
 
@@ -46,8 +47,10 @@ class StateAssembler : AbstractAssembler() {
         element: JsonElement
     ): JsonObject? {
         withScope(SubsetSchema::Scope).self ?: return null
-        val parentSubset = element.find(path.parent())
-            .withScope(SubsetSchema::Scope).self
+        val parentSubset = element
+            .find(path.parent())
+            .withScope(SubsetSchema::Scope)
+            .self
         require(parentSubset != null) { "parentSubset is null" }
         return rectify(parentSubset)
     }
@@ -57,14 +60,17 @@ class StateAssembler : AbstractAssembler() {
         element: JsonElement
     ): List<JsonObject>? {
         if (!any { it.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown }) return null
-        val parentSubset = element.find(path.parent())
-            .withScope(SubsetSchema::Scope).self
+        val parentSubset = element
+            .find(path.parent())
+            .withScope(SubsetSchema::Scope)
+            .self
         require(parentSubset != null) { "parentSubset is null" }
         return map { current ->
             if (current.withScope(SubsetSchema::Scope).self == SubsetSchema.Value.unknown) {
                 current.rectify(parentSubset)
-            } else current
+            } else {
+                current
+            }
         }
     }
-
 }

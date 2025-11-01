@@ -10,12 +10,14 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
 class SettingComponentNavigationRectifier : AbstractRectifier() {
-
     override val childProcessors = listOf(
         SettingComponentNavigationDefinitionRectifier()
     )
 
-    override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
+    override fun accept(
+        path: JsonElementPath,
+        element: JsonElement
+    ): Boolean {
         if (!path.lastSegmentIs(ComponentSettingSchema.Root.Key.navigation)) return false
         return element.find(path.parent()).isTypeOf(TypeSchema.Value.Setting.component)
     }

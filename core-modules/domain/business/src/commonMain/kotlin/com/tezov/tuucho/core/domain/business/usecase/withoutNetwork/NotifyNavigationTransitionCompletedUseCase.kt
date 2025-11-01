@@ -6,9 +6,9 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 class NotifyNavigationTransitionCompletedUseCase(
     private val navigationAnimatorStackRepository: NavigationRepositoryProtocol.StackTransition,
 ) : UseCaseProtocol.Async<Unit, Unit> {
-
-    override suspend fun invoke(input: Unit) {
+    override suspend fun invoke(
+        input: Unit
+    ) {
         navigationAnimatorStackRepository.notifyTransitionCompleted()
     }
-
 }

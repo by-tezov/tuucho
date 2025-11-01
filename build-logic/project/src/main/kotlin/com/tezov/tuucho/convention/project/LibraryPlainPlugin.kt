@@ -59,7 +59,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                 }
             )
             classDirectories.setFrom(
-                fileTree("$buildDirectory/tmp/kotlin-classes/mock") {
+                fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/mock") {
                     exclude(
                         "**/R.class",
                         "**/R$*.class",

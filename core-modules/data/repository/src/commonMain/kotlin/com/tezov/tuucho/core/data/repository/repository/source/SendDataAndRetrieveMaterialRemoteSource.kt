@@ -8,12 +8,14 @@ internal class SendDataAndRetrieveMaterialRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val networkJsonObject: NetworkJsonObject,
 ) {
-
-    suspend fun process(url: String, dataObject: JsonObject): JsonObject? {
+    suspend fun process(
+        url: String,
+        dataObject: JsonObject
+    ): JsonObject? {
         val response = coroutineScopes.network.await {
             networkJsonObject.send(url, dataObject)
         }
-        //TODO: rectifier response
+        // TODO: rectifier response
         return response
     }
 }

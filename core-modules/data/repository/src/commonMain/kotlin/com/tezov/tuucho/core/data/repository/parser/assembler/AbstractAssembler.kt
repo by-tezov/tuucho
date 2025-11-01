@@ -15,7 +15,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
-abstract class AbstractAssembler : MatcherAssemblerProtocol, TuuchoKoinComponent {
+abstract class AbstractAssembler :
+    MatcherAssemblerProtocol,
+    TuuchoKoinComponent {
     abstract val schemaType: String
 
     private val jsonObjectMerger: JsonObjectMerger by inject()
@@ -23,7 +25,9 @@ abstract class AbstractAssembler : MatcherAssemblerProtocol, TuuchoKoinComponent
     protected open val matchers: List<MatcherAssemblerProtocol> = emptyList()
     protected open val childProcessors: List<AbstractAssembler> = emptyList()
 
-    private fun <T> List<T>.singleOrThrow(path: JsonElementPath): T? {
+    private fun <T> List<T>.singleOrThrow(
+        path: JsonElementPath
+    ): T? {
         if (size > 1) throw DataException.Default("Only one child processor can accept the element at path $path")
         return firstOrNull()
     }
@@ -74,9 +78,9 @@ abstract class AbstractAssembler : MatcherAssemblerProtocol, TuuchoKoinComponent
                 rectify(path, element)
                     ?.also { _element = element.replaceOrInsert(path, it) }
             } ?: run {
-                // fallback, nothing to rectify
-                this
-            }
+            // fallback, nothing to rectify
+            this
+        }
 
         if (childProcessors.isNotEmpty()) {
             current.keys.forEach { childKey ->

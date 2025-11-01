@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.business.jsonSchema.material._element
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
@@ -7,7 +9,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSc
 import kotlinx.serialization.json.JsonObject
 
 object ButtonSchema {
-
     object Component {
         object Value {
             const val subset = SubsetSchema.Value.button
@@ -20,7 +21,9 @@ object ButtonSchema {
             const val action = ActionSchema.root
         }
 
-        class Scope(argument: SchemaScopeArgument) : ContentSchema.OpenScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : ContentSchema.OpenScope<Scope>(argument) {
             var label by delegate<JsonObject?>(Key.label)
             var action by delegate<JsonObject?>(Key.action)
         }

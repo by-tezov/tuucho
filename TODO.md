@@ -1,7 +1,9 @@
 ## In progress
 
-- Koin Library Scope
 - ATTENTION proguard protection Middle ware and RequestInterceptor
+- INTERNAL API ANNOTATION
+
+- fix unit test qui ne compile plus
 
 - add network error management around the other use case
 

@@ -6,9 +6,7 @@ import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import org.koin.core.module.Module
 
 internal object CoroutineScopeModules {
-
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupCore.Main
 
         override fun Module.declaration() {

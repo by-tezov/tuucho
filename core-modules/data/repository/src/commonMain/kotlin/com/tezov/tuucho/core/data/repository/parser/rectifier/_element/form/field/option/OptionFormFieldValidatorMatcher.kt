@@ -1,5 +1,6 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.option
+@file:Suppress("ktlint:standard:package-name")
 
+package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.option
 
 import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
@@ -13,12 +14,13 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
 class OptionFormFieldValidatorMatcher : MatcherRectifierProtocol {
-
-    override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
+    override fun accept(
+        path: JsonElementPath,
+        element: JsonElement
+    ): Boolean {
         if (!path.lastSegmentIs(FormSchema.Option.Key.validator)) return false
         val parent = element.find(path.parent())
-        return parent.isTypeOf(TypeSchema.Value.option)
-                && parent.isSubsetOf(FormFieldSchema.Component.Value.subset)
+        return parent.isTypeOf(TypeSchema.Value.option) &&
+            parent.isSubsetOf(FormFieldSchema.Component.Value.subset)
     }
-
 }

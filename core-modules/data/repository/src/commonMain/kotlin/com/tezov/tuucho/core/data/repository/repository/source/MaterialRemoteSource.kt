@@ -10,8 +10,9 @@ internal class MaterialRemoteSource(
     private val networkJsonObject: NetworkJsonObject,
     private val materialRectifier: MaterialRectifier,
 ) {
-
-    suspend fun process(url: String): JsonObject {
+    suspend fun process(
+        url: String
+    ): JsonObject {
         val response = coroutineScopes.network.await {
             networkJsonObject.resource(url)
         }
@@ -19,5 +20,4 @@ internal class MaterialRemoteSource(
             materialRectifier.process(response)
         }
     }
-
 }

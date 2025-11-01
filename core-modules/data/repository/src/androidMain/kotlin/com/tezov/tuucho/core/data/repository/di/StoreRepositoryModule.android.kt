@@ -13,13 +13,10 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import org.koin.core.module.Module
 
 internal object StoreRepositoryModuleAndroid {
-
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Main
 
         override fun Module.declaration() {
-
             single<DataStore<Preferences>> {
                 val context: Context = get(Name.APPLICATION_CONTEXT)
                 PreferenceDataStoreFactory.create(
@@ -32,7 +29,6 @@ internal object StoreRepositoryModuleAndroid {
                 )
             }
 
-
             factory<KeyValueStoreRepositoryProtocol> {
                 KeyValueStoreRepository(
                     dataStore = get(),
@@ -40,5 +36,4 @@ internal object StoreRepositoryModuleAndroid {
             }
         }
     }
-
 }

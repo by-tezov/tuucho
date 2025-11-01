@@ -12,9 +12,7 @@ import org.koin.core.module.Module
 import kotlin.time.Instant
 
 internal object MiscModule {
-
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupDomain.Main
 
         override fun Module.declaration() {
@@ -41,7 +39,4 @@ internal object MiscModule {
             }
         }
     }
-
 }
-
-

@@ -6,8 +6,9 @@ class StringMinLengthFormValidator(
     errorMessages: JsonObject,
     private val length: Int,
 ) : AbstractFormValidator<String>(errorMessages) {
-
-    override fun updateValidity(value: String) {
+    override fun updateValidity(
+        value: String
+    ) {
         isValid = value.length >= length
     }
 }

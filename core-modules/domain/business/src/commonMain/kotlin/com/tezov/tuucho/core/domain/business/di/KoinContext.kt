@@ -4,11 +4,9 @@ import org.koin.core.Koin
 import org.koin.core.KoinApplication
 
 object KoinContext {
-
-    lateinit var koinApplication:KoinApplication
+    lateinit var koinApplication: KoinApplication
 
     val koin get() = koinApplication.koin
-
 }
 
 interface TuuchoKoinComponent : org.koin.core.component.KoinComponent {

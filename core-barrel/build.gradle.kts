@@ -30,7 +30,7 @@ kotlin {
             implementation(compose.ui)
 
             implementation(libs.koin.core)
-            //implementation(libs.koin.compose)
+            // implementation(libs.koin.compose)
         }
     }
 }

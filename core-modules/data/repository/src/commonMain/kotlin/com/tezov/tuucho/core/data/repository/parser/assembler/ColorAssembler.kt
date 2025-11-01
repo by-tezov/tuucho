@@ -9,7 +9,6 @@ import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
 class ColorAssembler : AbstractAssembler() {
-
     override val schemaType: String = TypeSchema.Value.color
 
     override val matchers: List<MatcherAssemblerProtocol> by inject(
@@ -21,7 +20,7 @@ class ColorAssembler : AbstractAssembler() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement
-    ) =  path.isTypeOf(element, TypeSchema.Value.color) || super.accept(path, element)
-
+        path: JsonElementPath,
+        element: JsonElement
+    ) = path.isTypeOf(element, TypeSchema.Value.color) || super.accept(path, element)
 }

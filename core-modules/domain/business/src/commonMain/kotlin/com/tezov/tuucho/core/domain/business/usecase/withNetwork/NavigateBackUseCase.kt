@@ -16,7 +16,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InterractionLoc
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
-import org.koin.core.component.KoinComponent
 
 class NavigateBackUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -26,9 +25,11 @@ class NavigateBackUseCase(
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: InterractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
-) : UseCaseProtocol.Sync<Unit, Unit>, TuuchoKoinComponent {
-
-    override fun invoke(input: Unit) {
+) : UseCaseProtocol.Sync<Unit, Unit>,
+    TuuchoKoinComponent {
+    override fun invoke(
+        input: Unit
+    ) {
         coroutineScopes.useCase.async {
             (navigationMiddlewares + finalNavigationMiddleware()).execute(
                 context = NavigationMiddleware.Back.Context(
@@ -73,7 +74,8 @@ class NavigateBackUseCase(
         context: NavigationMiddleware.Back.Context
     ) {
         val view = navigationStackScreenRepository
-            .getScreenOrNull(route)?.view
+            .getScreenOrNull(route)
+            ?.view
             ?: return
         val componentObject = view.componentObject
         val componentSettingScope = componentObject
@@ -86,22 +88,23 @@ class NavigateBackUseCase(
         if (settingShadowerScope?.enable.isTrue) {
             val job = coroutineScopes.navigation.async {
                 suspend fun process() {
-                    shadowerMaterialRepository.process(
-                        url = route.value,
-                        componentObject = componentObject,
-                        types = listOf(Shadower.Type.contextual)
-                    ).forEach {
-                        coroutineScopes.renderer.await {
-                            view.update(it.jsonObject)
+                    shadowerMaterialRepository
+                        .process(
+                            url = route.value,
+                            componentObject = componentObject,
+                            types = listOf(Shadower.Type.contextual)
+                        ).forEach {
+                            coroutineScopes.renderer.await {
+                                view.update(it.jsonObject)
+                            }
                         }
-                    }
                 }
                 runCatching {
                     process()
                 }.onFailure { failure ->
                     context.onShadowerException?.invoke(failure, context) {
                         process()
-                    } ?:throw failure
+                    } ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {

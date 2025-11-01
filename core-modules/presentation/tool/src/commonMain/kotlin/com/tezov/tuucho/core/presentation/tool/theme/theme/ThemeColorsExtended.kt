@@ -30,11 +30,11 @@ val MaterialTheme.colorsExtended
     @ReadOnlyComposable
     get() = ThemeColorsExtended.localCommon.current
 
-infix fun MaterialTheme.provides(value: ThemeColorsExtended.Common) =
-    ThemeColorsExtended.localCommon provides value
+infix fun MaterialTheme.provides(
+    value: ThemeColorsExtended.Common
+) = ThemeColorsExtended.localCommon provides value
 
 object ThemeColorsExtended {
-
     object Dummy {
         val pink: Color = Color(0xFFFF00E5)
         val green: Color = Color(0xFF39EC07)
@@ -84,59 +84,59 @@ object ThemeColorsExtended {
     class Common(
         val background: OutfitPaletteColor,
         val onBackground: OutfitPaletteColor,
-
         val primary: OutfitPaletteColor,
         val onPrimary: OutfitPaletteColor,
-
         ribbon: OutfitPaletteColor? = null,
-
         backgroundElevated: OutfitPaletteColor? = null,
         onBackgroundElevated: OutfitPaletteColor? = null,
-
         backgroundModal: OutfitPaletteColor? = null,
         onBackgroundModal: OutfitPaletteColor? = null,
-
         secondary: OutfitPaletteColor? = null,
         onSecondary: OutfitPaletteColor? = null,
-
         tertiary: OutfitPaletteColor? = null,
         onTertiary: OutfitPaletteColor? = null,
-
         semantic: OutfitPaletteColorSemantic? = null,
         onSemantic: OutfitPaletteColorSemantic? = null,
-
-        ) {
-
+    ) {
         val ribbon: OutfitPaletteColor by DelegateNullFallBack.Ref(
             ribbon,
-            fallBackValue = { primary })
+            fallBackValue = { primary }
+        )
 
         val backgroundElevated: OutfitPaletteColor by DelegateNullFallBack.Ref(
             backgroundElevated,
-            fallBackValue = { background })
+            fallBackValue = { background }
+        )
         val onBackgroundElevated: OutfitPaletteColor by DelegateNullFallBack.Ref(
             onBackgroundElevated,
-            fallBackValue = { onBackground })
+            fallBackValue = { onBackground }
+        )
 
         val backgroundModal: OutfitPaletteColor by DelegateNullFallBack.Ref(
             backgroundModal,
-            fallBackValue = { background })
+            fallBackValue = { background }
+        )
         val onBackgroundModal: OutfitPaletteColor by DelegateNullFallBack.Ref(
             onBackgroundModal,
-            fallBackValue = { onBackground })
+            fallBackValue = { onBackground }
+        )
 
         val secondary: OutfitPaletteColor by DelegateNullFallBack.Ref(
             secondary,
-            fallBackValue = { primary })
+            fallBackValue = { primary }
+        )
         val onSecondary: OutfitPaletteColor by DelegateNullFallBack.Ref(
             onSecondary,
-            fallBackValue = { onPrimary })
+            fallBackValue = { onPrimary }
+        )
         val tertiary: OutfitPaletteColor by DelegateNullFallBack.Ref(
             tertiary,
-            fallBackValue = { primary })
+            fallBackValue = { primary }
+        )
         val onTertiary: OutfitPaletteColor by DelegateNullFallBack.Ref(
             onTertiary,
-            fallBackValue = { onPrimary })
+            fallBackValue = { onPrimary }
+        )
 
         val semantic: OutfitPaletteColorSemantic by DelegateNullFallBack.Ref(
             semantic,
@@ -144,15 +144,16 @@ object ThemeColorsExtended {
                 OutfitPaletteColorSemantic(
                     primary
                 )
-            })
+            }
+        )
         val onSemantic: OutfitPaletteColorSemantic by DelegateNullFallBack.Ref(
             onSemantic,
             fallBackValue = {
                 OutfitPaletteColorSemantic(
                     onPrimary
                 )
-            })
-
+            }
+        )
     }
 
     internal val localCommon: ProvidableCompositionLocal<Common> = staticCompositionLocalOf {
@@ -164,22 +165,16 @@ object ThemeColorsExtended {
         primary = MaterialTheme.colorsExtended.primary.default,
 //        primaryVariant = MaterialTheme.colorsExtended.primary.accent,
         onPrimary = MaterialTheme.colorsExtended.onPrimary.default,
-
         secondary = MaterialTheme.colorsExtended.secondary.default,
 //        secondaryVariant = MaterialTheme.colorsExtended.secondary.accent,
         onSecondary = MaterialTheme.colorsExtended.onSecondary.default,
-
         surface = Color.Transparent,
         onSurface = MaterialTheme.colorsExtended.onBackground.default,
-
         background = MaterialTheme.colorsExtended.background.default,
         onBackground = MaterialTheme.colorsExtended.onBackground.default,
-
         error = MaterialTheme.colorsExtended.semantic.error.default,
         onError = MaterialTheme.colorsExtended.onSemantic.error.default,
-
 //        isLight = true,
-
         // MISSING FIELDS
         inversePrimary = Color.Red,
         primaryContainer = Color.Red,
@@ -188,22 +183,18 @@ object ThemeColorsExtended {
         onSecondaryContainer = Color.Red,
         errorContainer = Color.Red,
         onErrorContainer = Color.Red,
-
         tertiary = Color.Red,
         onTertiary = Color.Red,
         tertiaryContainer = Color.Red,
         onTertiaryContainer = Color.Red,
-
         surfaceVariant = Color.Red,
         onSurfaceVariant = Color.Red,
         surfaceTint = Color.Red,
         inverseSurface = Color.Red,
         inverseOnSurface = Color.Red,
-
         outline = Color.Red,
         outlineVariant = Color.Red,
         scrim = Color.Red,
-
         surfaceBright = Color.Red,
         surfaceDim = Color.Red,
         surfaceContainer = Color.Red,
@@ -212,9 +203,4 @@ object ThemeColorsExtended {
         surfaceContainerLow = Color.Red,
         surfaceContainerLowest = Color.Red,
     )
-
 }
-
-
-
-

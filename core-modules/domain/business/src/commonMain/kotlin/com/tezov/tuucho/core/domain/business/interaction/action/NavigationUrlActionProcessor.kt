@@ -12,7 +12,6 @@ internal class NavigationUrlActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val navigateToUrl: NavigateToUrlUseCase,
 ) : ActionProcessorProtocol {
-
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
@@ -20,9 +19,7 @@ internal class NavigationUrlActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return action.command == Action.Navigate.command && action.authority == Action.Navigate.Url.authority
-    }
+    ): Boolean = action.command == Action.Navigate.command && action.authority == Action.Navigate.Url.authority
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -38,5 +35,4 @@ internal class NavigationUrlActionProcessor(
             )
         }
     }
-
 }

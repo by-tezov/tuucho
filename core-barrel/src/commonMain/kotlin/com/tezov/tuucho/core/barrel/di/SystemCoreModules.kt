@@ -12,10 +12,10 @@ import org.koin.dsl.module
 internal expect fun SystemCoreModules.platformInvoke(): List<ModuleProtocol>
 
 object SystemCoreModules {
-
     internal fun invoke(): List<ModuleProtocol> = listOf(
         CoroutineScopeModules.invoke(),
-    ) + platformInvoke()
+    ) +
+        platformInvoke()
 
     @Composable
     internal fun remember(

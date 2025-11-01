@@ -7,7 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class StringMinValueFormValidatorTest {
-
     private lateinit var sut: StringMinValueFormValidator
 
     @BeforeTest

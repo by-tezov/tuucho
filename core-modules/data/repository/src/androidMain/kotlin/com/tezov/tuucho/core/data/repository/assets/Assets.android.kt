@@ -7,7 +7,7 @@ import okio.source
 class AssetsAndroid(
     private val context: Context
 ) : AssetsProtocol {
-    override fun readFile(path: String): Source {
-        return context.assets.open("files/$path").source()
-    }
+    override fun readFile(
+        path: String
+    ): Source = context.assets.open("files/$path").source()
 }

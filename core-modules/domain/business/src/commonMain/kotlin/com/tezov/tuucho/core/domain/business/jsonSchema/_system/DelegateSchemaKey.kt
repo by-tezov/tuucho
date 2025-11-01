@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.business.jsonSchema._system
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
@@ -16,17 +18,25 @@ class DelegateSchemaKey<T : Any?>(
     private val type: KClass<*>,
     private var key: String? = null,
 ) {
-
     interface MapOperator {
-        fun read(key: String): JsonElement?
-        fun write(key: String, jsonElement: JsonElement)
+        fun read(
+            key: String
+        ): JsonElement?
+
+        fun write(
+            key: String,
+            jsonElement: JsonElement
+        )
     }
 
-    private fun resolveKey(property: KProperty<*>): String {
-        return key ?: property.name.also { key = it }
-    }
+    private fun resolveKey(
+        property: KProperty<*>
+    ): String = key ?: property.name.also { key = it }
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T? {
+    operator fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>
+    ): T? {
         val value = mapOperator.read(resolveKey(property)) ?: return null
         @Suppress("UNCHECKED_CAST", "IMPLICIT_CAST_TO_ANY")
         return (when (type) {
@@ -37,13 +47,18 @@ class DelegateSchemaKey<T : Any?>(
         }) as T
     }
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+    operator fun setValue(
+        thisRef: Any?,
+        property: KProperty<*>,
+        value: T?
+    ) {
         if (value == null) {
             mapOperator.write(resolveKey(property), JsonNull)
         } else {
             @Suppress("IMPLICIT_CAST_TO_ANY")
             mapOperator.write(
-                resolveKey(property), when (type) {
+                resolveKey(property),
+                when (type) {
                     JsonElement::class, JsonPrimitive::class, JsonArray::class, JsonObject::class -> value
                     String::class -> JsonPrimitive(value as String)
                     Boolean::class -> JsonPrimitive(value as Boolean)

@@ -7,7 +7,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
 class ActionModelDomainTest {
-
     @Test
     fun `from parses full string with command authority and target`() {
         val action = ActionModelDomain.Companion.from("open://system/settings")

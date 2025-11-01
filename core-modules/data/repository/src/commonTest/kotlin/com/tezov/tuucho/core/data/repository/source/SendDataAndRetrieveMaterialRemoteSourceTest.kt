@@ -18,7 +18,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class SendDataAndRetrieveMaterialRemoteSourceTest {
-
     private lateinit var coroutineScopes: CoroutineScopesProtocol
     private lateinit var networkJsonObject: NetworkJsonObject
 

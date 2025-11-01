@@ -19,7 +19,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
 class DimensionRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.DIMENSION
     )
@@ -30,25 +29,30 @@ class DimensionRectifier : AbstractRectifier() {
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(DimensionSchema::Scope).apply {
-        type = TypeSchema.Value.dimension
-        val value = this.element.string
-        if(value.startsWith(SymbolData.ID_REF_INDICATOR)) {
-            id = JsonPrimitive(value)
-        }
-        else {
-            id = JsonNull
-            default = value
-        }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(DimensionSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.dimension
+            val value = this.element.string
+            if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
+                id = JsonPrimitive(value)
+            } else {
+                id = JsonNull
+                default = value
+            }
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(DimensionSchema::Scope).apply {
-        type = TypeSchema.Value.dimension
-        id ?: run { id = JsonNull }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(DimensionSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.dimension
+            id ?: run { id = JsonNull }
+        }.collect()
 
     override fun afterAlterObject(
         path: JsonElementPath,
@@ -56,7 +60,8 @@ class DimensionRectifier : AbstractRectifier() {
     ): JsonElement? {
         var valueRectified: String?
         var sourceRectified: String?
-        return element.find(path)
+        return element
+            .find(path)
             .withScope(DimensionSchema::Scope)
             .takeIf {
                 it.rectifyIds().also { (value, source) ->
@@ -64,12 +69,12 @@ class DimensionRectifier : AbstractRectifier() {
                     sourceRectified = source
                 }
                 valueRectified != null || sourceRectified != null
-            }
-            ?.apply {
-                id = onScope(IdSchema::Scope).apply {
-                    valueRectified?.let { value = it }
-                    sourceRectified?.let { source = it }
-                }.collect()
+            }?.apply {
+                id = onScope(IdSchema::Scope)
+                    .apply {
+                        valueRectified?.let { value = it }
+                        sourceRectified?.let { source = it }
+                    }.collect()
             }?.collect()
     }
 
@@ -86,5 +91,4 @@ class DimensionRectifier : AbstractRectifier() {
         }
         return valueRectified to sourceRectified
     }
-
 }

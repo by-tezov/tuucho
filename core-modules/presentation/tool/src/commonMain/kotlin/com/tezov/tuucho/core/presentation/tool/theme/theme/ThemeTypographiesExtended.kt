@@ -15,11 +15,11 @@ val MaterialTheme.typographiesExtended
     @ReadOnlyComposable
     get() = ThemeTypographiesExtended.localCommon.current
 
-infix fun MaterialTheme.provides(value: ThemeTypographiesExtended.Common) =
-    ThemeTypographiesExtended.localCommon provides value
+infix fun MaterialTheme.provides(
+    value: ThemeTypographiesExtended.Common
+) = ThemeTypographiesExtended.localCommon provides value
 
 object ThemeTypographiesExtended {
-
     class Common(
         title: OutfitPaletteSize<OutfitTextStateColor>? = null,
         body: OutfitPaletteSize<OutfitTextStateColor>? = null,
@@ -32,7 +32,6 @@ object ThemeTypographiesExtended {
         caption: OutfitPaletteSize<OutfitTextStateColor>? = null,
         menu: OutfitPaletteSize<OutfitTextStateColor>? = null,
     ) {
-
         private val delegates =
             DelegateNullFallBack.Group<OutfitPaletteSize<OutfitTextStateColor>>()
         val title: OutfitPaletteSize<OutfitTextStateColor> by delegates.ref(title)
@@ -51,12 +50,9 @@ object ThemeTypographiesExtended {
                 ThemeColorsExtended.Dummy.outfitTextState.asPaletteSize
             }
         }
-
     }
 
     internal val localCommon: ProvidableCompositionLocal<Common> = staticCompositionLocalOf {
         error("not provided")
     }
-
-
 }

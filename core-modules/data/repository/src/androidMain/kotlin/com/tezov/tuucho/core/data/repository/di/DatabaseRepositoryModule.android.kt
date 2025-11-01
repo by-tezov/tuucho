@@ -8,17 +8,14 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
 object DatabaseRepositoryModuleAndroid {
-
     object Name {
         val APPLICATION_CONTEXT = named("DatabaseRepositoryModuleAndroid.Name.APPLICATION_CONTEXT")
     }
 
     internal fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Main
 
         override fun Module.declaration() {
-
             factory<SqlDriver> {
                 AndroidSqliteDriver(
                     schema = Database.Schema,
@@ -28,5 +25,4 @@ object DatabaseRepositoryModuleAndroid {
             }
         }
     }
-
 }

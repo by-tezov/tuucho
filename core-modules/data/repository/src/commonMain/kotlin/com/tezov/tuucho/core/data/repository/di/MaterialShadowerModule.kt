@@ -13,7 +13,6 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
 internal object MaterialShadowerModule {
-
     object Name {
         object Processor {
             val COMPONENT = named("MaterialShadowerModule.Name.Processor.COMPONENT")
@@ -31,7 +30,6 @@ internal object MaterialShadowerModule {
     }
 
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Shadower
 
         override fun Module.declaration() {
@@ -99,5 +97,3 @@ internal object MaterialShadowerModule {
         }
     }
 }
-
-

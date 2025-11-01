@@ -18,7 +18,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MaterialRemoteSourceTest {
-
     private lateinit var coroutineScopes: CoroutineScopesProtocol
     private lateinit var networkJsonObject: NetworkJsonObject
     private lateinit var materialRectifier: MaterialRectifier

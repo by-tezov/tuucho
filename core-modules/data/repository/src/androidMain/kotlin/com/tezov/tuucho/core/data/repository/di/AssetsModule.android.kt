@@ -7,9 +7,7 @@ import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import org.koin.core.module.Module
 
 internal object AssetsModuleAndroid {
-
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Main
 
         override fun Module.declaration() {
@@ -20,5 +18,4 @@ internal object AssetsModuleAndroid {
             }
         }
     }
-
 }

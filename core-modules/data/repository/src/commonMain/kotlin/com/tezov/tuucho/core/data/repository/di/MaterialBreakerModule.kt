@@ -17,7 +17,6 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
 internal object MaterialBreakerModule {
-
     object Name {
         object Processor {
             val COMPONENT = named("MaterialBreakerModule.Name.Processor.COMPONENT")
@@ -45,7 +44,6 @@ internal object MaterialBreakerModule {
     }
 
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Breaker
 
         override fun Module.declaration() {
@@ -170,5 +168,3 @@ internal object MaterialBreakerModule {
         }
     }
 }
-
-

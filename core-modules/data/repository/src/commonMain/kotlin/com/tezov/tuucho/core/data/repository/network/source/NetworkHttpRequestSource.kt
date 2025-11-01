@@ -14,8 +14,9 @@ internal class NetworkHttpRequestSource(
     private val httpClient: HttpClient,
     private val config: NetworkRepositoryModule.Config,
 ) {
-
-    suspend fun getHealth(url: String): RemoteResponse {
+    suspend fun getHealth(
+        url: String
+    ): RemoteResponse {
         val response = httpClient.get("${config.baseUrl}/${config.version}/${config.healthEndpoint}/$url")
         return RemoteResponse(
             url = response.request.url.toString(),
@@ -24,7 +25,9 @@ internal class NetworkHttpRequestSource(
         )
     }
 
-    suspend fun getResource(url: String): RemoteResponse {
+    suspend fun getResource(
+        url: String
+    ): RemoteResponse {
         val response = httpClient.get("${config.baseUrl}/${config.version}/${config.resourceEndpoint}/$url")
         return RemoteResponse(
             url = response.request.url.toString(),
@@ -33,7 +36,10 @@ internal class NetworkHttpRequestSource(
         )
     }
 
-    suspend fun postSend(url: String, request: RemoteRequest): RemoteResponse {
+    suspend fun postSend(
+        url: String,
+        request: RemoteRequest
+    ): RemoteResponse {
         val response = httpClient.post("${config.baseUrl}/${config.version}/${config.sendEndpoint}/$url") {
             contentType(ContentType.Application.Json)
             setBody(request.json)

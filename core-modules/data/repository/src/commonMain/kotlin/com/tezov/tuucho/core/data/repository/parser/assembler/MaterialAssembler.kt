@@ -10,12 +10,10 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OpenForTest
-class MaterialAssembler() : TuuchoKoinComponent {
-
+class MaterialAssembler : TuuchoKoinComponent {
     private val assemblers: List<AbstractAssembler> by inject(Name.ASSEMBLERS)
 
     suspend fun process(
@@ -31,7 +29,6 @@ class MaterialAssembler() : TuuchoKoinComponent {
                 findAllRefOrNullFetcher = findAllRefOrNullFetcher
             )
             jsonObjectAssembled.jsonObject
-
         } ?: throw DataException.Default("Missing assembler for type $type")
     }
 }

@@ -17,13 +17,11 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 
 internal object MaterialRepositoryModule {
-
     object Name {
         val SHADOWER_SOURCE = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
     }
 
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Main
 
         override fun Module.declaration() {
@@ -34,7 +32,6 @@ internal object MaterialRepositoryModule {
         }
 
         private fun Module.repository() {
-
             factory<MaterialRepositoryProtocol.RefreshCache> {
                 RefreshMaterialCacheRepository(
                     coroutineScopes = get(),
@@ -67,7 +64,6 @@ internal object MaterialRepositoryModule {
         }
 
         private fun Module.localSource() {
-
             factory<MaterialCacheLocalSource> {
                 MaterialCacheLocalSource(
                     coroutineScopes = get(),
@@ -77,11 +73,9 @@ internal object MaterialRepositoryModule {
                     lifetimeResolver = get(),
                 )
             }
-
         }
 
         private fun Module.remoteSource() {
-
             factory<MaterialRemoteSource> {
                 MaterialRemoteSource(
                     coroutineScopes = get(),

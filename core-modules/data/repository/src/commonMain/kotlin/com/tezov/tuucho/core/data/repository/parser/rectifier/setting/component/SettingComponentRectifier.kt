@@ -21,7 +21,6 @@ import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
 class SettingComponentRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.SETTING
     )
@@ -31,27 +30,37 @@ class SettingComponentRectifier : AbstractRectifier() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement,
-    ) = (path.lastSegmentStartWith(TypeSchema.Value.Setting.prefix) && path.parentIsTypeOf(
-        element, TypeSchema.Value.component
-    )) || super.accept(path, element)
+        path: JsonElementPath,
+        element: JsonElement,
+    ) = (path.lastSegmentStartWith(TypeSchema.Value.Setting.prefix) &&
+        path.parentIsTypeOf(
+            element,
+            TypeSchema.Value.component
+        )) ||
+        super.accept(path, element)
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ComponentSettingSchema::Scope).apply {
-        type = TypeSchema.Value.Setting.component
-        val value = this.element.string.requireIsRef()
-        id = JsonPrimitive(value)
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ComponentSettingSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.Setting.component
+            val value = this.element.string.requireIsRef()
+            id = JsonPrimitive(value)
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ComponentSettingSchema::Scope).apply {
-        type = TypeSchema.Value.Setting.component
-        id ?: run { id = JsonNull }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ComponentSettingSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.Setting.component
+            id ?: run { id = JsonNull }
+        }.collect()
 
     override fun beforeAlterArray(
         path: JsonElementPath,
@@ -59,5 +68,4 @@ class SettingComponentRectifier : AbstractRectifier() {
     ) = with(element.find(path).jsonArray) {
         JsonArray(map { process("".toPath(), it) })
     }
-
 }

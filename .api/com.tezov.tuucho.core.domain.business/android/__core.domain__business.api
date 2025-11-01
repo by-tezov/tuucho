@@ -5,9 +5,63 @@ public final class com/tezov/tuucho/core/domain/business/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
+	public static field koinApplication Lorg/koin/core/KoinApplication;
+	public final fun getKoin ()Lorg/koin/core/Koin;
+	public final fun getKoinApplication ()Lorg/koin/core/KoinApplication;
+	public final fun setKoinApplication (Lorg/koin/core/KoinApplication;)V
+}
+
+public abstract class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain : com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$ActionProcessor : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$ActionProcessor;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$RequestInterceptor : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$RequestInterceptor;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/domain/business/di/SystemCoreDomainModules {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/SystemCoreDomainModules;
 	public final fun invoke ()Ljava/util/List;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent : org/koin/core/component/KoinComponent {
+	public fun getKoin ()Lorg/koin/core/Koin;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent$DefaultImpls {
+	public static fun getKoin (Lcom/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent;)Lorg/koin/core/Koin;
 }
 
 public abstract class com/tezov/tuucho/core/domain/business/exception/DomainException : java/lang/Exception {
@@ -24,54 +78,6 @@ public final class com/tezov/tuucho/core/domain/business/exception/DomainExcepti
 
 public final class com/tezov/tuucho/core/domain/business/exception/DomainException$Unknown : com/tezov/tuucho/core/domain/business/exception/DomainException {
 	public fun <init> (Ljava/lang/Throwable;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/action/FormSendUrlActionProcessor : com/tezov/tuucho/core/domain/business/protocol/ActionProcessorProtocol, org/koin/core/component/KoinComponent {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase;)V
-	public fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;)Z
-	public fun getKoin ()Lorg/koin/core/Koin;
-	public fun getPriority ()I
-	public fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/action/FormUpdateActionProcessor : com/tezov/tuucho/core/domain/business/protocol/ActionProcessorProtocol, org/koin/core/component/KoinComponent {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase;)V
-	public fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;)Z
-	public fun getKoin ()Lorg/koin/core/Koin;
-	public fun getPriority ()I
-	public fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/action/NavigationLocalDestinationActionProcessor : com/tezov/tuucho/core/domain/business/protocol/ActionProcessorProtocol {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase;)V
-	public fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;)Z
-	public fun getPriority ()I
-	public fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/action/NavigationUrlActionProcessor : com/tezov/tuucho/core/domain/business/protocol/ActionProcessorProtocol {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase;)V
-	public fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;)Z
-	public fun getPriority ()I
-	public fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/action/StoreActionProcessor : com/tezov/tuucho/core/domain/business/protocol/ActionProcessorProtocol {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/SaveKeyValueToStoreUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/RemoveKeyValueFromStoreUseCase;)V
-	public fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;)Z
-	public fun getPriority ()I
-	public fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/ActionLockIdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
-	public fun <init> ()V
-	public fun generate ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InterractionLockRepository : com/tezov/tuucho/core/domain/business/protocol/repository/InterractionLockRepositoryProtocol {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol;)V
-	public fun tryLock (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InterractionLockRepositoryProtocol$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun unLock (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InterractionLockRepositoryProtocol$Type;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationOption {
@@ -141,46 +147,6 @@ public final class com/tezov/tuucho/core/domain/business/interaction/navigation/
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
-	public fun <init> ()V
-	public fun generate ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationStackRouteRepository : com/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
-	public fun backward (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun currentRoute (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun forward (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun priorRoute (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun routes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationStackScreenRepository : com/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen, org/koin/core/component/KoinComponent {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/screen/ScreenRendererProtocol;)V
-	public fun backward (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun forward (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getKoin ()Lorg/koin/core/Koin;
-	public fun getScreenOrNull (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getScreens (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getScreensOrNull (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun routes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationStackTransitionRepository : com/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition, org/koin/core/component/KoinComponent {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationStackTransitionHelperFactoryUseCase;)V
-	public fun backward (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun forward (Ljava/util/List;Lkotlinx/serialization/json/JsonObject;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getEvents-5QuBT3A ()Lkotlinx/coroutines/flow/Flow;
-	public fun getKoin ()Lorg/koin/core/Koin;
-	public fun notifyTransitionCompleted (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun routes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/navigation/selector/PageBreadCrumbNavigationDefinitionSelectorMatcher : com/tezov/tuucho/core/domain/business/protocol/NavigationDefinitionSelectorMatcherProtocol {
-	public fun <init> (Ljava/util/List;)V
-	public final fun accept (Ljava/util/List;)Z
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/transition/DefaultNavigationTransitionStackHelper : com/tezov/tuucho/core/domain/business/protocol/NavigationTransitionStackHelperProtocol {
@@ -1908,6 +1874,14 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/I
 	public abstract fun generate ()Ljava/lang/String;
 }
 
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
+	public abstract fun declaration (Lorg/koin/core/module/Module;)V
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
+}
+
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/NavigationDefinitionSelectorMatcherProtocol {
 }
 
@@ -2133,14 +2107,14 @@ public final class com/tezov/tuucho/core/domain/business/usecase/_system/UseCase
 	public final fun invokeSuspend (Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync, org/koin/core/component/KoinComponent {
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InterractionLockRepositoryProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public synthetic fun invoke (Ljava/lang/Object;)Ljava/lang/Object;
 	public fun invoke (Lkotlin/Unit;)V
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync, org/koin/core/component/KoinComponent {
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InterractionLockRepositoryProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;)V
@@ -2227,7 +2201,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Sen
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ServerHealthCheckUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async, org/koin/core/component/KoinComponent {
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ServerHealthCheckUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/ServerHealthCheckProtocol;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ServerHealthCheckUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

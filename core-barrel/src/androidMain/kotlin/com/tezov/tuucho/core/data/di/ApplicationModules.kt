@@ -8,13 +8,11 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
 object ApplicationModules {
-
     object Name {
         val APPLICATION_CONTEXT = named("ApplicationModules.Name.APPLICATION_CONTEXT")
     }
 
     internal fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupCore.Main
 
         override fun Module.declaration() {

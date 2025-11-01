@@ -23,14 +23,15 @@ class HttpClientMockEngine(
     override val config: HttpClientMockConfig,
     private val backendServer: BackendServer,
 ) : HttpClientEngineBase("HttpMockEngine") {
-
     private val callContext = coroutineContext + Job()
 
     override val supportedCapabilities: Set<HttpClientEngineCapability<*>> = setOf(
         HttpTimeoutCapability
     )
 
-    override suspend fun execute(data: HttpRequestData): HttpResponseData {
+    override suspend fun execute(
+        data: HttpRequestData
+    ): HttpResponseData {
         val response = backendServer.process(
             BackendServer.Request(
                 url = data.url.toString(),
@@ -53,10 +54,10 @@ class HttpClientMockEngineFactory(
     private val config: HttpClientMockConfig,
     private val backendServer: BackendServer,
 ) : HttpClientEngineFactory<HttpClientMockConfig> {
-
-    override fun create(block: HttpClientMockConfig.() -> Unit): HttpClientEngine =
-        HttpClientMockEngine(
-            config = config.apply(block),
-            backendServer = backendServer
-        )
+    override fun create(
+        block: HttpClientMockConfig.() -> Unit
+    ): HttpClientEngine = HttpClientMockEngine(
+        config = config.apply(block),
+        backendServer = backendServer
+    )
 }

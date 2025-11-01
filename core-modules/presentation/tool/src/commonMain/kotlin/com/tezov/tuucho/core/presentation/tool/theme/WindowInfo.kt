@@ -1,17 +1,19 @@
-//package com.tezov.tuucho.core.presentation.tool.theme
+@file:Suppress("ktlint:standard:no-empty-first-line-in-class-body")
+
+// package com.tezov.tuucho.core.presentation.tool.theme
 //
-//import androidx.compose.runtime.Composable
-//import androidx.compose.ui.platform.LocalConfiguration
-//import androidx.compose.ui.unit.Dp
-//import androidx.compose.ui.unit.dp
+// import androidx.compose.runtime.Composable
+// import androidx.compose.ui.platform.LocalConfiguration
+// import androidx.compose.ui.unit.Dp
+// import androidx.compose.ui.unit.dp
 //
-//data class WindowInfo(
+// data class WindowInfo(
 //    val orientation: Int,
 //    val screenWidthInfo: WindowType,
 //    val screenHeightInfo: WindowType,
 //    val screenWidth: Dp,
 //    val screenHeigh: Dp,
-//) {
+// ) {
 //    sealed class WindowType {
 //        object Compact : WindowType()
 //        object Medium : WindowType()
@@ -39,4 +41,4 @@
 //            )
 //        }
 //    }
-//}
+// }

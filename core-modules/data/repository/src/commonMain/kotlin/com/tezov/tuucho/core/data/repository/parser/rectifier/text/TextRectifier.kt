@@ -19,7 +19,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
 class TextRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.TEXT
     )
@@ -31,26 +30,31 @@ class TextRectifier : AbstractRectifier() {
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(TextSchema::Scope).apply {
-        type = TypeSchema.Value.text
-        //TODO add escaper on "ID_REF_INDICATOR" to allow string user content to start with it
-        val stringValue = this.element.string
-        if(stringValue.startsWith(SymbolData.ID_REF_INDICATOR)) {
-            id = JsonPrimitive(stringValue)
-        }
-        else {
-            id = JsonNull
-            default = stringValue
-        }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(TextSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.text
+            // TODO add escaper on "ID_REF_INDICATOR" to allow string user content to start with it
+            val stringValue = this.element.string
+            if (stringValue.startsWith(SymbolData.ID_REF_INDICATOR)) {
+                id = JsonPrimitive(stringValue)
+            } else {
+                id = JsonNull
+                default = stringValue
+            }
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(TextSchema::Scope).apply {
-        type = TypeSchema.Value.text
-        id ?: run { id = JsonNull }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(TextSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.text
+            id ?: run { id = JsonNull }
+        }.collect()
 
     override fun afterAlterObject(
         path: JsonElementPath,
@@ -58,7 +62,8 @@ class TextRectifier : AbstractRectifier() {
     ): JsonElement? {
         var valueRectified: String?
         var sourceRectified: String?
-        return element.find(path)
+        return element
+            .find(path)
             .withScope(TextSchema::Scope)
             .takeIf {
                 it.rectifyIds().also { (value, source) ->
@@ -66,12 +71,12 @@ class TextRectifier : AbstractRectifier() {
                     sourceRectified = source
                 }
                 valueRectified != null || sourceRectified != null
-            }
-            ?.apply {
-                id = onScope(IdSchema::Scope).apply {
-                    valueRectified?.let { value = it }
-                    sourceRectified?.let { source = it }
-                }.collect()
+            }?.apply {
+                id = onScope(IdSchema::Scope)
+                    .apply {
+                        valueRectified?.let { value = it }
+                        sourceRectified?.let { source = it }
+                    }.collect()
             }?.collect()
     }
 
@@ -88,5 +93,4 @@ class TextRectifier : AbstractRectifier() {
         }
         return valueRectified to sourceRectified
     }
-
 }

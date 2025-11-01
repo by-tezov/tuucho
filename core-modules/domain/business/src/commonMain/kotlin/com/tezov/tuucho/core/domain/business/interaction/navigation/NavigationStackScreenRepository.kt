@@ -12,8 +12,8 @@ import kotlinx.serialization.json.JsonObject
 internal class NavigationStackScreenRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val screenRenderer: ScreenRendererProtocol,
-) : StackScreen, TuuchoKoinComponent {
-
+) : StackScreen,
+    TuuchoKoinComponent {
     private val stack = mutableListOf<ScreenProtocol>()
     private val stackLock = Mutex()
 
@@ -21,21 +21,25 @@ internal class NavigationStackScreenRepository(
         stackLock.withLock { stack.map { it.route } }
     }
 
-    override suspend fun getScreens(routes: List<NavigationRoute.Url>) =
-        coroutineScopes.navigation.await {
-            stackLock.withLock {
-                stack.filter { screen ->
-                    routes.any { it == screen.route }
-                }
+    override suspend fun getScreens(
+        routes: List<NavigationRoute.Url>
+    ) = coroutineScopes.navigation.await {
+        stackLock.withLock {
+            stack.filter { screen ->
+                routes.any { it == screen.route }
             }
         }
+    }
 
-    override suspend fun getScreenOrNull(route: NavigationRoute.Url) =
-        coroutineScopes.navigation.await {
-            stackLock.withLock { stack.firstOrNull { route.id == it.route.id } }
-        }
+    override suspend fun getScreenOrNull(
+        route: NavigationRoute.Url
+    ) = coroutineScopes.navigation.await {
+        stackLock.withLock { stack.firstOrNull { route.id == it.route.id } }
+    }
 
-    override suspend fun getScreensOrNull(url: String) = coroutineScopes.navigation.await {
+    override suspend fun getScreensOrNull(
+        url: String
+    ) = coroutineScopes.navigation.await {
         stackLock.withLock { stack.filter { it.route.accept(url) } }
     }
 
@@ -44,12 +48,13 @@ internal class NavigationStackScreenRepository(
         componentObject: JsonObject,
     ) {
         coroutineScopes.navigation.await {
-            screenRenderer.process(
-                route = route,
-                componentObject = componentObject
-            ).also {
-                stackLock.withLock { stack.add(it) }
-            }
+            screenRenderer
+                .process(
+                    route = route,
+                    componentObject = componentObject
+                ).also {
+                    stackLock.withLock { stack.add(it) }
+                }
         }
     }
 
@@ -64,5 +69,4 @@ internal class NavigationStackScreenRepository(
             }
         }
     }
-
 }

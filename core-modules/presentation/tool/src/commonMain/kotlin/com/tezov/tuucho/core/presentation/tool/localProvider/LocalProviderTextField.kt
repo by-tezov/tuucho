@@ -9,12 +9,13 @@ import androidx.compose.ui.platform.TextToolbar
 import androidx.compose.ui.platform.TextToolbarStatus
 
 object LocalProviderTextField {
-
-    fun textSelectionColors(handleColor: Color, backgroundColor: Color) =
-        LocalTextSelectionColors provides TextSelectionColors(
-            handleColor = handleColor,
-            backgroundColor = backgroundColor
-        )
+    fun textSelectionColors(
+        handleColor: Color,
+        backgroundColor: Color
+    ) = LocalTextSelectionColors provides TextSelectionColors(
+        handleColor = handleColor,
+        backgroundColor = backgroundColor
+    )
 
     val textSelectionColorsNoColor
         get() = textSelectionColors(

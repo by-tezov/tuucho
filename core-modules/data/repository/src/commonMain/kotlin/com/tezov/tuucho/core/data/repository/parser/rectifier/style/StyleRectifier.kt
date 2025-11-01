@@ -24,7 +24,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
 class StyleRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.STYLE
     )
@@ -34,28 +33,38 @@ class StyleRectifier : AbstractRectifier() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement,
-    ) = (path.lastSegmentIs(TypeSchema.Value.style) && path.parentIsTypeOf(
-        element, TypeSchema.Value.component
-    )) || super.accept(path, element)
+        path: JsonElementPath,
+        element: JsonElement,
+    ) = (path.lastSegmentIs(TypeSchema.Value.style) &&
+        path.parentIsTypeOf(
+            element,
+            TypeSchema.Value.component
+        )) ||
+        super.accept(path, element)
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(StyleSchema::Scope).apply {
-        type = TypeSchema.Value.style
-        val value = this.element.string.requireIsRef()
-        id = JsonPrimitive(value)
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(StyleSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.style
+            val value = this.element.string.requireIsRef()
+            id = JsonPrimitive(value)
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(StyleSchema::Scope).apply {
-        type = TypeSchema.Value.style
-        id ?: run { id = JsonNull }
-        subset = retrieveSubsetOrMarkUnknown(path, element)
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(StyleSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.style
+            id ?: run { id = JsonNull }
+            subset = retrieveSubsetOrMarkUnknown(path, element)
+        }.collect()
 
     override fun afterAlterObject(
         path: JsonElementPath,
@@ -63,7 +72,8 @@ class StyleRectifier : AbstractRectifier() {
     ): JsonElement? {
         var valueRectified: String?
         var sourceRectified: String?
-        return element.find(path)
+        return element
+            .find(path)
             .withScope(StyleSchema::Scope)
             .takeIf {
                 it.rectifyIds().also { (value, source) ->
@@ -71,12 +81,12 @@ class StyleRectifier : AbstractRectifier() {
                     sourceRectified = source
                 }
                 valueRectified != null || sourceRectified != null
-            }
-            ?.apply {
-                id = onScope(IdSchema::Scope).apply {
-                    valueRectified?.let { value = it }
-                    sourceRectified?.let { source = it }
-                }.collect()
+            }?.apply {
+                id = onScope(IdSchema::Scope)
+                    .apply {
+                        valueRectified?.let { value = it }
+                        sourceRectified?.let { source = it }
+                    }.collect()
             }?.collect()
     }
 
@@ -97,7 +107,9 @@ class StyleRectifier : AbstractRectifier() {
     private fun retrieveSubsetOrMarkUnknown(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.findOrNull(path.parent())
-        ?.withScope(ComponentSchema::Scope)?.subset
+    ) = element
+        .findOrNull(path.parent())
+        ?.withScope(ComponentSchema::Scope)
+        ?.subset
         ?: SubsetSchema.Value.unknown
 }

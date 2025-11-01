@@ -1,5 +1,6 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action
+@file:Suppress("ktlint:standard:package-name")
 
+package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action
 
 import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
@@ -13,12 +14,13 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 class ActionButtonMatcher : MatcherRectifierProtocol {
-
-    override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
+    override fun accept(
+        path: JsonElementPath,
+        element: JsonElement
+    ): Boolean {
         if (!path.lastSegmentIs(ButtonSchema.Content.Key.action)) return false
         val parent = element.find(path.parent()) as? JsonObject
-        return parent.isSubsetOf(ButtonSchema.Component.Value.subset)
-                && parent.isTypeOf(TypeSchema.Value.content)
+        return parent.isSubsetOf(ButtonSchema.Component.Value.subset) &&
+            parent.isTypeOf(TypeSchema.Value.content)
     }
-
 }

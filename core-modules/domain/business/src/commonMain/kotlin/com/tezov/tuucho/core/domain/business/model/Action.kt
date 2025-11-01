@@ -1,15 +1,16 @@
 package com.tezov.tuucho.core.domain.business.model
 
 object Action {
-
     object Navigate {
         const val command = "navigate"
 
         object Url {
             const val authority = "url"
         }
+
         object LocalDestination {
             const val authority = "local-destination"
+
             object Target {
                 const val back = "back"
                 const val finish = "finish"
@@ -31,6 +32,7 @@ object Action {
 
         object Update {
             const val authority = "update"
+
             object Target {
                 const val error = "error"
             }
@@ -42,11 +44,11 @@ object Action {
 
         object KeyValue {
             const val authority = "key-value"
+
             object Target {
                 const val save = "save"
                 const val remove = "remove"
             }
         }
     }
-
 }

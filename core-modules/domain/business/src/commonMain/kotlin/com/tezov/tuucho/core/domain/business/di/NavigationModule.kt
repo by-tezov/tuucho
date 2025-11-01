@@ -11,13 +11,11 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
 internal object NavigationModule {
-
     object Name {
         val ID_GENERATOR = named("NavigationModule.Name.ID_GENERATOR")
     }
 
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupDomain.Main
 
         override fun Module.declaration() {
@@ -47,7 +45,4 @@ internal object NavigationModule {
             }
         }
     }
-
 }
-
-

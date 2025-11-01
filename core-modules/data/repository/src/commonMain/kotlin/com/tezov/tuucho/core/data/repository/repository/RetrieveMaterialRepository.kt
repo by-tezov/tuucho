@@ -13,8 +13,9 @@ internal class RetrieveMaterialRepository(
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
 ) : MaterialRepositoryProtocol.Retrieve {
-
-    override suspend fun process(url: String): JsonObject {
+    override suspend fun process(
+        url: String
+    ): JsonObject {
         val lifetime = materialCacheLocalSource.getLifetime(url)
         if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
             materialCacheLocalSource.assemble(url)?.let {
@@ -33,7 +34,9 @@ internal class RetrieveMaterialRepository(
                 Lifetime.Unlimited(
                     validityKey = lifetime?.validityKey
                 )
-            } else lifetime,
+            } else {
+                lifetime
+            },
             visibility = Visibility.Local
         )
         return materialCacheLocalSource.assemble(url).also {
@@ -43,5 +46,4 @@ internal class RetrieveMaterialRepository(
             }
         } ?: throw DataException.Default("Retrieved url $url returned nothing")
     }
-
 }

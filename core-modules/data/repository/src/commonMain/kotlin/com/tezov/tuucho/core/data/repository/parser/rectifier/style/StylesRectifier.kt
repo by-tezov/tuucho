@@ -21,7 +21,6 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
 class StylesRectifier : AbstractRectifier() {
-
     private val styleRectifier: StyleRectifier by inject()
 
     override fun beforeAlterObject(
@@ -43,43 +42,55 @@ class StylesRectifier : AbstractRectifier() {
         key: String,
         group: String,
         jsonPrimitive: JsonPrimitive,
-    ) = jsonPrimitive.withScope(StyleSchema::Scope).apply {
-        val stringValue = this.element.string.requireIsRef()
-        id = onScope(IdSchema::Scope).apply {
-            value = key.addGroup(group)
-            source = stringValue
+    ) = jsonPrimitive
+        .withScope(StyleSchema::Scope)
+        .apply {
+            val stringValue = this.element.string.requireIsRef()
+            id = onScope(IdSchema::Scope)
+                .apply {
+                    value = key.addGroup(group)
+                    source = stringValue
+                }.collect()
         }.collect()
-    }.collect()
 
     private fun alterObject(
         key: String,
         group: String,
         jsonObject: JsonObject,
-    ) = jsonObject.withScope(StyleSchema::Scope).apply {
-        id = onScope(IdSchema::Scope).apply {
-            when (val id = id) {
-                is JsonNull, null -> value = key.addGroup(group)
+    ) = jsonObject
+        .withScope(StyleSchema::Scope)
+        .apply {
+            id = onScope(IdSchema::Scope)
+                .apply {
+                    when (val id = id) {
+                        is JsonNull, null -> {
+                            value = key.addGroup(group)
+                        }
 
-                is JsonPrimitive -> {
-                    source = id.stringOrNull?.requireIsRef()
-                    value = key.addGroup(group)
-                }
+                        is JsonPrimitive -> {
+                            source = id.stringOrNull?.requireIsRef()
+                            value = key.addGroup(group)
+                        }
 
-                is JsonObject -> {
-                    source ?: run { source = value?.requireIsRef() }
-                    value = key.addGroup(group)
-                }
+                        is JsonObject -> {
+                            source ?: run { source = value?.requireIsRef() }
+                            value = key.addGroup(group)
+                        }
 
-                else -> error("type not managed")
-            }
+                        else -> {
+                            error("type not managed")
+                        }
+                    }
+                }.collect()
         }.collect()
-    }.collect()
 
     override fun afterAlterArray(
         path: JsonElementPath,
         element: JsonElement
-    ) = element.find(path).jsonArray.map {
-        styleRectifier.process("".toPath(), it)
-    }.let(::JsonArray)
-
+    ) = element
+        .find(path)
+        .jsonArray
+        .map {
+            styleRectifier.process("".toPath(), it)
+        }.let(::JsonArray)
 }

@@ -11,13 +11,10 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 
 internal object ActionProcessorModule {
-
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupDomain.ActionProcessor
 
         override fun Module.declaration() {
-
             factory<FormSendUrlActionProcessor> {
                 FormSendUrlActionProcessor(
                     useCaseExecutor = get(),
@@ -54,9 +51,6 @@ internal object ActionProcessorModule {
                     removeKeyValueFromStore = get()
                 )
             } bind ActionProcessorProtocol::class
-
         }
     }
 }
-
-

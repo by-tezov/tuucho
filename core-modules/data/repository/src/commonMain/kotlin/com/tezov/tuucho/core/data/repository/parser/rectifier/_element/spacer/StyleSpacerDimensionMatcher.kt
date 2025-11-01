@@ -1,5 +1,6 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier._element.spacer
+@file:Suppress("ktlint:standard:package-name")
 
+package com.tezov.tuucho.core.data.repository.parser.rectifier._element.spacer
 
 import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
@@ -13,18 +14,19 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
 class StyleSpacerDimensionMatcher : MatcherRectifierProtocol {
-
     private val segments = listOf(
         SpacerSchema.Style.Key.weight,
         StyleSchema.Key.width,
         StyleSchema.Key.height
     )
 
-    override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
+    override fun accept(
+        path: JsonElementPath,
+        element: JsonElement
+    ): Boolean {
         if (!path.lastSegmentIsAny(segments)) return false
         val parent = element.find(path.parent())
-        return parent.isTypeOf(TypeSchema.Value.style)
-                && parent.isSubsetOf(SpacerSchema.Component.Value.subset)
+        return parent.isTypeOf(TypeSchema.Value.style) &&
+            parent.isSubsetOf(SpacerSchema.Component.Value.subset)
     }
-
 }

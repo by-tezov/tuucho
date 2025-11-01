@@ -19,7 +19,6 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OpenForTest
@@ -36,8 +35,11 @@ class MaterialRectifier : TuuchoKoinComponent {
     private val actionsRectifier: ActionsRectifier by inject()
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun process(materialObject: JsonObject) =
-        materialObject.withScope(MaterialSchema::Scope).apply {
+    suspend fun process(
+        materialObject: JsonObject
+    ) = materialObject
+        .withScope(MaterialSchema::Scope)
+        .apply {
             rootComponent?.let {
                 rootComponent = componentRectifier.process("".toPath(), it).jsonObject
             }
@@ -45,15 +47,20 @@ class MaterialRectifier : TuuchoKoinComponent {
             contents?.let { contents = contentsRectifier.process("".toPath(), it).jsonArray }
             styles?.let { styles = stylesRectifier.process("".toPath(), it).jsonArray }
             options?.let { options = optionsRectifier.process("".toPath(), it).jsonArray }
-            states?.takeIf { it != JsonNull }
+            states
+                ?.takeIf { it != JsonNull }
                 ?.let { states = stateRectifier.process("".toPath(), it).jsonArray }
-            texts?.takeIf { it != JsonNull }
+            texts
+                ?.takeIf { it != JsonNull }
                 ?.let { texts = textsRectifier.process("".toPath(), it).jsonArray }
-            colors?.takeIf { it != JsonNull }
+            colors
+                ?.takeIf { it != JsonNull }
                 ?.let { colors = colorsRectifier.process("".toPath(), it).jsonArray }
-            dimensions?.takeIf { it != JsonNull }
+            dimensions
+                ?.takeIf { it != JsonNull }
                 ?.let { dimensions = dimensionsRectifier.process("".toPath(), it).jsonArray }
-            actions?.takeIf { it != JsonNull }
+            actions
+                ?.takeIf { it != JsonNull }
                 ?.let { actions = actionsRectifier.process("".toPath(), it).jsonArray }
         }.collect()
 }

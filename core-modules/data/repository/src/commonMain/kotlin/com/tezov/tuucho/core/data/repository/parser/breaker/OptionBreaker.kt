@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.data.repository.parser.breaker._system.MatcherBreak
 import org.koin.core.component.inject
 
 class OptionBreaker : AbstractBreaker() {
-
     override val matchers: List<MatcherBreakerProtocol> by inject(
         Name.Matcher.OPTION
     )
@@ -14,5 +13,4 @@ class OptionBreaker : AbstractBreaker() {
     override val childProcessors: List<AbstractBreaker> by inject(
         Name.Processor.OPTION
     )
-
 }

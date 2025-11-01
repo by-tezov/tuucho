@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSettin
 import kotlinx.serialization.json.JsonObject
 
 object SettingComponentNavigationTransitionSchema {
-
     const val root = "transition"
 
     object Key {
@@ -15,7 +14,9 @@ object SettingComponentNavigationTransitionSchema {
         const val backward = DirectionNavigation.backward
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = SettingComponentNavigationTransitionSchema.root
 
         var forward by delegate<JsonObject?>(Key.forward)
@@ -23,22 +24,20 @@ object SettingComponentNavigationTransitionSchema {
     }
 
     object Set {
-
         object Key {
             const val enter = DirectionScreen.enter
             const val exit = DirectionScreen.exit
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
-
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             var enter by delegate<JsonObject?>(Key.enter)
             var exit by delegate<JsonObject?>(Key.exit)
         }
-
     }
 
     object Spec {
-
         object Key {
             const val type = "type"
             const val directionNavigation = "direction-navigation"
@@ -64,33 +63,34 @@ object SettingComponentNavigationTransitionSchema {
             }
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenScope<Scope>(argument)
 
-        open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
-            OpenSchemaScope<T>(argument) {
+        open class OpenScope<T : OpenScope<T>>(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<T>(argument) {
             var type by delegate<String?>(Key.type)
             var directionNavigation by delegate<String?>(Key.directionNavigation)
             var directionScreen by delegate<String?>(Key.directionScreen)
         }
-
     }
 
     object SpecFade {
-
         object Key {
             const val duration = "duration"
             const val alphaInitial = "alpha-initial"
         }
 
-        class Scope(argument: SchemaScopeArgument) : Spec.OpenScope<Scope>(argument) {
-
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : Spec.OpenScope<Scope>(argument) {
             var duration by delegate<String?>(Key.duration)
             var alphaInitial by delegate<String?>(Key.alphaInitial)
         }
     }
 
     object SpecSlide {
-
         object Key {
             const val duration = "duration"
             const val exitDarkAlphaFactor = "exit-dark-alpha-factor"
@@ -113,12 +113,13 @@ object SettingComponentNavigationTransitionSchema {
             }
         }
 
-        class Scope(argument: SchemaScopeArgument) : Spec.OpenScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : Spec.OpenScope<Scope>(argument) {
             var duration by delegate<String?>(Key.duration)
             var exitDarkAlphaFactor by delegate<String?>(Key.exitDarkAlphaFactor)
             var entrance by delegate<String?>(Key.entrance)
             var effect by delegate<String?>(Key.effect)
         }
     }
-
 }

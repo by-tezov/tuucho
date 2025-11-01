@@ -4,9 +4,10 @@ import com.tezov.tuucho.core.data.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.core.data.repository.network.backendServer.BackendServer.Response
 
 interface ServiceProtocol {
-
     val url: String
 
-    suspend fun process(version: String, request: Request): Response
-
+    suspend fun process(
+        version: String,
+        request: Request
+    ): Response
 }

@@ -13,7 +13,6 @@ internal class NavigationLocalDestinationActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val navigateBack: NavigateBackUseCase,
 ) : ActionProcessorProtocol {
-
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
@@ -21,9 +20,7 @@ internal class NavigationLocalDestinationActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return action.command == Action.Navigate.command && action.authority == Action.Navigate.LocalDestination.authority
-    }
+    ): Boolean = action.command == Action.Navigate.command && action.authority == Action.Navigate.LocalDestination.authority
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -39,5 +36,4 @@ internal class NavigationLocalDestinationActionProcessor(
             else -> throw DomainException.Default("Unknown target ${action.target}")
         }
     }
-
 }

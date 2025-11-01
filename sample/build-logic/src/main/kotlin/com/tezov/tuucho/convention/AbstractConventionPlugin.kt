@@ -19,8 +19,8 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
 
     companion object {
 
-        private fun lintDisabled() = setOf(
-            "ComposableNaming"
+        private fun lintDisabled() = setOf<String>(
+//            "ComposableNaming"
         )
 
     }

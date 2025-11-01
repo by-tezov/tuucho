@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.data.repository.parser.breaker._system.MatcherBreak
 import org.koin.core.component.inject
 
 class ContentBreaker : AbstractBreaker() {
-
     override val matchers: List<MatcherBreakerProtocol> by inject(
         Name.Matcher.CONTENT
     )

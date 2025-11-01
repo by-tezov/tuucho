@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.coroutines.channels.BufferOverflow
 
 class AnimationProgress private constructor() {
-
     private enum class Step { Initial, Head, Running, Tail }
 
     private val transitionState = mutableStateOf(MutableTransitionState(Step.Initial))
@@ -45,11 +44,20 @@ class AnimationProgress private constructor() {
         with(transitionState.value) {
             when (currentState) {
                 Step.Initial -> {}
-                Step.Head -> targetState = Step.Running
-                Step.Running -> if(isIdle) {
-                    targetState = Step.Tail
+
+                Step.Head -> {
+                    targetState = Step.Running
                 }
-                Step.Tail -> onDone()
+
+                Step.Running -> {
+                    if (isIdle) {
+                        targetState = Step.Tail
+                    }
+                }
+
+                Step.Tail -> {
+                    onDone()
+                }
             }
         }
     }
@@ -93,8 +101,9 @@ class AnimationProgress private constructor() {
             .also { it.rememberTransition() }
 
         @Composable
-        fun rememberAnimationProgress(key1: Any?) = remember(key1) { AnimationProgress() }
+        fun rememberAnimationProgress(
+            key1: Any?
+        ) = remember(key1) { AnimationProgress() }
             .also { it.rememberTransition() }
     }
-
 }

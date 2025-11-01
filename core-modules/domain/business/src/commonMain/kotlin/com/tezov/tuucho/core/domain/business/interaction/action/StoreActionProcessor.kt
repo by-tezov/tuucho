@@ -20,7 +20,6 @@ internal class StoreActionProcessor(
     private val saveKeyValueToStore: SaveKeyValueToStoreUseCase,
     private val removeKeyValueFromStore: RemoveKeyValueFromStoreUseCase,
 ) : ActionProcessorProtocol {
-
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
@@ -28,9 +27,7 @@ internal class StoreActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return action.command == Action.Store.command && action.authority == Action.Store.KeyValue.authority
-    }
+    ): Boolean = action.command == Action.Store.command && action.authority == Action.Store.KeyValue.authority
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -45,7 +42,9 @@ internal class StoreActionProcessor(
         }
     }
 
-    private suspend fun saveValues(query: JsonElement) {
+    private suspend fun saveValues(
+        query: JsonElement
+    ) {
         query.jsonObject.forEach {
             useCaseExecutor.invokeSuspend(
                 useCase = saveKeyValueToStore,
@@ -57,7 +56,9 @@ internal class StoreActionProcessor(
         }
     }
 
-    private suspend fun removeKeys(query: JsonElement) {
+    private suspend fun removeKeys(
+        query: JsonElement
+    ) {
         query.jsonArray.forEach {
             useCaseExecutor.invokeSuspend(
                 useCase = removeKeyValueFromStore,
@@ -66,7 +67,5 @@ internal class StoreActionProcessor(
                 )
             )
         }
-
     }
-
 }

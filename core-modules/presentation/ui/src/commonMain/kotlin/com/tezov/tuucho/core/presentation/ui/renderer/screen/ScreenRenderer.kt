@@ -12,16 +12,18 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProto
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ScreenRenderer(
     private val coroutineScopes: CoroutineScopesProtocol,
-) : ScreenRendererProtocol, TuuchoKoinComponent {
-
+) : ScreenRendererProtocol,
+    TuuchoKoinComponent {
     private val viewFactories: List<AbstractViewFactory> by inject()
 
-    override suspend fun process(route: NavigationRoute.Url, componentObject: JsonObject) = coroutineScopes.renderer.await {
+    override suspend fun process(
+        route: NavigationRoute.Url,
+        componentObject: JsonObject
+    ) = coroutineScopes.renderer.await {
         val type = componentObject.withScope(TypeSchema::Scope).self
         if (type != TypeSchema.Value.component) {
             throw UiException.Default("object is not a component $componentObject")
@@ -40,11 +42,11 @@ class ScreenRenderer(
         )
     }
 
-    private fun <T> List<T>.singleOrThrow(id: String?, subset: String?): T? {
+    private fun <T> List<T>.singleOrThrow(
+        id: String?,
+        subset: String?
+    ): T? {
         if (size > 1) throw UiException.Default("Only one renderer can accept the object $id $subset")
         return firstOrNull()
     }
-
 }
-
-

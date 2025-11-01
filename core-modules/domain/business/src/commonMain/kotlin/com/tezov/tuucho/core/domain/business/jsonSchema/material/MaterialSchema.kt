@@ -7,7 +7,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 object MaterialSchema {
-
     object Key {
         const val pageSetting = PageSettingSchema.root
         const val rootComponent = "root"
@@ -24,7 +23,9 @@ object MaterialSchema {
         const val actions = "actions"
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         var pageSetting by delegate<JsonObject?>(Key.pageSetting)
         var rootComponent by delegate<JsonObject?>(Key.rootComponent)
 
@@ -38,9 +39,5 @@ object MaterialSchema {
         var colors by delegate<JsonElement?>(Key.colors)
         var dimensions by delegate<JsonElement?>(Key.dimensions)
         var actions by delegate<JsonElement?>(Key.actions)
-
     }
 }
-
-
-

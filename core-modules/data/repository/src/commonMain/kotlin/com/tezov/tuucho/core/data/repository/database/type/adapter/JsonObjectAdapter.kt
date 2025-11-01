@@ -6,15 +6,14 @@ import kotlinx.serialization.json.JsonObject
 
 internal class JsonObjectAdapter(
     private val json: Json
-): ColumnAdapter<JsonObject, String> {
-
+) : ColumnAdapter<JsonObject, String> {
     private val serializer = JsonObject.serializer()
 
-    override fun decode(databaseValue: String): JsonObject {
-        return json.decodeFromString(serializer, databaseValue)
-    }
+    override fun decode(
+        databaseValue: String
+    ): JsonObject = json.decodeFromString(serializer, databaseValue)
 
-    override fun encode(value: JsonObject): String {
-        return json.encodeToString(serializer, value)
-    }
+    override fun encode(
+        value: JsonObject
+    ): String = json.encodeToString(serializer, value)
 }

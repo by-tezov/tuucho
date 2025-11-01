@@ -8,18 +8,17 @@ import kotlinx.serialization.json.Json
 internal class VisibilityAdapter(
     private val json: Json,
 ) : ColumnAdapter<Visibility, String> {
-
     companion object {
         private const val separator = ":"
     }
 
     private val serializer: KSerializer<Visibility> = Visibility.serializer()
 
-    override fun decode(databaseValue: String): Visibility {
-        return json.decodeFromString(serializer, databaseValue.substringAfter(separator))
-    }
+    override fun decode(
+        databaseValue: String
+    ): Visibility = json.decodeFromString(serializer, databaseValue.substringAfter(separator))
 
-    override fun encode(value: Visibility): String {
-        return "${value.name}${separator}${json.encodeToString(serializer, value)}"
-    }
+    override fun encode(
+        value: Visibility
+    ): String = "${value.name}${separator}${json.encodeToString(serializer, value)}"
 }

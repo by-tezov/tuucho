@@ -11,7 +11,8 @@ import kotlinx.serialization.json.JsonObject
 fun mockCoroutineContext(
     currentScope: CoroutineScope
 ) = mock<CoroutineContextProtocol> {
-    everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject>()) } calls {
-            (block: suspend CoroutineScope.() -> JsonObject) -> block(currentScope)
+    @Suppress("ktlint:standard:max-line-length")
+    everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject>()) } calls { (block: suspend CoroutineScope.() -> JsonObject) ->
+        block(currentScope)
     }
 }

@@ -6,23 +6,17 @@ import io.ktor.client.engine.okhttp.OkHttp
 import org.koin.core.module.Module
 
 internal object NetworkRepositoryModuleAndroid {
-
     object FlavorDefault {
-
         fun invoke() = object : ModuleProtocol {
-
             override val group = ModuleGroupData.Main
 
             override fun Module.declaration() {
-
                 factory<HttpClientEngineFactory<*>> {
                     OkHttp
                 }
             }
         }
-
     }
 
     fun invoke() = NetworkRepositoryModuleAndroidFlavor.invoke()
-
 }

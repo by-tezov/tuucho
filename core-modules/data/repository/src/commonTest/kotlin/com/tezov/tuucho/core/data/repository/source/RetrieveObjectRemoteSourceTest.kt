@@ -17,7 +17,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class RetrieveObjectRemoteSourceTest {
-
     private lateinit var coroutineScopes: CoroutineScopesProtocol
     private lateinit var networkJsonObject: NetworkJsonObject
     private lateinit var sut: RetrieveObjectRemoteSource

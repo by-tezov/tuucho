@@ -8,7 +8,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class JsonElementExtensionTest {
-
     private val sample = JsonObject(
         mapOf(
             "user" to JsonObject(

@@ -7,7 +7,6 @@ import kotlin.test.assertEquals
 import kotlin.time.Instant
 
 class InstantSerializerTest {
-
     private val json = Json {
         serializersModule = kotlinx.serialization.modules.SerializersModule {
             contextual(Instant::class, InstantSerializer())

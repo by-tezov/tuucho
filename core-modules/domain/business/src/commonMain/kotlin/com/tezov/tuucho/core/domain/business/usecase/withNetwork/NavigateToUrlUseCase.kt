@@ -26,7 +26,6 @@ import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
-import org.koin.core.component.KoinComponent
 
 class NavigateToUrlUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -40,65 +39,68 @@ class NavigateToUrlUseCase(
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val actionLockRepository: InterractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
-) : UseCaseProtocol.Sync<Input, Unit>, TuuchoKoinComponent {
-
+) : UseCaseProtocol.Sync<Input, Unit>,
+    TuuchoKoinComponent {
     data class Input(
         val url: String,
     )
 
-    override fun invoke(input: Input) {
+    override fun invoke(
+        input: Input
+    ) {
         coroutineScopes.useCase.async {
             (navigationMiddlewares + finalNavigationMiddleware()).execute(
                 context = NavigationMiddleware.ToUrl.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value,
                     input = input,
                     onShadowerException = null
-
                 )
             )
         }
     }
 
-    private fun finalNavigationMiddleware(): NavigationMiddleware.ToUrl =
-        NavigationMiddleware.ToUrl { context, next ->
-            coroutineScopes.navigation.await {
-                val interactionHandle = tryLock() ?: return@await
-                with(context.input) {
-                    val componentObject = runCatching {
-                        retrieveMaterialRepository.process(url)
-                    }.onFailure {
-                        interactionHandle.unLock()
-                    }.getOrThrow()
-                    val navigationSettingObject = componentObject
-                        .onScope(ComponentSettingSchema.Root::Scope)
-                        .navigation
-                    val navigationDefinitionObject = navigationSettingObject
-                        ?.withScope(ComponentSettingNavigationSchema::Scope)
-                        ?.definition?.navigationResolver()
-                    val newRoute = navigationStackRouteRepository.forward(
-                        route = NavigationRoute.Url(navigationRouteIdGenerator.generate(), url),
-                        navigationOptionObject = navigationDefinitionObject
-                            ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.option
+    private fun finalNavigationMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, next ->
+        coroutineScopes.navigation.await {
+            val interactionHandle = tryLock() ?: return@await
+            with(context.input) {
+                val componentObject = runCatching {
+                    retrieveMaterialRepository.process(url)
+                }.onFailure {
+                    interactionHandle.unLock()
+                }.getOrThrow()
+                val navigationSettingObject = componentObject
+                    .onScope(ComponentSettingSchema.Root::Scope)
+                    .navigation
+                val navigationDefinitionObject = navigationSettingObject
+                    ?.withScope(ComponentSettingNavigationSchema::Scope)
+                    ?.definition
+                    ?.navigationResolver()
+                val newRoute = navigationStackRouteRepository.forward(
+                    route = NavigationRoute.Url(navigationRouteIdGenerator.generate(), url),
+                    navigationOptionObject = navigationDefinitionObject
+                        ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
+                        ?.option
+                )
+                newRoute?.let {
+                    navigationStackScreenRepository.forward(
+                        route = newRoute,
+                        componentObject = componentObject
                     )
-                    newRoute?.let {
-                        navigationStackScreenRepository.forward(
-                            route = newRoute,
-                            componentObject = componentObject
-                        )
-                        runShadower(newRoute, context)
-                    }
-                    navigationStackTransitionRepository.forward(
-                        routes = navigationStackRouteRepository.routes(),
-                        navigationExtraObject = navigationSettingObject
-                            ?.withScope(ComponentSettingNavigationSchema::Scope)
-                            ?.extra,
-                        navigationTransitionObject = navigationDefinitionObject
-                            ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)?.transition,
-                    )
+                    runShadower(newRoute, context)
                 }
-                interactionHandle.unLock()
+                navigationStackTransitionRepository.forward(
+                    routes = navigationStackRouteRepository.routes(),
+                    navigationExtraObject = navigationSettingObject
+                        ?.withScope(ComponentSettingNavigationSchema::Scope)
+                        ?.extra,
+                    navigationTransitionObject = navigationDefinitionObject
+                        ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
+                        ?.transition,
+                )
             }
+            interactionHandle.unLock()
         }
+    }
 
     private suspend fun tryLock() = actionLockRepository
         .tryLock(InterractionLockRepositoryProtocol.Type.Navigation)
@@ -117,12 +119,14 @@ class NavigateToUrlUseCase(
     private suspend fun JsonObject.accept(): Boolean {
         val selector =
             withScope(ComponentSettingNavigationSchema.Definition::Scope).selector ?: return true
-        return useCaseExecutor.invokeSuspend(
-            useCase = navigationOptionSelectorFactory,
-            input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(
-                prototypeObject = selector
-            )
-        ).selector.accept()
+        return useCaseExecutor
+            .invokeSuspend(
+                useCase = navigationOptionSelectorFactory,
+                input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(
+                    prototypeObject = selector
+                )
+            ).selector
+            .accept()
     }
 
     private suspend fun NavigationDefinitionSelectorMatcherProtocol.accept() = when (this) {
@@ -131,7 +135,9 @@ class NavigateToUrlUseCase(
             accept(route.map { it.value })
         }
 
-        else -> throw DomainException.Default("Unknown navigation option selector $this")
+        else -> {
+            throw DomainException.Default("Unknown navigation option selector $this")
+        }
     }
 
     private suspend fun runShadower(
@@ -139,7 +145,8 @@ class NavigateToUrlUseCase(
         context: NavigationMiddleware.ToUrl.Context
     ) {
         val view = navigationStackScreenRepository
-            .getScreenOrNull(route)?.view
+            .getScreenOrNull(route)
+            ?.view
             ?: return
         val componentObject = view.componentObject
         val componentSettingScope = componentObject
@@ -152,20 +159,21 @@ class NavigateToUrlUseCase(
         if (settingShadowerScope?.enable.isTrue) {
             val job = coroutineScopes.navigation.async {
                 suspend fun process() {
-                    shadowerMaterialRepository.process(
-                        url = route.value,
-                        componentObject = componentObject,
-                        types = listOf(Shadower.Type.contextual)
-                    ).forEach {
-                        coroutineScopes.renderer.await {
-                            view.update(it.jsonObject)
+                    shadowerMaterialRepository
+                        .process(
+                            url = route.value,
+                            componentObject = componentObject,
+                            types = listOf(Shadower.Type.contextual)
+                        ).forEach {
+                            coroutineScopes.renderer.await {
+                                view.update(it.jsonObject)
+                            }
                         }
-                    }
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.invoke(failure, context) {
                         process()
-                    } ?:throw failure
+                    } ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
@@ -173,5 +181,4 @@ class NavigateToUrlUseCase(
             }
         }
     }
-
 }

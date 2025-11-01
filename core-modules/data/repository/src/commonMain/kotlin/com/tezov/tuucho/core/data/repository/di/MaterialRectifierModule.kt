@@ -46,9 +46,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
 internal object MaterialRectifierModule {
-
     object Name {
-
         object Processor {
             val COMPONENT = named("MaterialRectifierModule.Name.Processor.COMPONENT")
             val SETTING = named("MaterialRectifierModule.Name.Processor.SETTING")
@@ -80,7 +78,6 @@ internal object MaterialRectifierModule {
     }
 
     fun invoke() = object : ModuleProtocol {
-
         override val group = ModuleGroupData.Rectifier
 
         override fun Module.declaration() {
@@ -305,7 +302,4 @@ internal object MaterialRectifierModule {
             }
         }
     }
-
 }
-
-

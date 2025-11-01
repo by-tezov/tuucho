@@ -11,9 +11,10 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import org.koin.core.component.KoinComponent
 
-abstract class AbstractShadower : MatcherShadowerProtocol, TuuchoKoinComponent {
+abstract class AbstractShadower :
+    MatcherShadowerProtocol,
+    TuuchoKoinComponent {
     protected open val matchers: List<MatcherShadowerProtocol> = emptyList()
     protected open val childProcessors: List<AbstractShadower> = emptyList()
 
@@ -41,7 +42,9 @@ abstract class AbstractShadower : MatcherShadowerProtocol, TuuchoKoinComponent {
     ) {
         forEach { entry ->
             (entry as? JsonObject)
-                ?: throw DataException.Default("By design element inside array must be object, so there is surely something missing in the rectifier for $entry ")
+                ?: throw DataException.Default(
+                    "By design element inside array must be object, so there is surely something missing in the rectifier for $entry "
+                )
             entry.processObject("".toPath(), entry, jsonObjectConsumer)
         }
     }
@@ -61,5 +64,4 @@ abstract class AbstractShadower : MatcherShadowerProtocol, TuuchoKoinComponent {
         }
         jsonObjectConsumer.onNext(this, null)
     }
-
 }

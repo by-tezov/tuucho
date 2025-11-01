@@ -1,5 +1,6 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.style
+@file:Suppress("ktlint:standard:package-name")
 
+package com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.style
 
 import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
@@ -12,12 +13,13 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
 class StyleLabelColorMatcher : MatcherRectifierProtocol {
-
-    override fun accept(path: JsonElementPath, element: JsonElement): Boolean {
+    override fun accept(
+        path: JsonElementPath,
+        element: JsonElement
+    ): Boolean {
         if (!path.lastSegmentIs(LabelSchema.Style.Key.fontColor)) return false
         val parent = element.find(path.parent())
-        return parent.isTypeOf(TypeSchema.Value.style)
-                && parent.isSubsetOf(LabelSchema.Component.Value.subset)
+        return parent.isTypeOf(TypeSchema.Value.style) &&
+            parent.isSubsetOf(LabelSchema.Component.Value.subset)
     }
-
 }

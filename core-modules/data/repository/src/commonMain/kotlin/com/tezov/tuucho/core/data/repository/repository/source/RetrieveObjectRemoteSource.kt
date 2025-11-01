@@ -8,9 +8,9 @@ internal class RetrieveObjectRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val networkJsonObject: NetworkJsonObject,
 ) {
-
-    suspend fun process(url: String): JsonObject = coroutineScopes.network.await {
+    suspend fun process(
+        url: String
+    ): JsonObject = coroutineScopes.network.await {
         networkJsonObject.resource(url)
     }
-
 }

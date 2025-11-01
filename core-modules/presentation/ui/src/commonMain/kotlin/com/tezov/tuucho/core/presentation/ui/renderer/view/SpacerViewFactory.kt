@@ -23,25 +23,24 @@ import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewF
 import kotlinx.serialization.json.JsonObject
 
 class SpacerViewFactory : AbstractViewFactory() {
-
-    override fun accept(componentElement: JsonObject) = componentElement.let {
+    override fun accept(
+        componentElement: JsonObject
+    ) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
-                it.withScope(SubsetSchema::Scope).self == SpacerSchema.Component.Value.subset
+            it.withScope(SubsetSchema::Scope).self == SpacerSchema.Component.Value.subset
     }
 
     override suspend fun process(
         route: NavigationRoute.Url,
         componentObject: JsonObject,
-    ) =
-        SpacerView(
-            componentObject = componentObject
-        ).also { it.init() }
+    ) = SpacerView(
+        componentObject = componentObject
+    ).also { it.init() }
 }
 
 class SpacerView(
     componentObject: JsonObject,
 ) : AbstractView(componentObject) {
-
     private var _width: JsonObject? = null
     private var _height: JsonObject? = null
     private var _weight: JsonObject? = null
@@ -60,7 +59,9 @@ class SpacerView(
         }
     }
 
-    override suspend fun JsonObject.processDimension(key: String) {
+    override suspend fun JsonObject.processDimension(
+        key: String
+    ) {
         when (key) {
             StyleSchema.Key.width -> _width = this
             StyleSchema.Key.height -> _height = this
@@ -69,25 +70,35 @@ class SpacerView(
     }
 
     private val width
-        get():Dp? {
-            return _width?.withScope(DimensionSchema::Scope)
-                ?.default?.toIntOrNull()?.dp
+        get(): Dp? {
+            return _width
+                ?.withScope(DimensionSchema::Scope)
+                ?.default
+                ?.toIntOrNull()
+                ?.dp
         }
 
     private val height
-        get():Dp? {
-            return _height?.withScope(DimensionSchema::Scope)
-                ?.default?.toIntOrNull()?.dp
+        get(): Dp? {
+            return _height
+                ?.withScope(DimensionSchema::Scope)
+                ?.default
+                ?.toIntOrNull()
+                ?.dp
         }
 
     private val weight
-        get():Float? {
-            return _weight?.withScope(DimensionSchema::Scope)
-                ?.default?.toFloatOrNull()
+        get(): Float? {
+            return _weight
+                ?.withScope(DimensionSchema::Scope)
+                ?.default
+                ?.toFloatOrNull()
         }
 
     @Composable
-    override fun displayComponent(scope: Any?) {
+    override fun displayComponent(
+        scope: Any?
+    ) {
         Spacer(
             modifier = Modifier
                 .then {
@@ -104,5 +115,4 @@ class SpacerView(
                 }
         )
     }
-
 }

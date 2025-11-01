@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
 interface KeyValueStoreRepositoryProtocol {
-
     interface Key {
         val value: String
 
@@ -22,12 +21,20 @@ interface KeyValueStoreRepositoryProtocol {
         }
     }
 
-    suspend fun save(key: Key, value: Value?)
+    suspend fun save(
+        key: Key,
+        value: Value?
+    )
 
-    suspend fun hasKey(key: Key): Boolean
+    suspend fun hasKey(
+        key: Key
+    ): Boolean
 
-    suspend fun get(key: Key): Value
+    suspend fun get(
+        key: Key
+    ): Value
 
-    suspend fun getOrNull(key: Key): Value?
-
+    suspend fun getOrNull(
+        key: Key
+    ): Value?
 }
