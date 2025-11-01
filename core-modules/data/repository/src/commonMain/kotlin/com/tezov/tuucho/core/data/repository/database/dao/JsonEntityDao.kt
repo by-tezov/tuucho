@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.entity.toEntity
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 
-class JsonObjectQueries(
+internal class JsonObjectQueries(
     private val database: Database,
 ) {
 

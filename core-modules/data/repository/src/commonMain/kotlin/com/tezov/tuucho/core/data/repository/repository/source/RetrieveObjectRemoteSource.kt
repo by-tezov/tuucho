@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
-class RetrieveObjectRemoteSource(
+internal class RetrieveObjectRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val networkJsonObject: NetworkJsonObject,
 ) {

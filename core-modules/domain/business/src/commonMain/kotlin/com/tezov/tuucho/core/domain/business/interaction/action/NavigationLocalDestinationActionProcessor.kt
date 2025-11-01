@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import kotlinx.serialization.json.JsonElement
 
-class NavigationLocalDestinationActionProcessor(
+internal class NavigationLocalDestinationActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val navigateBack: NavigateBackUseCase,
 ) : ActionProcessorProtocol {

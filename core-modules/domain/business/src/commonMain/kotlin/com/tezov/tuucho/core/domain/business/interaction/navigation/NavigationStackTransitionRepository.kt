@@ -17,9 +17,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 
-class NavigationStackTransitionRepository(
+internal class NavigationStackTransitionRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
     private val navigationStackTransitionHelperFactory: NavigationStackTransitionHelperFactoryUseCase,

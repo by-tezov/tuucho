@@ -15,7 +15,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
-class StoreActionProcessor(
+internal class StoreActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val saveKeyValueToStore: SaveKeyValueToStoreUseCase,
     private val removeKeyValueFromStore: RemoveKeyValueFromStoreUseCase,

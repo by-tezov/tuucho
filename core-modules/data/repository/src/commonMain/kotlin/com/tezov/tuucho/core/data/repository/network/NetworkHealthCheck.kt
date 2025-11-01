@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
-class NetworkHealthCheck(
+internal class NetworkHealthCheck(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val networkHttpRequestSource: NetworkHttpRequestSource,
     private val jsonConverter: Json

@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.repository.database
 import app.cash.sqldelight.TransactionWithReturn
 import app.cash.sqldelight.TransactionWithoutReturn
 
-class DatabaseTransactionFactory(
+internal class DatabaseTransactionFactory(
     private val database: Database,
 ) {
 

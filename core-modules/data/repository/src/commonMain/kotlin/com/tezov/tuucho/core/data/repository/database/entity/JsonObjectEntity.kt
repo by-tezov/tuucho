@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.database.table.JsonObjectCommonEntr
 import com.tezov.tuucho.core.data.repository.database.table.JsonObjectContextualEntry
 import kotlinx.serialization.json.JsonObject
 
-data class JsonObjectEntity(
+internal data class JsonObjectEntity(
     val primaryKey: Long? = null,
     val type: String,
     val url: String,
@@ -18,7 +18,7 @@ data class JsonObjectEntity(
     }
 }
 
-fun JsonObjectCommonEntry.toEntity() = JsonObjectEntity(
+internal fun JsonObjectCommonEntry.toEntity() = JsonObjectEntity(
     primaryKey = primaryKey,
     type = type,
     url = url,
@@ -27,7 +27,7 @@ fun JsonObjectCommonEntry.toEntity() = JsonObjectEntity(
     jsonObject = jsonObject
 )
 
-fun JsonObjectContextualEntry.toEntity() = JsonObjectEntity(
+internal fun JsonObjectContextualEntry.toEntity() = JsonObjectEntity(
     primaryKey = primaryKey,
     type = type,
     url = url,

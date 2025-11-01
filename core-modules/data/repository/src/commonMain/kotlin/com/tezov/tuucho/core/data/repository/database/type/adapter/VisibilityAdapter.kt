@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-class VisibilityAdapter(
+internal class VisibilityAdapter(
     private val json: Json,
 ) : ColumnAdapter<Visibility, String> {
 

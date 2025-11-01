@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlin.time.Instant
 
 @OpenForTest
-class LifetimeResolver(
+internal class LifetimeResolver(
     private val expirationDateTimeRectifier: ExpirationDateTimeRectifier,
 ) {
 

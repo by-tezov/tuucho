@@ -9,7 +9,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
 
-class NavigationStackRouteRepository(
+internal class NavigationStackRouteRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
 ) : StackRoute {
 

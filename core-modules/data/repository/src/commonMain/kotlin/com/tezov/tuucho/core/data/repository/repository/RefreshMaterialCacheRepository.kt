@@ -18,7 +18,7 @@ import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 
-class RefreshMaterialCacheRepository(
+internal class RefreshMaterialCacheRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val retrieveObjectRemoteSource: RetrieveObjectRemoteSource,
     private val materialRemoteSource: MaterialRemoteSource,

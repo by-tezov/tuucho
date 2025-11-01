@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.interaction.navigation.selector
 
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 
-class PageBreadCrumbNavigationDefinitionSelectorMatcher(
+internal class PageBreadCrumbNavigationDefinitionSelectorMatcher(
     private val values: List<String>,
 ) : NavigationDefinitionSelectorMatcherProtocol {
 

@@ -24,8 +24,6 @@ object Action {
             const val authority = "send-url"
 
             object ActionLabel {
-//                const val before = "before"
-//                const val after = "after"
                 const val validated = "validated"
                 const val denied = "denied"
             }

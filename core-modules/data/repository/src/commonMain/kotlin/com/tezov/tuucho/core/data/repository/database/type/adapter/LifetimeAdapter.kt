@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-class LifetimeAdapter(
+internal class LifetimeAdapter(
     private val json: Json,
 ) : ColumnAdapter<Lifetime, String> {
 

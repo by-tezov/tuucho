@@ -4,7 +4,7 @@ import app.cash.sqldelight.ColumnAdapter
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
-class JsonObjectAdapter(
+internal class JsonObjectAdapter(
     private val json: Json
 ): ColumnAdapter<JsonObject, String> {
 

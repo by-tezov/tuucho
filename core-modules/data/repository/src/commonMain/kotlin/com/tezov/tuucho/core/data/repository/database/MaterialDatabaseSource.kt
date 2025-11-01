@@ -13,7 +13,7 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-class MaterialDatabaseSource(
+internal class MaterialDatabaseSource(
     private val transactionFactory: DatabaseTransactionFactory,
     private val hookQueries: HookQueries,
     private val jsonObjectQueries: JsonObjectQueries,

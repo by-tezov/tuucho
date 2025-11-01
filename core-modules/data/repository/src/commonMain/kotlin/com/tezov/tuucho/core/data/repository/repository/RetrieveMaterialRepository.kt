@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSou
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 
-class RetrieveMaterialRepository(
+internal class RetrieveMaterialRepository(
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
 ) : MaterialRepositoryProtocol.Retrieve {

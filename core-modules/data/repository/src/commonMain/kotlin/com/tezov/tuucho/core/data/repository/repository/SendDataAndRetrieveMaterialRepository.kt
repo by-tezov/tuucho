@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrie
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 
-class SendDataAndRetrieveMaterialRepository(
+internal class SendDataAndRetrieveMaterialRepository(
     private val sendObjectAndRetrieveMaterialRemoteSource: SendDataAndRetrieveMaterialRemoteSource
 ) : MaterialRepositoryProtocol.SendDataAndRetrieve {
 

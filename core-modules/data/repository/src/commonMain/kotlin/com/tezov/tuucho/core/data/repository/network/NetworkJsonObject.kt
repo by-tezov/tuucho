@@ -8,7 +8,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-class NetworkJsonObject(
+internal class NetworkJsonObject(
     private val networkHttpRequestSource: NetworkHttpRequestSource,
     private val jsonConverter: Json
 ) {

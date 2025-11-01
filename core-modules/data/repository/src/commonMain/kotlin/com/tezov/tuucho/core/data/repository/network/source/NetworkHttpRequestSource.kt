@@ -10,7 +10,7 @@ import io.ktor.client.statement.request
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
-class NetworkHttpRequestSource(
+internal class NetworkHttpRequestSource(
     private val httpClient: HttpClient,
     private val config: NetworkRepositoryModule.Config,
 ) {

@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.database.Database
 import com.tezov.tuucho.core.data.repository.database.entity.HookEntity
 import com.tezov.tuucho.core.data.repository.database.entity.toEntity
 
-class HookQueries(private val database: Database) {
+internal class HookQueries(private val database: Database) {
 
     private val queries get() = database.hookStatementQueries
 

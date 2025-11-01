@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import kotlinx.serialization.json.JsonElement
 
-class NavigationUrlActionProcessor(
+internal class NavigationUrlActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val navigateToUrl: NavigateToUrlUseCase,
 ) : ActionProcessorProtocol {

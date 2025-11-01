@@ -24,10 +24,9 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class FormSendUrlActionProcessor(
+internal class FormSendUrlActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val getOrNullScreen: GetScreenOrNullUseCase,
     private val sendData: SendDataUseCase,

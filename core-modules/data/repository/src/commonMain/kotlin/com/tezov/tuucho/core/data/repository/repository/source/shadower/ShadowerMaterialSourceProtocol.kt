@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.repository.source.shadower
 
 import kotlinx.serialization.json.JsonObject
 
-interface ShadowerMaterialSourceProtocol {
+internal interface ShadowerMaterialSourceProtocol {
 
     val type: String
 

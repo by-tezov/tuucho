@@ -8,9 +8,8 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProto
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 
-class NavigationStackScreenRepository(
+internal class NavigationStackScreenRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val screenRenderer: ScreenRendererProtocol,
 ) : StackScreen, TuuchoKoinComponent {

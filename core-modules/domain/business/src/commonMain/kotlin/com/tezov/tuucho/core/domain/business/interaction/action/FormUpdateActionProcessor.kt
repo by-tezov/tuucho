@@ -16,9 +16,8 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUs
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
-import org.koin.core.component.KoinComponent
 
-class FormUpdateActionProcessor(
+internal class FormUpdateActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val updateView: UpdateViewUseCase,
 ) : ActionProcessorProtocol, TuuchoKoinComponent {

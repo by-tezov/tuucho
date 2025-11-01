@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InterractionLoc
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class InterractionLockRepository(
+internal class InteractionLockRepository(
     private val idGenerator: IdGeneratorProtocol,
 ) : InterractionLockRepositoryProtocol {
 

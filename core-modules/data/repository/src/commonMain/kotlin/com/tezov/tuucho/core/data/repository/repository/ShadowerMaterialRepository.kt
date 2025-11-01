@@ -10,9 +10,8 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
-import org.koin.core.component.KoinComponent
 
-class ShadowerMaterialRepository(
+internal class ShadowerMaterialRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialShadower: MaterialShadower,
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,

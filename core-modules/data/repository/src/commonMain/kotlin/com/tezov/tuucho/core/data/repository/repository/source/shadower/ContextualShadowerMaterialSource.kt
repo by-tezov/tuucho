@@ -21,7 +21,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
-class ContextualShadowerMaterialSource(
+internal class ContextualShadowerMaterialSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
