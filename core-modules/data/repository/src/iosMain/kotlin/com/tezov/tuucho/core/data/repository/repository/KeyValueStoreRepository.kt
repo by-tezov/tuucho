@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import platform.Foundation.NSUserDefaults
 
 class KeyValueStoreRepository(
-    private val userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults(),
+    private val userDefaults: NSUserDefaults,
 ) : KeyValueStoreRepositoryProtocol {
 
     override suspend fun save(

@@ -14,6 +14,10 @@ sqldelight {
 
 kotlin {
     sourceSets {
+        jvmMain.dependencies {
+            implementation(libs.ktor.okhttp)
+            implementation(libs.sql.delight.driver.jvm)
+        }
         androidMain.dependencies {
             implementation(libs.ktor.okhttp)
             implementation(libs.sql.delight.driver.android)

@@ -221,6 +221,13 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             } else {
                 println("⚠️ mac os target disable")
             }
+            // Desktop
+            val desktopTargets = listOf(jvm())
+            desktopTargets.forEach {
+                it.compilerOptions {
+                    jvmTarget.set(this@with.jvmTarget())
+                }
+            }
         }
     }
 
@@ -228,6 +235,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         val buildTypeCapitalized = buildTypeCapitalized()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
+                jvmMain {
+                    kotlin.srcDirs("${project.projectDir.path}/src/jvmMain$buildTypeCapitalized/kotlin")
+                }
                 androidMain {
                     kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
                 }

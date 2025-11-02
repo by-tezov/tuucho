@@ -2,6 +2,9 @@
 
 - fix unit test qui ne compile plus
 
+
+./gradlew :app:jvm:run
+
 - add network error management around the other use case
 
 *** ***

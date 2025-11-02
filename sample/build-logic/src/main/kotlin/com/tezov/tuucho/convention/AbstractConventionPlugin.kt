@@ -13,6 +13,7 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
         const val androidLibrary = "android.library"
         const val koltinAndroid = "kotlin.android"
         const val koltinMultiplatform = "kotlin.multiplatform"
+        const val koltinJvm = "kotlin.jvm"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
     }

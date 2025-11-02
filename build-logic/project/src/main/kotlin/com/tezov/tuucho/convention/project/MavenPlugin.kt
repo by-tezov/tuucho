@@ -7,7 +7,6 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.jvm.tasks.Jar
-import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.signing.Sign
 import org.gradle.plugins.signing.SigningExtension
@@ -122,6 +121,7 @@ class MavenPlugin : Plugin<Project> {
                         "iosArm64" -> "$artifactId-iosArm64"
                         "iosSimulatorArm64" -> "$artifactId-iosSimulatorArm64"
                         "iosX64" -> "$artifactId-iosX64"
+                        "jvm" -> "$artifactId-jvm"
                         else -> error("unknown publication name: $name")
                     }
                 }

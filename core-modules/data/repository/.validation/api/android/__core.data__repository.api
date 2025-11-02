@@ -342,11 +342,6 @@ public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryMo
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid$Name {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid$Name;
-	public final fun getAPPLICATION_CONTEXT ()Lorg/koin/core/qualifier/StringQualifier;
-}
-
 public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData : com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
 }
 
@@ -420,6 +415,15 @@ public abstract interface class com/tezov/tuucho/core/data/repository/di/StoreRe
 public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModules {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/SystemCoreDataModules;
 	public final fun invoke ()Ljava/util/List;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid$Name {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid$Name;
+	public final fun getAPPLICATION_CONTEXT ()Lorg/koin/core/qualifier/StringQualifier;
 }
 
 public abstract class com/tezov/tuucho/core/data/repository/exception/DataException : java/lang/Exception {

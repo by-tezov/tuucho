@@ -12,15 +12,15 @@ import org.koin.dsl.module
 
 internal expect fun SystemCoreModules.platformInvoke(): List<ModuleProtocol>
 
-object SystemCoreModules {
-    internal fun invoke(): List<ModuleProtocol> = listOf(
+internal object SystemCoreModules {
+    fun invoke(): List<ModuleProtocol> = listOf(
         CoroutineScopeModules.invoke(),
     ) +
         platformInvoke()
 
     @OptIn(TuuchoInternalApi::class)
     @Composable
-    internal fun remember(
+    fun remember(
         modules: List<ModuleProtocol>,
     ) = androidx.compose.runtime.remember {
         koinApplication {
@@ -30,7 +30,7 @@ object SystemCoreModules {
                 SystemCoreDomainModules.invoke(),
                 SystemCoreDataModules.invoke(),
                 SystemCoreUiModules.invoke(),
-                invoke()
+                SystemCoreModules.invoke()
             ).flatten().groupBy { it.group }
             modules(map.map { (_, modules) ->
                 module {

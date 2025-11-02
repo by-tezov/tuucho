@@ -27,7 +27,6 @@ buildkonfig {
 
     defaultConfigs {
         field("localDatabaseFileName", FieldSpec.Type.STRING)
-        field("localDatastoreFileName", FieldSpec.Type.STRING)
 
         field("serverTimeoutMillis", FieldSpec.Type.LONG)
         field("serverVersion", FieldSpec.Type.STRING)
@@ -37,12 +36,21 @@ buildkonfig {
     }
 
     targetConfigs {
+        create("jvm") {
+            field("localDatastoreNodeNameJvm", FieldSpec.Type.STRING, "localDatastoreFileName")
+            field("liveRelativeFolderPathJvm", FieldSpec.Type.STRING, "liveRelativeFolderPath")
+            field("headerPlatformJvm", FieldSpec.Type.STRING, "headerPlatform")
+            field("serverBaseUrlJvm", FieldSpec.Type.STRING, "serverBaseUrl")
+        }
+
         create("android") {
+            field("localDatastoreFileName", FieldSpec.Type.STRING)
             field("headerPlatformAndroid", FieldSpec.Type.STRING, "headerPlatform")
             field("serverBaseUrlAndroid", FieldSpec.Type.STRING, "serverBaseUrl")
         }
 
         create("ios") {
+            field("localDatastoreFileName", FieldSpec.Type.STRING)
             field("headerPlatformIos", FieldSpec.Type.STRING, "headerPlatform")
             field("serverBaseUrlIos", FieldSpec.Type.STRING, "serverBaseUrl")
         }
@@ -51,6 +59,9 @@ buildkonfig {
 
 kotlin {
     sourceSets {
+        jvmMain.dependencies {
+
+        }
         androidMain.dependencies {
 
         }
@@ -68,7 +79,6 @@ kotlin {
             implementation(compose.ui)
 
             implementation(libs.koin.core)
-            //implementation(libs.koin.compose)
             implementation(libs.ktor.core)
         }
     }
