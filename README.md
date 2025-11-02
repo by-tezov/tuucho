@@ -13,6 +13,7 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Jenkins](https://img.shields.io/badge/Jenkins-Passing-2C2D72?logo=jenkins&logoColor=white)](https://jenkins.example.com/job/tuucho/)
 [![Ktlint 1.7.1](https://img.shields.io/badge/ktlint-1.7.1-blue.svg)](https://pinterest.github.io/ktlint/)
+[![Detekt 1.23.8](https://img.shields.io/badge/detekt-1.23.8-blue.svg)](https://detekt.dev/)
 
 **TUUCHO** is a **Kotlin Multiplatform Mobile (KMM)** rendering engine that builds native UIs for iOS and Android from structured **JSON definitions** — no recompilation required.
 

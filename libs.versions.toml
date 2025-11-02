@@ -13,7 +13,7 @@ detektRules = "1.23.8"
 
 #plugin
 android-plugin = "8.13.0"
-kotlin-plugin = "2.2.20" # can't launch unit test when upgrade to 2.2.20
+kotlin-plugin = "2.2.20"
 compose-plugin = "1.9.0"
 kotlin-serialization-plugin = "2.2.20"
 maven-plugin = "0.34.0"
@@ -28,7 +28,7 @@ sql-delight = "2.1.0"
 ktor = "3.3.1"
 koin = "4.1.1"
 kotlin-datetime = "0.7.1"
-okio = "3.16.1"
+okio = "3.16.2"
 
 #lib - android
 compose-activity = "1.11.0"
@@ -36,7 +36,7 @@ datastore-preferences = "1.1.7"
 
 #test
 jacoco = "0.8.13"
-mokkery = "3.0.0-Beta2"
+mokkery = "3.0.0-Beta3"
 
 [libraries]
 #build-logic
