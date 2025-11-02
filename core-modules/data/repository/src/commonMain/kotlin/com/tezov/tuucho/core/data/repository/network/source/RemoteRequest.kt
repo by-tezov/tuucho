@@ -1,7 +1,5 @@
 package com.tezov.tuucho.core.data.repository.network.source
 
-data class RemoteRequest(
+internal data class RemoteRequest(
     val json: String,
 )
-
-

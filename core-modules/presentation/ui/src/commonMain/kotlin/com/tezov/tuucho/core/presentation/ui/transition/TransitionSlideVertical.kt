@@ -25,7 +25,6 @@ import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import kotlinx.serialization.json.JsonObject
 
 object TransitionSlideVertical {
-
     class Spec(
         val duration: Int,
         val exitDarkAlphaFactor: Float,
@@ -33,7 +32,9 @@ object TransitionSlideVertical {
         val effect: String,
     ) {
         companion object {
-            fun from(specObject: JsonObject?) = specObject
+            fun from(
+                specObject: JsonObject?
+            ) = specObject
                 ?.withScope(SettingComponentNavigationTransitionSchema.SpecSlide::Scope)
                 .let {
                     Spec(
@@ -78,14 +79,12 @@ object TransitionSlideVertical {
                 )
             }
         }
-
     }
 
     class FlatSlideModifier(
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
     ) : AbstractModifierTransition() {
-
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)
 
@@ -105,7 +104,9 @@ object TransitionSlideVertical {
         }
 
         @Composable
-        override fun Modifier.animate(boundaries: Size): Modifier {
+        override fun Modifier.animate(
+            boundaries: Size
+        ): Modifier {
             val progress = animationProgress.animateFloat(
                 startValue = startValue,
                 endValue = endValue,
@@ -130,7 +131,6 @@ object TransitionSlideVertical {
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
     ) : AbstractModifierTransition() {
-
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)
 
@@ -150,7 +150,9 @@ object TransitionSlideVertical {
         }
 
         @Composable
-        override fun Modifier.animate(boundaries: Size): Modifier {
+        override fun Modifier.animate(
+            boundaries: Size
+        ): Modifier {
             val progress = animationProgress.animateFloat(
                 startValue = startValue,
                 endValue = endValue,
@@ -186,5 +188,4 @@ object TransitionSlideVertical {
             }
         }
     }
-
 }

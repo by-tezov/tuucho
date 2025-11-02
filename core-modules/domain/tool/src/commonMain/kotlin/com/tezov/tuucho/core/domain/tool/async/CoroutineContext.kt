@@ -18,14 +18,15 @@ interface CoroutineContextProtocol {
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T>
 
-    suspend fun <T> await(block: suspend CoroutineScope.() -> T): T
+    suspend fun <T> await(
+        block: suspend CoroutineScope.() -> T
+    ): T
 }
 
 open class CoroutineContext(
     name: String,
     override val context: CoroutineContext,
 ) : CoroutineContextProtocol {
-
     override val job: Job = SupervisorJob()
 
     override val scope: CoroutineScope = CoroutineScope(context + job + CoroutineName(name))
@@ -43,7 +44,7 @@ open class CoroutineContext(
         return deferred
     }
 
-    override suspend fun <T> await(block: suspend CoroutineScope.() -> T): T {
-        return scope.async(block = block).await()
-    }
+    override suspend fun <T> await(
+        block: suspend CoroutineScope.() -> T
+    ): T = scope.async(block = block).await()
 }

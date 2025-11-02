@@ -16,7 +16,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ExtensionListTest {
-
     @Test
     fun `isNullIndex returns true when equals NULL_INDEX`() {
         assertTrue((-1).isNullIndex)

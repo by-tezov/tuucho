@@ -30,8 +30,7 @@ fun Modifier.border(
     sketch?.let {
         thenOnTrue(clip) {
             clip(sketch.shape)
-        }
-            .border(border, sketch.shape)
+        }.border(border, sketch.shape)
     } ?: kotlin.run {
         border(border)
     }
@@ -40,21 +39,23 @@ fun Modifier.border(
 typealias OutfitBorderStateColor = OutfitBorder.StateColor.Style
 
 object OutfitBorder {
-
     enum class Template {
         Fill;
 
-        fun get(size: Dp?, color: ColorImport) = size?.let {
+        fun get(
+            size: Dp?,
+            color: ColorImport
+        ) = size?.let {
             when (this) {
                 Fill -> BorderStroke(size, color)
             }
         }
-
     }
 
     object StateColor {
-
-        class StyleBuilder internal constructor(style: Style) {
+        class StyleBuilder internal constructor(
+            style: Style
+        ) {
             var template = style.template
             var size = style.size
             var outfitState = style.outfitState
@@ -71,17 +72,20 @@ object OutfitBorder {
             val size: Dp? = null,
             outfitState: OutfitState.Style<ColorImport>? = null,
         ) {
-
             val outfitState: OutfitState.Style<ColorImport> by DelegateNullFallBack.Ref(
                 outfitState,
-                fallBackValue = { com.tezov.tuucho.core.presentation.tool.theme.style.OutfitStateNull() }
+                fallBackValue = {
+                    com.tezov.tuucho.core.presentation.tool.theme.style
+                        .OutfitStateNull()
+                }
             )
 
             companion object {
-
                 @Composable
-                fun Style.copy(scope: @Composable StyleBuilder.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun Style.copy(
+                    scope: @Composable StyleBuilder.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.scope()
                     }.get()
 
@@ -92,7 +96,6 @@ object OutfitBorder {
 
                 inline val Dp.asStateColor: OutfitBorderStateColor
                     get() = OutfitBorderStateColor(size = this)
-
             }
 
             constructor(style: Style) : this(
@@ -101,18 +104,15 @@ object OutfitBorder {
                 outfitState = style.outfitState,
             )
 
-            fun resolveColor(selector: Any? = null) =
-                outfitState.resolve(selector, ColorImport::class)
+            fun resolveColor(
+                selector: Any? = null
+            ) = outfitState.resolve(selector, ColorImport::class)
 
-            fun resolve(selector: Any? = null) =
-                resolveColor(selector)?.let {
-                    template.get(size, it)
-                }
-
+            fun resolve(
+                selector: Any? = null
+            ) = resolveColor(selector)?.let {
+                template.get(size, it)
+            }
         }
-
     }
-
-
 }
-

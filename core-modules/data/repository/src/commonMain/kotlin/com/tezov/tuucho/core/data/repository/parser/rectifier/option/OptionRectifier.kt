@@ -14,6 +14,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requir
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.OptionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.findOrNull
@@ -23,8 +24,8 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class OptionRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.OPTION
     )
@@ -34,28 +35,38 @@ class OptionRectifier : AbstractRectifier() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement
-    ) = (path.lastSegmentIs(TypeSchema.Value.option) && path.parentIsTypeOf(
-        element, TypeSchema.Value.component
-    )) || super.accept(path, element)
+        path: JsonElementPath,
+        element: JsonElement
+    ) = (path.lastSegmentIs(TypeSchema.Value.option) &&
+        path.parentIsTypeOf(
+            element,
+            TypeSchema.Value.component
+        )) ||
+        super.accept(path, element)
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(OptionSchema::Scope).apply {
-        type = TypeSchema.Value.option
-        val value = this.element.string.requireIsRef()
-        id = JsonPrimitive(value)
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(OptionSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.option
+            val value = this.element.string.requireIsRef()
+            id = JsonPrimitive(value)
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement
-    ) = element.find(path).withScope(OptionSchema::Scope).apply {
-        type = TypeSchema.Value.option
-        id ?: run { id = JsonNull }
-        subset = retrieveSubsetOrMarkUnknown(path, element)
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(OptionSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.option
+            id ?: run { id = JsonNull }
+            subset = retrieveSubsetOrMarkUnknown(path, element)
+        }.collect()
 
     override fun afterAlterObject(
         path: JsonElementPath,
@@ -63,7 +74,8 @@ class OptionRectifier : AbstractRectifier() {
     ): JsonElement? {
         var valueRectified: String?
         var sourceRectified: String?
-        return element.find(path)
+        return element
+            .find(path)
             .withScope(OptionSchema::Scope)
             .takeIf {
                 it.rectifyIds().also { (value, source) ->
@@ -71,12 +83,12 @@ class OptionRectifier : AbstractRectifier() {
                     sourceRectified = source
                 }
                 valueRectified != null || sourceRectified != null
-            }
-            ?.apply {
-                id = onScope(IdSchema::Scope).apply {
-                    valueRectified?.let { value = it }
-                    sourceRectified?.let { source = it }
-                }.collect()
+            }?.apply {
+                id = onScope(IdSchema::Scope)
+                    .apply {
+                        valueRectified?.let { value = it }
+                        sourceRectified?.let { source = it }
+                    }.collect()
             }?.collect()
     }
 
@@ -97,7 +109,9 @@ class OptionRectifier : AbstractRectifier() {
     private fun retrieveSubsetOrMarkUnknown(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.findOrNull(path.parent())
-        ?.withScope(ComponentSchema::Scope)?.subset
+    ) = element
+        .findOrNull(path.parent())
+        ?.withScope(ComponentSchema::Scope)
+        ?.subset
         ?: SubsetSchema.Value.unknown
 }

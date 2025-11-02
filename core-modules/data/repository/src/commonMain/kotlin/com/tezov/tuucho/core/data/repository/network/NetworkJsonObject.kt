@@ -8,12 +8,13 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-class NetworkJsonObject(
+internal class NetworkJsonObject(
     private val networkHttpRequestSource: NetworkHttpRequestSource,
     private val jsonConverter: Json
 ) {
-
-    suspend fun resource(url: String): JsonObject {
+    suspend fun resource(
+        url: String
+    ): JsonObject {
         val response = networkHttpRequestSource.getResource(url)
         val data = response.json ?: throw DataException.Default("failed to retrieve resource at url $url")
         val jsonElement = jsonConverter.decodeFromString(
@@ -23,7 +24,10 @@ class NetworkJsonObject(
         return jsonElement
     }
 
-    suspend fun send(url: String, data: JsonObject): JsonObject? {
+    suspend fun send(
+        url: String,
+        data: JsonObject
+    ): JsonObject? {
         val json = jsonConverter.encodeToString(
             serializer = JsonObject.Companion.serializer(),
             value = data

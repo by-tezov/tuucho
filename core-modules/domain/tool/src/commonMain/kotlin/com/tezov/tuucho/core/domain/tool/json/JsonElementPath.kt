@@ -2,8 +2,9 @@ package com.tezov.tuucho.core.domain.tool.json
 
 fun String.toPath() = JsonElementPath(this)
 
-class JsonElementPath(path: String? = null) : Iterable<String> {
-
+class JsonElementPath(
+    path: String? = null
+) : Iterable<String> {
     private val _path: String? = path.trim()
 
     private companion object {
@@ -19,10 +20,15 @@ class JsonElementPath(path: String? = null) : Iterable<String> {
 
     fun lastSegment() = _path?.substringAfterLast(SEPARATOR)
 
-    fun child(segment: String): JsonElementPath {
+    fun child(
+        segment: String
+    ): JsonElementPath {
         val _segment = segment.trim()
-        return if (_segment.isNullOrEmpty()) this
-        else JsonElementPath(if (_path.isNullOrEmpty()) _segment else "$_path$SEPARATOR$_segment")
+        return if (_segment.isNullOrEmpty()) {
+            this
+        } else {
+            JsonElementPath(if (_path.isNullOrEmpty()) _segment else "$_path$SEPARATOR$_segment")
+        }
     }
 
     fun parent(): JsonElementPath {

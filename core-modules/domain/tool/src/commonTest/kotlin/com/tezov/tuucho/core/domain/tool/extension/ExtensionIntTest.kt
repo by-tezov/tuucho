@@ -12,7 +12,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ExtensionIntTest {
-
     @Test
     fun `isEven returns true for even numbers`() {
         assertTrue(2.isEven())

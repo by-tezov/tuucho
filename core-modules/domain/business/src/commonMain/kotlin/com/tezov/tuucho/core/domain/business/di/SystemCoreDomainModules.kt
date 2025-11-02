@@ -1,12 +1,14 @@
 package com.tezov.tuucho.core.domain.business.di
 
-object SystemCoreDomainModules {
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 
-    fun invoke() = listOf(
+@TuuchoInternalApi
+object SystemCoreDomainModules {
+    fun invoke(): List<ModuleProtocol> = listOf(
         MiscModule.invoke(),
         NavigationModule.invoke(),
         ActionProcessorModule.invoke(),
         UseCaseModule.invoke()
     )
-
 }

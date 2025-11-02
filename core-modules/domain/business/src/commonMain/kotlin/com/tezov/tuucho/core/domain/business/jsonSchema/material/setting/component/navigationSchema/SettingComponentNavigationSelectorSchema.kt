@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import kotlinx.serialization.json.JsonArray
 
 object ComponentSettingNavigationSelectorSchema {
-
     const val root = "selector"
 
     object Key {
@@ -20,11 +19,12 @@ object ComponentSettingNavigationSelectorSchema {
         }
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = ComponentSettingNavigationSelectorSchema.root
 
         var type by delegate<String?>(Key.type)
         var values by delegate<JsonArray?>(Key.values)
     }
-
 }

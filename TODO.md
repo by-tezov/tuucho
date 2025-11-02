@@ -2,6 +2,8 @@
 
 - add network error management around the other use case
 
+./gradlew :app:jvm:run
+
 *** ***
 - still need to fix mock server
 - Need a way to let core barrel on dev without fail because test lib are not here.

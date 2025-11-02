@@ -1,7 +1,3 @@
-@file:OptIn(ExperimentalAbiValidation::class)
-
-import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
-
 plugins {
     alias(libs.plugins.convention.library.ui)
 }
@@ -30,7 +26,7 @@ kotlin {
             implementation(compose.ui)
 
             implementation(libs.koin.core)
-            implementation(libs.koin.compose)
+            // implementation(libs.koin.compose)
         }
     }
 }

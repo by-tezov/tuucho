@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGro
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -19,8 +20,8 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class ComponentRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.COMPONENT
     )
@@ -31,19 +32,25 @@ class ComponentRectifier : AbstractRectifier() {
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ContentSchema::Scope).apply {
-        type = TypeSchema.Value.component
-        val value = this.element.string.requireIsRef()
-        id = JsonPrimitive(value)
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ContentSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.component
+            val value = this.element.string.requireIsRef()
+            id = JsonPrimitive(value)
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement
-    ) = element.find(path).withScope(ComponentSchema::Scope).apply {
-        type = TypeSchema.Value.component
-        id ?: run { id = JsonNull }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ComponentSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.component
+            id ?: run { id = JsonNull }
+        }.collect()
 
     override fun afterAlterObject(
         path: JsonElementPath,
@@ -51,7 +58,8 @@ class ComponentRectifier : AbstractRectifier() {
     ): JsonElement? {
         var valueRectified: String?
         var sourceRectified: String?
-        return element.find(path)
+        return element
+            .find(path)
             .withScope(ComponentSchema::Scope)
             .takeIf {
                 it.rectifyIds().also { (value, source) ->
@@ -59,12 +67,12 @@ class ComponentRectifier : AbstractRectifier() {
                     sourceRectified = source
                 }
                 valueRectified != null || sourceRectified != null
-            }
-            ?.apply {
-                id = onScope(IdSchema::Scope).apply {
-                    valueRectified?.let { value = it }
-                    sourceRectified?.let { source = it }
-                }.collect()
+            }?.apply {
+                id = onScope(IdSchema::Scope)
+                    .apply {
+                        valueRectified?.let { value = it }
+                        sourceRectified?.let { source = it }
+                    }.collect()
             }?.collect()
     }
 
@@ -81,5 +89,4 @@ class ComponentRectifier : AbstractRectifier() {
         }
         return valueRectified to sourceRectified
     }
-
 }

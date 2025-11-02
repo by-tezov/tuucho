@@ -7,7 +7,6 @@ import kotlin.time.Instant
 
 @Serializable
 sealed class Lifetime {
-
     companion object Type {
         const val enrolled = "enrolled"
         const val unlimited = "unlimited"
@@ -28,7 +27,9 @@ sealed class Lifetime {
 
     @Serializable
     @SerialName(unlimited)
-    data class Unlimited(override val validityKey: String?) : Lifetime() {
+    data class Unlimited(
+        override val validityKey: String?
+    ) : Lifetime() {
         override val name = unlimited
     }
 
@@ -48,5 +49,4 @@ sealed class Lifetime {
     ) : Lifetime() {
         override val name = singleUse
     }
-
 }

@@ -11,14 +11,15 @@ class ProcessActionUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val actionProcessors: List<ActionProcessorProtocol>,
 ) : UseCaseProtocol.Async<ProcessActionUseCase.Input, Unit> {
-
     data class Input(
         val route: NavigationRoute.Url,
         val action: ActionModelDomain,
         val jsonElement: JsonElement? = null,
     )
 
-    override suspend fun invoke(input: Input) {
+    override suspend fun invoke(
+        input: Input
+    ) {
         coroutineScopes.useCase.await {
             with(input) {
                 actionProcessors

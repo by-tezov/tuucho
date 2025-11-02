@@ -10,17 +10,17 @@ class RegisterToScreenTransitionEventUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val navigationAnimatorStackRepository: NavigationRepositoryProtocol.StackTransition,
 ) : UseCaseProtocol.Sync<Input, Unit> {
-
     data class Input(
         val onEvent: suspend (animate: Event) -> Unit,
     )
 
-    override fun invoke(input: Input) {
+    override fun invoke(
+        input: Input
+    ) {
         coroutineScopes.event.async {
             navigationAnimatorStackRepository.events
                 .filter { it != Event.TransitionComplete }
                 .forever { input.onEvent.invoke(it) }
         }
     }
-
 }

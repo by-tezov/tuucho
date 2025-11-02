@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation
@@ -16,14 +17,13 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 
-class NavigationStackTransitionRepository(
+internal class NavigationStackTransitionRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutor,
     private val navigationStackTransitionHelperFactory: NavigationStackTransitionHelperFactoryUseCase,
-) : StackTransition, KoinComponent {
-
+) : StackTransition,
+    TuuchoKoinComponent {
     private var lastEvent: StackTransition.Event = StackTransition.Event.Idle(routes = emptyList())
     private val _events = Notifier.Emitter<StackTransition.Event>(
         extraBufferCapacity = 5,
@@ -44,7 +44,9 @@ class NavigationStackTransitionRepository(
         stackLock.withLock { stack.map { it.route } }
     }
 
-    private fun emit(event: StackTransition.Event) {
+    private fun emit(
+        event: StackTransition.Event
+    ) {
         coroutineScopes.event.async {
             stackLock.withLock {
                 lastEvent = event
@@ -66,18 +68,24 @@ class NavigationStackTransitionRepository(
         ?.withScope(SettingComponentNavigationTransitionSchema.Set::Scope)
         ?.let { it[directionScreen] as? JsonObject }
         ?: run {
-            JsonNull.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope).apply {
-                type = Type.none
-            }.collect()
+            JsonNull
+                .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
+                .apply {
+                    type = Type.none
+                }.collect()
         }
 
-    private suspend fun isForeground(spec: JsonObject?) = spec?.let {
-        useCaseExecutor.invokeSuspend(
-            useCase = navigationStackTransitionHelperFactory,
-            input = NavigationStackTransitionHelperFactoryUseCase.Input(
-                prototypeObject = spec
-            )
-        ).helper.isForeground(spec)
+    private suspend fun isForeground(
+        spec: JsonObject?
+    ) = spec?.let {
+        useCaseExecutor
+            .invokeSuspend(
+                useCase = navigationStackTransitionHelperFactory,
+                input = NavigationStackTransitionHelperFactoryUseCase.Input(
+                    prototypeObject = spec
+                )
+            ).helper
+            .isForeground(spec)
     } ?: true
 
     private fun Item.isBackgroundSolid() = extraObject
@@ -114,7 +122,9 @@ class NavigationStackTransitionRepository(
         }
     }
 
-    override suspend fun backward(routes: List<NavigationRoute.Url>) {
+    override suspend fun backward(
+        routes: List<NavigationRoute.Url>
+    ) {
         emit(StackTransition.Event.PrepareTransition)
         coroutineScopes.navigation.await {
             val listenerDeferred = listenEndOfTransition(routes)
@@ -123,29 +133,30 @@ class NavigationStackTransitionRepository(
         }
     }
 
-    private fun listenEndOfTransition(routes: List<NavigationRoute>) =
-        coroutineScopes.navigation.async {
-            events.filter { it == StackTransition.Event.TransitionComplete }.once(block = {
-                val event: StackTransition.Event.Idle = stackLock.withLock {
-                    stack.retainAll { item ->
-                        routes.any { it == item.route }
-                    }
-                    StackTransition.Event.Idle(
-                        routes = buildList {
-                            val lastItem = stack.last()
-                            add(lastItem.route)
-                            if (!lastItem.isBackgroundSolid()) {
-                                for (item in stack.dropLast(1).asReversed()) {
-                                    add(item.route)
-                                    if (item.isBackgroundSolid()) break
-                                }
+    private fun listenEndOfTransition(
+        routes: List<NavigationRoute>
+    ) = coroutineScopes.navigation.async {
+        events.filter { it == StackTransition.Event.TransitionComplete }.once(block = {
+            val event: StackTransition.Event.Idle = stackLock.withLock {
+                stack.retainAll { item ->
+                    routes.any { it == item.route }
+                }
+                StackTransition.Event.Idle(
+                    routes = buildList {
+                        val lastItem = stack.last()
+                        add(lastItem.route)
+                        if (!lastItem.isBackgroundSolid()) {
+                            for (item in stack.dropLast(1).asReversed()) {
+                                add(item.route)
+                                if (item.isBackgroundSolid()) break
                             }
                         }
-                    )
-                }
-                emit(event)
-            })
-        }
+                    }
+                )
+            }
+            emit(event)
+        })
+    }
 
     private suspend fun buildTransitionEvent(
         directionNavigation: String,
@@ -190,5 +201,4 @@ class NavigationStackTransitionRepository(
             backgroundGroup = if (!isForegroundGroup) lastItemGroup else priorItemGroup,
         )
     }
-
 }

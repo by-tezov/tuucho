@@ -5,12 +5,13 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import kotlinx.serialization.json.JsonObject
 
 object ConfigSchema {
-
     object Key {
         const val materialResource = MaterialResource.root
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         var materialResource by delegate<JsonObject?>(Key.materialResource)
     }
 
@@ -23,7 +24,9 @@ object ConfigSchema {
             const val contextual = "contextual"
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             override val root = MaterialResource.root
 
             var global by delegate<JsonObject?>(Key.global)
@@ -40,7 +43,9 @@ object ConfigSchema {
             const val preDownload = "pre-download"
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             var validityKey by delegate<String?>(Key.validityKey)
             var url by delegate<String?>(Key.url)
             var urlOrigin by delegate<String?>(Key.urlOrigin)
@@ -48,4 +53,3 @@ object ConfigSchema {
         }
     }
 }
-

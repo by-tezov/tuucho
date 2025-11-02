@@ -18,29 +18,33 @@ data class NavigationOption(
     )
 
     companion object {
-        fun from(optionObject: JsonObject) =
-            with(optionObject.withScope(ComponentSettingNavigationOptionSchema::Scope)) {
-                NavigationOption(
-                    single = single ?: false,
-                    reuse = reuse?.let {
-                        if (it.toBooleanStrictOrNull() == true) {
-                            ComponentSettingNavigationOptionSchema.Value.Reuse.last
-                        } else it
+        fun from(
+            optionObject: JsonObject
+        ) = with(optionObject.withScope(ComponentSettingNavigationOptionSchema::Scope)) {
+            NavigationOption(
+                single = single ?: false,
+                reuse = reuse?.let {
+                    if (it.toBooleanStrictOrNull() == true) {
+                        ComponentSettingNavigationOptionSchema.Value.Reuse.last
+                    } else {
+                        it
+                    }
+                },
+                popUpTo = popupTo
+                    ?.withScope(ComponentSettingNavigationOptionSchema.PopUpTo::Scope)
+                    ?.let {
+                        PopUpTo(
+                            route = NavigationRoute.Url(
+                                "",
+                                it.url
+                                    ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")
+                            ),
+                            inclusive = it.inclusive ?: false,
+                            greedy = it.greedy ?: true
+                        )
                     },
-                    popUpTo = popupTo?.withScope(ComponentSettingNavigationOptionSchema.PopUpTo::Scope)
-                        ?.let {
-                            PopUpTo(
-                                route = NavigationRoute.Url(
-                                    "", it.url
-                                        ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")
-                                ),
-                                inclusive = it.inclusive ?: false,
-                                greedy = it.greedy ?: true
-                            )
-                        },
-                    clearStack = clearStack ?: false
-                )
-            }
+                clearStack = clearStack ?: false
+            )
+        }
     }
-
 }

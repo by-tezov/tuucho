@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.NavigationTransitionStackH
 import kotlinx.serialization.json.JsonObject
 
 class DefaultNavigationTransitionStackHelper : NavigationTransitionStackHelperProtocol {
-
-    override fun isForeground(transitionSpec: JsonObject) = true
-
+    override fun isForeground(
+        transitionSpec: JsonObject
+    ) = true
 }

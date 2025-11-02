@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import kotlinx.serialization.json.JsonElement
 
 object MessageSchema {
-
     const val root = TypeSchema.Value.message
 
     object Key {
@@ -14,18 +13,17 @@ object MessageSchema {
         const val subset = SubsetSchema.root
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenScope<Scope>(argument)
 
-    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
-        OpenSchemaScope<T>(argument) {
+    open class OpenScope<T : OpenScope<T>>(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<T>(argument) {
         final override val root = MessageSchema.root
 
         var id by delegate<JsonElement?>(Key.id)
         var type by delegate<String?>(Key.type)
         var subset by delegate<String?>(OptionSchema.Key.subset)
     }
-
 }
-
-
-

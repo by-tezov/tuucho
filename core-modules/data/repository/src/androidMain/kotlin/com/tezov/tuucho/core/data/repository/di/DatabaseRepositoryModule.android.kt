@@ -3,25 +3,23 @@ package com.tezov.tuucho.core.data.repository.di
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.tezov.tuucho.core.data.repository.database.Database
-import org.koin.core.qualifier.named
-
-import org.koin.dsl.module
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
+import org.koin.core.module.Module
 
 object DatabaseRepositoryModuleAndroid {
+    @OptIn(TuuchoInternalApi::class)
+    internal fun invoke() = object : ModuleProtocol {
+        override val group = ModuleGroupData.Main
 
-    object Name {
-        val APPLICATION_CONTEXT = named("DatabaseRepositoryModuleAndroid.Name.APPLICATION_CONTEXT")
-    }
-
-    internal fun invoke() = module {
-
-        factory<SqlDriver> {
-            AndroidSqliteDriver(
-                schema = Database.Schema,
-                context = get(Name.APPLICATION_CONTEXT),
-                name = get<DatabaseRepositoryModule.Config>().fileName
-            )
+        override fun Module.declaration() {
+            factory<SqlDriver> {
+                AndroidSqliteDriver(
+                    schema = Database.Schema,
+                    context = get(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT),
+                    name = get<DatabaseRepositoryModule.Config>().fileName
+                )
+            }
         }
     }
-
 }

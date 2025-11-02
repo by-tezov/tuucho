@@ -1,16 +1,15 @@
 package com.tezov.tuucho.core.data.repository.parser.shadower
 
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MaterialShadower : KoinComponent {
-
+class MaterialShadower : TuuchoKoinComponent {
     private val componentShadower: ComponentShadower by inject()
 
     suspend fun process(
@@ -22,7 +21,8 @@ class MaterialShadower : KoinComponent {
             element = componentObject,
             jsonObjectConsumer = object : JsonObjectConsumerProtocol {
                 private val shadowerSettingObject = componentObject
-                    .withScope(ComponentSchema::Scope).setting
+                    .withScope(ComponentSchema::Scope)
+                    .setting
                     ?.withScope(ComponentSettingSchema.Root::Scope)
                     ?.shadower
 
@@ -40,5 +40,4 @@ class MaterialShadower : KoinComponent {
         )
         jsonObjectConsumer.onDone()
     }
-
 }

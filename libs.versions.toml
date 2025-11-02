@@ -2,20 +2,23 @@
 #convention
 domain = "com.tezov"
 name = "tuucho"
-mavenPropertiesFilePath = "maven.properties"
 versionCode = "1"
 versionName = "0.0.1-alpha18_2.2.20"
 isSnapshot = "false"
 javaVersion = "17"
 minSdk = "24"
 compileSdk = "36"
+ktlintRules = "1.7.1"
+detektRules = "1.23.8"
 
 #plugin
 android-plugin = "8.13.0"
-kotlin-plugin = "2.2.20" # can't launch unit test when upgrade to 2.2.20
+kotlin-plugin = "2.2.20"
 compose-plugin = "1.9.0"
 kotlin-serialization-plugin = "2.2.20"
 maven-plugin = "0.34.0"
+ktlint = "13.1.0"
+detekt = "1.23.8"
 
 #lib - platform
 kotlin-couroutine = "1.10.2"
@@ -25,7 +28,7 @@ sql-delight = "2.1.0"
 ktor = "3.3.1"
 koin = "4.1.1"
 kotlin-datetime = "0.7.1"
-okio = "3.16.1"
+okio = "3.16.2"
 
 #lib - android
 compose-activity = "1.11.0"
@@ -33,13 +36,15 @@ datastore-preferences = "1.1.7"
 
 #test
 jacoco = "0.8.13"
-mokkery = "3.0.0-Beta2"
+mokkery = "3.0.0-Beta3"
 
 [libraries]
 #build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-plugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
 maven = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "maven-plugin" }
+ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
+detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - platform
@@ -55,6 +60,8 @@ ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-jso
 kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-collections-immutable" }
 kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlin-datetime" }
 okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+#lib - jvm
+sql-delight-driver-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sql-delight" }
 #lib - android
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
@@ -76,6 +83,8 @@ convention-library-ui = { id = "com.tezov.tuucho.convention.project.library-ui",
 #convention
 maven = { id = "maven-publish", version = "" }
 signing = { id = "signing", version = "" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }

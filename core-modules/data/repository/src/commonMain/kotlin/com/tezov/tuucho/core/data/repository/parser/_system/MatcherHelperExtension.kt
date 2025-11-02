@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.data.repository.parser._system
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -27,11 +29,13 @@ fun JsonElement?.isTypeOf(
 ) = (this as? JsonObject)?.withScope(TypeSchema::Scope)?.self == value
 
 fun JsonElementPath.isTypeOf(
-    element: JsonElement, value: String,
+    element: JsonElement,
+    value: String,
 ) = element.findOrNull(this).isTypeOf(value)
 
 fun JsonElementPath.parentIsTypeOf(
-    element: JsonElement, value: String,
+    element: JsonElement,
+    value: String,
 ) = element.findOrNull(parent())?.isTypeOf(value) == true
 
 // any type
@@ -43,11 +47,13 @@ fun JsonElement?.isAnyTypeOf(
 }
 
 fun JsonElementPath.isAnyTypeOf(
-    element: JsonElement, values: List<String>,
+    element: JsonElement,
+    values: List<String>,
 ) = element.findOrNull(this).isAnyTypeOf(values)
 
 fun JsonElementPath.parentIsAnyTypeOf(
-    element: JsonElement, values: List<String>,
+    element: JsonElement,
+    values: List<String>,
 ) = element.findOrNull(parent())?.isAnyTypeOf(values) == true
 
 // subset
@@ -60,26 +66,29 @@ fun JsonElement?.isSubsetStartWith(
 ) = (this as? JsonObject)?.withScope(SubsetSchema::Scope)?.self?.startsWith(value) == true
 
 fun JsonElementPath.isSubsetOf(
-    element: JsonElement, value: String,
+    element: JsonElement,
+    value: String,
 ) = element.findOrNull(this).isSubsetOf(value)
 
 fun JsonElementPath.parentIsSubsetOf(
-    element: JsonElement, value: String,
+    element: JsonElement,
+    value: String,
 ) = element.findOrNull(parent())?.isSubsetOf(value) == true
 
 // any subset
 fun JsonElement?.isAnySubsetOf(
     values: List<String>,
-):Boolean {
+): Boolean {
     val type = (this as? JsonObject)?.withScope(SubsetSchema::Scope)?.self ?: return false
     return values.any { it == type }
 }
 
 fun JsonElementPath.isAnySubsetOf(
-    element: JsonElement, values: List<String>,
+    element: JsonElement,
+    values: List<String>,
 ) = element.findOrNull(this).isAnySubsetOf(values)
 
 fun JsonElementPath.parentIsAnySubsetOf(
-    element: JsonElement, values: List<String>,
+    element: JsonElement,
+    values: List<String>,
 ) = element.findOrNull(parent())?.isAnySubsetOf(values) == true
-

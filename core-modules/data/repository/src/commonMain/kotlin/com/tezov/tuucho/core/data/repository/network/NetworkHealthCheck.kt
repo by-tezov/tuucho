@@ -7,13 +7,14 @@ import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
-class NetworkHealthCheck(
+internal class NetworkHealthCheck(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val networkHttpRequestSource: NetworkHttpRequestSource,
     private val jsonConverter: Json
-): ServerHealthCheckProtocol {
-
-    override suspend fun process(url: String): JsonObject {
+) : ServerHealthCheckProtocol {
+    override suspend fun process(
+        url: String
+    ): JsonObject {
         val jsonElement = coroutineScopes.network.await {
             val response = networkHttpRequestSource.getHealth(url)
             val data = response.json ?: throw DataException.Default("failed to check health at url $url")

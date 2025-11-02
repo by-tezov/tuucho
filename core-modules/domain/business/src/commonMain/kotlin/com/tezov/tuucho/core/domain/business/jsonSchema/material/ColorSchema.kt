@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import kotlinx.serialization.json.JsonElement
 
 object ColorSchema {
-
     const val root = TypeSchema.Value.color
 
     object Key {
@@ -21,16 +20,13 @@ object ColorSchema {
         }
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = ColorSchema.root
 
         var id by delegate<JsonElement?>(Key.id)
         var type by delegate<String?>(Key.type)
         var default by delegate<String?>(Key.default)
-
     }
-
 }
-
-
-

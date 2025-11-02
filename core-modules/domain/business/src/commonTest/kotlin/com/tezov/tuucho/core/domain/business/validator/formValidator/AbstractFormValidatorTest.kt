@@ -12,15 +12,14 @@ import kotlin.test.assertTrue
 private class DummyFormValidator(
     errorMessages: JsonObject
 ) : AbstractFormValidator<String>(errorMessages) {
-
-    override fun updateValidity(value: String) {
+    override fun updateValidity(
+        value: String
+    ) {
         isValid = value == "ok"
     }
-
 }
 
 class AbstractFormValidatorTest {
-
     private val defaultMessage = "Default message"
     private val frenchMessage = "message en français"
 

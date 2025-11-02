@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
@@ -7,13 +8,12 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProto
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.KoinComponent
 
-class NavigationStackScreenRepository(
+internal class NavigationStackScreenRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val screenRenderer: ScreenRendererProtocol,
-) : StackScreen, KoinComponent {
-
+) : StackScreen,
+    TuuchoKoinComponent {
     private val stack = mutableListOf<ScreenProtocol>()
     private val stackLock = Mutex()
 
@@ -21,21 +21,25 @@ class NavigationStackScreenRepository(
         stackLock.withLock { stack.map { it.route } }
     }
 
-    override suspend fun getScreens(routes: List<NavigationRoute.Url>) =
-        coroutineScopes.navigation.await {
-            stackLock.withLock {
-                stack.filter { screen ->
-                    routes.any { it == screen.route }
-                }
+    override suspend fun getScreens(
+        routes: List<NavigationRoute.Url>
+    ) = coroutineScopes.navigation.await {
+        stackLock.withLock {
+            stack.filter { screen ->
+                routes.any { it == screen.route }
             }
         }
+    }
 
-    override suspend fun getScreenOrNull(route: NavigationRoute.Url) =
-        coroutineScopes.navigation.await {
-            stackLock.withLock { stack.firstOrNull { route.id == it.route.id } }
-        }
+    override suspend fun getScreenOrNull(
+        route: NavigationRoute.Url
+    ) = coroutineScopes.navigation.await {
+        stackLock.withLock { stack.firstOrNull { route.id == it.route.id } }
+    }
 
-    override suspend fun getScreensOrNull(url: String) = coroutineScopes.navigation.await {
+    override suspend fun getScreensOrNull(
+        url: String
+    ) = coroutineScopes.navigation.await {
         stackLock.withLock { stack.filter { it.route.accept(url) } }
     }
 
@@ -44,12 +48,13 @@ class NavigationStackScreenRepository(
         componentObject: JsonObject,
     ) {
         coroutineScopes.navigation.await {
-            screenRenderer.process(
-                route = route,
-                componentObject = componentObject
-            ).also {
-                stackLock.withLock { stack.add(it) }
-            }
+            screenRenderer
+                .process(
+                    route = route,
+                    componentObject = componentObject
+                ).also {
+                    stackLock.withLock { stack.add(it) }
+                }
         }
     }
 
@@ -64,5 +69,4 @@ class NavigationStackScreenRepository(
             }
         }
     }
-
 }

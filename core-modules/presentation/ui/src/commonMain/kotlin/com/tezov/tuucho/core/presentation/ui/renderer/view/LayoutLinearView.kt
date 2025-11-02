@@ -28,23 +28,23 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
 class LayoutLinearViewFactory : AbstractViewFactory() {
-
     private val viewFactories: List<AbstractViewFactory> by inject()
 
-    override fun accept(componentElement: JsonObject) = componentElement.let {
+    override fun accept(
+        componentElement: JsonObject
+    ) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
-                it.withScope(SubsetSchema::Scope).self == LayoutLinearSchema.Component.Value.subset
+            it.withScope(SubsetSchema::Scope).self == LayoutLinearSchema.Component.Value.subset
     }
 
     override suspend fun process(
         route: NavigationRoute.Url,
         componentObject: JsonObject,
-    ) =
-        LayoutLinearView(
-            route = route,
-            componentObject = componentObject,
-            viewFactories = viewFactories,
-        ).also { it.init() }
+    ) = LayoutLinearView(
+        route = route,
+        componentObject = componentObject,
+        viewFactories = viewFactories,
+    ).also { it.init() }
 }
 
 class LayoutLinearView(
@@ -52,7 +52,6 @@ class LayoutLinearView(
     componentObject: JsonObject,
     private val viewFactories: List<AbstractViewFactory>,
 ) : AbstractView(componentObject) {
-
     override val children: List<ViewProtocol>?
         get() = _itemViews.value
 
@@ -82,7 +81,7 @@ class LayoutLinearView(
                     }
                 }
 
-                //TODO
+                // TODO
 //                componentObject = componentObject.withScope(ComponentSchema::Scope).apply {
 //                    content = content?.withScope(LayoutLinearSchema.Content::Scope).apply {
 //                        remove(LayoutLinearSchema.Content.Key.items)
@@ -101,7 +100,9 @@ class LayoutLinearView(
         }
     }
 
-    override suspend fun JsonObject.processColor(key: String) {
+    override suspend fun JsonObject.processColor(
+        key: String
+    ) {
         when (key) {
             LayoutLinearSchema.Style.Key.backgroundColor -> _backgroundColor = this
         }
@@ -117,20 +118,23 @@ class LayoutLinearView(
         get() = _fillMaxWidth
 
     private val backgroundColor
-        get():Color? {
-            return _backgroundColor?.withScope(ColorSchema::Scope)
-                ?.default?.toColorOrNull()
+        get(): Color? {
+            return _backgroundColor
+                ?.withScope(ColorSchema::Scope)
+                ?.default
+                ?.toColorOrNull()
         }
 
-    private val items get():List<ViewProtocol>? = _itemViews.value
+    private val items get(): List<ViewProtocol>? = _itemViews.value
 
     @Composable
-    override fun displayComponent(scope: Any?) {
+    override fun displayComponent(
+        scope: Any?
+    ) {
         val modifier = Modifier
             .then {
                 onTrue(fillMaxSize) { fillMaxSize() } or onTrue(fillMaxWidth) { fillMaxWidth() }
-            }
-            .thenOnNotNull(backgroundColor) { background(it) }
+            }.thenOnNotNull(backgroundColor) { background(it) }
 
         when (orientation) {
             Orientation.horizontal -> {
@@ -146,5 +150,4 @@ class LayoutLinearView(
             }
         }
     }
-
 }

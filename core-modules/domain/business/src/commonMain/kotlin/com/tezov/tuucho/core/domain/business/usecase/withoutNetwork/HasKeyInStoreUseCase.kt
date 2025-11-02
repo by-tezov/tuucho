@@ -10,7 +10,6 @@ class HasKeyInStoreUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val keyValueRepository: KeyValueStoreRepositoryProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
-
     data class Input(
         val key: KeyValueStoreRepositoryProtocol.Key
     )
@@ -19,12 +18,13 @@ class HasKeyInStoreUseCase(
         val result: Boolean,
     )
 
-    override suspend fun invoke(input: Input) = with(input) {
+    override suspend fun invoke(
+        input: Input
+    ) = with(input) {
         coroutineScopes.database.await {
             Output(
                 result = keyValueRepository.hasKey(input.key)
             )
         }
     }
-
 }

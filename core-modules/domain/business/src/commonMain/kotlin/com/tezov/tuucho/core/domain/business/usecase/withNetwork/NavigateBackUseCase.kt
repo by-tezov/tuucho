@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
@@ -11,11 +12,10 @@ import com.tezov.tuucho.core.domain.business.middleware.MiddlewareProtocol.Compa
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InterractionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
-import org.koin.core.component.KoinComponent
 
 class NavigateBackUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -23,11 +23,13 @@ class NavigateBackUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
-    private val actionLockRepository: InterractionLockRepositoryProtocol,
+    private val actionLockRepository: InteractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
-) : UseCaseProtocol.Sync<Unit, Unit>, KoinComponent {
-
-    override fun invoke(input: Unit) {
+) : UseCaseProtocol.Sync<Unit, Unit>,
+    TuuchoKoinComponent {
+    override fun invoke(
+        input: Unit
+    ) {
         coroutineScopes.useCase.async {
             (navigationMiddlewares + finalNavigationMiddleware()).execute(
                 context = NavigationMiddleware.Back.Context(
@@ -41,11 +43,11 @@ class NavigateBackUseCase(
     }
 
     private suspend fun tryLock() = actionLockRepository
-        .tryLock(InterractionLockRepositoryProtocol.Type.Navigation)
+        .tryLock(InteractionLockRepositoryProtocol.Type.Navigation)
 
     private suspend fun String.unLock() {
         actionLockRepository.unLock(
-            InterractionLockRepositoryProtocol.Type.Navigation,
+            InteractionLockRepositoryProtocol.Type.Navigation,
             this
         )
     }
@@ -72,7 +74,8 @@ class NavigateBackUseCase(
         context: NavigationMiddleware.Back.Context
     ) {
         val view = navigationStackScreenRepository
-            .getScreenOrNull(route)?.view
+            .getScreenOrNull(route)
+            ?.view
             ?: return
         val componentObject = view.componentObject
         val componentSettingScope = componentObject
@@ -85,22 +88,23 @@ class NavigateBackUseCase(
         if (settingShadowerScope?.enable.isTrue) {
             val job = coroutineScopes.navigation.async {
                 suspend fun process() {
-                    shadowerMaterialRepository.process(
-                        url = route.value,
-                        componentObject = componentObject,
-                        types = listOf(Shadower.Type.contextual)
-                    ).forEach {
-                        coroutineScopes.renderer.await {
-                            view.update(it.jsonObject)
+                    shadowerMaterialRepository
+                        .process(
+                            url = route.value,
+                            componentObject = componentObject,
+                            types = listOf(Shadower.Type.contextual)
+                        ).forEach {
+                            coroutineScopes.renderer.await {
+                                view.update(it.jsonObject)
+                            }
                         }
-                    }
                 }
                 runCatching {
                     process()
                 }.onFailure { failure ->
                     context.onShadowerException?.invoke(failure, context) {
                         process()
-                    } ?:throw failure
+                    } ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {

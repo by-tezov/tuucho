@@ -14,55 +14,57 @@ typealias OutfitStateSemantic<T> = OutfitState.Semantic.Style<T>
 typealias OutfitStateTemplate<T> = OutfitState.Template.Style<T>
 
 object OutfitState {
-
     interface Style<T : Any> {
-
         fun selectorType(): KClass<*>
 
         fun selectorDefault(): Any
 
-        fun resolve(selector: Any? = null): T?
+        fun resolve(
+            selector: Any? = null
+        ): T?
 
-        fun isSelectorValid(selector: Any? = null) =
-            selector != null && selector::class == selectorType()
-
-        @Suppress("UNCHECKED_CAST")
-        fun <S : Any> resolve(selector: Any? = null, doResolve: ((selector: S) -> T?)): T? =
-            runCatching {
-                (selector.takeIf { isSelectorValid(it) } ?: selectorDefault()) as S
-            }.getOrNull()?.let(doResolve)
+        fun isSelectorValid(
+            selector: Any? = null
+        ) = selector != null && selector::class == selectorType()
 
         @Suppress("UNCHECKED_CAST")
-        fun <C : Any> resolve(selector: Any? = null, type: KClass<C>): C? =
-            resolve(selector)?.let { runCatching { it as C }.getOrNull() }
+        fun <S : Any> resolve(
+            selector: Any? = null,
+            doResolve: ((selector: S) -> T?)
+        ): T? = runCatching {
+            (selector.takeIf { isSelectorValid(it) } ?: selectorDefault()) as S
+        }.getOrNull()?.let(doResolve)
+
+        @Suppress("UNCHECKED_CAST")
+        fun <C : Any> resolve(
+            selector: Any? = null,
+            type: KClass<C>
+        ): C? = resolve(selector)?.let { runCatching { it as C }.getOrNull() }
     }
 
     object Null {
-
         class Style<T : Any> : OutfitState.Style<T> {
-
             companion object {
-
                 @Composable
                 fun <T : Any> Style<T>.copy() = this
-
             }
 
             override fun selectorType() = Unit::class
 
             override fun selectorDefault() = Unit
 
-            override fun resolve(selector: Any?) = null
-
+            override fun resolve(
+                selector: Any?
+            ) = null
         }
-
     }
 
     object Simple {
-
         object Selector
 
-        class StyleBuilder<T : Any> internal constructor(val style: Style<T>) {
+        class StyleBuilder<T : Any> internal constructor(
+            val style: Style<T>
+        ) {
             var value = style.value
 
             internal fun get() = Style(
@@ -73,12 +75,12 @@ object OutfitState {
         class Style<T : Any>(
             val value: T,
         ) : OutfitState.Style<T> {
-
             companion object {
-
                 @Composable
-                fun <T : Any> Style<T>.copy(builder: @Composable StyleBuilder<T>.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun <T : Any> Style<T>.copy(
+                    builder: @Composable StyleBuilder<T>.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
 
@@ -100,21 +102,23 @@ object OutfitState {
 
             override fun selectorDefault() = Selector
 
-            override fun resolve(selector: Any?) = resolve<Selector>(selector) {
+            override fun resolve(
+                selector: Any?
+            ) = resolve<Selector>(selector) {
                 value
             }
-
         }
-
     }
 
     object BiStable {
-
         enum class Selector {
-            Active, Inactive
+            Active,
+            Inactive
         }
 
-        class StyleBuilder<T : Any> internal constructor(val style: Style<T>) {
+        class StyleBuilder<T : Any> internal constructor(
+            val style: Style<T>
+        ) {
             var active = style.active
             var inactive = style.inactive
 
@@ -128,7 +132,6 @@ object OutfitState {
             active: T? = null,
             inactive: T? = null,
         ) : OutfitState.Style<T> {
-
             private val delegates = DelegateNullFallBack.Group<T>()
             val active: T by delegates.ref(active)
             val inactive: T by delegates.ref(inactive)
@@ -138,10 +141,11 @@ object OutfitState {
             }
 
             companion object {
-
                 @Composable
-                fun <T : Any> Style<T>.copy(builder: @Composable StyleBuilder<T>.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun <T : Any> Style<T>.copy(
+                    builder: @Composable StyleBuilder<T>.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
 
@@ -164,24 +168,28 @@ object OutfitState {
 
             override fun selectorDefault() = Selector.Active
 
-            override fun resolve(selector: Any?) = resolve<Selector>(selector) {
+            override fun resolve(
+                selector: Any?
+            ) = resolve<Selector>(selector) {
                 when (it) {
                     Selector.Active -> active
                     Selector.Inactive -> inactive
                 }
             }
-
         }
-
     }
 
     object Input {
-
         enum class Selector {
-            Inactive, Error, Focused, Unfocused
+            Inactive,
+            Error,
+            Focused,
+            Unfocused
         }
 
-        class StyleBuilder<T : Any> internal constructor(val style: Style<T>) {
+        class StyleBuilder<T : Any> internal constructor(
+            val style: Style<T>
+        ) {
             var inactive = style.inactive
             var error = style.error
             var focused = style.focused
@@ -201,7 +209,6 @@ object OutfitState {
             focused: T? = null,
             unfocused: T? = null,
         ) : OutfitState.Style<T> {
-
             private val delegates = DelegateNullFallBack.Group<T>()
             val inactive: T by delegates.ref(inactive)
             val error: T by delegates.ref(error)
@@ -213,10 +220,11 @@ object OutfitState {
             }
 
             companion object {
-
                 @Composable
-                fun <T : Any> Style<T>.copy(builder: @Composable StyleBuilder<T>.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun <T : Any> Style<T>.copy(
+                    builder: @Composable StyleBuilder<T>.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
 
@@ -241,26 +249,31 @@ object OutfitState {
 
             override fun selectorDefault() = Selector.Unfocused
 
-            override fun resolve(selector: Any?) = resolve<Selector>(selector) {
+            override fun resolve(
+                selector: Any?
+            ) = resolve<Selector>(selector) {
                 when (it) {
                     Selector.Inactive -> inactive
                     Selector.Error -> error
                     Selector.Focused -> focused
                     Selector.Unfocused -> unfocused
-
                 }
             }
-
         }
     }
 
     object Semantic {
-
         enum class Selector {
-            Neutral, Info, Alert, Error, Success
+            Neutral,
+            Info,
+            Alert,
+            Error,
+            Success
         }
 
-        class StyleBuilder<T : Any> internal constructor(val style: Style<T>) {
+        class StyleBuilder<T : Any> internal constructor(
+            val style: Style<T>
+        ) {
             var neutral = style.neutral
             var info = style.info
             var alert = style.alert
@@ -283,7 +296,6 @@ object OutfitState {
             success: T? = null,
             error: T? = null,
         ) : OutfitState.Style<T> {
-
             private val delegates = DelegateNullFallBack.Group<T>()
             val neutral: T by delegates.ref(neutral)
             val info: T by delegates.ref(info)
@@ -296,10 +308,11 @@ object OutfitState {
             }
 
             companion object {
-
                 @Composable
-                fun <T : Any> Style<T>.copy(builder: @Composable StyleBuilder<T>.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun <T : Any> Style<T>.copy(
+                    builder: @Composable StyleBuilder<T>.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
 
@@ -325,7 +338,9 @@ object OutfitState {
 
             override fun selectorDefault() = Selector.Neutral
 
-            override fun resolve(selector: Any?) = resolve<Selector>(selector) {
+            override fun resolve(
+                selector: Any?
+            ) = resolve<Selector>(selector) {
                 when (it) {
                     Selector.Neutral -> neutral
                     Selector.Info -> info
@@ -338,12 +353,19 @@ object OutfitState {
     }
 
     object Template {
-
         enum class Selector {
-            A, B, C, D, E, F, G
+            A,
+            B,
+            C,
+            D,
+            E,
+            F,
+            G
         }
 
-        class StyleBuilder<T : Any> internal constructor(val style: Style<T>) {
+        class StyleBuilder<T : Any> internal constructor(
+            val style: Style<T>
+        ) {
             var a = style.a
             var b = style.b
             var c = style.c
@@ -371,9 +393,7 @@ object OutfitState {
             e: T? = null,
             f: T? = null,
             g: T? = null,
-
-            ) : OutfitState.Style<T> {
-
+        ) : OutfitState.Style<T> {
             private val delegates = DelegateNullFallBack.Group<T>()
             val a: T by delegates.ref(a)
             val b: T by delegates.ref(b)
@@ -388,10 +408,11 @@ object OutfitState {
             }
 
             companion object {
-
                 @Composable
-                fun <T : Any> Style<T>.copy(builder: @Composable StyleBuilder<T>.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun <T : Any> Style<T>.copy(
+                    builder: @Composable StyleBuilder<T>.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
 
@@ -411,14 +432,15 @@ object OutfitState {
                 e = style.e,
                 f = style.f,
                 g = style.g,
-
-                )
+            )
 
             override fun selectorType() = Selector::class
 
             override fun selectorDefault() = Selector.A
 
-            override fun resolve(selector: Any?) = resolve<Selector>(selector) {
+            override fun resolve(
+                selector: Any?
+            ) = resolve<Selector>(selector) {
                 when (it) {
                     Selector.A -> a
                     Selector.B -> b
@@ -429,9 +451,6 @@ object OutfitState {
                     Selector.G -> g
                 }
             }
-
         }
-
     }
-
 }

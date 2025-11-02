@@ -6,15 +6,15 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 class RefreshMaterialCacheUseCase(
     private val refreshMaterialCacheRepository: MaterialRepositoryProtocol.RefreshCache,
 ) : UseCaseProtocol.Async<RefreshMaterialCacheUseCase.Input, Unit> {
-
     data class Input(
         val url: String,
     )
 
-    override suspend fun invoke(input: Input) {
+    override suspend fun invoke(
+        input: Input
+    ) {
         with(input) {
             refreshMaterialCacheRepository.process(url)
         }
     }
-
 }

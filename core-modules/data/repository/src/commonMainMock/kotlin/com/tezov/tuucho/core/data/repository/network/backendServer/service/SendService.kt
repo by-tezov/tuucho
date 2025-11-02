@@ -9,8 +9,7 @@ import io.ktor.http.headersOf
 import io.ktor.http.withCharset
 import io.ktor.utils.io.charsets.Charsets
 
-class SendService() : ServiceProtocol {
-
+class SendService : ServiceProtocol {
     override val url = "send"
 
     override suspend fun process(
@@ -21,7 +20,9 @@ class SendService() : ServiceProtocol {
             statusCode = HttpStatusCode.Companion.fromValue(200),
             headers = headersOf(
                 name = HttpHeaders.ContentType,
-                value = ContentType.Application.Json.withCharset(Charsets.UTF_8).toString()
+                value = ContentType.Application.Json
+                    .withCharset(Charsets.UTF_8)
+                    .toString()
             ),
             body = """{ "type": "all-succeed" }"""
         )

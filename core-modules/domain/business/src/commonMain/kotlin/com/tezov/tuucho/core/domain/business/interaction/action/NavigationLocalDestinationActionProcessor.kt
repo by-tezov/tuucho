@@ -9,11 +9,10 @@ import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import kotlinx.serialization.json.JsonElement
 
-class NavigationLocalDestinationActionProcessor(
+internal class NavigationLocalDestinationActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val navigateBack: NavigateBackUseCase,
 ) : ActionProcessorProtocol {
-
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
@@ -21,9 +20,7 @@ class NavigationLocalDestinationActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return action.command == Action.Navigate.command && action.authority == Action.Navigate.LocalDestination.authority
-    }
+    ): Boolean = action.command == Action.Navigate.command && action.authority == Action.Navigate.LocalDestination.authority
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -39,5 +36,4 @@ class NavigationLocalDestinationActionProcessor(
             else -> throw DomainException.Default("Unknown target ${action.target}")
         }
     }
-
 }

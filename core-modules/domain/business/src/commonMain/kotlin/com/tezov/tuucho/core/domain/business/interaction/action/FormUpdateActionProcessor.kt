@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.action
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -15,13 +16,12 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUs
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
-import org.koin.core.component.KoinComponent
 
-class FormUpdateActionProcessor(
+internal class FormUpdateActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val updateView: UpdateViewUseCase,
-) : ActionProcessorProtocol, KoinComponent {
-
+) : ActionProcessorProtocol,
+    TuuchoKoinComponent {
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
@@ -29,9 +29,7 @@ class FormUpdateActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return action.command == Action.Form.command && action.authority == Action.Form.Update.authority
-    }
+    ): Boolean = action.command == Action.Form.command && action.authority == Action.Form.Update.authority
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -49,14 +47,16 @@ class FormUpdateActionProcessor(
         jsonElement: JsonElement?,
     ) {
         jsonElement?.jsonArray?.forEach { param ->
-            val message = JsonNull.withScope(FormSchema.Message::Scope).apply {
-                id = param.withScope(IdSchema::Scope).self
-                type = TypeSchema.Value.message
-                subset = FormSchema.Message.Value.Subset.updateErrorState
-                param.withScope(FormSendResponseSchema.FailureResult::Scope).reason?.let {
-                    messageErrorExtra = it
-                }
-            }.collect()
+            val message = JsonNull
+                .withScope(FormSchema.Message::Scope)
+                .apply {
+                    id = param.withScope(IdSchema::Scope).self
+                    type = TypeSchema.Value.message
+                    subset = FormSchema.Message.Value.Subset.updateErrorState
+                    param.withScope(FormSendResponseSchema.FailureResult::Scope).reason?.let {
+                        messageErrorExtra = it
+                    }
+                }.collect()
             useCaseExecutor.invokeSuspend(
                 useCase = updateView,
                 input = UpdateViewUseCase.Input(
@@ -66,5 +66,4 @@ class FormUpdateActionProcessor(
             )
         }
     }
-
 }

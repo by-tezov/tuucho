@@ -7,7 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class StringOnlyDigitsFormValidatorTest {
-
     private lateinit var sut: StringOnlyDigitsFormValidator
 
     @BeforeTest

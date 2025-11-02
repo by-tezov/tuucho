@@ -6,7 +6,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
 class LanguageModelDomainTest {
-
     @Test
     fun `fromOrNull returns matching enum`() {
         val lang = LanguageModelDomain.fromOrNull("fr")

@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import kotlinx.serialization.json.JsonObject
 
 object ComponentSettingNavigationOptionSchema {
-
     const val root = "option"
 
     object Key {
@@ -22,7 +21,9 @@ object ComponentSettingNavigationOptionSchema {
         }
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = ComponentSettingNavigationOptionSchema.root
 
         var single by delegate<Boolean?>(Key.single)
@@ -40,7 +41,9 @@ object ComponentSettingNavigationOptionSchema {
             const val greedy = "greedy"
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             override val root = PopUpTo.root
 
             var url by delegate<String?>(Key.url)

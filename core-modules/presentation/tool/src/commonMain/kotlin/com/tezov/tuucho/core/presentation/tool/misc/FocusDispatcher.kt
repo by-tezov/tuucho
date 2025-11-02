@@ -17,9 +17,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 class FocusDispatcher {
-
-    inner class FocusId internal constructor(internal val autoShowKeyboard: Boolean) {
-
+    inner class FocusId internal constructor(
+        internal val autoShowKeyboard: Boolean
+    ) {
         val value: FocusRequester = FocusRequester()
 
         fun onFocus() {
@@ -29,7 +29,6 @@ class FocusDispatcher {
         fun hasFocus() = hasFocus(this)
 
         fun requestFocus() = requestFocus(this)
-
     }
 
     private val ids = mutableListOf<FocusId>()
@@ -38,9 +37,13 @@ class FocusDispatcher {
     private lateinit var focusManager: FocusManager
     private lateinit var focusOwner: MutableState<FocusId?>
 
-    fun createId(autoShowKeyboard: Boolean = true) = FocusId(autoShowKeyboard).also { ids.add(it) }
+    fun createId(
+        autoShowKeyboard: Boolean = true
+    ) = FocusId(autoShowKeyboard).also { ids.add(it) }
 
-    fun destroyId(id: FocusId) = ids.remove(id)
+    fun destroyId(
+        id: FocusId
+    ) = ids.remove(id)
 
     @Composable
     fun compose() {
@@ -69,7 +72,9 @@ class FocusDispatcher {
         hideKeyboard()
     }
 
-    private fun onFocus(id: FocusId) {
+    private fun onFocus(
+        id: FocusId
+    ) {
         focusOwner.value = id
         if (id.autoShowKeyboard) {
             showKeyboard()
@@ -78,16 +83,19 @@ class FocusDispatcher {
         }
     }
 
-    fun requestFocus(id: FocusId) {
+    fun requestFocus(
+        id: FocusId
+    ) {
         if (focusOwner.value != id) {
             runCatching {
-                //TODO no idea why but throw "IllegalStateException" but the focus is obtained anyway ...
-                //maybe add focus cemetery same i did in java?
+                // TODO no idea why but throw "IllegalStateException" but the focus is obtained anyway ...
+                // maybe add focus cemetery same i did in java?
                 id.value.requestFocus()
             }
         }
     }
 
-    fun hasFocus(id: FocusId) = focusOwner.value == id
-
+    fun hasFocus(
+        id: FocusId
+    ) = focusOwner.value == id
 }

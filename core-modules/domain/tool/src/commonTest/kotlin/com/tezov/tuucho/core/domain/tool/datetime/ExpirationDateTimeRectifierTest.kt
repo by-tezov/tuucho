@@ -13,7 +13,6 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
 
 class ExpirationDateTimeRectifierTest {
-
     private lateinit var sut: ExpirationDateTimeRectifier
     private val fixedNow = Instant.parse("2025-09-06T10:00:00Z")
 

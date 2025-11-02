@@ -30,11 +30,11 @@ import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideVertical.
 import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
-import org.koin.compose.currentKoinScope
 
 interface TuuchoEngineProtocol {
-
-    suspend fun start(url: String)
+    suspend fun start(
+        url: String
+    )
 
     @Composable
     fun display()
@@ -48,14 +48,6 @@ class TuuchoEngine(
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
     private val navigateToUrl: NavigateToUrlUseCase,
 ) : TuuchoEngineProtocol {
-
-    companion object {
-        @Composable
-        fun rememberTuuchoEngine(): TuuchoEngineProtocol = currentKoinScope().let { scope ->
-            remember(scope) { scope.get(TuuchoEngineProtocol::class, null) }
-        }
-    }
-
     private data class Group(
         val screens: List<ScreenProtocol>,
         val transitionSpecObject: JsonObject,
@@ -66,18 +58,28 @@ class TuuchoEngine(
     private var transitionRequested = false
     private val redrawTrigger = mutableStateOf(0)
 
-    override suspend fun start(url: String) {
+    override suspend fun start(
+        url: String
+    ) {
         useCaseExecutor.invoke(
             useCase = registerToScreenTransitionEvent,
             input = RegisterToScreenTransitionEventUseCase.Input(
                 onEvent = { event ->
                     when (event) {
-                        is Event.RequestTransition -> onRequestTransitionEvent(event)
-                        is Event.Idle -> onIdleEvent(event)
-                        is Event.PrepareTransition -> { /* nothing */
+                        is Event.RequestTransition -> {
+                            onRequestTransitionEvent(event)
                         }
 
-                        else -> throw UiException.Default("received unmanaged transition event $event")
+                        is Event.Idle -> {
+                            onIdleEvent(event)
+                        }
+
+                        is Event.PrepareTransition -> { // nothing
+                        }
+
+                        else -> {
+                            throw UiException.Default("received unmanaged transition event $event")
+                        }
                     }
                 }
             )
@@ -90,40 +92,47 @@ class TuuchoEngine(
         )
     }
 
-    private suspend fun onRequestTransitionEvent(event: Event.RequestTransition) {
+    private suspend fun onRequestTransitionEvent(
+        event: Event.RequestTransition
+    ) {
         @Suppress("UNCHECKED_CAST")
         foregroundGroup = Group(
-            screens = useCaseExecutor.invokeSuspend(
-                useCase = getScreensFromRoutes,
-                input = GetScreensFromRoutesUseCase.Input(
-                    routes = event.foregroundGroup.routes
-                )
-            ).screens as List<ScreenProtocol>,
+            screens = useCaseExecutor
+                .invokeSuspend(
+                    useCase = getScreensFromRoutes,
+                    input = GetScreensFromRoutesUseCase.Input(
+                        routes = event.foregroundGroup.routes
+                    )
+                ).screens as List<ScreenProtocol>,
             transitionSpecObject = event.foregroundGroup.transitionSpecObject
         )
         @Suppress("UNCHECKED_CAST")
         backgroundGroup = Group(
-            screens = useCaseExecutor.invokeSuspend(
-                useCase = getScreensFromRoutes,
-                input = GetScreensFromRoutesUseCase.Input(
-                    routes = event.backgroundGroup.routes
-                )
-            ).screens as List<ScreenProtocol>,
+            screens = useCaseExecutor
+                .invokeSuspend(
+                    useCase = getScreensFromRoutes,
+                    input = GetScreensFromRoutesUseCase.Input(
+                        routes = event.backgroundGroup.routes
+                    )
+                ).screens as List<ScreenProtocol>,
             transitionSpecObject = event.backgroundGroup.transitionSpecObject
         )
         transitionRequested = true
         redrawTrigger.value = redrawTrigger.value + 1
     }
 
-    private suspend fun onIdleEvent(event: Event.Idle) {
+    private suspend fun onIdleEvent(
+        event: Event.Idle
+    ) {
         @Suppress("UNCHECKED_CAST")
         foregroundGroup = Group(
-            screens = useCaseExecutor.invokeSuspend(
-                useCase = getScreensFromRoutes,
-                input = GetScreensFromRoutesUseCase.Input(
-                    routes = event.routes
-                )
-            ).screens as List<ScreenProtocol>,
+            screens = useCaseExecutor
+                .invokeSuspend(
+                    useCase = getScreensFromRoutes,
+                    input = GetScreensFromRoutesUseCase.Input(
+                        routes = event.routes
+                    )
+                ).screens as List<ScreenProtocol>,
             transitionSpecObject = JsonNull
                 .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
                 .apply { type = Type.none }
@@ -138,7 +147,9 @@ class TuuchoEngine(
     override fun display() {
         val animationProgress = if (transitionRequested) {
             rememberAnimationProgress(redrawTrigger.value)
-        } else null
+        } else {
+            null
+        }
         val screens = remember(redrawTrigger.value) {
             buildList<Pair<String, @Composable () -> Unit>> {
                 backgroundGroup?.let { group ->
@@ -202,7 +213,8 @@ class TuuchoEngine(
     private fun ModifierTransition(
         animationProgress: AnimationProgress,
         spec: JsonObject,
-    ): AbstractModifierTransition = spec.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
+    ): AbstractModifierTransition = spec
+        .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
         .let { scope ->
             when (scope.type) {
                 Type.fade -> animationProgress.fade(
@@ -223,9 +235,3 @@ class TuuchoEngine(
             }
         }
 }
-
-
-
-
-
-

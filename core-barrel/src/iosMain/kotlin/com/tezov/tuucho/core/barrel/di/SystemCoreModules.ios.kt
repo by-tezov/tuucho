@@ -1,5 +1,5 @@
 package com.tezov.tuucho.core.barrel.di
 
-import org.koin.core.module.Module
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 
-actual fun SystemCoreModules.platformInvoke() = emptyList<Module>()
+actual fun SystemCoreModules.platformInvoke() = emptyList<ModuleProtocol>()

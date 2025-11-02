@@ -6,8 +6,9 @@ class StringMinDigitLengthFormValidator(
     errorMessages: JsonObject,
     private val length: Int,
 ) : AbstractFormValidator<String>(errorMessages) {
-
-    override fun updateValidity(value: String) {
+    override fun updateValidity(
+        value: String
+    ) {
         val digitCount = value.count { it.isDigit() }
         isValid = digitCount >= length
     }

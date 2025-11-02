@@ -6,10 +6,9 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.entity.toEntity
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 
-class JsonObjectQueries(
+internal class JsonObjectQueries(
     private val database: Database,
 ) {
-
     private val queriesCommon get() = database.jsonObjectCommonStatementQueries
 
     private val queriesContextual get() = database.jsonObjectContextualStatementQueries
@@ -21,14 +20,20 @@ class JsonObjectQueries(
         queriesContextual.deleteAll()
     }
 
-    fun deleteAll(url: String, table: Table) {
+    fun deleteAll(
+        url: String,
+        table: Table
+    ) {
         when (table) {
             Table.Common -> queriesCommon.deleteByUrl(url)
             Table.Contextual -> queriesContextual.deleteByUrl(url)
         }
     }
 
-    fun insert(entity: JsonObjectEntity, table: Table) = when (table) {
+    fun insert(
+        entity: JsonObjectEntity,
+        table: Table
+    ) = when (table) {
         Table.Common -> {
             queriesCommon.insert(
                 type = entity.type,
@@ -52,8 +57,9 @@ class JsonObjectQueries(
         }
     }
 
-    fun getCommonOrNull(primaryKey: Long) =
-        queriesCommon.getByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
+    fun getCommonOrNull(
+        primaryKey: Long
+    ) = queriesCommon.getByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
 
     fun getCommonOrNull(
         type: String,
@@ -61,9 +67,13 @@ class JsonObjectQueries(
         id: String,
     ) = queriesCommon.getByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
 
-    fun getCommonGlobalOrNull(type: String, id: String) = queriesJoin
+    fun getCommonGlobalOrNull(
+        type: String,
+        id: String
+    ) = queriesJoin
         .getCommonByTypeIdVisibility(Visibility.Global, type, id)
-        .executeAsOneOrNull()?.toEntity()
+        .executeAsOneOrNull()
+        ?.toEntity()
 
     fun getContextualOrNull(
         type: String,
@@ -72,9 +82,6 @@ class JsonObjectQueries(
         visibility: Visibility,
     ) = queriesJoin
         .getContextualByTypeUrlIdVisibility(visibility, type, url, id)
-        .executeAsOneOrNull()?.toEntity()
+        .executeAsOneOrNull()
+        ?.toEntity()
 }
-
-
-
-

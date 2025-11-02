@@ -3,10 +3,9 @@ package com.tezov.tuucho.core.data.repository.database
 import app.cash.sqldelight.TransactionWithReturn
 import app.cash.sqldelight.TransactionWithoutReturn
 
-class DatabaseTransactionFactory(
+internal class DatabaseTransactionFactory(
     private val database: Database,
 ) {
-
     fun transaction(
         noEnclosing: Boolean = false,
         body: TransactionWithoutReturn.() -> Unit,
@@ -17,8 +16,5 @@ class DatabaseTransactionFactory(
     fun <R> transactionWithResult(
         noEnclosing: Boolean = false,
         bodyWithReturn: TransactionWithReturn<R>.() -> R,
-    ): R {
-        return database.transactionWithResult(noEnclosing, bodyWithReturn)
-    }
-
+    ): R = database.transactionWithResult(noEnclosing, bodyWithReturn)
 }

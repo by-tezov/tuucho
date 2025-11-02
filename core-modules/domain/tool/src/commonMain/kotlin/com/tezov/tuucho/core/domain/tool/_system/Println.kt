@@ -1,13 +1,22 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.tool._system
 
-//TODO remove, allow log of long string when debug in logcat
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 
-fun logAll(value: Any?) {
+// TODO remove, allow log of long string when debug in logcat
+
+@TuuchoInternalApi
+fun logAll(
+    value: Any?
+) {
     val output = value?.toString() ?: "null"
     logLong(output)
 }
 
-private fun logLong(message: String) {
+private fun logLong(
+    message: String
+) {
     val maxLogSize = 4000
     var i = 0
     while (i < message.length) {

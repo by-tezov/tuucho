@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.data.repository.parser.shadower
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.toPath
@@ -10,9 +11,10 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import org.koin.core.component.KoinComponent
 
-abstract class AbstractShadower : MatcherShadowerProtocol, KoinComponent {
+abstract class AbstractShadower :
+    MatcherShadowerProtocol,
+    TuuchoKoinComponent {
     protected open val matchers: List<MatcherShadowerProtocol> = emptyList()
     protected open val childProcessors: List<AbstractShadower> = emptyList()
 
@@ -40,7 +42,9 @@ abstract class AbstractShadower : MatcherShadowerProtocol, KoinComponent {
     ) {
         forEach { entry ->
             (entry as? JsonObject)
-                ?: throw DataException.Default("By design element inside array must be object, so there is surely something missing in the rectifier for $entry ")
+                ?: throw DataException.Default(
+                    "By design element inside array must be object, so there is surely something missing in the rectifier for $entry "
+                )
             entry.processObject("".toPath(), entry, jsonObjectConsumer)
         }
     }
@@ -60,5 +64,4 @@ abstract class AbstractShadower : MatcherShadowerProtocol, KoinComponent {
         }
         jsonObjectConsumer.onNext(this, null)
     }
-
 }

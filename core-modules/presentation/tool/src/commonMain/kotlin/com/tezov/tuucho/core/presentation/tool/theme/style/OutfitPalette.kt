@@ -15,16 +15,15 @@ typealias OutfitPaletteColorSemantic = OutfitStateSemantic<OutfitPaletteColor>
 typealias OutfitPaletteSize<T> = OutfitPalette.Size.Style<T>
 typealias OutfitPaletteDirection<T> = OutfitPalette.Direction.Style<T>
 
-
 fun Modifier.padding(
     padding: OutfitPalette.Direction.Style<Dp>,
 ) = this.padding(vertical = padding.vertical, horizontal = padding.horizontal)
 
 object OutfitPalette {
-
     object Color {
-
-        class StyleBuilder internal constructor(val style: Style) {
+        class StyleBuilder internal constructor(
+            val style: Style
+        ) {
             var default = style.default
             var dark = style.dark
             var fade = style.fade
@@ -59,7 +58,6 @@ object OutfitPalette {
             decor: ColorImport? = null,
             overlay: ColorImport? = null,
         ) {
-
             private val delegates = DelegateNullFallBack.Group<ColorImport>()
             val dark: ColorImport by delegates.ref(dark)
             val fade: ColorImport by delegates.ref(fade)
@@ -75,16 +73,16 @@ object OutfitPalette {
             }
 
             companion object {
-
                 @Composable
-                fun Style.copy(builder: @Composable StyleBuilder.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun Style.copy(
+                    builder: @Composable StyleBuilder.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
 
                 inline val ColorImport.asPaletteColor: Style
                     get() = Style(default = this)
-
             }
 
             constructor(style: Style) : this(
@@ -99,19 +97,18 @@ object OutfitPalette {
                 overlay = style.overlay,
             )
         }
-
     }
 
     object Size {
-
-        class StyleBuilder<T : Any> internal constructor(val style: Style<T>) {
+        class StyleBuilder<T : Any> internal constructor(
+            val style: Style<T>
+        ) {
             var micro = style.micro
             var small = style.small
             var normal = style.normal
             var big = style.big
             var huge = style.huge
             var supra = style.supra
-
 
             internal fun get() = Style(
                 micro = micro,
@@ -131,7 +128,6 @@ object OutfitPalette {
             huge: T? = null,
             supra: T? = null,
         ) {
-
             private val delegates = DelegateNullFallBack.Group<T>()
             val micro: T by delegates.ref(micro)
             val small: T by delegates.ref(small)
@@ -144,10 +140,11 @@ object OutfitPalette {
             }
 
             companion object {
-
                 @Composable
-                fun <T : Any> Style<T>.copy(builder: @Composable StyleBuilder<T>.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun <T : Any> Style<T>.copy(
+                    builder: @Composable StyleBuilder<T>.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
 
@@ -159,7 +156,6 @@ object OutfitPalette {
 
                 inline val <T : Any> OutfitPaletteDirection<T>.asPaletteSize: Style<OutfitPaletteDirection<T>>
                     get() = Style(normal = this)
-
             }
 
             constructor(style: Style<T>) : this(
@@ -171,12 +167,12 @@ object OutfitPalette {
                 supra = style.supra,
             )
         }
-
     }
 
     object Direction {
-
-        class StyleBuilder<T : Any> internal constructor(val style: Style<T>) {
+        class StyleBuilder<T : Any> internal constructor(
+            val style: Style<T>
+        ) {
             var vertical = style.vertical
             var horizontal = style.horizontal
 
@@ -199,12 +195,12 @@ object OutfitPalette {
             }
 
             companion object {
-
                 @Composable
-                fun <T : Any> Style<T>.copy(builder: @Composable StyleBuilder<T>.() -> Unit = {}) =
-                    StyleBuilder(this).also {
-                        it.builder()
-                    }
+                fun <T : Any> Style<T>.copy(
+                    builder: @Composable StyleBuilder<T>.() -> Unit = {}
+                ) = StyleBuilder(this).also {
+                    it.builder()
+                }
 
                 inline val <T : Any> Size.Style<T>.asPaletteDirection: Style<Size.Style<T>>
                     get() = Style(all = this)
@@ -214,7 +210,6 @@ object OutfitPalette {
 
                 inline val DpSize.asPaletteDirection: Style<DpSize>
                     get() = Style(all = this)
-
             }
 
             constructor(all: T? = null) : this(
@@ -227,7 +222,5 @@ object OutfitPalette {
                 horizontal = style.horizontal,
             )
         }
-
     }
-
 }

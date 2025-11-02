@@ -1,14 +1,13 @@
 package com.tezov.tuucho.shared.sample.di
 
-import org.koin.core.module.Module
-import org.koin.dsl.ModuleDeclaration
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 
-internal expect fun SystemSharedModules.platformInvoke(): List<ModuleDeclaration>
+internal expect fun SystemSharedModules.platformInvoke(): List<ModuleProtocol>
 
 object SystemSharedModules {
 
-    fun invoke(): List<ModuleDeclaration> = listOf(
-        NetworkModule.invoke(),
+    fun invoke(): List<ModuleProtocol> = listOf(
+        RequestInterceptorModule.invoke(),
         MiddlewareModule.invoke()
     ) + platformInvoke()
 

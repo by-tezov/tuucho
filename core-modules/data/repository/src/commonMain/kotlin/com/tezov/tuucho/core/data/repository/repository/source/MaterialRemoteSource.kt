@@ -5,13 +5,14 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
-class MaterialRemoteSource(
+internal class MaterialRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val networkJsonObject: NetworkJsonObject,
     private val materialRectifier: MaterialRectifier,
 ) {
-
-    suspend fun process(url: String): JsonObject {
+    suspend fun process(
+        url: String
+    ): JsonObject {
         val response = coroutineScopes.network.await {
             networkJsonObject.resource(url)
         }
@@ -19,5 +20,4 @@ class MaterialRemoteSource(
             materialRectifier.process(response)
         }
     }
-
 }

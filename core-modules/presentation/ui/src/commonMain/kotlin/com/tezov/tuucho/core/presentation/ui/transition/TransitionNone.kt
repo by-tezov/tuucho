@@ -8,13 +8,13 @@ import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 
 object TransitionNone {
-
     @Composable
     fun AnimationProgress.none() = remember { NoneModifier() }
 
-    class NoneModifier() : AbstractModifierTransition() {
+    class NoneModifier : AbstractModifierTransition() {
         @Composable
-        override fun Modifier.animate(boundaries: Size) = this
+        override fun Modifier.animate(
+            boundaries: Size
+        ) = this
     }
-
 }

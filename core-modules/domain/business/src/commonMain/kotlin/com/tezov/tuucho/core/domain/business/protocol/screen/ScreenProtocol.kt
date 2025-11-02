@@ -6,12 +6,15 @@ import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 
 interface ScreenProtocol {
-
     val route: NavigationRoute.Url
 
     val view: ViewProtocol
 
-    suspend fun update(jsonObject: JsonObject)
+    suspend fun update(
+        jsonObject: JsonObject
+    )
 
-    fun <V : ViewProtocol> views(klass: KClass<V>): List<V>
+    fun <V : ViewProtocol> views(
+        klass: KClass<V>
+    ): List<V>
 }

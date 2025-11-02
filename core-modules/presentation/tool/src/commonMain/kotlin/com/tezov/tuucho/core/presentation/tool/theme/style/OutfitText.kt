@@ -9,9 +9,7 @@ import androidx.compose.ui.graphics.Color as ColorImport
 typealias OutfitTextStateColor = OutfitText.StateColor.Style
 
 object OutfitText {
-
     object StateColor {
-
         class StyleBuilder internal constructor(
             style: Style,
         ) {
@@ -28,7 +26,6 @@ object OutfitText {
             typo: TextStyle? = null,
             outfitState: OutfitState.Style<ColorImport>? = null,
         ) {
-
             val typo: TextStyle by DelegateNullFallBack.Ref(
                 typo,
                 fallBackValue = {
@@ -37,17 +34,20 @@ object OutfitText {
             )
             val outfitState: OutfitState.Style<ColorImport> by DelegateNullFallBack.Ref(
                 outfitState,
-                fallBackValue = { com.tezov.tuucho.core.presentation.tool.theme.style.OutfitStateNull() }
+                fallBackValue = {
+                    com.tezov.tuucho.core.presentation.tool.theme.style
+                        .OutfitStateNull()
+                }
             )
 
             companion object {
-
                 @Composable
                 fun Style.copy(
                     scope: @Composable StyleBuilder.() -> Unit = {},
-                ) = StyleBuilder(this).also {
-                    it.scope()
-                }.get()
+                ) = StyleBuilder(this)
+                    .also {
+                        it.scope()
+                    }.get()
 
                 inline val OutfitTextStateColor.asPaletteSize: OutfitPaletteSize<OutfitTextStateColor>
                     get() = _root_ide_package_.com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPaletteSize(
@@ -56,7 +56,6 @@ object OutfitText {
 
                 inline val TextStyle.asTextStateColor: OutfitTextStateColor
                     get() = Style(typo = this)
-
             }
 
             constructor(style: Style) : this(
@@ -64,13 +63,11 @@ object OutfitText {
                 outfitState = style.outfitState,
             )
 
-            fun resolve(selector: Any? = null) =
-                outfitState.resolve(selector, ColorImport::class)?.let {
-                    typo.copy(color = it)
-                } ?: typo
-
+            fun resolve(
+                selector: Any? = null
+            ) = outfitState.resolve(selector, ColorImport::class)?.let {
+                typo.copy(color = it)
+            } ?: typo
         }
-
     }
-
 }

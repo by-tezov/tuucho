@@ -1,9 +1,11 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
-object SystemCoreUiModules {
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 
-    fun invoke() = listOf(
+@TuuchoInternalApi
+object SystemCoreUiModules {
+    fun invoke(): List<ModuleProtocol> = listOf(
         MaterialRendererModule.invoke(),
     )
-
 }

@@ -3,9 +3,10 @@ package com.tezov.tuucho.core.presentation.tool.delegate
 import kotlin.reflect.KProperty
 
 object DelegateNullFallBack {
-
-    class Ref<V : Any>(initialValue: V? = null, fallBackValue: (() -> V)? = null) {
-
+    class Ref<V : Any>(
+        initialValue: V? = null,
+        fallBackValue: (() -> V)? = null
+    ) {
         var value: (() -> V)? = null
             private set
 
@@ -25,22 +26,27 @@ object DelegateNullFallBack {
             }
         }
 
-        operator fun getValue(thisRef: Any?, property: KProperty<*>): V {
-            return value!!.invoke()
-        }
+        operator fun getValue(
+            thisRef: Any?,
+            property: KProperty<*>
+        ): V = value!!.invoke()
 
-        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: V) {
+        operator fun setValue(
+            thisRef: Any?,
+            property: KProperty<*>,
+            value: V
+        ) {
             this.value = { value }
         }
-
     }
 
     class Group<V : Any> {
-
         private val refs = mutableListOf<Ref<V>>()
 
-        fun ref(initialValue: V?, fallBackValue: (() -> V)? = null) =
-            Ref(initialValue, fallBackValue).also { refs.add(it) }
+        fun ref(
+            initialValue: V?,
+            fallBackValue: (() -> V)? = null
+        ) = Ref(initialValue, fallBackValue).also { refs.add(it) }
 
         var fallBackValue: (() -> V)?
             get() = refs.firstOrNull()?.fallBackValue
@@ -54,5 +60,4 @@ object DelegateNullFallBack {
 
         fun firstNotNull() = refs.find { it.value != null }
     }
-
 }

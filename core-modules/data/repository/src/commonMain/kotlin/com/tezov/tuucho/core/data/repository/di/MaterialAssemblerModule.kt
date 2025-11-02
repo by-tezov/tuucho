@@ -1,7 +1,5 @@
 package com.tezov.tuucho.core.data.repository.di
 
-
-import com.tezov.tuucho.core.data.repository.parser.assembler.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ColorAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ComponentAssembler
@@ -13,14 +11,16 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.StateAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.TextAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.repository.parser.assembler._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.JsonObjectMerger
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.MatcherAssemblerProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
-import org.koin.dsl.module
 
+@OptIn(TuuchoExperimentalAPI::class)
 internal object MaterialAssemblerModule {
-
     object Name {
         val ASSEMBLERS = named("MaterialAssemblerModule.Name.ASSEMBLERS")
 
@@ -49,155 +49,157 @@ internal object MaterialAssemblerModule {
         }
     }
 
-    fun invoke() = module {
-        factory<List<AbstractAssembler>>(Name.ASSEMBLERS) {
-            listOf(
-                get<ComponentAssembler>(),
-                get<ContentAssembler>(),
-                get<StateAssembler>(),
-                get<TextAssembler>(),
-            )
+    fun invoke() = object : ModuleProtocol {
+        override val group = ModuleGroupData.Assembler
+
+        override fun Module.declaration() {
+            factory<List<AbstractAssembler>>(Name.ASSEMBLERS) {
+                listOf(
+                    get<ComponentAssembler>(),
+                    get<ContentAssembler>(),
+                    get<StateAssembler>(),
+                    get<TextAssembler>(),
+                )
+            }
+
+            single<MaterialAssembler> {
+                MaterialAssembler()
+            }
+            single<JsonObjectMerger> {
+                JsonObjectMerger()
+            }
+
+            componentModule()
+            contentModule()
+            styleModule()
+            optionModule()
+            stateModule()
+            textModule()
+            colorModule()
+            dimensionModule()
+            actionModule()
         }
 
-        single<MaterialAssembler> {
-            MaterialAssembler()
-        }
-        single<JsonObjectMerger> {
-            JsonObjectMerger()
-        }
+        private fun Module.componentModule() {
+            single<ComponentAssembler> { ComponentAssembler() }
 
-        componentModule()
-        contentModule()
-        styleModule()
-        optionModule()
-        stateModule()
-        textModule()
-        colorModule()
-        dimensionModule()
-        actionModule()
-    }
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.COMPONENT) {
+                listOf(
+                    ContentLayoutLinearItemsMatcher()
+                )
+            }
 
-    private fun Module.componentModule() {
-        single<ComponentAssembler> { ComponentAssembler() }
-
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.COMPONENT) {
-            listOf(
-                ContentLayoutLinearItemsMatcher()
-            )
+            single<List<AbstractAssembler>>(Name.Processor.COMPONENT) {
+                listOf(
+                    get<ContentAssembler>(),
+                    get<StyleAssembler>(),
+                    get<OptionAssembler>(),
+                    get<StateAssembler>(),
+                )
+            }
         }
 
-        single<List<AbstractAssembler>>(Name.Processor.COMPONENT) {
-            listOf(
-                get<ContentAssembler>(),
-                get<StyleAssembler>(),
-                get<OptionAssembler>(),
-                get<StateAssembler>(),
-            )
-        }
-    }
+        private fun Module.contentModule() {
+            single<ContentAssembler> { ContentAssembler() }
 
-    private fun Module.contentModule() {
-        single<ContentAssembler> { ContentAssembler() }
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.CONTENT) {
+                emptyList()
+            }
 
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.CONTENT) {
-            emptyList()
-        }
-
-        single<List<AbstractAssembler>>(Name.Processor.CONTENT) {
-            listOf(
-                get<TextAssembler>(),
-                get<ActionAssembler>(),
-                get<ComponentAssembler>()
-            )
-        }
-    }
-
-    private fun Module.styleModule() {
-        single<StyleAssembler> { StyleAssembler() }
-
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.STYLE) {
-            emptyList()
+            single<List<AbstractAssembler>>(Name.Processor.CONTENT) {
+                listOf(
+                    get<TextAssembler>(),
+                    get<ActionAssembler>(),
+                    get<ComponentAssembler>()
+                )
+            }
         }
 
-        single<List<AbstractAssembler>>(Name.Processor.STYLE) {
-            listOf(
-                get<ColorAssembler>(),
-                get<DimensionAssembler>()
-            )
-        }
-    }
+        private fun Module.styleModule() {
+            single<StyleAssembler> { StyleAssembler() }
 
-    private fun Module.optionModule() {
-        single<OptionAssembler> { OptionAssembler() }
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.STYLE) {
+                emptyList()
+            }
 
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.OPTION) {
-            emptyList()
-        }
-
-        single<List<AbstractAssembler>>(Name.Processor.OPTION) {
-            emptyList()
-        }
-    }
-
-    private fun Module.stateModule() {
-        single<StateAssembler> { StateAssembler() }
-
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.STATE) {
-            emptyList()
+            single<List<AbstractAssembler>>(Name.Processor.STYLE) {
+                listOf(
+                    get<ColorAssembler>(),
+                    get<DimensionAssembler>()
+                )
+            }
         }
 
-        single<List<AbstractAssembler>>(Name.Processor.STATE) {
-            emptyList()
-        }
-    }
+        private fun Module.optionModule() {
+            single<OptionAssembler> { OptionAssembler() }
 
-    private fun Module.textModule() {
-        single<TextAssembler> { TextAssembler() }
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.OPTION) {
+                emptyList()
+            }
 
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.TEXT) {
-            listOf()
-        }
-
-        single<List<AbstractAssembler>>(Name.Processor.TEXT) {
-            emptyList()
-        }
-    }
-
-    private fun Module.colorModule() {
-        single<ColorAssembler> { ColorAssembler() }
-
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.COLOR) {
-            emptyList()
+            single<List<AbstractAssembler>>(Name.Processor.OPTION) {
+                emptyList()
+            }
         }
 
-        single<List<AbstractAssembler>>(Name.Processor.COLOR) {
-            emptyList()
-        }
-    }
+        private fun Module.stateModule() {
+            single<StateAssembler> { StateAssembler() }
 
-    private fun Module.dimensionModule() {
-        single<DimensionAssembler> { DimensionAssembler() }
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.STATE) {
+                emptyList()
+            }
 
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.DIMENSION) {
-            emptyList()
-        }
-
-        single<List<AbstractAssembler>>(Name.Processor.DIMENSION) {
-            emptyList()
-        }
-    }
-
-    private fun Module.actionModule() {
-        single<ActionAssembler> { ActionAssembler() }
-
-        single<List<MatcherAssemblerProtocol>>(Name.Matcher.ACTION) {
-            emptyList()
+            single<List<AbstractAssembler>>(Name.Processor.STATE) {
+                emptyList()
+            }
         }
 
-        single<List<AbstractAssembler>>(Name.Processor.ACTION) {
-            emptyList()
+        private fun Module.textModule() {
+            single<TextAssembler> { TextAssembler() }
+
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.TEXT) {
+                listOf()
+            }
+
+            single<List<AbstractAssembler>>(Name.Processor.TEXT) {
+                emptyList()
+            }
+        }
+
+        private fun Module.colorModule() {
+            single<ColorAssembler> { ColorAssembler() }
+
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.COLOR) {
+                emptyList()
+            }
+
+            single<List<AbstractAssembler>>(Name.Processor.COLOR) {
+                emptyList()
+            }
+        }
+
+        private fun Module.dimensionModule() {
+            single<DimensionAssembler> { DimensionAssembler() }
+
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.DIMENSION) {
+                emptyList()
+            }
+
+            single<List<AbstractAssembler>>(Name.Processor.DIMENSION) {
+                emptyList()
+            }
+        }
+
+        private fun Module.actionModule() {
+            single<ActionAssembler> { ActionAssembler() }
+
+            single<List<MatcherAssemblerProtocol>>(Name.Matcher.ACTION) {
+                emptyList()
+            }
+
+            single<List<AbstractAssembler>>(Name.Processor.ACTION) {
+                emptyList()
+            }
         }
     }
 }
-
-

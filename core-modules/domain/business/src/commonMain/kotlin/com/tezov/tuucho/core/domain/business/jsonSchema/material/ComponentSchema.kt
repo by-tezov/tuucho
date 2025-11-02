@@ -8,7 +8,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 object ComponentSchema {
-
     object Key {
         const val id = IdSchema.root
         const val type = TypeSchema.root
@@ -27,10 +26,13 @@ object ComponentSchema {
         }
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenScope<Scope>(argument)
 
-    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
-        OpenSchemaScope<T>(argument) {
+    open class OpenScope<T : OpenScope<T>>(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<T>(argument) {
         final override val root = ""
 
         var id by delegate<JsonElement?>(Key.id)
@@ -42,7 +44,6 @@ object ComponentSchema {
         var setting by delegate<JsonObject?>(Key.setting)
         var state by delegate<JsonObject?>(Key.state)
         var message by delegate<JsonObject?>(Key.message)
-
     }
 
     val JsonObject.contentOrNull

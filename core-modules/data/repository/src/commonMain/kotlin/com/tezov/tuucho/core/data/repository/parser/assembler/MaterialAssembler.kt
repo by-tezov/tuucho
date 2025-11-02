@@ -2,19 +2,21 @@ package com.tezov.tuucho.core.data.repository.parser.assembler
 
 import com.tezov.tuucho.core.data.repository.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.data.repository.parser.assembler._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OpenForTest
-class MaterialAssembler() : KoinComponent {
-
+@OptIn(TuuchoExperimentalAPI::class)
+class MaterialAssembler : TuuchoKoinComponent {
     private val assemblers: List<AbstractAssembler> by inject(Name.ASSEMBLERS)
 
     suspend fun process(
@@ -30,7 +32,6 @@ class MaterialAssembler() : KoinComponent {
                 findAllRefOrNullFetcher = findAllRefOrNullFetcher
             )
             jsonObjectAssembled.jsonObject
-
         } ?: throw DataException.Default("Missing assembler for type $type")
     }
 }

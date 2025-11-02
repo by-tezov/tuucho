@@ -16,31 +16,26 @@ class FieldFormView(
     private val useCaseExecutor: UseCaseExecutor,
     private val fieldValidatorFactory: FormValidatorFactoryUseCase,
 ) : FieldFormViewProtocol {
-
     private lateinit var fieldView: FieldView
 
     override var validators: List<FormValidatorProtocol<String>>? = null
         private set
 
-    override fun attach(view: ViewProtocol) {
+    override fun attach(
+        view: ViewProtocol
+    ) {
         this.fieldView = view as FieldView
     }
 
-    override fun getId(): String {
-        return fieldView.componentObject.idValue
-    }
+    override fun getId(): String = fieldView.componentObject.idValue
 
-    override fun getValue(): String {
-        return fieldView.value
-    }
+    override fun getValue(): String = fieldView.value
 
     override fun updateValidity() {
         validators?.forEach { it.updateValidity(fieldView.value) }
     }
 
-    override fun isValid(): Boolean? {
-        return validators?.all { it.isValid }
-    }
+    override fun isValid(): Boolean? = validators?.all { it.isValid }
 
     suspend fun buildValidator(
         validatorsArray: JsonArray?,
@@ -52,20 +47,24 @@ class FieldFormView(
             idMessage to message
         }
 
-        validators = validatorsArray?.mapNotNull { validatorObject ->
-            val validatorPrototype = validatorObject.withScope(FormValidatorSchema::Scope).apply {
-                this.messageError = messagesErrorIdMapped
-                    .firstOrNull { it.first == idMessageError || validatorsArray.size == 1 }?.second
-                    ?: throw UiException.Default("Missing message error for validator")
-            }.collect()
-            @Suppress("UNCHECKED_CAST")
-            useCaseExecutor.invokeSuspend(
-                useCase = fieldValidatorFactory,
-                input = FormValidatorFactoryUseCase.Input(
-                    prototypeObject = validatorPrototype
-                ),
-            ).validator as? FormValidatorProtocol<String>
-        }?.takeIf { it.isNotEmpty() }
+        validators = validatorsArray
+            ?.mapNotNull { validatorObject ->
+                val validatorPrototype = validatorObject
+                    .withScope(FormValidatorSchema::Scope)
+                    .apply {
+                        this.messageError = messagesErrorIdMapped
+                            .firstOrNull { it.first == idMessageError || validatorsArray.size == 1 }
+                            ?.second
+                            ?: throw UiException.Default("Missing message error for validator")
+                    }.collect()
+                @Suppress("UNCHECKED_CAST")
+                useCaseExecutor
+                    .invokeSuspend(
+                        useCase = fieldValidatorFactory,
+                        input = FormValidatorFactoryUseCase.Input(
+                            prototypeObject = validatorPrototype
+                        ),
+                    ).validator as? FormValidatorProtocol<String>
+            }?.takeIf { it.isNotEmpty() }
     }
-
 }
