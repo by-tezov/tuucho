@@ -8,6 +8,7 @@ dependencies {
     implementation(libs.all.open)
     implementation(libs.maven)
     implementation(libs.ktlint)
+    implementation(libs.detekt)
 }
 
 java {

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>PackageNaming:OpenForTest.kt$package com.tezov.tuucho.core.domain.test._system</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -3,6 +3,9 @@ package com.tezov.tuucho.convention.project
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.AndroidComponentsExtension
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -22,6 +25,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
         const val ktLint = "ktlint"
+        const val detekt = "detekt"
 
         // test
         const val allOpen = "all.open"
@@ -59,6 +63,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
             pluginManager.apply(plugin(PluginId.ktLint))
+            pluginManager.apply(plugin(PluginId.detekt))
             pluginManager.apply(plugin(PluginId.conventionMaven))
         }
     }
@@ -68,6 +73,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         configureBuildType(project)
         configureLint(project)
         configureKtLint(project)
+        configureDetekt(project)
         configureProguard(project)
         configureMultiplatform(project)
         configureSourceSets(project)
@@ -161,10 +167,50 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             verbose.set(false)
             outputToConsole.set(true)
             outputColorName.set("RED")
-            ignoreFailures.set(false)
             reporters {
                 reporter(ReporterType.PLAIN)
                 reporter(ReporterType.CHECKSTYLE)
+            }
+            ignoreFailures.set(false)
+        }
+    }
+
+    private fun configureDetekt(
+        project: Project,
+    ) = with(project) {
+        extensions.configure(DetektExtension::class.java) {
+            toolVersion = version("detektRules")
+            buildUponDefaultConfig = true
+            allRules = false
+            config.setFrom("${rootProject.projectDir}/.detecktrules.yml")
+            baseline = file("$projectDir/.validation/detekt/baseline.xml")
+            ignoreFailures = false
+        }
+        val detektSourceDirs = mutableSetOf(
+            "src/commonMain/kotlin",
+            "src/androidMain/kotlin",
+            "src/iosMain/kotlin",
+            "src/jvmMain/kotlin"
+        )
+        extensions.configure(AndroidComponentsExtension::class.java) {
+            onVariants { variant ->
+                val bt = variant.buildType ?: error("build can't be null")
+                detektSourceDirs += listOf(
+                    "src/commonMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
+                    "src/androidMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
+                    "src/iosMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
+                    "src/jvmMain${bt.replaceFirstChar { it.uppercase() }}/kotlin"
+                )
+            }
+        }
+        afterEvaluate {
+            tasks.withType(Detekt::class.java).configureEach {
+                jvmTarget = javaVersionString()
+                setSource(files(detektSourceDirs))
+            }
+            tasks.withType(DetektCreateBaselineTask::class.java).configureEach {
+                jvmTarget = javaVersionString()
+                setSource(files(detektSourceDirs))
             }
         }
     }

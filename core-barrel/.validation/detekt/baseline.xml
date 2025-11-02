@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>FunctionNaming:StartTuuchoEngine.kt$@Composable fun StartTuuchoEngine( applicationModules: List&lt;ModuleProtocol&gt;, onStartUrl: String )</ID>
+    <ID>LongParameterList:CoroutineScopes.kt$CoroutineScopes$( override val database: CoroutineContextProtocol = object : CoroutineContext("Database", Dispatchers.IO) {}, override val datastore: CoroutineContextProtocol = object : CoroutineContext("Database", Dispatchers.IO) {}, override val network: CoroutineContextProtocol = object : CoroutineContext("Network", Dispatchers.IO) {}, override val parser: CoroutineContextProtocol = object : CoroutineContext("Parser", Dispatchers.Default) {}, override val renderer: CoroutineContextProtocol = object : CoroutineContext("Renderer", Dispatchers.Default) {}, override val navigation: CoroutineContextProtocol = object : CoroutineContext("Navigation", Dispatchers.Default) {}, override val useCase: CoroutineContextProtocol = object : CoroutineContext("UseCase", Dispatchers.Default) {}, override val event: CoroutineContextProtocol = object : CoroutineContext("Event", Dispatchers.Default) {}, override val default: CoroutineContextProtocol = object : CoroutineContext("Default", Dispatchers.Default) {}, override val main: CoroutineContextProtocol = object : CoroutineContext("Main", Dispatchers.Main) {}, override val io: CoroutineContextProtocol = object : CoroutineContext("IO", Dispatchers.IO) {}, )</ID>
+    <ID>NewLineAtEndOfFile:SystemCoreModules.ios.kt$com.tezov.tuucho.core.barrel.di.SystemCoreModules.ios.kt</ID>
+    <ID>PackageNaming:CoroutineScopes.kt$package com.tezov.tuucho.core.barrel._system</ID>
+  </CurrentIssues>
+</SmellBaseline>

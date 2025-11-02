@@ -39,7 +39,9 @@ internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.
 
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
 
-internal fun Project.javaVersionInt() = jvmTarget().target.toInt()
+internal fun Project.javaVersionString() = jvmTarget().target
+
+internal fun Project.javaVersionInt() = javaVersionString().toInt()
 
 internal fun Project.javaVersion() = JavaVersion.toVersion(javaVersionInt())
 
