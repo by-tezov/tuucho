@@ -1,10 +1,3 @@
-public final class com/tezov/tuucho/core/presentation/ui/BuildConfig {
-	public static final field BUILD_TYPE Ljava/lang/String;
-	public static final field DEBUG Z
-	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
 public final class com/tezov/tuucho/core/presentation/ui/_system/ColorExtensionKt {
 	public static final fun toColor (Ljava/lang/String;)J
 	public static final fun toColorOrNull (Ljava/lang/String;)Landroidx/compose/ui/graphics/Color;

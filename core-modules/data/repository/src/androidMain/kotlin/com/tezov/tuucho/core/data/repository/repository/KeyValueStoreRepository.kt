@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
 import kotlinx.coroutines.flow.first
 
-class KeyValueStoreRepository(
+internal class KeyValueStoreRepository(
     private val dataStore: DataStore<Preferences>,
 ) : KeyValueStoreRepositoryProtocol {
     override suspend fun save(

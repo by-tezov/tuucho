@@ -1,12 +1,11 @@
-public final class com/tezov/tuucho/core/domain/tool/BuildConfig {
-	public static final field BUILD_TYPE Ljava/lang/String;
-	public static final field DEBUG Z
-	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
 public final class com/tezov/tuucho/core/domain/tool/_system/PrintlnKt {
 	public static final fun logAll (Ljava/lang/Object;)V
+}
+
+public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoExperimentalAPI : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoInternalApi : java/lang/annotation/Annotation {
 }
 
 public class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {

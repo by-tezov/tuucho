@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGro
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -19,6 +20,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class ComponentRectifier : AbstractRectifier() {
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.COMPONENT

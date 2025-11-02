@@ -4,7 +4,7 @@ import android.content.Context
 import okio.Source
 import okio.source
 
-class AssetsAndroid(
+internal class AssetsAndroid(
     private val context: Context
 ) : AssetsProtocol {
     override fun readFile(

@@ -8,10 +8,12 @@ import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIsAny
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormFieldSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
+@OptIn(TuuchoExperimentalAPI::class)
 class ContentFormFieldTextMatcher : MatcherRectifierProtocol {
     private val segments = listOf(
         FormFieldSchema.Content.Key.title,

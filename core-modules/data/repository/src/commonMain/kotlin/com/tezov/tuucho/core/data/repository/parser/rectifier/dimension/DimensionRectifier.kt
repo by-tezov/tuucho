@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -18,6 +19,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class DimensionRectifier : AbstractRectifier() {
     override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.DIMENSION

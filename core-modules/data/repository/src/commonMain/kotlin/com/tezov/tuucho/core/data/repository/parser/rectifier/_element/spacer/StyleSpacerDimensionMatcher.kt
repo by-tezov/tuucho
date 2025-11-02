@@ -9,10 +9,12 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRec
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 
+@OptIn(TuuchoExperimentalAPI::class)
 class StyleSpacerDimensionMatcher : MatcherRectifierProtocol {
     private val segments = listOf(
         SpacerSchema.Style.Key.weight,

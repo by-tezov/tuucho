@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class IdRectifier(
     private val idGenerator: IdGeneratorProtocol
 ) : AbstractRectifier() {

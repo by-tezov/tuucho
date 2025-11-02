@@ -7,11 +7,13 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonElement
 
+@OptIn(TuuchoExperimentalAPI::class)
 class ContentButtonLabelRectifier : AbstractRectifier() {
     private val matcher = ContentButtonLabelMatcher()
 

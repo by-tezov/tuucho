@@ -14,6 +14,7 @@ import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -22,7 +23,8 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
 @OpenForTest
-class MaterialRectifier : TuuchoKoinComponent {
+@OptIn(TuuchoExperimentalAPI::class)
+internal class MaterialRectifier : TuuchoKoinComponent {
     private val componentRectifier: ComponentRectifier by inject()
     private val componentsRectifier: ComponentsRectifier by inject()
     private val contentsRectifier: ContentsRectifier by inject()

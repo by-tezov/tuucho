@@ -16,7 +16,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InterractionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
@@ -37,7 +37,7 @@ class NavigateToUrlUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
-    private val actionLockRepository: InterractionLockRepositoryProtocol,
+    private val actionLockRepository: InteractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
@@ -103,11 +103,11 @@ class NavigateToUrlUseCase(
     }
 
     private suspend fun tryLock() = actionLockRepository
-        .tryLock(InterractionLockRepositoryProtocol.Type.Navigation)
+        .tryLock(InteractionLockRepositoryProtocol.Type.Navigation)
 
     private suspend fun String.unLock() {
         actionLockRepository.unLock(
-            InterractionLockRepositoryProtocol.Type.Navigation,
+            InteractionLockRepositoryProtocol.Type.Navigation,
             this
         )
     }

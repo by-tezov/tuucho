@@ -1,10 +1,10 @@
-package com.tezov.tuucho.core.data.repository.parser.assembler
+@file:Suppress("ktlint:standard:package-name")
+
+package com.tezov.tuucho.core.data.repository.parser.assembler._system
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol
-import com.tezov.tuucho.core.data.repository.parser.assembler._system.JsonObjectMerger
-import com.tezov.tuucho.core.data.repository.parser.assembler._system.MatcherAssemblerProtocol
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
@@ -15,6 +15,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.component.inject
 
+@TuuchoExperimentalAPI
 abstract class AbstractAssembler :
     MatcherAssemblerProtocol,
     TuuchoKoinComponent {

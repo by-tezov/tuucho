@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
-interface InterractionLockRepositoryProtocol {
+interface InteractionLockRepositoryProtocol {
     enum class Type {
         Navigation
     }

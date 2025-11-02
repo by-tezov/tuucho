@@ -2,8 +2,11 @@
 
 package com.tezov.tuucho.core.domain.tool._system
 
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
+
 // TODO remove, allow log of long string when debug in logcat
 
+@TuuchoInternalApi
 fun logAll(
     value: Any?
 ) {

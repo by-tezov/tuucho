@@ -6,12 +6,14 @@ import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 @OpenForTest
-class MaterialBreaker : TuuchoKoinComponent {
+@OptIn(TuuchoExperimentalAPI::class)
+internal class MaterialBreaker : TuuchoKoinComponent {
     data class Nodes(
         val rootJsonObjectNode: JsonObjectNode?,
         val jsonElementNodes: List<JsonElementNode>,

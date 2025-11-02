@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 
-class JsonObjectMerger {
+internal class JsonObjectMerger {
     fun merge(
         from: List<JsonObject>
     ): JsonObject = when (from.size) {

@@ -13,6 +13,7 @@ import com.tezov.tuucho.core.data.repository.parser.breaker.TextBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker._system.AbstractBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker._system.MatcherBreakerProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
@@ -43,6 +44,7 @@ internal object MaterialBreakerModule {
         }
     }
 
+    @OptIn(TuuchoExperimentalAPI::class)
     fun invoke() = object : ModuleProtocol {
         override val group = ModuleGroupData.Breaker
 

@@ -2,11 +2,13 @@ package com.tezov.tuucho.core.data.repository.parser.assembler
 
 import com.tezov.tuucho.core.data.repository.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
+import com.tezov.tuucho.core.data.repository.parser.assembler._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.MatcherAssemblerProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.option.OptionRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.toPath
@@ -14,6 +16,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class OptionAssembler : AbstractAssembler() {
     override val schemaType: String = TypeSchema.Value.option
 

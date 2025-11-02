@@ -3,6 +3,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier._system
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 
 // Improve add meta data 'path' for breaker, assembler and shadower to improve speed
+@TuuchoExperimentalAPI
 abstract class AbstractRectifier :
     MatcherRectifierProtocol,
     TuuchoKoinComponent {

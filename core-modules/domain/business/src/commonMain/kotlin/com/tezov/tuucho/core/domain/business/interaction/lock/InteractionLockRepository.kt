@@ -2,18 +2,18 @@ package com.tezov.tuucho.core.domain.business.interaction.lock
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InterractionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 internal class InteractionLockRepository(
     private val idGenerator: IdGeneratorProtocol,
-) : InterractionLockRepositoryProtocol {
-    private val locks = mutableMapOf<InterractionLockRepositoryProtocol.Type, String>()
+) : InteractionLockRepositoryProtocol {
+    private val locks = mutableMapOf<InteractionLockRepositoryProtocol.Type, String>()
     private val mutex = Mutex()
 
     override suspend fun tryLock(
-        type: InterractionLockRepositoryProtocol.Type
+        type: InteractionLockRepositoryProtocol.Type
     ): String? = mutex.withLock {
         if (locks.containsKey(type)) {
             null
@@ -25,7 +25,7 @@ internal class InteractionLockRepository(
     }
 
     override suspend fun unLock(
-        type: InterractionLockRepositoryProtocol.Type,
+        type: InteractionLockRepositoryProtocol.Type,
         handle: String
     ) {
         mutex.withLock {

@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
 import com.tezov.tuucho.core.domain.business.di.KoinContext
 import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
@@ -17,6 +18,7 @@ object SystemCoreModules {
     ) +
         platformInvoke()
 
+    @OptIn(TuuchoInternalApi::class)
     @Composable
     internal fun remember(
         modules: List<ModuleProtocol>,

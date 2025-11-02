@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.data.repository.parser.assembler.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ColorAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.ComponentAssembler
@@ -12,12 +11,15 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.StateAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.StyleAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.TextAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler._element.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.repository.parser.assembler._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.JsonObjectMerger
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.MatcherAssemblerProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
+@OptIn(TuuchoExperimentalAPI::class)
 internal object MaterialAssemblerModule {
     object Name {
         val ASSEMBLERS = named("MaterialAssemblerModule.Name.ASSEMBLERS")

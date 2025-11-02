@@ -80,7 +80,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             compileSdk = version("compileSdk").toInt()
 
             buildFeatures {
-                buildConfig = true
+                //buildConfig = true
             }
 
             defaultConfig {
@@ -156,7 +156,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     ) = with(project) {
         extensions.configure(KtlintExtension::class.java) {
             version.set(version("ktlintRules"))
-            baseline.set(file(".ktlint/baseline.xml"))
+            baseline.set(file(".validation/ktlint/baseline.xml"))
             debug.set(false)
             verbose.set(false)
             outputToConsole.set(true)

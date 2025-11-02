@@ -42,6 +42,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StylesRectif
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextsRectifier
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
@@ -77,6 +78,7 @@ internal object MaterialRectifierModule {
         }
     }
 
+    @OptIn(TuuchoExperimentalAPI::class)
     fun invoke() = object : ModuleProtocol {
         override val group = ModuleGroupData.Rectifier
 

@@ -57,7 +57,7 @@ tasks.register("rootKtLintReport") {
             rootReportsDir.deleteRecursively()
         }
         rootReportsDir.mkdirs()
-        val aggregatedFile = File(rootReportsDir, "ktlint-aggregated.xml")
+        val aggregatedFile = file("${rootReportsDir.path}/ktlint-aggregated.xml")
         aggregatedFile.bufferedWriter().use { writer ->
             writer.appendLine("""<?xml version="1.0" encoding="UTF-8"?>""")
             writer.appendLine("<checkstyle>")
@@ -71,7 +71,13 @@ tasks.register("rootKtLintReport") {
             }
             writer.appendLine("</checkstyle>")
         }
-        println("Aggregated ${allXmlReports.size} ktlint XML reports into ${aggregatedFile.relativeTo(rootProject.projectDir)}")
+        println(
+            "Aggregated ${allXmlReports.size} ktlint XML reports into ${
+                aggregatedFile.relativeTo(
+                    rootProject.projectDir
+                )
+            }"
+        )
     }
 }
 
@@ -90,19 +96,20 @@ tasks.register("rootUpdateKtLintBaseline") {
     dependsOn(ktLineTasks)
     doLast {
         val allBaselines = subprojects.mapNotNull { sub ->
-            val baselineFile = sub.layout.projectDirectory.dir(".ktlint/baseline.xml").asFile
+            val baselineFile =
+                sub.layout.projectDirectory.dir(".validation/ktlint/baseline.xml").asFile
             baselineFile.takeIf { it.exists() }
         }
         if (allBaselines.isEmpty()) {
             println("No baseline.xml files found in subprojects.")
             return@doLast
         }
-        val rootKtLintDir = layout.projectDirectory.dir(".ktlint").asFile
+        val rootKtLintDir = layout.projectDirectory.dir(".validation/ktlint").asFile
         if (rootKtLintDir.exists()) {
             rootKtLintDir.deleteRecursively()
         }
         rootKtLintDir.mkdirs()
-        val aggregatedFile = File(rootKtLintDir, "baseline-aggregated.xml")
+        val aggregatedFile = file("${rootKtLintDir.path}/baseline-aggregated.xml")
         aggregatedFile.bufferedWriter().use { writer ->
             writer.appendLine("""<?xml version="1.0" encoding="utf-8"?>""")
             writer.appendLine("<baseline>")
@@ -119,7 +126,13 @@ tasks.register("rootUpdateKtLintBaseline") {
             }
             writer.appendLine("</baseline>")
         }
-        println("Aggregated ${allBaselines.size} ktlint baselines into ${aggregatedFile.relativeTo(rootProject.projectDir)}")
+        println(
+            "Aggregated ${allBaselines.size} ktlint baselines into ${
+                aggregatedFile.relativeTo(
+                    rootProject.projectDir
+                )
+            }"
+        )
     }
 }
 
@@ -209,4 +222,38 @@ tasks.register("rootUpdateProdApi") {
         it.dependsOn(cleanApiFolder)
     }
     dependsOn(abiTasks)
+    doLast {
+        val allApiReports = subprojects.flatMap { sub ->
+            val reportsDir = sub.layout.projectDirectory.dir(".validation/api").asFile
+            if (!reportsDir.exists()) return@flatMap emptyList()
+            reportsDir.walkTopDown()
+                .filter { it.isFile && it.extension == "api" }
+                .toList()
+        }
+        if (allApiReports.isEmpty()) {
+            println("No API reports found to aggregate.")
+            return@doLast
+        }
+
+        val rootApiDir = layout.projectDirectory.dir(".validation/api").asFile
+        if (rootApiDir.exists()) {
+            rootApiDir.deleteRecursively()
+        }
+        rootApiDir.mkdirs()
+        val aggregatedFile = file("${rootApiDir.path}/api-aggregated.xml")
+        aggregatedFile.bufferedWriter().use { writer ->
+            allApiReports.forEach { file ->
+                val content = file.readText().trim()
+                if (content.isNotEmpty()) {
+                    writer.appendLine(content)
+                    writer.appendLine() // spacing between files
+                }
+            }
+        }
+        println(
+            "Aggregated ${allApiReports.size} API files into ${
+                aggregatedFile.relativeTo(rootProject.projectDir)
+            }"
+        )
+    }
 }
