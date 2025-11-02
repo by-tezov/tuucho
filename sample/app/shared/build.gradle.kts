@@ -12,7 +12,7 @@ buildkonfig {
 
     val configPropertiesFile = project.file("../../config.properties")
     if (!configPropertiesFile.exists()) {
-        error("⚠️ No config.properties found")
+        error("No config.properties found")
     }
 
     val props = Properties().apply {

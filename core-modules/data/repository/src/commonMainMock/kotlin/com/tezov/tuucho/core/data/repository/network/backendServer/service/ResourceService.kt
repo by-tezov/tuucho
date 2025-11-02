@@ -15,7 +15,7 @@ import okio.buffer
 import okio.use
 import kotlin.random.Random
 
-class ResourceService(
+internal class ResourceService(
     private val assets: AssetsProtocol,
 ) : ServiceProtocol {
     override val url = "resource"
