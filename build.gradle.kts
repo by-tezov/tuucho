@@ -46,41 +46,40 @@ tasks.register("rootKtLintReport") {
     }
     dependsOn(ktLineTasks)
     doLast {
-        val allXmlReports = subprojects.flatMap { sub ->
+        val xmlReportsByProject = subprojects.mapNotNull { sub ->
             val reportsDir = sub.layout.buildDirectory.dir("reports/ktlint").get().asFile
-            if (!reportsDir.exists()) return@flatMap emptyList()
-            reportsDir.walkTopDown()
-                .filter { it.isFile && it.extension == "xml" }
-                .toList()
+            val xmlFile = reportsDir.walkTopDown()
+                .firstOrNull { it.isFile && it.extension == "xml" }
+            xmlFile?.let { sub.path to it }
         }
-        if (allXmlReports.isEmpty()) {
+        if (xmlReportsByProject.isEmpty()) {
             println("No ktlint XML reports found to aggregate.")
             return@doLast
         }
         val rootReportsDir = layout.buildDirectory.dir("reports/ktlint").get().asFile
-        if (rootReportsDir.exists()) {
-            rootReportsDir.deleteRecursively()
-        }
+        rootReportsDir.deleteRecursively()
         rootReportsDir.mkdirs()
         val aggregatedFile = file("${rootReportsDir.path}/ktlint-aggregated.xml")
         aggregatedFile.bufferedWriter().use { writer ->
             writer.appendLine("""<?xml version="1.0" encoding="UTF-8"?>""")
             writer.appendLine("""<checkstyle version="8.0">""")
-            allXmlReports.forEach { file ->
+            xmlReportsByProject.forEach { (projectPath, file) ->
                 val content = file.readText()
-                    .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")      // strip XML headers
-                    .replaceFirst("""<checkstyle[^>]*>""".toRegex(), "") // strip opening tag
-                    .replace("""</checkstyle>""", "")                    // strip closing tag
+                    .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")
+                    .replaceFirst("""<checkstyle[^>]*>""".toRegex(), "")
+                    .replace("""</checkstyle>""", "")
                     .trim()
-                if (content.isNotEmpty()) writer.appendLine(content)
+
+                if (content.isNotEmpty()) {
+                    writer.appendLine("  <!-- ************ Project: $projectPath ************ -->")
+                    writer.appendLine(content.prependIndent("  "))
+                }
             }
             writer.appendLine("</checkstyle>")
         }
         println(
-            "Aggregated ${allXmlReports.size} ktlint XML reports into ${
-                aggregatedFile.relativeTo(
-                    rootProject.projectDir
-                )
+            "Aggregated ${xmlReportsByProject.size} ktlint XML reports into ${
+                aggregatedFile.relativeTo(rootProject.projectDir)
             }"
         )
     }
@@ -105,42 +104,37 @@ tasks.register("rootUpdateKtLintBaseline") {
     }
     dependsOn(ktLineTasks)
     doLast {
-        val allBaselines = subprojects.mapNotNull { sub ->
-            val baselineFile =
-                sub.layout.projectDirectory.dir(".validation/ktlint/baseline.xml").asFile
-            baselineFile.takeIf { it.exists() }
+        val baselineFilesByProject = subprojects.mapNotNull { sub ->
+            val baselineFile = sub.layout.projectDirectory.dir(".validation/ktlint/baseline.xml").asFile
+            if (baselineFile.exists()) sub.path to baselineFile else null
         }
-        if (allBaselines.isEmpty()) {
+        if (baselineFilesByProject.isEmpty()) {
             println("No baseline.xml files found in subprojects.")
             return@doLast
         }
         val rootKtLintDir = layout.projectDirectory.dir(".validation/ktlint").asFile
-        if (rootKtLintDir.exists()) {
-            rootKtLintDir.deleteRecursively()
-        }
+        rootKtLintDir.deleteRecursively()
         rootKtLintDir.mkdirs()
         val aggregatedFile = file("${rootKtLintDir.path}/baseline-aggregated.xml")
         aggregatedFile.bufferedWriter().use { writer ->
             writer.appendLine("""<?xml version="1.0" encoding="utf-8"?>""")
             writer.appendLine("<baseline>")
-            allBaselines.forEach { file ->
+            baselineFilesByProject.forEach { (projectPath, file) ->
                 val content = file.readText()
                     .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")
                     .replaceFirst("""<baseline[^>]*>""".toRegex(), "")
                     .replace("</baseline>", "")
                     .trim()
                 if (content.isNotEmpty()) {
-                    writer.appendLine("<!-- From ${file.relativeTo(rootProject.projectDir)} -->")
-                    writer.appendLine(content)
+                    writer.appendLine("  <!-- ************ Project: $projectPath ************ -->")
+                    writer.appendLine(content.prependIndent("  "))
                 }
             }
             writer.appendLine("</baseline>")
         }
         println(
-            "Aggregated ${allBaselines.size} ktlint baselines into ${
-                aggregatedFile.relativeTo(
-                    rootProject.projectDir
-                )
+            "Aggregated ${baselineFilesByProject.size} ktlint baselines into ${
+                aggregatedFile.relativeTo(rootProject.projectDir)
             }"
         )
     }
@@ -156,43 +150,76 @@ tasks.register("rootDetektReport") {
     }
     dependsOn(detektTasks)
     doLast {
-        val allXmlReports = subprojects.flatMap { sub ->
-            val reportsDir = sub.layout.buildDirectory.dir("reports/detekt").get().asFile
-            if (!reportsDir.exists()) return@flatMap emptyList()
-            reportsDir.walkTopDown()
-                .filter { it.isFile && it.extension == "xml" }
-                .toList()
-        }
-        if (allXmlReports.isEmpty()) {
-            println("No ktlint XML reports found to aggregate.")
-            return@doLast
-        }
         val rootReportsDir = layout.buildDirectory.dir("reports/detekt").get().asFile
-        if (rootReportsDir.exists()) {
-            rootReportsDir.deleteRecursively()
-        }
+        rootReportsDir.deleteRecursively()
         rootReportsDir.mkdirs()
-        val aggregatedFile = file("${rootReportsDir.path}/detekt-aggregated.xml")
-        aggregatedFile.bufferedWriter().use { writer ->
-            writer.appendLine("""<?xml version="1.0" encoding="UTF-8"?>""")
-            writer.appendLine("""<checkstyle version="4.3">""")
-            allXmlReports.forEach { file ->
-                val content = file.readText()
-                    .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")      // strip XML headers
-                    .replaceFirst("""<checkstyle[^>]*>""".toRegex(), "") // strip opening tag
-                    .replace("""</checkstyle>""", "")                    // strip closing tag
-                    .trim()
-                if (content.isNotEmpty()) writer.appendLine(content)
-            }
-            writer.appendLine("</checkstyle>")
+
+        // ---------- Aggregate XML ----------
+        val xmlReportsByProject = subprojects.mapNotNull { sub ->
+            val reportsDir = sub.layout.buildDirectory.dir("reports/detekt").get().asFile
+            val xmlFile = reportsDir.walkTopDown()
+                .firstOrNull { it.isFile && it.extension == "xml" }
+            xmlFile?.let { sub.path to it }
         }
-        println(
-            "Aggregated ${allXmlReports.size} detekt XML reports into ${
-                aggregatedFile.relativeTo(
-                    rootProject.projectDir
-                )
-            }"
-        )
+        if (xmlReportsByProject.isNotEmpty()) {
+            val aggregatedXml = file("${rootReportsDir.path}/detekt-aggregated.xml")
+            aggregatedXml.bufferedWriter().use { writer ->
+                writer.appendLine("""<?xml version="1.0" encoding="UTF-8"?>""")
+                writer.appendLine("""<checkstyle version="4.3">""")
+                xmlReportsByProject.forEach { (projectPath, file) ->
+                    val content = file.readText()
+                        .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")
+                        .replaceFirst("""<checkstyle[^>]*>""".toRegex(), "")
+                        .replace("""</checkstyle>""", "")
+                        .trim()
+                    if (content.isNotEmpty()) {
+                        writer.appendLine("  <!-- ************ Project: $projectPath ************ -->")
+                        writer.appendLine(content.prependIndent("    "))
+                    }
+                }
+                writer.appendLine("</checkstyle>")
+            }
+
+            println(
+                "Aggregated ${xmlReportsByProject.size} Detekt XML reports into ${
+                    aggregatedXml.relativeTo(rootProject.projectDir)
+                }"
+            )
+        }
+
+        // ---------- Aggregate HTML ----------
+        val htmlReportsByProject = subprojects.mapNotNull { sub ->
+            val reportsDir = sub.layout.buildDirectory.dir("reports/detekt").get().asFile
+            val htmlFile = reportsDir.walkTopDown()
+                .firstOrNull { it.isFile && it.extension == "html" }
+            htmlFile?.let { sub.path to it }
+        }
+
+        if (htmlReportsByProject.isNotEmpty()) {
+            val aggregatedHtml = file("${rootReportsDir.path}/detekt-aggregated.html")
+            val firstHtml = htmlReportsByProject.first().second.readText()
+            val header = firstHtml.substringBefore("<h2>Metrics")
+            val footer = "</body>\n</html>"
+
+            aggregatedHtml.bufferedWriter().use { writer ->
+                writer.appendLine(header)
+                writer.appendLine("<h1>Aggregated Detekt Report</h1>")
+                htmlReportsByProject.forEach { (projectName, file) ->
+                    writer.appendLine("<h2>Project: $projectName</h2>")
+                    val body = file.readText()
+                        .substringAfter("<h2>Metrics")
+                        .substringBeforeLast(footer)
+                    writer.appendLine(body)
+                    writer.appendLine("<hr/>")
+                }
+                writer.appendLine(footer)
+            }
+            println(
+                "Aggregated ${htmlReportsByProject.size} Detekt HTML reports -> ${
+                    aggregatedHtml.relativeTo(rootProject.projectDir)
+                }"
+            )
+        }
     }
 }
 
@@ -217,57 +244,53 @@ tasks.register("rootUpdateDetektBaseline") {
     }
     dependsOn(detektTasks)
     doLast {
-        val allBaselines = subprojects.mapNotNull { sub ->
-            val baselineFile =
-                sub.layout.projectDirectory.dir(".validation/detekt/baseline.xml").asFile
-            baselineFile.takeIf { it.exists() }
+        val baselineFilesByProject = subprojects.mapNotNull { sub ->
+            val baselineFile = sub.layout.projectDirectory.dir(".validation/detekt/baseline.xml").asFile
+            if (baselineFile.exists()) sub.path to baselineFile else null
         }
-        if (allBaselines.isEmpty()) {
+        if (baselineFilesByProject.isEmpty()) {
             println("No baseline.xml files found in subprojects.")
             return@doLast
         }
         val rootDetektDir = layout.projectDirectory.dir(".validation/detekt").asFile
-        if (rootDetektDir.exists()) {
-            rootDetektDir.deleteRecursively()
-        }
+        rootDetektDir.deleteRecursively()
         rootDetektDir.mkdirs()
         val aggregatedFile = file("${rootDetektDir.path}/baseline-aggregated.xml")
         aggregatedFile.bufferedWriter().use { writer ->
             writer.appendLine("""<?xml version="1.0" ?>""")
             writer.appendLine("<SmellBaseline>")
             writer.appendLine("  <ManuallySuppressedIssues>")
-            allBaselines.forEach { file ->
+            baselineFilesByProject.forEach { (projectPath, file) ->
                 val content = file.readText()
-                    .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")
-                    .replaceFirst("""<SmellBaseline[^>]*>""".toRegex(), "")
-                    .replace("""</SmellBaseline>""", "")
-                    .trim()
                 val suppressed = content
                     .substringAfter("<ManuallySuppressedIssues>", "")
                     .substringBefore("</ManuallySuppressedIssues>", "")
                     .trim()
-                if (suppressed.isNotEmpty()) writer.appendLine("    $suppressed")
+                if (suppressed.isNotEmpty()) {
+                    writer.appendLine("    <!-- ************ Project: $projectPath ************ -->")
+                    writer.appendLine("    $suppressed")
+                }
             }
             writer.appendLine("  </ManuallySuppressedIssues>")
             writer.appendLine("  <CurrentIssues>")
-            allBaselines.forEach { file ->
+            baselineFilesByProject.forEach { (projectPath, file) ->
                 val content = file.readText()
-                    .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")
-                    .replaceFirst("""<SmellBaseline[^>]*>""".toRegex(), "")
-                    .replace("""</SmellBaseline>""", "")
-                    .trim()
                 val issues = content
                     .substringAfter("<CurrentIssues>", "")
                     .substringBefore("</CurrentIssues>", "")
                     .trim()
-                if (issues.isNotEmpty()) writer.appendLine("    $issues")
+                if (issues.isNotEmpty()) {
+                    writer.appendLine("    <!-- ************ Project: $projectPath ************ -->")
+                    writer.appendLine("    $issues")
+                }
             }
             writer.appendLine("  </CurrentIssues>")
+
             writer.appendLine("</SmellBaseline>")
         }
 
         println(
-            "Aggregated ${allBaselines.size} Detekt baseline files into ${
+            "Aggregated ${baselineFilesByProject.size} Detekt baseline files into ${
                 aggregatedFile.relativeTo(rootProject.projectDir)
             }"
         )
@@ -303,35 +326,36 @@ tasks.register("rootUpdateProdApi") {
     }
     dependsOn(abiTasks)
     doLast {
-        val allApiReports = subprojects.flatMap { sub ->
+        val apiReportsByProject = subprojects.mapNotNull { sub ->
             val reportsDir = sub.layout.projectDirectory.dir(".validation/api").asFile
-            if (!reportsDir.exists()) return@flatMap emptyList()
-            reportsDir.walkTopDown()
-                .filter { it.isFile && it.extension == "api" }
-                .toList()
+            val apiFiles = if (reportsDir.exists()) {
+                reportsDir.walkTopDown().filter { it.isFile && it.extension == "api" }.toList()
+            } else emptyList()
+            if (apiFiles.isEmpty()) null else sub.path to apiFiles
         }
-        if (allApiReports.isEmpty()) {
+        if (apiReportsByProject.isEmpty()) {
             println("No API reports found to aggregate.")
             return@doLast
         }
-
         val rootApiDir = layout.projectDirectory.dir(".validation/api").asFile
-        if (rootApiDir.exists()) {
-            rootApiDir.deleteRecursively()
-        }
+        rootApiDir.deleteRecursively()
         rootApiDir.mkdirs()
-        val aggregatedFile = file("${rootApiDir.path}/api-aggregated.xml")
+        val aggregatedFile = file("${rootApiDir.path}/api-aggregated.api")
         aggregatedFile.bufferedWriter().use { writer ->
-            allApiReports.forEach { file ->
-                val content = file.readText().trim()
-                if (content.isNotEmpty()) {
-                    writer.appendLine(content)
-                    writer.appendLine() // spacing between files
+            apiReportsByProject.forEach { (projectPath, files) ->
+                writer.appendLine("************ Project: $projectPath ************")
+                files.forEach { file ->
+                    val content = file.readText().trim()
+                    if (content.isNotEmpty()) {
+                        writer.appendLine(content)
+                        writer.appendLine()
+                    }
                 }
+                writer.appendLine()
             }
         }
         println(
-            "Aggregated ${allApiReports.size} API files into ${
+            "Aggregated ${apiReportsByProject.sumOf { it.second.size }} API files into ${
                 aggregatedFile.relativeTo(rootProject.projectDir)
             }"
         )

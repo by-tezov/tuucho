@@ -1,11 +1,8 @@
 ## In progress
 
-- fix unit test qui ne compile plus
-
+- add network error management around the other use case
 
 ./gradlew :app:jvm:run
-
-- add network error management around the other use case
 
 *** ***
 - still need to fix mock server

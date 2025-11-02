@@ -17,6 +17,7 @@ import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
+import dev.mokkery.matcher.matches
 import dev.mokkery.matcher.matching
 import dev.mokkery.mock
 import dev.mokkery.verify
@@ -226,7 +227,7 @@ class MaterialCacheLocalSourceTest {
         verify(VerifyMode.exactly(1)) { coroutineScopes.database }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(
-                matching { entity: JsonObjectEntity ->
+                matches { entity: JsonObjectEntity ->
                     entity.type == "typeRoot" &&
                         entity.url == url &&
                         entity.id == "valueRoot" &&
@@ -238,7 +239,7 @@ class MaterialCacheLocalSourceTest {
         }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(
-                matching { hook: HookEntity ->
+                matches { hook: HookEntity ->
                     hook.url == url &&
                         hook.visibility == visibility &&
                         hook.rootPrimaryKey == rootPrimaryKey &&
@@ -248,7 +249,7 @@ class MaterialCacheLocalSourceTest {
         }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(
-                matching { entity: JsonObjectEntity ->
+                matches { entity: JsonObjectEntity ->
                     entity.type == "typeChild" &&
                         entity.url == url &&
                         entity.id == "valueChild" &&
@@ -330,7 +331,7 @@ class MaterialCacheLocalSourceTest {
             materialDatabaseSource.insert(any())
         }
         verifySuspend(VerifyMode.exactly(1)) {
-            materialDatabaseSource.insert(matching(
+            materialDatabaseSource.insert(matches(
                 toString = { "HookEntity with expected values" }
             ) { hook: HookEntity ->
                 hook.url == url &&

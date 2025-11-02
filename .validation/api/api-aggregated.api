@@ -1,3 +1,4 @@
+************ Project: :core ************
 public final class com/tezov/tuucho/core/barrel/StartTuuchoEngineKt {
 	public static final fun StartTuuchoEngine (Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 }
@@ -30,6 +31,8 @@ public final class com/tezov/tuucho/core/barrel/di/ModuleGroupCore$Main : com/te
 	public fun toString ()Ljava/lang/String;
 }
 
+
+************ Project: :core:data:__core.data__repository ************
 public abstract interface class com/tezov/tuucho/core/data/repository/database/Database : app/cash/sqldelight/Transacter {
 	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/Database$Companion;
 	public abstract fun getHookStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/HookStatementQueries;
@@ -1953,6 +1956,8 @@ public abstract interface class com/tezov/tuucho/core/data/repository/parser/sha
 	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
+
+************ Project: :core:domain:__core.domain__business ************
 public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
 	public static field koinApplication Lorg/koin/core/KoinApplication;
@@ -7151,6 +7156,8 @@ public final class com/tezov/tuucho/core/domain/business/validator/formValidator
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
+
+************ Project: :core:domain:__core.domain__tool ************
 public final class com/tezov/tuucho/core/domain/tool/_system/PrintlnKt {
 	public static final fun logAll (Ljava/lang/Object;)V
 }
@@ -7489,6 +7496,8 @@ public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPathKt {
 	public static final fun toPath (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
 }
 
+
+************ Project: :core:presentation:__core.presentation__tool ************
 public abstract class com/tezov/tuucho/core/presentation/tool/animation/AbstractAnimationCompound {
 	public static final field $stable I
 	public static final field Companion Lcom/tezov/tuucho/core/presentation/tool/animation/AbstractAnimationCompound$Companion;
@@ -9857,6 +9866,8 @@ public final class com/tezov/tuucho/core/presentation/tool/type/primaire/Scale {
 	public final fun setW (F)V
 }
 
+
+************ Project: :core:presentation:__core.presentation__ui ************
 public final class com/tezov/tuucho/core/presentation/ui/_system/ColorExtensionKt {
 	public static final fun toColor (Ljava/lang/String;)J
 	public static final fun toColorOrNull (Ljava/lang/String;)Landroidx/compose/ui/graphics/Color;
@@ -10606,4 +10617,5 @@ public final class com/tezov/tuucho/core/presentation/ui/transition/_system/Dire
 public final class com/tezov/tuucho/core/presentation/ui/transition/_system/DirectionScreen$Companion {
 	public final fun from (Lkotlinx/serialization/json/JsonObject;)Lcom/tezov/tuucho/core/presentation/ui/transition/_system/DirectionScreen;
 }
+
 
