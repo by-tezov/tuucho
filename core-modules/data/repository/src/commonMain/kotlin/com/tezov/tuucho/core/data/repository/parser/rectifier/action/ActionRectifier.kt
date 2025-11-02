@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGro
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -21,8 +22,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class ActionRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.ACTION
     )
@@ -34,44 +35,54 @@ class ActionRectifier : AbstractRectifier() {
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ActionSchema::Scope).apply {
-        type = TypeSchema.Value.action
-        val value = this.element.string
-        if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
-            id = JsonPrimitive(value)
-        } else {
-            id = JsonNull
-            primary = listOf(this.element).let(::JsonArray)
-        }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ActionSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.action
+            val value = this.element.string
+            if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
+                id = JsonPrimitive(value)
+            } else {
+                id = JsonNull
+                primary = listOf(this.element).let(::JsonArray)
+            }
+        }.collect()
 
     override fun beforeAlterArray(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ActionSchema::Scope).apply {
-        type = TypeSchema.Value.action
-        id = JsonNull
-        primary = this.element.jsonArray
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ActionSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.action
+            id = JsonNull
+            primary = this.element.jsonArray
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ActionSchema::Scope).apply {
-        type = TypeSchema.Value.action
-        id ?: run { id = JsonNull }
-        val ignoreKeys = listOf(IdSchema.root, TypeSchema.root)
-        keys()
-            .asSequence()
-            .filter { !ignoreKeys.contains(it) }
-            .forEach { key ->
-                get(key)?.takeIf {
-                    it is JsonPrimitive
-                }?.let {
-                    set(key, listOf(it).let(::JsonArray))
+    ) = element
+        .find(path)
+        .withScope(ActionSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.action
+            id ?: run { id = JsonNull }
+            val ignoreKeys = listOf(IdSchema.root, TypeSchema.root)
+            keys()
+                .asSequence()
+                .filter { !ignoreKeys.contains(it) }
+                .forEach { key ->
+                    get(key)
+                        ?.takeIf {
+                            it is JsonPrimitive
+                        }?.let {
+                            set(key, listOf(it).let(::JsonArray))
+                        }
                 }
-            }
-    }.collect()
+        }.collect()
 
     override fun afterAlterObject(
         path: JsonElementPath,
@@ -79,7 +90,8 @@ class ActionRectifier : AbstractRectifier() {
     ): JsonElement? {
         var valueRectified: String?
         var sourceRectified: String?
-        return element.find(path)
+        return element
+            .find(path)
             .withScope(ActionSchema::Scope)
             .takeIf {
                 it.rectifyIds().also { (value, source) ->
@@ -87,12 +99,12 @@ class ActionRectifier : AbstractRectifier() {
                     sourceRectified = source
                 }
                 valueRectified != null || sourceRectified != null
-            }
-            ?.apply {
-                id = onScope(IdSchema::Scope).apply {
-                    valueRectified?.let { value = it }
-                    sourceRectified?.let { source = it }
-                }.collect()
+            }?.apply {
+                id = onScope(IdSchema::Scope)
+                    .apply {
+                        valueRectified?.let { value = it }
+                        sourceRectified?.let { source = it }
+                    }.collect()
             }?.collect()
     }
 
@@ -109,5 +121,4 @@ class ActionRectifier : AbstractRectifier() {
         }
         return valueRectified to sourceRectified
     }
-
 }

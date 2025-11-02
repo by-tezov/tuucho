@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.presentation.ui._system
 
 import androidx.compose.ui.graphics.Color

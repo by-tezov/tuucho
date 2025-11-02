@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidedValue
 
 object ExtensionCompositionLocal {
-
     @Composable
     fun CompositionLocalProvider(
         ancestor: Array<ProvidedValue<*>>,

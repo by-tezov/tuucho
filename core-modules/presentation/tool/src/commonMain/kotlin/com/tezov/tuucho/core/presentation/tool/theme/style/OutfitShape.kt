@@ -25,18 +25,18 @@ fun Modifier.background(
 ) = sketch?.takeIf { it.color != null }?.let {
     thenOnTrue(clip) {
         clip(it.shape)
-    }
-        .background(it.color!!, it.shape)
+    }.background(it.color!!, it.shape)
 } ?: this
 
 typealias OutfitShapeStateColor = OutfitShape.StateColor.Style
 
 object OutfitShape {
-
     enum class Template {
         Rounded;
 
-        fun get(size: Size? = null) = size?.let {
+        fun get(
+            size: Size? = null
+        ) = size?.let {
             when (this) {
                 Rounded -> RoundedCornerShape(
                     topStart = it.topStart ?: CornerSize(0),
@@ -47,10 +47,12 @@ object OutfitShape {
             }
         }
 
-        fun get(size: Size? = null, color: ColorImport? = null) = get(size)?.let {
+        fun get(
+            size: Size? = null,
+            color: ColorImport? = null
+        ) = get(size)?.let {
             Sketch(it, color)
         }
-
     }
 
     class Size(
@@ -59,13 +61,10 @@ object OutfitShape {
         val bottomStart: CornerSize? = null,
         val bottomEnd: CornerSize? = null,
     ) {
-
         companion object {
-
             inline val Int.asShapeSize: Size get() = Size(this)
 
             inline val Dp.asShapeSize: Size get() = Size(this)
-
         }
 
         val firstNotNull get() = topStart ?: topEnd ?: bottomStart ?: bottomEnd
@@ -97,14 +96,17 @@ object OutfitShape {
         constructor(size: CornerSize) : this(size, size, size, size)
         constructor(percent: Int) : this(CornerSize(percent))
         constructor(size: Dp) : this(CornerSize(size))
-
     }
 
-    data class Sketch(val shape: Shape, val color: ColorImport? = null)
+    data class Sketch(
+        val shape: Shape,
+        val color: ColorImport? = null
+    )
 
     object StateColor {
-
-        class StyleBuilder internal constructor(style: Style) {
+        class StyleBuilder internal constructor(
+            style: Style
+        ) {
             var template = style.template
             var size = style.size
             var outfitState = style.outfitState
@@ -121,17 +123,20 @@ object OutfitShape {
             val size: Size? = null,
             outfitState: OutfitState.Style<ColorImport>? = null,
         ) {
-
             val outfitState: OutfitState.Style<ColorImport> by DelegateNullFallBack.Ref(
                 outfitState,
-                fallBackValue = { com.tezov.tuucho.core.presentation.tool.theme.style.OutfitStateNull() }
+                fallBackValue = {
+                    com.tezov.tuucho.core.presentation.tool.theme.style
+                        .OutfitStateNull()
+                }
             )
 
             companion object {
-
                 @Composable
-                fun Style.copy(scope: @Composable StyleBuilder.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun Style.copy(
+                    scope: @Composable StyleBuilder.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.scope()
                     }.get()
 
@@ -159,7 +164,6 @@ object OutfitShape {
                     get() = com.tezov.tuucho.core.presentation.tool.theme.style.OutfitFrameStateColor(
                         outfitShape = this
                     )
-
             }
 
             constructor(style: Style) : this(
@@ -170,13 +174,13 @@ object OutfitShape {
 
             fun getShape() = template.get(size)
 
-            fun resolveColor(selector: Any? = null) =
-                outfitState.resolve(selector, ColorImport::class)
+            fun resolveColor(
+                selector: Any? = null
+            ) = outfitState.resolve(selector, ColorImport::class)
 
-            fun resolve(selector: Any? = null) = template.get(size, resolveColor(selector))
-
+            fun resolve(
+                selector: Any? = null
+            ) = template.get(size, resolveColor(selector))
         }
     }
-
 }
-

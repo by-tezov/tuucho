@@ -9,10 +9,9 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
 
-class NavigationStackRouteRepository(
+internal class NavigationStackRouteRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
 ) : StackRoute {
-
     private val stack = mutableListOf<NavigationRoute.Url>()
     private val stackLock = Mutex()
 
@@ -45,7 +44,9 @@ class NavigationStackRouteRepository(
         }
     }
 
-    override suspend fun backward(route: NavigationRoute) = coroutineScopes.navigation.await {
+    override suspend fun backward(
+        route: NavigationRoute
+    ) = coroutineScopes.navigation.await {
         stackLock.withLock {
             when (route) {
                 is NavigationRoute.Back -> navigateBack()
@@ -86,7 +87,9 @@ class NavigationStackRouteRepository(
                         ?.let { index -> stack.removeAt(index) }
                 }
 
-                else -> throw DomainException.Default("Invalid reuse value $reuse")
+                else -> {
+                    throw DomainException.Default("Invalid reuse value $reuse")
+                }
             }
         }
         if (option?.single == true) {

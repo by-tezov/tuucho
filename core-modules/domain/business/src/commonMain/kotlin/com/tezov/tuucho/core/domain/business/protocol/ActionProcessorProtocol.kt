@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import kotlinx.serialization.json.JsonElement
 
 interface ActionProcessorProtocol {
-
     object Priority {
         val LOW = 0
         val DEFAULT = 100
@@ -25,5 +24,4 @@ interface ActionProcessorProtocol {
         action: ActionModelDomain,
         jsonElement: JsonElement?,
     )
-
 }

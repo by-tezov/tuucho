@@ -22,14 +22,13 @@ class ButtonViewFactory(
     private val useCaseExecutor: UseCaseExecutor,
     private val actionHandler: ProcessActionUseCase,
 ) : AbstractViewFactory() {
-
     private val labelUiComponentFactory: LabelViewFactory by inject()
 
     override fun accept(
         componentElement: JsonObject,
     ) = componentElement.let {
         it.withScope(TypeSchema::Scope).self == TypeSchema.Value.component &&
-                it.withScope(SubsetSchema::Scope).self == ButtonSchema.Component.Value.subset
+            it.withScope(SubsetSchema::Scope).self == ButtonSchema.Component.Value.subset
     }
 
     override suspend fun process(
@@ -51,7 +50,6 @@ class ButtonView(
     private val labelUiComponentFactory: LabelViewFactory,
     private val actionHandler: ProcessActionUseCase,
 ) : AbstractView(componentObject) {
-
     override val children: List<ViewProtocol>?
         get() = labelView?.let { listOf(it) }
 
@@ -73,7 +71,7 @@ class ButtonView(
                         .process(route, labelObject)
                 }
 
-                //TODO
+                // TODO
 //                componentObject = componentObject.withScope(ComponentSchema::Scope).apply {
 //                    content = content?.withScope(ButtonSchema.Content::Scope).apply {
 //                        remove(ButtonSchema.Content.Key.label)
@@ -84,9 +82,11 @@ class ButtonView(
     }
 
     private val action
-        get():() -> Unit = ({
-            _action?.withScope(ActionSchema::Scope)
-                ?.primary?.forEach {
+        get(): () -> Unit = ({
+            _action
+                ?.withScope(ActionSchema::Scope)
+                ?.primary
+                ?.forEach {
                     useCaseExecutor.invoke(
                         useCase = actionHandler,
                         input = ProcessActionUseCase.Input(
@@ -99,11 +99,12 @@ class ButtonView(
         })
 
     @Composable
-    override fun displayComponent(scope: Any?) {
+    override fun displayComponent(
+        scope: Any?
+    ) {
         Button(
             onClick = action,
             content = { labelView?.display(this) }
         )
     }
-
 }

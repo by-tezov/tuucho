@@ -53,18 +53,26 @@ class ModifierConditional(
     private val apply: (Modifier) -> Modifier,
     private val isApplied: Boolean,
 ) {
-    fun applyTo(modifier: Modifier) = apply(modifier)
+    fun applyTo(
+        modifier: Modifier
+    ) = apply(modifier)
 
-    infix fun or(other: ModifierConditional) = if (isApplied) this else other
+    infix fun or(
+        other: ModifierConditional
+    ) = if (isApplied) this else other
 
-    infix fun or(other: Modifier.() -> Unit) = if (isApplied) {
+    infix fun or(
+        other: Modifier.() -> Unit
+    ) = if (isApplied) {
         this
     } else {
         val modifier = Modifier.apply(other)
         ModifierConditional({ modifier }, modifier !== Modifier)
     }
 
-    infix fun and(other: ModifierConditional) = ModifierConditional(
+    infix fun and(
+        other: ModifierConditional
+    ) = ModifierConditional(
         apply = { modifier ->
             val firstApplied = applyTo(modifier)
             other.applyTo(firstApplied)
@@ -72,7 +80,9 @@ class ModifierConditional(
         isApplied = isApplied && other.isApplied
     )
 
-    infix fun and(other: Modifier.() -> Unit) = if (!isApplied) {
+    infix fun and(
+        other: Modifier.() -> Unit
+    ) = if (!isApplied) {
         Empty
     } else {
         val modifier = Modifier.apply(other)
@@ -91,25 +101,39 @@ class ModifierConditional(
     }
 }
 
-fun Modifier.then(block: Modifier.() -> ModifierConditional) = block().applyTo(this)
+fun Modifier.then(
+    block: Modifier.() -> ModifierConditional
+) = block().applyTo(this)
 
-fun onTrue(condition: Boolean?, block: Modifier.() -> Modifier) = if (condition == true) {
+fun onTrue(
+    condition: Boolean?,
+    block: Modifier.() -> Modifier
+) = if (condition == true) {
     ModifierConditional({ it.block() }, true)
 } else {
     ModifierConditional.Empty
 }
 
-fun onFalse(condition: Boolean?, block: Modifier.() -> Modifier) = if (condition == false) {
+fun onFalse(
+    condition: Boolean?,
+    block: Modifier.() -> Modifier
+) = if (condition == false) {
     ModifierConditional({ it.block() }, true)
 } else {
     ModifierConditional.Empty
 }
 
-fun <T : Any> onNotNull(value: T?, block: Modifier.(T) -> Modifier) = value?.let {
+fun <T : Any> onNotNull(
+    value: T?,
+    block: Modifier.(T) -> Modifier
+) = value?.let {
     ModifierConditional({ it.block(value) }, true)
 } ?: ModifierConditional.Empty
 
-fun <T : Any> onNull(value: T?, block: Modifier.() -> Modifier) = if (value == null) {
+fun <T : Any> onNull(
+    value: T?,
+    block: Modifier.() -> Modifier
+) = if (value == null) {
     ModifierConditional({ it.block() }, true)
 } else {
     ModifierConditional.Empty

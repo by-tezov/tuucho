@@ -8,11 +8,10 @@ import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import kotlinx.serialization.json.JsonElement
 
-class NavigationUrlActionProcessor(
+internal class NavigationUrlActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val navigateToUrl: NavigateToUrlUseCase,
 ) : ActionProcessorProtocol {
-
     override val priority: Int
         get() = ActionProcessorProtocol.Priority.DEFAULT
 
@@ -20,9 +19,7 @@ class NavigationUrlActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return action.command == Action.Navigate.command && action.authority == Action.Navigate.Url.authority
-    }
+    ): Boolean = action.command == Action.Navigate.command && action.authority == Action.Navigate.Url.authority
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -38,5 +35,4 @@ class NavigationUrlActionProcessor(
             )
         }
     }
-
 }

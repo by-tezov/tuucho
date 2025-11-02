@@ -7,6 +7,8 @@ dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.all.open)
     implementation(libs.maven)
+    implementation(libs.ktlint)
+    implementation(libs.detekt)
 }
 
 java {

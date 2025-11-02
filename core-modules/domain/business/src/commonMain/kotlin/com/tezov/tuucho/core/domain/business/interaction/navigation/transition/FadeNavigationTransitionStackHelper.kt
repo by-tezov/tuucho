@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.NavigationTransitionStackH
 import kotlinx.serialization.json.JsonObject
 
 class FadeNavigationTransitionStackHelper : NavigationTransitionStackHelperProtocol {
-
-    override fun isForeground(transitionSpec: JsonObject) = false
-
+    override fun isForeground(
+        transitionSpec: JsonObject
+    ) = false
 }

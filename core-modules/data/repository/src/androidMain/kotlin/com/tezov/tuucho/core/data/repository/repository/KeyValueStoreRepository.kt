@@ -9,10 +9,9 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
 import kotlinx.coroutines.flow.first
 
-class KeyValueStoreRepository(
+internal class KeyValueStoreRepository(
     private val dataStore: DataStore<Preferences>,
 ) : KeyValueStoreRepositoryProtocol {
-
     override suspend fun save(
         key: KeyValueStoreRepositoryProtocol.Key,
         value: KeyValueStoreRepositoryProtocol.Value?,
@@ -27,21 +26,24 @@ class KeyValueStoreRepository(
         }
     }
 
-    override suspend fun hasKey(key: KeyValueStoreRepositoryProtocol.Key): Boolean {
+    override suspend fun hasKey(
+        key: KeyValueStoreRepositoryProtocol.Key
+    ): Boolean {
         val prefKey = stringPreferencesKey(key.value)
         val prefs = dataStore.data.first()
         return prefs.contains(prefKey)
     }
 
-    override suspend fun get(key: KeyValueStoreRepositoryProtocol.Key): KeyValueStoreRepositoryProtocol.Value {
-        return getOrNull(key)
-            ?: throw DataException.Default("Key ${key.value} not found in store")
-    }
+    override suspend fun get(
+        key: KeyValueStoreRepositoryProtocol.Key
+    ): KeyValueStoreRepositoryProtocol.Value = getOrNull(key)
+        ?: throw DataException.Default("Key ${key.value} not found in store")
 
-    override suspend fun getOrNull(key: KeyValueStoreRepositoryProtocol.Key): KeyValueStoreRepositoryProtocol.Value? {
+    override suspend fun getOrNull(
+        key: KeyValueStoreRepositoryProtocol.Key
+    ): KeyValueStoreRepositoryProtocol.Value? {
         val prefKey = stringPreferencesKey(key.value)
         val prefs = dataStore.data.first()
         return prefs[prefKey]?.toValue()
     }
-
 }

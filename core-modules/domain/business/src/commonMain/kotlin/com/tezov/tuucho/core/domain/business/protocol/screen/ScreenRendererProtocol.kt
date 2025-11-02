@@ -4,6 +4,8 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import kotlinx.serialization.json.JsonObject
 
 interface ScreenRendererProtocol {
-
-    suspend fun process(route: NavigationRoute.Url, componentObject: JsonObject): ScreenProtocol
+    suspend fun process(
+        route: NavigationRoute.Url,
+        componentObject: JsonObject
+    ): ScreenProtocol
 }

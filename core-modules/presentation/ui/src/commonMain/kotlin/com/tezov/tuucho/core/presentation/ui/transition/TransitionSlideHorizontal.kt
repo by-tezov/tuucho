@@ -25,7 +25,6 @@ import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import kotlinx.serialization.json.JsonObject
 
 object TransitionSlideHorizontal {
-
     class Spec(
         val duration: Int,
         val exitDarkAlphaFactor: Float,
@@ -33,7 +32,9 @@ object TransitionSlideHorizontal {
         val effect: String,
     ) {
         companion object {
-            fun from(specObject: JsonObject?) = specObject
+            fun from(
+                specObject: JsonObject?
+            ) = specObject
                 ?.withScope(SettingComponentNavigationTransitionSchema.SpecSlide::Scope)
                 .let {
                     Spec(
@@ -83,7 +84,6 @@ object TransitionSlideHorizontal {
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
     ) : AbstractModifierTransition() {
-
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)
 
@@ -103,7 +103,9 @@ object TransitionSlideHorizontal {
         }
 
         @Composable
-        override fun Modifier.animate(boundaries: Size): Modifier {
+        override fun Modifier.animate(
+            boundaries: Size
+        ): Modifier {
             val progress = animationProgress.animateFloat(
                 startValue = startValue,
                 endValue = endValue,
@@ -128,7 +130,6 @@ object TransitionSlideHorizontal {
         private val animationProgress: AnimationProgress,
         specObject: JsonObject,
     ) : AbstractModifierTransition() {
-
         private val spec = Spec.from(specObject)
         val directionNavigation = DirectionNavigation.from(specObject)
 
@@ -148,7 +149,9 @@ object TransitionSlideHorizontal {
         }
 
         @Composable
-        override fun Modifier.animate(boundaries: Size): Modifier {
+        override fun Modifier.animate(
+            boundaries: Size
+        ): Modifier {
             val progress = animationProgress.animateFloat(
                 startValue = startValue,
                 endValue = endValue,

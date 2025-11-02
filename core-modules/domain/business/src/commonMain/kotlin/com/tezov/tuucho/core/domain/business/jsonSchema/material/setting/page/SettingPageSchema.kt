@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import kotlinx.serialization.json.JsonObject
 
 object PageSettingSchema {
-
     const val root = TypeSchema.Value.Setting.prefix
 
     object Key {
@@ -14,7 +13,9 @@ object PageSettingSchema {
         const val ttl = Ttl.root
     }
 
-    class Scope(argument: SchemaScopeArgument) :  OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = PageSettingSchema.root
 
         var type by delegate<String?>(Key.type)
@@ -34,16 +35,15 @@ object PageSettingSchema {
                 const val transient = "transient"
                 const val singleUse = "single-use"
             }
-
         }
 
-
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             override val root = Ttl.root
 
             var strategy by delegate<String?>(Key.strategy)
             var transientValue by delegate<String?>(Key.transientValue)
         }
     }
-
 }

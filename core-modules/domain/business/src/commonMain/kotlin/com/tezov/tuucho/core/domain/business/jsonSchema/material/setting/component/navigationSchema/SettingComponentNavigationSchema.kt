@@ -8,7 +8,6 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 object ComponentSettingNavigationSchema {
-
     const val root = "navigation"
 
     object Key {
@@ -16,7 +15,9 @@ object ComponentSettingNavigationSchema {
         const val definition = Definition.root
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = ComponentSettingSchema.root
 
         var extra by delegate<JsonObject?>(Key.extra)
@@ -30,7 +31,9 @@ object ComponentSettingNavigationSchema {
             const val isBackgroundSolid = "is-background-solid"
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             override val root = ComponentSettingSchema.root
 
             var isBackgroundSolid by delegate<Boolean?>(Key.isBackgroundSolid)
@@ -46,7 +49,9 @@ object ComponentSettingNavigationSchema {
             const val transition = SettingComponentNavigationTransitionSchema.root
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             override val root = ComponentSettingSchema.root
 
             var selector by delegate<JsonObject?>(Key.selector)
@@ -54,5 +59,4 @@ object ComponentSettingNavigationSchema {
             var transition by delegate<JsonObject?>(Key.transition)
         }
     }
-
 }

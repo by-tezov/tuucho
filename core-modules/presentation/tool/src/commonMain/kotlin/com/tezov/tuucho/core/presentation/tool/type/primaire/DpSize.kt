@@ -8,14 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-fun Modifier.size(size: DpSize): Modifier {
-    return if (size.width != 0.dp && size.height != 0.dp) {
-        width(size.width).height(size.height)
-    } else if (size.width != 0.dp) {
-        width(size.width).aspectRatio(1.0f)
-    } else {
-        height(size.height).aspectRatio(1.0f)
-    }
+fun Modifier.size(
+    size: DpSize
+): Modifier = if (size.width != 0.dp && size.height != 0.dp) {
+    width(size.width).height(size.height)
+} else if (size.width != 0.dp) {
+    width(size.width).aspectRatio(1.0f)
+} else {
+    height(size.height).aspectRatio(1.0f)
 }
 
 inline val Int.dpSize: DpSize get() = DpSize(this)
@@ -26,7 +26,6 @@ class DpSize(
     var height: Dp = 0.dp,
     var padding: PaddingValues? = null,
 ) {
-
     constructor(size: Dp) : this(size, size)
     constructor(size: Int) : this(size.dp, size.dp)
     constructor(size: Double) : this(size.dp, size.dp)
@@ -56,14 +55,17 @@ class DpSize(
 
     val radiusMin get() = squareMin / 2
 
-    fun scaleTo(s: Scale) {
+    fun scaleTo(
+        s: Scale
+    ) {
         width *= s.w
         height *= s.h
     }
 
-    fun scaleFrom(s: Scale) {
+    fun scaleFrom(
+        s: Scale
+    ) {
         width /= s.w
         height /= s.h
     }
-
 }

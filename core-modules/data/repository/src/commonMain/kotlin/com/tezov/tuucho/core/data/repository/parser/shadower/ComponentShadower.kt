@@ -8,8 +8,7 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.component.inject
 
-class ComponentShadower: AbstractShadower() {
-
+class ComponentShadower : AbstractShadower() {
     override val matchers: List<MatcherShadowerProtocol> by inject(
         Name.Matcher.COMPONENT
     )
@@ -19,6 +18,7 @@ class ComponentShadower: AbstractShadower() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement
+        path: JsonElementPath,
+        element: JsonElement
     ) = path.isTypeOf(element, TypeSchema.Value.component) || super.accept(path, element)
 }

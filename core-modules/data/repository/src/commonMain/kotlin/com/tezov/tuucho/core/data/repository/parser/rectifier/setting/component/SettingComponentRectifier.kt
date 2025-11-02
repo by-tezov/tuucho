@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -20,8 +21,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class SettingComponentRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.SETTING
     )
@@ -31,27 +32,37 @@ class SettingComponentRectifier : AbstractRectifier() {
     )
 
     override fun accept(
-        path: JsonElementPath, element: JsonElement,
-    ) = (path.lastSegmentStartWith(TypeSchema.Value.Setting.prefix) && path.parentIsTypeOf(
-        element, TypeSchema.Value.component
-    )) || super.accept(path, element)
+        path: JsonElementPath,
+        element: JsonElement,
+    ) = (path.lastSegmentStartWith(TypeSchema.Value.Setting.prefix) &&
+        path.parentIsTypeOf(
+            element,
+            TypeSchema.Value.component
+        )) ||
+        super.accept(path, element)
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ComponentSettingSchema::Scope).apply {
-        type = TypeSchema.Value.Setting.component
-        val value = this.element.string.requireIsRef()
-        id = JsonPrimitive(value)
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ComponentSettingSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.Setting.component
+            val value = this.element.string.requireIsRef()
+            id = JsonPrimitive(value)
+        }.collect()
 
     override fun beforeAlterObject(
         path: JsonElementPath,
         element: JsonElement,
-    ) = element.find(path).withScope(ComponentSettingSchema::Scope).apply {
-        type = TypeSchema.Value.Setting.component
-        id ?: run { id = JsonNull }
-    }.collect()
+    ) = element
+        .find(path)
+        .withScope(ComponentSettingSchema::Scope)
+        .apply {
+            type = TypeSchema.Value.Setting.component
+            id ?: run { id = JsonNull }
+        }.collect()
 
     override fun beforeAlterArray(
         path: JsonElementPath,
@@ -59,5 +70,4 @@ class SettingComponentRectifier : AbstractRectifier() {
     ) = with(element.find(path).jsonArray) {
         JsonArray(map { process("".toPath(), it) })
     }
-
 }

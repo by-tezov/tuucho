@@ -12,7 +12,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationSt
 import kotlinx.serialization.json.JsonObject
 
 class NavigationStackTransitionHelperFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
-
     data class Input(
         val prototypeObject: JsonObject,
     )
@@ -22,9 +21,12 @@ class NavigationStackTransitionHelperFactoryUseCase : UseCaseProtocol.Sync<Input
     )
 
     @Suppress("UNCHECKED_CAST")
-    override fun invoke(input: Input) = with(input) {
+    override fun invoke(
+        input: Input
+    ) = with(input) {
         Output(
-            helper = prototypeObject.withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
+            helper = prototypeObject
+                .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
                 .let { scope ->
                     when (scope.type) {
                         Type.fade -> FadeNavigationTransitionStackHelper()
@@ -33,5 +35,4 @@ class NavigationStackTransitionHelperFactoryUseCase : UseCaseProtocol.Sync<Input
                 }
         )
     }
-
 }

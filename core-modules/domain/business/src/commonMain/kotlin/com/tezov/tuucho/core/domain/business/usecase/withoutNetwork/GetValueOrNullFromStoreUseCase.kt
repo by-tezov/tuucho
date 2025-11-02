@@ -10,7 +10,6 @@ class GetValueOrNullFromStoreUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val keyValueRepository: KeyValueStoreRepositoryProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
-
     data class Input(
         val key: KeyValueStoreRepositoryProtocol.Key,
     )
@@ -19,12 +18,13 @@ class GetValueOrNullFromStoreUseCase(
         val value: KeyValueStoreRepositoryProtocol.Value?,
     )
 
-    override suspend fun invoke(input: Input) = with(input) {
+    override suspend fun invoke(
+        input: Input
+    ) = with(input) {
         coroutineScopes.database.await {
             Output(
                 value = keyValueRepository.getOrNull(input.key)
             )
         }
     }
-
 }

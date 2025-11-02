@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.data.repository.repository.source._system
 
 import com.tezov.tuucho.core.data.repository.database.type.Lifetime
@@ -10,10 +12,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlin.time.Instant
 
 @OpenForTest
-class LifetimeResolver(
+internal class LifetimeResolver(
     private val expirationDateTimeRectifier: ExpirationDateTimeRectifier,
 ) {
-
     fun invoke(
         pageSetting: JsonObject?,
         weakLifetime: Lifetime,
@@ -37,7 +38,9 @@ class LifetimeResolver(
                         Lifetime.SingleUse(weakLifetime.validityKey)
                     }
 
-                    else -> throw DataException.Default("unknown ttl strategy $strategy")
+                    else -> {
+                        throw DataException.Default("unknown ttl strategy $strategy")
+                    }
                 }
             }
 
@@ -51,5 +54,4 @@ class LifetimeResolver(
         }
         return lifetime
     }
-
 }

@@ -17,6 +17,10 @@ group = packageName
 
 gradlePlugin {
     plugins {
+        register("ApplicationJvmPlugin") {
+            id = "${packageName}.application-jvm"
+            implementationClass = "${packageName}.${name}"
+        }
         register("ApplicationAndroidPlugin") {
             id = "${packageName}.application-android"
             implementationClass = "${packageName}.${name}"

@@ -7,14 +7,15 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import kotlinx.serialization.json.JsonObject
 
 object TypeResponseSchema {
-
     const val root = "type"
 
     object Value {
         const val form = "form"
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = TypeResponseSchema.root
         var self by delegate<String?>(root)
     }
@@ -23,7 +24,3 @@ object TypeResponseSchema {
         get() = withScope(::Scope).self
             ?: throw DomainException.Default("type value is null for $this")
 }
-
-
-
-

@@ -22,14 +22,13 @@ import kotlinx.serialization.json.JsonObject
 import kotlin.time.Clock
 import kotlin.time.Instant
 
-class MaterialCacheLocalSource(
+internal class MaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialDatabaseSource: MaterialDatabaseSource,
     private val materialBreaker: MaterialBreaker,
     private val materialAssembler: MaterialAssembler,
     private val lifetimeResolver: LifetimeResolver,
 ) {
-
     suspend fun isCacheValid(
         url: String,
         remoteValidityKey: String?,
@@ -48,7 +47,10 @@ class MaterialCacheLocalSource(
         return false
     }
 
-    suspend fun delete(url: String, table: Table) {
+    suspend fun delete(
+        url: String,
+        table: Table
+    ) {
         materialDatabaseSource.deleteAll(url, table)
     }
 
@@ -65,8 +67,11 @@ class MaterialCacheLocalSource(
         }
         coroutineScopes.database.await {
             with(nodes) {
-                val table = if (visibility is Visibility.Contextual) Table.Contextual
-                else Table.Common
+                val table = if (visibility is Visibility.Contextual) {
+                    Table.Contextual
+                } else {
+                    Table.Common
+                }
                 val rootPrimaryKey = rootJsonObjectNode?.let {
                     materialDatabaseSource.insert(it.toEntity(url), table)
                 }
@@ -79,7 +84,9 @@ class MaterialCacheLocalSource(
                         weakLifetime = weakLifetime,
                     ),
                 ).also { materialDatabaseSource.insert(it) }
-                jsonElementNodes.asSequence().flatMap { it.flatten() }
+                jsonElementNodes
+                    .asSequence()
+                    .flatMap { it.flatten() }
                     .forEach { materialDatabaseSource.insert(it.toEntity(url), table) }
             }
         }
@@ -105,21 +112,26 @@ class MaterialCacheLocalSource(
         validityKey: String,
         visibility: Visibility,
     ) {
-        coroutineScopes.database.await {
-            HookEntity(
-                url = url,
-                rootPrimaryKey = null,
-                visibility = visibility,
-                lifetime = Lifetime.Enrolled(validityKey),
-            )
-        }.also { materialDatabaseSource.insert(it) }
+        coroutineScopes.database
+            .await {
+                HookEntity(
+                    url = url,
+                    rootPrimaryKey = null,
+                    visibility = visibility,
+                    lifetime = Lifetime.Enrolled(validityKey),
+                )
+            }.also { materialDatabaseSource.insert(it) }
     }
 
-    suspend fun getLifetime(url: String) = coroutineScopes.database.await {
+    suspend fun getLifetime(
+        url: String
+    ) = coroutineScopes.database.await {
         materialDatabaseSource.getHookEntityOrNull(url)?.lifetime
     }
 
-    suspend fun assemble(url: String): JsonObject? {
+    suspend fun assemble(
+        url: String
+    ): JsonObject? {
         val entity = coroutineScopes.database.await {
             materialDatabaseSource.getRootJsonObjectEntityOrNull(url)
         } ?: return null
@@ -134,5 +146,4 @@ class MaterialCacheLocalSource(
             )
         }
     }
-
 }

@@ -8,7 +8,6 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 object FormSendResponseSchema {
-
     object Key {
         const val type = TypeResponseSchema.root
         const val allSucceed = "all-succeed"
@@ -16,7 +15,9 @@ object FormSendResponseSchema {
         const val action = ActionSchema.root
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         var type by delegate<String?>(Key.type)
         var allSucceed by delegate<Boolean?>(Key.allSucceed)
         var failureResult by delegate<JsonArray?>(Key.failureResult)
@@ -31,7 +32,9 @@ object FormSendResponseSchema {
             const val reason = "reason"
         }
 
-        class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : OpenSchemaScope<Scope>(argument) {
             override val root = FailureResult.root
 
             var id by delegate<String?>(Key.id)
@@ -45,13 +48,11 @@ object FormSendResponseSchema {
             const val after = "after"
         }
 
-        class Scope(argument: SchemaScopeArgument) : ActionSchema.OpenScope<Scope>(argument) {
+        class Scope(
+            argument: SchemaScopeArgument
+        ) : ActionSchema.OpenScope<Scope>(argument) {
             var before by delegate<JsonArray?>(Key.before)
             var after by delegate<JsonArray?>(Key.after)
         }
     }
-
 }
-
-
-

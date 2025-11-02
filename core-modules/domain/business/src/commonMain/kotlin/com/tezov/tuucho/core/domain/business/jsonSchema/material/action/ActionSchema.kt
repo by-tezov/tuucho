@@ -8,7 +8,6 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
 object ActionSchema {
-
     const val root = "action"
 
     object Key {
@@ -24,10 +23,13 @@ object ActionSchema {
         }
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenScope<Scope>(argument)
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenScope<Scope>(argument)
 
-    open class OpenScope<T : OpenScope<T>>(argument: SchemaScopeArgument) :
-        OpenSchemaScope<T>(argument) {
+    open class OpenScope<T : OpenScope<T>>(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<T>(argument) {
         override val root = ActionSchema.root
 
         var id by delegate<JsonElement>(Key.id)

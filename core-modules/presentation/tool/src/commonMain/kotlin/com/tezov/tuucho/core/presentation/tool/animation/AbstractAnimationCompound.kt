@@ -17,28 +17,31 @@ import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
     private val animators: MutableMap<KEY, Animator<Any>> = mutableMapOf<KEY, Animator<Any>>(),
 ) {
-
     interface Animator<STEP_PARENT : Any> {
-
         @Composable
-        fun update(transition: Transition<STEP_PARENT>)
+        fun update(
+            transition: Transition<STEP_PARENT>
+        )
 
-        fun animate(modifier: Modifier): Modifier
-
+        fun animate(
+            modifier: Modifier
+        ): Modifier
     }
 
     interface AnimatorChild<STEP_PARENT : Any, STEP_CHILD : Any> : Animator<STEP_CHILD> {
-
         fun createStepTransformer(): ((STEP_PARENT) -> STEP_CHILD)
     }
 
     companion object {
-        fun Modifier.animate(animation: Animator<*>) = animation.animate(this)
+        fun Modifier.animate(
+            animation: Animator<*>
+        ) = animation.animate(this)
     }
 
     var step: MutableTransitionState<STEP_PARENT> by DelegateNullFallBack.Ref(
         null,
-        fallBackValue = { MutableTransitionState(firstStep) })
+        fallBackValue = { MutableTransitionState(firstStep) }
+    )
 
     val isDone get() = step.currentState == doneStep
 
@@ -47,11 +50,16 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
     protected abstract val firstStep: STEP_PARENT
 
     @Suppress("UNCHECKED_CAST")
-    fun add(key: KEY, animator: Animator<*>) {
+    fun add(
+        key: KEY,
+        animator: Animator<*>
+    ) {
         animators.put(key, animator as Animator<Any>)
     }
 
-    fun get(key: KEY): Animator<*>? = animators.getValue(key)
+    fun get(
+        key: KEY
+    ): Animator<*>? = animators.getValue(key)
 
     fun start() {
         with(step) {
@@ -70,7 +78,10 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
 
     @OptIn(ExperimentalTransitionApi::class)
     @Composable
-    fun updateTransition(key: Any = Unit, start: Boolean = true) {
+    fun updateTransition(
+        key: Any = Unit,
+        start: Boolean = true
+    ) {
         onUpdateTransition()
         with(step) {
             if (isIdle) {
@@ -85,7 +96,8 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
                         is AnimatorChild<*, *> -> {
                             val stepTransformer = remember {
                                 val transformer: (@Composable (parentState: STEP_PARENT) -> Any) = {
-                                    (animator as AnimatorChild<Any, *>).createStepTransformer()
+                                    (animator as AnimatorChild<Any, *>)
+                                        .createStepTransformer()
                                         .invoke(it)
                                 }
                                 transformer
@@ -96,7 +108,9 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
                             )
                         }
 
-                        else -> transition as Transition<Any>
+                        else -> {
+                            transition as Transition<Any>
+                        }
                     }
                     animator.update(transition = animatorTransition)
                 }
@@ -113,13 +127,14 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
         var duration_ms: Int,
         private val transformer: ((STEP_PARENT) -> Boolean),
     ) : AnimatorChild<STEP_PARENT, Boolean> {
-
         private lateinit var waitFactor: State<Float>
 
         override fun createStepTransformer(): (STEP_PARENT) -> Boolean = transformer
 
         @Composable
-        override fun update(transition: Transition<Boolean>) {
+        override fun update(
+            transition: Transition<Boolean>
+        ) {
             waitFactor = transition.animateFloat(
                 transitionSpec = { snap(delayMillis = duration_ms) },
                 label = ""
@@ -131,8 +146,8 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
             }
         }
 
-        override fun animate(modifier: Modifier) =
-            throw IllegalStateException("Should never be called!")
+        override fun animate(
+            modifier: Modifier
+        ) = throw IllegalStateException("Should never be called!")
     }
-
 }

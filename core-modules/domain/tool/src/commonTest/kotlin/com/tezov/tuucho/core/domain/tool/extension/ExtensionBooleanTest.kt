@@ -15,7 +15,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ExtensionBooleanTest {
-
     @Test
     fun `isTrue returns true only when true`() {
         assertTrue(true.isTrue)

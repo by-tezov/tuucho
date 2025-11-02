@@ -8,13 +8,12 @@ import kotlinx.serialization.json.JsonObject
 abstract class AbstractFormValidator<T : Any>(
     private val errorMessages: JsonObject,
 ) : FormValidatorProtocol<T> {
-
     override var isValid: Boolean = false
         protected set
 
-    override fun getErrorMessage(language: LanguageModelDomain): String {
-        return errorMessages[language.code].stringOrNull
-            ?: errorMessages[LanguageModelDomain.Default.code].stringOrNull
-            ?: ""
-    }
+    override fun getErrorMessage(
+        language: LanguageModelDomain
+    ): String = errorMessages[language.code].stringOrNull
+        ?: errorMessages[LanguageModelDomain.Default.code].stringOrNull
+        ?: ""
 }

@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
 
 object SubsetSchema {
-
     const val root = "subset"
 
     object Value {
@@ -15,15 +14,12 @@ object SubsetSchema {
         const val button = "button"
         const val layoutLinear = "layout-linear"
         const val spacer = "spacer"
-
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = SubsetSchema.root
         var self by delegate<String?>(root)
     }
-
 }
-
-
-

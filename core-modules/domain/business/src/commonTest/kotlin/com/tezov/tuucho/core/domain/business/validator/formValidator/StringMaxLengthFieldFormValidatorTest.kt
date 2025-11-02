@@ -7,7 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class StringMaxLengthFieldFormValidatorTest {
-
     private lateinit var sut: StringMaxLengthFieldFormValidator
 
     @BeforeTest

@@ -9,15 +9,15 @@ class RemoveKeyValueFromStoreUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val keyValueRepository: KeyValueStoreRepositoryProtocol,
 ) : UseCaseProtocol.Async<Input, Unit> {
-
     data class Input(
         val key: KeyValueStoreRepositoryProtocol.Key
     )
 
-    override suspend fun invoke(input: Input) = with(input) {
+    override suspend fun invoke(
+        input: Input
+    ) = with(input) {
         coroutineScopes.database.await {
             keyValueRepository.save(input.key, null)
         }
     }
-
 }

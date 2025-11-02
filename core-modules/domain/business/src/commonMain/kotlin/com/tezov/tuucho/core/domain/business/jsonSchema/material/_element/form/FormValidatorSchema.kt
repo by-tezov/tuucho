@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
@@ -5,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgum
 import kotlinx.serialization.json.JsonObject
 
 object FormValidatorSchema {
-
     const val root = "form-validator"
 
     object Key {
@@ -30,7 +31,9 @@ object FormValidatorSchema {
         }
     }
 
-    class Scope(argument: SchemaScopeArgument) : OpenSchemaScope<Scope>(argument) {
+    class Scope(
+        argument: SchemaScopeArgument
+    ) : OpenSchemaScope<Scope>(argument) {
         override val root = FormValidatorSchema.root
 
         var type by delegate<String?>(Key.type)
@@ -40,5 +43,4 @@ object FormValidatorSchema {
         var length by delegate<String?>(Key.length)
         var value by delegate<String?>(Key.value)
     }
-
 }

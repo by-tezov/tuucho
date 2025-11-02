@@ -59,7 +59,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                 }
             )
             classDirectories.setFrom(
-                fileTree("$buildDirectory/tmp/kotlin-classes/mock") {
+                fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/mock") {
                     exclude(
                         "**/R.class",
                         "**/R$*.class",
@@ -100,8 +100,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
             extensions.configure(AbiValidationMultiplatformExtension::class.java) {
                 enabled.set(true)
                 legacyDump {
-                    val rootApiDir = rootProject.layout.projectDirectory.dir(".api/${namespace()}")
-                    referenceDumpDir.set(rootApiDir)
+                    referenceDumpDir.set(file(".validation/api"))
                 }
             }
         }

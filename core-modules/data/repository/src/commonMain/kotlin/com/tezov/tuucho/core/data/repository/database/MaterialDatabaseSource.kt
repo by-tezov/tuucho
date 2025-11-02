@@ -13,14 +13,16 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-class MaterialDatabaseSource(
+internal class MaterialDatabaseSource(
     private val transactionFactory: DatabaseTransactionFactory,
     private val hookQueries: HookQueries,
     private val jsonObjectQueries: JsonObjectQueries,
 ) {
-
     @Suppress("RedundantSuspendModifier")
-    suspend fun deleteAll(url: String, table: Table) {
+    suspend fun deleteAll(
+        url: String,
+        table: Table
+    ) {
         transactionFactory.transaction {
             hookQueries.delete(url)
             jsonObjectQueries.deleteAll(url, table) // since delete cascade is active, this one is not needed
@@ -28,18 +30,23 @@ class MaterialDatabaseSource(
     }
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun getHookEntityOrNull(url: String) = hookQueries.getOrNull(url = url)
+    suspend fun getHookEntityOrNull(
+        url: String
+    ) = hookQueries.getOrNull(url = url)
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun getRootJsonObjectEntityOrNull(url: String): JsonObjectEntity? {
+    suspend fun getRootJsonObjectEntityOrNull(
+        url: String
+    ): JsonObjectEntity? {
         val versioning = hookQueries.getOrNull(url = url) ?: return null
         versioning.rootPrimaryKey ?: return null
         return jsonObjectQueries.getCommonOrNull(versioning.rootPrimaryKey)
     }
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun getLifetimeOrNull(url: String): Lifetime? =
-        hookQueries.getLifetimeOrNull(url)
+    suspend fun getLifetimeOrNull(
+        url: String
+    ): Lifetime? = hookQueries.getLifetimeOrNull(url)
 
     @Suppress("RedundantSuspendModifier")
     suspend fun getAllCommonRefOrNull(
@@ -92,7 +99,9 @@ class MaterialDatabaseSource(
     }
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun insert(entity: HookEntity) = hookQueries.insert(entity)
+    suspend fun insert(
+        entity: HookEntity
+    ) = hookQueries.insert(entity)
 
     @Suppress("RedundantSuspendModifier")
     suspend fun insert(
@@ -101,5 +110,4 @@ class MaterialDatabaseSource(
     ) = transactionFactory.transactionWithResult {
         jsonObjectQueries.insert(entity, table)
     }
-
 }

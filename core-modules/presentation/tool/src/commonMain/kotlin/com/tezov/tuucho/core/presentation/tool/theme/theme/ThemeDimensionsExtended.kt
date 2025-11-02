@@ -20,32 +20,33 @@ val MaterialTheme.dimensionsCommonExtended
     @ReadOnlyComposable
     get() = ThemeDimensionsExtended.localCommon.current
 
-infix fun MaterialTheme.provides(value: ThemeDimensionsExtended.Common) =
-    ThemeDimensionsExtended.localCommon provides value
+infix fun MaterialTheme.provides(
+    value: ThemeDimensionsExtended.Common
+) = ThemeDimensionsExtended.localCommon provides value
 
 val MaterialTheme.dimensionsPaddingExtended
     @Composable
     @ReadOnlyComposable
     get() = ThemeDimensionsExtended.localPaddings.current
 
-infix fun MaterialTheme.provides(value: ThemeDimensionsExtended.Paddings) =
-    ThemeDimensionsExtended.localPaddings provides value
+infix fun MaterialTheme.provides(
+    value: ThemeDimensionsExtended.Paddings
+) = ThemeDimensionsExtended.localPaddings provides value
 
 val MaterialTheme.dimensionsIconExtended
     @Composable
     @ReadOnlyComposable
     get() = ThemeDimensionsExtended.localIcons.current
 
-infix fun MaterialTheme.provides(value: ThemeDimensionsExtended.Icons) =
-    ThemeDimensionsExtended.localIcons provides value
+infix fun MaterialTheme.provides(
+    value: ThemeDimensionsExtended.Icons
+) = ThemeDimensionsExtended.localIcons provides value
 
 object ThemeDimensionsExtended {
-
     class Common(
         divider: OutfitPaletteSize<Dp>? = null,
         elevation: OutfitPaletteSize<Dp>? = null,
     ) {
-
         private val delegates = DelegateNullFallBack.Group<OutfitPaletteSize<Dp>>()
         val divider: OutfitPaletteSize<Dp> by delegates.ref(divider)
         val elevation: OutfitPaletteSize<Dp> by delegates.ref(elevation)
@@ -68,7 +69,6 @@ object ThemeDimensionsExtended {
         button: OutfitPaletteSize<OutfitPaletteDirection<Dp>>? = null,
         text: OutfitPaletteSize<OutfitPaletteDirection<Dp>>? = null,
     ) {
-
         private val delegates =
             DelegateNullFallBack.Group<OutfitPaletteSize<OutfitPaletteDirection<Dp>>>()
         val page: OutfitPaletteSize<OutfitPaletteDirection<Dp>> by delegates.ref(page)
@@ -95,7 +95,6 @@ object ThemeDimensionsExtended {
         fieldInfo: OutfitPaletteSize<DpSize>? = null,
         fieldAction: OutfitPaletteSize<DpSize>? = null,
     ) {
-
         private val delegates = DelegateNullFallBack.Group<OutfitPaletteSize<DpSize>>()
         val modal: OutfitPaletteSize<DpSize> by delegates.ref(modal)
         val info: OutfitPaletteSize<DpSize> by delegates.ref(info)
@@ -111,7 +110,4 @@ object ThemeDimensionsExtended {
     internal val localIcons: ProvidableCompositionLocal<Icons> = staticCompositionLocalOf {
         error("not provided")
     }
-
 }
-
-

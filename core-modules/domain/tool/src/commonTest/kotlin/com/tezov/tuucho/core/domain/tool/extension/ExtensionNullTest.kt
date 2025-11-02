@@ -14,7 +14,6 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 class ExtensionNullTest {
-
     @Test
     fun `isNull returns true for null`() {
         val obj: Any? = null

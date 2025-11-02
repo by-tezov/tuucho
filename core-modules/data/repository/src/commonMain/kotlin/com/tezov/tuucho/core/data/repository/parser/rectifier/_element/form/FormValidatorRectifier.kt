@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form
 
 import com.tezov.tuucho.core.data.repository.di.MaterialRectifierModule
@@ -9,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGro
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -19,8 +22,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
+@OptIn(TuuchoExperimentalAPI::class)
 class FormValidatorRectifier : AbstractRectifier() {
-
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.FIELD_VALIDATOR
     )
@@ -34,7 +37,8 @@ class FormValidatorRectifier : AbstractRectifier() {
         element: JsonElement,
     ) = beforeAlterObject(
         path = "".toPath(),
-        element = element.find(path)
+        element = element
+            .find(path)
             .withScope(FormValidatorSchema::Scope)
             .apply {
                 type = this.element.string
@@ -56,11 +60,14 @@ class FormValidatorRectifier : AbstractRectifier() {
         if (!jsonArray.any { it is JsonPrimitive }) return null
         return JsonArray(jsonArray.map {
             if (it is JsonPrimitive) {
-                it.withScope(FormValidatorSchema::Scope)
+                it
+                    .withScope(FormValidatorSchema::Scope)
                     .apply {
                         type = this.element.string
                     }.collect()
-            } else it
+            } else {
+                it
+            }
         })
     }
 
@@ -84,5 +91,4 @@ class FormValidatorRectifier : AbstractRectifier() {
         }
         scope.collect()
     })
-
 }

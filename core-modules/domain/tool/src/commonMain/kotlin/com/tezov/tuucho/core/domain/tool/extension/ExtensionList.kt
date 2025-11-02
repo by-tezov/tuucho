@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.domain.tool.extension
 
 object ExtensionList {
-
     const val NULL_INDEX = -1
 
     val Int.isNullIndex get() = this == NULL_INDEX
@@ -13,15 +12,17 @@ object ExtensionList {
         return this[size - 2]
     }
 
-    fun <T> List<T>.priorLastOrNull() =
-        if (size < 2) null else this[size - 2]
+    fun <T> List<T>.priorLastOrNull() = if (size < 2) null else this[size - 2]
 
-    fun <T> List<T>.subListToEnd(fromIndex: Int) = subList(fromIndex, this.size)
+    fun <T> List<T>.subListToEnd(
+        fromIndex: Int
+    ) = subList(fromIndex, this.size)
 
-    fun <T> ArrayDeque<T>.push(t: T) = this.addLast(t)
+    fun <T> ArrayDeque<T>.push(
+        t: T
+    ) = this.addLast(t)
 
     fun <T> ArrayDeque<T>.pop() = this.removeLast()
 
     fun <T> ArrayDeque<T>.popOrNull() = this.removeLastOrNull()
-
 }

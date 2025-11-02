@@ -15,13 +15,14 @@ import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import kotlinx.serialization.json.JsonObject
 
 object TransitionFade {
-
     class Spec(
         val duration: Int,
         val alphaInitial: Float,
     ) {
         companion object {
-            fun from(specObject: JsonObject?) = specObject
+            fun from(
+                specObject: JsonObject?
+            ) = specObject
                 ?.withScope(SettingComponentNavigationTransitionSchema.SpecFade::Scope)
                 .let {
                     Spec(
@@ -41,7 +42,6 @@ object TransitionFade {
         private val animationProgress: AnimationProgress,
         specObject: JsonObject
     ) : AbstractModifierTransition() {
-
         private val spec = Spec.from(specObject)
         private val startValue: Float
         private val endValue: Float
@@ -59,7 +59,9 @@ object TransitionFade {
         }
 
         @Composable
-        override fun Modifier.animate(boundaries: Size): Modifier {
+        override fun Modifier.animate(
+            boundaries: Size
+        ): Modifier {
             val progress = animationProgress.animateFloat(
                 startValue = startValue,
                 endValue = endValue,
@@ -71,5 +73,4 @@ object TransitionFade {
             return alpha(progress.value)
         }
     }
-
 }

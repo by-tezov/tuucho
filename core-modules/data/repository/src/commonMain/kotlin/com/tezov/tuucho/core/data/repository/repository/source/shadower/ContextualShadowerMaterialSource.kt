@@ -21,14 +21,13 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
-class ContextualShadowerMaterialSource(
+internal class ContextualShadowerMaterialSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
     private val materialAssembler: MaterialAssembler,
     private val materialDatabaseSource: MaterialDatabaseSource,
 ) : ShadowerMaterialSourceProtocol {
-
     override val type = Shadower.Type.contextual
 
     override val isCancelled = false
@@ -36,36 +35,53 @@ class ContextualShadowerMaterialSource(
     private lateinit var urlOrigin: String
     private lateinit var map: MutableMap<String, MutableList<JsonObject>>
 
-    override suspend fun onStart(url: String, materialElement: JsonObject) {
+    override suspend fun onStart(
+        url: String,
+        materialElement: JsonObject
+    ) {
         this.urlOrigin = url
         map = mutableMapOf()
     }
 
-    override suspend fun onNext(jsonObject: JsonObject, settingObject: JsonObject?) {
+    override suspend fun onNext(
+        jsonObject: JsonObject,
+        settingObject: JsonObject?
+    ) {
         val idScope = jsonObject.onScope(IdSchema::Scope)
         idScope.source ?: return
         val type = jsonObject.withScope(TypeSchema::Scope).self
-        val url = idScope.urlSource?.jsonObject
-            ?.get(this.type)?.stringOrNull?.replaceUrlOriginToken(urlOrigin)
-            ?: settingObject?.withScope(SettingComponentShadowerSchema.Contextual::Scope)
-                ?.url?.get(type).stringOrNull?.replaceUrlOriginToken(urlOrigin)
+        val url = idScope.urlSource
+            ?.jsonObject
+            ?.get(this.type)
+            ?.stringOrNull
+            ?.replaceUrlOriginToken(urlOrigin)
+            ?: settingObject
+                ?.withScope(SettingComponentShadowerSchema.Contextual::Scope)
+                ?.url
+                ?.get(type)
+                .stringOrNull
+                ?.replaceUrlOriginToken(urlOrigin)
             ?: Contextual.defaultUrl(urlOrigin)
         map[url] = (map[url] ?: mutableListOf()).apply { add(jsonObject) }
     }
 
-    override suspend fun onDone() = map.map { (url, jsonObjects) ->
-        coroutineScopes.parser.async {
-            downloadAndCache(url)
-            jsonObjects.assembleAll(url).also {
-                val lifetime = materialCacheLocalSource.getLifetime(url)
-                if (lifetime is Lifetime.SingleUse) {
-                    materialCacheLocalSource.delete(url, Table.Common)
+    override suspend fun onDone() = map
+        .map { (url, jsonObjects) ->
+            coroutineScopes.parser.async {
+                downloadAndCache(url)
+                jsonObjects.assembleAll(url).also {
+                    val lifetime = materialCacheLocalSource.getLifetime(url)
+                    if (lifetime is Lifetime.SingleUse) {
+                        materialCacheLocalSource.delete(url, Table.Common)
+                    }
                 }
             }
-        }
-    }.awaitAll().flatten()
+        }.awaitAll()
+        .flatten()
 
-    private suspend fun downloadAndCache(url: String) {
+    private suspend fun downloadAndCache(
+        url: String
+    ) {
         val lifetime = materialCacheLocalSource.getLifetime(url)
         if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
             return
@@ -79,12 +95,16 @@ class ContextualShadowerMaterialSource(
                 Lifetime.SingleUse(
                     validityKey = lifetime?.validityKey
                 )
-            } else lifetime,
+            } else {
+                lifetime
+            },
             visibility = Visibility.Contextual(urlOrigin = urlOrigin)
         )
     }
 
-    private suspend fun List<JsonObject>.assembleAll(url: String) = mapNotNull { jsonObject ->
+    private suspend fun List<JsonObject>.assembleAll(
+        url: String
+    ) = mapNotNull { jsonObject ->
         materialAssembler.process(
             materialObject = jsonObject,
             findAllRefOrNullFetcher = { from, type ->

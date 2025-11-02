@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
-
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.selector.PageBreadCrumbNavigationDefinitionSelectorMatcher
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -16,7 +15,6 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 
 class NavigationDefinitionSelectorMatcherFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
-
     data class Input(
         val prototypeObject: JsonObject,
     )
@@ -26,9 +24,12 @@ class NavigationDefinitionSelectorMatcherFactoryUseCase : UseCaseProtocol.Sync<I
     )
 
     @Suppress("UNCHECKED_CAST")
-    override fun invoke(input: Input) = with(input) {
+    override fun invoke(
+        input: Input
+    ) = with(input) {
         Output(
-            selector = prototypeObject.withScope(ComponentSettingNavigationSelectorSchema::Scope)
+            selector = prototypeObject
+                .withScope(ComponentSettingNavigationSelectorSchema::Scope)
                 .let { scope ->
                     when (scope.type) {
                         Type.pageBreadCrumb -> {
@@ -37,10 +38,11 @@ class NavigationDefinitionSelectorMatcherFactoryUseCase : UseCaseProtocol.Sync<I
                             )
                         }
 
-                        else -> throw DomainException.Default("Selector $prototypeObject can't be resolved")
+                        else -> {
+                            throw DomainException.Default("Selector $prototypeObject can't be resolved")
+                        }
                     }
                 } as NavigationDefinitionSelectorMatcherProtocol
         )
     }
-
 }

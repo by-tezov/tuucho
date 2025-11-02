@@ -10,19 +10,21 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.option.OptionsRect
 import com.tezov.tuucho.core.data.repository.parser.rectifier.state.StatesRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StylesRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextsRectifier
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OpenForTest
-class MaterialRectifier : KoinComponent {
+@OptIn(TuuchoExperimentalAPI::class)
+internal class MaterialRectifier : TuuchoKoinComponent {
     private val componentRectifier: ComponentRectifier by inject()
     private val componentsRectifier: ComponentsRectifier by inject()
     private val contentsRectifier: ContentsRectifier by inject()
@@ -35,8 +37,11 @@ class MaterialRectifier : KoinComponent {
     private val actionsRectifier: ActionsRectifier by inject()
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun process(materialObject: JsonObject) =
-        materialObject.withScope(MaterialSchema::Scope).apply {
+    suspend fun process(
+        materialObject: JsonObject
+    ) = materialObject
+        .withScope(MaterialSchema::Scope)
+        .apply {
             rootComponent?.let {
                 rootComponent = componentRectifier.process("".toPath(), it).jsonObject
             }
@@ -44,15 +49,20 @@ class MaterialRectifier : KoinComponent {
             contents?.let { contents = contentsRectifier.process("".toPath(), it).jsonArray }
             styles?.let { styles = stylesRectifier.process("".toPath(), it).jsonArray }
             options?.let { options = optionsRectifier.process("".toPath(), it).jsonArray }
-            states?.takeIf { it != JsonNull }
+            states
+                ?.takeIf { it != JsonNull }
                 ?.let { states = stateRectifier.process("".toPath(), it).jsonArray }
-            texts?.takeIf { it != JsonNull }
+            texts
+                ?.takeIf { it != JsonNull }
                 ?.let { texts = textsRectifier.process("".toPath(), it).jsonArray }
-            colors?.takeIf { it != JsonNull }
+            colors
+                ?.takeIf { it != JsonNull }
                 ?.let { colors = colorsRectifier.process("".toPath(), it).jsonArray }
-            dimensions?.takeIf { it != JsonNull }
+            dimensions
+                ?.takeIf { it != JsonNull }
                 ?.let { dimensions = dimensionsRectifier.process("".toPath(), it).jsonArray }
-            actions?.takeIf { it != JsonNull }
+            actions
+                ?.takeIf { it != JsonNull }
                 ?.let { actions = actionsRectifier.process("".toPath(), it).jsonArray }
         }.collect()
 }

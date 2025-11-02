@@ -9,19 +9,21 @@ import kotlinx.serialization.json.jsonPrimitive
 
 val JsonElement?.stringOrNull get() = (this as? JsonPrimitive)?.contentOrNull
 val JsonElement?.string
-    get():String {
+    get(): String {
         require(this != null) { "element is null" }
         return jsonPrimitive.content
     }
 
 val JsonElement?.booleanOrNull: Boolean? get() = (this as? JsonPrimitive)?.boolean
 val JsonElement?.boolean
-    get():Boolean {
+    get(): Boolean {
         require(this != null) { "element is null" }
         return jsonPrimitive.boolean
     }
 
-fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? { //IMPROVE: Not efficient, but will do the job for now
+fun JsonElement.findOrNull(
+    path: JsonElementPath
+): JsonElement? { // IMPROVE: Not efficient, but will do the job for now
     var currentElement: JsonElement = this
     path.forEach { key ->
         currentElement = (currentElement as? JsonObject)?.get(key) ?: return null
@@ -29,17 +31,18 @@ fun JsonElement.findOrNull(path: JsonElementPath): JsonElement? { //IMPROVE: Not
     return currentElement
 }
 
-fun JsonElement.find(path: JsonElementPath): JsonElement {
+fun JsonElement.find(
+    path: JsonElementPath
+): JsonElement {
     val element = findOrNull(path)
     require(element != null) { "element could not be found at path $path inside $this" }
     return element
 }
 
-
 fun JsonElement.replaceOrInsert(
     path: JsonElementPath,
     newElement: JsonElement,
-): JsonElement { //IMPROVE: No efficient, but will do the job
+): JsonElement { // IMPROVE: No efficient, but will do the job
     if (path.isEmpty()) return newElement
     val stack = buildList {
         var current = this@replaceOrInsert

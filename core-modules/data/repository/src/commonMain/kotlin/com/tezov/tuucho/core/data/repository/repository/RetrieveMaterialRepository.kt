@@ -9,12 +9,13 @@ import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSou
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 
-class RetrieveMaterialRepository(
+internal class RetrieveMaterialRepository(
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
 ) : MaterialRepositoryProtocol.Retrieve {
-
-    override suspend fun process(url: String): JsonObject {
+    override suspend fun process(
+        url: String
+    ): JsonObject {
         val lifetime = materialCacheLocalSource.getLifetime(url)
         if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
             materialCacheLocalSource.assemble(url)?.let {
@@ -33,7 +34,9 @@ class RetrieveMaterialRepository(
                 Lifetime.Unlimited(
                     validityKey = lifetime?.validityKey
                 )
-            } else lifetime,
+            } else {
+                lifetime
+            },
             visibility = Visibility.Local
         )
         return materialCacheLocalSource.assemble(url).also {
@@ -43,5 +46,4 @@ class RetrieveMaterialRepository(
             }
         } ?: throw DataException.Default("Retrieved url $url returned nothing")
     }
-
 }

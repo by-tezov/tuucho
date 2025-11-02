@@ -6,9 +6,7 @@ import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 
 object NavigationRepositoryProtocol {
-
     interface StackRoute {
-
         suspend fun currentRoute(): NavigationRoute.Url?
 
         suspend fun priorRoute(): NavigationRoute.Url?
@@ -23,18 +21,22 @@ object NavigationRepositoryProtocol {
         suspend fun backward(
             route: NavigationRoute,
         ): NavigationRoute.Url?
-
     }
 
     interface StackScreen {
-
         suspend fun routes(): List<NavigationRoute.Url>
 
-        suspend fun getScreens(routes: List<NavigationRoute.Url>): List<ScreenProtocol>
+        suspend fun getScreens(
+            routes: List<NavigationRoute.Url>
+        ): List<ScreenProtocol>
 
-        suspend fun getScreenOrNull(route: NavigationRoute.Url): ScreenProtocol?
+        suspend fun getScreenOrNull(
+            route: NavigationRoute.Url
+        ): ScreenProtocol?
 
-        suspend fun getScreensOrNull(url: String): List<ScreenProtocol>?
+        suspend fun getScreensOrNull(
+            url: String
+        ): List<ScreenProtocol>?
 
         suspend fun forward(
             route: NavigationRoute.Url,
@@ -47,10 +49,13 @@ object NavigationRepositoryProtocol {
     }
 
     interface StackTransition {
-
         sealed class Event {
-            data class Idle(val routes: List<NavigationRoute.Url>) : Event()
+            data class Idle(
+                val routes: List<NavigationRoute.Url>
+            ) : Event()
+
             data object PrepareTransition : Event()
+
             data class RequestTransition(
                 val foregroundGroup: Group,
                 val backgroundGroup: Group,
@@ -80,6 +85,4 @@ object NavigationRepositoryProtocol {
             routes: List<NavigationRoute.Url>,
         )
     }
-
 }
-

@@ -8,9 +8,6 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-internal val Project.buildDirectory
-    get() = layout.buildDirectory.get().asFile
-
 internal val Project.libs
     get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
@@ -42,7 +39,9 @@ internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.
 
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
 
-internal fun Project.javaVersionInt() = jvmTarget().target.toInt()
+internal fun Project.javaVersionString() = jvmTarget().target
+
+internal fun Project.javaVersionInt() = javaVersionString().toInt()
 
 internal fun Project.javaVersion() = JavaVersion.toVersion(javaVersionInt())
 

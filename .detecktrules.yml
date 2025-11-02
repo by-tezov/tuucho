@@ -1,0 +1,20 @@
+config:
+  validation: true
+  warningsAsErrors: false
+
+output-reports:
+  active: true
+  exclude:
+    - 'TxtOutputReport'
+    - 'sarif'
+    - 'MdOutputReport'
+
+processors:
+  active: true
+
+console-reports:
+  active: true
+
+complexity:
+  TooManyFunctions:
+    thresholdInFiles: 20

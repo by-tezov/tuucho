@@ -4,6 +4,7 @@ import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.Source
 import platform.Foundation.NSBundle
+import com.tezov.tuucho.core.data.repository.exception.DataException
 
 class AssetsIos : AssetsProtocol {
     override fun readFile(path: String): Source {
@@ -13,7 +14,7 @@ class AssetsIos : AssetsProtocol {
         val ext = filename.substringAfterLast(".")
         val subdir = parts.dropLast(1).joinToString("/")
         val filePath = NSBundle.mainBundle.pathForResource(name, ext, subdir)
-            ?: error("Resource not found in framework: $path")
+            ?: throw DataException.Default("Resource not found in framework: $path")
         return FileSystem.SYSTEM.source(filePath.toPath())
     }
 }

@@ -17,6 +17,7 @@ import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
+import dev.mokkery.matcher.matches
 import dev.mokkery.matcher.matching
 import dev.mokkery.mock
 import dev.mokkery.verify
@@ -35,7 +36,6 @@ import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 
 class MaterialCacheLocalSourceTest {
-
     private lateinit var coroutineScopes: CoroutineScopesProtocol
     private lateinit var materialDatabaseSource: MaterialDatabaseSource
     private lateinit var materialBreaker: MaterialBreaker
@@ -116,55 +116,52 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns true when transient lifetime expirationDateTime equal now`() =
-        runTest {
-            val url = "url"
-            val key = "key"
-            val fixed = Clock.System.now()
-            everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Transient(
-                validityKey = key,
-                expirationDateTime = fixed
-            )
+    fun `isCacheValid returns true when transient lifetime expirationDateTime equal now`() = runTest {
+        val url = "url"
+        val key = "key"
+        val fixed = Clock.System.now()
+        everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Transient(
+            validityKey = key,
+            expirationDateTime = fixed
+        )
 
-            val result = sut.isCacheValid(url, key) { fixed }
-            assertTrue(result)
+        val result = sut.isCacheValid(url, key) { fixed }
+        assertTrue(result)
 
-            verifySuspend(VerifyMode.exactly(1)) { materialDatabaseSource.getLifetimeOrNull(url) }
-        }
-
-    @Test
-    fun `isCacheValid returns true when transient lifetime expirationDateTime above now`() =
-        runTest {
-            val url = "url"
-            val key = "key"
-            val fixed = Clock.System.now()
-            everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Transient(
-                validityKey = key,
-                expirationDateTime = fixed + 1.seconds
-            )
-
-            val result = sut.isCacheValid(url, key) { fixed }
-            assertTrue(result)
-
-            verifySuspend(VerifyMode.exactly(1)) { materialDatabaseSource.getLifetimeOrNull(url) }
-        }
+        verifySuspend(VerifyMode.exactly(1)) { materialDatabaseSource.getLifetimeOrNull(url) }
+    }
 
     @Test
-    fun `isCacheValid returns false when transient lifetime expirationDateTime below now`() =
-        runTest {
-            val url = "url"
-            val key = "key"
-            val fixed = Clock.System.now()
-            everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Transient(
-                validityKey = key,
-                expirationDateTime = fixed - 1.seconds
-            )
+    fun `isCacheValid returns true when transient lifetime expirationDateTime above now`() = runTest {
+        val url = "url"
+        val key = "key"
+        val fixed = Clock.System.now()
+        everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Transient(
+            validityKey = key,
+            expirationDateTime = fixed + 1.seconds
+        )
 
-            val result = sut.isCacheValid(url, key) { fixed }
-            assertFalse(result)
+        val result = sut.isCacheValid(url, key) { fixed }
+        assertTrue(result)
 
-            verifySuspend(VerifyMode.exactly(1)) { materialDatabaseSource.getLifetimeOrNull(url) }
-        }
+        verifySuspend(VerifyMode.exactly(1)) { materialDatabaseSource.getLifetimeOrNull(url) }
+    }
+
+    @Test
+    fun `isCacheValid returns false when transient lifetime expirationDateTime below now`() = runTest {
+        val url = "url"
+        val key = "key"
+        val fixed = Clock.System.now()
+        everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Transient(
+            validityKey = key,
+            expirationDateTime = fixed - 1.seconds
+        )
+
+        val result = sut.isCacheValid(url, key) { fixed }
+        assertFalse(result)
+
+        verifySuspend(VerifyMode.exactly(1)) { materialDatabaseSource.getLifetimeOrNull(url) }
+    }
 
     @Test
     fun `delete delegates to database`() = runTest {
@@ -230,34 +227,34 @@ class MaterialCacheLocalSourceTest {
         verify(VerifyMode.exactly(1)) { coroutineScopes.database }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(
-                matching { entity: JsonObjectEntity ->
+                matches { entity: JsonObjectEntity ->
                     entity.type == "typeRoot" &&
-                            entity.url == url &&
-                            entity.id == "valueRoot" &&
-                            entity.idFrom == "sourceRoot" &&
-                            entity.jsonObject == rootNode.content
+                        entity.url == url &&
+                        entity.id == "valueRoot" &&
+                        entity.idFrom == "sourceRoot" &&
+                        entity.jsonObject == rootNode.content
                 },
                 Table.Common
             )
         }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(
-                matching { hook: HookEntity ->
+                matches { hook: HookEntity ->
                     hook.url == url &&
-                            hook.visibility == visibility &&
-                            hook.rootPrimaryKey == rootPrimaryKey &&
-                            hook.lifetime == lifetime
+                        hook.visibility == visibility &&
+                        hook.rootPrimaryKey == rootPrimaryKey &&
+                        hook.lifetime == lifetime
                 }
             )
         }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(
-                matching { entity: JsonObjectEntity ->
+                matches { entity: JsonObjectEntity ->
                     entity.type == "typeChild" &&
-                            entity.url == url &&
-                            entity.id == "valueChild" &&
-                            entity.idFrom == "sourceChild" &&
-                            entity.jsonObject == childNode.content
+                        entity.url == url &&
+                        entity.id == "valueChild" &&
+                        entity.idFrom == "sourceChild" &&
+                        entity.jsonObject == childNode.content
                 },
                 Table.Common
             )
@@ -334,14 +331,13 @@ class MaterialCacheLocalSourceTest {
             materialDatabaseSource.insert(any())
         }
         verifySuspend(VerifyMode.exactly(1)) {
-            materialDatabaseSource.insert(
-                matching(
-                    toString = { "HookEntity with expected values" }
-                ) { hook: HookEntity ->
-                    hook.url == url &&
-                            hook.visibility == visibility &&
-                            (hook.lifetime as? Lifetime.Enrolled)?.validityKey == key
-                })
+            materialDatabaseSource.insert(matches(
+                toString = { "HookEntity with expected values" }
+            ) { hook: HookEntity ->
+                hook.url == url &&
+                    hook.visibility == visibility &&
+                    (hook.lifetime as? Lifetime.Enrolled)?.validityKey == key
+            })
         }
     }
 

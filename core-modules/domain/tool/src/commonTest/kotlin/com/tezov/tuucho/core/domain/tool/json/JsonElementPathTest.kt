@@ -7,7 +7,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class JsonElementPathTest {
-
     @Test
     fun `empty string becomes empty path`() {
         val path = JsonElementPath("")

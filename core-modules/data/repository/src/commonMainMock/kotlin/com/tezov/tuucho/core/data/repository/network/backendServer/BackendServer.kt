@@ -9,7 +9,6 @@ class BackendServer(
     private val serverUrl: String,
     private val services: List<ServiceProtocol>,
 ) {
-
     data class Request(
         val url: String,
         val headers: Headers,
@@ -22,7 +21,9 @@ class BackendServer(
         val body: String?,
     )
 
-    suspend fun process(request: Request): Response {
+    suspend fun process(
+        request: Request
+    ): Response {
         val parsedUrl = Url(request.url)
         val baseUrl = Url(serverUrl)
         val endpoint = parsedUrl.encodedPath
@@ -32,8 +33,8 @@ class BackendServer(
             ?: throw IllegalArgumentException("Missing 'version' query param")
         val url = parsedUrl.parameters["url"]
             ?: throw IllegalArgumentException("Missing 'url' query param")
-        return services.first { it.url == endpoint }
+        return services
+            .first { it.url == endpoint }
             .process(version, request.copy(url = url))
     }
-
 }

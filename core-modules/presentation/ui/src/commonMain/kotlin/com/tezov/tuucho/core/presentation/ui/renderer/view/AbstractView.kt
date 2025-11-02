@@ -23,7 +23,6 @@ import kotlinx.serialization.json.JsonObject
 abstract class AbstractView(
     componentObject: JsonObject,
 ) : ViewProtocol {
-
     override val children: List<ViewProtocol>? = null
 
     protected var isInitialized = false
@@ -39,12 +38,13 @@ abstract class AbstractView(
             field = value
         }
 
-    private fun keyOf(type: String?, id: String?) = "$type+$id"
+    private fun keyOf(
+        type: String?,
+        id: String?
+    ) = "$type+$id"
 
-    protected open fun canBeRendered(): Boolean {
-        return componentObject.idSourceOrNull == null &&
-                componentObject.contentOrNull?.idSourceOrNull == null
-    }
+    protected open fun canBeRendered(): Boolean = componentObject.idSourceOrNull == null &&
+        componentObject.contentOrNull?.idSourceOrNull == null
 
     protected fun updateCanBeRendered() {
         _canBeRendered.value = canBeRendered()
@@ -65,7 +65,9 @@ abstract class AbstractView(
 
     open fun onInit() {}
 
-    final override suspend fun update(jsonObject: JsonObject) {
+    final override suspend fun update(
+        jsonObject: JsonObject
+    ) {
         children?.forEach { it.update(jsonObject) }
 
         val id = jsonObject.idValue
@@ -80,31 +82,44 @@ abstract class AbstractView(
             }
 
             TypeSchema.Value.content -> {
-                componentObject = componentObject.withScope(ComponentSchema::Scope).apply {
-                    content = jsonObject
-                }.collect()
+                componentObject = componentObject
+                    .withScope(ComponentSchema::Scope)
+                    .apply {
+                        content = jsonObject
+                    }.collect()
                 jsonObject.processContent()
             }
 
             TypeSchema.Value.text -> {
-                componentObject = componentObject.withScope(ComponentSchema::Scope).apply {
-                    content?.let {
-                        content = it.withScope(ContentSchema::Scope).apply {
-                            this[key] = jsonObject
-                        }.collect()
-                    }
-                }.collect()
+                componentObject = componentObject
+                    .withScope(ComponentSchema::Scope)
+                    .apply {
+                        content?.let {
+                            content = it
+                                .withScope(ContentSchema::Scope)
+                                .apply {
+                                    this[key] = jsonObject
+                                }.collect()
+                        }
+                    }.collect()
                 jsonObject.processText(key)
             }
 
-            TypeSchema.Value.message -> jsonObject.processMessage()
+            TypeSchema.Value.message -> {
+                jsonObject.processMessage()
+            }
 
-            else -> throw UiException.Default("Unknown update type $type")
+            else -> {
+                throw UiException.Default("Unknown update type $type")
+            }
         }
         updateCanBeRendered()
     }
 
-    protected fun addTypeId(type: String?, id: String?) {
+    protected fun addTypeId(
+        type: String?,
+        id: String?
+    ) {
         val typeId = keyOf(type, id)
         if (typeIds.contains(typeId)) {
             throw UiException.Default("Warning, typeId $typeId already already")
@@ -112,7 +127,11 @@ abstract class AbstractView(
         typeIds.put(typeId, "")
     }
 
-    protected fun addTypeIdForKey(type: String?, id: String?, key: String) {
+    protected fun addTypeIdForKey(
+        type: String?,
+        id: String?,
+        key: String
+    ) {
         val typeId = keyOf(type, id)
         if (typeIds.contains(typeId)) {
             throw UiException.Default("Warning, typeId $typeId already already exist for $key")
@@ -121,19 +140,35 @@ abstract class AbstractView(
     }
 
     open suspend fun JsonObject.processComponent() {}
+
     open suspend fun JsonObject.processContent() {}
+
     open suspend fun JsonObject.processStyle() {}
+
     open suspend fun JsonObject.processOption() {}
+
     open suspend fun JsonObject.processState() {}
-    open suspend fun JsonObject.processText(key: String) {}
-    open suspend fun JsonObject.processDimension(key: String) {}
-    open suspend fun JsonObject.processColor(key: String) {}
+
+    open suspend fun JsonObject.processText(
+        key: String
+    ) {}
+
+    open suspend fun JsonObject.processDimension(
+        key: String
+    ) {}
+
+    open suspend fun JsonObject.processColor(
+        key: String
+    ) {}
+
     open suspend fun JsonObject.processMessage() {}
 
     private val canBeRendered get() = _canBeRendered.value
 
     @Composable
-    final override fun display(scope: Any?) {
+    final override fun display(
+        scope: Any?
+    ) {
         if (canBeRendered) {
             displayComponent(scope)
         } else {
@@ -142,10 +177,14 @@ abstract class AbstractView(
     }
 
     @Composable
-    protected abstract fun displayComponent(scope: Any?)
+    protected abstract fun displayComponent(
+        scope: Any?
+    )
 
     @Composable
-    protected open fun displayPlaceholder(scope: Any?) {
+    protected open fun displayPlaceholder(
+        scope: Any?
+    ) {
         Box(
             modifier = Modifier.Companion
                 .fillMaxWidth()
@@ -153,5 +192,4 @@ abstract class AbstractView(
                 .shimmerComposable(width = 1000f)
         )
     }
-
 }

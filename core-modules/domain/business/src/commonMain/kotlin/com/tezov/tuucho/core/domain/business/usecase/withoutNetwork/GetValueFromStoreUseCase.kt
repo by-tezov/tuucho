@@ -9,7 +9,6 @@ class GetValueFromStoreUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val keyValueRepository: KeyValueStoreRepositoryProtocol,
 ) : UseCaseProtocol.Async<Input, GetValueFromStoreUseCase.Output> {
-
     data class Input(
         val key: KeyValueStoreRepositoryProtocol.Key
     )
@@ -18,12 +17,13 @@ class GetValueFromStoreUseCase(
         val value: KeyValueStoreRepositoryProtocol.Value
     )
 
-    override suspend fun invoke(input: Input) = with(input) {
+    override suspend fun invoke(
+        input: Input
+    ) = with(input) {
         coroutineScopes.database.await {
             Output(
                 value = keyValueRepository.get(input.key)
             )
         }
     }
-
 }

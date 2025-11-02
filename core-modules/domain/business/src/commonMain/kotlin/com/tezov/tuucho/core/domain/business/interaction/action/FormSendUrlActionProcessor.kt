@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.action
 
+import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -23,15 +24,14 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class FormSendUrlActionProcessor(
+internal class FormSendUrlActionProcessor(
     private val useCaseExecutor: UseCaseExecutor,
     private val getOrNullScreen: GetScreenOrNullUseCase,
     private val sendData: SendDataUseCase,
-) : ActionProcessorProtocol, KoinComponent {
-
+) : ActionProcessorProtocol,
+    TuuchoKoinComponent {
     private val actionHandler: ProcessActionUseCase by inject()
 
     override val priority: Int
@@ -41,9 +41,7 @@ class FormSendUrlActionProcessor(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
         jsonElement: JsonElement?,
-    ): Boolean {
-        return (action.command == Action.Form.command && action.authority == Action.Form.Send.authority)
-    }
+    ): Boolean = (action.command == Action.Form.command && action.authority == Action.Form.Send.authority)
 
     override suspend fun process(
         route: NavigationRoute.Url,
@@ -53,14 +51,16 @@ class FormSendUrlActionProcessor(
         action.target ?: return
         val formView = route.getAllFormView() ?: return
         if (formView.isAllFormValid()) {
-            val response = useCaseExecutor.invokeSuspend(
-                useCase = sendData,
-                input = SendDataUseCase.Input(
-                    url = action.target,
-                    jsonObject = formView.data()
-                )
-            ).jsonObject
-            response?.withScope(FormSendResponseSchema::Scope)
+            val response = useCaseExecutor
+                .invokeSuspend(
+                    useCase = sendData,
+                    input = SendDataUseCase.Input(
+                        url = action.target,
+                        jsonObject = formView.data()
+                    )
+                ).jsonObject
+            response
+                ?.withScope(FormSendResponseSchema::Scope)
                 ?.takeIf { it.type == TypeResponseSchema.Value.form }
                 ?.run {
                     if (allSucceed.isTrue) {
@@ -74,13 +74,15 @@ class FormSendUrlActionProcessor(
         }
     }
 
-    private suspend fun NavigationRoute.Url.getAllFormView() =
-        useCaseExecutor.invokeSuspend(
+    private suspend fun NavigationRoute.Url.getAllFormView() = useCaseExecutor
+        .invokeSuspend(
             useCase = getOrNullScreen,
             input = GetScreenOrNullUseCase.Input(
                 route = this
             )
-        ).screen?.views(FormViewProtocol.Extension::class)?.map { it.formView }
+        ).screen
+        ?.views(FormViewProtocol.Extension::class)
+        ?.map { it.formView }
 
     private fun List<FormViewProtocol>.isAllFormValid(): Boolean {
         forEach { it.updateValidity() }
@@ -98,11 +100,15 @@ class FormSendUrlActionProcessor(
     ) {
         val results = filter { it.isValid() == false }
             .map {
-                JsonNull.withScope(IdSchema::Scope).apply {
-                    self = JsonNull.withScope(IdSchema::Scope).apply {
-                        value = it.getId()
+                JsonNull
+                    .withScope(IdSchema::Scope)
+                    .apply {
+                        self = JsonNull
+                            .withScope(IdSchema::Scope)
+                            .apply {
+                                value = it.getId()
+                            }.collect()
                     }.collect()
-                }.collect()
             }.let(::JsonArray)
         dispatchActionCommandError(route, results)
     }
@@ -117,8 +123,10 @@ class FormSendUrlActionProcessor(
             it.string.dispatchAction(route, responseCollect)
         }
         dispatchActionCommandError(route, toFailureResult())
-        jsonElement?.withScope(ActionFormSchema.Send::Scope)
-            ?.denied?.forEach {
+        jsonElement
+            ?.withScope(ActionFormSchema.Send::Scope)
+            ?.denied
+            ?.forEach {
                 it.string.dispatchAction(route, responseCollect)
             }
         responseActionScope?.after?.forEach {
@@ -135,8 +143,10 @@ class FormSendUrlActionProcessor(
         responseActionScope?.before?.forEach {
             it.string.dispatchAction(route, responseCollect)
         }
-        jsonElement?.withScope(ActionFormSchema.Send::Scope)
-            ?.validated?.forEach {
+        jsonElement
+            ?.withScope(ActionFormSchema.Send::Scope)
+            ?.validated
+            ?.forEach {
                 it.string.dispatchAction(route, responseCollect)
             }
         responseActionScope?.after?.forEach {
@@ -148,18 +158,22 @@ class FormSendUrlActionProcessor(
         ?.jsonArray
         ?.map { result ->
             val scope = result.withScope(FormSendResponseSchema.FailureResult::Scope)
-            JsonNull.withScope(::SchemaScope).apply {
-                withScope(IdSchema::Scope).apply {
-                    self = JsonNull.withScope(IdSchema::Scope).apply {
-                        value = scope.id
-                    }.collect()
-                }
-                scope.reason?.let {
-                    withScope(FormSendResponseSchema.FailureResult::Scope).apply {
-                        reason = it
+            JsonNull
+                .withScope(::SchemaScope)
+                .apply {
+                    withScope(IdSchema::Scope).apply {
+                        self = JsonNull
+                            .withScope(IdSchema::Scope)
+                            .apply {
+                                value = scope.id
+                            }.collect()
                     }
-                }
-            }.collect()
+                    scope.reason?.let {
+                        withScope(FormSendResponseSchema.FailureResult::Scope).apply {
+                            reason = it
+                        }
+                    }
+                }.collect()
         }?.let(::JsonArray)
 
     private suspend fun dispatchActionCommandError(
@@ -193,5 +207,4 @@ class FormSendUrlActionProcessor(
             ),
         )
     }
-
 }

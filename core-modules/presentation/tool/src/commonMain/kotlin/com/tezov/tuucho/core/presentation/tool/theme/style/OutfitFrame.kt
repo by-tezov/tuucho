@@ -22,10 +22,10 @@ fun Modifier.background(
 typealias OutfitFrameStateColor = OutfitFrame.StateColor.Style
 
 object OutfitFrame {
-
     object StateColor {
-
-        class StyleBuilder internal constructor(style: Style) {
+        class StyleBuilder internal constructor(
+            style: Style
+        ) {
             var outfitShape = style.outfitShape
             var outfitBorder = style.outfitBorder
 
@@ -41,21 +41,27 @@ object OutfitFrame {
         ) {
             val outfitShape: OutfitShapeStateColor by DelegateNullFallBack.Ref(
                 outfitShape,
-                fallBackValue = { com.tezov.tuucho.core.presentation.tool.theme.style.OutfitShapeStateColor() }
+                fallBackValue = {
+                    com.tezov.tuucho.core.presentation.tool.theme.style
+                        .OutfitShapeStateColor()
+                }
             )
             val outfitBorder: OutfitBorderStateColor by DelegateNullFallBack.Ref(
                 outfitBorder,
-                fallBackValue = { com.tezov.tuucho.core.presentation.tool.theme.style.OutfitBorderStateColor() }
+                fallBackValue = {
+                    com.tezov.tuucho.core.presentation.tool.theme.style
+                        .OutfitBorderStateColor()
+                }
             )
 
             companion object {
-
                 @Composable
-                fun Style.copy(builder: @Composable StyleBuilder.() -> Unit = {}) =
-                    StyleBuilder(this).also {
+                fun Style.copy(
+                    builder: @Composable StyleBuilder.() -> Unit = {}
+                ) = StyleBuilder(this)
+                    .also {
                         it.builder()
                     }.get()
-
             }
 
             constructor(style: Style) : this(
@@ -65,18 +71,21 @@ object OutfitFrame {
 
             fun getShape() = outfitShape.getShape()
 
-            fun resolveColorShape(selector: Any? = null) = outfitShape.resolveColor(selector)
+            fun resolveColorShape(
+                selector: Any? = null
+            ) = outfitShape.resolveColor(selector)
 
-            fun resolveShape(selector: Any? = null) = outfitShape.resolve(selector)
+            fun resolveShape(
+                selector: Any? = null
+            ) = outfitShape.resolve(selector)
 
-            fun resolveColorBorder(selector: Any? = null) = outfitBorder.resolveColor(selector)
+            fun resolveColorBorder(
+                selector: Any? = null
+            ) = outfitBorder.resolveColor(selector)
 
-            fun resolveBorder(selector: Any? = null) = outfitBorder.resolve(selector)
-
+            fun resolveBorder(
+                selector: Any? = null
+            ) = outfitBorder.resolve(selector)
         }
-
     }
-
-
 }
-

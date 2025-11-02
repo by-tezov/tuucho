@@ -10,7 +10,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrN
 class GetScreenOrNullUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
 ) : UseCaseProtocol.Async<Input, Output> {
-
     data class Input(
         val route: NavigationRoute.Url,
     )
@@ -19,7 +18,9 @@ class GetScreenOrNullUseCase(
         val screen: ScreenProtocol?,
     )
 
-    override suspend fun invoke(input: Input) = with(input) {
+    override suspend fun invoke(
+        input: Input
+    ) = with(input) {
         Output(
             screen = navigationStackScreenRepository.getScreenOrNull(route)
         )
