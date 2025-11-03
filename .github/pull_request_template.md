@@ -20,6 +20,7 @@ CI command (use label 'trigger CI' after update)
   - [x] : dev
   - [ ] : ~~stage~~ not available yet
   - [ ] : ~~release~~ not available yet
+- [ ] : static-analysis
 - [ ] : unit-test
 ---
 **QA branch name** : master
