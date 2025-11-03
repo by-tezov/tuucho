@@ -1,13 +1,15 @@
 package com.tezov.tuucho.core.data.repository.assets
 
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.Source
 import platform.Foundation.NSBundle
-import com.tezov.tuucho.core.data.repository.exception.DataException
 
 class AssetsIos : AssetsProtocol {
-    override fun readFile(path: String): Source {
+    override fun readFile(
+        path: String
+    ): Source {
         val parts = "assets/files/$path".split("/")
         val filename = parts.last()
         val name = filename.substringBeforeLast(".")

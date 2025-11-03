@@ -8,7 +8,6 @@ import platform.Foundation.NSUserDefaults
 class KeyValueStoreRepository(
     private val userDefaults: NSUserDefaults,
 ) : KeyValueStoreRepositoryProtocol {
-
     override suspend fun save(
         key: KeyValueStoreRepositoryProtocol.Key,
         value: KeyValueStoreRepositoryProtocol.Value?,
@@ -20,18 +19,19 @@ class KeyValueStoreRepository(
         }
     }
 
-    override suspend fun hasKey(key: KeyValueStoreRepositoryProtocol.Key): Boolean {
-        return userDefaults.objectForKey(key.value) != null
-    }
+    override suspend fun hasKey(
+        key: KeyValueStoreRepositoryProtocol.Key
+    ): Boolean = userDefaults.objectForKey(key.value) != null
 
-    override suspend fun get(key: KeyValueStoreRepositoryProtocol.Key): KeyValueStoreRepositoryProtocol.Value {
-        return getOrNull(key)
-            ?: throw DataException.Default("Key ${key.value} not found in store")
-    }
+    override suspend fun get(
+        key: KeyValueStoreRepositoryProtocol.Key
+    ): KeyValueStoreRepositoryProtocol.Value = getOrNull(key)
+        ?: throw DataException.Default("Key ${key.value} not found in store")
 
-    override suspend fun getOrNull(key: KeyValueStoreRepositoryProtocol.Key): KeyValueStoreRepositoryProtocol.Value? {
+    override suspend fun getOrNull(
+        key: KeyValueStoreRepositoryProtocol.Key
+    ): KeyValueStoreRepositoryProtocol.Value? {
         val stored = userDefaults.stringForKey(key.value)
         return stored?.toValue()
     }
-
 }

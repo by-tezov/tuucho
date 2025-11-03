@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
 import com.tezov.tuucho.sample.app.shared.BuildKonfig
 import org.koin.dsl.ModuleDeclaration
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import org.koin.core.module.Module
 
 internal object ConfigModuleIos {
 
@@ -16,35 +17,35 @@ internal object ConfigModuleIos {
 
         override fun Module.declaration() {
 
-        factory<StoreRepositoryModule.Config> {
-            object : StoreRepositoryModule.Config {
-                override val fileName = BuildKonfig.localDatastoreFileName
+            factory<StoreRepositoryModule.Config> {
+                object : StoreRepositoryModule.Config {
+                    override val fileName = BuildKonfig.localDatastoreFileName
+                }
             }
-        }
 
-        factory<DatabaseRepositoryModule.Config> {
-            object : DatabaseRepositoryModule.Config {
-                override val fileName = BuildKonfig.localDatabaseFileName
+            factory<DatabaseRepositoryModule.Config> {
+                object : DatabaseRepositoryModule.Config {
+                    override val fileName = BuildKonfig.localDatabaseFileName
+                }
             }
-        }
 
-        factory<NetworkRepositoryModule.Config> {
-            object : NetworkRepositoryModule.Config {
-                override val timeoutMillis = BuildKonfig.serverTimeoutMillis
-                override val version = BuildKonfig.serverVersion
-                override val baseUrl = BuildKonfig.serverBaseUrl
-                override val healthEndpoint = BuildKonfig.serverHealthEndpoint
-                override val resourceEndpoint = BuildKonfig.serverResourceEndpoint
-                override val sendEndpoint = BuildKonfig.serverSendEndpoint
+            factory<NetworkRepositoryModule.Config> {
+                object : NetworkRepositoryModule.Config {
+                    override val timeoutMillis = BuildKonfig.serverTimeoutMillis
+                    override val version = BuildKonfig.serverVersion
+                    override val baseUrl = BuildKonfig.serverBaseUrl
+                    override val healthEndpoint = BuildKonfig.serverHealthEndpoint
+                    override val resourceEndpoint = BuildKonfig.serverResourceEndpoint
+                    override val sendEndpoint = BuildKonfig.serverSendEndpoint
+                }
             }
-        }
 
-        factory<NetworkModule.Config> {
-            object : NetworkModule.Config {
-                override val headerPlatform = BuildKonfig.headerPlatform
+            factory<RequestInterceptorModule.Config> {
+                object : RequestInterceptorModule.Config {
+                    override val headerPlatform = BuildKonfig.headerPlatform
+                }
             }
-        }
 
+        }
     }
-
 }
