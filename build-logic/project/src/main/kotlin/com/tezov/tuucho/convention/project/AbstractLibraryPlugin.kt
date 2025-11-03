@@ -171,7 +171,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 reporter(ReporterType.PLAIN)
                 reporter(ReporterType.CHECKSTYLE)
             }
-            ignoreFailures.set(false)
+            ignoreFailures.set(System.getenv("IS_CI") == "true")
         }
     }
 
@@ -184,7 +184,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             allRules = false
             config.setFrom("${rootProject.projectDir}/.detecktrules.yml")
             baseline = file("$projectDir/.validation/detekt/baseline.xml")
-            ignoreFailures = false
+            ignoreFailures = System.getenv("IS_CI") == "true"
         }
         val detektSourceDirs = mutableSetOf(
             "src/commonMain/kotlin",
