@@ -48,9 +48,10 @@ tasks.register("rootKtLintReport") {
     doLast {
         val xmlReportsByProject = subprojects.mapNotNull { sub ->
             val reportsDir = sub.layout.buildDirectory.dir("reports/ktlint").get().asFile
-            val xmlFile = reportsDir.walkTopDown()
-                .firstOrNull { it.isFile && it.extension == "xml" }
-            xmlFile?.let { sub.path to it }
+            val xmlFiles = reportsDir.walkTopDown()
+                .filter { it.isFile && it.extension == "xml" }
+                .toList()
+            if (xmlFiles.isNotEmpty()) sub.path to xmlFiles else null
         }
         if (xmlReportsByProject.isEmpty()) {
             println("No ktlint XML reports found to aggregate.")
@@ -63,16 +64,20 @@ tasks.register("rootKtLintReport") {
         aggregatedFile.bufferedWriter().use { writer ->
             writer.appendLine("""<?xml version="1.0" encoding="UTF-8"?>""")
             writer.appendLine("""<checkstyle version="8.0">""")
-            xmlReportsByProject.forEach { (projectPath, file) ->
-                val content = file.readText()
-                    .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")
-                    .replaceFirst("""<checkstyle[^>]*>""".toRegex(), "")
-                    .replace("""</checkstyle>""", "")
-                    .trim()
-
-                if (content.isNotEmpty()) {
+            xmlReportsByProject.forEach { (projectPath, files) ->
+                val contents = files.mapNotNull { file ->
+                    val content = file.readText()
+                        .replaceFirst("""<\?xml[^>]*>""".toRegex(), "")
+                        .replaceFirst("""<checkstyle[^>]*>""".toRegex(), "")
+                        .replace("""</checkstyle>""", "")
+                        .trim()
+                    content.takeIf { it.isNotEmpty() }
+                }
+                if (contents.isNotEmpty()) {
                     writer.appendLine("  <!-- ************ Project: $projectPath ************ -->")
-                    writer.appendLine(content.prependIndent("  "))
+                    contents.forEach { content ->
+                        writer.appendLine(content.prependIndent("  "))
+                    }
                 }
             }
             writer.appendLine("</checkstyle>")
@@ -153,7 +158,6 @@ tasks.register("rootDetektReport") {
         val rootReportsDir = layout.buildDirectory.dir("reports/detekt").get().asFile
         rootReportsDir.deleteRecursively()
         rootReportsDir.mkdirs()
-
         // ---------- Aggregate XML ----------
         val xmlReportsByProject = subprojects.mapNotNull { sub ->
             val reportsDir = sub.layout.buildDirectory.dir("reports/detekt").get().asFile
@@ -179,14 +183,12 @@ tasks.register("rootDetektReport") {
                 }
                 writer.appendLine("</checkstyle>")
             }
-
             println(
                 "Aggregated ${xmlReportsByProject.size} Detekt XML reports into ${
                     aggregatedXml.relativeTo(rootProject.projectDir)
                 }"
             )
         }
-
         // ---------- Aggregate HTML ----------
         val htmlReportsByProject = subprojects.mapNotNull { sub ->
             val reportsDir = sub.layout.buildDirectory.dir("reports/detekt").get().asFile
@@ -343,15 +345,18 @@ tasks.register("rootUpdateProdApi") {
         val aggregatedFile = file("${rootApiDir.path}/api-aggregated.api")
         aggregatedFile.bufferedWriter().use { writer ->
             apiReportsByProject.forEach { (projectPath, files) ->
-                writer.appendLine("************ Project: $projectPath ************")
-                files.forEach { file ->
+                val contents = files.mapNotNull { file ->
                     val content = file.readText().trim()
-                    if (content.isNotEmpty()) {
+                    content.takeIf { it.isNotEmpty() }
+                }
+                if (contents.isNotEmpty()) {
+                    writer.appendLine("************ Project: $projectPath ************")
+                    contents.forEach { content ->
                         writer.appendLine(content)
                         writer.appendLine()
                     }
+                    writer.appendLine()
                 }
-                writer.appendLine()
             }
         }
         println(
