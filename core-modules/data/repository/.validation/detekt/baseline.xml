@@ -53,15 +53,11 @@
     <ID>NestedBlockDepth:StatesRectifier.kt$StatesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:StylesRectifier.kt$StylesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:TextsRectifier.kt$TextsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
-    <ID>NewLineAtEndOfFile:AssetsModule.ios.kt$com.tezov.tuucho.core.data.repository.di.AssetsModule.ios.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.android.dev.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.android.dev.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.android.stage.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.android.stage.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.dev.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.dev.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.mock.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.mock.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.prod.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.prod.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.stage.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.stage.kt</ID>
-    <ID>NewLineAtEndOfFile:StoreRepositoryModule.ios.kt$com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule.ios.kt</ID>
     <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
     <ID>PackageNaming:AbstractBreaker.kt$package com.tezov.tuucho.core.data.repository.parser.breaker._system</ID>
     <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>

@@ -6,7 +6,6 @@
     <!-- ************ Project: :core ************ -->
     <ID>FunctionNaming:StartTuuchoEngine.kt$@Composable fun StartTuuchoEngine( applicationModules: List&lt;ModuleProtocol&gt;, onStartUrl: String )</ID>
     <ID>LongParameterList:CoroutineScopes.kt$CoroutineScopes$( override val database: CoroutineContextProtocol = object : CoroutineContext("Database", Dispatchers.IO) {}, override val datastore: CoroutineContextProtocol = object : CoroutineContext("Database", Dispatchers.IO) {}, override val network: CoroutineContextProtocol = object : CoroutineContext("Network", Dispatchers.IO) {}, override val parser: CoroutineContextProtocol = object : CoroutineContext("Parser", Dispatchers.Default) {}, override val renderer: CoroutineContextProtocol = object : CoroutineContext("Renderer", Dispatchers.Default) {}, override val navigation: CoroutineContextProtocol = object : CoroutineContext("Navigation", Dispatchers.Default) {}, override val useCase: CoroutineContextProtocol = object : CoroutineContext("UseCase", Dispatchers.Default) {}, override val event: CoroutineContextProtocol = object : CoroutineContext("Event", Dispatchers.Default) {}, override val default: CoroutineContextProtocol = object : CoroutineContext("Default", Dispatchers.Default) {}, override val main: CoroutineContextProtocol = object : CoroutineContext("Main", Dispatchers.Main) {}, override val io: CoroutineContextProtocol = object : CoroutineContext("IO", Dispatchers.IO) {}, )</ID>
-    <ID>NewLineAtEndOfFile:SystemCoreModules.ios.kt$com.tezov.tuucho.core.barrel.di.SystemCoreModules.ios.kt</ID>
     <ID>PackageNaming:CoroutineScopes.kt$package com.tezov.tuucho.core.barrel._system</ID>
     <!-- ************ Project: :core:data:__core.data__repository ************ -->
     <ID>ForbiddenComment:SendDataAndRetrieveMaterialRemoteSource.kt$SendDataAndRetrieveMaterialRemoteSource$// TODO: rectifier response</ID>
@@ -60,15 +59,11 @@
     <ID>NestedBlockDepth:StatesRectifier.kt$StatesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:StylesRectifier.kt$StylesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:TextsRectifier.kt$TextsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
-    <ID>NewLineAtEndOfFile:AssetsModule.ios.kt$com.tezov.tuucho.core.data.repository.di.AssetsModule.ios.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.android.dev.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.android.dev.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.android.stage.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.android.stage.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.dev.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.dev.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.mock.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.mock.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.prod.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.prod.kt</ID>
     <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.stage.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.stage.kt</ID>
-    <ID>NewLineAtEndOfFile:StoreRepositoryModule.ios.kt$com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule.ios.kt</ID>
     <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
     <ID>PackageNaming:AbstractBreaker.kt$package com.tezov.tuucho.core.data.repository.parser.breaker._system</ID>
     <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
