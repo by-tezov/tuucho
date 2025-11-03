@@ -9,8 +9,11 @@ import com.tezov.tuucho.core.presentation.ui.renderer.TuuchoEngineProtocol
 @Composable
 fun StartTuuchoEngine(
     applicationModules: List<ModuleProtocol>,
-    onStartUrl: String
+    onStartUrl : String
 ) {
+    if(true) {
+        //nothing
+    }
     val tuuchoEngine = SystemCoreModules
         .remember(applicationModules)
         .koin
