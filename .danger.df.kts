@@ -18,49 +18,50 @@
 //}
 
 import systems.danger.kotlin.*
+import java.io.File
 
 danger(args) {
    val allSourceFiles = git.modifiedFiles + git.createdFiles
+
    // --- PR metadata checks ---
-   if (pullRequest.title.isBlank()) {
+   val title = github.pullRequest.title
+   val body = github.pullRequest.body ?: ""
+
+   if (title.isBlank()) {
       warn("⚠️ PR title is empty — please describe what this change does.")
    }
-   if (pullRequest.body.isBlank()) {
+   if (body.isBlank()) {
       warn("📝 Add a PR description for reviewers.")
    }
+
    if (git.modifiedFiles.size > 50) {
       fail("🚨 This PR changes ${git.modifiedFiles.size} files. Split it into smaller ones.")
    }
+
    // --- Test coverage reminder ---
    val hasTestChanges = allSourceFiles.any { it.contains("Test") || it.contains("Spec") }
    val hasSourceChanges = allSourceFiles.any { it.endsWith(".kt") && !it.contains("/test/") }
    if (hasSourceChanges && !hasTestChanges) {
       warn("🧪 You modified code but added no tests.")
    }
+
    // --- Dependency changes ---
    val dependencyFiles = listOf("build.gradle.kts", "libs.versions.toml", "settings.gradle.kts")
    val changedDependencies = allSourceFiles.filter { f -> dependencyFiles.any { f.endsWith(it) } }
    if (changedDependencies.isNotEmpty()) {
       message("📦 Dependencies changed in: ${changedDependencies.joinToString()}")
    }
+
    // --- Static analysis integration (KtLint) ---
-   val ktLintReport = File("build/reports/ktlint/ktlint-aggregated.xml")
-   if (ktLintReport.exists()) {
-      val warnings = ktLintReport.readText().split("<error").size - 1
-      if (warnings > 0) {
-         warn("⚠️ KtLint found $warnings issues. Check your report.")
-      } else {
-         message("✅ KtLint is clean.")
+   fun checkReport(path: String, tool: String) {
+      val file = File(path)
+      if (file.exists()) {
+         val issues = file.readText().split("<error").size - 1
+         if (issues > 0) warn("⚠️ $tool found $issues issues. Check your report.")
+         else message("✅ $tool is clean.")
       }
    }
-   // --- Static analysis integration (Detekt) ---
-   val detektReport = File("build/reports/detekt/detekt-aggregated.xml")
-   if (detektReport.exists()) {
-      val warnings = detektReport.readText().split("<error").size - 1
-      if (warnings > 0) {
-         warn("⚠️ Detekt found $warnings issues. Check your report.")
-      } else {
-         message("✅ Detekt is clean.")
-      }
-   }
+
+   checkReport("build/reports/ktlint/ktlint-aggregated.xml", "KtLint")
+   checkReport("build/reports/detekt/detekt-aggregated.xml", "Detekt")
 }
