@@ -1,18 +1,17 @@
-
-purpose of this pull request
+### purpose of this pull request
 ---
 
 
 
 
-demo (video / screen)
+### demo (video / screen)
 ---
 
 
 
 
 ---
-CI command (use label 'trigger CI' after update)
+### CI command (use label 'trigger CI' after update)
 ---
 - [ ] : push trigger CI when on draft
 - **build type**:
