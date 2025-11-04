@@ -37,10 +37,9 @@ danger(args) {
    if (body.isBlank()) {
       fail("📝 PR body is missing. Follow the required template.")
    } else {
-      // capture content between "### purpose..." and the next "###" or EOF
       fun extractSection(section: String, body: String): String? {
          val regex = Regex(
-            "(?s)###\\s*${Regex.escape(section)}\\s*\\n[-–—]*\\n+(.*?)(?=\\n+###|\\z)",
+            "(?s)###\\s*${Regex.escape(section)}.*?---+\\s*(.*?)\\s*(?=(###|$))",
             RegexOption.IGNORE_CASE
          )
          return regex.find(body)?.groups?.get(1)?.value?.trim()
