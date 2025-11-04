@@ -1,10 +1,11 @@
 package com.tezov.tuucho.shared.sample.di
 
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
-import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
+import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
-import com.tezov.tuucho.shared.sample.interceptor.HeadersInterceptor
+import com.tezov.tuucho.shared.sample.interceptor.FailSafePageInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeaderAuthorizationInterceptor
+import com.tezov.tuucho.shared.sample.interceptor.HeadersInterceptor
 import org.koin.core.module.Module
 import org.koin.dsl.bind
 
@@ -24,7 +25,7 @@ object RequestInterceptorModule {
                 HeadersInterceptor(
                     config = get()
                 )
-            } bind NetworkRepositoryModule.RequestInterceptor::class
+            } bind HttpInterceptor.Node::class
 
             factory<HeaderAuthorizationInterceptor> {
                 HeaderAuthorizationInterceptor(
@@ -32,7 +33,14 @@ object RequestInterceptorModule {
                     config = get(),
                     getValueOrNullFromStore = get()
                 )
-            } bind NetworkRepositoryModule.RequestInterceptor::class
+            } bind HttpInterceptor.Node::class
+
+            factory<FailSafePageInterceptor> {
+                FailSafePageInterceptor(
+                    config = get(),
+                )
+            } bind HttpInterceptor.Node::class
+
         }
     }
 }

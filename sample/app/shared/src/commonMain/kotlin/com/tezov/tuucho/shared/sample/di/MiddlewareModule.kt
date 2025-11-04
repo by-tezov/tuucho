@@ -1,14 +1,11 @@
 package com.tezov.tuucho.shared.sample.di
 
-import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
 import com.tezov.tuucho.core.domain.business.di.ModuleGroupDomain
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.shared.sample.middleware.BeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.shared.sample.middleware.ExceptionNavigateToUrlMiddleware
 import org.koin.core.module.Module
-import org.koin.dsl.ModuleDeclaration
 import org.koin.dsl.bind
 
 object MiddlewareModule {
@@ -19,10 +16,6 @@ object MiddlewareModule {
 
         override fun Module.declaration() {
 
-            factory<ExceptionNavigateToUrlMiddleware> {
-                ExceptionNavigateToUrlMiddleware()
-            } bind NavigationMiddleware.ToUrl::class
-
             factory<BeforeNavigateToUrlMiddleware> {
                 BeforeNavigateToUrlMiddleware(
                     useCaseExecutor = get(),
@@ -30,6 +23,10 @@ object MiddlewareModule {
                     refreshMaterialCache = get(),
                     getValueOrNullFromStore = get(),
                 )
+            } bind NavigationMiddleware.ToUrl::class
+
+            factory<ExceptionNavigateToUrlMiddleware> {
+                ExceptionNavigateToUrlMiddleware()
             } bind NavigationMiddleware.ToUrl::class
 
         }

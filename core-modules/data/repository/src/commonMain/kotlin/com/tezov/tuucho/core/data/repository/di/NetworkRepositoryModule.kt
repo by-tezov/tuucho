@@ -1,6 +1,8 @@
 package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
+import com.tezov.tuucho.core.data.repository.network.HttpInterceptorPlugin
 import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
@@ -8,23 +10,14 @@ import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.plugins.HttpResponseValidator
-import io.ktor.client.plugins.HttpSend
+import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.plugin
-import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 
 object NetworkRepositoryModule {
-    interface RequestInterceptor {
-        suspend fun intercept(
-            builder: HttpRequestBuilder
-        )
-    }
-
     interface Config {
         val timeoutMillis: Long
         val version: String
@@ -38,19 +31,19 @@ object NetworkRepositoryModule {
         override val group = ModuleGroupData.Main
 
         override fun Module.declaration() {
-            factory<HttpClient> {
+            single<HttpClient> {
                 HttpClient(get<HttpClientEngineFactory<*>>()) {
                     install(ContentNegotiation) {
                         json(get<Json>())
                     }
                     install(HttpTimeout) {
                         with(get<Config>()) {
+                            requestTimeoutMillis = timeoutMillis
                             connectTimeoutMillis = timeoutMillis
                             socketTimeoutMillis = timeoutMillis
                         }
                     }
-
-                    HttpResponseValidator {
+                    install(HttpCallValidator) {
                         validateResponse { response ->
                             val statusCode = response.status.value
                             if (statusCode !in 200..299) {
@@ -59,13 +52,8 @@ object NetworkRepositoryModule {
                         }
                         handleResponseExceptionWithRequest { cause, _ -> throw cause }
                     }
-                }.apply {
-                    val interceptors = getAll<RequestInterceptor>()
-                    if (interceptors.isNotEmpty()) {
-                        plugin(HttpSend).intercept { requestBuilder ->
-                            interceptors.forEach { it.intercept(requestBuilder) }
-                            execute(requestBuilder)
-                        }
+                    install(HttpInterceptorPlugin) {
+                        nodes = getAll<HttpInterceptor.Node>()
                     }
                 }
             }

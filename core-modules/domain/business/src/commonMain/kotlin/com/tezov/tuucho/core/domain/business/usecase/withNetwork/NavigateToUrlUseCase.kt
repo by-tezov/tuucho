@@ -49,7 +49,7 @@ class NavigateToUrlUseCase(
         input: Input
     ) {
         coroutineScopes.useCase.async {
-            (navigationMiddlewares + finalNavigationMiddleware()).execute(
+            (navigationMiddlewares + terminalNavigationMiddleware()).execute(
                 context = NavigationMiddleware.ToUrl.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value,
                     input = input,
@@ -59,7 +59,7 @@ class NavigateToUrlUseCase(
         }
     }
 
-    private fun finalNavigationMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, next ->
+    private fun terminalNavigationMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
         coroutineScopes.navigation.await {
             val interactionHandle = tryLock() ?: return@await
             with(context.input) {
