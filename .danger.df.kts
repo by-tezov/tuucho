@@ -27,11 +27,32 @@ danger(args) {
    val title = github.pullRequest.title
    val body = github.pullRequest.body ?: ""
 
-   if (title.isBlank()) {
-      warn("⚠️ PR title is empty — please describe what this change does.")
+   // --- TITLE VALIDATION ---
+   val titleRegex = Regex("^(chore|feat|release|fix)\\s*-\\s*.+$", RegexOption.IGNORE_CASE)
+   if (!titleRegex.matches(title)) {
+      fail("❌ PR title must start with one of: chore-, feat-, release-, fix-. Example: `feat - add login flow`")
    }
+
+   // --- BODY VALIDATION ---
    if (body.isBlank()) {
-      warn("📝 Add a PR description for reviewers.")
+      fail("📝 PR body is missing. Follow the required template.")
+   } else {
+      fun sectionContent(section: String, body: String): String? {
+         val regex = Regex("(?s)$section\\n---+\\n+([\\s\\S]*?)(?=\\n---|$)", RegexOption.IGNORE_CASE)
+         return regex.find(body)?.groups?.get(1)?.value?.trim()
+      }
+
+      val sections = listOf(
+         "### purpose of this pull request",
+         "### demo (video / screen)"
+      )
+
+      sections.forEach { section ->
+         val content = sectionContent(section, body)
+         if (content == null || content.isBlank()) {
+            fail("🚨 Section '$section' must not be empty.")
+         }
+      }
    }
 
    if (git.modifiedFiles.size > 50) {
