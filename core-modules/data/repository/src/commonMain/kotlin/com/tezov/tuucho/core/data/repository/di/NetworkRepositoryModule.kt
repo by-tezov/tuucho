@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.Name.HTTP_CLIENT_ENGINE
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptorPlugin
 import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
@@ -33,7 +34,7 @@ object NetworkRepositoryModule {
 
     internal fun invoke() = module(ModuleGroupData.Main) {
         single<HttpClient> {
-            HttpClient(get<HttpClientEngineFactory<*>>()) {
+            HttpClient(get<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE)) {
                 install(ContentNegotiation) {
                     json(get<Json>())
                 }
