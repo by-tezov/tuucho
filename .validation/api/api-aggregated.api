@@ -458,10 +458,6 @@ public abstract interface class com/tezov/tuucho/core/data/repository/di/Network
 	public abstract fun getVersion ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/data/repository/di/NetworkRepositoryModule$RequestInterceptor {
-	public abstract fun intercept (Lio/ktor/client/request/HttpRequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModule {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/StoreRepositoryModule;
 }
@@ -497,6 +493,23 @@ public final class com/tezov/tuucho/core/data/repository/exception/DataException
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
 	public fun <init> (Ljava/lang/Throwable;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor;
+	public final fun getLocalResponse ()Lio/ktor/util/AttributeKey;
+}
+
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Config {
+	public fun <init> ()V
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Node {
+	public abstract fun intercept (Lio/ktor/client/request/HttpRequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptorKt {
+	public static final fun getHttpInterceptorPlugin ()Lio/ktor/client/plugins/api/ClientPlugin;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/_system/JsonArrayNode : com/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode, java/util/List, kotlin/jvm/internal/markers/KMappedMarker {
@@ -1979,10 +1992,6 @@ final object com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule { 
         abstract val version // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.version|{}version[0]
             abstract fun <get-version>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.version.<get-version>|<get-version>(){}[0]
     }
-
-    abstract interface RequestInterceptor { // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.RequestInterceptor|null[0]
-        abstract suspend fun intercept(io.ktor.client.request/HttpRequestBuilder) // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.RequestInterceptor.intercept|intercept(io.ktor.client.request.HttpRequestBuilder){}[0]
-    }
 }
 
 final object com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule { // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule|null[0]
@@ -1995,6 +2004,22 @@ final object com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule { //
 final object com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules { // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules|null[0]
     final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol> // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules.invoke|invoke(){}[0]
 }
+
+final object com.tezov.tuucho.core.data.repository.network/HttpInterceptor { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor|null[0]
+    final val LocalResponse // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.LocalResponse|{}LocalResponse[0]
+        final fun <get-LocalResponse>(): io.ktor.util/AttributeKey<io.ktor.utils.io/ByteReadChannel> // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.LocalResponse.<get-LocalResponse>|<get-LocalResponse>(){}[0]
+
+    abstract fun interface Node { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Node|null[0]
+        abstract suspend fun intercept(io.ktor.client.request/HttpRequestBuilder) // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Node.intercept|intercept(io.ktor.client.request.HttpRequestBuilder){}[0]
+    }
+
+    final class Config { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Config|null[0]
+        constructor <init>() // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Config.<init>|<init>(){}[0]
+    }
+}
+
+final val com.tezov.tuucho.core.data.repository.network/HttpInterceptorPlugin // com.tezov.tuucho.core.data.repository.network/HttpInterceptorPlugin|{}HttpInterceptorPlugin[0]
+    final fun <get-HttpInterceptorPlugin>(): io.ktor.client.plugins.api/ClientPlugin<com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Config> // com.tezov.tuucho.core.data.repository.network/HttpInterceptorPlugin.<get-HttpInterceptorPlugin>|<get-HttpInterceptorPlugin>(){}[0]
 
 final fun (com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode).com.tezov.tuucho.core.data.repository.parser._system/flatten(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode> // com.tezov.tuucho.core.data.repository.parser._system/flatten|flatten@com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode(){}[0]
 final fun (com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode).com.tezov.tuucho.core.data.repository.parser._system/toJsonElement(): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.data.repository.parser._system/toJsonElement|toJsonElement@com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode(){}[0]
@@ -2417,10 +2442,6 @@ public abstract interface class com/tezov/tuucho/core/data/repository/di/Network
 	public abstract fun getVersion ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/data/repository/di/NetworkRepositoryModule$RequestInterceptor {
-	public abstract fun intercept (Lio/ktor/client/request/HttpRequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModule {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/StoreRepositoryModule;
 }
@@ -2453,6 +2474,23 @@ public final class com/tezov/tuucho/core/data/repository/exception/DataException
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
 	public fun <init> (Ljava/lang/Throwable;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor;
+	public final fun getLocalResponse ()Lio/ktor/util/AttributeKey;
+}
+
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Config {
+	public fun <init> ()V
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Node {
+	public abstract fun intercept (Lio/ktor/client/request/HttpRequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptorKt {
+	public static final fun getHttpInterceptorPlugin ()Lio/ktor/client/plugins/api/ClientPlugin;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/_system/JsonArrayNode : com/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode, java/util/List, kotlin/jvm/internal/markers/KMappedMarker {
@@ -4850,9 +4888,22 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/I
 	public abstract fun generate ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
-	public abstract fun declaration (Lorg/koin/core/module/Module;)V
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public final fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion {
+	public final fun module (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
@@ -5607,7 +5658,7 @@ final enum class com.tezov.tuucho.core.domain.business.model/LanguageModelDomain
 }
 
 abstract fun interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol { // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol|null[0]
-    abstract suspend fun process(#A, com.tezov.tuucho.core.domain.business.middleware/NextMiddleware<#A>?) // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.process|process(1:0;com.tezov.tuucho.core.domain.business.middleware.NextMiddleware<1:0>?){}[0]
+    abstract suspend fun process(#A, com.tezov.tuucho.core.domain.business.middleware/NextMiddleware<#A>) // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.process|process(1:0;com.tezov.tuucho.core.domain.business.middleware.NextMiddleware<1:0>){}[0]
 
     final object Companion { // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.Companion|null[0]
         final suspend fun <#A2: kotlin/Any> (kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol<#A2>>).execute(#A2) // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.Companion.execute|execute@kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.MiddlewareProtocol<0:0>>(0:0){0§<kotlin.Any>}[0]
@@ -5772,15 +5823,6 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/IdGeneratorPro
     abstract fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol.generate|generate(){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol|null[0]
-    abstract val group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group|{}group[0]
-        abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group.<get-group>|<get-group>(){}[0]
-
-    abstract fun (org.koin.core.module/Module).declaration() // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration|declaration@org.koin.core.module.Module(){}[0]
-
-    abstract interface Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group|null[0]
-}
-
 abstract interface com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol // com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol|null[0]
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol { // com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol|null[0]
@@ -5928,6 +5970,28 @@ final class com.tezov.tuucho.core.domain.business.model/ActionModelDomain { // c
         final fun from(kotlin/String): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String){}[0]
         final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlin/String? = ...): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?){}[0]
         final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlinx.serialization.json/JsonElement?): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+
+    final val declaration // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration|{}declaration[0]
+        final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration.<get-declaration>|<get-declaration>(){}[0]
+    final val group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group|{}group[0]
+        final fun <get-group>(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group.<get-group>|<get-group>(){}[0]
+
+    final fun component1(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.component1|component1(){}[0]
+    final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.component2|component2(){}[0]
+    final fun copy(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.copy|copy(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.toString|toString(){}[0]
+
+    abstract interface Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group|null[0]
+
+    final object Companion { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Companion|null[0]
+        final fun module(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Companion.module|module(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
     }
 }
 
@@ -10446,9 +10510,22 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/I
 	public abstract fun generate ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
-	public abstract fun declaration (Lorg/koin/core/module/Module;)V
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public final fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion {
+	public final fun module (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
@@ -11275,6 +11352,11 @@ public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionInt {
 	public final fun onOdd (ILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 }
 
+public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionKoin {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/extension/ExtensionKoin;
+	public final fun bindOrdered (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
+}
+
 public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionList {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/extension/ExtensionList;
 	public static final field NULL_INDEX I
@@ -11442,6 +11524,11 @@ public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionInt {
 	public final fun isOdd (I)Z
 	public final fun onEven (ILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun onOdd (ILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionKoin {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/extension/ExtensionKoin;
+	public final fun bindOrdered (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
 }
 
 public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionList {
@@ -11638,6 +11725,12 @@ final object com.tezov.tuucho.core.domain.tool.extension/ExtensionInt { // com.t
     final fun <#A1: kotlin/Any?> (kotlin/Int).action(kotlin/Function1<kotlin/Int, #A1>, kotlin/Function1<kotlin/Int, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.action|action@kotlin.Int(kotlin.Function1<kotlin.Int,0:0>;kotlin.Function1<kotlin.Int,0:0>){0§<kotlin.Any?>}[0]
     final fun <#A1: kotlin/Any?> (kotlin/Int).onEven(kotlin/Function1<kotlin/Int, #A1>): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.onEven|onEven@kotlin.Int(kotlin.Function1<kotlin.Int,0:0>){0§<kotlin.Any?>}[0]
     final fun <#A1: kotlin/Any?> (kotlin/Int).onOdd(kotlin/Function1<kotlin/Int, #A1>): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.onOdd|onOdd@kotlin.Int(kotlin.Function1<kotlin.Int,0:0>){0§<kotlin.Any?>}[0]
+}
+
+final object com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin { // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin|null[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.definition/KoinDefinition<out #A1>).bindOrdered(kotlin.reflect/KClass<#A1>): org.koin.core.definition/KoinDefinition<out #A1> // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin.bindOrdered|bindOrdered@org.koin.core.definition.KoinDefinition<out|0:0>(kotlin.reflect.KClass<0:0>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.scope/Scope).getAllOrdered(): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin.getAllOrdered|getAllOrdered@org.koin.core.scope.Scope(){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core/Koin).getAllOrdered(): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin.getAllOrdered|getAllOrdered@org.koin.core.Koin(){0§<kotlin.Any>}[0]
 }
 
 final object com.tezov.tuucho.core.domain.tool.extension/ExtensionList { // com.tezov.tuucho.core.domain.tool.extension/ExtensionList|null[0]

@@ -1867,9 +1867,22 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/I
 	public abstract fun generate ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
-	public abstract fun declaration (Lorg/koin/core/module/Module;)V
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public final fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion {
+	public final fun module (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {

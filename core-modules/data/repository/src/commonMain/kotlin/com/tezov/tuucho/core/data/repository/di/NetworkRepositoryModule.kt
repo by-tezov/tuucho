@@ -47,6 +47,7 @@ object NetworkRepositoryModule {
                 install(HttpCallValidator) {
                     validateResponse { response ->
                         val statusCode = response.status.value
+                        @Suppress("MagicNumber")
                         if (statusCode !in 200..299) {
                             throw DataException.Default("Bad response received: $response")
                         }

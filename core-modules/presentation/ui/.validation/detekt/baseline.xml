@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>ForbiddenComment:FieldView.kt$FieldView$// TODO: need to add the rectifier for initialValue text</ID>
-    <ID>FunctionNaming:TuuchoEngine.kt$TuuchoEngine$@Composable private fun ModifierTransition( animationProgress: AnimationProgress, spec: JsonObject, ): AbstractModifierTransition</ID>
     <ID>MagicNumber:ColorExtension.kt$16</ID>
     <ID>MagicNumber:ColorExtension.kt$6</ID>
     <ID>MagicNumber:ColorExtension.kt$8</ID>

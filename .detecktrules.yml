@@ -18,3 +18,5 @@ console-reports:
 complexity:
   TooManyFunctions:
     thresholdInFiles: 20
+  LongMethod:
+    active: false
