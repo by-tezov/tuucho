@@ -60,15 +60,18 @@ buildkonfig {
 kotlin {
     sourceSets {
         jvmMain.dependencies {
-
+//            implementation(libs.tuucho)
+            implementation(libs.ktor.okhttp)
         }
         androidMain.dependencies {
-
+            implementation(libs.tuucho.android)
+            implementation(libs.ktor.okhttp)
         }
         val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
         if (isMacOs) {
             iosMain.dependencies {
-
+//                implementation(libs.tuucho) //TODO
+                implementation(libs.ktor.darwin)
             }
         }
         commonMain.dependencies {

@@ -1,10 +1,11 @@
-package com.tezov.tuucho.core.domain.tool.di
+package com.tezov.tuucho.core.domain.tool.extension
 
-import com.tezov.tuucho.core.domain.tool.di.ExtensionKoin.bindOrdered
-import com.tezov.tuucho.core.domain.tool.di.ExtensionKoin.getAllOrderedimport org.koin.dsl.bind
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.getAllOrdered
+import org.koin.core.module.Module
+import org.koin.dsl.bind
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
-import org.koin.core.module.Module
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals

@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
 import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
@@ -24,158 +24,154 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToSc
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
-import com.tezov.tuucho.core.domain.tool.di.ExtensionKoin.getAllOrdered
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.getAllOrdered
 import org.koin.core.module.Module
 
 internal object UseCaseModule {
-    fun invoke() = object : ModuleProtocol {
-        override val group = ModuleGroupDomain.UseCase
+    fun invoke() = module(ModuleGroupDomain.UseCase) {
+        single<UseCaseExecutor> {
+            UseCaseExecutor(
+                coroutineScopes = get()
+            )
+        }
+        withNetworkModule()
+        withoutNetworkModule()
+    }
 
-        override fun Module.declaration() {
-            single<UseCaseExecutor> {
-                UseCaseExecutor(
-                    coroutineScopes = get()
-                )
-            }
-            withNetworkModule()
-            withoutNetworkModule()
+    private fun Module.withNetworkModule() {
+        factory<NavigateBackUseCase> {
+            NavigateBackUseCase(
+                coroutineScopes = get(),
+                navigationStackRouteRepository = get(),
+                navigationStackScreenRepository = get(),
+                navigationStackTransitionRepository = get(),
+                shadowerMaterialRepository = get(),
+                actionLockRepository = get(),
+                navigationMiddlewares = getAllOrdered()
+            )
         }
 
-        private fun Module.withNetworkModule() {
-            factory<NavigateBackUseCase> {
-                NavigateBackUseCase(
-                    coroutineScopes = get(),
-                    navigationStackRouteRepository = get(),
-                    navigationStackScreenRepository = get(),
-                    navigationStackTransitionRepository = get(),
-                    shadowerMaterialRepository = get(),
-                    actionLockRepository = get(),
-                    navigationMiddlewares = getKoin().getAllOrdered()
-                )
-            }
-
-            factory<NavigateToUrlUseCase> {
-                NavigateToUrlUseCase(
-                    coroutineScopes = get(),
-                    useCaseExecutor = get(),
-                    retrieveMaterialRepository = get(),
-                    navigationRouteIdGenerator = get(Name.ID_GENERATOR),
-                    navigationOptionSelectorFactory = get(),
-                    navigationStackRouteRepository = get(),
-                    navigationStackScreenRepository = get(),
-                    navigationStackTransitionRepository = get(),
-                    shadowerMaterialRepository = get(),
-                    actionLockRepository = get(),
-                    navigationMiddlewares = getKoin().getAllOrdered()
-                )
-            }
-
-            factory<ProcessActionUseCase> {
-                ProcessActionUseCase(
-                    coroutineScopes = get(),
-                    actionProcessors = getAll<ActionProcessorProtocol>()
-                )
-            }
-
-            factory<RefreshMaterialCacheUseCase> {
-                RefreshMaterialCacheUseCase(
-                    refreshMaterialCacheRepository = get()
-                )
-            }
-
-            factory<ServerHealthCheckUseCase> {
-                ServerHealthCheckUseCase(
-                    coroutineScopes = get(),
-                    serverHealthCheck = get(),
-                )
-            }
-
-            factory<SendDataUseCase> {
-                SendDataUseCase(
-                    sendDataAndRetrieveMaterialRepository = get()
-                )
-            }
+        factory<NavigateToUrlUseCase> {
+            NavigateToUrlUseCase(
+                coroutineScopes = get(),
+                useCaseExecutor = get(),
+                retrieveMaterialRepository = get(),
+                navigationRouteIdGenerator = get(Name.ID_GENERATOR),
+                navigationOptionSelectorFactory = get(),
+                navigationStackRouteRepository = get(),
+                navigationStackScreenRepository = get(),
+                navigationStackTransitionRepository = get(),
+                shadowerMaterialRepository = get(),
+                actionLockRepository = get(),
+                navigationMiddlewares = getAllOrdered()
+            )
         }
 
-        private fun Module.withoutNetworkModule() {
-            factory<FormValidatorFactoryUseCase> { FormValidatorFactoryUseCase() }
+        factory<ProcessActionUseCase> {
+            ProcessActionUseCase(
+                coroutineScopes = get(),
+                actionProcessors = getAll<ActionProcessorProtocol>()
+            )
+        }
 
-            factory<GetLanguageUseCase> { GetLanguageUseCase() }
+        factory<RefreshMaterialCacheUseCase> {
+            RefreshMaterialCacheUseCase(
+                refreshMaterialCacheRepository = get()
+            )
+        }
 
-            factory<GetScreenOrNullUseCase> {
-                GetScreenOrNullUseCase(
-                    navigationStackScreenRepository = get()
-                )
-            }
+        factory<ServerHealthCheckUseCase> {
+            ServerHealthCheckUseCase(
+                coroutineScopes = get(),
+                serverHealthCheck = get(),
+            )
+        }
 
-            factory<GetScreensFromRoutesUseCase> {
-                GetScreensFromRoutesUseCase(
-                    navigationStackScreenRepository = get(),
-                )
-            }
+        factory<SendDataUseCase> {
+            SendDataUseCase(
+                sendDataAndRetrieveMaterialRepository = get()
+            )
+        }
+    }
 
-            factory<GetValueFromStoreUseCase> {
-                GetValueFromStoreUseCase(
-                    coroutineScopes = get(),
-                    keyValueRepository = get()
-                )
-            }
+    private fun Module.withoutNetworkModule() {
+        factory<FormValidatorFactoryUseCase> { FormValidatorFactoryUseCase() }
 
-            factory<GetValueOrNullFromStoreUseCase> {
-                GetValueOrNullFromStoreUseCase(
-                    coroutineScopes = get(),
-                    keyValueRepository = get()
-                )
-            }
+        factory<GetLanguageUseCase> { GetLanguageUseCase() }
 
-            factory<HasKeyInStoreUseCase> {
-                HasKeyInStoreUseCase(
-                    coroutineScopes = get(),
-                    keyValueRepository = get()
-                )
-            }
+        factory<GetScreenOrNullUseCase> {
+            GetScreenOrNullUseCase(
+                navigationStackScreenRepository = get()
+            )
+        }
 
-            factory<NavigationDefinitionSelectorMatcherFactoryUseCase> {
-                NavigationDefinitionSelectorMatcherFactoryUseCase()
-            }
+        factory<GetScreensFromRoutesUseCase> {
+            GetScreensFromRoutesUseCase(
+                navigationStackScreenRepository = get(),
+            )
+        }
 
-            factory<NavigationStackTransitionHelperFactoryUseCase> {
-                NavigationStackTransitionHelperFactoryUseCase()
-            }
+        factory<GetValueFromStoreUseCase> {
+            GetValueFromStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
 
-            factory<NotifyNavigationTransitionCompletedUseCase> {
-                NotifyNavigationTransitionCompletedUseCase(
-                    navigationAnimatorStackRepository = get()
-                )
-            }
+        factory<GetValueOrNullFromStoreUseCase> {
+            GetValueOrNullFromStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
 
-            factory<RegisterToScreenTransitionEventUseCase> {
-                RegisterToScreenTransitionEventUseCase(
-                    coroutineScopes = get(),
-                    navigationAnimatorStackRepository = get()
-                )
-            }
+        factory<HasKeyInStoreUseCase> {
+            HasKeyInStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
 
-            factory<RemoveKeyValueFromStoreUseCase> {
-                RemoveKeyValueFromStoreUseCase(
-                    coroutineScopes = get(),
-                    keyValueRepository = get()
-                )
-            }
+        factory<NavigationDefinitionSelectorMatcherFactoryUseCase> {
+            NavigationDefinitionSelectorMatcherFactoryUseCase()
+        }
 
-            factory<SaveKeyValueToStoreUseCase> {
-                SaveKeyValueToStoreUseCase(
-                    coroutineScopes = get(),
-                    keyValueRepository = get()
-                )
-            }
+        factory<NavigationStackTransitionHelperFactoryUseCase> {
+            NavigationStackTransitionHelperFactoryUseCase()
+        }
 
-            factory<UpdateViewUseCase> {
-                UpdateViewUseCase(
-                    coroutineScopes = get(),
-                    navigationScreenStackRepository = get(),
-                )
-            }
+        factory<NotifyNavigationTransitionCompletedUseCase> {
+            NotifyNavigationTransitionCompletedUseCase(
+                navigationAnimatorStackRepository = get()
+            )
+        }
+
+        factory<RegisterToScreenTransitionEventUseCase> {
+            RegisterToScreenTransitionEventUseCase(
+                coroutineScopes = get(),
+                navigationAnimatorStackRepository = get()
+            )
+        }
+
+        factory<RemoveKeyValueFromStoreUseCase> {
+            RemoveKeyValueFromStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
+
+        factory<SaveKeyValueToStoreUseCase> {
+            SaveKeyValueToStoreUseCase(
+                coroutineScopes = get(),
+                keyValueRepository = get()
+            )
+        }
+
+        factory<UpdateViewUseCase> {
+            UpdateViewUseCase(
+                coroutineScopes = get(),
+                navigationScreenStackRepository = get(),
+            )
         }
     }
 }

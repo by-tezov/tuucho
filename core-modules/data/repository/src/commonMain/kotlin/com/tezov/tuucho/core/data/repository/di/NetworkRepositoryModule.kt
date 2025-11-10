@@ -5,9 +5,9 @@ import com.tezov.tuucho.core.data.repository.network.HttpInterceptorPlugin
 import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
-import com.tezov.tuucho.core.domain.tool.di.ExtensionKoin.getAllOrdered
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.getAllOrdered
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpCallValidator
@@ -15,7 +15,7 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 
 object NetworkRepositoryModule {
     interface Config {
@@ -27,58 +27,58 @@ object NetworkRepositoryModule {
         val sendEndpoint: String
     }
 
-    internal fun invoke() = object : ModuleProtocol {
-        override val group = ModuleGroupData.Main
+    internal object Name {
+        val HTTP_CLIENT_ENGINE = named("NetworkRepositoryModule.Name.HTTP_CLIENT_ENGINE")
+    }
 
-        override fun Module.declaration() {
-            single<HttpClient> {
-                HttpClient(get<HttpClientEngineFactory<*>>()) {
-                    install(ContentNegotiation) {
-                        json(get<Json>())
-                    }
-                    install(HttpTimeout) {
-                        with(get<Config>()) {
-                            requestTimeoutMillis = timeoutMillis
-                            connectTimeoutMillis = timeoutMillis
-                            socketTimeoutMillis = timeoutMillis
-                        }
-                    }
-                    install(HttpCallValidator) {
-                        validateResponse { response ->
-                            val statusCode = response.status.value
-                            if (statusCode !in 200..299) {
-                                throw DataException.Default("Bad response received: $response")
-                            }
-                        }
-                        handleResponseExceptionWithRequest { cause, _ -> throw cause }
-                    }
-                    install(HttpInterceptorPlugin) {
-                        nodes = getKoin().getAllOrdered()
+    internal fun invoke() = module(ModuleGroupData.Main) {
+        single<HttpClient> {
+            HttpClient(get<HttpClientEngineFactory<*>>()) {
+                install(ContentNegotiation) {
+                    json(get<Json>())
+                }
+                install(HttpTimeout) {
+                    with(get<Config>()) {
+                        requestTimeoutMillis = timeoutMillis
+                        connectTimeoutMillis = timeoutMillis
+                        socketTimeoutMillis = timeoutMillis
                     }
                 }
+                install(HttpCallValidator) {
+                    validateResponse { response ->
+                        val statusCode = response.status.value
+                        if (statusCode !in 200..299) {
+                            throw DataException.Default("Bad response received: $response")
+                        }
+                    }
+                    handleResponseExceptionWithRequest { cause, _ -> throw cause }
+                }
+                install(HttpInterceptorPlugin) {
+                    nodes = getAllOrdered()
+                }
             }
+        }
 
-            factory<NetworkHttpRequestSource> {
-                NetworkHttpRequestSource(
-                    httpClient = get(),
-                    config = get()
-                )
-            }
+        factory<NetworkHttpRequestSource> {
+            NetworkHttpRequestSource(
+                httpClient = get(),
+                config = get()
+            )
+        }
 
-            single<NetworkJsonObject> {
-                NetworkJsonObject(
-                    networkHttpRequestSource = get(),
-                    jsonConverter = get()
-                )
-            }
+        single<NetworkJsonObject> {
+            NetworkJsonObject(
+                networkHttpRequestSource = get(),
+                jsonConverter = get()
+            )
+        }
 
-            factory<ServerHealthCheckProtocol> {
-                NetworkHealthCheck(
-                    coroutineScopes = get(),
-                    networkHttpRequestSource = get(),
-                    jsonConverter = get()
-                )
-            }
+        factory<ServerHealthCheckProtocol> {
+            NetworkHealthCheck(
+                coroutineScopes = get(),
+                networkHttpRequestSource = get(),
+                jsonConverter = get()
+            )
         }
     }
 }

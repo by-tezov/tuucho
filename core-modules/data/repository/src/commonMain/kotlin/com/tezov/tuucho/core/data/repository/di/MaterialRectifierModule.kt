@@ -41,7 +41,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StyleRectifi
 import com.tezov.tuucho.core.data.repository.parser.rectifier.style.StylesRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextsRectifier
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -78,230 +78,237 @@ internal object MaterialRectifierModule {
         }
     }
 
+    fun invoke() = module(ModuleGroupData.Rectifier) {
+        single<MaterialRectifier> { MaterialRectifier() }
+
+        idModule()
+        componentModule()
+        settingModule()
+        contentModule()
+        styleModule()
+        optionModule()
+        stateModule()
+        textModule()
+        colorModule()
+        dimensionModule()
+        actionModule()
+        fieldValidatorModule()
+    }
+
     @OptIn(TuuchoExperimentalAPI::class)
-    fun invoke() = object : ModuleProtocol {
-        override val group = ModuleGroupData.Rectifier
-
-        override fun Module.declaration() {
-            single<MaterialRectifier> { MaterialRectifier() }
-
-            idModule()
-            componentModule()
-            settingModule()
-            contentModule()
-            styleModule()
-            optionModule()
-            stateModule()
-            textModule()
-            colorModule()
-            dimensionModule()
-            actionModule()
-            fieldValidatorModule()
+    private fun Module.idModule() {
+        single<IdRectifier> {
+            IdRectifier(
+                idGenerator = RectifierIdGenerator()
+            )
         }
 
-        private fun Module.idModule() {
-            single<IdRectifier> {
-                IdRectifier(
-                    idGenerator = RectifierIdGenerator()
-                )
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.ID) {
+            listOf(IdMatcher())
+        }
+    }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.ID) {
-                listOf(IdMatcher())
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.componentModule() {
+        single<ComponentsRectifier> { ComponentsRectifier() }
+
+        single<ComponentRectifier> { ComponentRectifier() }
+
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.COMPONENT) {
+            listOf(
+                ContentButtonLabelMatcher(),
+            )
         }
 
-        private fun Module.componentModule() {
-            single<ComponentsRectifier> { ComponentsRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.COMPONENT) {
+            listOf(
+                get<IdRectifier>(),
+                get<SettingComponentRectifier>(),
+                get<ContentRectifier>(),
+                get<StyleRectifier>(),
+                get<OptionRectifier>(),
+            )
+        }
+    }
 
-            single<ComponentRectifier> { ComponentRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.settingModule() {
+        single<SettingComponentRectifier> { SettingComponentRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.COMPONENT) {
-                listOf(
-                    ContentButtonLabelMatcher(),
-                )
-            }
-
-            single<List<AbstractRectifier>>(Name.Processor.COMPONENT) {
-                listOf(
-                    get<IdRectifier>(),
-                    get<SettingComponentRectifier>(),
-                    get<ContentRectifier>(),
-                    get<StyleRectifier>(),
-                    get<OptionRectifier>(),
-                )
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
+            emptyList()
         }
 
-        private fun Module.settingModule() {
-            single<SettingComponentRectifier> { SettingComponentRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.SETTING) {
+            listOf(
+                get<IdRectifier>(),
+                SettingComponentNavigationRectifier(),
+            )
+        }
+    }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.contentModule() {
+        single<ContentsRectifier> { ContentsRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.SETTING) {
-                listOf(
-                    get<IdRectifier>(),
-                    SettingComponentNavigationRectifier(),
-                )
-            }
+        single<ContentRectifier> { ContentRectifier() }
+
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.CONTENT) {
+            emptyList()
         }
 
-        private fun Module.contentModule() {
-            single<ContentsRectifier> { ContentsRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.CONTENT) {
+            listOf(
+                get<IdRectifier>(),
+                ContentLayoutLinearItemsRectifier(),
+                ContentButtonLabelRectifier(),
+                ContentFormFieldTextErrorRectifier(),
+                get<ActionRectifier>(),
+                get<TextRectifier>(),
+                get<ComponentRectifier>(),
+            )
+        }
+    }
 
-            single<ContentRectifier> { ContentRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.styleModule() {
+        single<StylesRectifier> { StylesRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.CONTENT) {
-                emptyList()
-            }
+        single<StyleRectifier> { StyleRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.CONTENT) {
-                listOf(
-                    get<IdRectifier>(),
-                    ContentLayoutLinearItemsRectifier(),
-                    ContentButtonLabelRectifier(),
-                    ContentFormFieldTextErrorRectifier(),
-                    get<ActionRectifier>(),
-                    get<TextRectifier>(),
-                    get<ComponentRectifier>(),
-                )
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.STYLE) {
+            emptyList()
         }
 
-        private fun Module.styleModule() {
-            single<StylesRectifier> { StylesRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.STYLE) {
+            listOf(
+                get<IdRectifier>(),
+                get<ColorRectifier>(),
+                get<DimensionRectifier>()
+            )
+        }
+    }
 
-            single<StyleRectifier> { StyleRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.optionModule() {
+        single<OptionsRectifier> { OptionsRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.STYLE) {
-                emptyList()
-            }
+        single<OptionRectifier> { OptionRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.STYLE) {
-                listOf(
-                    get<IdRectifier>(),
-                    get<ColorRectifier>(),
-                    get<DimensionRectifier>()
-                )
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.OPTION) {
+            emptyList()
         }
 
-        private fun Module.optionModule() {
-            single<OptionsRectifier> { OptionsRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.OPTION) {
+            listOf(
+                get<IdRectifier>(),
+                get<FormValidatorRectifier>(),
+            )
+        }
+    }
 
-            single<OptionRectifier> { OptionRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.stateModule() {
+        single<StatesRectifier> { StatesRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.OPTION) {
-                emptyList()
-            }
+        single<StateRectifier> { StateRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.OPTION) {
-                listOf(
-                    get<IdRectifier>(),
-                    get<FormValidatorRectifier>(),
-                )
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.STATE) {
+            emptyList()
         }
 
-        private fun Module.stateModule() {
-            single<StatesRectifier> { StatesRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.STATE) {
+            listOf(
+                get<IdRectifier>()
+            )
+        }
+    }
 
-            single<StateRectifier> { StateRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.textModule() {
+        single<TextsRectifier> { TextsRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.STATE) {
-                emptyList()
-            }
+        single<TextRectifier> { TextRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.STATE) {
-                listOf(
-                    get<IdRectifier>()
-                )
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.TEXT) {
+            listOf(
+                ContentLabelTextMatcher(),
+                ContentFormFieldTextMatcher(),
+                ContentFormFieldTextErrorMatcher(),
+                StateFormFieldTextMatcher(),
+            )
         }
 
-        private fun Module.textModule() {
-            single<TextsRectifier> { TextsRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.TEXT) {
+            listOf(get<IdRectifier>())
+        }
+    }
 
-            single<TextRectifier> { TextRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.colorModule() {
+        single<ColorsRectifier> { ColorsRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.TEXT) {
-                listOf(
-                    ContentLabelTextMatcher(),
-                    ContentFormFieldTextMatcher(),
-                    ContentFormFieldTextErrorMatcher(),
-                    StateFormFieldTextMatcher(),
-                )
-            }
+        single<ColorRectifier> { ColorRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.TEXT) {
-                listOf(get<IdRectifier>())
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.COLOR) {
+            listOf(
+                StyleLabelColorMatcher(),
+                StyleLayoutLinearColorMatcher(),
+            )
         }
 
-        private fun Module.colorModule() {
-            single<ColorsRectifier> { ColorsRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.COLOR) {
+            listOf(get<IdRectifier>())
+        }
+    }
 
-            single<ColorRectifier> { ColorRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.dimensionModule() {
+        single<DimensionsRectifier> { DimensionsRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.COLOR) {
-                listOf(
-                    StyleLabelColorMatcher(),
-                    StyleLayoutLinearColorMatcher(),
-                )
-            }
+        single<DimensionRectifier> { DimensionRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.COLOR) {
-                listOf(get<IdRectifier>())
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.DIMENSION) {
+            listOf(
+                StyleLabelDimensionMatcher(),
+                StyleSpacerDimensionMatcher(),
+            )
         }
 
-        private fun Module.dimensionModule() {
-            single<DimensionsRectifier> { DimensionsRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.DIMENSION) {
+            listOf(get<IdRectifier>())
+        }
+    }
 
-            single<DimensionRectifier> { DimensionRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.actionModule() {
+        single<ActionsRectifier> { ActionsRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.DIMENSION) {
-                listOf(
-                    StyleLabelDimensionMatcher(),
-                    StyleSpacerDimensionMatcher(),
-                )
-            }
+        single<ActionRectifier> { ActionRectifier() }
 
-            single<List<AbstractRectifier>>(Name.Processor.DIMENSION) {
-                listOf(get<IdRectifier>())
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.ACTION) {
+            listOf(
+                ActionButtonMatcher()
+            )
         }
 
-        private fun Module.actionModule() {
-            single<ActionsRectifier> { ActionsRectifier() }
+        single<List<AbstractRectifier>>(Name.Processor.ACTION) {
+            listOf(get<IdRectifier>())
+        }
+    }
 
-            single<ActionRectifier> { ActionRectifier() }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.fieldValidatorModule() {
+        single<FormValidatorRectifier> { FormValidatorRectifier() }
 
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.ACTION) {
-                listOf(
-                    ActionButtonMatcher()
-                )
-            }
-
-            single<List<AbstractRectifier>>(Name.Processor.ACTION) {
-                listOf(get<IdRectifier>())
-            }
+        single<List<MatcherRectifierProtocol>>(Name.Matcher.FIELD_VALIDATOR) {
+            listOf(
+                OptionFormFieldValidatorMatcher()
+            )
         }
 
-        private fun Module.fieldValidatorModule() {
-            single<FormValidatorRectifier> { FormValidatorRectifier() }
-
-            single<List<MatcherRectifierProtocol>>(Name.Matcher.FIELD_VALIDATOR) {
-                listOf(
-                    OptionFormFieldValidatorMatcher()
-                )
-            }
-
-            single<List<AbstractRectifier>>(Name.Processor.FIELD_VALIDATOR) {
-                emptyList()
-            }
+        single<List<AbstractRectifier>>(Name.Processor.FIELD_VALIDATOR) {
+            emptyList()
         }
     }
 }

@@ -1,19 +1,15 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.Name.HTTP_CLIENT_ENGINE
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.engine.okhttp.OkHttp
-import org.koin.core.module.Module
 
 internal object NetworkRepositoryModuleJvm {
     object FlavorDefault {
-        fun invoke() = object : ModuleProtocol {
-            override val group = ModuleGroupData.Main
-
-            override fun Module.declaration() {
-                factory<HttpClientEngineFactory<*>> {
-                    OkHttp
-                }
+        fun invoke() = module(ModuleGroupData.Main) {
+            factory<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE) {
+                getOrNull() ?: OkHttp
             }
         }
     }

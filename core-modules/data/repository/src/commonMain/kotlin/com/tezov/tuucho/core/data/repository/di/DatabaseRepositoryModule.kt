@@ -11,71 +11,66 @@ import com.tezov.tuucho.core.data.repository.database.table.JsonObjectContextual
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
-import org.koin.core.module.Module
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 
 object DatabaseRepositoryModule {
     interface Config {
         val fileName: String
     }
 
-    internal fun invoke() = object : ModuleProtocol {
-        override val group = ModuleGroupData.Main
+    internal fun invoke() = module(ModuleGroupData.Main) {
+        factory<JsonObjectAdapter> {
+            JsonObjectAdapter(json = get())
+        }
 
-        override fun Module.declaration() {
-            factory<JsonObjectAdapter> {
-                JsonObjectAdapter(json = get())
-            }
+        factory<LifetimeAdapter> {
+            LifetimeAdapter(json = get())
+        }
 
-            factory<LifetimeAdapter> {
-                LifetimeAdapter(json = get())
-            }
+        factory<VisibilityAdapter> {
+            VisibilityAdapter(json = get())
+        }
 
-            factory<VisibilityAdapter> {
-                VisibilityAdapter(json = get())
-            }
+        single<Database> {
+            Database(
+                driver = get(),
+                jsonObjectCommonEntryAdapter = JsonObjectCommonEntry.Adapter(
+                    jsonObjectAdapter = get<JsonObjectAdapter>()
+                ),
+                jsonObjectContextualEntryAdapter = JsonObjectContextualEntry.Adapter(
+                    jsonObjectAdapter = get<JsonObjectAdapter>()
+                ),
+                hookEntryAdapter = HookEntry.Adapter(
+                    visibilityAdapter = get<VisibilityAdapter>(),
+                    lifetimeAdapter = get<LifetimeAdapter>()
+                ),
+            )
+        }
 
-            single<Database> {
-                Database(
-                    driver = get(),
-                    jsonObjectCommonEntryAdapter = JsonObjectCommonEntry.Adapter(
-                        jsonObjectAdapter = get<JsonObjectAdapter>()
-                    ),
-                    jsonObjectContextualEntryAdapter = JsonObjectContextualEntry.Adapter(
-                        jsonObjectAdapter = get<JsonObjectAdapter>()
-                    ),
-                    hookEntryAdapter = HookEntry.Adapter(
-                        visibilityAdapter = get<VisibilityAdapter>(),
-                        lifetimeAdapter = get<LifetimeAdapter>()
-                    ),
-                )
-            }
+        factory<JsonObjectQueries> {
+            JsonObjectQueries(
+                database = get()
+            )
+        }
 
-            factory<JsonObjectQueries> {
-                JsonObjectQueries(
-                    database = get()
-                )
-            }
+        factory<HookQueries> {
+            HookQueries(
+                database = get()
+            )
+        }
 
-            factory<HookQueries> {
-                HookQueries(
-                    database = get()
-                )
-            }
+        factory<DatabaseTransactionFactory> {
+            DatabaseTransactionFactory(
+                database = get()
+            )
+        }
 
-            factory<DatabaseTransactionFactory> {
-                DatabaseTransactionFactory(
-                    database = get()
-                )
-            }
-
-            factory<MaterialDatabaseSource> {
-                MaterialDatabaseSource(
-                    transactionFactory = get(),
-                    hookQueries = get(),
-                    jsonObjectQueries = get()
-                )
-            }
+        factory<MaterialDatabaseSource> {
+            MaterialDatabaseSource(
+                transactionFactory = get(),
+                hookQueries = get(),
+                jsonObjectQueries = get()
+            )
         }
     }
 }

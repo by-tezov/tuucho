@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.tool.di
+package com.tezov.tuucho.core.domain.tool.extension
 
 import org.koin.core.Koin
 import org.koin.core.annotation.KoinInternalApi
@@ -8,11 +8,11 @@ import org.koin.core.instance.InstanceFactory
 import org.koin.core.instance.ResolutionContext
 import org.koin.core.module.OptionDslMarker
 import org.koin.core.qualifier.named
+import org.koin.core.scope.Scope
 import org.koin.dsl.bind
 import kotlin.reflect.KClass
 
 object ExtensionKoin {
-
     @OptIn(KoinInternalApi::class)
     @OptionDslMarker
     infix fun <S : Any> KoinDefinition<out S>.bindOrdered(
@@ -29,7 +29,10 @@ object ExtensionKoin {
     }
 
     @OptIn(KoinInternalApi::class)
-    inline fun <reified T : Any> Koin.getAllOrdered(): List<T> {
+    inline fun <reified T : Any> Koin.getAllOrdered(): List<T> = scopeRegistry.rootScope.getAllOrdered()
+
+    @OptIn(KoinInternalApi::class)
+    inline fun <reified T : Any> Scope.getAllOrdered(): List<T> = with(getKoin()) {
         val typeName = T::class.qualifiedName ?: error("class qualifier name is null")
         val orderedInstances = instanceRegistry.instances.entries
             .filter { (key, _) ->
@@ -58,7 +61,4 @@ object ExtensionKoin {
             }.toMutableList()
         return orderedInstances
     }
-
 }
-
-

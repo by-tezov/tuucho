@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.repository.parser.shadower.StateShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.TextShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
@@ -29,71 +29,67 @@ internal object MaterialShadowerModule {
         }
     }
 
-    fun invoke() = object : ModuleProtocol {
-        override val group = ModuleGroupData.Shadower
+    fun invoke() = module(ModuleGroupData.Shadower) {
+        single<MaterialShadower> { MaterialShadower() }
 
-        override fun Module.declaration() {
-            single<MaterialShadower> { MaterialShadower() }
+        componentModule()
+        contentModule()
+        stateModule()
+        textModule()
+    }
 
-            componentModule()
-            contentModule()
-            stateModule()
-            textModule()
+    private fun Module.componentModule() {
+        single<ComponentShadower> { ComponentShadower() }
+
+        single<List<MatcherShadowerProtocol>>(Name.Matcher.COMPONENT) {
+            listOf(
+                ContentLayoutLinearItemsMatcher()
+            )
         }
 
-        private fun Module.componentModule() {
-            single<ComponentShadower> { ComponentShadower() }
+        single<List<AbstractShadower>>(Name.Processor.COMPONENT) {
+            listOf(
+                get<ContentShadower>()
+            )
+        }
+    }
 
-            single<List<MatcherShadowerProtocol>>(Name.Matcher.COMPONENT) {
-                listOf(
-                    ContentLayoutLinearItemsMatcher()
-                )
-            }
+    private fun Module.contentModule() {
+        single<ContentShadower> { ContentShadower() }
 
-            single<List<AbstractShadower>>(Name.Processor.COMPONENT) {
-                listOf(
-                    get<ContentShadower>()
-                )
-            }
+        single<List<MatcherShadowerProtocol>>(Name.Matcher.CONTENT) {
+            emptyList()
         }
 
-        private fun Module.contentModule() {
-            single<ContentShadower> { ContentShadower() }
+        single<List<AbstractShadower>>(Name.Processor.CONTENT) {
+            listOf(
+                get<ComponentShadower>(),
+                get<TextShadower>()
+            )
+        }
+    }
 
-            single<List<MatcherShadowerProtocol>>(Name.Matcher.CONTENT) {
-                emptyList()
-            }
+    private fun Module.stateModule() {
+        single<StateShadower> { StateShadower() }
 
-            single<List<AbstractShadower>>(Name.Processor.CONTENT) {
-                listOf(
-                    get<ComponentShadower>(),
-                    get<TextShadower>()
-                )
-            }
+        single<List<MatcherShadowerProtocol>>(Name.Matcher.STATE) {
+            emptyList()
         }
 
-        private fun Module.stateModule() {
-            single<StateShadower> { StateShadower() }
+        single<List<AbstractShadower>>(Name.Processor.STATE) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherShadowerProtocol>>(Name.Matcher.STATE) {
-                emptyList()
-            }
+    private fun Module.textModule() {
+        single<TextShadower> { TextShadower() }
 
-            single<List<AbstractShadower>>(Name.Processor.STATE) {
-                emptyList()
-            }
+        single<List<MatcherShadowerProtocol>>(Name.Matcher.TEXT) {
+            emptyList()
         }
 
-        private fun Module.textModule() {
-            single<TextShadower> { TextShadower() }
-
-            single<List<MatcherShadowerProtocol>>(Name.Matcher.TEXT) {
-                emptyList()
-            }
-
-            single<List<AbstractShadower>>(Name.Processor.TEXT) {
-                emptyList()
-            }
+        single<List<AbstractShadower>>(Name.Processor.TEXT) {
+            emptyList()
         }
     }
 }

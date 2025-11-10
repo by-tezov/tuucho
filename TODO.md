@@ -1,7 +1,5 @@
 ## In progress
 
--- kotor single engine ...
-
 - add network error management around the other use case
 
 ./gradlew :app:jvm:run

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
 import com.tezov.tuucho.core.presentation.ui.renderer.TuuchoEngine
 import com.tezov.tuucho.core.presentation.ui.renderer.TuuchoEngineProtocol
@@ -15,69 +15,65 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 
 internal object MaterialRendererModule {
-    fun invoke() = object : ModuleProtocol {
-        override val group = ModuleGroupPresentation.Main
+    fun invoke() = module(ModuleGroupPresentation.Main) {
+        viewModule()
+        screenModule()
+    }
 
-        override fun Module.declaration() {
-            viewModule()
-            screenModule()
+    private fun Module.screenModule() {
+        factory<ScreenRenderer> {
+            ScreenRenderer(
+                coroutineScopes = get(),
+            )
+        } bind ScreenRendererProtocol::class
+
+        single<TuuchoEngineProtocol> {
+            TuuchoEngine(
+                coroutineScopes = get(),
+                useCaseExecutor = get(),
+                registerToScreenTransitionEvent = get(),
+                notifyNavigationTransitionCompleted = get(),
+                getScreensFromRoutes = get(),
+                navigateToUrl = get()
+            )
+        }
+    }
+
+    private fun Module.viewModule() {
+        factory<List<AbstractViewFactory>> {
+            listOf(
+                get<LabelViewFactory>(),
+                get<FieldViewFactory>(),
+                get<ButtonViewFactory>(),
+                get<SpacerViewFactory>(),
+                get<LayoutLinearViewFactory>(),
+            )
         }
 
-        private fun Module.screenModule() {
-            factory<ScreenRenderer> {
-                ScreenRenderer(
-                    coroutineScopes = get(),
-                )
-            } bind ScreenRendererProtocol::class
-
-            single<TuuchoEngineProtocol> {
-                TuuchoEngine(
-                    coroutineScopes = get(),
-                    useCaseExecutor = get(),
-                    registerToScreenTransitionEvent = get(),
-                    notifyNavigationTransitionCompleted = get(),
-                    getScreensFromRoutes = get(),
-                    navigateToUrl = get()
-                )
-            }
+        factory<LayoutLinearViewFactory> {
+            LayoutLinearViewFactory()
         }
 
-        private fun Module.viewModule() {
-            factory<List<AbstractViewFactory>> {
-                listOf(
-                    get<LabelViewFactory>(),
-                    get<FieldViewFactory>(),
-                    get<ButtonViewFactory>(),
-                    get<SpacerViewFactory>(),
-                    get<LayoutLinearViewFactory>(),
-                )
-            }
+        factory<LabelViewFactory> {
+            LabelViewFactory()
+        }
 
-            factory<LayoutLinearViewFactory> {
-                LayoutLinearViewFactory()
-            }
+        factory<FieldViewFactory> {
+            FieldViewFactory(
+                useCaseExecutor = get(),
+                fieldValidatorFactory = get(),
+            )
+        }
 
-            factory<LabelViewFactory> {
-                LabelViewFactory()
-            }
+        factory<ButtonViewFactory> {
+            ButtonViewFactory(
+                useCaseExecutor = get(),
+                actionHandler = get()
+            )
+        }
 
-            factory<FieldViewFactory> {
-                FieldViewFactory(
-                    useCaseExecutor = get(),
-                    fieldValidatorFactory = get(),
-                )
-            }
-
-            factory<ButtonViewFactory> {
-                ButtonViewFactory(
-                    useCaseExecutor = get(),
-                    actionHandler = get()
-                )
-            }
-
-            factory<SpacerViewFactory> {
-                SpacerViewFactory()
-            }
+        factory<SpacerViewFactory> {
+            SpacerViewFactory()
         }
     }
 }
