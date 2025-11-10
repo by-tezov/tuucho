@@ -11,19 +11,16 @@ fun interface MiddlewareProtocol<C : Any> {
         suspend fun <C : Any> List<MiddlewareProtocol<C>>.execute(
             context: C,
         ) {
-            var next: NextMiddleware<C>? = null
-            for (middleware in asReversed()) {
-                val nextCaptured = next
-                next = NextMiddleware { context ->
-                    middleware.process(context, nextCaptured)
-                }
+            val terminal: suspend (C) -> Unit = {}
+            val composed = foldRight(terminal) { middleware, next ->
+                { context -> middleware.process(context, NextMiddleware(next)) }
             }
-            next?.invoke(context)
+            composed(context)
         }
     }
 
     suspend fun process(
         context: C,
-        next: NextMiddleware<C>?
+        next: NextMiddleware<C>
     )
 }

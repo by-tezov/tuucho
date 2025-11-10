@@ -60,15 +60,15 @@ buildkonfig {
 kotlin {
     sourceSets {
         jvmMain.dependencies {
-
+            implementation(libs.ktor.okhttp)
         }
         androidMain.dependencies {
-
+            implementation(libs.ktor.okhttp)
         }
         val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
         if (isMacOs) {
             iosMain.dependencies {
-
+                implementation(libs.ktor.darwin)
             }
         }
         commonMain.dependencies {

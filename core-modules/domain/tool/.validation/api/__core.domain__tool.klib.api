@@ -122,6 +122,12 @@ final object com.tezov.tuucho.core.domain.tool.extension/ExtensionInt { // com.t
     final fun <#A1: kotlin/Any?> (kotlin/Int).onOdd(kotlin/Function1<kotlin/Int, #A1>): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.onOdd|onOdd@kotlin.Int(kotlin.Function1<kotlin.Int,0:0>){0§<kotlin.Any?>}[0]
 }
 
+final object com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin { // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin|null[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.definition/KoinDefinition<out #A1>).bindOrdered(kotlin.reflect/KClass<#A1>): org.koin.core.definition/KoinDefinition<out #A1> // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin.bindOrdered|bindOrdered@org.koin.core.definition.KoinDefinition<out|0:0>(kotlin.reflect.KClass<0:0>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.scope/Scope).getAllOrdered(): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin.getAllOrdered|getAllOrdered@org.koin.core.scope.Scope(){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core/Koin).getAllOrdered(): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.tool.extension/ExtensionKoin.getAllOrdered|getAllOrdered@org.koin.core.Koin(){0§<kotlin.Any>}[0]
+}
+
 final object com.tezov.tuucho.core.domain.tool.extension/ExtensionList { // com.tezov.tuucho.core.domain.tool.extension/ExtensionList|null[0]
     final const val NULL_INDEX // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.NULL_INDEX|{}NULL_INDEX[0]
         final fun <get-NULL_INDEX>(): kotlin/Int // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.NULL_INDEX.<get-NULL_INDEX>|<get-NULL_INDEX>(){}[0]

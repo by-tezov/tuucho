@@ -31,7 +31,7 @@ class NavigateBackUseCase(
         input: Unit
     ) {
         coroutineScopes.useCase.async {
-            (navigationMiddlewares + finalNavigationMiddleware()).execute(
+            (navigationMiddlewares + terminalNavigationMiddleware()).execute(
                 context = NavigationMiddleware.Back.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
                         ?: throw DomainException.Default("Shouldn't be possible"),
@@ -52,7 +52,7 @@ class NavigateBackUseCase(
         )
     }
 
-    private fun finalNavigationMiddleware() = NavigationMiddleware.Back { context, next ->
+    private fun terminalNavigationMiddleware() = NavigationMiddleware.Back { context, _ ->
         coroutineScopes.navigation.await {
             val interactionHandle = tryLock() ?: return@await
             val restoredRoute = navigationStackRouteRepository.backward(

@@ -95,6 +95,11 @@ public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionInt {
 	public final fun onOdd (ILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 }
 
+public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionKoin {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/extension/ExtensionKoin;
+	public final fun bindOrdered (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
+}
+
 public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionList {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/extension/ExtensionList;
 	public static final field NULL_INDEX I

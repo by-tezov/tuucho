@@ -18,7 +18,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
         with(project) {
-            if (buildType() == "mock") {
+            if (buildType() == "mock" || buildType() == "dev") {
                 pluginManager.apply("jacoco")
                 pluginManager.apply(plugin(PluginId.allOpen))
                 pluginManager.apply(plugin(PluginId.mokkery))
