@@ -25,7 +25,7 @@ final enum class com.tezov.tuucho.core.domain.business.model/LanguageModelDomain
 }
 
 abstract fun interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol { // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol|null[0]
-    abstract suspend fun process(#A, com.tezov.tuucho.core.domain.business.middleware/NextMiddleware<#A>?) // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.process|process(1:0;com.tezov.tuucho.core.domain.business.middleware.NextMiddleware<1:0>?){}[0]
+    abstract suspend fun process(#A, com.tezov.tuucho.core.domain.business.middleware/NextMiddleware<#A>) // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.process|process(1:0;com.tezov.tuucho.core.domain.business.middleware.NextMiddleware<1:0>){}[0]
 
     final object Companion { // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.Companion|null[0]
         final suspend fun <#A2: kotlin/Any> (kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol<#A2>>).execute(#A2) // com.tezov.tuucho.core.domain.business.middleware/MiddlewareProtocol.Companion.execute|execute@kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.MiddlewareProtocol<0:0>>(0:0){0§<kotlin.Any>}[0]
@@ -190,15 +190,6 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/IdGeneratorPro
     abstract fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol.generate|generate(){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol|null[0]
-    abstract val group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group|{}group[0]
-        abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group.<get-group>|<get-group>(){}[0]
-
-    abstract fun (org.koin.core.module/Module).declaration() // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration|declaration@org.koin.core.module.Module(){}[0]
-
-    abstract interface Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group|null[0]
-}
-
 abstract interface com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol // com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol|null[0]
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol { // com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol|null[0]
@@ -346,6 +337,28 @@ final class com.tezov.tuucho.core.domain.business.model/ActionModelDomain { // c
         final fun from(kotlin/String): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String){}[0]
         final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlin/String? = ...): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?){}[0]
         final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlinx.serialization.json/JsonElement?): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+
+    final val declaration // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration|{}declaration[0]
+        final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration.<get-declaration>|<get-declaration>(){}[0]
+    final val group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group|{}group[0]
+        final fun <get-group>(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group.<get-group>|<get-group>(){}[0]
+
+    final fun component1(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.component1|component1(){}[0]
+    final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.component2|component2(){}[0]
+    final fun copy(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.copy|copy(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.toString|toString(){}[0]
+
+    abstract interface Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group|null[0]
+
+    final object Companion { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Companion|null[0]
+        final fun module(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Companion.module|module(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
     }
 }
 

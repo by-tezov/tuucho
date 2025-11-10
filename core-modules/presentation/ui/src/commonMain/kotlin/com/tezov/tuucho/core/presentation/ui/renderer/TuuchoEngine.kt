@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -36,6 +36,7 @@ interface TuuchoEngineProtocol {
         url: String
     )
 
+    @Suppress("ComposableNaming")
     @Composable
     fun display()
 }
@@ -56,7 +57,7 @@ class TuuchoEngine(
     private var foregroundGroup: Group? = null
     private var backgroundGroup: Group? = null
     private var transitionRequested = false
-    private val redrawTrigger = mutableStateOf(0)
+    private val redrawTrigger = mutableIntStateOf(0)
 
     override suspend fun start(
         url: String
@@ -74,8 +75,7 @@ class TuuchoEngine(
                             onIdleEvent(event)
                         }
 
-                        is Event.PrepareTransition -> { // nothing
-                        }
+                        is Event.PrepareTransition -> { /* nothing */ }
 
                         else -> {
                             throw UiException.Default("received unmanaged transition event $event")
@@ -118,7 +118,7 @@ class TuuchoEngine(
             transitionSpecObject = event.backgroundGroup.transitionSpecObject
         )
         transitionRequested = true
-        redrawTrigger.value = redrawTrigger.value + 1
+        redrawTrigger.intValue = redrawTrigger.intValue + 1
     }
 
     private suspend fun onIdleEvent(
@@ -140,17 +140,17 @@ class TuuchoEngine(
         )
         backgroundGroup = null
         transitionRequested = false
-        redrawTrigger.value = redrawTrigger.value + 1
+        redrawTrigger.intValue = redrawTrigger.intValue + 1
     }
 
     @Composable
     override fun display() {
         val animationProgress = if (transitionRequested) {
-            rememberAnimationProgress(redrawTrigger.value)
+            rememberAnimationProgress(redrawTrigger.intValue)
         } else {
             null
         }
-        val screens = remember(redrawTrigger.value) {
+        val screens = remember(redrawTrigger.intValue) {
             buildList<Pair<String, @Composable () -> Unit>> {
                 backgroundGroup?.let { group ->
                     group.screens.forEach { screen ->
@@ -176,7 +176,7 @@ class TuuchoEngine(
         }
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
-            LaunchedEffect(redrawTrigger.value) {
+            LaunchedEffect(redrawTrigger.intValue) {
                 coroutineScopes.event.async {
                     animationProgress
                         .events
@@ -192,6 +192,7 @@ class TuuchoEngine(
         }
     }
 
+    @Suppress("ComposableNaming")
     @Composable
     private fun ScreenProtocol.displayWithTransition(
         animationProgress: AnimationProgress?,
@@ -202,15 +203,16 @@ class TuuchoEngine(
                 .fillMaxSize()
                 .thenOnNotNull(
                     animationProgress,
-                    block = { ModifierTransition(it, spec = spec) }
+                    block = { modifierTransition(it, spec = spec) }
                 )
         ) {
             display()
         }
     }
 
+    @Suppress("ModifierFactoryExtensionFunction", "ModifierFactoryReturnType")
     @Composable
-    private fun ModifierTransition(
+    private fun modifierTransition(
         animationProgress: AnimationProgress,
         spec: JsonObject,
     ): AbstractModifierTransition = spec

@@ -37,7 +37,11 @@ compose-activity = { group = "androidx.activity", name = "activity-compose", ver
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-
+#lib - jvm
+#lib - android
+ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+#lib - ios
+ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 [plugins]
 #convention
 convention-application-jvm = { id = "com.tezov.tuucho.convention.application-jvm", version = "unspecified" }

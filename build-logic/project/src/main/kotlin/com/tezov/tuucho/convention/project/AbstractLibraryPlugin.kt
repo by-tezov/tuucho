@@ -13,9 +13,9 @@ import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.jlleitschuh.gradle.ktlint.tasks.KtLintFormatTask
 
 abstract class AbstractLibraryPlugin : Plugin<Project> {
-
 
     object PluginId {
         const val maven = "maven"
@@ -173,6 +173,29 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             }
             ignoreFailures.set(System.getenv("IS_CI") == "true")
         }
+        val sourceDirs = mutableSetOf(
+            "src/commonMain/kotlin",
+            "src/androidMain/kotlin",
+            "src/iosMain/kotlin",
+            "src/jvmMain/kotlin",
+            "src/commonTest/kotlin"
+        )
+        extensions.configure(AndroidComponentsExtension::class.java) {
+            onVariants { variant ->
+                val bt = variant.buildType ?: error("build can't be null")
+                sourceDirs += listOf(
+                    "src/commonMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
+                    "src/androidMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
+                    "src/iosMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
+                    "src/jvmMain${bt.replaceFirstChar { it.uppercase() }}/kotlin"
+                )
+            }
+        }
+        afterEvaluate {
+            tasks.withType(KtLintFormatTask::class.java).configureEach {
+                setSource(files(sourceDirs))
+            }
+        }
     }
 
     private fun configureDetekt(
@@ -186,16 +209,17 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             baseline = file("$projectDir/.validation/detekt/baseline.xml")
             ignoreFailures = System.getenv("IS_CI") == "true"
         }
-        val detektSourceDirs = mutableSetOf(
+        val sourceDirs = mutableSetOf(
             "src/commonMain/kotlin",
             "src/androidMain/kotlin",
             "src/iosMain/kotlin",
-            "src/jvmMain/kotlin"
+            "src/jvmMain/kotlin",
+            "src/commonTest/kotlin"
         )
         extensions.configure(AndroidComponentsExtension::class.java) {
             onVariants { variant ->
                 val bt = variant.buildType ?: error("build can't be null")
-                detektSourceDirs += listOf(
+                sourceDirs += listOf(
                     "src/commonMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
                     "src/androidMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
                     "src/iosMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
@@ -206,11 +230,11 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         afterEvaluate {
             tasks.withType(Detekt::class.java).configureEach {
                 jvmTarget = javaVersionString()
-                setSource(files(detektSourceDirs))
+                setSource(files(sourceDirs))
             }
             tasks.withType(DetektCreateBaselineTask::class.java).configureEach {
                 jvmTarget = javaVersionString()
-                setSource(files(detektSourceDirs))
+                setSource(files(sourceDirs))
             }
         }
     }

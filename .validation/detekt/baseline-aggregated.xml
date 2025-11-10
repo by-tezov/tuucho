@@ -9,8 +9,6 @@
     <ID>PackageNaming:CoroutineScopes.kt$package com.tezov.tuucho.core.barrel._system</ID>
     <!-- ************ Project: :core:data:__core.data__repository ************ -->
     <ID>ForbiddenComment:SendDataAndRetrieveMaterialRemoteSource.kt$SendDataAndRetrieveMaterialRemoteSource$// TODO: rectifier response</ID>
-    <ID>MagicNumber:NetworkRepositoryModule.kt$NetworkRepositoryModule.&lt;no name provided&gt;$200</ID>
-    <ID>MagicNumber:NetworkRepositoryModule.kt$NetworkRepositoryModule.&lt;no name provided&gt;$299</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$200</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$3000</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$500</ID>
@@ -59,11 +57,6 @@
     <ID>NestedBlockDepth:StatesRectifier.kt$StatesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:StylesRectifier.kt$StylesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:TextsRectifier.kt$TextsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.android.dev.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.android.dev.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.android.stage.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.android.stage.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.dev.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.dev.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.mock.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.mock.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkRepositoryModule.ios.stage.kt$com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.ios.stage.kt</ID>
     <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
     <ID>PackageNaming:AbstractBreaker.kt$package com.tezov.tuucho.core.data.repository.parser.breaker._system</ID>
     <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
@@ -102,12 +95,12 @@
     <ID>TooGenericExceptionThrown:ResourceService.kt$ResourceService$throw Exception("unknown version $version")</ID>
     <ID>TooGenericExceptionThrown:SendService.kt$SendService$throw Exception("unknown version $version")</ID>
     <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : MatcherRectifierProtocolTuuchoKoinComponent</ID>
+    <ID>TooManyFunctions:MaterialRectifierModule.kt$MaterialRectifierModule</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>
     <ID>VariableNaming:AbstractBreaker.kt$AbstractBreaker$var _element = this as JsonElement</ID>
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
     <!-- ************ Project: :core:domain:__core.domain__business ************ -->
     <ID>InvalidPackageDeclaration:SettingComponentNavigationTransitionSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema</ID>
-    <ID>LongMethod:UseCaseModule.kt$UseCaseModule.&lt;no name provided&gt;$private fun Module.withoutNetworkModule()</ID>
     <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val actionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, )</ID>
     <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutor, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: IdGeneratorProtocol, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val actionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
     <ID>MagicNumber:ActionProcessorProtocol.kt$ActionProcessorProtocol.Priority$100</ID>
@@ -181,7 +174,6 @@
     <ID>UseCheckOrError:AbstractAnimationCompound.kt$AbstractAnimationCompound.AnimatorIdle$throw IllegalStateException("Should never be called!")</ID>
     <!-- ************ Project: :core:presentation:__core.presentation__ui ************ -->
     <ID>ForbiddenComment:FieldView.kt$FieldView$// TODO: need to add the rectifier for initialValue text</ID>
-    <ID>FunctionNaming:TuuchoEngine.kt$TuuchoEngine$@Composable private fun ModifierTransition( animationProgress: AnimationProgress, spec: JsonObject, ): AbstractModifierTransition</ID>
     <ID>MagicNumber:ColorExtension.kt$16</ID>
     <ID>MagicNumber:ColorExtension.kt$6</ID>
     <ID>MagicNumber:ColorExtension.kt$8</ID>

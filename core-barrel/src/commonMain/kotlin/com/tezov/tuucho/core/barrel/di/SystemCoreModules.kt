@@ -21,16 +21,16 @@ internal object SystemCoreModules {
     @OptIn(TuuchoInternalApi::class)
     @Composable
     fun remember(
-        modules: List<ModuleProtocol>,
+        applicationModules: List<ModuleProtocol>,
     ) = androidx.compose.runtime.remember {
         koinApplication {
             allowOverride(override = false)
             val map = listOf(
-                modules,
                 SystemCoreDomainModules.invoke(),
                 SystemCoreDataModules.invoke(),
                 SystemCoreUiModules.invoke(),
-                SystemCoreModules.invoke()
+                SystemCoreModules.invoke(),
+                applicationModules,
             ).flatten().groupBy { it.group }
             modules(map.map { (_, modules) ->
                 module {

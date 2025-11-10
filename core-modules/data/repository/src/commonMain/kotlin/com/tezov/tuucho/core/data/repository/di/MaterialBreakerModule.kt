@@ -12,7 +12,7 @@ import com.tezov.tuucho.core.data.repository.parser.breaker.StyleBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker.TextBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker._system.AbstractBreaker
 import com.tezov.tuucho.core.data.repository.parser.breaker._system.MatcherBreakerProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -44,129 +44,133 @@ internal object MaterialBreakerModule {
         }
     }
 
+    fun invoke() = module(ModuleGroupData.Breaker) {
+        single<MaterialBreaker> { MaterialBreaker() }
+        componentModule()
+        contentModule()
+        styleModule()
+        optionModule()
+        stateModule()
+        textModule()
+        colorModule()
+        dimensionModule()
+        actionModule()
+    }
+
     @OptIn(TuuchoExperimentalAPI::class)
-    fun invoke() = object : ModuleProtocol {
-        override val group = ModuleGroupData.Breaker
+    private fun Module.componentModule() {
+        single<ComponentBreaker> { ComponentBreaker() }
 
-        override fun Module.declaration() {
-            single<MaterialBreaker> { MaterialBreaker() }
-            componentModule()
-            contentModule()
-            styleModule()
-            optionModule()
-            stateModule()
-            textModule()
-            colorModule()
-            dimensionModule()
-            actionModule()
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.COMPONENT) {
+            emptyList()
         }
 
-        private fun Module.componentModule() {
-            single<ComponentBreaker> { ComponentBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.COMPONENT) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.COMPONENT) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.contentModule() {
+        single<ContentBreaker> { ContentBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.COMPONENT) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.CONTENT) {
+            emptyList()
         }
 
-        private fun Module.contentModule() {
-            single<ContentBreaker> { ContentBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.CONTENT) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.CONTENT) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.styleModule() {
+        single<StyleBreaker> { StyleBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.CONTENT) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.STYLE) {
+            emptyList()
         }
 
-        private fun Module.styleModule() {
-            single<StyleBreaker> { StyleBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.STYLE) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.STYLE) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.optionModule() {
+        single<OptionBreaker> { OptionBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.STYLE) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.OPTION) {
+            emptyList()
         }
 
-        private fun Module.optionModule() {
-            single<OptionBreaker> { OptionBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.OPTION) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.OPTION) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.stateModule() {
+        single<StateBreaker> { StateBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.OPTION) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.STATE) {
+            emptyList()
         }
 
-        private fun Module.stateModule() {
-            single<StateBreaker> { StateBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.STATE) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.STATE) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.textModule() {
+        single<TextBreaker> { TextBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.STATE) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.TEXT) {
+            emptyList()
         }
 
-        private fun Module.textModule() {
-            single<TextBreaker> { TextBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.TEXT) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.TEXT) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.colorModule() {
+        single<ColorBreaker> { ColorBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.TEXT) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.COLOR) {
+            emptyList()
         }
 
-        private fun Module.colorModule() {
-            single<ColorBreaker> { ColorBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.COLOR) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.COLOR) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.dimensionModule() {
+        single<DimensionBreaker> { DimensionBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.COLOR) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.DIMENSION) {
+            emptyList()
         }
 
-        private fun Module.dimensionModule() {
-            single<DimensionBreaker> { DimensionBreaker() }
+        single<List<AbstractBreaker>>(Name.Processor.DIMENSION) {
+            emptyList()
+        }
+    }
 
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.DIMENSION) {
-                emptyList()
-            }
+    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.actionModule() {
+        single<ActionBreaker> { ActionBreaker() }
 
-            single<List<AbstractBreaker>>(Name.Processor.DIMENSION) {
-                emptyList()
-            }
+        single<List<MatcherBreakerProtocol>>(Name.Matcher.ACTION) {
+            emptyList()
         }
 
-        private fun Module.actionModule() {
-            single<ActionBreaker> { ActionBreaker() }
-
-            single<List<MatcherBreakerProtocol>>(Name.Matcher.ACTION) {
-                emptyList()
-            }
-
-            single<List<AbstractBreaker>>(Name.Processor.ACTION) {
-                emptyList()
-            }
+        single<List<AbstractBreaker>>(Name.Processor.ACTION) {
+            emptyList()
         }
     }
 }

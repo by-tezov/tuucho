@@ -1,11 +1,19 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
-import org.koin.core.module.Module
+import org.koin.core.module.KoinDslMarker
+import org.koin.dsl.ModuleDeclaration
 
-interface ModuleProtocol {
+data class ModuleProtocol(
+    val group: Group,
+    val declaration: ModuleDeclaration
+) {
     interface Group
 
-    val group: Group
-
-    fun Module.declaration()
+    companion object {
+        @KoinDslMarker
+        fun module(
+            group: Group,
+            declaration: ModuleDeclaration
+        ) = ModuleProtocol(group, declaration)
+    }
 }

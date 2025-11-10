@@ -12,7 +12,9 @@ fun mockCoroutineContext(
     currentScope: CoroutineScope
 ) = mock<CoroutineContextProtocol> {
     @Suppress("ktlint:standard:max-line-length")
-    everySuspend { await(block = any<suspend CoroutineScope.() -> JsonObject>()) } calls { (block: suspend CoroutineScope.() -> JsonObject) ->
+    everySuspend {
+        await(block = any<suspend CoroutineScope.() -> JsonObject>())
+    } calls { (block: suspend CoroutineScope.() -> JsonObject) ->
         block(currentScope)
     }
 }

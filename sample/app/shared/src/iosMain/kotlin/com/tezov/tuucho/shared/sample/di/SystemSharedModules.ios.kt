@@ -4,4 +4,5 @@ import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 
 internal actual fun SystemSharedModules.platformInvoke(): List<ModuleProtocol> = listOf(
     ConfigModuleIos.invoke(),
+    NetworkModuleIos.invoke(),
 )
