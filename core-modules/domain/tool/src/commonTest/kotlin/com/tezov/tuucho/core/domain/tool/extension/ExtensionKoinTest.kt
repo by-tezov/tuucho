@@ -11,14 +11,18 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ExtensionKoinTest {
-
     interface SimpleProtocol
+
     class SimpleA : SimpleProtocol
+
     class SimpleB : SimpleProtocol
+
     class SimpleC : SimpleProtocol
+
     class SimpleD : SimpleProtocol
 
     interface AnotherProtocol
+
     class Another : AnotherProtocol
 
     @Test
@@ -129,11 +133,14 @@ class ExtensionKoinTest {
     @Test
     fun `ordered - resolve all - single module - registration order`() {
         fun <T> List<T>.permutations(): Sequence<List<T>> = sequence {
-            if (size <= 1) yield(this@permutations)
-            else for (i in indices) {
-                val element = this@permutations[i]
-                val rest = this@permutations.take(i) + this@permutations.drop(i + 1)
-                for (perm in rest.permutations()) yield(listOf(element) + perm)
+            if (size <= 1) {
+                yield(this@permutations)
+            } else {
+                for (i in indices) {
+                    val element = this@permutations[i]
+                    val rest = this@permutations.take(i) + this@permutations.drop(i + 1)
+                    for (perm in rest.permutations()) yield(listOf(element) + perm)
+                }
             }
         }
 

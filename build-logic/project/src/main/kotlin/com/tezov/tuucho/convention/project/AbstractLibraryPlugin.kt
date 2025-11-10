@@ -13,7 +13,6 @@ import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-import org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask
 import org.jlleitschuh.gradle.ktlint.tasks.KtLintFormatTask
 
 abstract class AbstractLibraryPlugin : Plugin<Project> {
@@ -196,9 +195,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             tasks.withType(KtLintFormatTask::class.java).configureEach {
                 setSource(files(sourceDirs))
             }
-            tasks.withType(GenerateReportsTask::class.java).configureEach {
-//                setSource(files(sourceDirs))
-            }
         }
     }
 
@@ -217,7 +213,8 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             "src/commonMain/kotlin",
             "src/androidMain/kotlin",
             "src/iosMain/kotlin",
-            "src/jvmMain/kotlin"
+            "src/jvmMain/kotlin",
+            "src/commonTest/kotlin"
         )
         extensions.configure(AndroidComponentsExtension::class.java) {
             onVariants { variant ->

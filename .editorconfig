@@ -4,10 +4,6 @@ root = true
 ij_formatter_enabled = false
 ktlint = disabled
 
-[**/src/commonTest/**]
-ij_formatter_enabled = false
-ktlint = disabled
-
 [**/src/**/*.kt]
 ktlint_code_style = ktlint_official
 ktlint_experimental = enabled
