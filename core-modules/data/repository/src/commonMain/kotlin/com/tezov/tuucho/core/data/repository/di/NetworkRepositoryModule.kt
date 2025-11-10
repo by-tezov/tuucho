@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptorPlugin
 import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
+import com.tezov.tuucho.core.domain.tool.di.ExtensionKoin.getAllOrdered
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpCallValidator
@@ -53,7 +53,7 @@ object NetworkRepositoryModule {
                         handleResponseExceptionWithRequest { cause, _ -> throw cause }
                     }
                     install(HttpInterceptorPlugin) {
-                        nodes = getAll<HttpInterceptor.Node>()
+                        nodes = getKoin().getAllOrdered()
                     }
                 }
             }

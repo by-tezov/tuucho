@@ -3,6 +3,7 @@ package com.tezov.tuucho.shared.sample.di
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.tool.di.ExtensionKoin.bindOrdered
 import com.tezov.tuucho.shared.sample.interceptor.FailSafePageInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeaderAuthorizationInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeadersInterceptor
@@ -21,11 +22,17 @@ object RequestInterceptorModule {
 
         override fun Module.declaration() {
 
+            factory<FailSafePageInterceptor> {
+                FailSafePageInterceptor(
+                    config = get(),
+                )
+            } bindOrdered HttpInterceptor.Node::class
+
             factory<HeadersInterceptor> {
                 HeadersInterceptor(
                     config = get()
                 )
-            } bind HttpInterceptor.Node::class
+            } bindOrdered HttpInterceptor.Node::class
 
             factory<HeaderAuthorizationInterceptor> {
                 HeaderAuthorizationInterceptor(
@@ -33,13 +40,7 @@ object RequestInterceptorModule {
                     config = get(),
                     getValueOrNullFromStore = get()
                 )
-            } bind HttpInterceptor.Node::class
-
-            factory<FailSafePageInterceptor> {
-                FailSafePageInterceptor(
-                    config = get(),
-                )
-            } bind HttpInterceptor.Node::class
+            } bindOrdered HttpInterceptor.Node::class
 
         }
     }

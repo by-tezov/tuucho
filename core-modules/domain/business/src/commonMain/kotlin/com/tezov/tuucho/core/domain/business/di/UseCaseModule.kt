@@ -24,6 +24,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToSc
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
+import com.tezov.tuucho.core.domain.tool.di.ExtensionKoin.getAllOrdered
 import org.koin.core.module.Module
 
 internal object UseCaseModule {
@@ -49,7 +50,7 @@ internal object UseCaseModule {
                     navigationStackTransitionRepository = get(),
                     shadowerMaterialRepository = get(),
                     actionLockRepository = get(),
-                    navigationMiddlewares = getAll()
+                    navigationMiddlewares = getKoin().getAllOrdered()
                 )
             }
 
@@ -65,7 +66,7 @@ internal object UseCaseModule {
                     navigationStackTransitionRepository = get(),
                     shadowerMaterialRepository = get(),
                     actionLockRepository = get(),
-                    navigationMiddlewares = getAll()
+                    navigationMiddlewares = getKoin().getAllOrdered()
                 )
             }
 

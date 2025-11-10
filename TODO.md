@@ -1,6 +1,5 @@
 ## In progress
 
--- koin order ... fail
 -- kotor single engine ...
 
 - add network error management around the other use case
