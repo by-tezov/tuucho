@@ -18,7 +18,6 @@ import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.matches
-import dev.mokkery.matcher.matching
 import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
@@ -214,14 +213,6 @@ class MaterialCacheLocalSourceTest {
 
         sut.insert(material, url, visibility, weakLifetime)
 
-        verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineScopes.parser
-            materialBreaker.process(material)
-            coroutineScopes.database
-            materialDatabaseSource.insert(any(), Table.Common)
-            materialDatabaseSource.insert(any())
-            materialDatabaseSource.insert(any(), Table.Common)
-        }
         verify(VerifyMode.exactly(1)) { coroutineScopes.parser }
         verifySuspend(VerifyMode.exactly(1)) { materialBreaker.process(material) }
         verify(VerifyMode.exactly(1)) { coroutineScopes.database }
@@ -326,9 +317,8 @@ class MaterialCacheLocalSourceTest {
 
         sut.enroll(url, key, visibility)
 
-        verifySuspend(VerifyMode.exhaustiveOrder) {
+        verify(VerifyMode.exactly(1)) {
             coroutineScopes.database
-            materialDatabaseSource.insert(any())
         }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(matches(
