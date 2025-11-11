@@ -31,13 +31,13 @@ class ExceptionNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
         } catch (exception: Throwable) {
             //IMPROVE: check exception and design action in accord with exception
             if ((attempt + 1) < maxRetries) {
-                val delayMs = (Config.NetworkMinRetryDelay * (1 shl attempt)).coerceAtMost(Config.NetworkMaxRetryDelay)
+                val delayMs = (Config.networkMinRetryDelay * (1 shl attempt)).coerceAtMost(Config.networkMaxRetryDelay)
                 delay(delayMs)
                 processWithRetry(context, next, attempt + 1, maxRetries)
-            } else if (context.input.url != Page.FailSafe) {
+            } else if (context.input.url != Page.failSafe) {
                 next.invoke(
                     context.copy(
-                        input = context.input.copy(url = Page.FailSafe)
+                        input = context.input.copy(url = Page.failSafe)
                     )
                 )
             } else {

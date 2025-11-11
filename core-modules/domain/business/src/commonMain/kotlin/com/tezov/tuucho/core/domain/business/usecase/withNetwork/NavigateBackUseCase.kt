@@ -8,9 +8,9 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
-import com.tezov.tuucho.core.domain.business.middleware.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
@@ -31,13 +31,14 @@ class NavigateBackUseCase(
         input: Unit
     ) {
         coroutineScopes.useCase.async {
-            (navigationMiddlewares + terminalNavigationMiddleware()).execute(
+            navigationMiddlewares.execute(
                 context = NavigationMiddleware.Back.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
                         ?: throw DomainException.Default("Shouldn't be possible"),
                     nextUrl = navigationStackRouteRepository.priorRoute()?.value,
                     onShadowerException = null
-                )
+                ),
+                terminal = terminalMiddleware()
             )
         }
     }
@@ -52,7 +53,7 @@ class NavigateBackUseCase(
         )
     }
 
-    private fun terminalNavigationMiddleware() = NavigationMiddleware.Back { context, _ ->
+    private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
         coroutineScopes.navigation.await {
             val interactionHandle = tryLock() ?: return@await
             val restoredRoute = navigationStackRouteRepository.backward(

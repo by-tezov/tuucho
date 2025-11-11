@@ -18,7 +18,7 @@ class FailSafePageInterceptor(
             .removePrefix("${config.version}/")
             .removePrefix(config.resourceEndpoint)
 
-        if (route != "/${Page.FailSafe}") return
+        if (route != "/${Page.failSafe}") return
 
 //TODO should be a json file from resource
         val fakeJson = """

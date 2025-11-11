@@ -77,7 +77,7 @@ class BeforeNavigateToUrlMiddleware(
                 next.invoke(
                     context.withExceptionHandler()
                         .copy(
-                            input = context.input.copy(url = Page.Login)
+                            input = context.input.copy(url = Page.login)
                         )
                 )
                 return true
@@ -90,12 +90,12 @@ class BeforeNavigateToUrlMiddleware(
         context: NavigationMiddleware.ToUrl.Context,
         next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
     ): Boolean {
-        if (context.currentUrl == null && context.input.url == Page.Login && isAuthorizationExist() && isAuthorizationValid()) {
+        if (context.currentUrl == null && context.input.url == Page.login && isAuthorizationExist() && isAuthorizationValid()) {
             loadAuthConfig()
             next.invoke(
                 context.withExceptionHandler()
                     .copy(
-                        input = context.input.copy(url = Page.Home)
+                        input = context.input.copy(url = Page.home)
                     )
             )
             return true
@@ -106,7 +106,7 @@ class BeforeNavigateToUrlMiddleware(
     private suspend fun loadLobbyConfigOnStart(
         context: NavigationMiddleware.ToUrl.Context,
     ): Boolean {
-        if (context.currentUrl == null && context.input.url == Page.Login) {
+        if (context.currentUrl == null && context.input.url == Page.login) {
             loadLobbyConfig()
             return true
         }
@@ -116,7 +116,7 @@ class BeforeNavigateToUrlMiddleware(
     private suspend fun loadAuthConfigAfterSuccessfulLogin(
         context: NavigationMiddleware.ToUrl.Context,
     ): Boolean {
-        if (context.currentUrl == Page.Login && context.input.url == Page.Home) {
+        if (context.currentUrl == Page.login && context.input.url == Page.home) {
             loadAuthConfig()
             return true
         }

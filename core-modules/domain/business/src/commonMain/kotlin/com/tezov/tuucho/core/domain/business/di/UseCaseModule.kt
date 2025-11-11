@@ -89,7 +89,9 @@ internal object UseCaseModule {
 
         factory<SendDataUseCase> {
             SendDataUseCase(
-                sendDataAndRetrieveMaterialRepository = get()
+                coroutineScopes = get(),
+                sendDataAndRetrieveMaterialRepository = get(),
+                sendDataMiddlewares = getAllOrdered()
             )
         }
     }
@@ -171,6 +173,7 @@ internal object UseCaseModule {
             UpdateViewUseCase(
                 coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
+                updateViewMiddlewares = getAllOrdered()
             )
         }
     }

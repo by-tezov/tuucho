@@ -10,10 +10,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
-import com.tezov.tuucho.core.domain.business.middleware.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
@@ -49,17 +49,18 @@ class NavigateToUrlUseCase(
         input: Input
     ) {
         coroutineScopes.useCase.async {
-            (navigationMiddlewares + terminalNavigationMiddleware()).execute(
+            navigationMiddlewares.execute(
                 context = NavigationMiddleware.ToUrl.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value,
                     input = input,
                     onShadowerException = null
-                )
+                ),
+                terminal = terminalMiddleware()
             )
         }
     }
 
-    private fun terminalNavigationMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
+    private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
         coroutineScopes.navigation.await {
             val interactionHandle = tryLock() ?: return@await
             with(context.input) {
