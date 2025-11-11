@@ -5,7 +5,7 @@
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <com.tezov:__core.presentation__tool>
+// Library unique name: <com.tezov:core.presentation.tool>
 abstract class <#A: kotlin/Any, #B: kotlin/Any> com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound { // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound|null[0]
     constructor <init>(kotlin.collections/MutableMap<#A, com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator<kotlin/Any>> = ...) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.<init>|<init>(kotlin.collections.MutableMap<1:0,com.tezov.tuucho.core.presentation.tool.animation.AbstractAnimationCompound.Animator<kotlin.Any>>){}[0]
 

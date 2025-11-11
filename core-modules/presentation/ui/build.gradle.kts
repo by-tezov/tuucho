@@ -5,9 +5,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core:domain:__core.domain__tool"))
-            implementation(project(":core:domain:__core.domain__business"))
-            implementation(project(":core:presentation:__core.presentation__tool"))
+            implementation(project(":core.domain.tool"))
+            implementation(project(":core.domain.business"))
+            implementation(project(":core.presentation.tool"))
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)

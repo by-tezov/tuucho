@@ -32,9 +32,9 @@ kotlin {
             }
         }
         commonMain.dependencies {
-            implementation(project(":core:domain:__core.domain__test"))
-            implementation(project(":core:domain:__core.domain__tool"))
-            implementation(project(":core:domain:__core.domain__business"))
+            implementation(project(":core.domain.test"))
+            implementation(project(":core.domain.tool"))
+            implementation(project(":core.domain.business"))
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)

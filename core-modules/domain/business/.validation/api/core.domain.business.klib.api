@@ -5,7 +5,7 @@
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <com.tezov:__core.domain__business>
+// Library unique name: <com.tezov:core.domain.business>
 final enum class com.tezov.tuucho.core.domain.business.model/LanguageModelDomain : kotlin/Enum<com.tezov.tuucho.core.domain.business.model/LanguageModelDomain> { // com.tezov.tuucho.core.domain.business.model/LanguageModelDomain|null[0]
     enum entry Default // com.tezov.tuucho.core.domain.business.model/LanguageModelDomain.Default|null[0]
     enum entry French // com.tezov.tuucho.core.domain.business.model/LanguageModelDomain.French|null[0]

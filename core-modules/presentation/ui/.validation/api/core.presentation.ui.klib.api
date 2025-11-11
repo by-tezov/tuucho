@@ -5,7 +5,7 @@
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <com.tezov:__core.presentation__ui>
+// Library unique name: <com.tezov:core.presentation.ui>
 final enum class com.tezov.tuucho.core.presentation.ui.transition._system/DirectionNavigation : kotlin/Enum<com.tezov.tuucho.core.presentation.ui.transition._system/DirectionNavigation> { // com.tezov.tuucho.core.presentation.ui.transition._system/DirectionNavigation|null[0]
     enum entry Backward // com.tezov.tuucho.core.presentation.ui.transition._system/DirectionNavigation.Backward|null[0]
     enum entry Forward // com.tezov.tuucho.core.presentation.ui.transition._system/DirectionNavigation.Forward|null[0]
