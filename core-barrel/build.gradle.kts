@@ -5,21 +5,21 @@ plugins {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            api(project(":core:data:__core.data__repository"))
+            api(project(":core.data.repository"))
         }
         val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
         if (isMacOs) {
             iosMain.dependencies {
-                api(project(":core:data:__core.data__repository"))
+                api(project(":core.data.repository"))
             }
         }
         commonMain.dependencies {
-            api(project(":core:domain:__core.domain__test"))
-            api(project(":core:domain:__core.domain__tool"))
-            api(project(":core:domain:__core.domain__business"))
-            api(project(":core:data:__core.data__repository"))
-            api(project(":core:presentation:__core.presentation__tool"))
-            api(project(":core:presentation:__core.presentation__ui"))
+            api(project(":core.domain.test"))
+            api(project(":core.domain.tool"))
+            api(project(":core.domain.business"))
+            api(project(":core.data.repository"))
+            api(project(":core.presentation.tool"))
+            api(project(":core.presentation.ui"))
 
             implementation(compose.runtime)
             implementation(compose.foundation)
