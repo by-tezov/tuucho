@@ -7,7 +7,7 @@
     <ID>FunctionNaming:StartTuuchoEngine.kt$@Composable fun StartTuuchoEngine( applicationModules: List&lt;ModuleProtocol&gt;, onStartUrl: String )</ID>
     <ID>LongParameterList:CoroutineScopes.kt$CoroutineScopes$( override val database: CoroutineContextProtocol = object : CoroutineContext("Database", Dispatchers.IO) {}, override val datastore: CoroutineContextProtocol = object : CoroutineContext("Database", Dispatchers.IO) {}, override val network: CoroutineContextProtocol = object : CoroutineContext("Network", Dispatchers.IO) {}, override val parser: CoroutineContextProtocol = object : CoroutineContext("Parser", Dispatchers.Default) {}, override val renderer: CoroutineContextProtocol = object : CoroutineContext("Renderer", Dispatchers.Default) {}, override val navigation: CoroutineContextProtocol = object : CoroutineContext("Navigation", Dispatchers.Default) {}, override val useCase: CoroutineContextProtocol = object : CoroutineContext("UseCase", Dispatchers.Default) {}, override val event: CoroutineContextProtocol = object : CoroutineContext("Event", Dispatchers.Default) {}, override val default: CoroutineContextProtocol = object : CoroutineContext("Default", Dispatchers.Default) {}, override val main: CoroutineContextProtocol = object : CoroutineContext("Main", Dispatchers.Main) {}, override val io: CoroutineContextProtocol = object : CoroutineContext("IO", Dispatchers.IO) {}, )</ID>
     <ID>PackageNaming:CoroutineScopes.kt$package com.tezov.tuucho.core.barrel._system</ID>
-    <!-- ************ Project: :core:data:__core.data__repository ************ -->
+    <!-- ************ Project: :core.data.repository ************ -->
     <ID>ForbiddenComment:SendDataAndRetrieveMaterialRemoteSource.kt$SendDataAndRetrieveMaterialRemoteSource$// TODO: rectifier response</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$200</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$3000</ID>
@@ -99,7 +99,7 @@
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>
     <ID>VariableNaming:AbstractBreaker.kt$AbstractBreaker$var _element = this as JsonElement</ID>
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
-    <!-- ************ Project: :core:domain:__core.domain__business ************ -->
+    <!-- ************ Project: :core.domain.business ************ -->
     <ID>InvalidPackageDeclaration:SettingComponentNavigationTransitionSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema</ID>
     <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val actionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, )</ID>
     <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutor, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: IdGeneratorProtocol, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val actionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
@@ -133,9 +133,9 @@
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
     <ID>TooManyFunctions:FormSendUrlActionProcessor.kt$FormSendUrlActionProcessor : ActionProcessorProtocolTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:Schema.kt$OpenSchemaScope&lt;T : OpenSchemaScope&lt;T&gt;&gt;</ID>
-    <!-- ************ Project: :core:domain:__core.domain__test ************ -->
+    <!-- ************ Project: :core.domain.test ************ -->
     <ID>PackageNaming:OpenForTest.kt$package com.tezov.tuucho.core.domain.test._system</ID>
-    <!-- ************ Project: :core:domain:__core.domain__tool ************ -->
+    <!-- ************ Project: :core.domain.tool ************ -->
     <ID>CyclomaticComplexMethod:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$fun process( input: String, now: Instant = Clock.System.now(), ): String</ID>
     <ID>MagicNumber:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$3</ID>
     <ID>MagicNumber:Println.kt$4000</ID>
@@ -144,7 +144,7 @@
     <ID>PackageNaming:Println.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
     <ID>TooManyFunctions:ExtensionNull.kt$ExtensionNull</ID>
     <ID>VariableNaming:JsonElementPath.kt$JsonElementPath$val _segment = segment.trim()</ID>
-    <!-- ************ Project: :core:presentation:__core.presentation__tool ************ -->
+    <!-- ************ Project: :core.presentation.tool ************ -->
     <ID>ConstructorParameterNaming:AbstractAnimationCompound.kt$AbstractAnimationCompound.AnimatorIdle$var duration_ms: Int</ID>
     <ID>EmptyFunctionBlock:LocalProviderTextField.kt$LocalProviderTextField.&lt;no name provided&gt;${ }</ID>
     <ID>EmptyFunctionBlock:LocalProviderTextField.kt$LocalProviderTextField.&lt;no name provided&gt;${}</ID>
@@ -172,7 +172,7 @@
     <ID>MagicNumber:ThemeColorsExtended.kt$ThemeColorsExtended.Resources$0xFFFFFF00</ID>
     <ID>MagicNumber:ThemeColorsExtended.kt$ThemeColorsExtended.Resources$0xFFFFFFFF</ID>
     <ID>UseCheckOrError:AbstractAnimationCompound.kt$AbstractAnimationCompound.AnimatorIdle$throw IllegalStateException("Should never be called!")</ID>
-    <!-- ************ Project: :core:presentation:__core.presentation__ui ************ -->
+    <!-- ************ Project: :core.presentation.ui ************ -->
     <ID>ForbiddenComment:FieldView.kt$FieldView$// TODO: need to add the rectifier for initialValue text</ID>
     <ID>MagicNumber:ColorExtension.kt$16</ID>
     <ID>MagicNumber:ColorExtension.kt$6</ID>

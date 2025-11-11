@@ -191,43 +191,43 @@ public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierFill
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitBorderKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitBorderKt;
 	public fun <init> ()V
-	public final fun getLambda$1203075824$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1203075824$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitFrameKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitFrameKt;
 	public fun <init> ()V
-	public final fun getLambda$-1338982711$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1338982711$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitPaletteKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitPaletteKt;
 	public fun <init> ()V
-	public final fun getLambda$-1067547400$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1720156493$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$1205206086$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1067547400$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1720156493$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1205206086$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitShapeKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitShapeKt;
 	public fun <init> ()V
-	public final fun getLambda$1391307586$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1391307586$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitStateKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitStateKt;
 	public fun <init> ()V
-	public final fun getLambda$-1850890327$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-377465283$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-969593683$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$1542480369$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$45941209$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1850890327$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-377465283$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-969593683$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1542480369$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$45941209$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitTextKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitTextKt;
 	public fun <init> ()V
-	public final fun getLambda$-1902171282$__core_presentation__tool ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1902171282$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/OutfitBorder {

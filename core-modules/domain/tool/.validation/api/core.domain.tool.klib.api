@@ -5,7 +5,7 @@
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <com.tezov:__core.domain__tool>
+// Library unique name: <com.tezov:core.domain.tool>
 open annotation class com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI : kotlin/Annotation { // com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI|null[0]
     constructor <init>() // com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI.<init>|<init>(){}[0]
 }

@@ -5,7 +5,7 @@
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <com.tezov:__core.data__repository>
+// Library unique name: <com.tezov:core.data.repository>
 abstract fun interface com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol|null[0]
     abstract suspend fun invoke(kotlinx.serialization.json/JsonObject, kotlin/String): kotlin.collections/List<kotlinx.serialization.json/JsonObject>? // com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol.invoke|invoke(kotlinx.serialization.json.JsonObject;kotlin.String){}[0]
 }
