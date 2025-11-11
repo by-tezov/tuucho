@@ -3,7 +3,7 @@
 domain = "com.tezov"
 name = "tuucho"
 versionCode = "1"
-versionName = "0.0.1-alpha18_2.2.20"
+versionName = "0.0.1-alpha19_2.2.21"
 isSnapshot = "false"
 javaVersion = "17"
 minSdk = "24"
@@ -12,12 +12,12 @@ ktlintRules = "1.7.1"
 detektRules = "1.23.8"
 
 #plugin
-android-plugin = "8.13.0"
-kotlin-plugin = "2.2.20"
-compose-plugin = "1.9.0"
-kotlin-serialization-plugin = "2.2.20"
+android-plugin = "8.13.1"
+kotlin-plugin = "2.2.21"
+compose-plugin = "1.9.3"
+kotlin-serialization-plugin = "2.2.21"
 maven-plugin = "0.34.0"
-ktlint = "13.1.0"
+ktlint = "14.0.1"
 detekt = "1.23.8"
 
 #lib - platform
@@ -25,7 +25,7 @@ kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.9.0"
 kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.1.0"
-ktor = "3.3.1"
+ktor = "3.3.2"
 koin = "4.1.1"
 kotlin-datetime = "0.7.1"
 okio = "3.16.2"
@@ -36,7 +36,7 @@ datastore-preferences = "1.1.7"
 
 #test
 jacoco = "0.8.13"
-mokkery = "3.0.0-Beta3"
+mokkery = "3.0.0-RC"
 
 [libraries]
 #build-logic

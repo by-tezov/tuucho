@@ -202,5 +202,17 @@ object ThemeColorsExtended {
         surfaceContainerHighest = Color.Red,
         surfaceContainerLow = Color.Red,
         surfaceContainerLowest = Color.Red,
+        primaryFixed = Color.Red,
+        primaryFixedDim = Color.Red,
+        onPrimaryFixed = Color.Red,
+        onPrimaryFixedVariant = Color.Red,
+        secondaryFixed = Color.Red,
+        secondaryFixedDim = Color.Red,
+        onSecondaryFixed = Color.Red,
+        onSecondaryFixedVariant = Color.Red,
+        tertiaryFixed = Color.Red,
+        tertiaryFixedDim = Color.Red,
+        onTertiaryFixed = Color.Red,
+        onTertiaryFixedVariant = Color.Red,
     )
 }

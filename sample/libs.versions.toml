@@ -4,23 +4,23 @@ domain = "com.tezov"
 name = "tuucho.sample"
 keystorePropertiesFilePath = "keystore.properties"
 versionCode = "1"
-versionName = "0.0.1-alpha18_2.2.20"
+versionName = "0.0.1-alpha19_2.2.21"
 javaVersion = "17"
 minSdk = "24"
 targetSdk = "36"
 compileSdk = "36"
 
 #plugin
-android-plugin = "8.13.0"
-kotlin-plugin = "2.2.20"
-compose-plugin = "1.9.0"
+android-plugin = "8.13.1"
+kotlin-plugin = "2.2.21"
+compose-plugin = "1.9.3"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
 compose-activity = "1.11.0"
 
 #lib - platform
-ktor = "3.3.1"
+ktor = "3.3.2"
 koin = "4.1.1"
 
 [libraries]
