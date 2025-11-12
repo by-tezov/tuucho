@@ -2,7 +2,6 @@ package com.tezov.tuucho.shared.sample.interceptor
 
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.shared.sample._system.Logger
-import com.tezov.tuucho.shared.sample.di.RequestInterceptorModule
 import io.ktor.client.request.HttpRequestBuilder
 
 class LoggerInterceptor(
@@ -14,13 +13,13 @@ class LoggerInterceptor(
     ) {
         with(logger) {
             println("${builder.method} - ${builder.url}")
-            builder.headers.names().takeIf { it.isNotEmpty() }?.let { names->
-                println("-- Headers --")
-                names.forEach {
-                    println(it)
+            builder.headers.entries()
+                .takeIf { it.isNotEmpty() }
+                ?.let { entries ->
+                    println("-- Headers --")
+                    entries.forEach { println(it) }
+                    println("-------------")
                 }
-                println("-------------")
-            }
         }
     }
 }

@@ -19,7 +19,7 @@ fun interface MiddlewareProtocol<C, R> {
             context: C,
             terminal: MiddlewareProtocol<C, R>
         ): R {
-            val initial: Next<C, R> = Next {
+            val initial: Next<C, R> = Next { context ->
                 terminal.process(context, next = { throw DomainException.Default("Should never be called") })
             }
             val composed = foldRight(initial) { middleware, next ->
