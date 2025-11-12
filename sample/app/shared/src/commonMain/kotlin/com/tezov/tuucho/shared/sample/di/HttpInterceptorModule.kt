@@ -9,7 +9,7 @@ import com.tezov.tuucho.shared.sample.interceptor.HeaderAuthorizationInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeadersInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.LoggerInterceptor
 
-object RequestInterceptorModule {
+object HttpInterceptorModule {
 
     interface Config {
         val headerPlatform: String

@@ -121,7 +121,7 @@ class NavigateToUrlUseCase(
         val selector =
             withScope(ComponentSettingNavigationSchema.Definition::Scope).selector ?: return true
         return useCaseExecutor
-            .invokeSuspend(
+            .await(
                 useCase = navigationOptionSelectorFactory,
                 input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(
                     prototypeObject = selector
@@ -172,9 +172,11 @@ class NavigateToUrlUseCase(
                         }
                 }
                 runCatching { process() }.onFailure { failure ->
-                    context.onShadowerException?.invoke(failure, context) {
-                        process()
-                    } ?: throw failure
+                    context.onShadowerException?.invoke(
+                        /* exception */ failure,
+                        /* context */context,
+                        /* replay*/ ::process
+                    )?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {

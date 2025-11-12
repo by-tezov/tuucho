@@ -10,7 +10,7 @@ import kotlin.coroutines.CoroutineContext
 
 interface CoroutineContextProtocol {
     val context: CoroutineContext
-    val job: Job
+    val supervisorJob: Job
     val scope: CoroutineScope
 
     fun <T> async(
@@ -27,19 +27,18 @@ open class CoroutineContext(
     name: String,
     override val context: CoroutineContext,
 ) : CoroutineContextProtocol {
-    override val job: Job = SupervisorJob()
 
-    override val scope: CoroutineScope = CoroutineScope(context + job + CoroutineName(name))
+    override val supervisorJob: Job = SupervisorJob()
+
+    override val scope: CoroutineScope = CoroutineScope(context + supervisorJob + CoroutineName(name))
 
     override fun <T> async(
         onException: ((e: Throwable) -> Unit)?,
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T> {
         val deferred = scope.async(block = block)
-        deferred.invokeOnCompletion { e: Throwable? ->
-            if (e != null) {
-                onException?.invoke(e) ?: throw e
-            }
+        deferred.invokeOnCompletion { throwable ->
+            throwable?.let { onException?.invoke(throwable) ?: throw throwable }
         }
         return deferred
     }

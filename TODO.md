@@ -1,8 +1,8 @@
 ## In progress
 
-- Logger show exception
-- Action Middleware + Lock Fail Safe navigation ?
 - Error Handler on coroutine scope
+
+- Action Middleware + Lock Fail Safe navigation ?
 - Error when Compose enter in the ga
 - me
 - add network error management around the other use case

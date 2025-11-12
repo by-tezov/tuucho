@@ -32,7 +32,7 @@ class HeaderAuthorizationInterceptor(
             }
 
         if (route.matches(authRegex)) {
-            useCaseExecutor.invokeSuspend(
+            useCaseExecutor.await(
                 useCase = getValueOrNullFromStore,
                 input = GetValueOrNullFromStoreUseCase.Input(
                     key = "login-authorization".toKey()

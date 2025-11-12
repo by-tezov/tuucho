@@ -12,7 +12,7 @@ object SystemSharedModules {
 
     fun invoke(): List<ModuleProtocol> = listOf(
         module(ModuleGroupCore.Main) { single { Logger() } },
-        RequestInterceptorModule.invoke(),
+        HttpInterceptorModule.invoke(),
         MiddlewareModule.invoke()
     ) + platformInvoke()
 

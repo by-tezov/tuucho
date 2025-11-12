@@ -34,8 +34,8 @@ internal object ConfigModuleAndroid {
             }
         }
 
-        factory<RequestInterceptorModule.Config> {
-            object : RequestInterceptorModule.Config {
+        factory<HttpInterceptorModule.Config> {
+            object : HttpInterceptorModule.Config {
                 override val headerPlatform = BuildKonfig.headerPlatform
             }
         }

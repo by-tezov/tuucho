@@ -62,7 +62,7 @@ class TuuchoEngine(
     override suspend fun start(
         url: String
     ) {
-        useCaseExecutor.invoke(
+        useCaseExecutor.async(
             useCase = registerToScreenTransitionEvent,
             input = RegisterToScreenTransitionEventUseCase.Input(
                 onEvent = { event ->
@@ -84,7 +84,7 @@ class TuuchoEngine(
                 }
             )
         )
-        useCaseExecutor.invoke(
+        useCaseExecutor.async(
             useCase = navigateToUrl,
             input = NavigateToUrlUseCase.Input(
                 url = url
@@ -98,7 +98,7 @@ class TuuchoEngine(
         @Suppress("UNCHECKED_CAST")
         foregroundGroup = Group(
             screens = useCaseExecutor
-                .invokeSuspend(
+                .await(
                     useCase = getScreensFromRoutes,
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.foregroundGroup.routes
@@ -109,7 +109,7 @@ class TuuchoEngine(
         @Suppress("UNCHECKED_CAST")
         backgroundGroup = Group(
             screens = useCaseExecutor
-                .invokeSuspend(
+                .await(
                     useCase = getScreensFromRoutes,
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.backgroundGroup.routes
@@ -127,7 +127,7 @@ class TuuchoEngine(
         @Suppress("UNCHECKED_CAST")
         foregroundGroup = Group(
             screens = useCaseExecutor
-                .invokeSuspend(
+                .await(
                     useCase = getScreensFromRoutes,
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.routes
@@ -181,7 +181,7 @@ class TuuchoEngine(
                     animationProgress
                         .events
                         .once {
-                            useCaseExecutor.invoke(
+                            useCaseExecutor.async(
                                 useCase = notifyNavigationTransitionCompleted,
                                 input = Unit
                             )

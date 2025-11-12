@@ -59,7 +59,7 @@ class FieldFormView(
                     }.collect()
                 @Suppress("UNCHECKED_CAST")
                 useCaseExecutor
-                    .invokeSuspend(
+                    .await(
                         useCase = fieldValidatorFactory,
                         input = FormValidatorFactoryUseCase.Input(
                             prototypeObject = validatorPrototype

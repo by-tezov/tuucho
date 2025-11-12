@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
+import com.tezov.tuucho.shared.sample._system.Config
 import com.tezov.tuucho.shared.sample._system.Page
 import kotlinx.coroutines.delay
 
@@ -34,7 +35,7 @@ class BeforeNavigateToUrlMiddleware(
         next.invoke(context.withExceptionHandler())
     }
 
-    private suspend fun isAuthorizationExist() = useCaseExecutor.invokeSuspend(
+    private suspend fun isAuthorizationExist() = useCaseExecutor.await(
         useCase = getValueOrNullFromStore,
         input = GetValueOrNullFromStoreUseCase.Input(
             key = LOGIN_AUTHORIZATION.toKey()
@@ -42,7 +43,7 @@ class BeforeNavigateToUrlMiddleware(
     ).value?.value != null
 
     private suspend fun isAuthorizationValid() = runCatching {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = serverHealthCheck,
             input = ServerHealthCheckUseCase.Input(
                 url = AUTH_PREFIX
@@ -51,7 +52,7 @@ class BeforeNavigateToUrlMiddleware(
     }.getOrNull() != null
 
     private suspend fun loadLobbyConfig() {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = refreshMaterialCache,
             input = RefreshMaterialCacheUseCase.Input(
                 url = LOBBY_CONFIG
@@ -60,7 +61,7 @@ class BeforeNavigateToUrlMiddleware(
     }
 
     private suspend fun loadAuthConfig() {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = refreshMaterialCache,
             input = RefreshMaterialCacheUseCase.Input(
                 url = AUTH_CONFIG
@@ -130,7 +131,7 @@ class BeforeNavigateToUrlMiddleware(
                 val maxRetries = 3
                 var failure: Throwable? = exception
                 for (attempt in 0 until maxRetries) {
-                    val delayMs = (1000L * (1 shl attempt)).coerceAtMost(5000L)
+                    val delayMs = (Config.networkMinRetryDelay * (1 shl attempt)).coerceAtMost(Config.networkMaxRetryDelay)
                     delay(delayMs)
                     val result = runCatching { replay.invoke() }
                     failure = result.exceptionOrNull()

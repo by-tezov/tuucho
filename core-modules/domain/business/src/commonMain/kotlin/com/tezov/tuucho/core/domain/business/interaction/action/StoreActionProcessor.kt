@@ -46,7 +46,7 @@ internal class StoreActionProcessor(
         query: JsonElement
     ) {
         query.jsonObject.forEach {
-            useCaseExecutor.invokeSuspend(
+            useCaseExecutor.await(
                 useCase = saveKeyValueToStore,
                 input = SaveKeyValueToStoreUseCase.Input(
                     key = it.key.toKey(),
@@ -60,7 +60,7 @@ internal class StoreActionProcessor(
         query: JsonElement
     ) {
         query.jsonArray.forEach {
-            useCaseExecutor.invokeSuspend(
+            useCaseExecutor.await(
                 useCase = removeKeyValueFromStore,
                 input = RemoveKeyValueFromStoreUseCase.Input(
                     key = it.string.toKey(),

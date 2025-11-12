@@ -103,9 +103,11 @@ class NavigateBackUseCase(
                 runCatching {
                     process()
                 }.onFailure { failure ->
-                    context.onShadowerException?.invoke(failure, context) {
-                        process()
-                    } ?: throw failure
+                    context.onShadowerException?.invoke(
+                        /* exception */ failure,
+                        /* context */context,
+                        /* replay*/ ::process
+                    ) ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {

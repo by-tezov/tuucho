@@ -21,7 +21,7 @@ class GetValueOrNullFromStoreUseCase(
     override suspend fun invoke(
         input: Input
     ) = with(input) {
-        coroutineScopes.database.await {
+        coroutineScopes.datastore.await {
             Output(
                 value = keyValueRepository.getOrNull(input.key)
             )
