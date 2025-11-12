@@ -78,6 +78,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.ui)
 
+            implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.ktor.core)
         }

@@ -1,16 +1,16 @@
-package com.tezov.tuucho.shared.sample.middleware
+package com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.NextMiddleware
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.shared.sample._system.Config
 import com.tezov.tuucho.shared.sample._system.Page
 import kotlinx.coroutines.delay
 
-class ExceptionNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
+class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
     override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ) {
         processWithRetry(
             context = context,
@@ -22,7 +22,7 @@ class ExceptionNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
     private suspend fun processWithRetry(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
         attempt: Int,
         maxRetries: Int,
     ) {
@@ -41,7 +41,7 @@ class ExceptionNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
                     )
                 )
             } else {
-                throw exception // crash application, should never happen because FailSafe can not fail
+                throw exception // crash application, should never happen because FailSafe can not fail by design
             }
         }
     }

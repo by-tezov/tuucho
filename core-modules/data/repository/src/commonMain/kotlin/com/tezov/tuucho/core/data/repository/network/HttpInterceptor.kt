@@ -37,7 +37,7 @@ val HttpInterceptorPlugin: ClientPlugin<HttpInterceptor.Config> = createClientPl
     val nodes = pluginConfig.nodes
     on(Send) { builder ->
         if (nodes.isNotEmpty()) {
-            nodes.asReversed().forEach {
+            nodes.forEach {
                 it.intercept(builder)
             }
             builder.attributes.getOrNull(LocalResponse)?.let {

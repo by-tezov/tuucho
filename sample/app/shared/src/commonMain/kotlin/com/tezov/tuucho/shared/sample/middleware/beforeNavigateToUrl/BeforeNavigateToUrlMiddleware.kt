@@ -1,7 +1,7 @@
-package com.tezov.tuucho.shared.sample.middleware
+package com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.NextMiddleware
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
@@ -26,7 +26,7 @@ class BeforeNavigateToUrlMiddleware(
 
     override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ) {
         if (ensureAuthorizationOrRedirectToLoginPage(context, next)) return
         if (autoLoginOnStart(context, next)) return
@@ -70,7 +70,7 @@ class BeforeNavigateToUrlMiddleware(
 
     private suspend fun ensureAuthorizationOrRedirectToLoginPage(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ): Boolean {
         if (context.input.url.startsWith("$AUTH_PREFIX/")) {
             if (!isAuthorizationExist()) {
@@ -88,7 +88,7 @@ class BeforeNavigateToUrlMiddleware(
 
     private suspend fun autoLoginOnStart(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ): Boolean {
         if (context.currentUrl == null && context.input.url == Page.login && isAuthorizationExist() && isAuthorizationValid()) {
             loadAuthConfig()

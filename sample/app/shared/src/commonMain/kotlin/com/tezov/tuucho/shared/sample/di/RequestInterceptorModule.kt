@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
 import com.tezov.tuucho.shared.sample.interceptor.FailSafePageInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeaderAuthorizationInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeadersInterceptor
+import com.tezov.tuucho.shared.sample.interceptor.LoggerInterceptor
 
 object RequestInterceptorModule {
 
@@ -33,6 +34,12 @@ object RequestInterceptorModule {
                 useCaseExecutor = get(),
                 config = get(),
                 getValueOrNullFromStore = get()
+            )
+        } bindOrdered HttpInterceptor.Node::class
+
+        factory<LoggerInterceptor> {
+            LoggerInterceptor(
+                logger = get()
             )
         } bindOrdered HttpInterceptor.Node::class
 
