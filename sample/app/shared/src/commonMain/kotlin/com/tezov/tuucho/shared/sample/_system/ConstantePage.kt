@@ -1,7 +1,7 @@
 package com.tezov.tuucho.shared.sample._system
 
 object Page {
-    const val FailSafe = "page-fail-safe"
-    const val Login = "lobby/page-login"
-    const val Home = "auth/page-home"
+    const val failSafe = "page-fail-safe"
+    const val login = "lobby/page-login"
+    const val home = "auth/page-home"
 }

@@ -9,18 +9,18 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 class UseCaseExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
 ) {
-    fun <INPUT : Any, OUTPUT : Any> invoke(
+    fun <INPUT : Any, OUTPUT : Any> async(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
         onException: ((DomainException) -> Unit)? = null,
         onResult: OUTPUT.() -> Unit = {},
     ) {
         coroutineScopes.useCase.async(
-            onException = { e: Throwable ->
-                val output = onException ?: throw e
-                when (e) {
-                    is DomainException -> output(e)
-                    else -> output(DomainException.Unknown(e))
+            onException = { throwable ->
+                val output = onException ?: throw throwable
+                when (throwable) {
+                    is DomainException -> output(throwable)
+                    else -> output(DomainException.Unknown(throwable))
                 }
             },
             block = {
@@ -37,7 +37,7 @@ class UseCaseExecutor(
         )
     }
 
-    suspend fun <INPUT : Any, OUTPUT : Any> invokeSuspend(
+    suspend fun <INPUT : Any, OUTPUT : Any> await(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
     ): OUTPUT {

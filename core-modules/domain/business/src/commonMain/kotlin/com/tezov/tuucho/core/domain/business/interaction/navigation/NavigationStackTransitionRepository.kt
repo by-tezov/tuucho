@@ -79,7 +79,7 @@ internal class NavigationStackTransitionRepository(
         spec: JsonObject?
     ) = spec?.let {
         useCaseExecutor
-            .invokeSuspend(
+            .await(
                 useCase = navigationStackTransitionHelperFactory,
                 input = NavigationStackTransitionHelperFactoryUseCase.Input(
                     prototypeObject = spec
@@ -136,26 +136,28 @@ internal class NavigationStackTransitionRepository(
     private fun listenEndOfTransition(
         routes: List<NavigationRoute>
     ) = coroutineScopes.navigation.async {
-        events.filter { it == StackTransition.Event.TransitionComplete }.once(block = {
-            val event: StackTransition.Event.Idle = stackLock.withLock {
-                stack.retainAll { item ->
-                    routes.any { it == item.route }
-                }
-                StackTransition.Event.Idle(
-                    routes = buildList {
-                        val lastItem = stack.last()
-                        add(lastItem.route)
-                        if (!lastItem.isBackgroundSolid()) {
-                            for (item in stack.dropLast(1).asReversed()) {
-                                add(item.route)
-                                if (item.isBackgroundSolid()) break
+        events
+            .filter { it == StackTransition.Event.TransitionComplete }
+            .once(block = {
+                val event: StackTransition.Event.Idle = stackLock.withLock {
+                    stack.retainAll { item ->
+                        routes.any { it == item.route }
+                    }
+                    StackTransition.Event.Idle(
+                        routes = buildList {
+                            val lastItem = stack.last()
+                            add(lastItem.route)
+                            if (!lastItem.isBackgroundSolid()) {
+                                for (item in stack.dropLast(1).asReversed()) {
+                                    add(item.route)
+                                    if (item.isBackgroundSolid()) break
+                                }
                             }
                         }
-                    }
-                )
-            }
-            emit(event)
-        })
+                    )
+                }
+                emit(event)
+            })
     }
 
     private suspend fun buildTransitionEvent(

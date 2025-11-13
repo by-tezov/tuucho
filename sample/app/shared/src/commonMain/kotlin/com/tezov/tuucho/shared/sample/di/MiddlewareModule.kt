@@ -4,15 +4,23 @@ import com.tezov.tuucho.core.domain.business.di.ModuleGroupDomain
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
-import com.tezov.tuucho.shared.sample.middleware.BeforeNavigateToUrlMiddleware
-import com.tezov.tuucho.shared.sample.middleware.ExceptionNavigateToUrlMiddleware
+import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.BeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.CatcherBeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.LoggerBeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.shared.sample.middleware.sendData.LoggerSendDataMiddleware
+import org.koin.core.module.Module
 
 object MiddlewareModule {
 
     fun invoke() = module(ModuleGroupDomain.Middleware) {
+        beforeNavigateToUrl()
+        sendData()
+        updateView()
+    }
 
-        factory<ExceptionNavigateToUrlMiddleware> {
-            ExceptionNavigateToUrlMiddleware()
+    private fun Module.beforeNavigateToUrl() {
+        factory<CatcherBeforeNavigateToUrlMiddleware> {
+            CatcherBeforeNavigateToUrlMiddleware()
         } bindOrdered NavigationMiddleware.ToUrl::class
 
         factory<BeforeNavigateToUrlMiddleware> {
@@ -24,5 +32,26 @@ object MiddlewareModule {
             )
         } bindOrdered NavigationMiddleware.ToUrl::class
 
+        factory<LoggerBeforeNavigateToUrlMiddleware> {
+            LoggerBeforeNavigateToUrlMiddleware(
+                logger = get()
+            )
+        } bindOrdered NavigationMiddleware.ToUrl::class
+    }
+
+    private fun Module.sendData() {
+        factory<LoggerSendDataMiddleware> {
+            LoggerSendDataMiddleware(
+                logger = get()
+            )
+        } bindOrdered LoggerSendDataMiddleware::class
+    }
+
+    private fun Module.updateView() {
+        factory<LoggerSendDataMiddleware> {
+            LoggerSendDataMiddleware(
+                logger = get()
+            )
+        } bindOrdered LoggerSendDataMiddleware::class
     }
 }

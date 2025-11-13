@@ -28,7 +28,7 @@ internal class NavigationLocalDestinationActionProcessor(
         jsonElement: JsonElement?,
     ) {
         when (action.target) {
-            Action.Navigate.LocalDestination.Target.back -> useCaseExecutor.invokeSuspend(
+            Action.Navigate.LocalDestination.Target.back -> useCaseExecutor.await(
                 useCase = navigateBack,
                 input = Unit
             )

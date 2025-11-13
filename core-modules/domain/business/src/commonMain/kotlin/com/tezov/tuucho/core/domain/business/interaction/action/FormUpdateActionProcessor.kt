@@ -57,7 +57,7 @@ internal class FormUpdateActionProcessor(
                         messageErrorExtra = it
                     }
                 }.collect()
-            useCaseExecutor.invokeSuspend(
+            useCaseExecutor.await(
                 useCase = updateView,
                 input = UpdateViewUseCase.Input(
                     route = route,

@@ -119,8 +119,8 @@ internal class MaterialCacheLocalSource(
                     rootPrimaryKey = null,
                     visibility = visibility,
                     lifetime = Lifetime.Enrolled(validityKey),
-                )
-            }.also { materialDatabaseSource.insert(it) }
+                ).also { materialDatabaseSource.insert(it) }
+            }
     }
 
     suspend fun getLifetime(

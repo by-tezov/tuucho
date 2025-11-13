@@ -1,12 +1,13 @@
-package com.tezov.tuucho.shared.sample.middleware
+package com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.NextMiddleware
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
+import com.tezov.tuucho.shared.sample._system.Config
 import com.tezov.tuucho.shared.sample._system.Page
 import kotlinx.coroutines.delay
 
@@ -26,7 +27,7 @@ class BeforeNavigateToUrlMiddleware(
 
     override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ) {
         if (ensureAuthorizationOrRedirectToLoginPage(context, next)) return
         if (autoLoginOnStart(context, next)) return
@@ -34,7 +35,7 @@ class BeforeNavigateToUrlMiddleware(
         next.invoke(context.withExceptionHandler())
     }
 
-    private suspend fun isAuthorizationExist() = useCaseExecutor.invokeSuspend(
+    private suspend fun isAuthorizationExist() = useCaseExecutor.await(
         useCase = getValueOrNullFromStore,
         input = GetValueOrNullFromStoreUseCase.Input(
             key = LOGIN_AUTHORIZATION.toKey()
@@ -42,7 +43,7 @@ class BeforeNavigateToUrlMiddleware(
     ).value?.value != null
 
     private suspend fun isAuthorizationValid() = runCatching {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = serverHealthCheck,
             input = ServerHealthCheckUseCase.Input(
                 url = AUTH_PREFIX
@@ -51,7 +52,7 @@ class BeforeNavigateToUrlMiddleware(
     }.getOrNull() != null
 
     private suspend fun loadLobbyConfig() {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = refreshMaterialCache,
             input = RefreshMaterialCacheUseCase.Input(
                 url = LOBBY_CONFIG
@@ -60,7 +61,7 @@ class BeforeNavigateToUrlMiddleware(
     }
 
     private suspend fun loadAuthConfig() {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = refreshMaterialCache,
             input = RefreshMaterialCacheUseCase.Input(
                 url = AUTH_CONFIG
@@ -70,14 +71,14 @@ class BeforeNavigateToUrlMiddleware(
 
     private suspend fun ensureAuthorizationOrRedirectToLoginPage(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ): Boolean {
         if (context.input.url.startsWith("$AUTH_PREFIX/")) {
             if (!isAuthorizationExist()) {
                 next.invoke(
                     context.withExceptionHandler()
                         .copy(
-                            input = context.input.copy(url = Page.Login)
+                            input = context.input.copy(url = Page.login)
                         )
                 )
                 return true
@@ -88,14 +89,14 @@ class BeforeNavigateToUrlMiddleware(
 
     private suspend fun autoLoginOnStart(
         context: NavigationMiddleware.ToUrl.Context,
-        next: NextMiddleware<NavigationMiddleware.ToUrl.Context>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ): Boolean {
-        if (context.currentUrl == null && context.input.url == Page.Login && isAuthorizationExist() && isAuthorizationValid()) {
+        if (context.currentUrl == null && context.input.url == Page.login && isAuthorizationExist() && isAuthorizationValid()) {
             loadAuthConfig()
             next.invoke(
                 context.withExceptionHandler()
                     .copy(
-                        input = context.input.copy(url = Page.Home)
+                        input = context.input.copy(url = Page.home)
                     )
             )
             return true
@@ -106,7 +107,7 @@ class BeforeNavigateToUrlMiddleware(
     private suspend fun loadLobbyConfigOnStart(
         context: NavigationMiddleware.ToUrl.Context,
     ): Boolean {
-        if (context.currentUrl == null && context.input.url == Page.Login) {
+        if (context.currentUrl == null && context.input.url == Page.login) {
             loadLobbyConfig()
             return true
         }
@@ -116,7 +117,7 @@ class BeforeNavigateToUrlMiddleware(
     private suspend fun loadAuthConfigAfterSuccessfulLogin(
         context: NavigationMiddleware.ToUrl.Context,
     ): Boolean {
-        if (context.currentUrl == Page.Login && context.input.url == Page.Home) {
+        if (context.currentUrl == Page.login && context.input.url == Page.home) {
             loadAuthConfig()
             return true
         }
@@ -130,7 +131,7 @@ class BeforeNavigateToUrlMiddleware(
                 val maxRetries = 3
                 var failure: Throwable? = exception
                 for (attempt in 0 until maxRetries) {
-                    val delayMs = (1000L * (1 shl attempt)).coerceAtMost(5000L)
+                    val delayMs = (Config.networkMinRetryDelay * (1 shl attempt)).coerceAtMost(Config.networkMaxRetryDelay)
                     delay(delayMs)
                     val result = runCatching { replay.invoke() }
                     failure = result.exceptionOrNull()

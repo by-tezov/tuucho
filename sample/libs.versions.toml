@@ -20,8 +20,10 @@ build-konfig-plugin = "0.17.1"
 compose-activity = "1.11.0"
 
 #lib - platform
+kermit = "2.0.8"
 ktor = "3.3.2"
 koin = "4.1.1"
+kotlin-serialization-json = "1.9.0"
 
 [libraries]
 #build-logic
@@ -34,9 +36,11 @@ tuucho-jvm = { group = "com.tezov", name = "tuucho.core-jvm", version.ref = "ver
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - platform
+kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 #lib - jvm
 #lib - android
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }

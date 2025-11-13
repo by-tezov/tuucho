@@ -37,8 +37,8 @@ internal object ConfigModuleIos {
             }
         }
 
-        factory<RequestInterceptorModule.Config> {
-            object : RequestInterceptorModule.Config {
+        factory<InterceptorModule.Config> {
+            object : InterceptorModule.Config {
                 override val headerPlatform = BuildKonfig.headerPlatform
             }
         }

@@ -87,7 +87,7 @@ class ButtonView(
                 ?.withScope(ActionSchema::Scope)
                 ?.primary
                 ?.forEach {
-                    useCaseExecutor.invoke(
+                    useCaseExecutor.async(
                         useCase = actionHandler,
                         input = ProcessActionUseCase.Input(
                             route = route,
