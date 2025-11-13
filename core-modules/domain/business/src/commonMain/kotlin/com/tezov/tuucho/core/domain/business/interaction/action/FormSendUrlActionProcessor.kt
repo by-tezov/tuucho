@@ -52,7 +52,7 @@ internal class FormSendUrlActionProcessor(
         val formView = route.getAllFormView() ?: return
         if (formView.isAllFormValid()) {
             val response = useCaseExecutor
-                .invokeSuspend(
+                .await(
                     useCase = sendData,
                     input = SendDataUseCase.Input(
                         url = action.target,
@@ -75,7 +75,7 @@ internal class FormSendUrlActionProcessor(
     }
 
     private suspend fun NavigationRoute.Url.getAllFormView() = useCaseExecutor
-        .invokeSuspend(
+        .await(
             useCase = getOrNullScreen,
             input = GetScreenOrNullUseCase.Input(
                 route = this
@@ -180,7 +180,7 @@ internal class FormSendUrlActionProcessor(
         route: NavigationRoute.Url,
         results: JsonElement?
     ) {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = actionHandler,
             input = ProcessActionUseCase.Input(
                 route = route,
@@ -198,7 +198,7 @@ internal class FormSendUrlActionProcessor(
         route: NavigationRoute.Url,
         jsonElement: JsonElement?
     ) {
-        useCaseExecutor.invokeSuspend(
+        useCaseExecutor.await(
             useCase = actionHandler,
             input = ProcessActionUseCase.Input(
                 route = route,

@@ -72,12 +72,14 @@ kotlin {
             }
         }
         commonMain.dependencies {
+            implementation(libs.kermit)
             implementation(libs.tuucho)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.ui)
 
+            implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.ktor.core)
         }

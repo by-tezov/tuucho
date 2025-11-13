@@ -53,7 +53,9 @@ object NetworkRepositoryModule {
                             throw DataException.Default("Bad response received: $response")
                         }
                     }
-                    handleResponseExceptionWithRequest { cause, _ -> throw cause }
+                    handleResponseExceptionWithRequest { cause, _ ->
+                        throw cause
+                    }
                 }
                 install(HttpInterceptorPlugin) {
                     nodes = getAllOrdered()

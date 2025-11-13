@@ -27,7 +27,7 @@ internal class NavigationUrlActionProcessor(
         jsonElement: JsonElement?,
     ) {
         action.target?.let { url ->
-            useCaseExecutor.invokeSuspend(
+            useCaseExecutor.await(
                 useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(
                     url = url
