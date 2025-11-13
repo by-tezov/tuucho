@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.Name.HTTP_CLIENT_ENGINE
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.data.repository.network.HttpInterceptorPlugin
+import com.tezov.tuucho.core.data.repository.network.HttpClientEngineFactory
 import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
@@ -10,7 +10,6 @@ import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.m
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.getAllOrdered
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -34,7 +33,12 @@ object NetworkRepositoryModule {
 
     internal fun invoke() = module(ModuleGroupData.Main) {
         single<HttpClient> {
-            HttpClient(get<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE)) {
+            HttpClient(
+                engineFactory = HttpClientEngineFactory(
+                    engineFactory = get<io.ktor.client.engine.HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE),
+                    interceptors = getAllOrdered()
+                )
+            ) {
                 install(ContentNegotiation) {
                     json(get<Json>())
                 }
@@ -56,9 +60,6 @@ object NetworkRepositoryModule {
                     handleResponseExceptionWithRequest { cause, _ ->
                         throw cause
                     }
-                }
-                install(HttpInterceptorPlugin) {
-                    nodes = getAllOrdered()
                 }
             }
         }

@@ -6,6 +6,21 @@
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core.data.repository>
+abstract fun interface com.tezov.tuucho.core.data.repository.network/HttpInterceptor : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context, io.ktor.client.request/HttpResponseData> { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor|null[0]
+    final class Context { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context|null[0]
+        constructor <init>(io.ktor.client.request/HttpRequestBuilder) // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.<init>|<init>(io.ktor.client.request.HttpRequestBuilder){}[0]
+
+        final val builder // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.builder|{}builder[0]
+            final fun <get-builder>(): io.ktor.client.request/HttpRequestBuilder // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.builder.<get-builder>|<get-builder>(){}[0]
+
+        final fun component1(): io.ktor.client.request/HttpRequestBuilder // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.component1|component1(){}[0]
+        final fun copy(io.ktor.client.request/HttpRequestBuilder = ...): com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.copy|copy(io.ktor.client.request.HttpRequestBuilder){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.toString|toString(){}[0]
+    }
+}
+
 abstract fun interface com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol|null[0]
     abstract suspend fun invoke(kotlinx.serialization.json/JsonObject, kotlin/String): kotlin.collections/List<kotlinx.serialization.json/JsonObject>? // com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol.invoke|invoke(kotlinx.serialization.json.JsonObject;kotlin.String){}[0]
 }
@@ -974,22 +989,6 @@ final object com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule { //
 final object com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules { // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules|null[0]
     final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol> // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules.invoke|invoke(){}[0]
 }
-
-final object com.tezov.tuucho.core.data.repository.network/HttpInterceptor { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor|null[0]
-    final val LocalResponse // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.LocalResponse|{}LocalResponse[0]
-        final fun <get-LocalResponse>(): io.ktor.util/AttributeKey<io.ktor.utils.io/ByteReadChannel> // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.LocalResponse.<get-LocalResponse>|<get-LocalResponse>(){}[0]
-
-    abstract fun interface Node { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Node|null[0]
-        abstract suspend fun intercept(io.ktor.client.request/HttpRequestBuilder) // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Node.intercept|intercept(io.ktor.client.request.HttpRequestBuilder){}[0]
-    }
-
-    final class Config { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Config|null[0]
-        constructor <init>() // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Config.<init>|<init>(){}[0]
-    }
-}
-
-final val com.tezov.tuucho.core.data.repository.network/HttpInterceptorPlugin // com.tezov.tuucho.core.data.repository.network/HttpInterceptorPlugin|{}HttpInterceptorPlugin[0]
-    final fun <get-HttpInterceptorPlugin>(): io.ktor.client.plugins.api/ClientPlugin<com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Config> // com.tezov.tuucho.core.data.repository.network/HttpInterceptorPlugin.<get-HttpInterceptorPlugin>|<get-HttpInterceptorPlugin>(){}[0]
 
 final fun (com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode).com.tezov.tuucho.core.data.repository.parser._system/flatten(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode> // com.tezov.tuucho.core.data.repository.parser._system/flatten|flatten@com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode(){}[0]
 final fun (com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode).com.tezov.tuucho.core.data.repository.parser._system/toJsonElement(): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.data.repository.parser._system/toJsonElement|toJsonElement@com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode(){}[0]

@@ -5,7 +5,7 @@ import com.tezov.tuucho.shared.sample._system.Logger
 import kotlinx.coroutines.CoroutineName
 import kotlin.coroutines.CoroutineContext
 
-class CoroutineExceptionMonitor(
+class LoggerCoroutineExceptionMonitor(
     private val logger: Logger
 ) : CoroutineExceptionMonitorProtocol {
     override fun process(context: CoroutineContext, throwable: Throwable) {

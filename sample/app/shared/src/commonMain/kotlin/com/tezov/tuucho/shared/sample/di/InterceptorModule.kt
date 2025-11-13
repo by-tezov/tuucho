@@ -25,13 +25,13 @@ object InterceptorModule {
             FailSafePageHttpInterceptor(
                 config = get(),
             )
-        } bindOrdered HttpInterceptor.Node::class
+        } bindOrdered HttpInterceptor::class
 
         factory<HeadersHttpInterceptor> {
             HeadersHttpInterceptor(
                 config = get()
             )
-        } bindOrdered HttpInterceptor.Node::class
+        } bindOrdered HttpInterceptor::class
 
         factory<HeaderHttpAuthorizationInterceptor> {
             HeaderHttpAuthorizationInterceptor(
@@ -39,12 +39,12 @@ object InterceptorModule {
                 config = get(),
                 getValueOrNullFromStore = get()
             )
-        } bindOrdered HttpInterceptor.Node::class
+        } bindOrdered HttpInterceptor::class
 
         factory<LoggerHttpInterceptor> {
             LoggerHttpInterceptor(
                 logger = get()
             )
-        } bindOrdered HttpInterceptor.Node::class
+        } bindOrdered HttpInterceptor::class
     }
 }
