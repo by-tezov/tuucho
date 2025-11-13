@@ -2,12 +2,15 @@ package com.tezov.tuucho.shared.sample.di
 
 import com.tezov.tuucho.core.domain.business.di.ModuleGroupDomain
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.BeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.CatcherBeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.LoggerBeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.shared.sample.middleware.sendData.LoggerSendDataMiddleware
+import com.tezov.tuucho.shared.sample.middleware.updateView.LoggerUpdateViewMiddleware
 import org.koin.core.module.Module
 
 object MiddlewareModule {
@@ -44,14 +47,14 @@ object MiddlewareModule {
             LoggerSendDataMiddleware(
                 logger = get()
             )
-        } bindOrdered LoggerSendDataMiddleware::class
+        } bindOrdered SendDataMiddleware::class
     }
 
     private fun Module.updateView() {
-        factory<LoggerSendDataMiddleware> {
-            LoggerSendDataMiddleware(
+        factory<LoggerUpdateViewMiddleware> {
+            LoggerUpdateViewMiddleware(
                 logger = get()
             )
-        } bindOrdered LoggerSendDataMiddleware::class
+        } bindOrdered UpdateViewMiddleware::class
     }
 }
