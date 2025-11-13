@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
+import com.tezov.tuucho.shared.sample.middleware.beforeNavigateBack.LoggerBeforeNavigateBackMiddleware
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.BeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.CatcherBeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.LoggerBeforeNavigateToUrlMiddleware
@@ -17,6 +18,7 @@ object MiddlewareModule {
 
     fun invoke() = module(ModuleGroupDomain.Middleware) {
         beforeNavigateToUrl()
+        beforeNavigateBack()
         sendData()
         updateView()
     }
@@ -40,6 +42,14 @@ object MiddlewareModule {
                 logger = get()
             )
         } bindOrdered NavigationMiddleware.ToUrl::class
+    }
+
+    private fun Module.beforeNavigateBack() {
+        factory<LoggerBeforeNavigateBackMiddleware> {
+            LoggerBeforeNavigateBackMiddleware(
+                logger = get()
+            )
+        } bindOrdered NavigationMiddleware.Back::class
     }
 
     private fun Module.sendData() {
