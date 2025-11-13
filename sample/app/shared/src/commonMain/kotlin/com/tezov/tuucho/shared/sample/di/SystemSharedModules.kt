@@ -18,6 +18,7 @@ object SystemSharedModules {
             }
         },
         MonitorModule.invoke(),
+        InteractionModule.invoke(),
         InterceptorModule.invoke(),
         MiddlewareModule.invoke()
     ) + platformInvoke()

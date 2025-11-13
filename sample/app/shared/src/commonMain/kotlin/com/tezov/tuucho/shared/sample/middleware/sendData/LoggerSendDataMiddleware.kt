@@ -14,12 +14,16 @@ class LoggerSendDataMiddleware(
         next: MiddlewareProtocol.Next<SendDataMiddleware.Context, SendDataUseCase.Output>,
     ): SendDataUseCase.Output {
         with(logger) {
-            debug("SEND DATA") { context.input.url }
-            debug { "-- input --" }
-            debug { context.input.jsonObject }
             val output = next.invoke(context)
-            debug { "-- output --" }
-            debug { output }
+            debug("SEND DATA") {
+                buildString {
+                    appendLine(context.input.url)
+                    appendLine("-- input --")
+                    appendLine(context.input.jsonObject.toString())
+                    appendLine("-- output --")
+                    appendLine(output)
+                }
+            }
             return output
         }
     }

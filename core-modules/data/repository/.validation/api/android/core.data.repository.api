@@ -434,21 +434,18 @@ public final class com/tezov/tuucho/core/data/repository/exception/DataException
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
-public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor;
-	public final fun getLocalResponse ()Lio/ktor/util/AttributeKey;
+public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
 }
 
-public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Config {
-	public fun <init> ()V
-}
-
-public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Node {
-	public abstract fun intercept (Lio/ktor/client/request/HttpRequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptorKt {
-	public static final fun getHttpInterceptorPlugin ()Lio/ktor/client/plugins/api/ClientPlugin;
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context {
+	public fun <init> (Lio/ktor/client/request/HttpRequestBuilder;)V
+	public final fun component1 ()Lio/ktor/client/request/HttpRequestBuilder;
+	public final fun copy (Lio/ktor/client/request/HttpRequestBuilder;)Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;Lio/ktor/client/request/HttpRequestBuilder;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBuilder ()Lio/ktor/client/request/HttpRequestBuilder;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/_system/JsonArrayNode : com/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode, java/util/List, kotlin/jvm/internal/markers/KMappedMarker {
