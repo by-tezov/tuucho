@@ -36,6 +36,7 @@ internal class HttpClientEngine(
 
     override fun close() {
         engine.close()
+        super.close()
     }
 }
 
