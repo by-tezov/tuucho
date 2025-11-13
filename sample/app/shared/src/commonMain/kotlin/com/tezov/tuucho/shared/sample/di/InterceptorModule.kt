@@ -4,44 +4,47 @@ import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
-import com.tezov.tuucho.shared.sample.interceptor.FailSafePageInterceptor
-import com.tezov.tuucho.shared.sample.interceptor.HeaderAuthorizationInterceptor
-import com.tezov.tuucho.shared.sample.interceptor.HeadersInterceptor
-import com.tezov.tuucho.shared.sample.interceptor.LoggerInterceptor
+import com.tezov.tuucho.shared.sample.interceptor.FailSafePageHttpInterceptor
+import com.tezov.tuucho.shared.sample.interceptor.HeaderHttpAuthorizationInterceptor
+import com.tezov.tuucho.shared.sample.interceptor.HeadersHttpInterceptor
+import com.tezov.tuucho.shared.sample.interceptor.LoggerHttpInterceptor
+import org.koin.core.module.Module
 
-object HttpInterceptorModule {
+object InterceptorModule {
 
     interface Config {
         val headerPlatform: String
     }
 
     fun invoke() = module(ModuleGroupData.RequestInterceptor) {
+        http()
+    }
 
-        factory<FailSafePageInterceptor> {
-            FailSafePageInterceptor(
+    private fun Module.http() {
+        factory<FailSafePageHttpInterceptor> {
+            FailSafePageHttpInterceptor(
                 config = get(),
             )
         } bindOrdered HttpInterceptor.Node::class
 
-        factory<HeadersInterceptor> {
-            HeadersInterceptor(
+        factory<HeadersHttpInterceptor> {
+            HeadersHttpInterceptor(
                 config = get()
             )
         } bindOrdered HttpInterceptor.Node::class
 
-        factory<HeaderAuthorizationInterceptor> {
-            HeaderAuthorizationInterceptor(
+        factory<HeaderHttpAuthorizationInterceptor> {
+            HeaderHttpAuthorizationInterceptor(
                 useCaseExecutor = get(),
                 config = get(),
                 getValueOrNullFromStore = get()
             )
         } bindOrdered HttpInterceptor.Node::class
 
-        factory<LoggerInterceptor> {
-            LoggerInterceptor(
+        factory<LoggerHttpInterceptor> {
+            LoggerHttpInterceptor(
                 logger = get()
             )
         } bindOrdered HttpInterceptor.Node::class
-
     }
 }

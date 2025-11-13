@@ -5,30 +5,24 @@ package com.tezov.tuucho.core.barrel._system
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContext
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
+import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitorProtocol
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
-internal class CoroutineScopes(
-    override val database: CoroutineContextProtocol = object :
-        CoroutineContext("Database", Dispatchers.IO) {},
-    override val datastore: CoroutineContextProtocol = object :
-        CoroutineContext("Database", Dispatchers.IO) {},
-    override val network: CoroutineContextProtocol = object :
-        CoroutineContext("Network", Dispatchers.IO) {},
-    override val parser: CoroutineContextProtocol = object :
-        CoroutineContext("Parser", Dispatchers.Default) {},
-    override val renderer: CoroutineContextProtocol = object :
-        CoroutineContext("Renderer", Dispatchers.Default) {},
-    override val navigation: CoroutineContextProtocol = object :
-        CoroutineContext("Navigation", Dispatchers.Default) {},
-    override val useCase: CoroutineContextProtocol = object :
-        CoroutineContext("UseCase", Dispatchers.Default) {},
-    override val event: CoroutineContextProtocol = object :
-        CoroutineContext("Event", Dispatchers.Default) {},
-    override val default: CoroutineContextProtocol = object :
-        CoroutineContext("Default", Dispatchers.Default) {},
-    override val main: CoroutineContextProtocol = object :
-        CoroutineContext("Main", Dispatchers.Main) {},
-    override val io: CoroutineContextProtocol = object :
-        CoroutineContext("IO", Dispatchers.IO) {},
-) : CoroutineScopesProtocol
+internal fun createCoroutineScopes(
+    exceptionMonitor: CoroutineExceptionMonitorProtocol?
+): CoroutineScopesProtocol = object : CoroutineScopesProtocol {
+    override val database: CoroutineContextProtocol = CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)
+    override val datastore: CoroutineContextProtocol = CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)
+    override val network: CoroutineContextProtocol = CoroutineContext("Network", Dispatchers.IO, exceptionMonitor)
+    override val parser: CoroutineContextProtocol = CoroutineContext("Parser", Dispatchers.Default, exceptionMonitor)
+    override val renderer: CoroutineContextProtocol = CoroutineContext("Renderer", Dispatchers.Default, exceptionMonitor)
+    override val navigation: CoroutineContextProtocol = CoroutineContext("Navigation", Dispatchers.Default, exceptionMonitor)
+    override val useCase: CoroutineContextProtocol = CoroutineContext("UseCase", Dispatchers.Default, exceptionMonitor)
+    override val event: CoroutineContextProtocol = CoroutineContext("Event", Dispatchers.Default, exceptionMonitor)
+    override val default: CoroutineContextProtocol = CoroutineContext("Default", Dispatchers.Default, exceptionMonitor)
+    override val main: CoroutineContextProtocol = CoroutineContext("Main", Dispatchers.Main, exceptionMonitor)
+    override val io: CoroutineContextProtocol = CoroutineContext("IO", Dispatchers.IO, exceptionMonitor)
+}
+
+
+

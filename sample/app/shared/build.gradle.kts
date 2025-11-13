@@ -72,6 +72,7 @@ kotlin {
             }
         }
         commonMain.dependencies {
+            implementation(libs.kermit)
             implementation(libs.tuucho)
 
             implementation(compose.runtime)

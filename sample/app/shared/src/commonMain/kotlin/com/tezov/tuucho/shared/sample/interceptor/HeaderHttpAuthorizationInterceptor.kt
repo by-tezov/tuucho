@@ -5,10 +5,9 @@ import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
-import io.ktor.client.call.HttpClientCall
 import io.ktor.client.request.HttpRequestBuilder
 
-class HeaderAuthorizationInterceptor(
+class HeaderHttpAuthorizationInterceptor(
     private val useCaseExecutor: UseCaseExecutor,
     private val config: NetworkRepositoryModule.Config,
     private val getValueOrNullFromStore: GetValueOrNullFromStoreUseCase

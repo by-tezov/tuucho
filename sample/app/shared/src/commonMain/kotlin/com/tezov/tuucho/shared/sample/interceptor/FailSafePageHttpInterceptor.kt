@@ -6,7 +6,7 @@ import com.tezov.tuucho.shared.sample._system.Page
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.utils.io.ByteReadChannel
 
-class FailSafePageInterceptor(
+class FailSafePageHttpInterceptor(
     private val config: NetworkRepositoryModule.Config,
 ) : HttpInterceptor.Node {
 

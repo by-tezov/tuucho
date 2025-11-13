@@ -1,6 +1,5 @@
 package com.tezov.tuucho.shared.sample.middleware.sendData
 
-import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
@@ -15,12 +14,12 @@ class LoggerSendDataMiddleware(
         next: MiddlewareProtocol.Next<SendDataMiddleware.Context, SendDataUseCase.Output>,
     ): SendDataUseCase.Output {
         with(logger) {
-            println(context.input.url)
-            println("-- input --")
-            println(context.input.jsonObject)
+            debug("SEND DATA") { context.input.url }
+            debug { "-- input --" }
+            debug { context.input.jsonObject }
             val output = next.invoke(context)
-            println("-- output --")
-            println(output)
+            debug { "-- output --" }
+            debug { output }
             return output
         }
     }

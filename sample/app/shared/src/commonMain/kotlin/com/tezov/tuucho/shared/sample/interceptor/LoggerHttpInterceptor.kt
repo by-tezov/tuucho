@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.shared.sample._system.Logger
 import io.ktor.client.request.HttpRequestBuilder
 
-class LoggerInterceptor(
+class LoggerHttpInterceptor(
     private val logger: Logger
 ) : HttpInterceptor.Node {
 
@@ -12,13 +12,13 @@ class LoggerInterceptor(
         builder: HttpRequestBuilder
     ) {
         with(logger) {
-            println("${builder.method} - ${builder.url}")
+            debug("NET") { "${builder.method} - ${builder.url}" }
             builder.headers.entries()
                 .takeIf { it.isNotEmpty() }
                 ?.let { entries ->
-                    println("-- Headers --")
-                    entries.forEach { println(it) }
-                    println("-------------")
+                    debug { "-- Headers --" }
+                    entries.forEach { debug { it } }
+                    debug { "-------------" }
                 }
         }
     }
