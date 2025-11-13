@@ -8,13 +8,13 @@ public abstract interface annotation class com/tezov/tuucho/core/domain/tool/ann
 public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoInternalApi : java/lang/annotation/Annotation {
 }
 
-public class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
-	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;)V
+public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
+	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitorProtocol;)V
 	public fun async (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getContext ()Lkotlin/coroutines/CoroutineContext;
-	public fun getJob ()Lkotlinx/coroutines/Job;
 	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
+	public fun getSupervisorJob ()Lkotlinx/coroutines/Job;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
@@ -22,12 +22,16 @@ public abstract interface class com/tezov/tuucho/core/domain/tool/async/Coroutin
 	public static synthetic fun async$default (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Deferred;
 	public abstract fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getContext ()Lkotlin/coroutines/CoroutineContext;
-	public abstract fun getJob ()Lkotlinx/coroutines/Job;
 	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
+	public abstract fun getSupervisorJob ()Lkotlinx/coroutines/Job;
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol$DefaultImpls {
 	public static synthetic fun async$default (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Deferred;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitorProtocol {
+	public abstract fun process (Lkotlin/coroutines/CoroutineContext;Ljava/lang/Throwable;)V
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/ExtensionFlow {

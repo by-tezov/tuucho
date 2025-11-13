@@ -173,10 +173,13 @@ class NavigateToUrlUseCase(
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.invoke(
-                        /* exception */ failure,
-                        /* context */context,
-                        /* replay*/ ::process
-                    )?: throw failure
+                        // exception
+                        failure,
+                        // context
+                        context,
+                        // replay
+                        ::process
+                    ) ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {

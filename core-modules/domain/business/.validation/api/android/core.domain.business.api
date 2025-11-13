@@ -1672,20 +1672,11 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/Typ
 	public static final field form Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/middleware/MiddlewareProtocol {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/middleware/MiddlewareProtocol$Companion;
-	public abstract fun process (Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/middleware/NextMiddleware;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/middleware/MiddlewareProtocol$Companion {
-	public final fun execute (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back : com/tezov/tuucho/core/domain/business/middleware/MiddlewareProtocol {
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context {
@@ -1703,7 +1694,7 @@ public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMi
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl : com/tezov/tuucho/core/domain/business/middleware/MiddlewareProtocol {
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context {
@@ -1721,8 +1712,32 @@ public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMi
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NextMiddleware {
-	public abstract fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+}
+
+public final class com/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware$Context {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;)Lcom/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware$Context;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/UpdateViewMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+}
+
+public final class com/tezov/tuucho/core/domain/business/middleware/UpdateViewMiddleware$Context {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;)Lcom/tezov/tuucho/core/domain/business/middleware/UpdateViewMiddleware$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/UpdateViewMiddleware$Context;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/UpdateViewMiddleware$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/Action {
@@ -1865,6 +1880,19 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/F
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
 	public abstract fun generate ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Companion;
+	public abstract fun process (Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Companion {
+	public final fun execute (Ljava/util/List;Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next {
+	public abstract fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
@@ -2108,9 +2136,9 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/s
 
 public final class com/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
-	public final fun invoke (Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun invoke$default (Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public final fun invokeSuspend (Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun async (Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun async$default (Lcom/tezov/tuucho/core/domain/business/usecase/_system/UseCaseExecutor;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun await (Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
@@ -2178,7 +2206,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Ref
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$SendDataAndRetrieve;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$SendDataAndRetrieve;Ljava/util/List;)V
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -2536,10 +2564,10 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;)V
-	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Ljava/util/List;)V
+	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;)V
+	public synthetic fun invoke (Ljava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input {

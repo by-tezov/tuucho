@@ -28,7 +28,6 @@ class CoroutineContext(
     override val context: CoroutineContext,
     private val exceptionMonitor: CoroutineExceptionMonitorProtocol?
 ) : CoroutineContextProtocol {
-
     override val supervisorJob: Job = SupervisorJob()
 
     override val scope: CoroutineScope = CoroutineScope(context + supervisorJob + CoroutineName(name))
@@ -49,13 +48,15 @@ class CoroutineContext(
 
     override suspend fun <T> await(
         block: suspend CoroutineScope.() -> T
-    ): T = scope.async(block = block).also { deferred ->
-        exceptionMonitor?.let {
-            deferred.invokeOnCompletion { throwable ->
-                throwable?.let {
-                    exceptionMonitor.process(scope.coroutineContext, throwable)
+    ): T = scope
+        .async(block = block)
+        .also { deferred ->
+            exceptionMonitor?.let {
+                deferred.invokeOnCompletion { throwable ->
+                    throwable?.let {
+                        exceptionMonitor.process(scope.coroutineContext, throwable)
+                    }
                 }
             }
-        }
-    }.await()
+        }.await()
 }

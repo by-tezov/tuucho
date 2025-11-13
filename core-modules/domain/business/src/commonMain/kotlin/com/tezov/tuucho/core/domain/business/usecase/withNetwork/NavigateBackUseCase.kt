@@ -104,9 +104,12 @@ class NavigateBackUseCase(
                     process()
                 }.onFailure { failure ->
                     context.onShadowerException?.invoke(
-                        /* exception */ failure,
-                        /* context */context,
-                        /* replay*/ ::process
+                        // exception
+                        failure,
+                        // context
+                        context,
+                        // replay
+                        ::process
                     ) ?: throw failure
                 }
             }
