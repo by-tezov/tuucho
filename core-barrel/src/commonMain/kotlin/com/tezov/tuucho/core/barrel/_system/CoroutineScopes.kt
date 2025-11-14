@@ -5,12 +5,11 @@ package com.tezov.tuucho.core.barrel._system
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContext
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
-import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitorProtocol
+import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 internal fun createCoroutineScopes(
-    exceptionMonitor: CoroutineExceptionMonitorProtocol?
+    exceptionMonitor: CoroutineExceptionMonitor?
 ): CoroutineScopesProtocol = object : CoroutineScopesProtocol {
     override val database: CoroutineContextProtocol =
         CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)

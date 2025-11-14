@@ -11,8 +11,8 @@ class HeadersHttpInterceptor(
     override suspend fun process(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
-    ): HttpResponseData {
-        context.builder.headers.append("platform", config.headerPlatform)
-        return next.invoke(context)
+    ) = with(context.builder) {
+        headers.append("platform", config.headerPlatform)
+        next.invoke(context)
     }
 }

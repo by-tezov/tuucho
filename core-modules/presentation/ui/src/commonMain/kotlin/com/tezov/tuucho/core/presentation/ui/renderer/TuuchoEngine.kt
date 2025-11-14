@@ -103,7 +103,7 @@ class TuuchoEngine(
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.foregroundGroup.routes
                     )
-                ).screens as List<ScreenProtocol>,
+                )?.screens as List<ScreenProtocol>,
             transitionSpecObject = event.foregroundGroup.transitionSpecObject
         )
         @Suppress("UNCHECKED_CAST")
@@ -114,7 +114,7 @@ class TuuchoEngine(
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.backgroundGroup.routes
                     )
-                ).screens as List<ScreenProtocol>,
+                )?.screens as List<ScreenProtocol>,
             transitionSpecObject = event.backgroundGroup.transitionSpecObject
         )
         transitionRequested = true
@@ -132,7 +132,7 @@ class TuuchoEngine(
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.routes
                     )
-                ).screens as List<ScreenProtocol>,
+                )?.screens as List<ScreenProtocol>,
             transitionSpecObject = JsonNull
                 .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
                 .apply { type = Type.none }

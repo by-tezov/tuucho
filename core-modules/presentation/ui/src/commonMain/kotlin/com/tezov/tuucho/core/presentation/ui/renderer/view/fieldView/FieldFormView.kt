@@ -64,7 +64,7 @@ class FieldFormView(
                         input = FormValidatorFactoryUseCase.Input(
                             prototypeObject = validatorPrototype
                         ),
-                    ).validator as? FormValidatorProtocol<String>
+                    )?.validator as? FormValidatorProtocol<String>
             }?.takeIf { it.isNotEmpty() }
     }
 }

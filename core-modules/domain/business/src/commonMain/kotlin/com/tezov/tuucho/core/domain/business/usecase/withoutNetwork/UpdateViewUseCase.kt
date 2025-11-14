@@ -23,11 +23,10 @@ class UpdateViewUseCase(
         input: Input
     ) {
         coroutineScopes.useCase.async {
-            updateViewMiddlewares.execute(
+            (updateViewMiddlewares + terminalMiddleware()).execute(
                 context = UpdateViewMiddleware.Context(
                     input = input,
-                ),
-                terminal = terminalMiddleware()
+                )
             )
         }
     }

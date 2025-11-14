@@ -19,8 +19,8 @@ class HeaderHttpAuthorizationInterceptor(
     override suspend fun process(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
-    ): HttpResponseData {
-        val route = context.builder.url.toString()
+    ) = with(context.builder) {
+        val route = url.toString()
             .removePrefix("${config.baseUrl}/")
             .removePrefix("${config.version}/")
             .let {
@@ -38,10 +38,10 @@ class HeaderHttpAuthorizationInterceptor(
                 input = GetValueOrNullFromStoreUseCase.Input(
                     key = "login-authorization".toKey()
                 )
-            ).value?.value?.let { authorizationKey ->
-                context.builder.headers.append("authorization", "Bearer $authorizationKey")
+            )?.value?.value?.let { authorizationKey ->
+                headers.append("authorization", "Bearer $authorizationKey")
             }
         }
-        return next.invoke(context)
+        next.invoke(context)
     }
 }

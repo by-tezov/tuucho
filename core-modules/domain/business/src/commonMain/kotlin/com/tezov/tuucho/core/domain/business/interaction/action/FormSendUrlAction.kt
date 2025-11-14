@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.interaction.action
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -8,9 +9,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.TypeResponseSchema
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
@@ -26,30 +28,28 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
-internal class FormSendUrlActionProcessor(
+internal class FormSendUrlAction(
     private val useCaseExecutor: UseCaseExecutor,
     private val getOrNullScreen: GetScreenOrNullUseCase,
     private val sendData: SendDataUseCase,
-) : ActionProcessorProtocol,
+) : ActionMiddleware,
     TuuchoKoinComponent {
     private val actionHandler: ProcessActionUseCase by inject()
 
     override val priority: Int
-        get() = ActionProcessorProtocol.Priority.DEFAULT
+        get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
-        jsonElement: JsonElement?,
-    ): Boolean = (action.command == Action.Form.command && action.authority == Action.Form.Send.authority)
+    ): Boolean = (action.command == Action.Form.command && action.authority == Action.Form.Send.authority && action.target != null)
 
     override suspend fun process(
-        route: NavigationRoute.Url,
-        action: ActionModelDomain,
-        jsonElement: JsonElement?,
-    ) {
-        action.target ?: return
-        val formView = route.getAllFormView() ?: return
+        context: ActionMiddleware.Context,
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+    ) = with(context.input) {
+        action.target ?: throw DomainException.Default("should no be possible")
+        val formView = route.getAllFormView() ?: return@with next.invoke(context)
         if (formView.isAllFormValid()) {
             val response = useCaseExecutor
                 .await(
@@ -58,7 +58,7 @@ internal class FormSendUrlActionProcessor(
                         url = action.target,
                         jsonObject = formView.data()
                     )
-                ).jsonObject
+                )?.jsonObject
             response
                 ?.withScope(FormSendResponseSchema::Scope)
                 ?.takeIf { it.type == TypeResponseSchema.Value.form }
@@ -72,6 +72,7 @@ internal class FormSendUrlActionProcessor(
         } else {
             formView.processInvalidLocalForm(route)
         }
+        next.invoke(context)
     }
 
     private suspend fun NavigationRoute.Url.getAllFormView() = useCaseExecutor
@@ -80,7 +81,7 @@ internal class FormSendUrlActionProcessor(
             input = GetScreenOrNullUseCase.Input(
                 route = this
             )
-        ).screen
+        )?.screen
         ?.views(FormViewProtocol.Extension::class)
         ?.map { it.formView }
 

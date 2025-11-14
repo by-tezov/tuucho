@@ -13,5 +13,5 @@ sealed class ModuleGroupData : ModuleProtocol.Group {
 
     data object Shadower : ModuleGroupData()
 
-    data object RequestInterceptor : ModuleGroupData()
+    data object Interceptor : ModuleGroupData()
 }

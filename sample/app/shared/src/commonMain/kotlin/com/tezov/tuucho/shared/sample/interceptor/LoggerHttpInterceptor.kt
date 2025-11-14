@@ -12,28 +12,24 @@ class LoggerHttpInterceptor(
     override suspend fun process(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
-    ): HttpResponseData {
-        with(logger) {
-            debug("NETWORK:request") {
-                buildString {
-                    appendLine("${context.builder.method} - ${context.builder.url}")
-//                    val entries = context.builder.headers.entries()
+    ) = with(context.builder) {
+        logger.debug("NETWORK:request") {
+            buildString {
+                appendLine("$method - $url")
+//                    val entries = headers.entries()
 //                    if (entries.isNotEmpty()) {
 //                        appendLine("-- Headers --")
 //                        entries.forEach { appendLine(it.toString()) }
 //                        appendLine("-------------")
 //                    }
-                }
             }
-            val response = next.invoke(context)
-            debug("NETWORK:response") {
+        }
+        next.invoke(context).also { response ->
+            logger.debug("NETWORK:response") {
                 buildString {
-                    appendLine("${response.statusCode}")
+                    appendLine("${response?.statusCode}")
                 }
             }
-            return response
         }
     }
-
-
 }

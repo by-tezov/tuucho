@@ -84,8 +84,8 @@ internal class NavigationStackTransitionRepository(
                 input = NavigationStackTransitionHelperFactoryUseCase.Input(
                     prototypeObject = spec
                 )
-            ).helper
-            .isForeground(spec)
+            )?.helper
+            ?.isForeground(spec)
     } ?: true
 
     private fun Item.isBackgroundSolid() = extraObject

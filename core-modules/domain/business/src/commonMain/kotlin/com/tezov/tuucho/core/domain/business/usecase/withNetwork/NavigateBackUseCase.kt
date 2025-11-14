@@ -31,14 +31,13 @@ class NavigateBackUseCase(
         input: Unit
     ) {
         coroutineScopes.useCase.async {
-            navigationMiddlewares.execute(
+            (navigationMiddlewares + terminalMiddleware()).execute(
                 context = NavigationMiddleware.Back.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
                         ?: throw DomainException.Default("Shouldn't be possible"),
                     nextUrl = navigationStackRouteRepository.priorRoute()?.value,
                     onShadowerException = null
-                ),
-                terminal = terminalMiddleware()
+                )
             )
         }
     }
@@ -104,11 +103,8 @@ class NavigateBackUseCase(
                     process()
                 }.onFailure { failure ->
                     context.onShadowerException?.invoke(
-                        // exception
                         failure,
-                        // context
                         context,
-                        // replay
                         ::process
                     ) ?: throw failure
                 }

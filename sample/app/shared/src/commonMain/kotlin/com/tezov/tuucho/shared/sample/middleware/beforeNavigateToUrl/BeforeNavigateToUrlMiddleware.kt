@@ -40,7 +40,7 @@ class BeforeNavigateToUrlMiddleware(
         input = GetValueOrNullFromStoreUseCase.Input(
             key = LOGIN_AUTHORIZATION.toKey()
         )
-    ).value?.value != null
+    )?.value?.value != null
 
     private suspend fun isAuthorizationValid() = runCatching {
         useCaseExecutor.await(

@@ -7,6 +7,11 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.HttpRequestData
 import io.ktor.client.request.HttpResponseData
 import io.ktor.client.request.takeFrom
+import io.ktor.client.utils.EmptyContent
+import io.ktor.http.HttpProtocolVersion
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
+import io.ktor.util.date.GMTDate
 import io.ktor.utils.io.InternalAPI
 
 @OptIn(InternalAPI::class)
@@ -26,11 +31,18 @@ internal class HttpClientEngine(
         val terminal = HttpInterceptor { context, _ ->
             engine.execute(context.builder.build())
         }
-        return interceptors.execute(
+        val builder = HttpRequestBuilder().takeFrom(data)
+        return (interceptors + terminal).execute(
             HttpInterceptor.Context(
-                builder = HttpRequestBuilder().takeFrom(data)
-            ),
-            terminal
+                builder = builder
+            )
+        ) ?: HttpResponseData(
+            statusCode = HttpStatusCode.NoContent,
+            requestTime = GMTDate(),
+            headers = headersOf(),
+            version = HttpProtocolVersion.HTTP_1_1,
+            body = EmptyContent,
+            callContext = builder.executionContext
         )
     }
 

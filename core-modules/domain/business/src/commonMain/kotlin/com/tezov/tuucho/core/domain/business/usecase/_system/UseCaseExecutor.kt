@@ -13,7 +13,7 @@ class UseCaseExecutor(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
         onException: ((DomainException) -> Unit)? = null,
-        onResult: OUTPUT.() -> Unit = {},
+        onResult: OUTPUT?.() -> Unit = {},
     ) {
         coroutineScopes.useCase.async(
             onException = { throwable ->
@@ -40,7 +40,7 @@ class UseCaseExecutor(
     suspend fun <INPUT : Any, OUTPUT : Any> await(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
-    ): OUTPUT {
+    ): OUTPUT? {
         try {
             return coroutineScopes.useCase.await {
                 when (useCase) {

@@ -49,13 +49,12 @@ class NavigateToUrlUseCase(
         input: Input
     ) {
         coroutineScopes.useCase.async {
-            navigationMiddlewares.execute(
+            (navigationMiddlewares + terminalMiddleware()).execute(
                 context = NavigationMiddleware.ToUrl.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value,
                     input = input,
                     onShadowerException = null
-                ),
-                terminal = terminalMiddleware()
+                )
             )
         }
     }
@@ -126,8 +125,8 @@ class NavigateToUrlUseCase(
                 input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(
                     prototypeObject = selector
                 )
-            ).selector
-            .accept()
+            )?.selector
+            ?.accept() ?: throw DomainException.Default("Should not be possible")
     }
 
     private suspend fun NavigationDefinitionSelectorMatcherProtocol.accept() = when (this) {
@@ -173,11 +172,8 @@ class NavigateToUrlUseCase(
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.invoke(
-                        // exception
                         failure,
-                        // context
                         context,
-                        // replay
                         ::process
                     ) ?: throw failure
                 }

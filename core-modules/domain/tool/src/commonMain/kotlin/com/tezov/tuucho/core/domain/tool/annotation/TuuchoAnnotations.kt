@@ -45,3 +45,18 @@ annotation class TuuchoInternalApi
     AnnotationTarget.CONSTRUCTOR,
 )
 annotation class TuuchoExperimentalAPI
+
+@Suppress("ktlint:standard:max-line-length")
+@RequiresOptIn(
+    message = "API marked as @TuuchoDelicateAPI. This API requires careful usage and understanding of its implications. Use with caution as improper usage may lead to unexpected behavior.",
+    level = RequiresOptIn.Level.WARNING
+)
+@Target(
+    AnnotationTarget.CLASS,
+    AnnotationTarget.TYPEALIAS,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.PROPERTY,
+    AnnotationTarget.FIELD,
+    AnnotationTarget.CONSTRUCTOR,
+)
+annotation class TuuchoDelicateAPI

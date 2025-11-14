@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
-import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
@@ -70,7 +70,7 @@ internal object UseCaseModule {
         factory<ProcessActionUseCase> {
             ProcessActionUseCase(
                 coroutineScopes = get(),
-                actionProcessors = getAll<ActionProcessorProtocol>()
+                actionMiddlewares = getAll<ActionMiddleware>()
             )
         }
 
