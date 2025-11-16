@@ -35,9 +35,8 @@ data class NavigationOption(
                     ?.let {
                         PopUpTo(
                             route = NavigationRoute.Url(
-                                "",
-                                it.url
-                                    ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")
+                                NavigationRouteIdGenerator.Id(""),
+                                it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")
                             ),
                             inclusive = it.inclusive ?: false,
                             greedy = it.greedy ?: true

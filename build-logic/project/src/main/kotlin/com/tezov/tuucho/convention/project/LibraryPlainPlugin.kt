@@ -15,10 +15,13 @@ import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 open class LibraryPlainPlugin : AbstractLibraryPlugin() {
 
+    private val Project.shouldConfigureTest
+        get() = buildType() == "mock" || buildType() == "dev"
+
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
         with(project) {
-            if (buildType() == "mock" || buildType() == "dev") {
+            if (shouldConfigureTest) {
                 pluginManager.apply("jacoco")
                 pluginManager.apply(plugin(PluginId.allOpen))
                 pluginManager.apply(plugin(PluginId.mokkery))
@@ -32,7 +35,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         super.configure(project)
         with(project) {
             extra["hasAssets"] = true
-            if (buildType() == "mock") {
+            if (shouldConfigureTest) {
                 configureCoverage(project)
                 configureTest(project)
             }

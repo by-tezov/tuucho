@@ -32,6 +32,10 @@ fun mockCoroutineScope(
         currentScope
     )
 
+    every { action } returns mockCoroutineContext(
+        currentScope
+    )
+
     every { default } returns mockCoroutineContext(
         currentScope
     )

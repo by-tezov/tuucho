@@ -8,6 +8,7 @@ ktlint = disabled
 ktlint_code_style = ktlint_official
 ktlint_experimental = enabled
 
+ktlint_standard_no-wildcard-imports = disabled
 ktlint_standard_filename = disabled
 ktlint_standard_function-naming = disabled
 ktlint_standard_backing-property-naming = disabled

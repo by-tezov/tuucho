@@ -15,16 +15,16 @@ internal class NavigationStackScreenRepository(
 ) : StackScreen,
     TuuchoKoinComponent {
     private val stack = mutableListOf<ScreenProtocol>()
-    private val stackLock = Mutex()
+    private val mutex = Mutex()
 
     override suspend fun routes() = coroutineScopes.navigation.await {
-        stackLock.withLock { stack.map { it.route } }
+        mutex.withLock { stack.map { it.route } }
     }
 
     override suspend fun getScreens(
         routes: List<NavigationRoute.Url>
     ) = coroutineScopes.navigation.await {
-        stackLock.withLock {
+        mutex.withLock {
             stack.filter { screen ->
                 routes.any { it == screen.route }
             }
@@ -34,13 +34,13 @@ internal class NavigationStackScreenRepository(
     override suspend fun getScreenOrNull(
         route: NavigationRoute.Url
     ) = coroutineScopes.navigation.await {
-        stackLock.withLock { stack.firstOrNull { route.id == it.route.id } }
+        mutex.withLock { stack.firstOrNull { route.id == it.route.id } }
     }
 
     override suspend fun getScreensOrNull(
         url: String
     ) = coroutineScopes.navigation.await {
-        stackLock.withLock { stack.filter { it.route.accept(url) } }
+        mutex.withLock { stack.filter { it.route.accept(url) } }
     }
 
     override suspend fun forward(
@@ -53,7 +53,7 @@ internal class NavigationStackScreenRepository(
                     route = route,
                     componentObject = componentObject
                 ).also {
-                    stackLock.withLock { stack.add(it) }
+                    mutex.withLock { stack.add(it) }
                 }
         }
     }
@@ -62,7 +62,7 @@ internal class NavigationStackScreenRepository(
         routes: List<NavigationRoute.Url>,
     ) {
         coroutineScopes.navigation.await {
-            stackLock.withLock {
+            mutex.withLock {
                 stack.retainAll { screen ->
                     routes.any { it == screen.route }
                 }

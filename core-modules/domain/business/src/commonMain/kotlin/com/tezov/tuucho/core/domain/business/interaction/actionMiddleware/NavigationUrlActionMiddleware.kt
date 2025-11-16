@@ -1,16 +1,16 @@
-package com.tezov.tuucho.core.domain.business.interaction.action
+package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
-internal class NavigationUrlAction(
-    private val useCaseExecutor: UseCaseExecutor,
+internal class NavigationUrlActionMiddleware(
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigateToUrl: NavigateToUrlUseCase,
 ) : ActionMiddleware {
     override val priority: Int
@@ -19,7 +19,7 @@ internal class NavigationUrlAction(
     override fun accept(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
-    ): Boolean = action.command == Action.Navigate.command && action.authority == Action.Navigate.Url.authority
+    ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.Url.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,

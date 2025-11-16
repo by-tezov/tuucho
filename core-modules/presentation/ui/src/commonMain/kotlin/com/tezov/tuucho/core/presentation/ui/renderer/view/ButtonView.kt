@@ -8,18 +8,15 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 class ButtonViewFactory(
-    private val useCaseExecutor: UseCaseExecutor,
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val actionHandler: ProcessActionUseCase,
 ) : AbstractViewFactory() {
     private val labelUiComponentFactory: LabelViewFactory by inject()
@@ -46,7 +43,7 @@ class ButtonViewFactory(
 class ButtonView(
     private val route: NavigationRoute.Url,
     componentObject: JsonObject,
-    private val useCaseExecutor: UseCaseExecutor,
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val labelUiComponentFactory: LabelViewFactory,
     private val actionHandler: ProcessActionUseCase,
 ) : AbstractView(componentObject) {
@@ -83,19 +80,15 @@ class ButtonView(
 
     private val action
         get(): () -> Unit = ({
-            _action
-                ?.withScope(ActionSchema::Scope)
-                ?.primary
-                ?.forEach {
-                    useCaseExecutor.async(
-                        useCase = actionHandler,
-                        input = ProcessActionUseCase.Input(
-                            route = route,
-                            action = ActionModelDomain.from(it.string),
-                            jsonElement = _action
-                        )
+            _action?.let {
+                useCaseExecutor.async(
+                    useCase = actionHandler,
+                    input = ProcessActionUseCase.Input.ActionObject(
+                        route = route,
+                        actionObject = it
                     )
-                }
+                )
+            }
         })
 
     @Composable

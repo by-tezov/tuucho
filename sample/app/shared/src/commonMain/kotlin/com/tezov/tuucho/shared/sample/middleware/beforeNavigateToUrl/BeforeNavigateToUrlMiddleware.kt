@@ -2,8 +2,9 @@ package com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
@@ -12,7 +13,7 @@ import com.tezov.tuucho.shared.sample._system.Page
 import kotlinx.coroutines.delay
 
 class BeforeNavigateToUrlMiddleware(
-    private val useCaseExecutor: UseCaseExecutor,
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val serverHealthCheck: ServerHealthCheckUseCase,
     private val refreshMaterialCache: RefreshMaterialCacheUseCase,
     private val getValueOrNullFromStore: GetValueOrNullFromStoreUseCase,

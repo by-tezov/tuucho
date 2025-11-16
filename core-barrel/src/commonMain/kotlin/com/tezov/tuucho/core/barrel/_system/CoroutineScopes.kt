@@ -13,8 +13,6 @@ internal fun createCoroutineScopes(
 ): CoroutineScopesProtocol = object : CoroutineScopesProtocol {
     override val database: CoroutineContextProtocol =
         CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)
-    override val datastore: CoroutineContextProtocol =
-        CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)
     override val network: CoroutineContextProtocol =
         CoroutineContext("Network", Dispatchers.IO, exceptionMonitor)
     override val parser: CoroutineContextProtocol =
@@ -25,6 +23,8 @@ internal fun createCoroutineScopes(
         CoroutineContext("Navigation", Dispatchers.Default, exceptionMonitor)
     override val useCase: CoroutineContextProtocol =
         CoroutineContext("UseCase", Dispatchers.Default, exceptionMonitor)
+    override val action: CoroutineContextProtocol =
+        CoroutineContext("Action", Dispatchers.Default, exceptionMonitor)
     override val event: CoroutineContextProtocol =
         CoroutineContext("Event", Dispatchers.Default, exceptionMonitor)
     override val default: CoroutineContextProtocol =

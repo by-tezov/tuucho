@@ -100,8 +100,8 @@
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
     <!-- ************ Project: :core.domain.business ************ -->
     <ID>InvalidPackageDeclaration:SettingComponentNavigationTransitionSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema</ID>
-    <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val actionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, )</ID>
-    <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutor, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: IdGeneratorProtocol, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val actionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
+    <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val interactionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, )</ID>
+    <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: NavigationRouteIdGenerator, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val interactionLockRepository: InteractionLockRepositoryProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
     <ID>MatchingDeclarationName:CoroutineScopesProtocole.kt$CoroutineScopesProtocol</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationOptionSchema.kt$ComponentSettingNavigationOptionSchema</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationSchema.kt$ComponentSettingNavigationSchema</ID>
@@ -110,25 +110,25 @@
     <ID>MatchingDeclarationName:SettingPageSchema.kt$PageSettingSchema</ID>
     <ID>MatchingDeclarationName:ShadowerDefinition.kt$Shadower</ID>
     <ID>MaxLineLength:ActionModelDomain.kt$ActionModelDomain.Companion$pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""</ID>
-    <ID>MaxLineLength:FormSendUrlAction.kt$FormSendUrlAction$)</ID>
-    <ID>MaxLineLength:NavigationLocalDestinationAction.kt$NavigationLocalDestinationAction$)</ID>
+    <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
+    <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationMiddleware.kt$NavigationMiddleware.ToUrl.Context$val onShadowerException: (suspend (exception: Throwable, context: Context, replay: suspend () -&gt; Unit) -&gt; Unit)?</ID>
-    <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$?:</ID>
-    <ID>MaxLineLength:StoreAction.kt$StoreAction$)</ID>
-    <ID>NestedBlockDepth:FormSendUrlAction.kt$FormSendUrlAction$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output?&gt; )</ID>
+    <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
+    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$)</ID>
+    <ID>NestedBlockDepth:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output?&gt; )</ID>
     <ID>PackageNaming:ButtonSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
     <ID>PackageNaming:DelegateSchemaKey.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:FormFieldSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
     <ID>PackageNaming:FormSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
     <ID>PackageNaming:FormValidatorSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
+    <ID>PackageNaming:IdGenerator.kt$package com.tezov.tuucho.core.domain.business._system</ID>
     <ID>PackageNaming:LabelSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
     <ID>PackageNaming:LayoutLinearSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout</ID>
     <ID>PackageNaming:Schema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SpacerSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
     <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
-    <ID>PackageNaming:UseCaseExecutor.kt$package com.tezov.tuucho.core.domain.business.usecase._system</ID>
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
-    <ID>TooManyFunctions:FormSendUrlAction.kt$FormSendUrlAction : ActionMiddlewareTuuchoKoinComponent</ID>
+    <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:Schema.kt$OpenSchemaScope&lt;T : OpenSchemaScope&lt;T&gt;&gt;</ID>
     <!-- ************ Project: :core.domain.test ************ -->
     <ID>PackageNaming:OpenForTest.kt$package com.tezov.tuucho.core.domain.test._system</ID>

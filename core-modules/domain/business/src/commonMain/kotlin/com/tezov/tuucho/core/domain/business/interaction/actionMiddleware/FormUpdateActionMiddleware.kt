@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.interaction.action
+package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
@@ -9,18 +9,18 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.FormAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
 
-internal class FormUpdateAction(
-    private val useCaseExecutor: UseCaseExecutor,
+internal class FormUpdateActionMiddleware(
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val updateView: UpdateViewUseCase,
 ) : ActionMiddleware,
     TuuchoKoinComponent {
@@ -30,14 +30,14 @@ internal class FormUpdateAction(
     override fun accept(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
-    ): Boolean = action.command == Action.Form.command && action.authority == Action.Form.Update.authority
+    ): Boolean = action.command == FormAction.command && action.authority == FormAction.Update.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
     ) = with(context.input) {
         when (val target = action.target) {
-            Action.Form.Update.Target.error -> updateErrorState(route, jsonElement)
+            FormAction.Update.Target.error -> updateErrorState(route, jsonElement)
             else -> throw DomainException.Default("Unknown target $target")
         }
         next.invoke(context)

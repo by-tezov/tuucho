@@ -1,6 +1,8 @@
 ## In progress
 
-- Action Middleware + Lock Fail Safe navigation ?
+- TODO cyclic dependency
+- Test still work
+- Then on action pass the lock (sendForm or navigation stuff, canBeRelease to false...)
 
 - Error when Compose enter in the game
 
@@ -10,9 +12,7 @@
 - still need to fix mock server
 - form field initial value inside state, need to make the matcher for the text and uncomment id update register
     - fix state error with "" or just string ?
-
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
-
 - back button managed
 
 **** ****

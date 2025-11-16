@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.interaction.action
+package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
@@ -10,11 +10,11 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFo
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.TypeResponseSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.Action
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.FormAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
@@ -28,8 +28,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 
-internal class FormSendUrlAction(
-    private val useCaseExecutor: UseCaseExecutor,
+internal class FormSendUrlActionMiddleware(
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val getOrNullScreen: GetScreenOrNullUseCase,
     private val sendData: SendDataUseCase,
 ) : ActionMiddleware,
@@ -42,20 +42,19 @@ internal class FormSendUrlAction(
     override fun accept(
         route: NavigationRoute.Url,
         action: ActionModelDomain,
-    ): Boolean = (action.command == Action.Form.command && action.authority == Action.Form.Send.authority && action.target != null)
+    ): Boolean = (action.command == FormAction.command && action.authority == FormAction.Send.authority && action.target != null)
 
     override suspend fun process(
         context: ActionMiddleware.Context,
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
     ) = with(context.input) {
-        action.target ?: throw DomainException.Default("should no be possible")
         val formView = route.getAllFormView() ?: return@with next.invoke(context)
         if (formView.isAllFormValid()) {
             val response = useCaseExecutor
                 .await(
                     useCase = sendData,
                     input = SendDataUseCase.Input(
-                        url = action.target,
+                        url = action.target ?: throw DomainException.Default("should no be possible"),
                         jsonObject = formView.data()
                     )
                 )?.jsonObject
@@ -183,14 +182,14 @@ internal class FormSendUrlAction(
     ) {
         useCaseExecutor.await(
             useCase = actionHandler,
-            input = ProcessActionUseCase.Input(
+            input = ProcessActionUseCase.Input.JsonElement(
                 route = route,
                 action = ActionModelDomain.from(
-                    command = Action.Form.command,
-                    authority = Action.Form.Update.authority,
-                    target = Action.Form.Update.Target.error,
+                    command = FormAction.command,
+                    authority = FormAction.Update.authority,
+                    target = FormAction.Update.Target.error,
                 ),
-                jsonElement = results
+                jsonElement = results // TODO locks
             ),
         )
     }
@@ -201,10 +200,10 @@ internal class FormSendUrlAction(
     ) {
         useCaseExecutor.await(
             useCase = actionHandler,
-            input = ProcessActionUseCase.Input(
+            input = ProcessActionUseCase.Input.JsonElement(
                 route = route,
                 action = ActionModelDomain.from(this),
-                jsonElement = jsonElement
+                jsonElement = jsonElement // TODO locks
             ),
         )
     }

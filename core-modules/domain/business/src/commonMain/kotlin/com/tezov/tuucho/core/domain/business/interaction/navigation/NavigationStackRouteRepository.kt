@@ -13,18 +13,18 @@ internal class NavigationStackRouteRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
 ) : StackRoute {
     private val stack = mutableListOf<NavigationRoute.Url>()
-    private val stackLock = Mutex()
+    private val mutex = Mutex()
 
     override suspend fun currentRoute() = coroutineScopes.navigation.await {
-        stackLock.withLock { stack.lastOrNull() }
+        mutex.withLock { stack.lastOrNull() }
     }
 
     override suspend fun priorRoute() = coroutineScopes.navigation.await {
-        stackLock.withLock { stack.priorLastOrNull() }
+        mutex.withLock { stack.priorLastOrNull() }
     }
 
     override suspend fun routes() = coroutineScopes.navigation.await {
-        stackLock.withLock { stack.toList() }
+        mutex.withLock { stack.toList() }
     }
 
     override suspend fun forward(
@@ -39,7 +39,7 @@ internal class NavigationStackRouteRepository(
             popUpTo = null,
             clearStack = false
         )
-        stackLock.withLock {
+        mutex.withLock {
             navigateUrl(route, option)
         }
     }
@@ -47,7 +47,7 @@ internal class NavigationStackRouteRepository(
     override suspend fun backward(
         route: NavigationRoute
     ) = coroutineScopes.navigation.await {
-        stackLock.withLock {
+        mutex.withLock {
             when (route) {
                 is NavigationRoute.Back -> navigateBack()
                 is NavigationRoute.Finish -> navigateFinish()
