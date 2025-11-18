@@ -1,32 +1,30 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
-import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator.Id
-
 sealed class NavigationRoute(
-    open val id: Id,
+    open val id: String,
 ) {
     abstract fun accept(
         other: Any
     ): Boolean
 
-    object Back : NavigationRoute(Id("back")) {
+    object Back : NavigationRoute("back") {
         override fun accept(
             other: Any
         ): Boolean = other is Back
 
-        override fun toString(): String = id.value
+        override fun toString(): String = id
     }
 
-    object Finish : NavigationRoute(Id("finish")) {
+    object Finish : NavigationRoute("finish") {
         override fun accept(
             other: Any
         ): Boolean = other is Finish
 
-        override fun toString(): String = id.value
+        override fun toString(): String = id
     }
 
     data class Url(
-        override val id: Id,
+        override val id: String,
         val value: String
     ) : NavigationRoute(id) {
         override fun accept(

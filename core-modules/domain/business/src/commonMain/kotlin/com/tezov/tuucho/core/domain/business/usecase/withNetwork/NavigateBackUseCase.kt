@@ -64,7 +64,7 @@ class NavigateBackUseCase(
                 navigationStackScreenRepository.backward(
                     routes = navigationStackRouteRepository.routes(),
                 )
-                lock.release()
+                interactionLockRepository.release(lock)
             }
         }
     }
@@ -73,7 +73,7 @@ class NavigateBackUseCase(
         if (type != Type.Navigation) {
             throw DomainException.Default("expected lock of type Navigation but got $type")
         }
-        takeIf { it.isValid() }
+        takeIf { interactionLockRepository.isValid(it) }
     } else {
         interactionLockRepository.tryAcquire(Type.Navigation)
     }

@@ -83,7 +83,9 @@ internal class ActionExecutor(
                 ActionMiddleware.Context(input)
             )
             deferred.complete(result)
-            acquiredLocks?.release()
+            acquiredLocks?.let {
+                interactionLockRepository.release(it)
+            }
         }
         deferred.await()
     }

@@ -8,7 +8,6 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator.Id
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
@@ -152,7 +151,7 @@ class TuuchoEngine(
             null
         }
         val screens = remember(redrawTrigger.intValue) {
-            buildList<Pair<Id, @Composable () -> Unit>> {
+            buildList<Pair<String, @Composable () -> Unit>> {
                 backgroundGroup?.let { group ->
                     group.screens.forEach { screen ->
                         add(screen.route.id to {

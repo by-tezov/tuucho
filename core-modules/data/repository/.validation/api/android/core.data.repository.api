@@ -359,6 +359,13 @@ public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Brea
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main;
 	public fun equals (Ljava/lang/Object;)Z
@@ -368,13 +375,6 @@ public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main
 
 public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$RequestInterceptor : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$RequestInterceptor;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -777,6 +777,13 @@ public abstract interface class com/tezov/tuucho/core/data/repository/parser/rec
 	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierIdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
+	public synthetic fun generate ()Ljava/lang/Object;
+	public fun generate ()Ljava/lang/String;
+	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun generate (Lkotlin/Unit;)Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/action/ActionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun beforeAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
@@ -846,7 +853,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/id/IdM
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/id/IdRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol;)V
+	public fun <init> (Lcom/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierIdGenerator;)V
 	public synthetic fun beforeAlterNull (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;

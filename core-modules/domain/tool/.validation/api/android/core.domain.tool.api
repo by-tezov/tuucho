@@ -2,6 +2,9 @@ public final class com/tezov/tuucho/core/domain/tool/_system/PrintlnKt {
 	public static final fun logAll (Ljava/lang/Object;)V
 }
 
+public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoDelicateAPI : java/lang/annotation/Annotation {
+}
+
 public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoExperimentalAPI : java/lang/annotation/Annotation {
 }
 
@@ -9,7 +12,7 @@ public abstract interface annotation class com/tezov/tuucho/core/domain/tool/ann
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
-	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitorProtocol;)V
+	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor;)V
 	public fun async (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getContext ()Lkotlin/coroutines/CoroutineContext;
@@ -30,8 +33,23 @@ public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProto
 	public static synthetic fun async$default (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Deferred;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitorProtocol {
-	public abstract fun process (Lkotlin/coroutines/CoroutineContext;Ljava/lang/Throwable;)V
+public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor {
+	public abstract fun process (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor$Context;)V
+}
+
+public final class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor$Context {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor$Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getThrowable ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/ExtensionFlow {

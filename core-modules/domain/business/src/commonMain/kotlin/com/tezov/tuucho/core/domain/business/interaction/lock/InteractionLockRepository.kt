@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.interaction.lock
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
@@ -11,6 +12,7 @@ import kotlinx.coroutines.sync.withLock
 
 @OpenForTest
 internal class InteractionLockRepository(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val lockGenerator: InteractionLockGenerator,
 ) : InteractionLockRepositoryProtocol {
     private data class Waiter(
@@ -24,30 +26,38 @@ internal class InteractionLockRepository(
 
     override suspend fun isValid(
         lock: Lock.Element
-    ): Boolean {
+    ) = coroutineScopes.default.await {
         mutex.withLock {
-            return usedLocks[lock.type] == lock
+            usedLocks[lock.type] == lock
         }
     }
 
     override suspend fun acquire(
         types: List<Type>
-    ): Lock {
-        tryAcquire(types)?.let { return it }
-        val waiter = CompletableDeferred<Unit>()
-        mutex.withLock {
-            waiters.add(
-                Waiter(
-                    lockTypes = types,
-                    deferred = waiter
+    ): Lock = coroutineScopes.default.await {
+        tryAcquireInternal(types)?.let { return@await it }
+        coroutineScopes.io.await {
+            val waiter = CompletableDeferred<Unit>()
+            mutex.withLock {
+                waiters.add(
+                    Waiter(
+                        lockTypes = types,
+                        deferred = waiter
+                    )
                 )
-            )
+            }
+            waiter.await()
         }
-        waiter.await()
-        return acquire(types)
+        acquire(types)
     }
 
     override suspend fun tryAcquire(
+        types: List<Type>
+    ): Lock? = coroutineScopes.default.await {
+        tryAcquireInternal(types)
+    }
+
+    private suspend fun tryAcquireInternal(
         types: List<Type>
     ): Lock? {
         if (types.isEmpty()) {
@@ -56,7 +66,7 @@ internal class InteractionLockRepository(
         val ordered = types.sortedBy { it.ordinal }
         var acquired: List<Lock.Element>? = null
         mutex.withLock {
-            if (!ordered.all { it !in usedLocks }) return@withLock null
+            if (!ordered.all { it !in usedLocks }) return@withLock
             acquired = types.map { type ->
                 lockGenerator.generate(type).also { usedLocks[type] = it }
             }
@@ -92,16 +102,22 @@ internal class InteractionLockRepository(
         if (!lock.canBeRelease) {
             return
         }
-        val toResume: Waiter?
-        mutex.withLock {
-            usedLocks.remove(lock.type)
-            toResume = waiters
-                .firstOrNull { waiter ->
-                    waiter.lockTypes.all { it !in usedLocks }
-                }?.also {
-                    waiters.remove(it)
+        coroutineScopes.default.await {
+            mutex.withLock {
+                usedLocks.remove(lock.type)
+            }
+            coroutineScopes.io.async {
+                var toResume: Waiter? = null
+                mutex.withLock {
+                    toResume = waiters
+                        .firstOrNull { waiter ->
+                            waiter.lockTypes.all { it !in usedLocks }
+                        }?.also {
+                            waiters.remove(it)
+                        }
                 }
+                toResume?.deferred?.complete(Unit)
+            }
         }
-        toResume?.deferred?.complete(Unit)
     }
 }

@@ -69,7 +69,7 @@ class NavigateToUrlUseCase(
                 val componentObject = runCatching {
                     retrieveMaterialRepository.process(url)
                 }.onFailure {
-                    lock.release()
+                    interactionLockRepository.release(lock)
                 }.getOrThrow()
                 val navigationSettingObject = componentObject
                     .onScope(ComponentSettingSchema.Root::Scope)
@@ -100,7 +100,7 @@ class NavigateToUrlUseCase(
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
                         ?.transition,
                 )
-                lock.release()
+                interactionLockRepository.release(lock)
             }
         }
     }
@@ -109,7 +109,7 @@ class NavigateToUrlUseCase(
         if (type != Type.Navigation) {
             throw DomainException.Default("expected lock of type Navigation but got $type")
         }
-        takeIf { it.isValid() }
+        takeIf { interactionLockRepository.isValid(it) }
     } else {
         interactionLockRepository.tryAcquire(Type.Navigation)
     }
