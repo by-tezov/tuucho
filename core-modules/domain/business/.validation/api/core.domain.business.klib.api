@@ -309,11 +309,8 @@ final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLo
     final fun generate(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.generate|generate(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
 
     sealed class Lock { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock|null[0]
-        abstract suspend fun isValid(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.isValid|isValid(){}[0]
-        abstract suspend fun release() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.release|release(){}[0]
-
         final class Element : com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol, kotlin/Boolean = ..., kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol;kotlin.Boolean;kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
+            constructor <init>(kotlin/Boolean = ..., kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.<init>|<init>(kotlin.Boolean;kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
 
             final val canBeRelease // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.canBeRelease|{}canBeRelease[0]
                 final fun <get-canBeRelease>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.canBeRelease.<get-canBeRelease>|<get-canBeRelease>(){}[0]
@@ -322,15 +319,13 @@ final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLo
             final val value // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.value|{}value[0]
                 final fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.value.<get-value>|<get-value>(){}[0]
 
-            final fun component2(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.component2|component2(){}[0]
-            final fun component3(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.component3|component3(){}[0]
-            final fun component4(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.component4|component4(){}[0]
-            final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol = ..., kotlin/Boolean = ..., kotlin/String = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type = ...): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol;kotlin.Boolean;kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
+            final fun component1(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.component1|component1(){}[0]
+            final fun component2(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.component2|component2(){}[0]
+            final fun component3(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.component3|component3(){}[0]
+            final fun copy(kotlin/Boolean = ..., kotlin/String = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type = ...): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.copy|copy(kotlin.Boolean;kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.toString|toString(){}[0]
-            final suspend fun isValid(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.isValid|isValid(){}[0]
-            final suspend fun release() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.release|release(){}[0]
         }
 
         final class ElementArray : com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray|null[0]
@@ -344,8 +339,6 @@ final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLo
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.toString|toString(){}[0]
-            final suspend fun isValid(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.isValid|isValid(){}[0]
-            final suspend fun release() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.release|release(){}[0]
         }
     }
 }
