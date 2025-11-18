@@ -549,6 +549,11 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.spac
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier._element.spacer/StyleSpacerDimensionMatcher.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
+final class com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierIdGenerator : com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<kotlin/Unit, kotlin/String> { // com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierIdGenerator|null[0]
+    final fun generate(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierIdGenerator.generate|generate(){}[0]
+    final fun generate(kotlin/Unit): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierIdGenerator.generate|generate(kotlin.Unit){}[0]
+}
+
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier.<init>|<init>(){}[0]
 }
@@ -598,7 +603,7 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdMatcher 
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol) // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierIdGenerator) // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier.<init>|<init>(com.tezov.tuucho.core.data.repository.parser.rectifier._system.RectifierIdGenerator){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier|null[0]
@@ -920,6 +925,12 @@ sealed class com.tezov.tuucho.core.data.repository.di/ModuleGroupData : com.tezo
         final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Breaker.toString|toString(){}[0]
     }
 
+    final object Interceptor : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Interceptor|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Interceptor.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Interceptor.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Interceptor.toString|toString(){}[0]
+    }
+
     final object Main : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Main|null[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Main.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Main.hashCode|hashCode(){}[0]
@@ -930,12 +941,6 @@ sealed class com.tezov.tuucho.core.data.repository.di/ModuleGroupData : com.tezo
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.toString|toString(){}[0]
-    }
-
-    final object RequestInterceptor : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.RequestInterceptor|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.RequestInterceptor.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.RequestInterceptor.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.RequestInterceptor.toString|toString(){}[0]
     }
 
     final object Shadower : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Shadower|null[0]

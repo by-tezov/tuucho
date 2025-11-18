@@ -1,9 +1,8 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.di.NavigationModule.Name
-import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
+import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
@@ -29,7 +28,7 @@ import org.koin.core.module.Module
 
 internal object UseCaseModule {
     fun invoke() = module(ModuleGroupDomain.UseCase) {
-        single<UseCaseExecutor> {
+        single<UseCaseExecutorProtocol> {
             UseCaseExecutor(
                 coroutineScopes = get()
             )
@@ -46,7 +45,7 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                actionLockRepository = get(),
+                interactionLockRepository = get(),
                 navigationMiddlewares = getAllOrdered()
             )
         }
@@ -56,13 +55,13 @@ internal object UseCaseModule {
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
                 retrieveMaterialRepository = get(),
-                navigationRouteIdGenerator = get(Name.ID_GENERATOR),
+                navigationRouteIdGenerator = get(),
                 navigationOptionSelectorFactory = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                actionLockRepository = get(),
+                interactionLockRepository = get(),
                 navigationMiddlewares = getAllOrdered()
             )
         }
@@ -70,7 +69,7 @@ internal object UseCaseModule {
         factory<ProcessActionUseCase> {
             ProcessActionUseCase(
                 coroutineScopes = get(),
-                actionProcessors = getAll<ActionProcessorProtocol>()
+                actionExecutor = get()
             )
         }
 

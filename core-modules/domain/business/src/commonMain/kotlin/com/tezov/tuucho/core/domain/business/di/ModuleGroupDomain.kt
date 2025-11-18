@@ -7,9 +7,5 @@ sealed class ModuleGroupDomain : ModuleProtocol.Group {
 
     data object UseCase : ModuleGroupDomain()
 
-    data object ActionProcessor : ModuleGroupDomain()
-
     data object Middleware : ModuleGroupDomain()
-
-    data object RequestInterceptor : ModuleGroupDomain()
 }

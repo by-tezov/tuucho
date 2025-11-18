@@ -1,31 +1,30 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
-
 fun interface MiddlewareProtocol<C, R> {
     fun interface Next<C, R> {
         suspend fun invoke(
             context: C
-        ): R
+        ): R?
     }
 
     suspend fun process(
         context: C,
         next: Next<C, R>
-    ): R
+    ): R?
 
     companion object {
         suspend fun <C, R> List<MiddlewareProtocol<C, R>>.execute(
-            context: C,
-            terminal: MiddlewareProtocol<C, R>
-        ): R {
-            val initial: Next<C, R> = Next { context ->
-                terminal.process(context, next = { throw DomainException.Default("Should never be called") })
+            context: C
+        ): R? {
+            var result: R? = null
+            var next = Next<C, R> { result } // endpoint, loopback
+            for (middleware in asReversed()) {
+                val prev = next
+                next = Next { context ->
+                    middleware.process(context, prev).also { result = it }
+                }
             }
-            val composed = foldRight(initial) { middleware, next ->
-                Next { context -> middleware.process(context, next) }
-            }
-            return composed.invoke(context)
+            return next.invoke(context)
         }
     }
 }

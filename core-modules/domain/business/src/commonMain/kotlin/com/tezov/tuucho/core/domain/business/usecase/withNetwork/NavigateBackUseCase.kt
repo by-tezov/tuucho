@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -13,8 +14,10 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase.Input
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 class NavigateBackUseCase(
@@ -23,51 +26,56 @@ class NavigateBackUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
-    private val actionLockRepository: InteractionLockRepositoryProtocol,
+    private val interactionLockRepository: InteractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
-) : UseCaseProtocol.Sync<Unit, Unit>,
+) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
+    data class Input(
+        val lock: Lock.Element? = null
+    )
+
     override fun invoke(
-        input: Unit
+        input: Input
     ) {
         coroutineScopes.useCase.async {
-            navigationMiddlewares.execute(
+            (navigationMiddlewares + terminalMiddleware()).execute(
                 context = NavigationMiddleware.Back.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
                         ?: throw DomainException.Default("Shouldn't be possible"),
                     nextUrl = navigationStackRouteRepository.priorRoute()?.value,
+                    input = input,
                     onShadowerException = null
-                ),
-                terminal = terminalMiddleware()
+                )
             )
         }
-    }
-
-    private suspend fun tryLock() = actionLockRepository
-        .tryLock(InteractionLockRepositoryProtocol.Type.Navigation)
-
-    private suspend fun String.unLock() {
-        actionLockRepository.unLock(
-            InteractionLockRepositoryProtocol.Type.Navigation,
-            this
-        )
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
         coroutineScopes.navigation.await {
-            val interactionHandle = tryLock() ?: return@await
-            val restoredRoute = navigationStackRouteRepository.backward(
-                route = NavigationRoute.Back
-            )
-            restoredRoute?.let { runShadower(restoredRoute, context) }
-            navigationStackTransitionRepository.backward(
-                routes = navigationStackRouteRepository.routes(),
-            )
-            navigationStackScreenRepository.backward(
-                routes = navigationStackRouteRepository.routes(),
-            )
-            interactionHandle.unLock()
+            with(context.input) {
+                val lock = lock.tryAcquire() ?: return@await
+                val restoredRoute = navigationStackRouteRepository.backward(
+                    route = NavigationRoute.Back
+                )
+                restoredRoute?.let { runShadower(restoredRoute, context) }
+                navigationStackTransitionRepository.backward(
+                    routes = navigationStackRouteRepository.routes(),
+                )
+                navigationStackScreenRepository.backward(
+                    routes = navigationStackRouteRepository.routes(),
+                )
+                interactionLockRepository.release(lock)
+            }
         }
+    }
+
+    private suspend fun Lock.Element?.tryAcquire(): Lock.Element? = if (this != null) {
+        if (type != Type.Navigation) {
+            throw DomainException.Default("expected lock of type Navigation but got $type")
+        }
+        takeIf { interactionLockRepository.isValid(it) }
+    } else {
+        interactionLockRepository.tryAcquire(Type.Navigation)
     }
 
     private suspend fun runShadower(
@@ -104,11 +112,8 @@ class NavigateBackUseCase(
                     process()
                 }.onFailure { failure ->
                     context.onShadowerException?.invoke(
-                        // exception
                         failure,
-                        // context
                         context,
-                        // replay
                         ::process
                     ) ?: throw failure
                 }

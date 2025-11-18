@@ -6,13 +6,12 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
-import com.tezov.tuucho.core.data.repository.mock.mockCoroutineScope
+import com.tezov.tuucho.core.data.repository.mock.coroutineTestScope
 import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
 import com.tezov.tuucho.core.data.repository.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
@@ -22,7 +21,6 @@ import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import kotlin.test.BeforeTest
@@ -35,7 +33,7 @@ import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 
 class MaterialCacheLocalSourceTest {
-    private lateinit var coroutineScopes: CoroutineScopesProtocol
+    private val coroutineTestScope = coroutineTestScope()
     private lateinit var materialDatabaseSource: MaterialDatabaseSource
     private lateinit var materialBreaker: MaterialBreaker
     private lateinit var materialAssembler: MaterialAssembler
@@ -45,14 +43,13 @@ class MaterialCacheLocalSourceTest {
 
     @BeforeTest
     fun setup() {
-        coroutineScopes = mockCoroutineScope()
         materialDatabaseSource = mock()
         materialBreaker = mock()
         materialAssembler = mock()
         lifetimeResolver = mock()
 
         sut = MaterialCacheLocalSource(
-            coroutineScopes = coroutineScopes,
+            coroutineScopes = coroutineTestScope.createMock(),
             materialDatabaseSource = materialDatabaseSource,
             materialBreaker = materialBreaker,
             materialAssembler = materialAssembler,
@@ -61,7 +58,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns false when no lifetime`() = runTest {
+    fun `isCacheValid returns false when no lifetime`() = coroutineTestScope.run {
         val url = "url"
         everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns null
 
@@ -72,7 +69,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns false when keys doesn't match`() = runTest {
+    fun `isCacheValid returns false when keys doesn't match`() = coroutineTestScope.run {
         val url = "url"
         val key1 = "key1"
         val key2 = "key2"
@@ -87,7 +84,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns true when unlimited lifetime and keys match`() = runTest {
+    fun `isCacheValid returns true when unlimited lifetime and keys match`() = coroutineTestScope.run {
         val url = "url"
         val key = "key"
         everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Unlimited(
@@ -101,7 +98,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns false when enrolled lifetime`() = runTest {
+    fun `isCacheValid returns false when enrolled lifetime`() = coroutineTestScope.run {
         val url = "url"
         val key = "key"
         everySuspend { materialDatabaseSource.getLifetimeOrNull(url) } returns Lifetime.Enrolled(
@@ -115,7 +112,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns true when transient lifetime expirationDateTime equal now`() = runTest {
+    fun `isCacheValid returns true when transient lifetime expirationDateTime equal now`() = coroutineTestScope.run {
         val url = "url"
         val key = "key"
         val fixed = Clock.System.now()
@@ -131,7 +128,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns true when transient lifetime expirationDateTime above now`() = runTest {
+    fun `isCacheValid returns true when transient lifetime expirationDateTime above now`() = coroutineTestScope.run {
         val url = "url"
         val key = "key"
         val fixed = Clock.System.now()
@@ -147,7 +144,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `isCacheValid returns false when transient lifetime expirationDateTime below now`() = runTest {
+    fun `isCacheValid returns false when transient lifetime expirationDateTime below now`() = coroutineTestScope.run {
         val url = "url"
         val key = "key"
         val fixed = Clock.System.now()
@@ -163,7 +160,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `delete delegates to database`() = runTest {
+    fun `delete delegates to database`() = coroutineTestScope.run {
         val url = "url"
         val table = Table.Common
 
@@ -175,7 +172,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `insert inserts root entity, hook, and children in common table`() = runTest {
+    fun `insert inserts root entity, hook, and children in common table`() = coroutineTestScope.run {
         val url = "url"
         val visibility = Visibility.Local
         val weakLifetime = Lifetime.Unlimited("key")
@@ -213,9 +210,9 @@ class MaterialCacheLocalSourceTest {
 
         sut.insert(material, url, visibility, weakLifetime)
 
-        verify(VerifyMode.exactly(1)) { coroutineScopes.parser }
+        verify(VerifyMode.exactly(1)) { coroutineTestScope.mock.parser }
         verifySuspend(VerifyMode.exactly(1)) { materialBreaker.process(material) }
-        verify(VerifyMode.exactly(1)) { coroutineScopes.database }
+        verify(VerifyMode.exactly(1)) { coroutineTestScope.mock.database }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(
                 matches { entity: JsonObjectEntity ->
@@ -253,7 +250,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `insert inserts hook, and node with children in contextual table`() = runTest {
+    fun `insert inserts hook, and node with children in contextual table`() = coroutineTestScope.run {
         val url = "url"
         val visibility = Visibility.Contextual(urlOrigin = "urlOrigin")
         val weakLifetime = Lifetime.Unlimited("key")
@@ -296,9 +293,9 @@ class MaterialCacheLocalSourceTest {
         sut.insert(material, url, visibility, weakLifetime)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineScopes.parser
+            coroutineTestScope.mock.parser
             materialBreaker.process(material)
-            coroutineScopes.database
+            coroutineTestScope.mock.database
             materialDatabaseSource.insert(any())
             materialDatabaseSource.insert(any(), Table.Contextual)
             materialDatabaseSource.insert(any(), Table.Contextual)
@@ -308,7 +305,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `enroll inserts enrolled hook`() = runTest {
+    fun `enroll inserts enrolled hook`() = coroutineTestScope.run {
         val url = "url"
         val key = "key"
         val visibility = Visibility.Local
@@ -318,7 +315,7 @@ class MaterialCacheLocalSourceTest {
         sut.enroll(url, key, visibility)
 
         verify(VerifyMode.exactly(1)) {
-            coroutineScopes.database
+            coroutineTestScope.mock.database
         }
         verifySuspend(VerifyMode.exactly(1)) {
             materialDatabaseSource.insert(matches(
@@ -332,7 +329,7 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `getLifetime returns value from db`() = runTest {
+    fun `getLifetime returns value from db`() = coroutineTestScope.run {
         val url = "url"
         val lifetime = Lifetime.Unlimited("k")
 
@@ -348,13 +345,13 @@ class MaterialCacheLocalSourceTest {
         assertEquals(lifetime, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineScopes.database
+            coroutineTestScope.mock.database
             materialDatabaseSource.getHookEntityOrNull(url)
         }
     }
 
     @Test
-    fun `getLifetime returns null`() = runTest {
+    fun `getLifetime returns null`() = coroutineTestScope.run {
         val url = "url"
 
         everySuspend { materialDatabaseSource.getHookEntityOrNull(url) } returns null
@@ -363,13 +360,13 @@ class MaterialCacheLocalSourceTest {
         assertNull(result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineScopes.database
+            coroutineTestScope.mock.database
             materialDatabaseSource.getHookEntityOrNull(url)
         }
     }
 
     @Test
-    fun `assemble returns null when no root entity`() = runTest {
+    fun `assemble returns null when no root entity`() = coroutineTestScope.run {
         val url = "url"
         everySuspend { materialDatabaseSource.getRootJsonObjectEntityOrNull(url) } returns null
 
@@ -378,13 +375,13 @@ class MaterialCacheLocalSourceTest {
         assertNull(result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineScopes.database
+            coroutineTestScope.mock.database
             materialDatabaseSource.getRootJsonObjectEntityOrNull(url)
         }
     }
 
     @Test
-    fun `assemble passes root entity to assembler`() = runTest {
+    fun `assemble passes root entity to assembler`() = coroutineTestScope.run {
         val url = "url"
         val entity = JsonObjectEntity(
             type = "type",
@@ -402,9 +399,9 @@ class MaterialCacheLocalSourceTest {
         assertEquals(expected, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineScopes.database
+            coroutineTestScope.mock.database
             materialDatabaseSource.getRootJsonObjectEntityOrNull(url)
-            coroutineScopes.parser
+            coroutineTestScope.mock.parser
             materialAssembler.process(entity.jsonObject, any())
         }
     }

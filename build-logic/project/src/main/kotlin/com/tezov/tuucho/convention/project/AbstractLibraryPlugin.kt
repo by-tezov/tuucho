@@ -260,7 +260,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             compilerOptions {
                 optIn.addAll(optIn())
                 freeCompilerArgs.addAll(compilerOption())
-                allWarningsAsErrors.set(false) //turn of warning error unique name when maven publication, TODO need to dig in.
+                allWarningsAsErrors.set(false) //turn of warning error unique name when maven publication, TODO need to dig in to find what is wrong with KLib
             }
             // Android
             val androidTargets = listOf(androidTarget())

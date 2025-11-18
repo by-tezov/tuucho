@@ -16,7 +16,7 @@ object InterceptorModule {
         val headerPlatform: String
     }
 
-    fun invoke() = module(ModuleGroupData.RequestInterceptor) {
+    fun invoke() = module(ModuleGroupData.Interceptor) {
         http()
     }
 

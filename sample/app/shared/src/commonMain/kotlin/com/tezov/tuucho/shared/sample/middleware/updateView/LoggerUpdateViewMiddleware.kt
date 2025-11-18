@@ -12,15 +12,16 @@ class LoggerUpdateViewMiddleware(
         context: UpdateViewMiddleware.Context,
         next: MiddlewareProtocol.Next<UpdateViewMiddleware.Context, Unit>,
     ) {
-        with(logger) {
-            debug("VIEW UPDATE") {
+        with(context.input) {
+            logger.debug("VIEW UPDATE") {
                 buildString {
-                    appendLine(context.input.route.value)
+                    appendLine(route.value)
                     appendLine("-- input --")
-                    appendLine(context.input.jsonObject.toString())
+                    appendLine(jsonObject.toString())
                 }
             }
             next.invoke(context)
         }
+
     }
 }

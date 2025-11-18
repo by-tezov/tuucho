@@ -1,19 +1,18 @@
-@file:Suppress("ktlint:standard:package-name")
-
-package com.tezov.tuucho.core.domain.business.usecase._system
+package com.tezov.tuucho.core.domain.business.usecase
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 
 class UseCaseExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
-) {
-    fun <INPUT : Any, OUTPUT : Any> async(
+) : UseCaseExecutorProtocol {
+    override fun <INPUT : Any, OUTPUT : Any> async(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
-        onException: ((DomainException) -> Unit)? = null,
-        onResult: OUTPUT.() -> Unit = {},
+        onException: ((DomainException) -> Unit)?,
+        onResult: OUTPUT?.() -> Unit,
     ) {
         coroutineScopes.useCase.async(
             onException = { throwable ->
@@ -37,10 +36,10 @@ class UseCaseExecutor(
         )
     }
 
-    suspend fun <INPUT : Any, OUTPUT : Any> await(
+    override suspend fun <INPUT : Any, OUTPUT : Any> await(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
-    ): OUTPUT {
+    ): OUTPUT? {
         try {
             return coroutineScopes.useCase.await {
                 when (useCase) {

@@ -1,51 +1,61 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.interaction.action.FormSendUrlActionProcessor
-import com.tezov.tuucho.core.domain.business.interaction.action.FormUpdateActionProcessor
-import com.tezov.tuucho.core.domain.business.interaction.action.NavigationLocalDestinationActionProcessor
-import com.tezov.tuucho.core.domain.business.interaction.action.NavigationUrlActionProcessor
-import com.tezov.tuucho.core.domain.business.interaction.action.StoreActionProcessor
-import com.tezov.tuucho.core.domain.business.protocol.ActionProcessorProtocol
+import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.ActionExecutor
+import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormSendUrlActionMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormUpdateActionMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.NavigationLocalDestinationActionMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.NavigationUrlActionMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.StoreActionMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
+import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import org.koin.dsl.bind
 
 internal object ActionProcessorModule {
-    fun invoke() = module(ModuleGroupDomain.ActionProcessor) {
-        factory<FormSendUrlActionProcessor> {
-            FormSendUrlActionProcessor(
+    fun invoke() = module(ModuleGroupDomain.Middleware) {
+        factory<ActionExecutorProtocol> {
+            ActionExecutor(
+                coroutineScopes = get(),
+                middlewares = getAll(),
+                interactionLockRepository = get()
+            )
+        }
+
+        factory<FormSendUrlActionMiddleware> {
+            FormSendUrlActionMiddleware(
                 useCaseExecutor = get(),
                 getOrNullScreen = get(),
                 sendData = get()
             )
-        } bind ActionProcessorProtocol::class
+        } bind ActionMiddleware::class
 
-        factory<FormUpdateActionProcessor> {
-            FormUpdateActionProcessor(
+        factory<FormUpdateActionMiddleware> {
+            FormUpdateActionMiddleware(
                 useCaseExecutor = get(),
                 updateView = get()
             )
-        } bind ActionProcessorProtocol::class
+        } bind ActionMiddleware::class
 
-        factory<NavigationLocalDestinationActionProcessor> {
-            NavigationLocalDestinationActionProcessor(
+        factory<NavigationLocalDestinationActionMiddleware> {
+            NavigationLocalDestinationActionMiddleware(
                 useCaseExecutor = get(),
                 navigateBack = get()
             )
-        } bind ActionProcessorProtocol::class
+        } bind ActionMiddleware::class
 
-        factory<NavigationUrlActionProcessor> {
-            NavigationUrlActionProcessor(
+        factory<NavigationUrlActionMiddleware> {
+            NavigationUrlActionMiddleware(
                 useCaseExecutor = get(),
                 navigateToUrl = get()
             )
-        } bind ActionProcessorProtocol::class
+        } bind ActionMiddleware::class
 
-        factory<StoreActionProcessor> {
-            StoreActionProcessor(
+        factory<StoreActionMiddleware> {
+            StoreActionMiddleware(
                 useCaseExecutor = get(),
                 saveKeyValueToStore = get(),
                 removeKeyValueFromStore = get()
             )
-        } bind ActionProcessorProtocol::class
+        } bind ActionMiddleware::class
     }
 }

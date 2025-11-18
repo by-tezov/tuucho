@@ -12,9 +12,7 @@ class LoggerBeforeNavigateToUrlMiddleware(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
     ) {
-        with(logger) {
-            debug("NAVIGATION") { "${context.currentUrl} -> ${context.input.url}" }
-            next.invoke(context)
-        }
+        logger.debug("NAVIGATION") { "${context.currentUrl} -> ${context.input.url}" }
+        next.invoke(context)
     }
 }

@@ -22,8 +22,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormFieldSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FieldFormViewProtocol
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.presentation.ui.renderer.view.AbstractView
@@ -31,7 +31,7 @@ import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewF
 import kotlinx.serialization.json.JsonObject
 
 class FieldViewFactory(
-    private val useCaseExecutor: UseCaseExecutor,
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val fieldValidatorFactory: FormValidatorFactoryUseCase,
 ) : AbstractViewFactory() {
     override fun accept(

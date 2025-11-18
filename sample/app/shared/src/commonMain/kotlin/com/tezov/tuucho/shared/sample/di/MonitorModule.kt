@@ -2,7 +2,7 @@ package com.tezov.tuucho.shared.sample.di
 
 import com.tezov.tuucho.core.domain.business.di.ModuleGroupDomain
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
-import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitorProtocol
+import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor
 import com.tezov.tuucho.shared.sample.monitor.LoggerCoroutineExceptionMonitor
 import org.koin.core.module.Module
 
@@ -13,7 +13,7 @@ object MonitorModule {
     }
 
     private fun Module.coroutineException() {
-        factory<CoroutineExceptionMonitorProtocol> {
+        factory<CoroutineExceptionMonitor> {
             LoggerCoroutineExceptionMonitor(
                 logger = get(),
             )

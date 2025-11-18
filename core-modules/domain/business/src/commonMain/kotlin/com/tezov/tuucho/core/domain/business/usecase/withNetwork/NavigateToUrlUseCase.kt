@@ -2,7 +2,9 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator
 import com.tezov.tuucho.core.domain.business.interaction.navigation.selector.PageBreadCrumbNavigationDefinitionSelectorMatcher
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -12,14 +14,14 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
@@ -29,45 +31,45 @@ import kotlinx.serialization.json.jsonObject
 
 class NavigateToUrlUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val useCaseExecutor: UseCaseExecutor,
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve,
-    private val navigationRouteIdGenerator: IdGeneratorProtocol,
+    private val navigationRouteIdGenerator: NavigationRouteIdGenerator,
     private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
-    private val actionLockRepository: InteractionLockRepositoryProtocol,
+    private val interactionLockRepository: InteractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
     data class Input(
         val url: String,
+        val lock: Lock.Element? = null
     )
 
     override fun invoke(
         input: Input
     ) {
         coroutineScopes.useCase.async {
-            navigationMiddlewares.execute(
+            (navigationMiddlewares + terminalMiddleware()).execute(
                 context = NavigationMiddleware.ToUrl.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value,
                     input = input,
                     onShadowerException = null
-                ),
-                terminal = terminalMiddleware()
+                )
             )
         }
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
         coroutineScopes.navigation.await {
-            val interactionHandle = tryLock() ?: return@await
             with(context.input) {
+                val lock = lock.tryAcquire() ?: return@await
                 val componentObject = runCatching {
                     retrieveMaterialRepository.process(url)
                 }.onFailure {
-                    interactionHandle.unLock()
+                    interactionLockRepository.release(lock)
                 }.getOrThrow()
                 val navigationSettingObject = componentObject
                     .onScope(ComponentSettingSchema.Root::Scope)
@@ -98,19 +100,18 @@ class NavigateToUrlUseCase(
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
                         ?.transition,
                 )
+                interactionLockRepository.release(lock)
             }
-            interactionHandle.unLock()
         }
     }
 
-    private suspend fun tryLock() = actionLockRepository
-        .tryLock(InteractionLockRepositoryProtocol.Type.Navigation)
-
-    private suspend fun String.unLock() {
-        actionLockRepository.unLock(
-            InteractionLockRepositoryProtocol.Type.Navigation,
-            this
-        )
+    private suspend fun Lock.Element?.tryAcquire(): Lock.Element? = if (this != null) {
+        if (type != Type.Navigation) {
+            throw DomainException.Default("expected lock of type Navigation but got $type")
+        }
+        takeIf { interactionLockRepository.isValid(it) }
+    } else {
+        interactionLockRepository.tryAcquire(Type.Navigation)
     }
 
     private suspend fun JsonArray?.navigationResolver() = this
@@ -126,8 +127,8 @@ class NavigateToUrlUseCase(
                 input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(
                     prototypeObject = selector
                 )
-            ).selector
-            .accept()
+            )?.selector
+            ?.accept() ?: throw DomainException.Default("Should not be possible")
     }
 
     private suspend fun NavigationDefinitionSelectorMatcherProtocol.accept() = when (this) {
@@ -173,11 +174,8 @@ class NavigateToUrlUseCase(
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.invoke(
-                        // exception
                         failure,
-                        // context
                         context,
-                        // replay
                         ::process
                     ) ?: throw failure
                 }

@@ -30,9 +30,7 @@ class Screen(
         klass: KClass<V>
     ) = view
         .flatten()
-        .asSequence()
-        .filter { klass.isInstance(it) }
-        .toList() as List<V>
+        .filter { klass.isInstance(it) } as List<V>
 }
 
 fun ViewProtocol.flatten(): List<ViewProtocol> = buildList {
