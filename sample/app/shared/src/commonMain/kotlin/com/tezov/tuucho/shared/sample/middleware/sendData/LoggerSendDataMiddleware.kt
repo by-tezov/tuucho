@@ -12,19 +12,17 @@ class LoggerSendDataMiddleware(
     override suspend fun process(
         context: SendDataMiddleware.Context,
         next: MiddlewareProtocol.Next<SendDataMiddleware.Context, SendDataUseCase.Output>,
-    ): SendDataUseCase.Output {
-        with(logger) {
-            val output = next.invoke(context)
-            debug("SEND DATA") {
-                buildString {
-                    appendLine(context.input.url)
-                    appendLine("-- input --")
-                    appendLine(context.input.jsonObject.toString())
-                    appendLine("-- output --")
-                    appendLine(output)
-                }
+    ) = with(context.input) {
+        val output = next.invoke(context)
+        logger.debug("SEND DATA") {
+            buildString {
+                appendLine(url)
+                appendLine("-- input --")
+                appendLine(jsonObject.toString())
+                appendLine("-- output --")
+                appendLine(output)
             }
-            return output
         }
+        output
     }
 }

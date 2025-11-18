@@ -17,7 +17,7 @@ internal object StoreRepositoryModuleAndroid {
         single<DataStore<Preferences>> {
             val context: Context = get(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT)
             PreferenceDataStoreFactory.create(
-                scope = get<CoroutineScopesProtocol>().datastore.scope,
+                scope = get<CoroutineScopesProtocol>().io.scope,
                 produceFile = {
                     context.preferencesDataStoreFile(
                         get<StoreRepositoryModule.Config>().fileName

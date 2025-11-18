@@ -24,11 +24,10 @@ class SendDataUseCase(
     override suspend fun invoke(
         input: Input
     ) = coroutineScopes.useCase.await {
-        sendDataMiddlewares.execute(
+        (sendDataMiddlewares + terminalMiddleware()).execute(
             context = SendDataMiddleware.Context(
                 input = input,
-            ),
-            terminal = terminalMiddleware()
+            )
         )
     }
 

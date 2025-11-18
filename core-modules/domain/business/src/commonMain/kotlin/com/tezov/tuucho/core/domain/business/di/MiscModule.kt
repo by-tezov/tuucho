@@ -1,13 +1,16 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.interaction.lock.ActionLockIdGenerator
+import com.tezov.tuucho.core.domain.business._system.IdGenerator
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRepository
+import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import com.tezov.tuucho.core.domain.tool.json.InstantSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
+import org.koin.dsl.bind
 import kotlin.time.Instant
 
 internal object MiscModule {
@@ -28,9 +31,20 @@ internal object MiscModule {
             ExpirationDateTimeRectifier()
         }
 
+        single {
+            IdGenerator()
+        } bind IdGeneratorProtocol::class // <Unit, String>
+
+        factory<InteractionLockGenerator> {
+            InteractionLockGenerator(
+                idGenerator = get(),
+            )
+        }
+
         single<InteractionLockRepositoryProtocol> {
             InteractionLockRepository(
-                idGenerator = ActionLockIdGenerator()
+                coroutineScopes = get(),
+                lockGenerator = get()
             )
         }
     }

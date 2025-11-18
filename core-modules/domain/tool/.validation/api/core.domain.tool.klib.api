@@ -6,6 +6,10 @@
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core.domain.tool>
+open annotation class com.tezov.tuucho.core.domain.tool.annotation/TuuchoDelicateAPI : kotlin/Annotation { // com.tezov.tuucho.core.domain.tool.annotation/TuuchoDelicateAPI|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.tool.annotation/TuuchoDelicateAPI.<init>|<init>(){}[0]
+}
+
 open annotation class com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI : kotlin/Annotation { // com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI|null[0]
     constructor <init>() // com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI.<init>|<init>(){}[0]
 }
@@ -26,12 +30,31 @@ abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineContextProto
     abstract suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitorProtocol { // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitorProtocol|null[0]
-    abstract fun process(kotlin.coroutines/CoroutineContext, kotlin/Throwable) // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitorProtocol.process|process(kotlin.coroutines.CoroutineContext;kotlin.Throwable){}[0]
+abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor { // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor|null[0]
+    abstract fun process(com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context) // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.process|process(com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor.Context){}[0]
+
+    final class Context { // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Throwable) // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.<init>|<init>(kotlin.String;kotlin.String;kotlin.Throwable){}[0]
+
+        final val id // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.id|{}id[0]
+            final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.id.<get-id>|<get-id>(){}[0]
+        final val name // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.name|{}name[0]
+            final fun <get-name>(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.name.<get-name>|<get-name>(){}[0]
+        final val throwable // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.throwable|{}throwable[0]
+            final fun <get-throwable>(): kotlin/Throwable // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.throwable.<get-throwable>|<get-throwable>(){}[0]
+
+        final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.component1|component1(){}[0]
+        final fun component2(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.component2|component2(){}[0]
+        final fun component3(): kotlin/Throwable // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.component3|component3(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Throwable = ...): com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.copy|copy(kotlin.String;kotlin.String;kotlin.Throwable){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.toString|toString(){}[0]
+    }
 }
 
 final class com.tezov.tuucho.core.domain.tool.async/CoroutineContext : com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol { // com.tezov.tuucho.core.domain.tool.async/CoroutineContext|null[0]
-    constructor <init>(kotlin/String, kotlin.coroutines/CoroutineContext, com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitorProtocol?) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.<init>|<init>(kotlin.String;kotlin.coroutines.CoroutineContext;com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitorProtocol?){}[0]
+    constructor <init>(kotlin/String, kotlin.coroutines/CoroutineContext, com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor?) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.<init>|<init>(kotlin.String;kotlin.coroutines.CoroutineContext;com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor?){}[0]
 
     final val context // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.context|{}context[0]
         final fun <get-context>(): kotlin.coroutines/CoroutineContext // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.context.<get-context>|<get-context>(){}[0]

@@ -26,7 +26,7 @@ interface CoroutineContextProtocol {
 class CoroutineContext(
     name: String,
     override val context: CoroutineContext,
-    private val exceptionMonitor: CoroutineExceptionMonitorProtocol?
+    private val exceptionMonitor: CoroutineExceptionMonitor?
 ) : CoroutineContextProtocol {
     override val supervisorJob: Job = SupervisorJob()
 
@@ -39,7 +39,13 @@ class CoroutineContext(
         val deferred = scope.async(block = block)
         deferred.invokeOnCompletion { throwable ->
             throwable?.let {
-                exceptionMonitor?.process(scope.coroutineContext, throwable)
+                exceptionMonitor?.process(
+                    context = CoroutineExceptionMonitor.Context(
+                        name = scope.coroutineContext[CoroutineName]?.name ?: "unknown",
+                        id = deferred.hashCode().toHexString(),
+                        throwable = throwable
+                    )
+                )
                 onException?.invoke(throwable) ?: throw throwable
             }
         }
@@ -54,7 +60,13 @@ class CoroutineContext(
             exceptionMonitor?.let {
                 deferred.invokeOnCompletion { throwable ->
                     throwable?.let {
-                        exceptionMonitor.process(scope.coroutineContext, throwable)
+                        exceptionMonitor.process(
+                            context = CoroutineExceptionMonitor.Context(
+                                name = scope.coroutineContext[CoroutineName]?.name ?: "unknown",
+                                id = deferred.hashCode().toHexString(),
+                                throwable = throwable
+                            )
+                        )
                     }
                 }
             }

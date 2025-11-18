@@ -12,8 +12,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
-import com.tezov.tuucho.core.domain.business.usecase._system.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
@@ -43,7 +43,7 @@ interface TuuchoEngineProtocol {
 
 class TuuchoEngine(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val useCaseExecutor: UseCaseExecutor,
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val registerToScreenTransitionEvent: RegisterToScreenTransitionEventUseCase,
     private val notifyNavigationTransitionCompleted: NotifyNavigationTransitionCompletedUseCase,
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
@@ -103,7 +103,7 @@ class TuuchoEngine(
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.foregroundGroup.routes
                     )
-                ).screens as List<ScreenProtocol>,
+                )?.screens as List<ScreenProtocol>,
             transitionSpecObject = event.foregroundGroup.transitionSpecObject
         )
         @Suppress("UNCHECKED_CAST")
@@ -114,7 +114,7 @@ class TuuchoEngine(
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.backgroundGroup.routes
                     )
-                ).screens as List<ScreenProtocol>,
+                )?.screens as List<ScreenProtocol>,
             transitionSpecObject = event.backgroundGroup.transitionSpecObject
         )
         transitionRequested = true
@@ -132,7 +132,7 @@ class TuuchoEngine(
                     input = GetScreensFromRoutesUseCase.Input(
                         routes = event.routes
                     )
-                ).screens as List<ScreenProtocol>,
+                )?.screens as List<ScreenProtocol>,
             transitionSpecObject = JsonNull
                 .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
                 .apply { type = Type.none }
