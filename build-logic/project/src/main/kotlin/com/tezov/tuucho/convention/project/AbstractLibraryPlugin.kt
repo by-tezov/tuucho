@@ -270,7 +270,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 }
             }
             // iOS
-            val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
             if (isMacOs) {
                 val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
                 project.afterEvaluate {
@@ -287,7 +286,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                         }
                     }
                 }
-                applyDefaultHierarchyTemplate()
             } else {
                 println("⚠️ mac os target disable")
             }
@@ -298,6 +296,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                     jvmTarget.set(this@with.jvmTarget())
                 }
             }
+            applyDefaultHierarchyTemplate()
         }
     }
 
@@ -311,7 +310,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 androidMain {
                     kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
                 }
-                val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
                 if (isMacOs) {
                     iosMain {
                         kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")

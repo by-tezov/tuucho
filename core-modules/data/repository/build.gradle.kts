@@ -1,3 +1,5 @@
+import com.tezov.tuucho.convention.project.isMacOs
+
 plugins {
     alias(libs.plugins.convention.library.plain)
     alias(libs.plugins.sql.delight)
@@ -23,7 +25,7 @@ kotlin {
             implementation(libs.sql.delight.driver.android)
             implementation(libs.datastore.preferences)
         }
-        val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
+        val isMacOs = isMacOs
         if (isMacOs) {
             iosMain.dependencies {
                 implementation(libs.ktor.darwin)

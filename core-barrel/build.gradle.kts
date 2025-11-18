@@ -1,3 +1,5 @@
+import com.tezov.tuucho.convention.project.isMacOs
+
 plugins {
     alias(libs.plugins.convention.library.ui)
 }
@@ -7,7 +9,6 @@ kotlin {
         androidMain.dependencies {
             api(project(":core.data.repository"))
         }
-        val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
         if (isMacOs) {
             iosMain.dependencies {
                 api(project(":core.data.repository"))

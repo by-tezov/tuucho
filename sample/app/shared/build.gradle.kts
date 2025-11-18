@@ -65,7 +65,6 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.okhttp)
         }
-        val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
         if (isMacOs) {
             iosMain.dependencies {
                 implementation(libs.ktor.darwin)
