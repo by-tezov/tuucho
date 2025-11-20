@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Provider
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import kotlinx.serialization.json.JsonObject
@@ -15,20 +15,22 @@ class ProcessActionUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val actionExecutor: ActionExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
-    sealed class Input(
-        val route: NavigationRoute.Url
-    ) {
-        class JsonElement(
-            route: NavigationRoute.Url,
-            val action: ActionModelDomain,
-            val locks: List<Type>? = null,
-            val jsonElement: kotlinx.serialization.json.JsonElement? = null,
-        ) : Input(route)
+    sealed class Input {
+        abstract val route: NavigationRoute.Url
+        abstract val lockProvider: Provider?
 
-        class ActionObject(
-            route: NavigationRoute.Url,
+        data class JsonElement(
+            override val route: NavigationRoute.Url,
+            val action: ActionModelDomain,
+            override val lockProvider: Provider? = null,
+            val jsonElement: kotlinx.serialization.json.JsonElement? = null,
+        ) : Input()
+
+        data class ActionObject(
+            override val route: NavigationRoute.Url,
             val actionObject: JsonObject,
-        ) : Input(route)
+            override val lockProvider: Provider? = null,
+        ) : Input()
     }
 
     sealed class Output(

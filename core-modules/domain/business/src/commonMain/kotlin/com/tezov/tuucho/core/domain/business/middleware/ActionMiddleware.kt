@@ -4,10 +4,12 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Provider
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
 interface ActionMiddleware : MiddlewareProtocol<Context, ProcessActionUseCase.Output?> {
     data class Context(
+        val lockProvider: Provider,
         val input: ProcessActionUseCase.Input.JsonElement
     )
 

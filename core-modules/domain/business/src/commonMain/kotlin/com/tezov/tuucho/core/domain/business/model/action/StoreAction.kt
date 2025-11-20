@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.domain.business.model.action
 
 import com.tezov.tuucho.core.domain.business.protocol.ActionProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 
 object StoreAction {
     const val command = "store"
 
     object KeyValue : ActionProtocol {
-        override val locks get() = emptyList<Type>()
+        override val locks get() = emptyList<InteractionLock.Type>()
 
         override val command get() = StoreAction.command
 

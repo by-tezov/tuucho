@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.IdGenerator
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
-import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRepository
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockStack
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
@@ -41,8 +41,8 @@ internal object MiscModule {
             )
         }
 
-        single<InteractionLockRepositoryProtocol> {
-            InteractionLockRepository(
+        single<InteractionLockRepositoryProtocol.Stack> {
+            InteractionLockStack(
                 coroutineScopes = get(),
                 lockGenerator = get(),
                 interactionLockMonitor = getOrNull()

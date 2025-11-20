@@ -16,7 +16,7 @@ import kotlinx.coroutines.CompletableDeferred
 internal class ActionExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val middlewares: List<ActionMiddleware>,
-    private val interactionLockRepository: InteractionLockRepositoryProtocol,
+    private val interactionLockResolver: InteractionLockRepositoryProtocol.Resolver,
 ) : ActionExecutorProtocol {
     override suspend fun process(
         input: Input
@@ -32,7 +32,7 @@ internal class ActionExecutor(
                                 Input.JsonElement(
                                     route = route,
                                     action = ActionModelDomain.from(jsonElement.string),
-                                    locks = emptyList(),
+                                    lockProvider = TODO(),
                                     jsonElement = actionObject
                                 )
                             )
@@ -74,23 +74,26 @@ internal class ActionExecutor(
             .sortedBy { it.priority }
         val deferred = CompletableDeferred<Output?>()
         coroutineScopes.action.async {
-            val acquiredLocks = if (input.locks?.isNotEmpty() == true) {
-                interactionLockRepository.acquire(
+            val acquiredLocks = input.lockProvider?.let { locksProvider ->
+                interactionLockResolver.acquire(
                     requester = "$route::$action",
-                    types = input.locks
+                    provider = locksProvider
                 )
-            } else {
-                null
-            }
+            } ?: emptyList()
+
+            // TODO + retreive te defautl lock of action
+
             val result = middlewaresToExecute.execute(
-                ActionMiddleware.Context(input)
+                ActionMiddleware.Context(
+                    lockProvider = TODO(), //acquiredLocks.map { it.freeze() },
+                    input = input,
+                )
             )
             deferred.complete(result)
-            acquiredLocks?.let {
-                interactionLockRepository.release(
-                    requester =
-                        "$route::$action",
-                    lock = it
+            acquiredLocks.takeIf { it.isNotEmpty() }?.let {
+                interactionLockResolver.release(
+                    requester = "$route::$action",
+                    locks = it
                 )
             }
         }

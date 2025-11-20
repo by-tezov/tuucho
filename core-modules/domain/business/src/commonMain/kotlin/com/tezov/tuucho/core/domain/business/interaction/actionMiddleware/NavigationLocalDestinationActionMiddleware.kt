@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock.Type
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
@@ -29,7 +30,9 @@ internal class NavigationLocalDestinationActionMiddleware(
         when (action.target) {
             NavigateAction.LocalDestination.Target.back -> useCaseExecutor.await(
                 useCase = navigateBack,
-                input = NavigateBackUseCase.Input()
+                input = NavigateBackUseCase.Input(
+                    lock = context.lockProvider[Type.Navigation],
+                )
             )
 
             else -> throw DomainException.Default("Unknown target ${action.target}")

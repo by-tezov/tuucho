@@ -22,13 +22,14 @@ class JsonObjectNode(
     override fun toString() = content.toString()
 }
 
+@Suppress("EQUALS_OR_HASHCODE_IN_SUPERTYPE")
 class JsonArrayNode(
     private val content: List<JsonElementNode>
 ) : JsonElementNode(),
     List<JsonElementNode> by content {
-    override fun equals(
-        other: Any?
-    ) = content == other
+
+    override fun equals(other: Any?) =
+        other is JsonArrayNode && content == other.content
 
     override fun hashCode() = content.hashCode()
 

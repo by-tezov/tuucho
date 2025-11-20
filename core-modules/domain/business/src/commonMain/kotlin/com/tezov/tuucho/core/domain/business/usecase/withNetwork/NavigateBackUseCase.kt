@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -13,8 +12,8 @@ import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase.Input
@@ -26,7 +25,7 @@ class NavigateBackUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
-    private val interactionLockRepository: InteractionLockRepositoryProtocol,
+    private val interactionLockRepository: InteractionLockRepositoryProtocol.Stack,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
@@ -35,7 +34,7 @@ class NavigateBackUseCase(
     }
 
     data class Input(
-        val lock: Lock.Element? = null
+        val lock: InteractionLock? = null
     )
 
     override fun invoke(
@@ -76,15 +75,15 @@ class NavigateBackUseCase(
         }
     }
 
-    private suspend fun Lock.Element?.tryAcquire(): Lock.Element? = if (this != null) {
-        if (type != Type.Navigation) {
+    private suspend fun InteractionLock?.tryAcquire(): InteractionLock? = if (this != null) {
+        if (type != InteractionLock.Type.Navigation) {
             throw DomainException.Default("expected lock of type Navigation but got $type")
         }
         takeIf { interactionLockRepository.isValid(it) }
     } else {
         interactionLockRepository.tryAcquire(
             requester = requester,
-            type = Type.Navigation
+            type = InteractionLock.Type.Navigation
         )
     }
 

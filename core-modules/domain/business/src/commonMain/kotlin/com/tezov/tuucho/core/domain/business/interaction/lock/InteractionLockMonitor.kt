@@ -1,21 +1,21 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 
 interface InteractionLockMonitor {
     enum class Event {
-        Acquire,
-        TryAcquire,
+        Acquired,
+        AcquireFromTry,
         WaitToAcquire,
-        Release,
-        CanNotBeRelease,
+        Released,
+        CanNotBeReleased,
         TryAcquireAgain
     }
 
     data class Context(
         val event: Event,
-        val requester: String,
-        val lockTypes: List<Type>,
+        val requester: List<String>,
+        val lockTypes: List<InteractionLock.Type>,
     )
 
     fun process(

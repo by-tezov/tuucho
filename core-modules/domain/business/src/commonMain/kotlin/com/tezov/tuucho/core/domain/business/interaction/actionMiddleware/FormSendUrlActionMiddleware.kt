@@ -14,6 +14,7 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.FormAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Provider
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
@@ -63,9 +64,9 @@ internal class FormSendUrlActionMiddleware(
                 ?.takeIf { it.type == TypeResponseSchema.Value.form }
                 ?.run {
                     if (allSucceed.isTrue) {
-                        processValidRemoteForm(route, jsonElement)
+                        processValidRemoteForm(route, context.lockProvider, jsonElement)
                     } else {
-                        processInvalidRemoteForm(route, jsonElement)
+                        processInvalidRemoteForm(route, context.lockProvider, jsonElement)
                     }
                 }
         } else {
@@ -115,42 +116,44 @@ internal class FormSendUrlActionMiddleware(
 
     private suspend fun FormSendResponseSchema.Scope.processInvalidRemoteForm(
         route: NavigationRoute.Url,
+        lockProvider: Provider,
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
         val responseActionScope = action?.withScope(FormSendResponseSchema.Action::Scope)
         responseActionScope?.before?.forEach {
-            it.string.dispatchAction(route, responseCollect)
+            it.string.dispatchAction(route, lockProvider, responseCollect)
         }
         dispatchActionCommandError(route, toFailureResult())
         jsonElement
             ?.withScope(ActionFormSchema.Send::Scope)
             ?.denied
             ?.forEach {
-                it.string.dispatchAction(route, responseCollect)
+                it.string.dispatchAction(route, lockProvider, responseCollect)
             }
         responseActionScope?.after?.forEach {
-            it.string.dispatchAction(route, responseCollect)
+            it.string.dispatchAction(route, lockProvider, responseCollect)
         }
     }
 
     private suspend fun FormSendResponseSchema.Scope.processValidRemoteForm(
         route: NavigationRoute.Url,
+        lockProvider: Provider,
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
         val responseActionScope = action?.withScope(FormSendResponseSchema.Action::Scope)
         responseActionScope?.before?.forEach {
-            it.string.dispatchAction(route, responseCollect)
+            it.string.dispatchAction(route, lockProvider, responseCollect)
         }
         jsonElement
             ?.withScope(ActionFormSchema.Send::Scope)
             ?.validated
             ?.forEach {
-                it.string.dispatchAction(route, responseCollect)
+                it.string.dispatchAction(route, lockProvider, responseCollect)
             }
         responseActionScope?.after?.forEach {
-            it.string.dispatchAction(route, responseCollect)
+            it.string.dispatchAction(route, lockProvider, responseCollect)
         }
     }
 
@@ -189,13 +192,14 @@ internal class FormSendUrlActionMiddleware(
                     authority = FormAction.Update.authority,
                     target = FormAction.Update.Target.error,
                 ),
-                jsonElement = results // TODO locks
+                jsonElement = results
             ),
         )
     }
 
     private suspend fun String.dispatchAction(
         route: NavigationRoute.Url,
+        lockProvider: Provider,
         jsonElement: JsonElement?
     ) {
         useCaseExecutor.await(
@@ -203,7 +207,8 @@ internal class FormSendUrlActionMiddleware(
             input = ProcessActionUseCase.Input.JsonElement(
                 route = route,
                 action = ActionModelDomain.from(this),
-                jsonElement = jsonElement // TODO locks
+                jsonElement = jsonElement,
+                lockProvider = lockProvider
             ),
         )
     }
