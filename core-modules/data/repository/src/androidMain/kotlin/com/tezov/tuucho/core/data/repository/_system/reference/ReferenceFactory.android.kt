@@ -8,11 +8,11 @@ import kotlin.reflect.KClass
 
 class ReferenceFactoryAndroid : ReferenceProtocol.Factory {
     override fun <T : Any> create(
-        type: KClass<ReferenceProtocol<*>>,
+        type: KClass<out ReferenceProtocol<*>>,
         value: T?
     ) = when (type) {
-        is ReferenceProtocol.Weak<*> -> WeakReferenceAndroid(value)
-        is ReferenceProtocol.Strong<*> -> StrongReferenceAndroid(value)
-        else -> throw DataException.Default("incorrect reference type")
+        ReferenceProtocol.Weak::class -> WeakReferenceAndroid(value)
+        ReferenceProtocol.Strong::class -> StrongReferenceAndroid(value)
+        else -> throw DataException.Default("incorrect reference type $type")
     }
 }

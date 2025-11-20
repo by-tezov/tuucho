@@ -11,7 +11,7 @@ sealed interface ReferenceProtocol<T : Any> {
 
     interface Factory {
         fun <T : Any> create(
-            type: KClass<ReferenceProtocol<*>>,
+            type: KClass<out ReferenceProtocol<*>>,
             value: T? = null
         ): ReferenceProtocol<T>
     }

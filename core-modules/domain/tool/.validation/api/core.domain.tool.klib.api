@@ -68,7 +68,7 @@ sealed interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.tool._system/Refe
     abstract interface <#A1: kotlin/Any> Weak : com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A1> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Weak|null[0]
 
     abstract interface Factory { // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Factory|null[0]
-        abstract fun <#A2: kotlin/Any> create(kotlin.reflect/KClass<com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<*>>, #A2? = ...): com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A2> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Factory.create|create(kotlin.reflect.KClass<com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol<*>>;0:0?){0§<kotlin.Any>}[0]
+        abstract fun <#A2: kotlin/Any> create(kotlin.reflect/KClass<out com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<*>>, #A2? = ...): com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A2> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Factory.create|create(kotlin.reflect.KClass<out|com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol<*>>;0:0?){0§<kotlin.Any>}[0]
     }
 }
 
