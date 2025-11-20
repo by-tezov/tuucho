@@ -1,19 +1,18 @@
 package com.tezov.tuucho.shared.sample.monitor
 
-import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.shared.sample._system.Logger
 
-class LoggerCoroutineExceptionMonitor(
+class LoggerInteractionLockMonitor(
     private val logger: Logger,
     private val systemInformation: SystemInformationProtocol
-) : CoroutineExceptionMonitor {
-    override fun process(
-        context: CoroutineExceptionMonitor.Context
-    ) {
+) : InteractionLockMonitor {
+
+    override fun process(context: InteractionLockMonitor.Context) {
         with(context) {
             logger.debug("THREAD") { systemInformation.currentThreadName() }
-            logger.exception("COROUTINE", throwable) { "$id:$name" }
+            logger.debug("LOCK:$event") { "$requester - ${if (lockTypes.isEmpty()) "nothing" else lockTypes.toString()} " }
         }
     }
 }

@@ -7,10 +7,9 @@ import com.tezov.tuucho.core.domain.tool.async.CoroutineContext
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 internal fun createCoroutineScopes(
-    exceptionMonitor: CoroutineExceptionMonitor?
+    exceptionMonitor: CoroutineExceptionMonitor?,
 ): CoroutineScopesProtocol = object : CoroutineScopesProtocol {
     override val database: CoroutineContextProtocol =
         CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)

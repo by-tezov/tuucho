@@ -2,17 +2,20 @@ package com.tezov.tuucho.shared.sample.interceptor
 
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.shared.sample._system.Logger
 import io.ktor.client.request.HttpResponseData
 
 class LoggerHttpInterceptor(
-    private val logger: Logger
+    private val logger: Logger,
+    private val systemInformation: SystemInformationProtocol
 ) : HttpInterceptor {
 
     override suspend fun process(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
     ) = with(context.builder) {
+        logger.debug("THREAD") { systemInformation.currentThreadName() }
         logger.debug("NETWORK:request") {
             buildString {
                 appendLine("$method - $url")

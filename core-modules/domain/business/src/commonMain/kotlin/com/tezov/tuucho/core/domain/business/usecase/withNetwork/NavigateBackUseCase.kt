@@ -30,6 +30,11 @@ class NavigateBackUseCase(
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
+
+    companion object {
+        private const val requester = "NavigateBackUseCase"
+    }
+
     data class Input(
         val lock: Lock.Element? = null
     )
@@ -64,7 +69,10 @@ class NavigateBackUseCase(
                 navigationStackScreenRepository.backward(
                     routes = navigationStackRouteRepository.routes(),
                 )
-                interactionLockRepository.release(lock)
+                interactionLockRepository.release(
+                    requester = requester,
+                    lock = lock
+                )
             }
         }
     }
@@ -75,7 +83,10 @@ class NavigateBackUseCase(
         }
         takeIf { interactionLockRepository.isValid(it) }
     } else {
-        interactionLockRepository.tryAcquire(Type.Navigation)
+        interactionLockRepository.tryAcquire(
+            requester = requester,
+            type = Type.Navigation
+        )
     }
 
     private suspend fun runShadower(

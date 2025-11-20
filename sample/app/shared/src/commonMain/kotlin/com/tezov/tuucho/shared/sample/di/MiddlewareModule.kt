@@ -39,7 +39,8 @@ object MiddlewareModule {
 
         factory<LoggerBeforeNavigateToUrlMiddleware> {
             LoggerBeforeNavigateToUrlMiddleware(
-                logger = get()
+                logger = get(),
+                systemInformation = get()
             )
         } bindOrdered NavigationMiddleware.ToUrl::class
     }
@@ -47,7 +48,8 @@ object MiddlewareModule {
     private fun Module.beforeNavigateBack() {
         factory<LoggerBeforeNavigateBackMiddleware> {
             LoggerBeforeNavigateBackMiddleware(
-                logger = get()
+                logger = get(),
+                systemInformation = get()
             )
         } bindOrdered NavigationMiddleware.Back::class
     }
@@ -55,7 +57,8 @@ object MiddlewareModule {
     private fun Module.sendData() {
         factory<LoggerSendDataMiddleware> {
             LoggerSendDataMiddleware(
-                logger = get()
+                logger = get(),
+                systemInformation = get()
             )
         } bindOrdered SendDataMiddleware::class
     }
@@ -63,7 +66,8 @@ object MiddlewareModule {
     private fun Module.updateView() {
         factory<LoggerUpdateViewMiddleware> {
             LoggerUpdateViewMiddleware(
-                logger = get()
+                logger = get(),
+                systemInformation = get()
             )
         } bindOrdered UpdateViewMiddleware::class
     }

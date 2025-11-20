@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.interaction.lock
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Input
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
@@ -9,14 +10,17 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 @OpenForTest
 class InteractionLockGenerator(
     private val idGenerator: IdGeneratorProtocol<Unit, String>,
-) : IdGeneratorProtocol<Type, InteractionLockGenerator.Lock.Element>,
+) : IdGeneratorProtocol<Input, InteractionLockGenerator.Lock.Element>,
     TuuchoKoinComponent {
-    sealed class Lock {
-        data class Element(
+    sealed class Lock(
+        val owner: String
+    ) {
+        class Element(
+            owner: String,
             val canBeRelease: Boolean = true,
             val value: String,
             val type: Type
-        ) : Lock() {
+        ) : Lock(owner) {
             override fun equals(
                 other: Any?
             ): Boolean {
@@ -32,15 +36,22 @@ class InteractionLockGenerator(
             }
         }
 
-        data class ElementArray(
+        class ElementArray(
+            owner: String,
             val locks: List<Element>
-        ) : Lock()
+        ) : Lock(owner)
     }
 
+    data class Input(
+        val owner: String,
+        val type: Type,
+    )
+
     override fun generate(
-        input: Type
+        input: Input
     ) = Lock.Element(
-        type = input,
+        owner = input.owner,
+        type = input.type,
         value = idGenerator.generate()
     )
 

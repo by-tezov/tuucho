@@ -43,7 +43,8 @@ object InterceptorModule {
 
         factory<LoggerHttpInterceptor> {
             LoggerHttpInterceptor(
-                logger = get()
+                logger = get(),
+                systemInformation = get()
             )
         } bindOrdered HttpInterceptor::class
     }

@@ -44,7 +44,8 @@ internal object MiscModule {
         single<InteractionLockRepositoryProtocol> {
             InteractionLockRepository(
                 coroutineScopes = get(),
-                lockGenerator = get()
+                lockGenerator = get(),
+                interactionLockMonitor = getOrNull()
             )
         }
     }

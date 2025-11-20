@@ -75,7 +75,10 @@ internal class ActionExecutor(
         val deferred = CompletableDeferred<Output?>()
         coroutineScopes.action.async {
             val acquiredLocks = if (input.locks?.isNotEmpty() == true) {
-                interactionLockRepository.acquire(input.locks)
+                interactionLockRepository.acquire(
+                    requester = "${route}::${action}",
+                    types = input.locks
+                )
             } else {
                 null
             }
@@ -84,7 +87,11 @@ internal class ActionExecutor(
             )
             deferred.complete(result)
             acquiredLocks?.let {
-                interactionLockRepository.release(it)
+                interactionLockRepository.release(
+                    requester =
+                        "${route}::${action}",
+                    lock = it
+                )
             }
         }
         deferred.await()
