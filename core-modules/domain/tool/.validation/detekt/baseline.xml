@@ -5,10 +5,12 @@
     <ID>CyclomaticComplexMethod:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$fun process( input: String, now: Instant = Clock.System.now(), ): String</ID>
     <ID>MagicNumber:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$3</ID>
     <ID>MagicNumber:Println.kt$4000</ID>
+    <ID>MatchingDeclarationName:WeakReferenceFactoryProtocol.kt$ReferenceProtocol&lt;T : Any&gt;</ID>
     <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoDelicateAPI$message = "API marked as @TuuchoDelicateAPI. This API requires careful usage and understanding of its implications. Use with caution as improper usage may lead to unexpected behavior."</ID>
     <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoExperimentalAPI$message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API."</ID>
     <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoInternalApi$message = "API marked as @TuuchoInternalApi and is intended for internal framework use only. It may change or be removed in future releases without notice. External usage is strongly discouraged."</ID>
     <ID>PackageNaming:Println.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
+    <ID>PackageNaming:WeakReferenceFactoryProtocol.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
     <ID>TooManyFunctions:ExtensionNull.kt$ExtensionNull</ID>
     <ID>VariableNaming:JsonElementPath.kt$JsonElementPath$val _segment = segment.trim()</ID>
   </CurrentIssues>

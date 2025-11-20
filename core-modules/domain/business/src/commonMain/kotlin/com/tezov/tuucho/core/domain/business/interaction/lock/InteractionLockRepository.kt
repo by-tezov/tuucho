@@ -40,15 +40,14 @@ internal class InteractionLockRepository(
         types: List<Type>
     ): Lock = coroutineScopes.default.await {
         tryAcquireInternal(requester, types)?.let { lock ->
-            interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
-                    event = Event.Acquire,
-                    requester = requester,
-                    lockTypes = when (lock) {
-                        is Lock.Element -> listOf(lock.type)
-                        is Lock.ElementArray -> lock.locks.map { it.type }
-                    }
-                ))
+            interactionLockMonitor?.process(InteractionLockMonitor.Context(
+                event = Event.Acquire,
+                requester = requester,
+                lockTypes = when (lock) {
+                    is Lock.Element -> listOf(lock.type)
+                    is Lock.ElementArray -> lock.locks.map { it.type }
+                }
+            ))
             return@await lock
         }
         coroutineScopes.io.await {
@@ -79,16 +78,15 @@ internal class InteractionLockRepository(
         types: List<Type>
     ): Lock? = coroutineScopes.default.await {
         tryAcquireInternal(requester, types).also { lock ->
-            interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
-                    event = Event.TryAcquire,
-                    requester = requester,
-                    lockTypes = when (lock) {
-                        is Lock.Element -> listOf(lock.type)
-                        is Lock.ElementArray -> lock.locks.map { it.type }
-                        null -> emptyList()
-                    }
-                ))
+            interactionLockMonitor?.process(InteractionLockMonitor.Context(
+                event = Event.TryAcquire,
+                requester = requester,
+                lockTypes = when (lock) {
+                    is Lock.Element -> listOf(lock.type)
+                    is Lock.ElementArray -> lock.locks.map { it.type }
+                    null -> emptyList()
+                }
+            ))
         }
     }
 
@@ -104,12 +102,13 @@ internal class InteractionLockRepository(
         mutex.withLock {
             if (!ordered.all { it !in usedLocks }) return@withLock
             acquired = types.map { type ->
-                lockGenerator.generate(
-                    InteractionLockGenerator.Input(
-                        owner = requester,
-                        type = type
-                    )
-                ).also { usedLocks[type] = it }
+                lockGenerator
+                    .generate(
+                        InteractionLockGenerator.Input(
+                            owner = requester,
+                            type = type
+                        )
+                    ).also { usedLocks[type] = it }
             }
         }
         return acquired?.let {
@@ -138,19 +137,18 @@ internal class InteractionLockRepository(
             is Lock.Element -> releaseElement(requester, lock)
             is Lock.ElementArray -> lock.locks.forEach { releaseElement(requester, it) }
         }
-        interactionLockMonitor?.process(
-            InteractionLockMonitor.Context(
-                event = Event.Release,
-                requester = if (requester == lock.owner) {
-                    requester
-                } else {
-                    "requester $requester but owned by ${lock.owner}"
-                },
-                lockTypes = when (lock) {
-                    is Lock.Element -> listOf(lock.type)
-                    is Lock.ElementArray -> lock.locks.map { it.type }
-                }
-            ))
+        interactionLockMonitor?.process(InteractionLockMonitor.Context(
+            event = Event.Release,
+            requester = if (requester == lock.owner) {
+                requester
+            } else {
+                "requester $requester but owned by ${lock.owner}"
+            },
+            lockTypes = when (lock) {
+                is Lock.Element -> listOf(lock.type)
+                is Lock.ElementArray -> lock.locks.map { it.type }
+            }
+        ))
     }
 
     private suspend fun releaseElement(

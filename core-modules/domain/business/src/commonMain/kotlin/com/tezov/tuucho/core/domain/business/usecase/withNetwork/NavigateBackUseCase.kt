@@ -30,7 +30,6 @@ class NavigateBackUseCase(
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
-
     companion object {
         private const val requester = "NavigateBackUseCase"
     }

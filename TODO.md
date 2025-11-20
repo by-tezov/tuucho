@@ -1,7 +1,5 @@
 ## In progress
 
-- add weak reference factory
-
 - Then on action pass the lock (sendForm or navigation stuff, canBeRelease to false...)
 - Error when Compose enter in the game
 

@@ -43,7 +43,6 @@ class NavigateToUrlUseCase(
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
-
     companion object {
         private const val requester = "NavigateToUrlUseCase"
     }

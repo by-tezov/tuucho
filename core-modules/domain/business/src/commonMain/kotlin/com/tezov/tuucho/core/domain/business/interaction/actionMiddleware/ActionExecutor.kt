@@ -76,7 +76,7 @@ internal class ActionExecutor(
         coroutineScopes.action.async {
             val acquiredLocks = if (input.locks?.isNotEmpty() == true) {
                 interactionLockRepository.acquire(
-                    requester = "${route}::${action}",
+                    requester = "$route::$action",
                     types = input.locks
                 )
             } else {
@@ -89,7 +89,7 @@ internal class ActionExecutor(
             acquiredLocks?.let {
                 interactionLockRepository.release(
                     requester =
-                        "${route}::${action}",
+                        "$route::$action",
                     lock = it
                 )
             }

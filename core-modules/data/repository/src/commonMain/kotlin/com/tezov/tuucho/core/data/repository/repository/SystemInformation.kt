@@ -4,8 +4,7 @@ import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 
 class SystemInformation(
     private val platformRepository: PlatformProtocol
-): SystemInformationProtocol {
-
+) : SystemInformationProtocol {
     interface PlatformProtocol {
         fun currentThreadName(): String
     }

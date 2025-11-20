@@ -6,11 +6,6 @@ serverVersion=v1
 serverHealthEndpoint=health
 serverResourceEndpoint=resource
 serverSendEndpoint=send
-#jvm
-liveRelativeFolderPathJvm=dist
-localDatastoreNodeNameJvm=com/tuucho/sample
-headerPlatformJvm=jvm
-serverBaseUrlJvm=http://localhost:3000
 #android
 headerPlatformAndroid=android
 serverBaseUrlAndroid=http://10.0.2.2:3000
