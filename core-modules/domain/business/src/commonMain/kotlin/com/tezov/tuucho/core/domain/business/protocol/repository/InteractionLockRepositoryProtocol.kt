@@ -13,22 +13,27 @@ interface InteractionLockRepositoryProtocol {
     ): Boolean
 
     suspend fun acquire(
+        requester: String,
         types: List<Type>
     ): Lock
 
     suspend fun tryAcquire(
+        requester: String,
         types: List<Type>
     ): Lock?
 
     suspend fun acquire(
+        requester: String,
         type: Type
     ): Lock.Element
 
     suspend fun tryAcquire(
+        requester: String,
         type: Type
     ): Lock.Element?
 
     suspend fun release(
+        requester: String,
         lock: Lock
     )
 }

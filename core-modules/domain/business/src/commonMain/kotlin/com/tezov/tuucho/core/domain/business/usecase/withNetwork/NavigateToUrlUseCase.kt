@@ -43,6 +43,10 @@ class NavigateToUrlUseCase(
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
+    companion object {
+        private const val requester = "NavigateToUrlUseCase"
+    }
+
     data class Input(
         val url: String,
         val lock: Lock.Element? = null
@@ -69,7 +73,10 @@ class NavigateToUrlUseCase(
                 val componentObject = runCatching {
                     retrieveMaterialRepository.process(url)
                 }.onFailure {
-                    interactionLockRepository.release(lock)
+                    interactionLockRepository.release(
+                        requester = requester,
+                        lock = lock
+                    )
                 }.getOrThrow()
                 val navigationSettingObject = componentObject
                     .onScope(ComponentSettingSchema.Root::Scope)
@@ -100,7 +107,10 @@ class NavigateToUrlUseCase(
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
                         ?.transition,
                 )
-                interactionLockRepository.release(lock)
+                interactionLockRepository.release(
+                    requester = requester,
+                    lock = lock
+                )
             }
         }
     }
@@ -111,7 +121,10 @@ class NavigateToUrlUseCase(
         }
         takeIf { interactionLockRepository.isValid(it) }
     } else {
-        interactionLockRepository.tryAcquire(Type.Navigation)
+        interactionLockRepository.tryAcquire(
+            requester = requester,
+            type = Type.Navigation
+        )
     }
 
     private suspend fun JsonArray?.navigationResolver() = this

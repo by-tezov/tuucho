@@ -53,6 +53,25 @@ abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMon
     }
 }
 
+abstract interface com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol { // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol|null[0]
+    abstract fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol.currentThreadName|currentThreadName(){}[0]
+}
+
+sealed interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol { // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol|null[0]
+    abstract fun clear() // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.clear|clear(){}[0]
+    abstract fun getOrNull(): #A? // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.getOrNull|getOrNull(){}[0]
+    abstract fun getOrThrow(): #A // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.getOrThrow|getOrThrow(){}[0]
+    abstract fun set(#A) // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.set|set(1:0){}[0]
+
+    abstract interface <#A1: kotlin/Any> Strong : com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A1> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Strong|null[0]
+
+    abstract interface <#A1: kotlin/Any> Weak : com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A1> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Weak|null[0]
+
+    abstract interface Factory { // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Factory|null[0]
+        abstract fun <#A2: kotlin/Any> create(kotlin.reflect/KClass<out com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<*>>, #A2? = ...): com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A2> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Factory.create|create(kotlin.reflect.KClass<out|com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol<*>>;0:0?){0§<kotlin.Any>}[0]
+    }
+}
+
 final class com.tezov.tuucho.core.domain.tool.async/CoroutineContext : com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol { // com.tezov.tuucho.core.domain.tool.async/CoroutineContext|null[0]
     constructor <init>(kotlin/String, kotlin.coroutines/CoroutineContext, com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor?) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.<init>|<init>(kotlin.String;kotlin.coroutines.CoroutineContext;com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor?){}[0]
 

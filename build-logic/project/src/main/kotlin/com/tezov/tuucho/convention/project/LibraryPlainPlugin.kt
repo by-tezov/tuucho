@@ -87,11 +87,9 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         }
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
-                commonTest {
-                    dependencies {
-                        implementation(kotlin("test"))
-                        implementation(library("kotlinx.coroutines.test"))
-                    }
+                commonTest.dependencies {
+                    implementation(kotlin("test"))
+                    implementation(library("kotlinx.coroutines.test"))
                 }
             }
         }

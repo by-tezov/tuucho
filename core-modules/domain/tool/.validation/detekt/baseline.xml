@@ -9,6 +9,7 @@
     <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoExperimentalAPI$message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API."</ID>
     <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoInternalApi$message = "API marked as @TuuchoInternalApi and is intended for internal framework use only. It may change or be removed in future releases without notice. External usage is strongly discouraged."</ID>
     <ID>PackageNaming:Println.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
+    <ID>PackageNaming:ReferenceProtocol.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
     <ID>TooManyFunctions:ExtensionNull.kt$ExtensionNull</ID>
     <ID>VariableNaming:JsonElementPath.kt$JsonElementPath$val _segment = segment.trim()</ID>
   </CurrentIssues>

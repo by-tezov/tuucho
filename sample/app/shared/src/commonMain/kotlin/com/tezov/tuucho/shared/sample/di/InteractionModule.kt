@@ -12,6 +12,7 @@ object InteractionModule {
         factory<LoggerAction> {
             LoggerAction(
                 logger = get(),
+                systemInformation = get()
             )
         }  bind ActionMiddleware::class
 

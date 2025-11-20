@@ -41,7 +41,6 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
-#lib - jvm
 #lib - android
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 #lib - ios

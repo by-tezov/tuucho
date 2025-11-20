@@ -70,39 +70,73 @@ public final class com/tezov/tuucho/core/domain/business/interaction/lock/Intera
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol;)V
 	public synthetic fun generate ()Ljava/lang/Object;
 	public fun generate ()Ljava/lang/Void;
-	public fun generate (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
+	public fun generate (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
 	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
 	public fun getKoin ()Lorg/koin/core/Koin;
 }
 
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input {
+	public fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
+	public final fun copy (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOwner ()Ljava/lang/String;
+	public final fun getType ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getOwner ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element : com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock {
-	public fun <init> (ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)V
-	public synthetic fun <init> (ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Z
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
-	public final fun copy (ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
+	public fun <init> (Ljava/lang/String;ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)V
+	public synthetic fun <init> (Ljava/lang/String;ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCanBeRelease ()Z
 	public final fun getType ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$ElementArray : com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock {
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$ElementArray;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$ElementArray;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$ElementArray;
-	public fun equals (Ljava/lang/Object;)Z
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public final fun getLocks ()Ljava/util/List;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor {
+	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/lang/String;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEvent ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public final fun getLockTypes ()Ljava/util/List;
+	public final fun getRequester ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event : java/lang/Enum {
+	public static final field Acquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field CanNotBeRelease Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field Release Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field TryAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field TryAcquireAgain Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field WaitToAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static fun values ()[Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationOption {
@@ -2026,12 +2060,12 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/V
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol {
-	public abstract fun acquire (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun acquire (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun acquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun acquire (Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun isValid (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun release (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun tryAcquire (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun tryAcquire (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun release (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun tryAcquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun tryAcquire (Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type : java/lang/Enum {
@@ -2228,10 +2262,14 @@ public final class com/tezov/tuucho/core/domain/business/usecase/UseCaseExecutor
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Companion;
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;)V
 	public synthetic fun invoke (Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Companion {
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input {
@@ -2248,10 +2286,14 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Nav
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Companion;
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;)V
 	public synthetic fun invoke (Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Companion {
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input {

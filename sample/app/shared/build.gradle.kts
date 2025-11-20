@@ -36,13 +36,6 @@ buildkonfig {
     }
 
     targetConfigs {
-        create("jvm") {
-            field("localDatastoreNodeNameJvm", FieldSpec.Type.STRING, "localDatastoreFileName")
-            field("liveRelativeFolderPathJvm", FieldSpec.Type.STRING, "liveRelativeFolderPath")
-            field("headerPlatformJvm", FieldSpec.Type.STRING, "headerPlatform")
-            field("serverBaseUrlJvm", FieldSpec.Type.STRING, "serverBaseUrl")
-        }
-
         create("android") {
             field("localDatastoreFileName", FieldSpec.Type.STRING)
             field("headerPlatformAndroid", FieldSpec.Type.STRING, "headerPlatform")
@@ -59,9 +52,6 @@ buildkonfig {
 
 kotlin {
     sourceSets {
-        jvmMain.dependencies {
-            implementation(libs.ktor.okhttp)
-        }
         androidMain.dependencies {
             implementation(libs.ktor.okhttp)
         }
