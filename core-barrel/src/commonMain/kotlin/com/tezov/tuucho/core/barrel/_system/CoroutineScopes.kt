@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
 internal fun createCoroutineScopes(
-    exceptionMonitor: CoroutineExceptionMonitor?
+    exceptionMonitor: CoroutineExceptionMonitor?,
 ): CoroutineScopesProtocol = object : CoroutineScopesProtocol {
     override val database: CoroutineContextProtocol =
         CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)

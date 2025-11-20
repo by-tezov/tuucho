@@ -66,7 +66,6 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
                 }
             }
             // iOS
-            val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
             if (isMacOs) {
                 val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
                 project.afterEvaluate {
@@ -83,15 +82,8 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
                         }
                     }
                 }
-                applyDefaultHierarchyTemplate() //Needed by BuildKonfig
             }
-            // Desktop
-            val desktopTargets = listOf(jvm())
-            desktopTargets.forEach {
-                it.compilerOptions {
-                    jvmTarget.set(this@with.jvmTarget())
-                }
-            }
+            applyDefaultHierarchyTemplate() //Needed by BuildKonfig
         }
     }
 
@@ -99,13 +91,9 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         val buildTypeCapitalized = buildTypeCapitalized()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
-                jvmMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/jvmMain$buildTypeCapitalized/kotlin")
-                }
                 androidMain {
                     kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
                 }
-                val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
                 if (isMacOs) {
                     iosMain {
                         kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")

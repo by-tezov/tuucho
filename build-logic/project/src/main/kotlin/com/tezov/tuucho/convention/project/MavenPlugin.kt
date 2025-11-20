@@ -121,7 +121,6 @@ class MavenPlugin : Plugin<Project> {
                         "iosArm64" -> "$artifactId-iosArm64"
                         "iosSimulatorArm64" -> "$artifactId-iosSimulatorArm64"
                         "iosX64" -> "$artifactId-iosX64"
-                        "jvm" -> "$artifactId-jvm"
                         else -> error("unknown publication name: $name")
                     }
                 }

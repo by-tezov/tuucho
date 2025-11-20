@@ -32,9 +32,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "tuucho-sample"
 include(":app:android")
-include(":app:jvm")
-val isMacOs = System.getProperty("os.name")
-    .startsWith("Mac", ignoreCase = true)
+val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
 if (isMacOs) {
     include(":app:ios")
 }

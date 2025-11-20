@@ -177,7 +177,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             "src/commonMain/kotlin",
             "src/androidMain/kotlin",
             "src/iosMain/kotlin",
-            "src/jvmMain/kotlin",
             "src/commonTest/kotlin"
         )
         extensions.configure(AndroidComponentsExtension::class.java) {
@@ -187,7 +186,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                     "src/commonMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
                     "src/androidMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
                     "src/iosMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                    "src/jvmMain${bt.replaceFirstChar { it.uppercase() }}/kotlin"
                 )
             }
         }
@@ -213,7 +211,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             "src/commonMain/kotlin",
             "src/androidMain/kotlin",
             "src/iosMain/kotlin",
-            "src/jvmMain/kotlin",
             "src/commonTest/kotlin"
         )
         extensions.configure(AndroidComponentsExtension::class.java) {
@@ -223,7 +220,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                     "src/commonMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
                     "src/androidMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
                     "src/iosMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                    "src/jvmMain${bt.replaceFirstChar { it.uppercase() }}/kotlin"
                 )
             }
         }
@@ -270,7 +266,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 }
             }
             // iOS
-            val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
             if (isMacOs) {
                 val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
                 project.afterEvaluate {
@@ -287,17 +282,10 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                         }
                     }
                 }
-                applyDefaultHierarchyTemplate()
             } else {
                 println("⚠️ mac os target disable")
             }
-            // Desktop
-            val desktopTargets = listOf(jvm())
-            desktopTargets.forEach {
-                it.compilerOptions {
-                    jvmTarget.set(this@with.jvmTarget())
-                }
-            }
+            applyDefaultHierarchyTemplate()
         }
     }
 
@@ -305,13 +293,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         val buildTypeCapitalized = buildTypeCapitalized()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
-                jvmMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/jvmMain$buildTypeCapitalized/kotlin")
-                }
                 androidMain {
                     kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
                 }
-                val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
                 if (isMacOs) {
                     iosMain {
                         kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")

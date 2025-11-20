@@ -1,3 +1,37 @@
+public final class com/tezov/tuucho/core/data/repository/_system/SystemInformationAndroid : com/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol {
+	public fun <init> ()V
+	public fun currentThreadName ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/_system/reference/ReferenceFactoryAndroid : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Factory {
+	public fun <init> ()V
+	public fun create (Lkotlin/reflect/KClass;Ljava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol;
+}
+
+public final class com/tezov/tuucho/core/data/repository/_system/reference/StrongReferenceAndroid : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Strong {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Object;)V
+	public synthetic fun <init> (Ljava/lang/Object;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun clear ()V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getOrNull ()Ljava/lang/Object;
+	public fun getOrThrow ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun set (Ljava/lang/Object;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/_system/reference/WeakReferenceAndroid : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Weak {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Object;)V
+	public synthetic fun <init> (Ljava/lang/Object;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun clear ()V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getOrNull ()Ljava/lang/Object;
+	public fun getOrThrow ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun set (Ljava/lang/Object;)V
+}
+
 public abstract interface class com/tezov/tuucho/core/data/repository/database/Database : app/cash/sqldelight/Transacter {
 	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/Database$Companion;
 	public abstract fun getHookStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/HookStatementQueries;
@@ -977,5 +1011,14 @@ public abstract interface class com/tezov/tuucho/core/data/repository/parser/sha
 
 public abstract interface class com/tezov/tuucho/core/data/repository/parser/shadower/_system/MatcherShadowerProtocol {
 	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/repository/SystemInformation : com/tezov/tuucho/core/domain/tool/protocol/SystemInformationProtocol {
+	public fun <init> (Lcom/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol;)V
+	public fun currentThreadName ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol {
+	public abstract fun currentThreadName ()Ljava/lang/String;
 }
 

@@ -2,6 +2,28 @@ public final class com/tezov/tuucho/core/domain/tool/_system/PrintlnKt {
 	public static final fun logAll (Ljava/lang/Object;)V
 }
 
+public abstract interface class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol {
+	public abstract fun clear ()V
+	public abstract fun getOrNull ()Ljava/lang/Object;
+	public abstract fun getOrThrow ()Ljava/lang/Object;
+	public abstract fun set (Ljava/lang/Object;)V
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Factory {
+	public abstract fun create (Lkotlin/reflect/KClass;Ljava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol;
+	public static synthetic fun create$default (Lcom/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Factory;Lkotlin/reflect/KClass;Ljava/lang/Object;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol;
+}
+
+public final class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Factory$DefaultImpls {
+	public static synthetic fun create$default (Lcom/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Factory;Lkotlin/reflect/KClass;Ljava/lang/Object;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Strong : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol {
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Weak : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol {
+}
+
 public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoDelicateAPI : java/lang/annotation/Annotation {
 }
 
@@ -192,5 +214,9 @@ public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPath : java
 
 public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPathKt {
 	public static final fun toPath (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/tool/protocol/SystemInformationProtocol {
+	public abstract fun currentThreadName ()Ljava/lang/String;
 }
 
