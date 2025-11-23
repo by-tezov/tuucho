@@ -1,10 +1,10 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.sync.Mutex
@@ -15,16 +15,15 @@ internal class InteractionLockStack(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val lockGenerator: InteractionLockGenerator,
     private val interactionLockMonitor: InteractionLockMonitor?
-) : InteractionLockRepositoryProtocol.Stack {
-
+) : InteractionLockProtocol.Stack {
     private data class Waiter(
         val requester: String,
-        val lockTypes: List<InteractionLock.Type>,
+        val lockTypes: List<InteractionLockType>,
         val deferred: CompletableDeferred<Unit>
     )
 
     private val mutex = Mutex()
-    private val usedLocks = mutableMapOf<InteractionLock.Type, InteractionLock>()
+    private val usedLocks = mutableMapOf<InteractionLockType, InteractionLock>()
     private val waiters = ArrayDeque<Waiter>()
 
     override suspend fun isValid(
@@ -35,22 +34,29 @@ internal class InteractionLockStack(
         }
     }
 
+    override suspend fun isAllValid(
+        locks: List<InteractionLock>
+    ) = coroutineScopes.default.await {
+        mutex.withLock {
+            locks.all { usedLocks[it.type]?.id == it.id }
+        }
+    }
+
     override suspend fun acquire(
         requester: String,
-        type: InteractionLock.Type
+        type: InteractionLockType
     ) = acquire(requester, listOf(type)).first()
 
     override suspend fun acquire(
         requester: String,
-        types: List<InteractionLock.Type>
+        types: List<InteractionLockType>
     ): List<InteractionLock> = coroutineScopes.default.await {
         tryAcquireInternal(requester, types)?.let { locks ->
-            interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
-                    event = Event.Acquired,
-                    requester = listOf(requester),
-                    lockTypes = locks.map { it.type }
-                ))
+            interactionLockMonitor?.process(InteractionLockMonitor.Context(
+                event = Event.Acquired,
+                requester = listOf(requester),
+                lockTypes = locks.map { it.type }
+            ))
             return@await locks
         }
         coroutineScopes.io.await {
@@ -78,31 +84,30 @@ internal class InteractionLockStack(
 
     override suspend fun tryAcquire(
         requester: String,
-        type: InteractionLock.Type
+        type: InteractionLockType
     ) = tryAcquire(requester, listOf(type))?.firstOrNull()
 
     override suspend fun tryAcquire(
         requester: String,
-        types: List<InteractionLock.Type>
+        types: List<InteractionLockType>
     ): List<InteractionLock>? = coroutineScopes.default.await {
         tryAcquireInternal(requester, types)?.also { locks ->
-            interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
-                    event = Event.AcquireFromTry,
-                    requester = listOf(requester),
-                    lockTypes = locks.map { it.type }
-                ))
+            interactionLockMonitor?.process(InteractionLockMonitor.Context(
+                event = Event.AcquireFromTry,
+                requester = listOf(requester),
+                lockTypes = locks.map { it.type }
+            ))
         }
     }
 
     private suspend fun tryAcquireInternal(
         requester: String,
-        types: List<InteractionLock.Type>
+        types: List<InteractionLockType>
     ): List<InteractionLock>? {
         if (types.isEmpty()) {
-            throw DomainException.Default("Lock types cannot be empty")
+            return emptyList()
         }
-        val ordered = types.sortedBy { it.ordinal }
+        val ordered = types.sortedBy { it.name }
         var acquired: List<InteractionLock>? = null
         mutex.withLock {
             if (!ordered.all { it !in usedLocks }) return@withLock

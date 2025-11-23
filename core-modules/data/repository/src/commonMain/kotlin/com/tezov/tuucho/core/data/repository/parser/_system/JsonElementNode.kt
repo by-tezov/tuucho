@@ -27,9 +27,9 @@ class JsonArrayNode(
     private val content: List<JsonElementNode>
 ) : JsonElementNode(),
     List<JsonElementNode> by content {
-
-    override fun equals(other: Any?) =
-        other is JsonArrayNode && content == other.content
+    override fun equals(
+        other: Any?
+    ) = other is JsonArrayNode && content == other.content
 
     override fun hashCode() = content.hashCode()
 

@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Provider
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import kotlinx.serialization.json.JsonObject
@@ -16,20 +16,20 @@ class ProcessActionUseCase(
     private val actionExecutor: ActionExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
     sealed class Input {
-        abstract val route: NavigationRoute.Url
-        abstract val lockProvider: Provider?
+        abstract val route: NavigationRoute.Url?
+        abstract val lockable: InteractionLockable?
 
         data class JsonElement(
-            override val route: NavigationRoute.Url,
+            override val route: NavigationRoute.Url?,
             val action: ActionModelDomain,
-            override val lockProvider: Provider? = null,
+            override val lockable: InteractionLockable? = null,
             val jsonElement: kotlinx.serialization.json.JsonElement? = null,
         ) : Input()
 
         data class ActionObject(
-            override val route: NavigationRoute.Url,
+            override val route: NavigationRoute.Url?,
             val actionObject: JsonObject,
-            override val lockProvider: Provider? = null,
+            override val lockable: InteractionLockable? = null,
         ) : Input()
     }
 

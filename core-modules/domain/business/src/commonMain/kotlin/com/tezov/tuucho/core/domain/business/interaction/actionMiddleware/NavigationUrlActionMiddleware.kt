@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock.Type
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
@@ -18,7 +17,7 @@ internal class NavigationUrlActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url,
+        route: NavigationRoute.Url?,
         action: ActionModelDomain,
     ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.Url.authority
 
@@ -31,7 +30,6 @@ internal class NavigationUrlActionMiddleware(
                 useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(
                     url = url,
-                    lock = context.lockProvider[Type.Navigation],
                 )
             )
         }

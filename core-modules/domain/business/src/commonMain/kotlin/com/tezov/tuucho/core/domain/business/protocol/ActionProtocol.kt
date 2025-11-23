@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 
 interface ActionProtocol {
     val command: String
     val authority: String
-    val locks: List<InteractionLock.Type>
+    val lockable: InteractionLockable
 }

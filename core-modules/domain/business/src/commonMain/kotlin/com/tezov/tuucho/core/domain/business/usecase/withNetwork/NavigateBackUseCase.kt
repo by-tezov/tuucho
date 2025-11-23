@@ -12,11 +12,8 @@ import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase.Input
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 class NavigateBackUseCase(
@@ -25,20 +22,11 @@ class NavigateBackUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
-    private val interactionLockRepository: InteractionLockRepositoryProtocol.Stack,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
-) : UseCaseProtocol.Sync<Input, Unit>,
+) : UseCaseProtocol.Sync<Unit, Unit>,
     TuuchoKoinComponent {
-    companion object {
-        private const val requester = "NavigateBackUseCase"
-    }
-
-    data class Input(
-        val lock: InteractionLock? = null
-    )
-
     override fun invoke(
-        input: Input
+        input: Unit
     ) {
         coroutineScopes.useCase.async {
             (navigationMiddlewares + terminalMiddleware()).execute(
@@ -46,7 +34,6 @@ class NavigateBackUseCase(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
                         ?: throw DomainException.Default("Shouldn't be possible"),
                     nextUrl = navigationStackRouteRepository.priorRoute()?.value,
-                    input = input,
                     onShadowerException = null
                 )
             )
@@ -55,36 +42,17 @@ class NavigateBackUseCase(
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
         coroutineScopes.navigation.await {
-            with(context.input) {
-                val lock = lock.tryAcquire() ?: return@await
-                val restoredRoute = navigationStackRouteRepository.backward(
-                    route = NavigationRoute.Back
-                )
-                restoredRoute?.let { runShadower(restoredRoute, context) }
-                navigationStackTransitionRepository.backward(
-                    routes = navigationStackRouteRepository.routes(),
-                )
-                navigationStackScreenRepository.backward(
-                    routes = navigationStackRouteRepository.routes(),
-                )
-                interactionLockRepository.release(
-                    requester = requester,
-                    lock = lock
-                )
-            }
+            val restoredRoute = navigationStackRouteRepository.backward(
+                route = NavigationRoute.Back
+            )
+            restoredRoute?.let { runShadower(restoredRoute, context) }
+            navigationStackTransitionRepository.backward(
+                routes = navigationStackRouteRepository.routes(),
+            )
+            navigationStackScreenRepository.backward(
+                routes = navigationStackRouteRepository.routes(),
+            )
         }
-    }
-
-    private suspend fun InteractionLock?.tryAcquire(): InteractionLock? = if (this != null) {
-        if (type != InteractionLock.Type.Navigation) {
-            throw DomainException.Default("expected lock of type Navigation but got $type")
-        }
-        takeIf { interactionLockRepository.isValid(it) }
-    } else {
-        interactionLockRepository.tryAcquire(
-            requester = requester,
-            type = InteractionLock.Type.Navigation
-        )
     }
 
     private suspend fun runShadower(

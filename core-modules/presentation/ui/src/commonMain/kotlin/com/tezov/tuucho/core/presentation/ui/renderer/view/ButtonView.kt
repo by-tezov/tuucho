@@ -86,7 +86,7 @@ class ButtonView(
                     input = ProcessActionUseCase.Input.ActionObject(
                         route = route,
                         actionObject = it,
-                        lockProvider = null //TODO
+                        lockable = null // TODO
                     )
                 )
             }

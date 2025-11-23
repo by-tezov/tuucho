@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock.Type
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
@@ -19,7 +18,7 @@ internal class NavigationLocalDestinationActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url,
+        route: NavigationRoute.Url?,
         action: ActionModelDomain,
     ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.LocalDestination.authority
 
@@ -28,14 +27,16 @@ internal class NavigationLocalDestinationActionMiddleware(
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
     ) = with(context.input) {
         when (action.target) {
-            NavigateAction.LocalDestination.Target.back -> useCaseExecutor.await(
-                useCase = navigateBack,
-                input = NavigateBackUseCase.Input(
-                    lock = context.lockProvider[Type.Navigation],
+            NavigateAction.LocalDestination.Target.back -> {
+                useCaseExecutor.await(
+                    useCase = navigateBack,
+                    input = Unit
                 )
-            )
+            }
 
-            else -> throw DomainException.Default("Unknown target ${action.target}")
+            else -> {
+                throw DomainException.Default("Unknown target ${action.target}")
+            }
         }
         next.invoke(context)
     }

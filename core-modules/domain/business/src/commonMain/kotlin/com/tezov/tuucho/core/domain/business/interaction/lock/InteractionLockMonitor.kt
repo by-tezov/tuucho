@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 
 interface InteractionLockMonitor {
     enum class Event {
@@ -15,7 +15,7 @@ interface InteractionLockMonitor {
     data class Context(
         val event: Event,
         val requester: List<String>,
-        val lockTypes: List<InteractionLock.Type>,
+        val lockTypes: List<InteractionLockType>,
     )
 
     fun process(
