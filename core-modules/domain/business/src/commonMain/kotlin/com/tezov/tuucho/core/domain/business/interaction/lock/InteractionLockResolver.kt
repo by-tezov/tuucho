@@ -83,7 +83,7 @@ internal class InteractionLockResolver(
             }
 
             is InteractionLockable.Composite -> {
-                release(requester, lockable)
+                release(requester, lockable.lock)
             }
 
             else -> {}
