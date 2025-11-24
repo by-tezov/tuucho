@@ -1,6 +1,7 @@
 ## In progress
 
-
+- update doc
+- finir les p'tit dessous + clean
 
 *** ***
 - still need to fix mock server
