@@ -15,7 +15,7 @@ class LoggerAction(
     override val priority: Int = ActionMiddleware.Priority.LOW
 
     override fun accept(
-        route: NavigationRoute.Url,
+        route: NavigationRoute.Url?,
         action: ActionModelDomain,
     ) = true
 
@@ -24,7 +24,7 @@ class LoggerAction(
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
     ) = with(context.input) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
-        logger.debug("ACTION") { "from ${route.value}: $action" }
+        logger.debug("ACTION") { "from ${route?.value}: $action" }
         next.invoke(context)
     }
 }

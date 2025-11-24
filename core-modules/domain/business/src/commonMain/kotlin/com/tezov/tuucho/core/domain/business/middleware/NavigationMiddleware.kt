@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.domain.business.middleware
 
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 
 object NavigationMiddleware {
@@ -17,7 +16,6 @@ object NavigationMiddleware {
         data class Context(
             val currentUrl: String,
             val nextUrl: String?,
-            val input: NavigateBackUseCase.Input,
             val onShadowerException: ((exception: Throwable, context: Context, replay: suspend () -> Unit) -> Unit)?
         )
     }

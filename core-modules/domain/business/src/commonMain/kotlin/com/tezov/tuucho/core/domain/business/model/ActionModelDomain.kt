@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.model
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -78,5 +79,29 @@ data class ActionModelDomain(
             target = target,
             query = query,
         )
+    }
+
+    override fun toString(): String {
+        fun JsonElement.toPrettyString(): String = when (this) {
+            is JsonObject -> entries.joinToString("&") { "${it.key}=${it.value.string}" }
+            is JsonArray -> joinToString(",") { it.string }
+            is JsonPrimitive -> this.content
+        }
+        val stringBuilder = StringBuilder().apply {
+            append(command)
+            append("://")
+            authority?.let {
+                append(it)
+                target?.let { target ->
+                    append("/")
+                    append(target)
+                }
+            }
+            query?.let { query ->
+                append("?")
+                append(query.toPrettyString())
+            }
+        }
+        return stringBuilder.toString()
     }
 }

@@ -1,10 +1,9 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock
 import com.tezov.tuucho.core.domain.business.mock.coroutineTestScope
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import dev.mokkery.answering.returns
 import dev.mokkery.answering.returnsBy
 import dev.mokkery.every
@@ -14,7 +13,6 @@ import kotlinx.coroutines.delay
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -22,11 +20,12 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 // TODO redo cleanly
-class InteractionLockRepositoryTest {
+// include monitor and test if id is different from hold, then no release is done
+class InteractionLockStackTest {
     private val coroutineTestScope = coroutineTestScope()
     private lateinit var lockGenerator: InteractionLockGenerator
     private lateinit var sut: InteractionLockRepositoryWrap
-    private lateinit var counters: MutableMap<Type, Int>
+    private lateinit var counters: MutableMap<InteractionLockType, Int>
 
     companion object {
         private val requester = "test"
@@ -35,41 +34,41 @@ class InteractionLockRepositoryTest {
     private class InteractionLockRepositoryWrap(
         coroutineScopes: CoroutineScopesProtocol,
         lockGenerator: InteractionLockGenerator,
-    ) : InteractionLockRepository(
+    ) : InteractionLockStack(
             coroutineScopes = coroutineScopes,
             lockGenerator = lockGenerator,
             interactionLockMonitor = null
         ) {
         suspend fun acquire(
-            type: Type
+            type: InteractionLockType
         ) = acquire(
             requester = requester,
             type = type
         )
 
         suspend fun tryAcquire(
-            type: Type
+            type: InteractionLockType
         ) = tryAcquire(
             requester = requester,
             type = type
         )
 
         suspend fun acquire(
-            types: List<Type>
+            types: List<InteractionLockType>
         ) = acquire(
             requester = requester,
             types = types
         )
 
         suspend fun tryAcquire(
-            types: List<Type>
+            types: List<InteractionLockType>
         ) = tryAcquire(
             requester = requester,
             types = types
         )
 
         suspend fun release(
-            lock: Lock
+            lock: InteractionLock
         ) = release(
             requester = requester,
             lock = lock
@@ -77,29 +76,29 @@ class InteractionLockRepositoryTest {
     }
 
     private fun generateInput(
-        type: Type
+        type: InteractionLockType
     ) = InteractionLockGenerator.Input(
         owner = "test",
         type = type
     )
 
     private fun stubLock(
-        type: Type
+        type: InteractionLockType
     ) {
         every { lockGenerator.generate(generateInput(type)) } returnsBy {
             val count = counters.getValue(type).also {
                 counters[type] = it + 1
             }
-            Lock.Element(
+            InteractionLock(
                 owner = "test",
+                id = idKey(type, count),
                 type = type,
-                value = idKey(type, count)
             )
         }
     }
 
     private fun idKey(
-        type: Type,
+        type: InteractionLockType,
         count: Int
     ) = "${type}_$count"
 
@@ -110,89 +109,79 @@ class InteractionLockRepositoryTest {
             coroutineScopes = coroutineTestScope.createMock(),
             lockGenerator = lockGenerator
         )
-        counters = mutableMapOf<Type, Int>().withDefault { 1 }
-        listOf(Type.ScreenInteraction, Type.Navigation).forEach {
+        counters = mutableMapOf<InteractionLockType, Int>().withDefault { 1 }
+        listOf(InteractionLockType.Screen, InteractionLockType.Navigation).forEach {
             stubLock(it)
         }
     }
 
     @Test
     fun `lock type are different`() = coroutineTestScope.run {
-        assertEquals(2, listOf(Type.ScreenInteraction, Type.Navigation).distinct().size)
-        assertEquals(2, listOf(Type.ScreenInteraction, Type.Navigation).map { it.toString() }.distinct().size)
+        assertEquals(2, listOf(InteractionLockType.Screen, InteractionLockType.Navigation).distinct().size)
+        assertEquals(2, listOf(InteractionLockType.Screen, InteractionLockType.Navigation).map { it.toString() }.distinct().size)
     }
 
     @Test
-    fun `acquire empty list throws`() = coroutineTestScope.run {
-        assertFailsWith<DomainException.Default> {
-            sut.acquire(emptyList())
-        }
-    }
-
-    @Test
-    fun `tryAcquire with empty list returns null`() = coroutineTestScope.run {
-        assertFailsWith<DomainException.Default> {
-            sut.tryAcquire(emptyList())
-        }
+    fun `tryAcquire with empty list returns empty list`() = coroutineTestScope.run {
+        val result = sut.tryAcquire(emptyList())
+        assertEquals(emptyList(), result)
     }
 
     @Test
     fun `acquire single lock`() = coroutineTestScope.run {
-        val lock = sut.acquire(Type.ScreenInteraction)
+        val lock = sut.acquire(InteractionLockType.Screen)
 
-        assertEquals(Type.ScreenInteraction, lock.type)
-        assertEquals(idKey(Type.ScreenInteraction, 1), lock.value)
-        assertTrue(lock.canBeRelease)
+        assertEquals(InteractionLockType.Screen, lock.type)
+        assertEquals(idKey(InteractionLockType.Screen, 1), lock.id)
+        assertTrue(lock.canBeReleased)
 
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
     }
 
     @Test
     fun `acquire and release single lock`() = coroutineTestScope.run {
-        val lock = sut.acquire(Type.ScreenInteraction)
+        val lock = sut.acquire(InteractionLockType.Screen)
         sut.release(lock)
 
-        val result = sut.tryAcquire(Type.ScreenInteraction)
+        val result = sut.tryAcquire(InteractionLockType.Screen)
         assertNotNull(result)
 
 //        verify(VerifyMode.exactly(2)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
     }
 
     @Test
     fun `acquire multiple lock`() = coroutineTestScope.run {
-        val expectedTypes = listOf(Type.ScreenInteraction, Type.Navigation)
+        val expectedTypes = listOf(InteractionLockType.Screen, InteractionLockType.Navigation)
 
-        val lock = sut.acquire(expectedTypes)
+        val locks = sut.acquire(expectedTypes)
 
-        assertTrue(lock is Lock.ElementArray)
-        assertEquals(expectedTypes, lock.locks.map { it.type })
-        lock.locks.forEach {
+        assertEquals(expectedTypes, locks.map { it.type })
+        locks.forEach {
             when (it.type) {
-                Type.ScreenInteraction -> assertEquals(it.value, idKey(Type.ScreenInteraction, 1))
-                Type.Navigation -> assertEquals(it.value, idKey(Type.Navigation, 1))
+                InteractionLockType.Screen -> assertEquals(it.id, idKey(InteractionLockType.Screen, 1))
+                InteractionLockType.Navigation -> assertEquals(it.id, idKey(InteractionLockType.Navigation, 1))
             }
         }
-
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.Navigation)
+//            lockGenerator.generate(InteractionLockType.Navigation)
 //        }
     }
 
     @Test
     fun `tryAcquire single lock returns null when lock already held`() = coroutineTestScope.run {
-        sut.acquire(Type.Navigation)
+        sut.acquire(InteractionLockType.Navigation)
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.Navigation)
+//            lockGenerator.generate(InteractionLockType.Navigation)
 //        }
 
-        val failedAttempt = sut.tryAcquire(Type.Navigation)
+        val failedAttempt = sut.tryAcquire(InteractionLockType.Navigation)
         assertNull(failedAttempt)
 
 //        verify(VerifyMode.exactly(0)) {
@@ -202,12 +191,12 @@ class InteractionLockRepositoryTest {
 
     @Test
     fun `tryAcquire multiple lock returns null when at least one lock already held`() = coroutineTestScope.run {
-        sut.acquire(Type.Navigation)
+        sut.acquire(InteractionLockType.Navigation)
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.Navigation)
+//            lockGenerator.generate(InteractionLockType.Navigation)
 //        }
 
-        val failedAttempt = sut.tryAcquire(listOf(Type.ScreenInteraction, Type.Navigation))
+        val failedAttempt = sut.tryAcquire(listOf(InteractionLockType.Screen, InteractionLockType.Navigation))
         assertNull(failedAttempt)
 
 //        verify(VerifyMode.exactly(0)) {
@@ -217,19 +206,19 @@ class InteractionLockRepositoryTest {
 
     @Test
     fun `multi-lock acquire is atomic`() = coroutineTestScope.run {
-        val combinedLock = sut.acquire(listOf(Type.ScreenInteraction, Type.Navigation))
+        val combinedLock = sut.acquire(listOf(InteractionLockType.Screen, InteractionLockType.Navigation))
         assertNotNull(combinedLock)
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.Navigation)
+//            lockGenerator.generate(InteractionLockType.Navigation)
 //        }
 
-        val attemptScreen = sut.tryAcquire(Type.ScreenInteraction)
+        val attemptScreen = sut.tryAcquire(InteractionLockType.Screen)
         assertNull(attemptScreen)
 
-        val attemptNavigation = sut.tryAcquire(Type.Navigation)
+        val attemptNavigation = sut.tryAcquire(InteractionLockType.Navigation)
         assertNull(attemptNavigation)
 
 //        verify(VerifyMode.exactly(0)) {
@@ -239,10 +228,10 @@ class InteractionLockRepositoryTest {
 
     @Test
     fun `second waiter suspends until first releases`() = coroutineTestScope.run {
-        val firstLock = sut.acquire(Type.ScreenInteraction)
-
+        // TODO
+        val firstLock = sut.acquire(InteractionLockType.Screen)
         val secondLockDeferred = async {
-            sut.acquire(Type.ScreenInteraction)
+            sut.acquire(InteractionLockType.Screen)
         }
 
         delay(5)
@@ -250,11 +239,12 @@ class InteractionLockRepositoryTest {
 
         sut.release(firstLock)
         val secondLock = secondLockDeferred.await()
-        assertEquals(Type.ScreenInteraction, secondLock.type)
-        assertEquals(idKey(Type.ScreenInteraction, 2), secondLock.value)
+
+        assertEquals(InteractionLockType.Screen, secondLock.type)
+        assertEquals(idKey(InteractionLockType.Screen, 2), secondLock.id)
 
 //        verify(VerifyMode.exactly(2)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
     }
 
@@ -266,16 +256,16 @@ class InteractionLockRepositoryTest {
         )
         val completionOrder = mutableListOf<String>()
 
-        val initialLock = sut.acquire(Type.ScreenInteraction)
+        val initialLock = sut.acquire(InteractionLockType.Screen)
 
         val firstLockDeferred = async {
-            sut.acquire(Type.ScreenInteraction).also {
+            sut.acquire(InteractionLockType.Screen).also {
                 completionOrder += "first_waiter_completed"
             }
         }
 
         val secondLockDeferred = async {
-            sut.acquire(Type.ScreenInteraction).also {
+            sut.acquire(InteractionLockType.Screen).also {
                 completionOrder += "second_waiter_completed"
             }
         }
@@ -291,22 +281,22 @@ class InteractionLockRepositoryTest {
         assertEquals(expectedOrder, completionOrder)
 
 //        verify(VerifyMode.exactly(3)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
     }
 
     @Test
     fun `selective wake-up only releases eligible waiter`() = coroutineTestScope.run {
-        val expectedTypes = listOf(Type.ScreenInteraction, Type.Navigation)
+        val expectedTypes = listOf(InteractionLockType.Screen, InteractionLockType.Navigation)
 
-        val heldScreenLock = sut.acquire(Type.ScreenInteraction)
+        val heldScreenLock = sut.acquire(InteractionLockType.Screen)
 
         val waiterA = async {
-            sut.acquire(listOf(Type.ScreenInteraction, Type.Navigation))
+            sut.acquire(listOf(InteractionLockType.Screen, InteractionLockType.Navigation))
         }
 
         val heldNavigationLockDeferred = async {
-            sut.acquire(Type.Navigation)
+            sut.acquire(InteractionLockType.Navigation)
         }
 
         delay(5)
@@ -323,39 +313,38 @@ class InteractionLockRepositoryTest {
         // ScreenLock and NavigationLock has been taken by waiterA
         assertFalse(waiterA.isActive)
 
-        val lock = waiterA.await()
-        assertTrue(lock is Lock.ElementArray)
-        assertEquals(lock.locks.map { it.type }, expectedTypes)
-        lock.locks.forEach {
+        val locks = waiterA.await()
+        assertEquals(locks.map { it.type }, expectedTypes)
+        locks.forEach {
             when (it.type) {
-                Type.ScreenInteraction -> assertEquals(it.value, idKey(Type.ScreenInteraction, 2))
-                Type.Navigation -> assertEquals(it.value, idKey(Type.Navigation, 2))
+                InteractionLockType.Screen -> assertEquals(it.id, idKey(InteractionLockType.Screen, 2))
+                InteractionLockType.Navigation -> assertEquals(it.id, idKey(InteractionLockType.Navigation, 2))
             }
         }
 
 //        verify(VerifyMode.exactly(2)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
 //        verify(VerifyMode.exactly(2)) {
-//            lockGenerator.generate(Type.Navigation)
+//            lockGenerator.generate(InteractionLockType.Navigation)
 //        }
     }
 
     @Test
     fun `release ignores locks that cannot be released`() = coroutineTestScope.run {
-        val unreleasable = Lock.Element(
+        val unreleasable = InteractionLock(
             owner = "test",
-            type = Type.ScreenInteraction,
-            value = idKey(Type.ScreenInteraction, counters.getValue(Type.ScreenInteraction)),
-            canBeRelease = false
+            id = idKey(InteractionLockType.Screen, counters.getValue(InteractionLockType.Screen)),
+            type = InteractionLockType.Screen,
+            canBeReleased = false
         )
-        every { lockGenerator.generate(generateInput(Type.ScreenInteraction)) } returns unreleasable
+        every { lockGenerator.generate(generateInput(InteractionLockType.Screen)) } returns unreleasable
 
-        val acquired = sut.acquire(Type.ScreenInteraction)
+        val acquired = sut.acquire(InteractionLockType.Screen)
         assertSame(unreleasable, acquired)
 
         val waiter = async {
-            sut.acquire(Type.ScreenInteraction)
+            sut.acquire(InteractionLockType.Screen)
         }
 
         delay(5)
@@ -368,16 +357,16 @@ class InteractionLockRepositoryTest {
         waiter.cancel()
 
 //        verify(VerifyMode.exactly(1)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
     }
 
     @Test
     fun `release wakes only one waiter even when two are eligible`() = coroutineTestScope.run {
-        val lock = sut.acquire(Type.ScreenInteraction)
+        val lock = sut.acquire(InteractionLockType.Screen)
 
-        val waiter1 = async { sut.acquire(Type.ScreenInteraction) }
-        val waiter2 = async { sut.acquire(Type.ScreenInteraction) }
+        val waiter1 = async { sut.acquire(InteractionLockType.Screen) }
+        val waiter2 = async { sut.acquire(InteractionLockType.Screen) }
 
         delay(5)
         assertTrue(waiter1.isActive)
@@ -392,20 +381,20 @@ class InteractionLockRepositoryTest {
         waiter2.cancel()
 
 //        verify(VerifyMode.exactly(2)) {
-//            lockGenerator.generate(Type.ScreenInteraction)
+//            lockGenerator.generate(InteractionLockType.Screen)
 //        }
     }
 
     @Test
     fun `isValid returns true when lock is current`() = coroutineTestScope.run {
-        val lock = sut.acquire(Type.ScreenInteraction)
+        val lock = sut.acquire(InteractionLockType.Screen)
         val result = sut.isValid(lock)
         assertTrue(result)
     }
 
     @Test
     fun `isValid returns false after release`() = coroutineTestScope.run {
-        val lock = sut.acquire(Type.ScreenInteraction)
+        val lock = sut.acquire(InteractionLockType.Screen)
         sut.release(lock)
         val result = sut.isValid(lock)
         assertFalse(result)
@@ -413,11 +402,11 @@ class InteractionLockRepositoryTest {
 
     @Test
     fun `isValid returns false for different instance with same type but different value`() = coroutineTestScope.run {
-        val original = sut.acquire(Type.ScreenInteraction)
-        val fake = Lock.Element(
+        val original = sut.acquire(InteractionLockType.Screen)
+        val fake = InteractionLock(
             owner = "test",
-            type = Type.ScreenInteraction,
-            value = "fake"
+            id = "fake",
+            type = InteractionLockType.Screen,
         )
         val result = sut.isValid(fake)
         assertFalse(result)
@@ -426,9 +415,9 @@ class InteractionLockRepositoryTest {
 
     @Test
     fun `isValid returns false when another lock replaced it`() = coroutineTestScope.run {
-        val first = sut.acquire(Type.ScreenInteraction)
+        val first = sut.acquire(InteractionLockType.Screen)
         sut.release(first)
-        val second = sut.acquire(Type.ScreenInteraction)
+        val second = sut.acquire(InteractionLockType.Screen)
         val firstResult = sut.isValid(first)
         val secondResult = sut.isValid(second)
         assertFalse(firstResult)
@@ -437,12 +426,12 @@ class InteractionLockRepositoryTest {
 
     @Test
     fun `isValid returns false for lock with different type`() = coroutineTestScope.run {
-        val validLock = sut.acquire(Type.Navigation)
+        val validLock = sut.acquire(InteractionLockType.Navigation)
 
-        val fakeLock = Lock.Element(
+        val fakeLock = InteractionLock(
             owner = "test",
-            type = Type.ScreenInteraction,
-            value = validLock.value
+            id = validLock.id,
+            type = InteractionLockType.Screen,
         )
 
         assertTrue(sut.isValid(validLock))

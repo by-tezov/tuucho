@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.domain.business.model.action
 
 import com.tezov.tuucho.core.domain.business.protocol.ActionProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 
 object FormAction {
     const val command = "form"
-    private val locks = (NavigateAction.Url.locks + NavigateAction.LocalDestination.locks).distinct()
 
     object Send : ActionProtocol {
-        override val locks get() = FormAction.locks
+        override val lockable get() = NavigateAction.Url.lockable + NavigateAction.LocalDestination.lockable
 
         override val command get() = FormAction.command
 
@@ -20,7 +20,7 @@ object FormAction {
     }
 
     object Update : ActionProtocol {
-        override val locks get() = FormAction.locks
+        override val lockable get() = InteractionLockable.Empty
 
         override val command get() = FormAction.command
 

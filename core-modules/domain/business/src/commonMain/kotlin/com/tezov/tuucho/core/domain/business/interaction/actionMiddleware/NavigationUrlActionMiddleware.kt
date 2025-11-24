@@ -17,7 +17,7 @@ internal class NavigationUrlActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url,
+        route: NavigationRoute.Url?,
         action: ActionModelDomain,
     ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.Url.authority
 
@@ -29,7 +29,7 @@ internal class NavigationUrlActionMiddleware(
             useCaseExecutor.await(
                 useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(
-                    url = url
+                    url = url,
                 )
             )
         }

@@ -45,7 +45,6 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                interactionLockRepository = get(),
                 navigationMiddlewares = getAllOrdered()
             )
         }
@@ -61,7 +60,6 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
-                interactionLockRepository = get(),
                 navigationMiddlewares = getAllOrdered()
             )
         }
