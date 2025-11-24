@@ -1480,7 +1480,7 @@ final class com.tezov.tuucho.core.data.repository.parser.assembler/DimensionAsse
 final class com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent { // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler.<init>|<init>(){}[0]
 
-    final suspend fun process(kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler.process|process(kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol){}[0]
+    final suspend fun process(kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler.process|process(kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.assembler/OptionAssembler : com.tezov.tuucho.core.data.repository.parser.assembler._system/AbstractAssembler { // com.tezov.tuucho.core.data.repository.parser.assembler/OptionAssembler|null[0]
@@ -2218,10 +2218,10 @@ abstract interface com.tezov.tuucho.core.domain.business.interaction.lock/Intera
     abstract fun process(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.process|process(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Context){}[0]
 
     final enum class Event : kotlin/Enum<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event> { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event|null[0]
-        enum entry Acquire // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.Acquire|null[0]
-        enum entry CanNotBeRelease // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.CanNotBeRelease|null[0]
-        enum entry Release // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.Release|null[0]
-        enum entry TryAcquire // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.TryAcquire|null[0]
+        enum entry AcquireFromTry // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.AcquireFromTry|null[0]
+        enum entry Acquired // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.Acquired|null[0]
+        enum entry CanNotBeReleased // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.CanNotBeReleased|null[0]
+        enum entry Released // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.Released|null[0]
         enum entry TryAcquireAgain // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.TryAcquireAgain|null[0]
         enum entry WaitToAcquire // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.WaitToAcquire|null[0]
 
@@ -2233,19 +2233,19 @@ abstract interface com.tezov.tuucho.core.domain.business.interaction.lock/Intera
     }
 
     final class Context { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event, kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event;kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type>){}[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event, kotlin.collections/List<kotlin/String>, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
 
         final val event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.event|{}event[0]
             final fun <get-event>(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.event.<get-event>|<get-event>(){}[0]
         final val lockTypes // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.lockTypes|{}lockTypes[0]
-            final fun <get-lockTypes>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.lockTypes.<get-lockTypes>|<get-lockTypes>(){}[0]
+            final fun <get-lockTypes>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.lockTypes.<get-lockTypes>|<get-lockTypes>(){}[0]
         final val requester // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.requester|{}requester[0]
-            final fun <get-requester>(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.requester.<get-requester>|<get-requester>(){}[0]
+            final fun <get-requester>(): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.requester.<get-requester>|<get-requester>(){}[0]
 
         final fun component1(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component1|component1(){}[0]
-        final fun component2(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component2|component2(){}[0]
-        final fun component3(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component3|component3(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event = ..., kotlin/String = ..., kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> = ...): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.copy|copy(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event;kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type>){}[0]
+        final fun component2(): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component2|component2(){}[0]
+        final fun component3(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component3|component3(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> = ...): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.copy|copy(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.toString|toString(){}[0]
@@ -2265,16 +2265,19 @@ abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddle
     abstract val priority // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority|{}priority[0]
         abstract fun <get-priority>(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority.<get-priority>|<get-priority>(){}[0]
 
-    abstract fun accept(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, com.tezov.tuucho.core.domain.business.model/ActionModelDomain): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.accept|accept(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;com.tezov.tuucho.core.domain.business.model.ActionModelDomain){}[0]
+    abstract fun accept(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.accept|accept(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain){}[0]
 
     final class Context { // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement) // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input.JsonElement){}[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement) // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input.JsonElement){}[0]
 
         final val input // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.input|{}input[0]
             final fun <get-input>(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.input.<get-input>|<get-input>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.lockable.<get-lockable>|<get-lockable>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.component1|component1(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement = ...): com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.copy|copy(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input.JsonElement){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.component1|component1(){}[0]
+        final fun component2(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable = ..., com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement = ...): com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input.JsonElement){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.toString|toString(){}[0]
@@ -2290,23 +2293,27 @@ abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddle
     }
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol|null[0]
-    abstract suspend fun acquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.acquire|acquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
-    abstract suspend fun acquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type>): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.acquire|acquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type>){}[0]
-    abstract suspend fun isValid(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.isValid|isValid(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock.Element){}[0]
-    abstract suspend fun release(kotlin/String, com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.release|release(kotlin.String;com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock){}[0]
-    abstract suspend fun tryAcquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.tryAcquire|tryAcquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
-    abstract suspend fun tryAcquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type>): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.tryAcquire|tryAcquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type>){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol|null[0]
+    abstract interface Registry { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry|null[0]
+        abstract fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
+        abstract fun register(com.tezov.tuucho.core.domain.business.protocol/ActionProtocol) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionProtocol){}[0]
+    }
 
-    final enum class Type : kotlin/Enum<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type|null[0]
-        enum entry Navigation // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type.Navigation|null[0]
-        enum entry ScreenInteraction // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type.ScreenInteraction|null[0]
+    abstract interface Resolver { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver|null[0]
+        abstract suspend fun acquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.acquire|acquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
+        abstract suspend fun release(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.release|release(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
+        abstract suspend fun tryAcquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.tryAcquire|tryAcquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
+    }
 
-        final val entries // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type.entries|#static{}entries[0]
-            final fun <get-entries>(): kotlin.enums/EnumEntries<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type.entries.<get-entries>|<get-entries>#static(){}[0]
-
-        final fun valueOf(kotlin/String): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type.valueOf|valueOf#static(kotlin.String){}[0]
-        final fun values(): kotlin/Array<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type.values|values#static(){}[0]
+    abstract interface Stack { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack|null[0]
+        abstract suspend fun acquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.acquire|acquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType){}[0]
+        abstract suspend fun acquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.acquire|acquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
+        abstract suspend fun isAllValid(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.isAllValid|isAllValid(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
+        abstract suspend fun isValid(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.isValid|isValid(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock){}[0]
+        abstract suspend fun release(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.release|release(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock){}[0]
+        abstract suspend fun release(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.release|release(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
+        abstract suspend fun tryAcquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.tryAcquire|tryAcquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType){}[0]
+        abstract suspend fun tryAcquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.tryAcquire|tryAcquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
     }
 }
 
@@ -2388,8 +2395,8 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionProtocol
         abstract fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.authority.<get-authority>|<get-authority>(){}[0]
     abstract val command // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.command|{}command[0]
         abstract fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.command.<get-command>|<get-command>(){}[0]
-    abstract val locks // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.locks|{}locks[0]
-        abstract fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.locks.<get-locks>|<get-locks>(){}[0]
+    abstract val lockable // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.lockable|{}lockable[0]
+        abstract fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.lockable.<get-lockable>|<get-lockable>(){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol { // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol|null[0]
@@ -2452,6 +2459,19 @@ abstract class <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.validator.
     open fun getErrorMessage(com.tezov.tuucho.core.domain.business.model/LanguageModelDomain): kotlin/String // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.getErrorMessage|getErrorMessage(com.tezov.tuucho.core.domain.business.model.LanguageModelDomain){}[0]
 }
 
+abstract class com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType|null[0]
+    constructor <init>(kotlin/String) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType.<init>|<init>(kotlin.String){}[0]
+
+    final val name // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType.name|{}name[0]
+        final fun <get-name>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType.name.<get-name>|<get-name>(){}[0]
+
+    open fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType.toString|toString(){}[0]
+
+    final object Navigation : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType.Navigation|null[0]
+
+    final object Screen : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType.Screen|null[0]
+}
+
 final class <#A: kotlin/Any?> com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey { // com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey.MapOperator, kotlin.reflect/KClass<*>, kotlin/String? = ...) // com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.DelegateSchemaKey.MapOperator;kotlin.reflect.KClass<*>;kotlin.String?){}[0]
 
@@ -2468,53 +2488,11 @@ final class com.tezov.tuucho.core.domain.business._system/IdGenerator : com.tezo
     final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business._system/IdGenerator.generate|generate(){}[0]
 }
 
-final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input, com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element> { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<kotlin/Unit, kotlin/String>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol<kotlin.Unit,kotlin.String>){}[0]
+final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(){}[0]
 
-    final fun generate(): kotlin/Nothing // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.generate|generate(){}[0]
-    final fun generate(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.generate|generate(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Input){}[0]
-
-    final class Input { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input|null[0]
-        constructor <init>(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.<init>|<init>(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
-
-        final val owner // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.owner|{}owner[0]
-            final fun <get-owner>(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.owner.<get-owner>|<get-owner>(){}[0]
-        final val type // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.type|{}type[0]
-            final fun <get-type>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.type.<get-type>|<get-type>(){}[0]
-
-        final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.component1|component1(){}[0]
-        final fun component2(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.component2|component2(){}[0]
-        final fun copy(kotlin/String = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type = ...): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.copy|copy(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Input.toString|toString(){}[0]
-    }
-
-    sealed class Lock { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock|null[0]
-        final val owner // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.owner|{}owner[0]
-            final fun <get-owner>(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.owner.<get-owner>|<get-owner>(){}[0]
-
-        final class Element : com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element|null[0]
-            constructor <init>(kotlin/String, kotlin/Boolean = ..., kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.<init>|<init>(kotlin.String;kotlin.Boolean;kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type){}[0]
-
-            final val canBeRelease // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.canBeRelease|{}canBeRelease[0]
-                final fun <get-canBeRelease>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.canBeRelease.<get-canBeRelease>|<get-canBeRelease>(){}[0]
-            final val type // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.type|{}type[0]
-                final fun <get-type>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.type.<get-type>|<get-type>(){}[0]
-            final val value // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.value|{}value[0]
-                final fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.value.<get-value>|<get-value>(){}[0]
-
-            final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.equals|equals(kotlin.Any?){}[0]
-            final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element.hashCode|hashCode(){}[0]
-        }
-
-        final class ElementArray : com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray|null[0]
-            constructor <init>(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.<init>|<init>(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock.Element>){}[0]
-
-            final val locks // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.locks|{}locks[0]
-                final fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.ElementArray.locks.<get-locks>|<get-locks>(){}[0]
-        }
-    }
+    final fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
+    final fun register(com.tezov.tuucho.core.domain.business.protocol/ActionProtocol) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionProtocol){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper : com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol { // com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper|null[0]
@@ -2629,6 +2607,29 @@ final class com.tezov.tuucho.core.domain.business.model/ActionModelDomain { // c
     }
 }
 
+final class com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock|null[0]
+    constructor <init>(kotlin/String, kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType, kotlin/Boolean = ...) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.<init>|<init>(kotlin.String;kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType;kotlin.Boolean){}[0]
+
+    final val canBeReleased // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.canBeReleased|{}canBeReleased[0]
+        final fun <get-canBeReleased>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.canBeReleased.<get-canBeReleased>|<get-canBeReleased>(){}[0]
+    final val id // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.id|{}id[0]
+        final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.id.<get-id>|<get-id>(){}[0]
+    final val owner // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.owner|{}owner[0]
+        final fun <get-owner>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.owner.<get-owner>|<get-owner>(){}[0]
+    final val type // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.type|{}type[0]
+        final fun <get-type>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.type.<get-type>|<get-type>(){}[0]
+
+    final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.component2|component2(){}[0]
+    final fun component3(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.component4|component4(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType = ..., kotlin/Boolean = ...): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.copy|copy(kotlin.String;kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.equals|equals(kotlin.Any?){}[0]
+    final fun freeze(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.freeze|freeze(){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.toString|toString(){}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
 
@@ -2651,49 +2652,29 @@ final class com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // c
     }
 }
 
-final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Sync<com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back>){}[0]
+final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Sync<kotlin/Unit, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back>){}[0]
 
-    final fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase.Input){}[0]
-
-    final class Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock.Element?){}[0]
-
-        final val lock // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.lock|{}lock[0]
-            final fun <get-lock>(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.lock.<get-lock>|<get-lock>(){}[0]
-
-        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.component1|component1(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock.Element?){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input.toString|toString(){}[0]
-    }
-
-    final object Companion // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Companion|null[0]
+    final fun invoke(kotlin/Unit) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.invoke|invoke(kotlin.Unit){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Sync<com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Retrieve, com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Retrieve;com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Retrieve, com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Retrieve;com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl>){}[0]
 
     final fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input){}[0]
 
     final class Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input|null[0]
-        constructor <init>(kotlin/String, com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.<init>|<init>(kotlin.String;com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock.Element?){}[0]
+        constructor <init>(kotlin/String) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.<init>|<init>(kotlin.String){}[0]
 
-        final val lock // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.lock|{}lock[0]
-            final fun <get-lock>(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.lock.<get-lock>|<get-lock>(){}[0]
         final val url // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.url|{}url[0]
             final fun <get-url>(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.url.<get-url>|<get-url>(){}[0]
 
         final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.component1|component1(){}[0]
-        final fun component2(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.component2|component2(){}[0]
-        final fun copy(kotlin/String = ..., com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockGenerator.Lock.Element? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.copy|copy(kotlin.String;com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock.Element?){}[0]
+        final fun copy(kotlin/String = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.copy|copy(kotlin.String){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input.toString|toString(){}[0]
     }
-
-    final object Companion // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Companion|null[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase|null[0]
@@ -2702,25 +2683,50 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessAct
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
 
     sealed class Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input|null[0]
-        final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route|{}route[0]
-            final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route.<get-route>|<get-route>(){}[0]
+        abstract val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable|{}lockable[0]
+            abstract fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable.<get-lockable>|<get-lockable>(){}[0]
+        abstract val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route|{}route[0]
+            abstract fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route.<get-route>|<get-route>(){}[0]
 
         final class ActionObject : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url?, kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?){}[0]
 
             final val actionObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.actionObject|{}actionObject[0]
                 final fun <get-actionObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.actionObject.<get-actionObject>|<get-actionObject>(){}[0]
+            final val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.lockable|{}lockable[0]
+                final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.lockable.<get-lockable>|<get-lockable>(){}[0]
+            final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.route|{}route[0]
+                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.route.<get-route>|<get-route>(){}[0]
+
+            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component1|component1(){}[0]
+            final fun component2(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component2|component2(){}[0]
+            final fun component3(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component3|component3(){}[0]
+            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? = ..., kotlinx.serialization.json/JsonObject = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.toString|toString(){}[0]
         }
 
         final class JsonElement : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, com.tezov.tuucho.core.domain.business.model/ActionModelDomain, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type>? = ..., kotlinx.serialization.json/JsonElement? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type>?;kotlinx.serialization.json.JsonElement?){}[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
 
             final val action // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.action|{}action[0]
                 final fun <get-action>(): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.action.<get-action>|<get-action>(){}[0]
             final val jsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.jsonElement|{}jsonElement[0]
                 final fun <get-jsonElement>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.jsonElement.<get-jsonElement>|<get-jsonElement>(){}[0]
-            final val locks // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.locks|{}locks[0]
-                final fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type>? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.locks.<get-locks>|<get-locks>(){}[0]
+            final val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.lockable|{}lockable[0]
+                final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.lockable.<get-lockable>|<get-lockable>(){}[0]
+            final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.route|{}route[0]
+                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.route.<get-route>|<get-route>(){}[0]
+
+            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component1|component1(){}[0]
+            final fun component2(): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component2|component2(){}[0]
+            final fun component3(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component3|component3(){}[0]
+            final fun component4(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component4|component4(){}[0]
+            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? = ..., com.tezov.tuucho.core.domain.business.model/ActionModelDomain = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.toString|toString(){}[0]
         }
     }
 
@@ -3336,12 +3342,72 @@ sealed class com.tezov.tuucho.core.domain.business.interaction.navigation/Naviga
 
     final object Back : com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute { // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back|null[0]
         final fun accept(kotlin/Any): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back.accept|accept(kotlin.Any){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back.toString|toString(){}[0]
     }
 
     final object Finish : com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute { // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Finish|null[0]
         final fun accept(kotlin/Any): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Finish.accept|accept(kotlin.Any){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Finish.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Finish.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Finish.toString|toString(){}[0]
+    }
+}
+
+sealed class com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable|null[0]
+    final fun freeze(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.freeze|freeze(){}[0]
+    final fun get(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.get|get(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType){}[0]
+    final fun getLocks(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.getLocks|getLocks(){}[0]
+    final fun getTypes(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.getTypes|getTypes(){}[0]
+    final fun plus(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.plus|plus(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
+
+    final class Composite : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable.Type;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable.Lock){}[0]
+
+        final val lock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.lock|{}lock[0]
+            final fun <get-lock>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.lock.<get-lock>|<get-lock>(){}[0]
+        final val type // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.type|{}type[0]
+            final fun <get-type>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.type.<get-type>|<get-type>(){}[0]
+
+        final fun component1(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.component1|component1(){}[0]
+        final fun component2(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock = ...): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable.Type;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable.Lock){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Composite.toString|toString(){}[0]
+    }
+
+    final class Lock : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock|null[0]
+        constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
+
+        final val value // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.value|{}value[0]
+            final fun <get-value>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.component1|component1(){}[0]
+        final fun copy(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock> = ...): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.copy|copy(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Lock.toString|toString(){}[0]
+    }
+
+    final class Type : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type|null[0]
+        constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
+
+        final val value // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.value|{}value[0]
+            final fun <get-value>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.component1|component1(){}[0]
+        final fun copy(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> = ...): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.copy|copy(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type.toString|toString(){}[0]
+    }
+
+    final object Empty : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty.toString|toString(){}[0]
     }
 }
 
@@ -5097,12 +5163,10 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeRespo
 final object com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware|null[0]
     abstract fun interface Back : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back|null[0]
         final class Context { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context|null[0]
-            constructor <init>(kotlin/String, kotlin/String?, com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input, kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>?) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.<init>|<init>(kotlin.String;kotlin.String?;com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase.Input;kotlin.Function3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
+            constructor <init>(kotlin/String, kotlin/String?, kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>?) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.<init>|<init>(kotlin.String;kotlin.String?;kotlin.Function3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
 
             final val currentUrl // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.currentUrl|{}currentUrl[0]
                 final fun <get-currentUrl>(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.currentUrl.<get-currentUrl>|<get-currentUrl>(){}[0]
-            final val input // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.input|{}input[0]
-                final fun <get-input>(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.input.<get-input>|<get-input>(){}[0]
             final val nextUrl // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.nextUrl|{}nextUrl[0]
                 final fun <get-nextUrl>(): kotlin/String? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.nextUrl.<get-nextUrl>|<get-nextUrl>(){}[0]
             final val onShadowerException // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.onShadowerException|{}onShadowerException[0]
@@ -5110,9 +5174,8 @@ final object com.tezov.tuucho.core.domain.business.middleware/NavigationMiddlewa
 
             final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component1|component1(){}[0]
             final fun component2(): kotlin/String? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component2|component2(){}[0]
-            final fun component3(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component3|component3(){}[0]
-            final fun component4(): kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component4|component4(){}[0]
-            final fun copy(kotlin/String = ..., kotlin/String? = ..., com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.Input = ..., kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? = ...): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.copy|copy(kotlin.String;kotlin.String?;com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase.Input;kotlin.Function3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
+            final fun component3(): kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component3|component3(){}[0]
+            final fun copy(kotlin/String = ..., kotlin/String? = ..., kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? = ...): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.copy|copy(kotlin.String;kotlin.String?;kotlin.Function3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.toString|toString(){}[0]
@@ -5150,8 +5213,8 @@ final object com.tezov.tuucho.core.domain.business.model.action/FormAction { // 
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.authority.<get-authority>|<get-authority>(){}[0]
         final val command // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.command|{}command[0]
             final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.command.<get-command>|<get-command>(){}[0]
-        final val locks // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.locks|{}locks[0]
-            final fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.locks.<get-locks>|<get-locks>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.lockable.<get-lockable>|<get-lockable>(){}[0]
 
         final object ActionLabel { // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.ActionLabel|null[0]
             final const val denied // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.ActionLabel.denied|{}denied[0]
@@ -5166,8 +5229,8 @@ final object com.tezov.tuucho.core.domain.business.model.action/FormAction { // 
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.authority.<get-authority>|<get-authority>(){}[0]
         final val command // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.command|{}command[0]
             final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.command.<get-command>|<get-command>(){}[0]
-        final val locks // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.locks|{}locks[0]
-            final fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.locks.<get-locks>|<get-locks>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.lockable.<get-lockable>|<get-lockable>(){}[0]
 
         final object Target { // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.Target|null[0]
             final const val error // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.Target.error|{}error[0]
@@ -5185,8 +5248,8 @@ final object com.tezov.tuucho.core.domain.business.model.action/NavigateAction {
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.authority.<get-authority>|<get-authority>(){}[0]
         final val command // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.command|{}command[0]
             final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.command.<get-command>|<get-command>(){}[0]
-        final val locks // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.locks|{}locks[0]
-            final fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.locks.<get-locks>|<get-locks>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.lockable.<get-lockable>|<get-lockable>(){}[0]
 
         final object Target { // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.Target|null[0]
             final const val back // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.Target.back|{}back[0]
@@ -5201,8 +5264,8 @@ final object com.tezov.tuucho.core.domain.business.model.action/NavigateAction {
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.authority.<get-authority>|<get-authority>(){}[0]
         final val command // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.command|{}command[0]
             final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.command.<get-command>|<get-command>(){}[0]
-        final val locks // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.locks|{}locks[0]
-            final fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.locks.<get-locks>|<get-locks>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.lockable.<get-lockable>|<get-lockable>(){}[0]
     }
 }
 
@@ -5215,8 +5278,8 @@ final object com.tezov.tuucho.core.domain.business.model.action/StoreAction { //
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.authority.<get-authority>|<get-authority>(){}[0]
         final val command // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.command|{}command[0]
             final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.command.<get-command>|<get-command>(){}[0]
-        final val locks // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.locks|{}locks[0]
-            final fun <get-locks>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockRepositoryProtocol.Type> // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.locks.<get-locks>|<get-locks>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.lockable.<get-lockable>|<get-lockable>(){}[0]
 
         final object Target { // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.Target|null[0]
             final const val remove // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.Target.remove|{}remove[0]
@@ -5423,77 +5486,41 @@ public final class com/tezov/tuucho/core/domain/business/exception/DomainExcepti
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol;)V
-	public synthetic fun generate ()Ljava/lang/Object;
-	public fun generate ()Ljava/lang/Void;
-	public fun generate (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
-	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
-	public fun getKoin ()Lorg/koin/core/Koin;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input {
-	public fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
-	public final fun copy (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Input;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getOwner ()Ljava/lang/String;
-	public final fun getType ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock {
-	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getOwner ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element : com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock {
-	public fun <init> (Ljava/lang/String;ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;)V
-	public synthetic fun <init> (Ljava/lang/String;ZLjava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCanBeRelease ()Z
-	public final fun getType ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
-	public final fun getValue ()Ljava/lang/String;
-	public fun hashCode ()I
-}
-
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$ElementArray : com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock {
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public final fun getLocks ()Ljava/util/List;
-}
-
 public abstract interface class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor {
 	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/lang/String;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public final fun component2 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/List;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/lang/String;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEvent ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
 	public final fun getLockTypes ()Ljava/util/List;
-	public final fun getRequester ()Ljava/lang/String;
+	public final fun getRequester ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event : java/lang/Enum {
-	public static final field Acquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field CanNotBeRelease Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field Release Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field TryAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field AcquireFromTry Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field Acquired Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field CanNotBeReleased Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static final field Released Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
 	public static final field TryAcquireAgain Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
 	public static final field WaitToAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
 	public static fun values ()[Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+}
+
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockRegistry : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {
+	public fun <init> ()V
+	public fun lockTypeFor (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public fun register (Lcom/tezov/tuucho/core/domain/business/protocol/ActionProtocol;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationOption {
@@ -5542,12 +5569,16 @@ public abstract class com/tezov/tuucho/core/domain/business/interaction/navigati
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Back : com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Back;
 	public fun accept (Ljava/lang/Object;)Z
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Finish : com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Finish;
 	public fun accept (Ljava/lang/Object;)Z
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -7108,12 +7139,14 @@ public abstract interface class com/tezov/tuucho/core/domain/business/middleware
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;)Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;)Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
+	public final fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -7133,16 +7166,14 @@ public abstract interface class com/tezov/tuucho/core/domain/business/middleware
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;Lkotlin/jvm/functions/Function3;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;
-	public final fun component4 ()Lkotlin/jvm/functions/Function3;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;Lkotlin/jvm/functions/Function3;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
+	public final fun component3 ()Lkotlin/jvm/functions/Function3;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrentUrl ()Ljava/lang/String;
-	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;
 	public final fun getNextUrl ()Ljava/lang/String;
 	public final fun getOnShadowerException ()Lkotlin/jvm/functions/Function3;
 	public fun hashCode ()I
@@ -7244,7 +7275,7 @@ public final class com/tezov/tuucho/core/domain/business/model/action/FormAction
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/FormAction$Send;
 	public fun getAuthority ()Ljava/lang/String;
 	public fun getCommand ()Ljava/lang/String;
-	public fun getLocks ()Ljava/util/List;
+	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/FormAction$Send$ActionLabel {
@@ -7257,7 +7288,8 @@ public final class com/tezov/tuucho/core/domain/business/model/action/FormAction
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/FormAction$Update;
 	public fun getAuthority ()Ljava/lang/String;
 	public fun getCommand ()Ljava/lang/String;
-	public fun getLocks ()Ljava/util/List;
+	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Empty;
+	public synthetic fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/FormAction$Update$Target {
@@ -7274,7 +7306,8 @@ public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAc
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/NavigateAction$LocalDestination;
 	public fun getAuthority ()Ljava/lang/String;
 	public fun getCommand ()Ljava/lang/String;
-	public fun getLocks ()Ljava/util/List;
+	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;
+	public synthetic fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAction$LocalDestination$Target {
@@ -7287,7 +7320,8 @@ public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAc
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/NavigateAction$Url;
 	public fun getAuthority ()Ljava/lang/String;
 	public fun getCommand ()Ljava/lang/String;
-	public fun getLocks ()Ljava/util/List;
+	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;
+	public synthetic fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/StoreAction {
@@ -7299,7 +7333,8 @@ public final class com/tezov/tuucho/core/domain/business/model/action/StoreActio
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/StoreAction$KeyValue;
 	public fun getAuthority ()Ljava/lang/String;
 	public fun getCommand ()Ljava/lang/String;
-	public fun getLocks ()Ljava/util/List;
+	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Empty;
+	public synthetic fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/StoreAction$KeyValue$Target {
@@ -7315,7 +7350,7 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/A
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ActionProtocol {
 	public abstract fun getAuthority ()Ljava/lang/String;
 	public abstract fun getCommand ()Ljava/lang/String;
-	public abstract fun getLocks ()Ljava/util/List;
+	public abstract fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol {
@@ -7416,21 +7451,112 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/V
 	public abstract fun updateValidity (Ljava/lang/Object;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol {
-	public abstract fun acquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;
+	public final fun component4 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;Z)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock;Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;ZILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun freeze ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock;
+	public final fun getCanBeReleased ()Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getOwner ()Ljava/lang/String;
+	public final fun getType ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol {
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {
+	public abstract fun lockTypeFor (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public abstract fun register (Lcom/tezov/tuucho/core/domain/business/protocol/ActionProtocol;)V
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Resolver {
+	public abstract fun acquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun release (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun tryAcquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Stack {
+	public abstract fun acquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun acquire (Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun isValid (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun release (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun tryAcquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun isAllValid (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun isValid (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun release (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun release (Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun tryAcquire (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun tryAcquire (Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type : java/lang/Enum {
-	public static final field Navigation Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
-	public static final field ScreenInteraction Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
-	public static fun values ()[Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol$Type;
+public abstract class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getName ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType$Navigation : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType$Navigation;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType$Screen : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType$Screen;
+}
+
+public abstract class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable {
+	public final fun freeze ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public final fun get (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockType;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLock;
+	public final fun getLocks ()Ljava/util/List;
+	public final fun getTypes ()Ljava/util/List;
+	public final fun plus (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Composite : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;
+	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Composite;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Composite;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Composite;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLock ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;
+	public final fun getType ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Empty : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Empty;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable {
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Lock;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable {
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable$Type;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol {
@@ -7619,49 +7745,25 @@ public final class com/tezov/tuucho/core/domain/business/usecase/UseCaseExecutor
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Companion;
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
-	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;)V
 	public synthetic fun invoke (Ljava/lang/Object;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Companion {
-}
-
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input {
-	public fun <init> ()V
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;)V
-	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase$Input;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getLock ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
+	public fun invoke (Lkotlin/Unit;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Companion;
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockRepositoryProtocol;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;)V
 	public synthetic fun invoke (Ljava/lang/Object;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Companion {
-}
-
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input {
-	public fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;)V
-	public synthetic fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
-	public final fun copy (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
+	public final fun copy (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getLock ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockGenerator$Lock$Element;
 	public final fun getUrl ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -7674,21 +7776,42 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Pro
 }
 
 public abstract class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input {
-	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public abstract fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public abstract fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject : com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;)V
+	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public final fun component2 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActionObject ()Lkotlinx/serialization/json/JsonObject;
+	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement : com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Ljava/util/List;Lkotlinx/serialization/json/JsonElement;)V
-	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Ljava/util/List;Lkotlinx/serialization/json/JsonElement;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;)V
+	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public final fun component4 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAction ()Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;
 	public final fun getJsonElement ()Lkotlinx/serialization/json/JsonElement;
-	public final fun getLocks ()Ljava/util/List;
+	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Output {
@@ -8184,9 +8307,6 @@ public abstract interface class com/tezov/tuucho/core/domain/tool/_system/Refere
 public abstract interface class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Weak : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol {
 }
 
-public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoDelicateAPI : java/lang/annotation/Annotation {
-}
-
 public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoExperimentalAPI : java/lang/annotation/Annotation {
 }
 
@@ -8388,10 +8508,6 @@ public abstract interface class com/tezov/tuucho/core/domain/tool/protocol/Syste
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core.domain.tool>
-open annotation class com.tezov.tuucho.core.domain.tool.annotation/TuuchoDelicateAPI : kotlin/Annotation { // com.tezov.tuucho.core.domain.tool.annotation/TuuchoDelicateAPI|null[0]
-    constructor <init>() // com.tezov.tuucho.core.domain.tool.annotation/TuuchoDelicateAPI.<init>|<init>(){}[0]
-}
-
 open annotation class com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI : kotlin/Annotation { // com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI|null[0]
     constructor <init>() // com.tezov.tuucho.core.domain.tool.annotation/TuuchoExperimentalAPI.<init>|<init>(){}[0]
 }
@@ -11202,7 +11318,7 @@ public final class com/tezov/tuucho/core/presentation/ui/exception/UiException$D
 
 public final class com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngine : com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngineProtocol {
 	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/RegisterToScreenTransitionEventUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NotifyNavigationTransitionCompletedUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreensFromRoutesUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/RegisterToScreenTransitionEventUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NotifyNavigationTransitionCompletedUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreensFromRoutesUseCase;)V
 	public fun display (Landroidx/compose/runtime/Composer;I)V
 	public fun start (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -11780,7 +11896,7 @@ final class com.tezov.tuucho.core.presentation.ui.renderer.view/SpacerViewFactor
 }
 
 final class com.tezov.tuucho.core.presentation.ui.renderer/TuuchoEngine : com.tezov.tuucho.core.presentation.ui.renderer/TuuchoEngineProtocol { // com.tezov.tuucho.core.presentation.ui.renderer/TuuchoEngine|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RegisterToScreenTransitionEventUseCase, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NotifyNavigationTransitionCompletedUseCase, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreensFromRoutesUseCase, com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase) // com.tezov.tuucho.core.presentation.ui.renderer/TuuchoEngine.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase;com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RegisterToScreenTransitionEventUseCase, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NotifyNavigationTransitionCompletedUseCase, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreensFromRoutesUseCase) // com.tezov.tuucho.core.presentation.ui.renderer/TuuchoEngine.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase){}[0]
 
     final fun display(androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.ui.renderer/TuuchoEngine.display|display(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final suspend fun start(kotlin/String) // com.tezov.tuucho.core.presentation.ui.renderer/TuuchoEngine.start|start(kotlin.String){}[0]

@@ -414,7 +414,7 @@ final class com.tezov.tuucho.core.data.repository.parser.assembler/DimensionAsse
 final class com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent { // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler.<init>|<init>(){}[0]
 
-    final suspend fun process(kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler.process|process(kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol){}[0]
+    final suspend fun process(kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.data.repository.parser.assembler._system/FindAllRefOrNullFetcherProtocol): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.parser.assembler/MaterialAssembler.process|process(kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.data.repository.parser.assembler._system.FindAllRefOrNullFetcherProtocol){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.assembler/OptionAssembler : com.tezov.tuucho.core.data.repository.parser.assembler._system/AbstractAssembler { // com.tezov.tuucho.core.data.repository.parser.assembler/OptionAssembler|null[0]

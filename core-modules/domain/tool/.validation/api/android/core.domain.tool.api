@@ -24,9 +24,6 @@ public abstract interface class com/tezov/tuucho/core/domain/tool/_system/Refere
 public abstract interface class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Weak : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol {
 }
 
-public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoDelicateAPI : java/lang/annotation/Annotation {
-}
-
 public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoExperimentalAPI : java/lang/annotation/Annotation {
 }
 
