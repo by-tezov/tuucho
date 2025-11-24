@@ -7,7 +7,7 @@ sealed class NavigationRoute(
         other: Any
     ): Boolean
 
-    object Back : NavigationRoute("back") {
+    data object Back : NavigationRoute("back") {
         override fun accept(
             other: Any
         ): Boolean = other is Back
@@ -15,7 +15,7 @@ sealed class NavigationRoute(
         override fun toString(): String = id
     }
 
-    object Finish : NavigationRoute("finish") {
+    data object Finish : NavigationRoute("finish") {
         override fun accept(
             other: Any
         ): Boolean = other is Finish
@@ -30,5 +30,7 @@ sealed class NavigationRoute(
         override fun accept(
             other: Any
         ): Boolean = (other is Url && other.value == value) || (other is String && other == value)
+
+        override fun toString(): String = value
     }
 }

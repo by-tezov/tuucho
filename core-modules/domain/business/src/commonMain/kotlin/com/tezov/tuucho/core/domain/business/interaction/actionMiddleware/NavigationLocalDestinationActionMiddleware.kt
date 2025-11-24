@@ -18,7 +18,7 @@ internal class NavigationLocalDestinationActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url,
+        route: NavigationRoute.Url?,
         action: ActionModelDomain,
     ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.LocalDestination.authority
 
@@ -27,12 +27,16 @@ internal class NavigationLocalDestinationActionMiddleware(
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
     ) = with(context.input) {
         when (action.target) {
-            NavigateAction.LocalDestination.Target.back -> useCaseExecutor.await(
-                useCase = navigateBack,
-                input = NavigateBackUseCase.Input()
-            )
+            NavigateAction.LocalDestination.Target.back -> {
+                useCaseExecutor.await(
+                    useCase = navigateBack,
+                    input = Unit
+                )
+            }
 
-            else -> throw DomainException.Default("Unknown target ${action.target}")
+            else -> {
+                throw DomainException.Default("Unknown target ${action.target}")
+            }
         }
         next.invoke(context)
     }

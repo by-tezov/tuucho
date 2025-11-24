@@ -11,10 +11,12 @@ import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
+import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
@@ -44,10 +46,10 @@ interface TuuchoEngineProtocol {
 class TuuchoEngine(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
+    private val actionHandler: ProcessActionUseCase,
     private val registerToScreenTransitionEvent: RegisterToScreenTransitionEventUseCase,
     private val notifyNavigationTransitionCompleted: NotifyNavigationTransitionCompletedUseCase,
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
-    private val navigateToUrl: NavigateToUrlUseCase,
 ) : TuuchoEngineProtocol {
     private data class Group(
         val screens: List<ScreenProtocol>,
@@ -85,10 +87,15 @@ class TuuchoEngine(
             )
         )
         useCaseExecutor.async(
-            useCase = navigateToUrl,
-            input = NavigateToUrlUseCase.Input(
-                url = url
-            )
+            useCase = actionHandler,
+            input = ProcessActionUseCase.Input.JsonElement(
+                route = null,
+                action = ActionModelDomain.from(
+                    command = NavigateAction.command,
+                    authority = NavigateAction.Url.authority,
+                    target = url,
+                )
+            ),
         )
     }
 

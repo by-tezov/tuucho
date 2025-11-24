@@ -22,7 +22,7 @@ class MaterialAssembler : TuuchoKoinComponent {
     suspend fun process(
         materialObject: JsonObject,
         findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol,
-    ): JsonObject? {
+    ): JsonObject {
         val type = materialObject.withScope(TypeSchema::Scope).self
             ?: throw DataException.Default("Missing type in material $materialObject")
         return assemblers.firstOrNull { it.schemaType == type }?.let {

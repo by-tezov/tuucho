@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Lock
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator
 import com.tezov.tuucho.core.domain.business.interaction.navigation.selector.PageBreadCrumbNavigationDefinitionSelectorMatcher
@@ -18,8 +17,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Compani
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol.Type
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input
@@ -39,17 +36,11 @@ class NavigateToUrlUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
-    private val interactionLockRepository: InteractionLockRepositoryProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
 ) : UseCaseProtocol.Sync<Input, Unit>,
     TuuchoKoinComponent {
-    companion object {
-        private const val requester = "NavigateToUrlUseCase"
-    }
-
     data class Input(
-        val url: String,
-        val lock: Lock.Element? = null
+        val url: String
     )
 
     override fun invoke(
@@ -69,15 +60,7 @@ class NavigateToUrlUseCase(
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
         coroutineScopes.navigation.await {
             with(context.input) {
-                val lock = lock.tryAcquire() ?: return@await
-                val componentObject = runCatching {
-                    retrieveMaterialRepository.process(url)
-                }.onFailure {
-                    interactionLockRepository.release(
-                        requester = requester,
-                        lock = lock
-                    )
-                }.getOrThrow()
+                val componentObject = retrieveMaterialRepository.process(url)
                 val navigationSettingObject = componentObject
                     .onScope(ComponentSettingSchema.Root::Scope)
                     .navigation
@@ -107,24 +90,8 @@ class NavigateToUrlUseCase(
                         ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
                         ?.transition,
                 )
-                interactionLockRepository.release(
-                    requester = requester,
-                    lock = lock
-                )
             }
         }
-    }
-
-    private suspend fun Lock.Element?.tryAcquire(): Lock.Element? = if (this != null) {
-        if (type != Type.Navigation) {
-            throw DomainException.Default("expected lock of type Navigation but got $type")
-        }
-        takeIf { interactionLockRepository.isValid(it) }
-    } else {
-        interactionLockRepository.tryAcquire(
-            requester = requester,
-            type = Type.Navigation
-        )
     }
 
     private suspend fun JsonArray?.navigationResolver() = this

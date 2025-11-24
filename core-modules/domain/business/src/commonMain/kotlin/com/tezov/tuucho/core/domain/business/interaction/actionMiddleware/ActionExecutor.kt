@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
@@ -7,16 +8,17 @@ import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.tool.json.string
-import kotlinx.coroutines.CompletableDeferred
 
 internal class ActionExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val middlewares: List<ActionMiddleware>,
-    private val interactionLockRepository: InteractionLockRepositoryProtocol,
+    private val interactionLockResolver: InteractionLockProtocol.Resolver,
+    private val interactionLockRegistry: InteractionLockProtocol.Registry
 ) : ActionExecutorProtocol {
     override suspend fun process(
         input: Input
@@ -32,7 +34,7 @@ internal class ActionExecutor(
                                 Input.JsonElement(
                                     route = route,
                                     action = ActionModelDomain.from(jsonElement.string),
-                                    locks = emptyList(),
+                                    lockable = lockable,
                                     jsonElement = actionObject
                                 )
                             )
@@ -69,31 +71,51 @@ internal class ActionExecutor(
     private suspend fun process(
         input: Input.JsonElement
     ) = with(input) {
-        val middlewaresToExecute = middlewares
-            .filter { it.accept(route, action) }
-            .sortedBy { it.priority }
-        val deferred = CompletableDeferred<Output?>()
-        coroutineScopes.action.async {
-            val acquiredLocks = if (input.locks?.isNotEmpty() == true) {
-                interactionLockRepository.acquire(
-                    requester = "$route::$action",
-                    types = input.locks
-                )
-            } else {
-                null
-            }
-            val result = middlewaresToExecute.execute(
-                ActionMiddleware.Context(input)
+        coroutineScopes.action.await {
+            val locks = input.lockable.acquireLocks(
+                route = route,
+                action = action
             )
-            deferred.complete(result)
-            acquiredLocks?.let {
-                interactionLockRepository.release(
-                    requester =
-                        "$route::$action",
-                    lock = it
+            val middlewaresToExecute = middlewares
+                .filter { it.accept(route, action) }
+                .sortedBy { it.priority }
+            val result = middlewaresToExecute.execute(
+                ActionMiddleware.Context(
+                    lockable = locks.freeze(),
+                    input = input,
                 )
-            }
+            )
+            locks.releaseLocks(
+                route = route,
+                action = action
+            )
+            result
         }
-        deferred.await()
+    }
+
+    private suspend fun InteractionLockable?.acquireLocks(
+        route: NavigationRoute.Url?,
+        action: ActionModelDomain,
+    ): InteractionLockable {
+        val lockTypesForCommand = interactionLockRegistry.lockTypeFor(
+            command = action.command,
+            authority = action.authority
+        )
+        val lockToAcquire = lockTypesForCommand + (this ?: InteractionLockable.Empty)
+        val acquiredLocks = interactionLockResolver.acquire(
+            requester = "$route::$action",
+            lockable = lockToAcquire
+        )
+        return acquiredLocks
+    }
+
+    private suspend fun InteractionLockable.releaseLocks(
+        route: NavigationRoute.Url?,
+        action: ActionModelDomain,
+    ) {
+        interactionLockResolver.release(
+            requester = "$route::$action",
+            lockable = this
+        )
     }
 }

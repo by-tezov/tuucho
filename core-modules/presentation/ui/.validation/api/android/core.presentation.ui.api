@@ -41,7 +41,7 @@ public final class com/tezov/tuucho/core/presentation/ui/exception/UiException$D
 
 public final class com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngine : com/tezov/tuucho/core/presentation/ui/renderer/TuuchoEngineProtocol {
 	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/RegisterToScreenTransitionEventUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NotifyNavigationTransitionCompletedUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreensFromRoutesUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/RegisterToScreenTransitionEventUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NotifyNavigationTransitionCompletedUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreensFromRoutesUseCase;)V
 	public fun display (Landroidx/compose/runtime/Composer;I)V
 	public fun start (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

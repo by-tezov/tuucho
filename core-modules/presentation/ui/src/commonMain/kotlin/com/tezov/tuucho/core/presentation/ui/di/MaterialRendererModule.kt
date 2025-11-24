@@ -31,10 +31,10 @@ internal object MaterialRendererModule {
             TuuchoEngine(
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
+                actionHandler = get(),
                 registerToScreenTransitionEvent = get(),
                 notifyNavigationTransitionCompleted = get(),
                 getScreensFromRoutes = get(),
-                navigateToUrl = get()
             )
         }
     }
