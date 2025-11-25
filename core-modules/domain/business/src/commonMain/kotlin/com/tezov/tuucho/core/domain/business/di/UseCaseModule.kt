@@ -13,7 +13,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidato
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.HasKeyInStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
@@ -107,13 +106,6 @@ internal object UseCaseModule {
         factory<GetScreensFromRoutesUseCase> {
             GetScreensFromRoutesUseCase(
                 navigationStackScreenRepository = get(),
-            )
-        }
-
-        factory<GetValueFromStoreUseCase> {
-            GetValueFromStoreUseCase(
-                coroutineScopes = get(),
-                keyValueRepository = get()
             )
         }
 

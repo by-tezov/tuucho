@@ -372,6 +372,11 @@ public abstract interface class com/tezov/tuucho/core/data/repository/di/Databas
 	public abstract fun getFileName ()Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModule$Name {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModule$Name;
+	public final fun getDATABASE_REPOSITORY_CONFIG ()Lorg/koin/core/qualifier/StringQualifier;
+}
+
 public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid;
 }
@@ -440,6 +445,11 @@ public final class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModul
 
 public abstract interface class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModule$Config {
 	public abstract fun getFileName ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModule$Name {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/StoreRepositoryModule$Name;
+	public final fun getSTORE_REPOSITORY_CONFIG ()Lorg/koin/core/qualifier/StringQualifier;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModules {

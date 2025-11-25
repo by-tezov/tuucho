@@ -26,6 +26,7 @@ object SystemCoreDataModules {
         MaterialShadowerModule.invoke(),
         MaterialRepositoryModule.invoke(),
         DatabaseRepositoryModule.invoke(),
+        StoreRepositoryModule.invoke(),
         NetworkRepositoryModule.invoke(),
     ) +
         platformInvoke()

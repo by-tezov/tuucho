@@ -1,6 +1,5 @@
 ## In progress
 
-- update doc
 - finir les p'tit dessous + clean
 
 *** ***

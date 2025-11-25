@@ -13,20 +13,12 @@ comments: true
 
 Work in progress:
 
-- **Public API + Error management**
-  - Allow user to add custom action
-  - All need middleware and interceptor
-  - Correct and comprehensible error feedback
-  - First attempt to define architecture to allow custom view features
+- **Presentation Layer + Dev documentation**
+  - Define architecture to allow custom view features
   - Add Dokka doc + ktlint + Danger for CI
-  - Improve Quick Start documentation for user and contributor
-  - CI allows the use of different branches for dev/backend Docker container
 
 - **Images / Assets store**  
   Add a way to cache images and use them (or remote assets)
-
-- **Real time Data Support**  
-  Introduce bi-directional communication to enable real-time content updates.
 
 ---
 
@@ -35,7 +27,8 @@ Work in progress:
 - **Implement the use of selectors (language, style, etc...)**
 
 - **Advanced UI Components**  
-  Add comprehensive, fully tested UI components to cover a wider range of application needs.
+  - Add comprehensive, fully tested UI components to cover a wider range of application needs.
+  - Support UI components as independent modules for easier customization and extensibility.
 
 - **Validators, Navigation, Settings, other useful solvable by pointer**
   - Minimise and keep only what is useful and start to think about the public dev API
@@ -43,17 +36,20 @@ Work in progress:
 - **Data store**  
   Allow the use of recorded data from the JSON (still need to think about the use case and how)
 
-- **Modular UI Components**  
-  Support UI components as independent modules for easier customization and extensibility.
-
 - **Unit Tests + E2E Tests**  
   Add as many meaningful tests as possible before production validation to protect from any regression.
+
+- **Real time Data Support**  
+  Introduce bi-directional communication to enable real-time content updates.
+
+- **Comprehensible errors feedback**
 
 ---
 
 ## 🚀 Long-Term Vision
 
 - **Add useful device features (GPS, permissions, ...)**
+   - Allow user to add custom action
 
 - **Behavior & Animation System**  
   Implement an extensible behavior module to handle animations and interactive UI elements.
@@ -73,6 +69,9 @@ Work in progress:
 ---
 
 ## ✅ Realized
+
+- **Public Api** (2025-11)  
+  Add a way to record data key/value on device and use them.
 
 - **Data store** (2025-10)  
   Add a way to record data key/value on device and use them.

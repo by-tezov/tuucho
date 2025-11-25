@@ -18,7 +18,7 @@ class SaveKeyValueToStoreUseCase(
         input: Input
     ) = with(input) {
         coroutineScopes.io.await {
-            keyValueRepository.save(input.key, input.value)
+            keyValueRepository.save(key, value)
         }
     }
 }
