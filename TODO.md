@@ -1,7 +1,5 @@
 ## In progress
 
-- default config name
-
 - finir les p'tit dessous + clean
 
 *** ***
