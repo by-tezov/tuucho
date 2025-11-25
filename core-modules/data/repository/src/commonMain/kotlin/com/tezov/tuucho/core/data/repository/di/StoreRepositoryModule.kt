@@ -14,12 +14,10 @@ object StoreRepositoryModule {
     }
 
     internal fun invoke() = module(ModuleGroupData.Main) {
-
         factory<Config>(STORE_REPOSITORY_CONFIG) {
             getOrNull() ?: object : Config {
                 override val fileName = "tuucho-datastore"
             }
         }
-
     }
 }

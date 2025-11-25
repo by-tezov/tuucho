@@ -2586,34 +2586,6 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol;)V
-	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Key;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Key;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Key;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Input;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Input;Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Key;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Input;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getKey ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Key;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Output {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Value;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Value;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Value;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Output;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Output;Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Value;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueFromStoreUseCase$Output;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol$Value;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueOrNullFromStoreUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/KeyValueStoreRepositoryProtocol;)V
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetValueOrNullFromStoreUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
