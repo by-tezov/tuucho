@@ -3,7 +3,7 @@
 domain = "com.tezov"
 name = "tuucho"
 versionCode = "1"
-versionName = "0.0.1-alpha19_2.2.21"
+versionName = "0.0.1-alpha20_2.2.21"
 isSnapshot = "false"
 javaVersion = "17"
 minSdk = "24"
