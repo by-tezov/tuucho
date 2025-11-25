@@ -17,7 +17,7 @@ class RemoveKeyValueFromStoreUseCase(
         input: Input
     ) = with(input) {
         coroutineScopes.io.await {
-            keyValueRepository.save(input.key, null)
+            keyValueRepository.save(key, null)
         }
     }
 }

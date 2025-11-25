@@ -4,6 +4,16 @@
 
 ---
 
+## 0.0.1-alpha19 - 2025-11-15
+
+- Add middleware
+- Add interceptor
+- Add monitor
+- Add ABI validation
+- Add Danger + Ktlint + Detekt
+
+---
+
 ## 0.0.1-alpha10 - 2025-09-14
 
 - Add TTL cache + auto-purge with validity key for Local, GLobal and Contextual data.

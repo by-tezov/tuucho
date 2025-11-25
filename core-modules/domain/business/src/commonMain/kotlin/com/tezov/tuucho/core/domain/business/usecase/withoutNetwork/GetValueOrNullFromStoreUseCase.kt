@@ -23,7 +23,7 @@ class GetValueOrNullFromStoreUseCase(
     ) = with(input) {
         coroutineScopes.io.await {
             Output(
-                value = keyValueRepository.getOrNull(input.key)
+                value = keyValueRepository.getOrNull(key)
             )
         }
     }

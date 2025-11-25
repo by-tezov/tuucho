@@ -103,6 +103,16 @@ nav:
           - Page Confirmation: pages-definition/page-confirmation.md
   - Cache: cache.md
   - Dynamic Loading: shadower-contextual.md
+  - Mobile Integration:
+      - Overview: mobile-integration/index.md
+      - Quick start: mobile-integration/quick-start.md
+      - Dependencies Injection: mobile-integration/di.md
+      - Configuration: mobile-integration/config.md
+      - Interceptors: mobile-integration/interceptor.md
+      - Monitors: mobile-integration/monitor.md
+      - Middlewares: mobile-integration/middleware.md
+      - Action Middleware: mobile-integration/action.md
+      - Use cases: mobile-integration/usecases.md
   - ChangeLog: changelog.md
   - Contribute: contribute.md
   - Contact: contact.md

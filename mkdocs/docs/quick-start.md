@@ -2,166 +2,128 @@
 comments: true
 ---
 
-# Quick Start
+# Tuucho Backend — Quick Start with NestJS
 
-This guide shows how to quickly integrate **Tuucho** into a Kotlin Multiplatform project (iOS and Android). Tuucho is a server‑driven rendering engine published on Maven Central.
+Tuucho requires a backend capable of returning JSON structures. This guide explains how to set up a **development server** using **NestJS**.
 
-## 1 Add dependencies to the shared module
+This is **not** intended for production but for quick test and experiment with Tuucho.
 
-In your **shared module** (`commonMain`) you need the Tuucho core library plus its supporting libraries:
+---
 
-```kotlin
- commonMain.dependencies {
-    implementation("com.tezov:tuucho.core:0.0.1-alpha16_2.2.20") // for kotlin 2.2.20     
-    implementation("io.insert-koin:koin-core:4.1.1")     
-    implementation("io.insert-koin:koin-compose:4.1.1")
-    implementation("io.ktor:ktor-client-core:3.3.1")
+**Mobile Integration**: For the mobile side, follow this guide: [mobile-integration/quick-start.md](mobile-integration/quick-start.md)
 
-    implementation(compose.runtime)
-    implementation(compose.foundation)
-    implementation(compose.ui)
- }
+---
+
+# Minimal NestJS Server
+
 ```
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
 
-## 2 Create an `AppScreen` in `commonMain` in the shared module
-
-Tuucho exposes a composable engine which loads its configuration from the server and renders the pages. The simplest way to start it is via an `AppScreen` composable:
-
-```kotlin
-@Composable
-fun AppScreen(
-    applicationModuleDeclaration: ModuleDeclaration,
-) = StartKoinModules(
-    configurationModuleDeclaration + applicationModuleDeclaration
-) {
-    val tuuchoEngine = rememberTuuchoEngine()
-    LaunchedEffect(Unit) {
-        tuuchoEngine.start(url = "page-home")
-    }
-    tuuchoEngine.display()
+async function bootstrap() {
+const app = await NestFactory.create(AppModule);
+await app.listen(3000, '0.0.0.0');
 }
+bootstrap();
 ```
 
-> The sample repository uses this pattern – the `AppScreen` composable calls `rememberTuuchoEngine`.
-> Configuration are preloaded and cached with the help of a middleware to detect if we are on unauthenticated zone or authenticated zone.
-> Take a look to [Config details](config/index.md) to understand the config file format.
+This starts a NestJS server on port **3000**, listening on all interfaces.
 
+---
 
-## 3 Supply configuration via Koin in the shared module
+# AppModule Structure
 
-Tuucho needs configuration properties, like you server base url, endpoint, database file name.  Define a Koin module that provides a `SystemCoreDataModules.Config` instance.  In the shared module you can implement this interface with your own values:
+All required modules for a Tuucho dev backend:
 
-```kotlin
-val configurationModuleDeclaration: ModuleDeclaration = {
-
-    factory<StoreRepositoryModule.Config> {
-        object : StoreRepositoryModule.Config {
-            override val fileName = "datastore"
-        }
-    }
-    factory<DatabaseRepositoryModule.Config> {
-        object : DatabaseRepositoryModule.Config {
-            override val fileName = "database"
-        }
-    }
-    
-    factory<NetworkRepositoryModule.Config> {
-        object : NetworkRepositoryModule.Config {
-            override val timeoutMillis = 5000
-            override val version = "v1"
-            override val baseUrl = "http://localhost:3000/"
-            override val healthEndpoint = "health"
-            override val resourceEndpoint = "resource"
-            override val sendEndpoint = "send"
-        }
-    }
-}
+```
+@Module({
+  imports: [],
+  controllers: [
+    HealthController,
+    ResourceAuthController,
+    ResourceLobbyController,
+    SendFormLobbyController,
+    SendAuthController,
+  ],
+  providers: [
+    AuthGuard,
+    AuthGuardOptional,
+    LoginTokenStore,
+    ResourceRepositoryService,
+  ],
+})
+export class AppModule {}
 ```
 
-The core module defines the `Config` interface for `StoreRepositoryModule`, `DatabaseRepositoryModule` and `NetworkRepositoryModule`.  
+### Controllers overview
 
-> The sample application uses `BuildKonfig` to generate these values per platform.
+| Controller                 | Endpoint area             | Purpose                                              |
+|----------------------------|---------------------------|------------------------------------------------------|
+| `HealthController`         | `/health`                 | Health probe used by Tuucho                         |
+| `ResourceAuthController`   | `resource/auth`           | Protected resource zone                              |
+| `ResourceLobbyController`  | `resource/lobby` (public) | Unauthenticated resource zone                        |
+| `SendFormLobbyController`  | `send/lobby` (public)     | Receive public form submissions                      |
+| `SendAuthController`       | `send/auth`               | Receive authenticated form submissions               |
 
-## 4 Android integration
+### Providers
 
-On Android you have to provide the application `Context` so that Tuucho can access platform services.  Define an `ApplicationModuleDeclaration` that injects the context using Koin:
+| Provider              | Role                                                                    |
+|-----------------------|-------------------------------------------------------------------------|
+| `AuthGuard`           | Protects authenticated resource/send zones                              |
+| `LoginTokenStore`     | Stores login tokens for the session                                     |
+| `ResourceRepositoryService` | Provides resource JSON for all endpoints                     |
 
-First you need the to add the dependencies
+Each area uses its own config file and JSON resource definition.
 
-```kotlin
- dependencies {
-    implementation(project(":app:shared"))
-    implementation("com.tezov:tuucho.core-android:0.0.1-alpha16_2.2.20") // for kotlin 2.2.20   
+---
 
-    implementation("androidx.activity:activity-compose:1.11.0")
-    implementation("io.insert-koin:koin-core:4.1.1")
- }
+# Reference Implementation
+
+A complete example backend is available publicly: [https://github.com/by-tezov/tuucho-backend](https://github.com/by-tezov/tuucho-backend)
+
+This repository shows:
+
+- health resource
+- public & authenticated resources
+- send endpoints
+- guards
+- token storage
+- sample forms & actions
+- folder structure recommended for Tuucho
+
+It is the **fastest way** to experiment with Tuucho.
+
+---
+
+**Requirements** You will need **Node.js v22 or later**.
+
+---
+
+# TUUCHO Backend dev repository
+
+### 1. Clone the backend
+
+```
+git clone https://github.com/by-tezov/tuucho-backend
 ```
 
-Then you need to supply the context with the koin symbol `ApplicationModules.Name.APPLICATION_CONTEXT` 
+### 2. Checkout the corresponding release branch
 
-```kotlin
-object ApplicationModuleDeclaration {
-    operator fun invoke(applicationContext: Context): ModuleDeclaration = {
-        single<Context>(ApplicationModules.Name.APPLICATION_CONTEXT) {
-            applicationContext
-        }
-    }
-}
+(Ensure your backend version matches your Tuucho mobile version.)
+
+### 3. Install dependencies
+
+```
+npm install
 ```
 
-Then, in your `Activity`, set the Compose content to `AppScreen` and pass in the application context:
+### 4. Start the development server
 
-```kotlin
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AppScreen(ApplicationModuleDeclaration.invoke(applicationContext))
-        }
-    }
-}
+```
+npm run start:dev
 ```
 
-At runtime Tuucho will start Koin, load the configuration and display the server‑rendered UI.
+This launches the Tuucho backend at: http://localhost:3000
 
-## 5 iOS integration
 
-On iOS you need to expose the `AppScreen` composable through a `ComposeUIViewController`, then wrap it in a SwiftUI view.  In your shared module create a simple function returning a `ComposeUIViewController`:
-
-```kotlin
-fun uiView() = ComposeUIViewController {
-    AppScreen(applicationModuleDeclaration = {})
-}
-```
-
-Then in your iOS app, bridge the Compose controller into SwiftUI.  The sample uses `ComposeView` and `ContentView` to do this:
-
-```swift
-import AppSharedFramework
-
-struct ComposeView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> UIViewController {
-        MainScreen_iosKt.uiView()
-    }
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-}
-
-struct ContentView: View {
-    var body: some View {
-        ComposeView()
-    }
-}
-```
-
-Present `ContentView` from your root view controller and Tuucho will render the server‑driven UI on iOS.
-
-## 6 Backend
-
-Tuucho renders its UI from a backend server.  For a quick test you can run the [tuucho‑backend](https://github.com/by-tezov/tuucho-backend) dev repository locally with a version matching your Tuucho client.
-
-The engine is under active development.  At the time of writing the UI components are limited to basic primitives (fields, labels, linear layouts, buttons and spacers).  The ability to register custom views and provide richer UI will evolve in future releases.
-
-## 7 Sample Application
-
-* The `sample` folder is contains all explain above to try. [tuucho‑sample](https://github.com/by-tezov/tuucho)
+You can now point your mobile app to this server and start iterating on your UI & actions.
