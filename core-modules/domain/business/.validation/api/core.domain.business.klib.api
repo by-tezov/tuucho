@@ -829,38 +829,6 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScre
     }
 }
 
-final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
-
-    final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueFromStoreUseCase.Input){}[0]
-
-    final class Input { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
-
-        final val key // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.key|{}key[0]
-            final fun <get-key>(): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.key.<get-key>|<get-key>(){}[0]
-
-        final fun component1(): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.component1|component1(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Input.toString|toString(){}[0]
-    }
-
-    final class Output { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value){}[0]
-
-        final val value // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.value|{}value[0]
-            final fun <get-value>(): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.value.<get-value>|<get-value>(){}[0]
-
-        final fun component1(): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.component1|component1(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueFromStoreUseCase.Output.toString|toString(){}[0]
-    }
-}
-
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 

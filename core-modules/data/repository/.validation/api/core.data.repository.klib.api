@@ -1009,6 +1009,11 @@ final object com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule {
         abstract val fileName // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Config.fileName|{}fileName[0]
             abstract fun <get-fileName>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Config.fileName.<get-fileName>|<get-fileName>(){}[0]
     }
+
+    final object Name { // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Name|null[0]
+        final val DATABASE_REPOSITORY_CONFIG // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG|{}DATABASE_REPOSITORY_CONFIG[0]
+            final fun <get-DATABASE_REPOSITORY_CONFIG>(): org.koin.core.qualifier/StringQualifier // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG.<get-DATABASE_REPOSITORY_CONFIG>|<get-DATABASE_REPOSITORY_CONFIG>(){}[0]
+    }
 }
 
 final object com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule { // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule|null[0]
@@ -1032,6 +1037,11 @@ final object com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule { //
     abstract interface Config { // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config|null[0]
         abstract val fileName // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config.fileName|{}fileName[0]
             abstract fun <get-fileName>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config.fileName.<get-fileName>|<get-fileName>(){}[0]
+    }
+
+    final object Name { // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Name|null[0]
+        final val STORE_REPOSITORY_CONFIG // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Name.STORE_REPOSITORY_CONFIG|{}STORE_REPOSITORY_CONFIG[0]
+            final fun <get-STORE_REPOSITORY_CONFIG>(): org.koin.core.qualifier/StringQualifier // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Name.STORE_REPOSITORY_CONFIG.<get-STORE_REPOSITORY_CONFIG>|<get-STORE_REPOSITORY_CONFIG>(){}[0]
     }
 }
 

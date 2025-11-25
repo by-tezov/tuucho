@@ -23,7 +23,7 @@ class HasKeyInStoreUseCase(
     ) = with(input) {
         coroutineScopes.io.await {
             Output(
-                result = keyValueRepository.hasKey(input.key)
+                result = keyValueRepository.hasKey(key)
             )
         }
     }
