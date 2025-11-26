@@ -54,8 +54,8 @@ internal object MaterialAssemblerModule {
             listOf(
                 get<ComponentAssembler>(),
                 get<ContentAssembler>(),
-                get<StateAssembler>(),
                 get<TextAssembler>(),
+                get<StateAssembler>(),
             )
         }
 
@@ -147,7 +147,9 @@ internal object MaterialAssemblerModule {
         }
 
         single<List<AbstractAssembler>>(Name.Processor.STATE) {
-            emptyList()
+            listOf(
+                get<TextAssembler>(),
+            )
         }
     }
 

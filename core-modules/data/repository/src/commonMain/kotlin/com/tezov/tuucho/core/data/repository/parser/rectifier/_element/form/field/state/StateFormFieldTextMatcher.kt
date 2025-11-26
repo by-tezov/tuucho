@@ -22,7 +22,7 @@ class StateFormFieldTextMatcher : MatcherRectifierProtocol {
     ): Boolean {
         if (!path.lastSegmentIs(FormFieldSchema.State.Key.initialValue)) return false
         val parent = element.find(path.parent())
-        return parent.isSubsetStartWith(FormSchema.Component.Value.subset) &&
-            parent.isTypeOf(TypeSchema.Value.content)
+        return (parent.isSubsetStartWith(FormSchema.Component.Value.subset) &&
+            parent.isTypeOf(TypeSchema.Value.state))
     }
 }

@@ -1,14 +1,12 @@
 ## In progress
 
 - finir les p'tit dessous + clean
-
 - contextual -> crash if delay over 5000ms
 
 *** ***
-- form field initial value inside state, need to make the matcher for the text and uncomment id update register
-  - fix state error with "" or just string ?
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - back button managed
+
 - still need to fix mock server
 - 
 **** ****

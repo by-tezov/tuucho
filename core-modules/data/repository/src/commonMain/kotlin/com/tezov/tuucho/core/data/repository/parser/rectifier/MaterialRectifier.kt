@@ -16,7 +16,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.toPath
-import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -30,7 +29,7 @@ internal class MaterialRectifier : TuuchoKoinComponent {
     private val contentsRectifier: ContentsRectifier by inject()
     private val stylesRectifier: StylesRectifier by inject()
     private val optionsRectifier: OptionsRectifier by inject()
-    private val stateRectifier: StatesRectifier by inject()
+    private val statesRectifier: StatesRectifier by inject()
     private val textsRectifier: TextsRectifier by inject()
     private val colorsRectifier: ColorsRectifier by inject()
     private val dimensionsRectifier: DimensionsRectifier by inject()
@@ -49,20 +48,10 @@ internal class MaterialRectifier : TuuchoKoinComponent {
             contents?.let { contents = contentsRectifier.process("".toPath(), it).jsonArray }
             styles?.let { styles = stylesRectifier.process("".toPath(), it).jsonArray }
             options?.let { options = optionsRectifier.process("".toPath(), it).jsonArray }
-            states
-                ?.takeIf { it != JsonNull }
-                ?.let { states = stateRectifier.process("".toPath(), it).jsonArray }
-            texts
-                ?.takeIf { it != JsonNull }
-                ?.let { texts = textsRectifier.process("".toPath(), it).jsonArray }
-            colors
-                ?.takeIf { it != JsonNull }
-                ?.let { colors = colorsRectifier.process("".toPath(), it).jsonArray }
-            dimensions
-                ?.takeIf { it != JsonNull }
-                ?.let { dimensions = dimensionsRectifier.process("".toPath(), it).jsonArray }
-            actions
-                ?.takeIf { it != JsonNull }
-                ?.let { actions = actionsRectifier.process("".toPath(), it).jsonArray }
+            states?.let { states = statesRectifier.process("".toPath(), it).jsonArray }
+            texts?.let { texts = textsRectifier.process("".toPath(), it).jsonArray }
+            colors?.let { colors = colorsRectifier.process("".toPath(), it).jsonArray }
+            dimensions?.let { dimensions = dimensionsRectifier.process("".toPath(), it).jsonArray }
+            actions?.let { actions = actionsRectifier.process("".toPath(), it).jsonArray }
         }.collect()
 }

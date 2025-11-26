@@ -23,6 +23,7 @@ internal class MaterialBreaker : TuuchoKoinComponent {
     private val contentBreaker: ContentBreaker by inject()
     private val styleBreaker: StyleBreaker by inject()
     private val optionBreaker: OptionBreaker by inject()
+    private val stateBreaker: StateBreaker by inject()
 
     private val colorBreaker: ColorBreaker by inject()
     private val dimensionBreaker: DimensionBreaker by inject()
@@ -52,6 +53,10 @@ internal class MaterialBreaker : TuuchoKoinComponent {
                 options
                     ?.let {
                         optionBreaker.process("".toPath(), it)
+                    }?.also(::add)
+                states
+                    ?.let {
+                        stateBreaker.process("".toPath(), it)
                     }?.also(::add)
 
                 texts

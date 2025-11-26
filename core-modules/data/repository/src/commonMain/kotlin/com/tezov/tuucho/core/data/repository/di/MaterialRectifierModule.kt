@@ -80,7 +80,6 @@ internal object MaterialRectifierModule {
 
     fun invoke() = module(ModuleGroupData.Rectifier) {
         single<MaterialRectifier> { MaterialRectifier() }
-
         idModule()
         componentModule()
         settingModule()
@@ -129,6 +128,7 @@ internal object MaterialRectifierModule {
                 get<ContentRectifier>(),
                 get<StyleRectifier>(),
                 get<OptionRectifier>(),
+                get<StateRectifier>(),
             )
         }
     }
@@ -221,7 +221,8 @@ internal object MaterialRectifierModule {
 
         single<List<AbstractRectifier>>(Name.Processor.STATE) {
             listOf(
-                get<IdRectifier>()
+                get<IdRectifier>(),
+                get<TextRectifier>()
             )
         }
     }
