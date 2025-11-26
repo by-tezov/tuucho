@@ -17,7 +17,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
-import com.tezov.tuucho.core.presentation.tool.modifier.onTrue
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
@@ -133,8 +132,13 @@ class LayoutLinearView(
     ) {
         val modifier = Modifier
             .then {
-                onTrue(fillMaxSize) { fillMaxSize() } or onTrue(fillMaxWidth) { fillMaxWidth() }
-            }.thenOnNotNull(backgroundColor) { background(it) }
+                ifTrue(fillMaxSize) {
+                    fillMaxSize()
+                } or ifTrue(fillMaxWidth) {
+                    fillMaxWidth()
+                }
+            }
+            .thenOnNotNull(backgroundColor) { background(it) }
 
         when (orientation) {
             Orientation.horizontal -> {

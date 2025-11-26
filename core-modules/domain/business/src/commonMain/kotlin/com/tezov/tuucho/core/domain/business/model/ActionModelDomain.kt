@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.model
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionNull.isNotNullAndNotEmpty
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -37,7 +38,10 @@ data class ActionModelDomain(
                 }
 
                 contains(",") -> {
-                    val items = split(",").map { JsonPrimitive(it) }
+                    val items = split(",").mapNotNull { item ->
+                        item.takeIf { it.isNotNullAndNotEmpty() }
+                            ?.let(::JsonPrimitive)
+                    }
                     JsonArray(items)
                 }
 

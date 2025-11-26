@@ -49,92 +49,58 @@ private fun <T : Any> Modifier.thenInternal(
     onNull?.let { composed { then(it()) } }
 }) ?: this
 
-class ModifierConditional(
-    private val apply: (Modifier) -> Modifier,
-    private val isApplied: Boolean,
-) {
-    fun applyTo(
-        modifier: Modifier
-    ) = apply(modifier)
+class ModifierChainBuilder(var modifier: Modifier) {
 
-    infix fun or(
-        other: ModifierConditional
-    ) = if (isApplied) this else other
-
-    infix fun or(
-        other: Modifier.() -> Unit
-    ) = if (isApplied) {
-        this
-    } else {
-        val modifier = Modifier.apply(other)
-        ModifierConditional({ modifier }, modifier !== Modifier)
+    inline fun <T> ifNotNull(
+        value: T?,
+        crossinline block: Modifier.(T) -> Modifier
+    ): ModifierChainBuilder {
+        if (value != null) modifier = block(modifier, value)
+        return this
     }
 
-    infix fun and(
-        other: ModifierConditional
-    ) = ModifierConditional(
-        apply = { modifier ->
-            val firstApplied = applyTo(modifier)
-            other.applyTo(firstApplied)
-        },
-        isApplied = isApplied && other.isApplied
-    )
-
-    infix fun and(
-        other: Modifier.() -> Unit
-    ) = if (!isApplied) {
-        Empty
-    } else {
-        val modifier = Modifier.apply(other)
-        if (modifier !== Modifier) {
-            ModifierConditional(
-                apply = { base -> modifier.then(applyTo(base)) },
-                isApplied = true
-            )
-        } else {
-            this
-        }
+    inline fun ifNull(
+        value: Any?,
+        crossinline block: Modifier.() -> Modifier
+    ): ModifierChainBuilder {
+        if (value == null) modifier = block(modifier)
+        return this
     }
 
-    companion object {
-        val Empty = ModifierConditional({ it }, false)
+    inline fun ifTrue(
+        condition: Boolean?,
+        crossinline block: Modifier.() -> Modifier
+    ): ModifierChainBuilder {
+        if (condition == true) modifier = block(modifier)
+        return this
     }
+
+    inline fun ifFalse(
+        condition: Boolean?,
+        crossinline block: Modifier.() -> Modifier
+    ): ModifierChainBuilder {
+        if (condition == false) modifier = block(modifier)
+        return this
+    }
+
+    infix fun or(block: ModifierChainBuilder.() -> Unit): ModifierChainBuilder {
+        this.block()
+        return this
+    }
+
+    infix fun and(block: ModifierChainBuilder.() -> Unit): ModifierChainBuilder {
+        this.block()
+        return this
+    }
+
+    infix fun or(next: ModifierChainBuilder): ModifierChainBuilder = this
+    infix fun and(next: ModifierChainBuilder): ModifierChainBuilder = this
+
+    fun build(): Modifier = modifier
 }
 
-fun Modifier.then(
-    block: Modifier.() -> ModifierConditional
-) = block().applyTo(this)
-
-fun onTrue(
-    condition: Boolean?,
-    block: Modifier.() -> Modifier
-) = if (condition == true) {
-    ModifierConditional({ it.block() }, true)
-} else {
-    ModifierConditional.Empty
-}
-
-fun onFalse(
-    condition: Boolean?,
-    block: Modifier.() -> Modifier
-) = if (condition == false) {
-    ModifierConditional({ it.block() }, true)
-} else {
-    ModifierConditional.Empty
-}
-
-fun <T : Any> onNotNull(
-    value: T?,
-    block: Modifier.(T) -> Modifier
-) = value?.let {
-    ModifierConditional({ it.block(value) }, true)
-} ?: ModifierConditional.Empty
-
-fun <T : Any> onNull(
-    value: T?,
-    block: Modifier.() -> Modifier
-) = if (value == null) {
-    ModifierConditional({ it.block() }, true)
-} else {
-    ModifierConditional.Empty
+inline fun Modifier.then(block: ModifierChainBuilder.() -> Unit): Modifier {
+    val builder = ModifierChainBuilder(this)
+    builder.block()
+    return builder.build()
 }

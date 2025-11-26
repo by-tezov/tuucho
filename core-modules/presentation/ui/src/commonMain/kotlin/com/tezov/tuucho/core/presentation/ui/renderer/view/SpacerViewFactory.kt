@@ -17,7 +17,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema
-import com.tezov.tuucho.core.presentation.tool.modifier.onNotNull
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import kotlinx.serialization.json.JsonObject
@@ -102,16 +101,16 @@ class SpacerView(
         Spacer(
             modifier = Modifier
                 .then {
-                    (onNotNull(weight) { weight ->
+                    ifNotNull(weight) { weight ->
                         when (scope) {
-                            is ColumnScope -> with(scope) { weight(weight) }
-                            is RowScope -> with(scope) { weight(weight) }
-                            else -> null
-                        } ?: this
+                            is ColumnScope -> scope.run { weight(weight) }
+                            is RowScope -> scope.run { weight(weight) }
+                            else -> this
+                        }
                     } or {
-                        onNotNull(width) { width(it) }
-                        onNotNull(height) { height(it) }
-                    })
+                        ifNotNull(width) { width(it) }
+                        ifNotNull(height) { height(it) }
+                    }
                 }
         )
     }

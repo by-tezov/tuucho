@@ -17,7 +17,7 @@ compose-plugin = "1.9.3"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
-compose-activity = "1.11.0"
+compose-activity = "1.12.0"
 
 #lib - platform
 kermit = "2.0.8"
