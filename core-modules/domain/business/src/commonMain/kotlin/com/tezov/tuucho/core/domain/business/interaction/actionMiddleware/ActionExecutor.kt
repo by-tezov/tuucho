@@ -72,13 +72,13 @@ internal class ActionExecutor(
         input: Input.JsonElement
     ) = with(input) {
         coroutineScopes.action.await {
+            val middlewaresToExecute = middlewares
+                .filter { it.accept(route, action) }
+                .sortedBy { it.priority }
             val locks = input.lockable.acquireLocks(
                 route = route,
                 action = action
             )
-            val middlewaresToExecute = middlewares
-                .filter { it.accept(route, action) }
-                .sortedBy { it.priority }
             val result = middlewaresToExecute.execute(
                 ActionMiddleware.Context(
                     lockable = locks.freeze(),

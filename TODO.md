@@ -1,12 +1,10 @@
 ## In progress
 
-- fix commented test
-
+- rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - finir les p'tit dessous + clean
 - contextual -> crash if delay over 5000ms
 
 *** ***
-- rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - back button managed
 
 - still need to fix mock server
