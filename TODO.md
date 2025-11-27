@@ -1,5 +1,7 @@
 ## In progress
 
+- fix commented test
+
 - finir les p'tit dessous + clean
 - contextual -> crash if delay over 5000ms
 

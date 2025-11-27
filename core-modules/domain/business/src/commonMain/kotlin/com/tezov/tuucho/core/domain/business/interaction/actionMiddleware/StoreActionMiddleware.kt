@@ -62,7 +62,9 @@ internal class StoreActionMiddleware(
     private suspend fun removeKeys(
         query: JsonElement
     ) {
-        suspend fun execute(key: JsonElement) {
+        suspend fun execute(
+            key: JsonElement
+        ) {
             useCaseExecutor.await(
                 useCase = removeKeyValueFromStore,
                 input = RemoveKeyValueFromStoreUseCase.Input(
@@ -71,11 +73,17 @@ internal class StoreActionMiddleware(
             )
         }
         when (query) {
-            is JsonArray -> query.jsonArray
-                .forEach {
-                    execute(it)
-                }
-            is JsonPrimitive -> execute(query)
+            is JsonArray -> {
+                query.jsonArray
+                    .forEach {
+                        execute(it)
+                    }
+            }
+
+            is JsonPrimitive -> {
+                execute(query)
+            }
+
             else -> {}
         }
     }

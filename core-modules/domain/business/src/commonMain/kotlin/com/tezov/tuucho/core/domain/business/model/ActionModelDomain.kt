@@ -39,7 +39,8 @@ data class ActionModelDomain(
 
                 contains(",") -> {
                     val items = split(",").mapNotNull { item ->
-                        item.takeIf { it.isNotNullAndNotEmpty() }
+                        item
+                            .takeIf { it.isNotNullAndNotEmpty() }
                             ?.let(::JsonPrimitive)
                     }
                     JsonArray(items)

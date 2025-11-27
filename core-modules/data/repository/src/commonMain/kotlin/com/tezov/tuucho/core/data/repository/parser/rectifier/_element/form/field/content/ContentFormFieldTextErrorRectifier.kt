@@ -4,6 +4,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.fie
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.text.TextRectifier
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormFieldSchema
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -15,8 +16,8 @@ import org.koin.core.component.inject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class ContentFormFieldTextErrorRectifier : AbstractRectifier() {
+    override val key = FormFieldSchema.Content.Key.messageError
     private val matcher = ContentFormFieldTextErrorMatcher()
-
     private val textRectifier: TextRectifier by inject()
 
     override fun accept(

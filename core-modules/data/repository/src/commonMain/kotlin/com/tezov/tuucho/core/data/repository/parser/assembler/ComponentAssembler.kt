@@ -12,7 +12,7 @@ import org.koin.core.component.inject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class ComponentAssembler : AbstractAssembler() {
-    override val schemaType: String = TypeSchema.Value.component
+    override val schemaType = TypeSchema.Value.component
 
     override val matchers: List<MatcherAssemblerProtocol> by inject(
         Name.Matcher.COMPONENT

@@ -7,11 +7,11 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import com.tezov.tuucho.core.data.repository.mock.coroutineTestScope
-import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
 import com.tezov.tuucho.core.data.repository.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver
+import com.tezov.tuucho.core.domain.tool.json.string
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
@@ -20,9 +20,11 @@ import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
+import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
+import kotlinx.serialization.json.jsonObject
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -177,30 +179,26 @@ class MaterialCacheLocalSourceTest {
         val visibility = Visibility.Local
         val weakLifetime = Lifetime.Unlimited("key")
         val lifetime = Lifetime.Unlimited("resolved")
-        val material = buildJsonObject { put("key", "value") }
+        val material = buildJsonObject { put("key", JsonPrimitive("value")) }
         val rootPrimaryKey = 3L
 
-        val childNode = JsonObjectNode(
-            buildJsonObject {
-                put("id", buildJsonObject {
-                    put("value", "valueChild")
-                    put("source", "sourceChild")
-                })
-                put("type", "typeChild")
-            }
-        )
-        val rootNode = JsonObjectNode(
-            buildJsonObject {
-                put("id", buildJsonObject {
-                    put("value", "valueRoot")
-                    put("source", "sourceRoot")
-                })
-                put("type", "typeRoot")
-            }
-        )
+        val childNode = buildJsonObject {
+            put("id", buildJsonObject {
+                put("value", JsonPrimitive("valueChild"))
+                put("source", JsonPrimitive("sourceChild"))
+            })
+            put("type", JsonPrimitive("typeChild"))
+        }
+        val rootNode = buildJsonObject {
+            put("id", buildJsonObject {
+                put("value", JsonPrimitive("valueRoot"))
+                put("source", JsonPrimitive("sourceRoot"))
+            })
+            put("type", JsonPrimitive("typeRoot"))
+        }
         val nodes = MaterialBreaker.Nodes(
-            rootJsonObjectNode = rootNode,
-            jsonElementNodes = listOf(childNode)
+            rootJsonObject = rootNode,
+            jsonObjects = listOf(childNode)
         )
 
         everySuspend { materialBreaker.process(material) } returns nodes
@@ -220,7 +218,7 @@ class MaterialCacheLocalSourceTest {
                         entity.url == url &&
                         entity.id == "valueRoot" &&
                         entity.idFrom == "sourceRoot" &&
-                        entity.jsonObject == rootNode.content
+                        entity.jsonObject == rootNode
                 },
                 Table.Common
             )
@@ -242,7 +240,7 @@ class MaterialCacheLocalSourceTest {
                         entity.url == url &&
                         entity.id == "valueChild" &&
                         entity.idFrom == "sourceChild" &&
-                        entity.jsonObject == childNode.content
+                        entity.jsonObject == childNode
                 },
                 Table.Common
             )
@@ -250,57 +248,71 @@ class MaterialCacheLocalSourceTest {
     }
 
     @Test
-    fun `insert inserts hook, and node with children in contextual table`() = coroutineTestScope.run {
+    fun `insert hook, and node with children in contextual table`() = coroutineTestScope.run {
         val url = "url"
         val visibility = Visibility.Contextual(urlOrigin = "urlOrigin")
-        val weakLifetime = Lifetime.Unlimited("key")
-        val material = buildJsonObject { put("key", "value") }
+        val lifetime = Lifetime.Unlimited("key")
+        val material = buildJsonObject { put("key", JsonPrimitive("value")) }
         val rootPrimaryKey = 3L
 
-        val childNode = JsonObjectNode(
-            buildJsonObject {
-                put("id", buildJsonObject {
-                    put("value", "valueChild")
-                    put("source", "sourceChild")
-                })
-                put("type", "typeChild")
-            }
-        )
-        val node = JsonObjectNode(
-            buildJsonObject {
-                put("id", buildJsonObject {
-                    put("value", "value")
-                    put("source", "source")
-                })
-                put("type", "typeRoot")
-            }
-        ).apply { children = listOf(childNode, childNode, childNode) }
+        val node1 = buildJsonObject {
+            put("id", buildJsonObject {
+                put("value", JsonPrimitive("value1"))
+                put("source", JsonPrimitive("source1"))
+            })
+            put("type", JsonPrimitive("node1"))
+        }
+        val node2 = buildJsonObject {
+            put("id", buildJsonObject {
+                put("value", JsonPrimitive("value2"))
+                put("source", JsonPrimitive("source2"))
+            })
+            put("type", JsonPrimitive("node2"))
+        }
         val nodes = MaterialBreaker.Nodes(
-            rootJsonObjectNode = null,
-            jsonElementNodes = listOf(node)
+            rootJsonObject = null,
+            jsonObjects = listOf(node1, node2)
         )
 
         everySuspend { materialBreaker.process(material) } returns nodes
         everySuspend {
-            materialDatabaseSource.insert(
-                any(),
-                Table.Contextual
-            )
+            materialDatabaseSource.insert(any(), Table.Contextual)
         } returns rootPrimaryKey
         everySuspend { materialDatabaseSource.insert(any()) } returns Unit
-        every { lifetimeResolver.invoke(any(), weakLifetime) } returns weakLifetime
+        every { lifetimeResolver.invoke(any(), lifetime) } returns lifetime
 
-        sut.insert(material, url, visibility, weakLifetime)
+        sut.insert(material, url, visibility, lifetime)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.parser
             materialBreaker.process(material)
             coroutineTestScope.mock.database
-            materialDatabaseSource.insert(any())
-            materialDatabaseSource.insert(any(), Table.Contextual)
-            materialDatabaseSource.insert(any(), Table.Contextual)
-            materialDatabaseSource.insert(any(), Table.Contextual)
-            materialDatabaseSource.insert(any(), Table.Contextual)
+        }
+        verifySuspend(exactly(1)) {
+            materialDatabaseSource.insert(matches { hook: HookEntity ->
+                hook.url == url &&
+                    hook.visibility == visibility &&
+                    hook.rootPrimaryKey == null &&
+                    hook.lifetime == lifetime
+            })
+        }
+        verifySuspend(exactly(1)) {
+            materialDatabaseSource.insert(matches { entity: JsonObjectEntity ->
+                entity.type == node1["type"].string &&
+                    entity.url == url &&
+                    entity.id == node1["id"]?.jsonObject["value"].string &&
+                    entity.idFrom == node1["id"]?.jsonObject["source"].string &&
+                    entity.jsonObject == node1
+            }, Table.Contextual)
+        }
+        verifySuspend(exactly(1)) {
+            materialDatabaseSource.insert(matches { entity: JsonObjectEntity ->
+                entity.type == node2["type"].string &&
+                    entity.url == url &&
+                    entity.id == node2["id"]?.jsonObject["value"].string &&
+                    entity.idFrom == node2["id"]?.jsonObject["source"].string &&
+                    entity.jsonObject == node2
+            }, Table.Contextual)
         }
     }
 
@@ -334,11 +346,11 @@ class MaterialCacheLocalSourceTest {
         val lifetime = Lifetime.Unlimited("k")
 
         everySuspend { materialDatabaseSource.getHookEntityOrNull(url) } returns HookEntity(
-            null,
-            url,
-            null,
-            Visibility.Global,
-            lifetime
+            primaryKey = null,
+            url = url,
+            rootPrimaryKey = null,
+            visibility = Visibility.Global,
+            lifetime = lifetime
         )
 
         val result = sut.getLifetime(url)
@@ -388,9 +400,9 @@ class MaterialCacheLocalSourceTest {
             url = url,
             id = "id",
             idFrom = "idFrom",
-            jsonObject = buildJsonObject { put("x", "y") }
+            jsonObject = buildJsonObject { put("x", JsonPrimitive("y")) }
         )
-        val expected = buildJsonObject { put("assembled", "ok") }
+        val expected = buildJsonObject { put("assembled", JsonPrimitive("ok")) }
 
         everySuspend { materialDatabaseSource.getRootJsonObjectEntityOrNull(url) } returns entity
         everySuspend { materialAssembler.process(entity.jsonObject, any()) } returns expected

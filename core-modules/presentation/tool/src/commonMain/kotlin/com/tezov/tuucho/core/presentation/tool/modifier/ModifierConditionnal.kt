@@ -49,8 +49,9 @@ private fun <T : Any> Modifier.thenInternal(
     onNull?.let { composed { then(it()) } }
 }) ?: this
 
-class ModifierChainBuilder(var modifier: Modifier) {
-
+class ModifierChainBuilder(
+    var modifier: Modifier
+) {
     inline fun <T> ifNotNull(
         value: T?,
         crossinline block: Modifier.(T) -> Modifier
@@ -83,23 +84,34 @@ class ModifierChainBuilder(var modifier: Modifier) {
         return this
     }
 
-    infix fun or(block: ModifierChainBuilder.() -> Unit): ModifierChainBuilder {
+    infix fun or(
+        block: ModifierChainBuilder.() -> Unit
+    ): ModifierChainBuilder {
         this.block()
         return this
     }
 
-    infix fun and(block: ModifierChainBuilder.() -> Unit): ModifierChainBuilder {
+    infix fun and(
+        block: ModifierChainBuilder.() -> Unit
+    ): ModifierChainBuilder {
         this.block()
         return this
     }
 
-    infix fun or(next: ModifierChainBuilder): ModifierChainBuilder = this
-    infix fun and(next: ModifierChainBuilder): ModifierChainBuilder = this
+    infix fun or(
+        next: ModifierChainBuilder
+    ): ModifierChainBuilder = this
+
+    infix fun and(
+        next: ModifierChainBuilder
+    ): ModifierChainBuilder = this
 
     fun build(): Modifier = modifier
 }
 
-inline fun Modifier.then(block: ModifierChainBuilder.() -> Unit): Modifier {
+inline fun Modifier.then(
+    block: ModifierChainBuilder.() -> Unit
+): Modifier {
     val builder = ModifierChainBuilder(this)
     builder.block()
     return builder.build()

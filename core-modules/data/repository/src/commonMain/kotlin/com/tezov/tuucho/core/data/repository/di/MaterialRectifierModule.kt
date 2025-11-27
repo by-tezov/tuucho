@@ -2,10 +2,8 @@ package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action.ActionButtonMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label.ContentButtonLabelMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label.ContentButtonLabelRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.FormValidatorRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content.ContentFormFieldTextErrorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content.ContentFormFieldTextMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.option.OptionFormFieldValidatorMatcher
@@ -46,8 +44,11 @@ import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 
+@OptIn(TuuchoExperimentalAPI::class)
 internal object MaterialRectifierModule {
     object Name {
+        val RECTIFIERS = named("MaterialRectifierModule.Name.RECTIFIERS")
+
         object Processor {
             val COMPONENT = named("MaterialRectifierModule.Name.Processor.COMPONENT")
             val SETTING = named("MaterialRectifierModule.Name.Processor.SETTING")
@@ -59,17 +60,10 @@ internal object MaterialRectifierModule {
             val COLOR = named("MaterialRectifierModule.Name.Processor.COLOR")
             val DIMENSION = named("MaterialRectifierModule.Name.Processor.DIMENSION")
             val ACTION = named("MaterialRectifierModule.Name.Processor.ACTION")
-            val FIELD_VALIDATOR = named("MaterialRectifierModule.Name.Processor.FIELD_VALIDATOR")
         }
 
         object Matcher {
             val ID = named("MaterialRectifierModule.Name.Matcher.ID")
-            val COMPONENT = named("MaterialRectifierModule.Name.Matcher.COMPONENT")
-            val SETTING = named("MaterialRectifierModule.Name.Matcher.SETTING")
-            val CONTENT = named("MaterialRectifierModule.Name.Matcher.CONTENT")
-            val STYLE = named("MaterialRectifierModule.Name.Matcher.STYLE")
-            val OPTION = named("MaterialRectifierModule.Name.Matcher.OPTION")
-            val STATE = named("MaterialRectifierModule.Name.Matcher.STATE")
             val TEXT = named("MaterialRectifierModule.Name.Matcher.TEXT")
             val COLOR = named("MaterialRectifierModule.Name.Matcher.COLOR")
             val DIMENSION = named("MaterialRectifierModule.Name.Matcher.DIMENSION")
@@ -79,6 +73,19 @@ internal object MaterialRectifierModule {
     }
 
     fun invoke() = module(ModuleGroupData.Rectifier) {
+        factory<List<AbstractRectifier>>(Name.RECTIFIERS) {
+            listOf(
+                get<ComponentsRectifier>(),
+                get<ContentsRectifier>(),
+                get<StylesRectifier>(),
+                get<OptionsRectifier>(),
+                get<StatesRectifier>(),
+                get<TextsRectifier>(),
+                get<ColorsRectifier>(),
+                get<DimensionsRectifier>(),
+                get<ActionsRectifier>(),
+            )
+        }
         single<MaterialRectifier> { MaterialRectifier() }
         idModule()
         componentModule()
@@ -94,7 +101,6 @@ internal object MaterialRectifierModule {
         fieldValidatorModule()
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.idModule() {
         single<IdRectifier> {
             IdRectifier(
@@ -109,17 +115,21 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
+    private fun Module.settingModule() {
+        single<SettingComponentRectifier> { SettingComponentRectifier() }
+
+        single<List<AbstractRectifier>>(Name.Processor.SETTING) {
+            listOf(
+                get<IdRectifier>(),
+                SettingComponentNavigationRectifier(),
+            )
+        }
+    }
+
     private fun Module.componentModule() {
         single<ComponentsRectifier> { ComponentsRectifier() }
 
         single<ComponentRectifier> { ComponentRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.COMPONENT) {
-            listOf(
-                ContentButtonLabelMatcher(),
-            )
-        }
 
         single<List<AbstractRectifier>>(Name.Processor.COMPONENT) {
             listOf(
@@ -133,54 +143,27 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
-    private fun Module.settingModule() {
-        single<SettingComponentRectifier> { SettingComponentRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.SETTING) {
-            emptyList()
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.SETTING) {
-            listOf(
-                get<IdRectifier>(),
-                SettingComponentNavigationRectifier(),
-            )
-        }
-    }
-
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.contentModule() {
         single<ContentsRectifier> { ContentsRectifier() }
 
         single<ContentRectifier> { ContentRectifier() }
 
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.CONTENT) {
-            emptyList()
-        }
-
         single<List<AbstractRectifier>>(Name.Processor.CONTENT) {
             listOf(
                 get<IdRectifier>(),
+                get<ActionRectifier>(),
+                get<TextRectifier>(),
                 ContentLayoutLinearItemsRectifier(),
                 ContentButtonLabelRectifier(),
                 ContentFormFieldTextErrorRectifier(),
-                get<ActionRectifier>(),
-                get<TextRectifier>(),
-                get<ComponentRectifier>(),
             )
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.styleModule() {
         single<StylesRectifier> { StylesRectifier() }
 
         single<StyleRectifier> { StyleRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.STYLE) {
-            emptyList()
-        }
 
         single<List<AbstractRectifier>>(Name.Processor.STYLE) {
             listOf(
@@ -191,15 +174,10 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.optionModule() {
         single<OptionsRectifier> { OptionsRectifier() }
 
         single<OptionRectifier> { OptionRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.OPTION) {
-            emptyList()
-        }
 
         single<List<AbstractRectifier>>(Name.Processor.OPTION) {
             listOf(
@@ -209,15 +187,10 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.stateModule() {
         single<StatesRectifier> { StatesRectifier() }
 
         single<StateRectifier> { StateRectifier() }
-
-        single<List<MatcherRectifierProtocol>>(Name.Matcher.STATE) {
-            emptyList()
-        }
 
         single<List<AbstractRectifier>>(Name.Processor.STATE) {
             listOf(
@@ -227,7 +200,6 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.textModule() {
         single<TextsRectifier> { TextsRectifier() }
 
@@ -237,7 +209,6 @@ internal object MaterialRectifierModule {
             listOf(
                 ContentLabelTextMatcher(),
                 ContentFormFieldTextMatcher(),
-                ContentFormFieldTextErrorMatcher(),
                 StateFormFieldTextMatcher(),
             )
         }
@@ -247,7 +218,6 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.colorModule() {
         single<ColorsRectifier> { ColorsRectifier() }
 
@@ -265,7 +235,6 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.dimensionModule() {
         single<DimensionsRectifier> { DimensionsRectifier() }
 
@@ -283,7 +252,6 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.actionModule() {
         single<ActionsRectifier> { ActionsRectifier() }
 
@@ -300,7 +268,6 @@ internal object MaterialRectifierModule {
         }
     }
 
-    @OptIn(TuuchoExperimentalAPI::class)
     private fun Module.fieldValidatorModule() {
         single<FormValidatorRectifier> { FormValidatorRectifier() }
 
@@ -308,10 +275,6 @@ internal object MaterialRectifierModule {
             listOf(
                 OptionFormFieldValidatorMatcher()
             )
-        }
-
-        single<List<AbstractRectifier>>(Name.Processor.FIELD_VALIDATOR) {
-            emptyList()
         }
     }
 }

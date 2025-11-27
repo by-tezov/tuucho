@@ -87,7 +87,8 @@ class FieldView(
                 }
             }
         componentObject.stateOrNull
-            ?.withScope(FormFieldSchema.State::Scope)?.run {
+            ?.withScope(FormFieldSchema.State::Scope)
+            ?.run {
                 initialValue?.idValue?.let {
                     addTypeIdForKey(
                         type = TypeSchema.Value.text,
