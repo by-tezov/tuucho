@@ -1,10 +1,9 @@
 ## In progress
 
-- ios backHandler
 - screen lock
-
-- rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - contextual -> crash if delay over 5000ms
+ 
+- rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - finir les p'tit dessous + clean
 
 *** ***
