@@ -31,7 +31,7 @@ import org.koin.core.component.inject
 
 internal class FormSendUrlActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
-    private val getOrNullScreen: GetScreenOrNullUseCase,
+    private val getScreenOrNull: GetScreenOrNullUseCase,
     private val sendData: SendDataUseCase,
 ) : ActionMiddleware,
     TuuchoKoinComponent {
@@ -77,10 +77,8 @@ internal class FormSendUrlActionMiddleware(
 
     private suspend fun NavigationRoute.Url.getAllFormView() = useCaseExecutor
         .await(
-            useCase = getOrNullScreen,
-            input = GetScreenOrNullUseCase.Input(
-                route = this
-            )
+            useCase = getScreenOrNull,
+            input = GetScreenOrNullUseCase.Input(route = this)
         )?.screen
         ?.views(FormViewProtocol.Extension::class)
         ?.map { it.formView }

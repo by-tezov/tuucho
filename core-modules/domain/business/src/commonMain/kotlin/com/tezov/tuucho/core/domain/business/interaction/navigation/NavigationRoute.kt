@@ -14,6 +14,7 @@ sealed class NavigationRoute(
 
         override fun toString(): String = id
     }
+
     data object Finish : NavigationRoute("finish") {
         override fun accept(
             other: Any
@@ -21,6 +22,7 @@ sealed class NavigationRoute(
 
         override fun toString(): String = id
     }
+
     data object Current : NavigationRoute("current") {
         override fun accept(
             other: Any

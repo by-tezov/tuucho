@@ -81,12 +81,14 @@ class ButtonView(
     private val action
         get(): () -> Unit = ({
             _action?.let {
+                // TODO add lock screen
+
                 useCaseExecutor.async(
                     useCase = actionHandler,
                     input = ProcessActionUseCase.Input.ActionObject(
                         route = route,
                         actionObject = it,
-                        lockable = null // TODO
+                        lockable = null
                     )
                 )
             }

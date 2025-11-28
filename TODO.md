@@ -1,9 +1,11 @@
 ## In progress
 
+- ios backHandler
+- screen lock
+
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
-- finir les p'tit dessous + clean
 - contextual -> crash if delay over 5000ms
-- back button managed
+- finir les p'tit dessous + clean
 
 *** ***
 - still need to fix mock server
