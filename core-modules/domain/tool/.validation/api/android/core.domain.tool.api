@@ -70,6 +70,11 @@ public final class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMon
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/domain/tool/async/DeferredExtension {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/async/DeferredExtension;
+	public final fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
+}
+
 public final class com/tezov/tuucho/core/domain/tool/async/ExtensionFlow {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/async/ExtensionFlow;
 	public final fun collectForever (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

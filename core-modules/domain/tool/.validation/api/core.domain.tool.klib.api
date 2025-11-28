@@ -108,6 +108,10 @@ final class com.tezov.tuucho.core.domain.tool.json/JsonElementPath : kotlin.coll
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.toString|toString(){}[0]
 }
 
+final object com.tezov.tuucho.core.domain.tool.async/DeferredExtension { // com.tezov.tuucho.core.domain.tool.async/DeferredExtension|null[0]
+    final fun <#A1: kotlin/Any?> (kotlinx.coroutines/Deferred<#A1>).throwOnFailure() // com.tezov.tuucho.core.domain.tool.async/DeferredExtension.throwOnFailure|throwOnFailure@kotlinx.coroutines.Deferred<0:0>(){0§<kotlin.Any?>}[0]
+}
+
 final object com.tezov.tuucho.core.domain.tool.async/ExtensionFlow { // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow|null[0]
     final suspend fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<#A1>).collectForever(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow.collectForever|collectForever@kotlinx.coroutines.flow.Flow<0:0>(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<kotlin.Any>}[0]
     final suspend fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<#A1>).collectOnce(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow.collectOnce|collectOnce@kotlinx.coroutines.flow.Flow<0:0>(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<kotlin.Any>}[0]

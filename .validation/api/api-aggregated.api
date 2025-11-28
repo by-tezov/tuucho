@@ -8249,6 +8249,11 @@ public final class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMon
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/domain/tool/async/DeferredExtension {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/async/DeferredExtension;
+	public final fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
+}
+
 public final class com/tezov/tuucho/core/domain/tool/async/ExtensionFlow {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/async/ExtensionFlow;
 	public final fun collectForever (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8503,6 +8508,10 @@ final class com.tezov.tuucho.core.domain.tool.json/JsonElementPath : kotlin.coll
     final fun lastSegment(): kotlin/String? // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.lastSegment|lastSegment(){}[0]
     final fun parent(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.parent|parent(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.toString|toString(){}[0]
+}
+
+final object com.tezov.tuucho.core.domain.tool.async/DeferredExtension { // com.tezov.tuucho.core.domain.tool.async/DeferredExtension|null[0]
+    final fun <#A1: kotlin/Any?> (kotlinx.coroutines/Deferred<#A1>).throwOnFailure() // com.tezov.tuucho.core.domain.tool.async/DeferredExtension.throwOnFailure|throwOnFailure@kotlinx.coroutines.Deferred<0:0>(){0§<kotlin.Any?>}[0]
 }
 
 final object com.tezov.tuucho.core.domain.tool.async/ExtensionFlow { // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow|null[0]
