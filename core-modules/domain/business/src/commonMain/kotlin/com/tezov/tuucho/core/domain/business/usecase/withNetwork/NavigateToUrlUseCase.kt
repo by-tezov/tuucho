@@ -146,22 +146,28 @@ class NavigateToUrlUseCase(
                             url = route.value,
                             componentObject = componentObject,
                             types = listOf(Shadower.Type.contextual)
-                        ).forEach {
+                        )
+                        .forEach {
                             coroutineScopes.renderer.await {
                                 view.update(it.jsonObject)
                             }
                         }
                 }
                 runCatching { process() }.onFailure { failure ->
-                    context.onShadowerException?.invoke(
-                        failure,
-                        context,
-                        ::process
+                    context.onShadowerException?.process(
+                        exception = failure,
+                        context = context,
+                        replay = ::process
                     ) ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
+            }
+            else {
+                job.invokeOnCompletion {
+                    it?.let { throw it }
+                }
             }
         }
     }

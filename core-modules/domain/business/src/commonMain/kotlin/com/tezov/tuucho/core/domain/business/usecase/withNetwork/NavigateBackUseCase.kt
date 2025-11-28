@@ -85,18 +85,20 @@ class NavigateBackUseCase(
                             }
                         }
                 }
-                runCatching {
-                    process()
-                }.onFailure { failure ->
-                    context.onShadowerException?.invoke(
-                        failure,
-                        context,
-                        ::process
+                runCatching { process() }.onFailure { failure ->
+                    context.onShadowerException?.process(
+                        exception = failure,
+                        context = context,
+                        replay = ::process
                     ) ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
+            } else {
+                job.invokeOnCompletion {
+                    it?.let { throw it }
+                }
             }
         }
     }
