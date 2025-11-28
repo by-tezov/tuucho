@@ -35,13 +35,13 @@ internal class FormSendUrlActionMiddleware(
     private val sendData: SendDataUseCase,
 ) : ActionMiddleware,
     TuuchoKoinComponent {
-    private val actionHandler: ProcessActionUseCase by inject()
+    private val processAction: ProcessActionUseCase by inject()
 
     override val priority: Int
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ): Boolean = (action.command == FormAction.command && action.authority == FormAction.Send.authority && action.target != null)
 
@@ -49,7 +49,7 @@ internal class FormSendUrlActionMiddleware(
         context: ActionMiddleware.Context,
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
     ) = with(context.input) {
-        val formView = route?.getAllFormView() ?: return@with next.invoke(context)
+        val formView = (route as? NavigationRoute.Url)?.getAllFormView() ?: return@with next.invoke(context)
         if (formView.isAllFormValid()) {
             val response = useCaseExecutor
                 .await(
@@ -184,7 +184,7 @@ internal class FormSendUrlActionMiddleware(
         results: JsonElement?
     ) {
         useCaseExecutor.await(
-            useCase = actionHandler,
+            useCase = processAction,
             input = ProcessActionUseCase.Input.JsonElement(
                 route = route,
                 action = ActionModelDomain.from(
@@ -203,7 +203,7 @@ internal class FormSendUrlActionMiddleware(
         jsonElement: JsonElement?
     ) {
         useCaseExecutor.await(
-            useCase = actionHandler,
+            useCase = processAction,
             input = ProcessActionUseCase.Input.JsonElement(
                 route = route,
                 action = ActionModelDomain.from(this),

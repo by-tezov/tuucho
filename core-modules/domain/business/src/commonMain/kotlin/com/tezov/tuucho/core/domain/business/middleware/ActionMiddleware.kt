@@ -22,7 +22,7 @@ interface ActionMiddleware : MiddlewareProtocol<Context, ProcessActionUseCase.Ou
     val priority: Int
 
     fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain
     ): Boolean
 }

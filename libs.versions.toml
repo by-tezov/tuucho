@@ -32,6 +32,7 @@ okio = "3.16.2"
 
 #lib - android
 compose-activity = "1.11.0"
+compose-backhandler= "1.9.3"
 datastore-preferences = "1.1.7"
 
 #test
@@ -64,6 +65,7 @@ okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore-preferences" }
+compose-backhandler = { group = "org.jetbrains.compose.ui", name = "ui-backhandler", version.ref = "compose-backhandler" }
 #lib - ios
 sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }

@@ -17,7 +17,7 @@ import org.koin.core.component.inject
 
 class ButtonViewFactory(
     private val useCaseExecutor: UseCaseExecutorProtocol,
-    private val actionHandler: ProcessActionUseCase,
+    private val processAction: ProcessActionUseCase,
 ) : AbstractViewFactory() {
     private val labelUiComponentFactory: LabelViewFactory by inject()
 
@@ -36,7 +36,7 @@ class ButtonViewFactory(
         componentObject = componentObject,
         useCaseExecutor = useCaseExecutor,
         labelUiComponentFactory = labelUiComponentFactory,
-        actionHandler = actionHandler
+        actionHandler = processAction
     ).also { it.init() }
 }
 

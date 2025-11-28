@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             api(project(":core.data.repository"))
+            implementation(libs.compose.backhandler)
         }
         if (isMacOs) {
             iosMain.dependencies {
@@ -27,7 +28,6 @@ kotlin {
             implementation(compose.ui)
 
             implementation(libs.koin.core)
-            // implementation(libs.koin.compose)
         }
     }
 }

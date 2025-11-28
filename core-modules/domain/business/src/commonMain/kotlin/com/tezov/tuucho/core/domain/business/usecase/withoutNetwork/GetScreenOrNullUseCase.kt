@@ -11,7 +11,7 @@ class GetScreenOrNullUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
 ) : UseCaseProtocol.Async<Input, Output> {
     data class Input(
-        val route: NavigationRoute.Url,
+        val route: NavigationRoute,
     )
 
     data class Output(

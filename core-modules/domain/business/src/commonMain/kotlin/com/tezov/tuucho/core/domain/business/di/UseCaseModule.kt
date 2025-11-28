@@ -66,7 +66,8 @@ internal object UseCaseModule {
         factory<ProcessActionUseCase> {
             ProcessActionUseCase(
                 coroutineScopes = get(),
-                actionExecutor = get()
+                actionExecutor = get(),
+                getScreenOrNull = get(),
             )
         }
 

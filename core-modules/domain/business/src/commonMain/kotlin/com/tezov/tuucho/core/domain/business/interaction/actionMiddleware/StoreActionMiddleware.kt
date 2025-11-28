@@ -28,7 +28,7 @@ internal class StoreActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ): Boolean = action.command == StoreAction.command && action.authority == StoreAction.KeyValue.authority && action.query != null
 

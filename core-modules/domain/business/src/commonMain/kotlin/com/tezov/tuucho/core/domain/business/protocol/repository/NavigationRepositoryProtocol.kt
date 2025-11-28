@@ -31,7 +31,7 @@ object NavigationRepositoryProtocol {
         ): List<ScreenProtocol>
 
         suspend fun getScreenOrNull(
-            route: NavigationRoute.Url
+            route: NavigationRoute
         ): ScreenProtocol?
 
         suspend fun getScreensOrNull(

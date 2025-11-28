@@ -94,7 +94,7 @@ internal class ActionExecutor(
     }
 
     private suspend fun InteractionLockable?.acquireLocks(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ): InteractionLockable {
         val lockTypesForCommand = interactionLockRegistry.lockTypeFor(
@@ -110,7 +110,7 @@ internal class ActionExecutor(
     }
 
     private suspend fun InteractionLockable.releaseLocks(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ) {
         interactionLockResolver.release(
