@@ -143,30 +143,27 @@ public final class com/tezov/tuucho/core/presentation/tool/misc/FocusDispatcher$
 	public final fun requestFocus ()V
 }
 
+public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/ui/Modifier;)V
+	public final fun and (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun and (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun build ()Landroidx/compose/ui/Modifier;
+	public final fun getModifier ()Landroidx/compose/ui/Modifier;
+	public final fun ifFalse (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun ifNotNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun ifNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun ifTrue (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun or (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun or (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun setModifier (Landroidx/compose/ui/Modifier;)V
+}
+
 public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierClickKt {
 	public static final fun clickableDisabled (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
 }
 
-public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional {
-	public static final field $stable I
-	public static final field Companion Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional$Companion;
-	public fun <init> (Lkotlin/jvm/functions/Function1;Z)V
-	public final fun and (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public final fun and (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public final fun applyTo (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
-	public final fun or (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public final fun or (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-}
-
-public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional$Companion {
-	public final fun getEmpty ()Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-}
-
 public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierConditionnalKt {
-	public static final fun onFalse (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public static final fun onNotNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public static final fun onNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public static final fun onTrue (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
 	public static final fun then (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
 	public static final fun thenOnFalse (Landroidx/compose/ui/Modifier;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function3;)Landroidx/compose/ui/Modifier;
 	public static final fun thenOnNotNull (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
