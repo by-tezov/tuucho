@@ -1,11 +1,14 @@
 package com.tezov.tuucho.core.domain.business.di
 
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
 
 object KoinContext {
+    @TuuchoInternalApi
     lateinit var koinApplication: KoinApplication
 
+    @OptIn(TuuchoInternalApi::class)
     val koin get() = koinApplication.koin
 }
 

@@ -23,6 +23,14 @@ sealed class NavigationRoute(
         override fun toString(): String = id
     }
 
+    data object Current : NavigationRoute("current") {
+        override fun accept(
+            other: Any
+        ): Boolean = other is Current
+
+        override fun toString(): String = id
+    }
+
     data class Url(
         override val id: String,
         val value: String

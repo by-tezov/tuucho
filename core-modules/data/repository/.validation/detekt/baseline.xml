@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ForbiddenComment:SendDataAndRetrieveMaterialRemoteSource.kt$SendDataAndRetrieveMaterialRemoteSource$// TODO: rectifier response</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$200</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$3000</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$500</ID>
@@ -36,8 +35,8 @@
     <ID>MatchingDeclarationName:SystemInformation.ios.kt$SystemInformationIos : PlatformProtocol</ID>
     <ID>MatchingDeclarationName:WeakReference.android.kt$WeakReferenceAndroid&lt;T : Any&gt; : Weak</ID>
     <ID>MatchingDeclarationName:WeakReference.ios.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
-    <ID>MaxLineLength:AbstractBreaker.kt$AbstractBreaker$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
+    <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( path: JsonElementPath, element: JsonElement )</ID>
     <ID>NestedBlockDepth:ActionsRectifier.kt$ActionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
@@ -54,7 +53,6 @@
     <ID>NestedBlockDepth:StylesRectifier.kt$StylesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:TextsRectifier.kt$TextsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
-    <ID>PackageNaming:AbstractBreaker.kt$package com.tezov.tuucho.core.data.repository.parser.breaker._system</ID>
     <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
     <ID>PackageNaming:ActionButtonMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action</ID>
     <ID>PackageNaming:ContentButtonLabelMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label</ID>
@@ -69,16 +67,15 @@
     <ID>PackageNaming:ContentLayoutLinearItemsRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear</ID>
     <ID>PackageNaming:FindAllRefOrNullFetcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
     <ID>PackageNaming:FormValidatorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form</ID>
-    <ID>PackageNaming:JsonElementNode.kt$package com.tezov.tuucho.core.data.repository.parser._system</ID>
     <ID>PackageNaming:JsonObjectConsumerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:JsonObjectMerger.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
     <ID>PackageNaming:LifetimeResolver.kt$package com.tezov.tuucho.core.data.repository.repository.source._system</ID>
     <ID>PackageNaming:MatcherAssemblerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
-    <ID>PackageNaming:MatcherBreakerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.breaker._system</ID>
     <ID>PackageNaming:MatcherHelperExtension.kt$package com.tezov.tuucho.core.data.repository.parser._system</ID>
     <ID>PackageNaming:MatcherRectifierProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
     <ID>PackageNaming:MatcherShadowerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:OptionFormFieldValidatorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.option</ID>
+    <ID>PackageNaming:RectifierHelper.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
     <ID>PackageNaming:RectifierIdGenerator.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
     <ID>PackageNaming:ReferenceFactory.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:ReferenceFactory.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
@@ -101,7 +98,6 @@
     <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : MatcherRectifierProtocolTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:MaterialRectifierModule.kt$MaterialRectifierModule</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>
-    <ID>VariableNaming:AbstractBreaker.kt$AbstractBreaker$var _element = this as JsonElement</ID>
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -18,7 +18,7 @@ class LoggerUpdateViewMiddleware(
             logger.debug("THREAD") { systemInformation.currentThreadName() }
             logger.debug("VIEW UPDATE") {
                 buildString {
-                    appendLine(route.value)
+                    appendLine(route)
                     appendLine("-- input --")
                     appendLine(jsonObject.toString())
                 }

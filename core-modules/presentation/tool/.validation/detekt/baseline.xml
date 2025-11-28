@@ -28,6 +28,7 @@
     <ID>MagicNumber:ThemeColorsExtended.kt$ThemeColorsExtended.Resources$0xFFFF00FF</ID>
     <ID>MagicNumber:ThemeColorsExtended.kt$ThemeColorsExtended.Resources$0xFFFFFF00</ID>
     <ID>MagicNumber:ThemeColorsExtended.kt$ThemeColorsExtended.Resources$0xFFFFFFFF</ID>
+    <ID>UnusedParameter:ModifierConditionnal.kt$ModifierChainBuilder$next: ModifierChainBuilder</ID>
     <ID>UseCheckOrError:AbstractAnimationCompound.kt$AbstractAnimationCompound.AnimatorIdle$throw IllegalStateException("Should never be called!")</ID>
   </CurrentIssues>
 </SmellBaseline>

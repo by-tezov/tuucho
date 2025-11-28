@@ -19,6 +19,7 @@ import kotlinx.serialization.json.jsonObject
 abstract class AbstractRectifier :
     MatcherRectifierProtocol,
     TuuchoKoinComponent {
+    abstract val key: String
     protected open val matchers: List<MatcherRectifierProtocol> = emptyList()
     protected open val childProcessors: List<AbstractRectifier> = emptyList()
 

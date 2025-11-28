@@ -25,7 +25,7 @@ internal object ActionProcessorModule {
         factory<FormSendUrlActionMiddleware> {
             FormSendUrlActionMiddleware(
                 useCaseExecutor = get(),
-                getOrNullScreen = get(),
+                getScreenOrNull = get(),
                 sendData = get()
             )
         } bind ActionMiddleware::class

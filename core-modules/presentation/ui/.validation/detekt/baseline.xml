@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ForbiddenComment:FieldView.kt$FieldView$// TODO: need to add the rectifier for initialValue text</ID>
+    <ID>CyclomaticComplexMethod:AbstractView.kt$AbstractView$final override suspend fun update( jsonObject: JsonObject )</ID>
     <ID>MagicNumber:ColorExtension.kt$16</ID>
     <ID>MagicNumber:ColorExtension.kt$6</ID>
     <ID>MagicNumber:ColorExtension.kt$8</ID>

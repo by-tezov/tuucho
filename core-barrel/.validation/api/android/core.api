@@ -1,5 +1,6 @@
-public final class com/tezov/tuucho/core/barrel/StartTuuchoEngineKt {
-	public static final fun StartTuuchoEngine (Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
+	public static final fun TuuchoEngineStart (Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+	public static final fun getLocalTuuchoKoin ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
 public abstract class com/tezov/tuucho/core/barrel/di/ModuleGroupCore : com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {

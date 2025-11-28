@@ -1,76 +1,48 @@
 package com.tezov.tuucho.core.data.repository.parser.breaker
 
-import com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode
-import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
+import com.tezov.tuucho.core.data.repository.di.MaterialBreakerModule.Name
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
-import com.tezov.tuucho.core.domain.tool.json.toPath
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 @OpenForTest
-@OptIn(TuuchoExperimentalAPI::class)
 internal class MaterialBreaker : TuuchoKoinComponent {
     data class Nodes(
-        val rootJsonObjectNode: JsonObjectNode?,
-        val jsonElementNodes: List<JsonElementNode>,
+        val rootJsonObject: JsonObject?,
+        val jsonObjects: List<JsonObject>,
     )
 
-    private val componentBreaker: ComponentBreaker by inject()
-    private val contentBreaker: ContentBreaker by inject()
-    private val styleBreaker: StyleBreaker by inject()
-    private val optionBreaker: OptionBreaker by inject()
-
-    private val colorBreaker: ColorBreaker by inject()
-    private val dimensionBreaker: DimensionBreaker by inject()
-    private val textBreaker: TextBreaker by inject()
-    private val actionBreaker: ActionBreaker by inject()
+    private val breakables: List<String> by inject(Name.BREAKABLES)
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
         materialObject: JsonObject,
     ) = with(materialObject.withScope(MaterialSchema::Scope)) {
         Nodes(
-            rootJsonObjectNode = rootComponent?.let(::JsonObjectNode),
-            jsonElementNodes = buildList {
-                components
-                    ?.let {
-                        componentBreaker.process("".toPath(), it)
-                    }?.also(::add)
-
-                contents
-                    ?.let {
-                        contentBreaker.process("".toPath(), it)
-                    }?.also(::add)
-                styles
-                    ?.let {
-                        styleBreaker.process("".toPath(), it)
-                    }?.also(::add)
-                options
-                    ?.let {
-                        optionBreaker.process("".toPath(), it)
-                    }?.also(::add)
-
-                texts
-                    ?.let {
-                        textBreaker.process("".toPath(), it)
-                    }?.also(::add)
-                colors
-                    ?.let {
-                        colorBreaker.process("".toPath(), it)
-                    }?.also(::add)
-                dimensions
-                    ?.let {
-                        dimensionBreaker.process("".toPath(), it)
-                    }?.also(::add)
-                actions
-                    ?.let {
-                        actionBreaker.process("".toPath(), it)
-                    }?.also(::add)
+            rootJsonObject = rootComponent?.let(::JsonObject),
+            jsonObjects = buildList {
+                breakables.forEach { breakable ->
+                    this@with[breakable]?.process()?.also(::addAll)
+                }
             }
         )
+    }
+
+    private fun JsonElement.process(): List<JsonObject> {
+        if (this !is JsonArray) {
+            throw DataException.Default("By design it must be an array because object should has been rectified but $this")
+        }
+        return map { entry ->
+            if (entry !is JsonObject) {
+                throw DataException.Default("By design it must be an object nut $entry")
+            }
+            entry
+        }
     }
 }

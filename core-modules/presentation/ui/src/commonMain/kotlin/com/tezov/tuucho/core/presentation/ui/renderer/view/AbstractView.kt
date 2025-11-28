@@ -105,6 +105,15 @@ abstract class AbstractView(
                 jsonObject.processText(key)
             }
 
+            TypeSchema.Value.state -> {
+                componentObject = componentObject
+                    .withScope(ComponentSchema::Scope)
+                    .apply {
+                        state = jsonObject
+                    }.collect()
+                jsonObject.processState()
+            }
+
             TypeSchema.Value.message -> {
                 jsonObject.processMessage()
             }
@@ -124,7 +133,7 @@ abstract class AbstractView(
         if (typeIds.contains(typeId)) {
             throw UiException.Default("Warning, typeId $typeId already already")
         }
-        typeIds.put(typeId, "")
+        typeIds[typeId] = ""
     }
 
     protected fun addTypeIdForKey(
@@ -136,7 +145,7 @@ abstract class AbstractView(
         if (typeIds.contains(typeId)) {
             throw UiException.Default("Warning, typeId $typeId already already exist for $key")
         }
-        typeIds.put(typeId, key)
+        typeIds[typeId] = key
     }
 
     open suspend fun JsonObject.processComponent() {}

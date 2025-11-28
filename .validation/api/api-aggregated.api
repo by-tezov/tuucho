@@ -1,6 +1,7 @@
 ************ Project: :core ************
-public final class com/tezov/tuucho/core/barrel/StartTuuchoEngineKt {
-	public static final fun StartTuuchoEngine (Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
+	public static final fun TuuchoEngineStart (Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+	public static final fun getLocalTuuchoKoin ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
 public abstract class com/tezov/tuucho/core/barrel/di/ModuleGroupCore : com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
@@ -33,10 +34,12 @@ sealed class com.tezov.tuucho.core.barrel.di/ModuleGroupCore : com.tezov.tuucho.
 
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop[0]
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop[0]
+final val com.tezov.tuucho.core.barrel/localTuuchoKoin // com.tezov.tuucho.core.barrel/localTuuchoKoin|{}localTuuchoKoin[0]
+    final fun <get-localTuuchoKoin>(): androidx.compose.runtime/ProvidableCompositionLocal<org.koin.core/Koin> // com.tezov.tuucho.core.barrel/localTuuchoKoin.<get-localTuuchoKoin>|<get-localTuuchoKoin>(){}[0]
 
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.barrel/StartTuuchoEngine(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol>, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.barrel/StartTuuchoEngine|StartTuuchoEngine(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol>;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol>, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol>;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 
 
 ************ Project: :core.data.repository ************
@@ -534,73 +537,6 @@ public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/data/repository/parser/_system/JsonArrayNode : com/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode, java/util/List, kotlin/jvm/internal/markers/KMappedMarker {
-	public fun <init> (Ljava/util/List;)V
-	public fun add (ILcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)V
-	public synthetic fun add (ILjava/lang/Object;)V
-	public fun add (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)Z
-	public synthetic fun add (Ljava/lang/Object;)Z
-	public fun addAll (ILjava/util/Collection;)Z
-	public fun addAll (Ljava/util/Collection;)Z
-	public fun addFirst (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)V
-	public synthetic fun addFirst (Ljava/lang/Object;)V
-	public fun addLast (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)V
-	public synthetic fun addLast (Ljava/lang/Object;)V
-	public fun clear ()V
-	public fun contains (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)Z
-	public final fun contains (Ljava/lang/Object;)Z
-	public fun containsAll (Ljava/util/Collection;)Z
-	public fun equals (Ljava/lang/Object;)Z
-	public fun get (I)Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;
-	public synthetic fun get (I)Ljava/lang/Object;
-	public fun getSize ()I
-	public fun hashCode ()I
-	public fun indexOf (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)I
-	public final fun indexOf (Ljava/lang/Object;)I
-	public fun isEmpty ()Z
-	public fun iterator ()Ljava/util/Iterator;
-	public fun lastIndexOf (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)I
-	public final fun lastIndexOf (Ljava/lang/Object;)I
-	public fun listIterator ()Ljava/util/ListIterator;
-	public fun listIterator (I)Ljava/util/ListIterator;
-	public fun remove (I)Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;
-	public synthetic fun remove (I)Ljava/lang/Object;
-	public fun remove (Ljava/lang/Object;)Z
-	public fun removeAll (Ljava/util/Collection;)Z
-	public fun removeFirst ()Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;
-	public synthetic fun removeFirst ()Ljava/lang/Object;
-	public fun removeLast ()Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;
-	public synthetic fun removeLast ()Ljava/lang/Object;
-	public fun replaceAll (Ljava/util/function/UnaryOperator;)V
-	public fun retainAll (Ljava/util/Collection;)Z
-	public fun set (ILcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;
-	public synthetic fun set (ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun size ()I
-	public fun sort (Ljava/util/Comparator;)V
-	public fun subList (II)Ljava/util/List;
-	public fun toArray ()[Ljava/lang/Object;
-	public fun toArray ([Ljava/lang/Object;)[Ljava/lang/Object;
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class com/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode {
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/_system/JsonElementNodeKt {
-	public static final fun flatten (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)Ljava/util/List;
-	public static final fun toJsonElement (Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;)Lkotlinx/serialization/json/JsonElement;
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/_system/JsonObjectNode : com/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;)V
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getChildren ()Ljava/util/List;
-	public final fun getContent ()Lkotlinx/serialization/json/JsonObject;
-	public fun hashCode ()I
-	public final fun setChildren (Ljava/util/List;)V
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class com/tezov/tuucho/core/data/repository/parser/_system/MatcherHelperExtensionKt {
 	public static final fun isAnySubsetOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
 	public static final fun isAnySubsetOf (Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
@@ -705,55 +641,6 @@ public abstract interface class com/tezov/tuucho/core/data/repository/parser/ass
 	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/ActionBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/ColorBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/ComponentBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/ContentBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/DimensionBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/OptionBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/StateBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/StyleBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public final class com/tezov/tuucho/core/data/repository/parser/breaker/TextBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker {
-	public fun <init> ()V
-}
-
-public abstract class com/tezov/tuucho/core/data/repository/parser/breaker/_system/AbstractBreaker : com/tezov/tuucho/core/data/repository/parser/breaker/_system/MatcherBreakerProtocol, com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
-	public fun <init> ()V
-	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
-	protected fun getChildProcessors ()Ljava/util/List;
-	public fun getKoin ()Lorg/koin/core/Koin;
-	protected fun getMatchers ()Ljava/util/List;
-	public final fun process (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lcom/tezov/tuucho/core/data/repository/parser/_system/JsonElementNode;
-}
-
-public abstract interface class com/tezov/tuucho/core/data/repository/parser/breaker/_system/MatcherBreakerProtocol {
-	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
-}
-
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/button/content/action/ActionButtonMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
 	public fun <init> ()V
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
@@ -767,6 +654,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_eleme
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/button/content/label/ContentButtonLabelRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/FormValidatorRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
@@ -774,6 +662,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_eleme
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/field/content/ContentFormFieldTextErrorMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
@@ -787,6 +676,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_eleme
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/field/content/ContentFormFieldTextMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
@@ -830,6 +720,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_eleme
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/layout/linear/StyleLayoutLinearColorMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
@@ -854,6 +745,7 @@ public abstract class com/tezov/tuucho/core/data/repository/parser/rectifier/_sy
 	protected fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	protected fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	protected fun getChildProcessors ()Ljava/util/List;
+	public abstract fun getKey ()Ljava/lang/String;
 	public fun getKoin ()Lorg/koin/core/Koin;
 	protected fun getMatchers ()Ljava/util/List;
 	public final fun process (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
@@ -861,6 +753,12 @@ public abstract class com/tezov/tuucho/core/data/repository/parser/rectifier/_sy
 
 public abstract interface class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
 	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierHelper {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierHelper;
+	public final fun rectifyIds (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;Ljava/lang/String;)Lkotlin/Pair;
+	public final fun retrieveSubsetOrMarkUnknown (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierIdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
@@ -875,36 +773,42 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/action
 	public synthetic fun beforeAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/action/ActionsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/color/ColorRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/color/ColorsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/component/ComponentRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/component/ComponentsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/content/ContentRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
@@ -912,24 +816,28 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/conten
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/content/ContentsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/dimension/DimensionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/dimension/DimensionsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/id/IdMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol, com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
@@ -943,6 +851,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/id/IdR
 	public synthetic fun beforeAlterNull (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/option/OptionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
@@ -950,12 +859,14 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/option
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/option/OptionsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/setting/component/SettingComponentNavigationDefinitionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
@@ -963,11 +874,13 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/settin
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/setting/component/SettingComponentNavigationRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/setting/component/SettingComponentRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
@@ -976,6 +889,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/settin
 	public synthetic fun beforeAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/state/StateRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
@@ -983,12 +897,14 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/state/
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/state/StatesRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/style/StyleRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
@@ -996,24 +912,28 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/style/
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/style/StylesRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/text/TextRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/text/TextsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
 	public fun <init> ()V
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
 }
 
 public abstract class com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower : com/tezov/tuucho/core/data/repository/parser/shadower/_system/MatcherShadowerProtocol, com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
@@ -1123,10 +1043,6 @@ abstract interface com.tezov.tuucho.core.data.repository.parser.assembler._syste
     abstract fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.assembler._system/MatcherAssemblerProtocol.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.data.repository.parser.breaker._system/MatcherBreakerProtocol { // com.tezov.tuucho.core.data.repository.parser.breaker._system/MatcherBreakerProtocol|null[0]
-    abstract fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.breaker._system/MatcherBreakerProtocol.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
-}
-
 abstract interface com.tezov.tuucho.core.data.repository.parser.rectifier._system/MatcherRectifierProtocol { // com.tezov.tuucho.core.data.repository.parser.rectifier._system/MatcherRectifierProtocol|null[0]
     abstract fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier._system/MatcherRectifierProtocol.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
@@ -1156,21 +1072,11 @@ abstract class com.tezov.tuucho.core.data.repository.parser.assembler._system/Ab
     open fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.assembler._system/AbstractAssembler.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
-abstract class com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/MatcherBreakerProtocol, com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent { // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker.<init>|<init>(){}[0]
-
-    open val childProcessors // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker.childProcessors|{}childProcessors[0]
-        open fun <get-childProcessors>(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker> // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker.childProcessors.<get-childProcessors>|<get-childProcessors>(){}[0]
-    open val matchers // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker.matchers|{}matchers[0]
-        open fun <get-matchers>(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser.breaker._system/MatcherBreakerProtocol> // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker.matchers.<get-matchers>|<get-matchers>(){}[0]
-
-    final fun process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker.process|process(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
-    open fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
-}
-
 abstract class com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/MatcherRectifierProtocol, com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent { // com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier.<init>|<init>(){}[0]
 
+    abstract val key // com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier.key|{}key[0]
+        abstract fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier.key.<get-key>|<get-key>(){}[0]
     open val childProcessors // com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier.childProcessors|{}childProcessors[0]
         open fun <get-childProcessors>(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier> // com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier.childProcessors.<get-childProcessors>|<get-childProcessors>(){}[0]
     open val matchers // com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier.matchers|{}matchers[0]
@@ -1400,42 +1306,6 @@ final class com.tezov.tuucho.core.data.repository.database.table/JsonObjectConte
     }
 }
 
-final class com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode : com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode, kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode> { // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode|null[0]
-    constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode>) // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode>){}[0]
-
-    final val size // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.size|{}size[0]
-        final fun <get-size>(): kotlin/Int // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.size.<get-size>|<get-size>(){}[0]
-
-    final fun contains(com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.contains|contains(com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode){}[0]
-    final fun containsAll(kotlin.collections/Collection<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode>): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.containsAll|containsAll(kotlin.collections.Collection<com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.equals|equals(kotlin.Any?){}[0]
-    final fun get(kotlin/Int): com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.get|get(kotlin.Int){}[0]
-    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.hashCode|hashCode(){}[0]
-    final fun indexOf(com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode): kotlin/Int // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.indexOf|indexOf(com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode){}[0]
-    final fun isEmpty(): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.isEmpty|isEmpty(){}[0]
-    final fun iterator(): kotlin.collections/Iterator<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode> // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.iterator|iterator(){}[0]
-    final fun lastIndexOf(com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode): kotlin/Int // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.lastIndexOf|lastIndexOf(com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode){}[0]
-    final fun listIterator(): kotlin.collections/ListIterator<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode> // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.listIterator|listIterator(){}[0]
-    final fun listIterator(kotlin/Int): kotlin.collections/ListIterator<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode> // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.listIterator|listIterator(kotlin.Int){}[0]
-    final fun subList(kotlin/Int, kotlin/Int): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode> // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.subList|subList(kotlin.Int;kotlin.Int){}[0]
-    final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.parser._system/JsonArrayNode.toString|toString(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode : com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode { // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.<init>|<init>(kotlinx.serialization.json.JsonObject){}[0]
-
-    final val content // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.content|{}content[0]
-        final fun <get-content>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.content.<get-content>|<get-content>(){}[0]
-
-    final var children // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.children|{}children[0]
-        final fun <get-children>(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode>? // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.children.<get-children>|<get-children>(){}[0]
-        final fun <set-children>(kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode>?) // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.children.<set-children>|<set-children>(kotlin.collections.List<com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode>?){}[0]
-
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode.toString|toString(){}[0]
-}
-
 final class com.tezov.tuucho.core.data.repository.parser.assembler._element.layout.linear/ContentLayoutLinearItemsMatcher : com.tezov.tuucho.core.data.repository.parser.assembler._system/MatcherAssemblerProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler._element.layout.linear/ContentLayoutLinearItemsMatcher|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.assembler._element.layout.linear/ContentLayoutLinearItemsMatcher.<init>|<init>(){}[0]
 
@@ -1529,42 +1399,6 @@ final class com.tezov.tuucho.core.data.repository.parser.assembler/TextAssembler
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.assembler/TextAssembler.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
-final class com.tezov.tuucho.core.data.repository.parser.breaker/ActionBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/ActionBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/ActionBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/ColorBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/ColorBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/ColorBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/ComponentBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/ComponentBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/ComponentBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/ContentBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/ContentBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/ContentBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/DimensionBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/DimensionBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/DimensionBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/OptionBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/OptionBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/OptionBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/StateBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/StateBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/StateBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/StyleBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/StyleBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/StyleBreaker.<init>|<init>(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository.parser.breaker/TextBreaker : com.tezov.tuucho.core.data.repository.parser.breaker._system/AbstractBreaker { // com.tezov.tuucho.core.data.repository.parser.breaker/TextBreaker|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.breaker/TextBreaker.<init>|<init>(){}[0]
-}
-
 final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action/ActionButtonMatcher : com.tezov.tuucho.core.data.repository.parser.rectifier._system/MatcherRectifierProtocol { // com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action/ActionButtonMatcher|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action/ActionButtonMatcher.<init>|<init>(){}[0]
 
@@ -1580,6 +1414,9 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.butt
 final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label/ContentButtonLabelRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label/ContentButtonLabelRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label/ContentButtonLabelRectifier.<init>|<init>(){}[0]
 
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label/ContentButtonLabelRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label/ContentButtonLabelRectifier.key.<get-key>|<get-key>(){}[0]
+
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label/ContentButtonLabelRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
@@ -1591,6 +1428,9 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.form
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content/ContentFormFieldTextErrorRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content/ContentFormFieldTextErrorRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content/ContentFormFieldTextErrorRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content/ContentFormFieldTextErrorRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content/ContentFormFieldTextErrorRectifier.key.<get-key>|<get-key>(){}[0]
 
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content/ContentFormFieldTextErrorRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
@@ -1615,6 +1455,9 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.form
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.form/FormValidatorRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form/FormValidatorRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form/FormValidatorRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form/FormValidatorRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._element.form/FormValidatorRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.content/ContentLabelTextMatcher : com.tezov.tuucho.core.data.repository.parser.rectifier._system/MatcherRectifierProtocol { // com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.content/ContentLabelTextMatcher|null[0]
@@ -1644,6 +1487,9 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.layo
 final class com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear/ContentLayoutLinearItemsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear/ContentLayoutLinearItemsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear/ContentLayoutLinearItemsRectifier.<init>|<init>(){}[0]
 
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear/ContentLayoutLinearItemsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear/ContentLayoutLinearItemsRectifier.key.<get-key>|<get-key>(){}[0]
+
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear/ContentLayoutLinearItemsRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
@@ -1666,44 +1512,74 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier._system/Recti
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionsRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.action/ActionsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorsRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.color/ColorsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentsRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.component/ComponentsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentRectifier.key.<get-key>|<get-key>(){}[0]
 
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentsRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.content/ContentsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionsRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.dimension/DimensionsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdMatcher : com.tezov.tuucho.core.data.repository.parser.rectifier._system/MatcherRectifierProtocol, com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent { // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdMatcher|null[0]
@@ -1714,20 +1590,32 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdMatcher 
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier|null[0]
     constructor <init>(com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierIdGenerator) // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier.<init>|<init>(com.tezov.tuucho.core.data.repository.parser.rectifier._system.RectifierIdGenerator){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.id/IdRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier.key.<get-key>|<get-key>(){}[0]
 
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionsRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.option/OptionsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationDefinitionRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationDefinitionRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationDefinitionRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationDefinitionRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationDefinitionRectifier.key.<get-key>|<get-key>(){}[0]
 
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationDefinitionRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
@@ -1735,11 +1623,17 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.setting.compo
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationRectifier.<init>|<init>(){}[0]
 
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationRectifier.key.<get-key>|<get-key>(){}[0]
+
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentNavigationRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentRectifier.key.<get-key>|<get-key>(){}[0]
 
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier.setting.component/SettingComponentRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
@@ -1747,29 +1641,47 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.setting.compo
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.state/StateRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StateRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StateRectifier.<init>|<init>(){}[0]
 
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StateRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StateRectifier.key.<get-key>|<get-key>(){}[0]
+
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StateRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.state/StatesRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StatesRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StatesRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StatesRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.state/StatesRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.style/StyleRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StyleRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StyleRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StyleRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StyleRectifier.key.<get-key>|<get-key>(){}[0]
 
     final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StyleRectifier.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.style/StylesRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StylesRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StylesRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StylesRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.style/StylesRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextsRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextsRectifier|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextsRectifier.<init>|<init>(){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextsRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.text/TextsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear/ContentLayoutLinearItemsMatcher : com.tezov.tuucho.core.data.repository.parser.shadower._system/MatcherShadowerProtocol { // com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear/ContentLayoutLinearItemsMatcher|null[0]
@@ -2078,8 +1990,6 @@ sealed class com.tezov.tuucho.core.data.repository.exception/DataException : kot
     }
 }
 
-sealed class com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode // com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode|null[0]
-
 final object com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule { // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule|null[0]
     abstract interface Config { // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Config|null[0]
         abstract val fileName // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Config.fileName|{}fileName[0]
@@ -2125,8 +2035,11 @@ final object com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules { //
     final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol> // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules.invoke|invoke(){}[0]
 }
 
-final fun (com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode).com.tezov.tuucho.core.data.repository.parser._system/flatten(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser._system/JsonObjectNode> // com.tezov.tuucho.core.data.repository.parser._system/flatten|flatten@com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode(){}[0]
-final fun (com.tezov.tuucho.core.data.repository.parser._system/JsonElementNode).com.tezov.tuucho.core.data.repository.parser._system/toJsonElement(): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.data.repository.parser._system/toJsonElement|toJsonElement@com.tezov.tuucho.core.data.repository.parser._system.JsonElementNode(){}[0]
+final object com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierHelper { // com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierHelper|null[0]
+    final fun <#A1: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A1>> (com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A1>).rectifyIds(kotlin/String): kotlin/Pair<kotlin/String?, kotlin/String?> // com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierHelper.rectifyIds|rectifyIds@com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>(kotlin.String){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
+    final fun retrieveSubsetOrMarkUnknown(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier._system/RectifierHelper.retrieveSubsetOrMarkUnknown|retrieveSubsetOrMarkUnknown(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
+}
+
 final fun (com.tezov.tuucho.core.domain.tool.json/JsonElementPath).com.tezov.tuucho.core.data.repository.parser._system/isAnySubsetOf(kotlinx.serialization.json/JsonElement, kotlin.collections/List<kotlin/String>): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/isAnySubsetOf|isAnySubsetOf@com.tezov.tuucho.core.domain.tool.json.JsonElementPath(kotlinx.serialization.json.JsonElement;kotlin.collections.List<kotlin.String>){}[0]
 final fun (com.tezov.tuucho.core.domain.tool.json/JsonElementPath).com.tezov.tuucho.core.data.repository.parser._system/isAnyTypeOf(kotlinx.serialization.json/JsonElement, kotlin.collections/List<kotlin/String>): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/isAnyTypeOf|isAnyTypeOf@com.tezov.tuucho.core.domain.tool.json.JsonElementPath(kotlinx.serialization.json.JsonElement;kotlin.collections.List<kotlin.String>){}[0]
 final fun (com.tezov.tuucho.core.domain.tool.json/JsonElementPath).com.tezov.tuucho.core.data.repository.parser._system/isSubsetOf(kotlinx.serialization.json/JsonElement, kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser._system/isSubsetOf|isSubsetOf@com.tezov.tuucho.core.domain.tool.json.JsonElementPath(kotlinx.serialization.json.JsonElement;kotlin.String){}[0]
@@ -2285,7 +2198,7 @@ abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddle
     abstract val priority // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority|{}priority[0]
         abstract fun <get-priority>(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority.<get-priority>|<get-priority>(){}[0]
 
-    abstract fun accept(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.accept|accept(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain){}[0]
+    abstract fun accept(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.accept|accept(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain){}[0]
 
     final class Context { // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context|null[0]
         constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement) // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input.JsonElement){}[0]
@@ -2504,10 +2417,6 @@ final class <#A: kotlin/Any?> com.tezov.tuucho.core.domain.business.jsonSchema._
     }
 }
 
-final class com.tezov.tuucho.core.domain.business._system/IdGenerator : com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<kotlin/Unit, kotlin/String> { // com.tezov.tuucho.core.domain.business._system/IdGenerator|null[0]
-    final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business._system/IdGenerator.generate|generate(){}[0]
-}
-
 final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
     constructor <init>() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(){}[0]
 
@@ -2573,6 +2482,8 @@ final class com.tezov.tuucho.core.domain.business.interaction.navigation/Navigat
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator : com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<kotlin/Unit, kotlin/String> { // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<kotlin/Unit, kotlin/String>) // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol<kotlin.Unit,kotlin.String>){}[0]
+
     final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator.generate|generate(){}[0]
 }
 
@@ -2706,29 +2617,29 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessAct
         abstract val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable|{}lockable[0]
             abstract fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable.<get-lockable>|<get-lockable>(){}[0]
         abstract val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route|{}route[0]
-            abstract fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route.<get-route>|<get-route>(){}[0]
+            abstract fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route.<get-route>|<get-route>(){}[0]
 
         final class ActionObject : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url?, kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?){}[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?){}[0]
 
             final val actionObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.actionObject|{}actionObject[0]
                 final fun <get-actionObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.actionObject.<get-actionObject>|<get-actionObject>(){}[0]
             final val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.lockable|{}lockable[0]
                 final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.lockable.<get-lockable>|<get-lockable>(){}[0]
             final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.route|{}route[0]
-                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.route.<get-route>|<get-route>(){}[0]
+                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.route.<get-route>|<get-route>(){}[0]
 
-            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component1|component1(){}[0]
+            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component1|component1(){}[0]
             final fun component2(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component2|component2(){}[0]
             final fun component3(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component3|component3(){}[0]
-            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? = ..., kotlinx.serialization.json/JsonObject = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?){}[0]
+            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? = ..., kotlinx.serialization.json/JsonObject = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?){}[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.toString|toString(){}[0]
         }
 
         final class JsonElement : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
 
             final val action // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.action|{}action[0]
                 final fun <get-action>(): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.action.<get-action>|<get-action>(){}[0]
@@ -2737,13 +2648,13 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessAct
             final val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.lockable|{}lockable[0]
                 final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.lockable.<get-lockable>|<get-lockable>(){}[0]
             final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.route|{}route[0]
-                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.route.<get-route>|<get-route>(){}[0]
+                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.route.<get-route>|<get-route>(){}[0]
 
-            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component1|component1(){}[0]
+            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component1|component1(){}[0]
             final fun component2(): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component2|component2(){}[0]
             final fun component3(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component3|component3(){}[0]
             final fun component4(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.component4|component4(){}[0]
-            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url? = ..., com.tezov.tuucho.core.domain.business.model/ActionModelDomain = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
+            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? = ..., com.tezov.tuucho.core.domain.business.model/ActionModelDomain = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.JsonElement.toString|toString(){}[0]
@@ -2919,13 +2830,13 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScre
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase.Input){}[0]
 
     final class Input { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url){}[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute){}[0]
 
         final val route // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.route|{}route[0]
-            final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.route.<get-route>|<get-route>(){}[0]
+            final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.route.<get-route>|<get-route>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.component1|component1(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.component1|component1(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScreenOrNullUseCase.Input.toString|toString(){}[0]
@@ -3177,16 +3088,16 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateV
     final fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input){}[0]
 
     final class Input { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute, kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute;kotlinx.serialization.json.JsonObject){}[0]
 
         final val jsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.jsonObject|{}jsonObject[0]
             final fun <get-jsonObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.jsonObject.<get-jsonObject>|<get-jsonObject>(){}[0]
         final val route // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.route|{}route[0]
-            final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.route.<get-route>|<get-route>(){}[0]
+            final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.route.<get-route>|<get-route>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.component1|component1(){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.component1|component1(){}[0]
         final fun component2(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.component2|component2(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url = ..., kotlinx.serialization.json/JsonObject = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute = ..., kotlinx.serialization.json/JsonObject = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute;kotlinx.serialization.json.JsonObject){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.toString|toString(){}[0]
@@ -3333,6 +3244,13 @@ sealed class com.tezov.tuucho.core.domain.business.interaction.navigation/Naviga
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Back.toString|toString(){}[0]
+    }
+
+    final object Current : com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute { // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Current|null[0]
+        final fun accept(kotlin/Any): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Current.accept|accept(kotlin.Any){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Current.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Current.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Current.toString|toString(){}[0]
     }
 
     final object Finish : com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute { // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Finish|null[0]
@@ -5327,7 +5245,7 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/Navigatio
     abstract interface StackScreen { // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen|null[0]
         abstract suspend fun backward(kotlin.collections/List<com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url>) // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.backward|backward(kotlin.collections.List<com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url>){}[0]
         abstract suspend fun forward(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.forward|forward(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
-        abstract suspend fun getScreenOrNull(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url): com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.getScreenOrNull|getScreenOrNull(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url){}[0]
+        abstract suspend fun getScreenOrNull(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute): com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.getScreenOrNull|getScreenOrNull(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute){}[0]
         abstract suspend fun getScreens(kotlin.collections/List<com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol> // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.getScreens|getScreens(kotlin.collections.List<com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url>){}[0]
         abstract suspend fun getScreensOrNull(kotlin/String): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol>? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.getScreensOrNull|getScreensOrNull(kotlin.String){}[0]
         abstract suspend fun routes(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url> // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.routes|routes(){}[0]
@@ -5405,13 +5323,6 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/Navigatio
 
 final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope|onScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
 final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>, com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator? = ...): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope|withScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>;com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeMapOperator?){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
-
-public final class com/tezov/tuucho/core/domain/business/_system/IdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
-	public synthetic fun generate ()Ljava/lang/Object;
-	public fun generate ()Ljava/lang/String;
-	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
-	public fun generate (Lkotlin/Unit;)Ljava/lang/String;
-}
 
 public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
@@ -5562,6 +5473,14 @@ public final class com/tezov/tuucho/core/domain/business/interaction/navigation/
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Current : com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Current;
+	public fun accept (Ljava/lang/Object;)Z
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Finish : com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Finish;
 	public fun accept (Ljava/lang/Object;)Z
@@ -5585,6 +5504,7 @@ public final class com/tezov/tuucho/core/domain/business/interaction/navigation/
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol;)V
 	public synthetic fun generate ()Ljava/lang/Object;
 	public fun generate ()Ljava/lang/String;
 	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
@@ -7122,7 +7042,7 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/Typ
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/middleware/ActionMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
-	public abstract fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;)Z
+	public abstract fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;)Z
 	public abstract fun getPriority ()I
 }
 
@@ -7622,7 +7542,7 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/r
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen {
 	public abstract fun backward (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun forward (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getScreenOrNull (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getScreenOrNull (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScreens (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScreensOrNull (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun routes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7765,39 +7685,39 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Pro
 
 public abstract class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input {
 	public abstract fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public abstract fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public abstract fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject : com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;)V
-	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;)V
+	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public final fun component2 ()Lkotlinx/serialization/json/JsonObject;
 	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$ActionObject;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActionObject ()Lkotlinx/serialization/json/JsonObject;
 	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement : com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;)V
-	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;)V
+	public synthetic fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;
 	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
 	public final fun component4 ()Lkotlinx/serialization/json/JsonElement;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lkotlinx/serialization/json/JsonElement;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input$JsonElement;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAction ()Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;
 	public final fun getJsonElement ()Lkotlinx/serialization/json/JsonElement;
 	public fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -7945,12 +7865,12 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase$Input;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase$Input;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase$Input;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase$Input;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase$Input;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreenOrNullUseCase$Input;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public final fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -8172,14 +8092,14 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public final fun component2 ()Lkotlinx/serialization/json/JsonObject;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getJsonObject ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
+	public final fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -8837,30 +8757,27 @@ public final class com/tezov/tuucho/core/presentation/tool/misc/FocusDispatcher$
 	public final fun requestFocus ()V
 }
 
+public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/ui/Modifier;)V
+	public final fun and (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun and (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun build ()Landroidx/compose/ui/Modifier;
+	public final fun getModifier ()Landroidx/compose/ui/Modifier;
+	public final fun ifFalse (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun ifNotNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun ifNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun ifTrue (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun or (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun or (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierChainBuilder;
+	public final fun setModifier (Landroidx/compose/ui/Modifier;)V
+}
+
 public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierClickKt {
 	public static final fun clickableDisabled (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
 }
 
-public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional {
-	public static final field $stable I
-	public static final field Companion Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional$Companion;
-	public fun <init> (Lkotlin/jvm/functions/Function1;Z)V
-	public final fun and (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public final fun and (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public final fun applyTo (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
-	public final fun or (Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public final fun or (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-}
-
-public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional$Companion {
-	public final fun getEmpty ()Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-}
-
 public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierConditionnalKt {
-	public static final fun onFalse (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public static final fun onNotNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public static final fun onNull (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
-	public static final fun onTrue (Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/tool/modifier/ModifierConditional;
 	public static final fun then (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;)Landroidx/compose/ui/Modifier;
 	public static final fun thenOnFalse (Landroidx/compose/ui/Modifier;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function3;)Landroidx/compose/ui/Modifier;
 	public static final fun thenOnNotNull (Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
@@ -9996,19 +9913,22 @@ final class com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher { // co
     }
 }
 
-final class com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional { // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional|null[0]
-    constructor <init>(kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>, kotlin/Boolean) // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.<init>|<init>(kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>;kotlin.Boolean){}[0]
+final class com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder { // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder|null[0]
+    constructor <init>(androidx.compose.ui/Modifier) // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.<init>|<init>(androidx.compose.ui.Modifier){}[0]
 
-    final fun and(com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.and|and(com.tezov.tuucho.core.presentation.tool.modifier.ModifierConditional){}[0]
-    final fun and(kotlin/Function1<androidx.compose.ui/Modifier, kotlin/Unit>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.and|and(kotlin.Function1<androidx.compose.ui.Modifier,kotlin.Unit>){}[0]
-    final fun applyTo(androidx.compose.ui/Modifier): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.applyTo|applyTo(androidx.compose.ui.Modifier){}[0]
-    final fun or(com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.or|or(com.tezov.tuucho.core.presentation.tool.modifier.ModifierConditional){}[0]
-    final fun or(kotlin/Function1<androidx.compose.ui/Modifier, kotlin/Unit>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.or|or(kotlin.Function1<androidx.compose.ui.Modifier,kotlin.Unit>){}[0]
+    final var modifier // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.modifier|{}modifier[0]
+        final fun <get-modifier>(): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.modifier.<get-modifier>|<get-modifier>(){}[0]
+        final fun <set-modifier>(androidx.compose.ui/Modifier) // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.modifier.<set-modifier>|<set-modifier>(androidx.compose.ui.Modifier){}[0]
 
-    final object Companion { // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.Companion|null[0]
-        final val Empty // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.Companion.Empty|{}Empty[0]
-            final fun <get-Empty>(): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional.Companion.Empty.<get-Empty>|<get-Empty>(){}[0]
-    }
+    final fun and(com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.and|and(com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder){}[0]
+    final fun and(kotlin/Function1<com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder, kotlin/Unit>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.and|and(kotlin.Function1<com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder,kotlin.Unit>){}[0]
+    final fun build(): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.build|build(){}[0]
+    final fun or(com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.or|or(com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder){}[0]
+    final fun or(kotlin/Function1<com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder, kotlin/Unit>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.or|or(kotlin.Function1<com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder,kotlin.Unit>){}[0]
+    final inline fun <#A1: kotlin/Any?> ifNotNull(#A1?, crossinline kotlin/Function2<androidx.compose.ui/Modifier, #A1, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifNotNull|ifNotNull(0:0?;kotlin.Function2<androidx.compose.ui.Modifier,0:0,androidx.compose.ui.Modifier>){0§<kotlin.Any?>}[0]
+    final inline fun ifFalse(kotlin/Boolean?, crossinline kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifFalse|ifFalse(kotlin.Boolean?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
+    final inline fun ifNull(kotlin/Any?, crossinline kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifNull|ifNull(kotlin.Any?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
+    final inline fun ifTrue(kotlin/Boolean?, crossinline kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifTrue|ifTrue(kotlin.Boolean?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
 }
 
 final class com.tezov.tuucho.core.presentation.tool.type.primaire/DpSize { // com.tezov.tuucho.core.presentation.tool.type.primaire/DpSize|null[0]
@@ -11039,7 +10959,7 @@ final val com.tezov.tuucho.core.presentation.tool.extension/com_tezov_tuucho_cor
 final val com.tezov.tuucho.core.presentation.tool.extension/com_tezov_tuucho_core_presentation_tool_extension_ExtensionPadding$stableprop // com.tezov.tuucho.core.presentation.tool.extension/com_tezov_tuucho_core_presentation_tool_extension_ExtensionPadding$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_extension_ExtensionPadding$stableprop[0]
 final val com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop // com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop[0]
 final val com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop // com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop[0]
-final val com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierConditional$stableprop // com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierConditional$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_modifier_ModifierConditional$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop // com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop[0]
 final val com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder$stableprop // com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder$stableprop[0]
 final val com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor$stableprop // com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor$stableprop[0]
 final val com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor_Style$stableprop // com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor_Style$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor_Style$stableprop[0]
@@ -11137,7 +11057,6 @@ final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool
 final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/fillDefaultMinHeightRemembered(kotlin/Boolean = ...): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/fillDefaultMinHeightRemembered|fillDefaultMinHeightRemembered@androidx.compose.ui.Modifier(kotlin.Boolean){}[0]
 final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/fillMaxHeight(androidx.compose.runtime/MutableState<androidx.compose.ui.unit/Dp>, kotlin/Boolean = ...): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/fillMaxHeight|fillMaxHeight@androidx.compose.ui.Modifier(androidx.compose.runtime.MutableState<androidx.compose.ui.unit.Dp>;kotlin.Boolean){}[0]
 final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/fillMaxHeightRemembered(kotlin/Boolean = ...): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/fillMaxHeightRemembered|fillMaxHeightRemembered@androidx.compose.ui.Modifier(kotlin.Boolean){}[0]
-final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/then(kotlin/Function1<androidx.compose.ui/Modifier, com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/then|then@androidx.compose.ui.Modifier(kotlin.Function1<androidx.compose.ui.Modifier,com.tezov.tuucho.core.presentation.tool.modifier.ModifierConditional>){}[0]
 final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenOnFalse(kotlin/Boolean?, kotlin/Function3<androidx.compose.ui/Modifier, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenOnFalse|thenOnFalse@androidx.compose.ui.Modifier(kotlin.Boolean?;kotlin.Function3<androidx.compose.ui.Modifier,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){}[0]
 final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenOnNotNull(androidx.compose.ui/Modifier?): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenOnNotNull|thenOnNotNull@androidx.compose.ui.Modifier(androidx.compose.ui.Modifier?){}[0]
 final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenOnTrue(kotlin/Boolean?, kotlin/Function3<androidx.compose.ui/Modifier, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenOnTrue|thenOnTrue@androidx.compose.ui.Modifier(kotlin.Boolean?;kotlin.Function3<androidx.compose.ui.Modifier,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){}[0]
@@ -11152,8 +11071,6 @@ final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool
 final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.type.primaire/size(com.tezov.tuucho.core.presentation.tool.type.primaire/DpSize): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.type.primaire/size|size@androidx.compose.ui.Modifier(com.tezov.tuucho.core.presentation.tool.type.primaire.DpSize){}[0]
 final fun <#A: kotlin/Any> (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenOnNotNull(#A?, kotlin/Function4<androidx.compose.ui/Modifier, #A, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenOnNotNull|thenOnNotNull@androidx.compose.ui.Modifier(0:0?;kotlin.Function4<androidx.compose.ui.Modifier,0:0,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){0§<kotlin.Any>}[0]
 final fun <#A: kotlin/Any> (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenOnNull(#A?, kotlin/Function3<androidx.compose.ui/Modifier, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenOnNull|thenOnNull@androidx.compose.ui.Modifier(0:0?;kotlin.Function3<androidx.compose.ui.Modifier,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){0§<kotlin.Any>}[0]
-final fun <#A: kotlin/Any> com.tezov.tuucho.core.presentation.tool.modifier/onNotNull(#A?, kotlin/Function2<androidx.compose.ui/Modifier, #A, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/onNotNull|onNotNull(0:0?;kotlin.Function2<androidx.compose.ui.Modifier,0:0,androidx.compose.ui.Modifier>){0§<kotlin.Any>}[0]
-final fun <#A: kotlin/Any> com.tezov.tuucho.core.presentation.tool.modifier/onNull(#A?, kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/onNull|onNull(0:0?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){0§<kotlin.Any>}[0]
 final fun com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop_getter|com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop_getter|com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop_getter|com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop_getter(){}[0]
@@ -11165,9 +11082,7 @@ final fun com.tezov.tuucho.core.presentation.tool.extension/com_tezov_tuucho_cor
 final fun com.tezov.tuucho.core.presentation.tool.extension/com_tezov_tuucho_core_presentation_tool_extension_ExtensionPadding$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.extension/com_tezov_tuucho_core_presentation_tool_extension_ExtensionPadding$stableprop_getter|com_tezov_tuucho_core_presentation_tool_extension_ExtensionPadding$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop_getter|com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop_getter|com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierConditional$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierConditional$stableprop_getter|com_tezov_tuucho_core_presentation_tool_modifier_ModifierConditional$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.presentation.tool.modifier/onFalse(kotlin/Boolean?, kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/onFalse|onFalse(kotlin.Boolean?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
-final fun com.tezov.tuucho.core.presentation.tool.modifier/onTrue(kotlin/Boolean?, kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierConditional // com.tezov.tuucho.core.presentation.tool.modifier/onTrue|onTrue(kotlin.Boolean?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop_getter|com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder$stableprop_getter|com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor$stableprop_getter|com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor_Style$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.theme.style/com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor_Style$stableprop_getter|com_tezov_tuucho_core_presentation_tool_theme_style_OutfitBorder_StateColor_Style$stableprop_getter(){}[0]
@@ -11232,6 +11147,7 @@ final fun com.tezov.tuucho.core.presentation.tool.theme.theme/com_tezov_tuucho_c
 final fun com.tezov.tuucho.core.presentation.tool.type.primaire/com_tezov_tuucho_core_presentation_tool_type_primaire_DpSize$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.type.primaire/com_tezov_tuucho_core_presentation_tool_type_primaire_DpSize$stableprop_getter|com_tezov_tuucho_core_presentation_tool_type_primaire_DpSize$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.type.primaire/com_tezov_tuucho_core_presentation_tool_type_primaire_QuadDirection$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.type.primaire/com_tezov_tuucho_core_presentation_tool_type_primaire_QuadDirection$stableprop_getter|com_tezov_tuucho_core_presentation_tool_type_primaire_QuadDirection$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.tool.type.primaire/com_tezov_tuucho_core_presentation_tool_type_primaire_Scale$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.type.primaire/com_tezov_tuucho_core_presentation_tool_type_primaire_Scale$stableprop_getter|com_tezov_tuucho_core_presentation_tool_type_primaire_Scale$stableprop_getter(){}[0]
+final inline fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/then(kotlin/Function1<com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder, kotlin/Unit>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/then|then@androidx.compose.ui.Modifier(kotlin.Function1<com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder,kotlin.Unit>){}[0]
 
 
 ************ Project: :core.presentation.ui ************

@@ -15,6 +15,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema.contentOrNull
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema.optionOrNull
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema.stateOrNull
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.idValue
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MessageSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
@@ -85,17 +86,17 @@ class FieldView(
                     )
                 }
             }
-        // TODO: need to add the rectifier for initialValue text
-//        componentObject.stateOrNull
-//            ?.withScope(FormFieldSchema.State::Scope)?.run {
-//                initialValue?.idValue?.let {
-//                    addTypeIdForKey(
-//                        type = TypeSchema.Value.text,
-//                        id = it,
-//                        key = FormFieldSchema.State.Key.initialValue
-//                    )
-//                }
-//            }
+        componentObject.stateOrNull
+            ?.withScope(FormFieldSchema.State::Scope)
+            ?.run {
+                initialValue?.idValue?.let {
+                    addTypeIdForKey(
+                        type = TypeSchema.Value.text,
+                        id = it,
+                        key = FormFieldSchema.State.Key.initialValue
+                    )
+                }
+            }
         addTypeId(TypeSchema.Value.message, id = componentObject.idValue)
     }
 

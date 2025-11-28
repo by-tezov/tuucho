@@ -15,7 +15,7 @@ class UpdateViewUseCase(
     private val updateViewMiddlewares: List<UpdateViewMiddleware>
 ) : UseCaseProtocol.Sync<Input, Unit> {
     data class Input(
-        val route: NavigationRoute.Url,
+        val route: NavigationRoute,
         val jsonObject: JsonObject,
     )
 
