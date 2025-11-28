@@ -29,16 +29,17 @@ class NavigateBackUseCase(
     override fun invoke(
         input: Unit
     ) {
-        coroutineScopes.useCase.async {
-            (navigationMiddlewares + terminalMiddleware()).execute(
-                context = NavigationMiddleware.Back.Context(
-                    currentUrl = navigationStackRouteRepository.currentRoute()?.value
-                        ?: throw DomainException.Default("Shouldn't be possible"),
-                    nextUrl = navigationStackRouteRepository.priorRoute()?.value,
-                    onShadowerException = null
+        coroutineScopes.useCase
+            .async {
+                (navigationMiddlewares + terminalMiddleware()).execute(
+                    context = NavigationMiddleware.Back.Context(
+                        currentUrl = navigationStackRouteRepository.currentRoute()?.value
+                            ?: throw DomainException.Default("Shouldn't be possible"),
+                        nextUrl = navigationStackRouteRepository.priorRoute()?.value,
+                        onShadowerException = null
+                    )
                 )
-            )
-        }.throwOnFailure()
+            }.throwOnFailure()
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->

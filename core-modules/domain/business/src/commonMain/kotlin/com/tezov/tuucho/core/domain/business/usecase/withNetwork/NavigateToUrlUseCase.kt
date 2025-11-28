@@ -47,15 +47,16 @@ class NavigateToUrlUseCase(
     override fun invoke(
         input: Input
     ) {
-        coroutineScopes.useCase.async {
-            (navigationMiddlewares + terminalMiddleware()).execute(
-                context = NavigationMiddleware.ToUrl.Context(
-                    currentUrl = navigationStackRouteRepository.currentRoute()?.value,
-                    input = input,
-                    onShadowerException = null
+        coroutineScopes.useCase
+            .async {
+                (navigationMiddlewares + terminalMiddleware()).execute(
+                    context = NavigationMiddleware.ToUrl.Context(
+                        currentUrl = navigationStackRouteRepository.currentRoute()?.value,
+                        input = input,
+                        onShadowerException = null
+                    )
                 )
-            )
-        }.throwOnFailure()
+            }.throwOnFailure()
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->

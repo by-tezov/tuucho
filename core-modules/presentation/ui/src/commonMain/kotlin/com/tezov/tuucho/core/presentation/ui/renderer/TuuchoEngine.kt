@@ -185,16 +185,17 @@ class TuuchoEngine(
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
             LaunchedEffect(redrawTrigger.intValue) {
-                coroutineScopes.event.async {
-                    animationProgress
-                        .events
-                        .once {
-                            useCaseExecutor.async(
-                                useCase = notifyNavigationTransitionCompleted,
-                                input = Unit
-                            )
-                        }
-                }.throwOnFailure()
+                coroutineScopes.event
+                    .async {
+                        animationProgress
+                            .events
+                            .once {
+                                useCaseExecutor.async(
+                                    useCase = notifyNavigationTransitionCompleted,
+                                    input = Unit
+                                )
+                            }
+                    }.throwOnFailure()
                 animationProgress.start()
             }
         }

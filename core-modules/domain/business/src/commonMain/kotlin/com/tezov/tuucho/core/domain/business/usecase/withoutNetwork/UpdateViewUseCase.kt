@@ -23,13 +23,14 @@ class UpdateViewUseCase(
     override fun invoke(
         input: Input
     ) {
-        coroutineScopes.useCase.async {
-            (updateViewMiddlewares + terminalMiddleware()).execute(
-                context = UpdateViewMiddleware.Context(
-                    input = input,
+        coroutineScopes.useCase
+            .async {
+                (updateViewMiddlewares + terminalMiddleware()).execute(
+                    context = UpdateViewMiddleware.Context(
+                        input = input,
+                    )
                 )
-            )
-        }.throwOnFailure()
+            }.throwOnFailure()
     }
 
     private fun terminalMiddleware(): UpdateViewMiddleware = UpdateViewMiddleware { context, _ ->
