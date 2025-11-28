@@ -14,13 +14,12 @@ interface CoroutineContextProtocol {
     val scope: CoroutineScope
 
     fun <T> async(
-        onException: ((e: Throwable) -> Unit)? = null,
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T>
 
     suspend fun <T> await(
         block: suspend CoroutineScope.() -> T
-    ): T
+    ): T = async(block = block).await()
 }
 
 class CoroutineContext(
@@ -33,28 +32,8 @@ class CoroutineContext(
     override val scope: CoroutineScope = CoroutineScope(context + supervisorJob + CoroutineName(name))
 
     override fun <T> async(
-        onException: ((e: Throwable) -> Unit)?,
         block: suspend CoroutineScope.() -> T,
-    ): Deferred<T> {
-        val deferred = scope.async(block = block)
-        deferred.invokeOnCompletion { throwable ->
-            throwable?.let {
-                exceptionMonitor?.process(
-                    context = CoroutineExceptionMonitor.Context(
-                        name = scope.coroutineContext[CoroutineName]?.name ?: "unknown",
-                        id = deferred.hashCode().toHexString(),
-                        throwable = throwable
-                    )
-                )
-                onException?.invoke(throwable) ?: throw throwable
-            }
-        }
-        return deferred
-    }
-
-    override suspend fun <T> await(
-        block: suspend CoroutineScope.() -> T
-    ): T = scope
+    ) = scope
         .async(block = block)
         .also { deferred ->
             exceptionMonitor?.let {
@@ -70,5 +49,5 @@ class CoroutineContext(
                     }
                 }
             }
-        }.await()
+        }
 }

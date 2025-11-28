@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Compani
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import kotlinx.serialization.json.JsonObject
 
 class UpdateViewUseCase(
@@ -22,13 +23,14 @@ class UpdateViewUseCase(
     override fun invoke(
         input: Input
     ) {
-        coroutineScopes.useCase.async {
-            (updateViewMiddlewares + terminalMiddleware()).execute(
-                context = UpdateViewMiddleware.Context(
-                    input = input,
+        coroutineScopes.useCase
+            .async {
+                (updateViewMiddlewares + terminalMiddleware()).execute(
+                    context = UpdateViewMiddleware.Context(
+                        input = input,
+                    )
                 )
-            )
-        }
+            }.throwOnFailure()
     }
 
     private fun terminalMiddleware(): UpdateViewMiddleware = UpdateViewMiddleware { context, _ ->

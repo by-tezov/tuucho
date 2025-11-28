@@ -1,8 +1,7 @@
 ## In progress
 
 - screen lock
-- contextual -> crash if delay over 5000ms
- 
+- async throw -> redirect to global catcher to let user plug on it.
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - finir les p'tit dessous + clean
 
@@ -11,6 +10,10 @@
 - add more unit test + clean test
  
 **** ****
+- Shadower
+    // do not crash application but 
+    // - build a way to inform view the failure (all skimmer)
+    // - on back, when it was failure, how to attempt reload the block if back shadower is off ?
 - Error when Compose enter in the game
 - Add bottom/top screen not react to transition
 - Improve: update view have a knowledge of previous element and next element to avoid overhear job (aka generate validators)

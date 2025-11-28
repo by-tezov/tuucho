@@ -120,7 +120,6 @@
     <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
     <ID>MaxLineLength:InteractionLockStackTest.kt$InteractionLockStackTest$assertEquals(2, listOf(InteractionLockType.Screen, InteractionLockType.Navigation).map { it.toString() }.distinct().size)</ID>
     <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
-    <ID>MaxLineLength:NavigationMiddleware.kt$NavigationMiddleware.ToUrl.Context$val onShadowerException: (suspend (exception: Throwable, context: Context, replay: suspend () -&gt; Unit) -&gt; Unit)?</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
     <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$)</ID>
     <ID>MayBeConst:InteractionLockStackTest.kt$InteractionLockStackTest.Companion$private val requester = "test"</ID>

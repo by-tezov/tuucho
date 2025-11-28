@@ -14,26 +14,24 @@ class UseCaseExecutor(
         onException: ((DomainException) -> Unit)?,
         onResult: OUTPUT?.() -> Unit,
     ) {
-        coroutineScopes.useCase.async(
-            onException = { throwable ->
+        coroutineScopes.useCase
+            .async(
+                block = {
+                    when (useCase) {
+                        is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input)
+                        is UseCaseProtocol.Sync<INPUT, OUTPUT> -> useCase.invoke(input)
+                    }.also {
+                        it.onResult()
+                    }
+                }
+            ).invokeOnCompletion { throwable ->
+                if (throwable == null) return@invokeOnCompletion
                 val output = onException ?: throw throwable
                 when (throwable) {
                     is DomainException -> output(throwable)
                     else -> output(DomainException.Unknown(throwable))
                 }
-            },
-            block = {
-                when (useCase) {
-                    is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input).also {
-                        it.onResult()
-                    }
-
-                    is UseCaseProtocol.Sync<INPUT, OUTPUT> -> useCase.invoke(input).also {
-                        it.onResult()
-                    }
-                }
             }
-        )
     }
 
     override suspend fun <INPUT : Any, OUTPUT : Any> await(

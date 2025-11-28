@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.data.repository.mock
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.every
@@ -38,15 +39,15 @@ internal class CoroutineTestScopes {
         @Suppress("ktlint:standard:max-line-length")
         every {
             async(
-                onException = any(),
                 block = any<suspend CoroutineScope.() -> Any?>()
             )
         } calls { args ->
-            val block = args.arg(1) as suspend CoroutineScope.() -> Any?
+            val block = args.arg(0) as suspend CoroutineScope.() -> Any?
             val deferred = CompletableDeferred<Any?>()
             currentScope.launch {
                 val result = block(currentScope)
-                deferred.invokeOnCompletion { result }
+                deferred.throwOnFailure()
+                deferred.complete(result)
             }
             deferred
         }
