@@ -5068,20 +5068,24 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeRespo
 
 final object com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware|null[0]
     abstract fun interface Back : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back|null[0]
+        abstract fun interface OnShadowerException { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.OnShadowerException|null[0]
+            abstract suspend fun process(kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.OnShadowerException.process|process(kotlin.Throwable;com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.Context;kotlin.coroutines.SuspendFunction0<kotlin.Unit>){}[0]
+        }
+
         final class Context { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context|null[0]
-            constructor <init>(kotlin/String, kotlin/String?, kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>?) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.<init>|<init>(kotlin.String;kotlin.String?;kotlin.Function3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
+            constructor <init>(kotlin/String, kotlin/String?, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.OnShadowerException?) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.<init>|<init>(kotlin.String;kotlin.String?;com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.OnShadowerException?){}[0]
 
             final val currentUrl // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.currentUrl|{}currentUrl[0]
                 final fun <get-currentUrl>(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.currentUrl.<get-currentUrl>|<get-currentUrl>(){}[0]
             final val nextUrl // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.nextUrl|{}nextUrl[0]
                 final fun <get-nextUrl>(): kotlin/String? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.nextUrl.<get-nextUrl>|<get-nextUrl>(){}[0]
             final val onShadowerException // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.onShadowerException|{}onShadowerException[0]
-                final fun <get-onShadowerException>(): kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.onShadowerException.<get-onShadowerException>|<get-onShadowerException>(){}[0]
+                final fun <get-onShadowerException>(): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.OnShadowerException? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.onShadowerException.<get-onShadowerException>|<get-onShadowerException>(){}[0]
 
             final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component1|component1(){}[0]
             final fun component2(): kotlin/String? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component2|component2(){}[0]
-            final fun component3(): kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component3|component3(){}[0]
-            final fun copy(kotlin/String = ..., kotlin/String? = ..., kotlin/Function3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? = ...): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.copy|copy(kotlin.String;kotlin.String?;kotlin.Function3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
+            final fun component3(): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.OnShadowerException? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.component3|component3(){}[0]
+            final fun copy(kotlin/String = ..., kotlin/String? = ..., com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.OnShadowerException? = ...): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.copy|copy(kotlin.String;kotlin.String?;com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back.OnShadowerException?){}[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back.Context.toString|toString(){}[0]
@@ -5089,20 +5093,24 @@ final object com.tezov.tuucho.core.domain.business.middleware/NavigationMiddlewa
     }
 
     abstract fun interface ToUrl : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl|null[0]
+        abstract fun interface OnShadowerException { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.OnShadowerException|null[0]
+            abstract suspend fun process(kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.OnShadowerException.process|process(kotlin.Throwable;com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl.Context;kotlin.coroutines.SuspendFunction0<kotlin.Unit>){}[0]
+        }
+
         final class Context { // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context|null[0]
-            constructor <init>(kotlin/String?, com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input, kotlin.coroutines/SuspendFunction3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>?) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.<init>|<init>(kotlin.String?;com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input;kotlin.coroutines.SuspendFunction3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
+            constructor <init>(kotlin/String?, com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.OnShadowerException?) // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.<init>|<init>(kotlin.String?;com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input;com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl.OnShadowerException?){}[0]
 
             final val currentUrl // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.currentUrl|{}currentUrl[0]
                 final fun <get-currentUrl>(): kotlin/String? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.currentUrl.<get-currentUrl>|<get-currentUrl>(){}[0]
             final val input // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.input|{}input[0]
                 final fun <get-input>(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.input.<get-input>|<get-input>(){}[0]
             final val onShadowerException // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.onShadowerException|{}onShadowerException[0]
-                final fun <get-onShadowerException>(): kotlin.coroutines/SuspendFunction3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.onShadowerException.<get-onShadowerException>|<get-onShadowerException>(){}[0]
+                final fun <get-onShadowerException>(): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.OnShadowerException? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.onShadowerException.<get-onShadowerException>|<get-onShadowerException>(){}[0]
 
             final fun component1(): kotlin/String? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.component1|component1(){}[0]
             final fun component2(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.component2|component2(){}[0]
-            final fun component3(): kotlin.coroutines/SuspendFunction3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.component3|component3(){}[0]
-            final fun copy(kotlin/String? = ..., com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input = ..., kotlin.coroutines/SuspendFunction3<kotlin/Throwable, com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlin/Unit>? = ...): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.copy|copy(kotlin.String?;com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input;kotlin.coroutines.SuspendFunction3<kotlin.Throwable,com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl.Context,kotlin.coroutines.SuspendFunction0<kotlin.Unit>,kotlin.Unit>?){}[0]
+            final fun component3(): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.OnShadowerException? // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.component3|component3(){}[0]
+            final fun copy(kotlin/String? = ..., com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input = ..., com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.OnShadowerException? = ...): com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.copy|copy(kotlin.String?;com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input;com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl.OnShadowerException?){}[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl.Context.toString|toString(){}[0]
@@ -7074,36 +7082,44 @@ public abstract interface class com/tezov/tuucho/core/domain/business/middleware
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lkotlin/jvm/functions/Function3;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrentUrl ()Ljava/lang/String;
 	public final fun getNextUrl ()Ljava/lang/String;
-	public final fun getOnShadowerException ()Lkotlin/jvm/functions/Function3;
+	public final fun getOnShadowerException ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException {
+	public abstract fun process (Ljava/lang/Throwable;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context {
-	public fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/jvm/functions/Function4;)V
+	public fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
-	public final fun component3 ()Lkotlin/jvm/functions/Function4;
-	public final fun copy (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/jvm/functions/Function4;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;
+	public final fun copy (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrentUrl ()Ljava/lang/String;
 	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
-	public final fun getOnShadowerException ()Lkotlin/jvm/functions/Function4;
+	public final fun getOnShadowerException ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException {
+	public abstract fun process (Ljava/lang/Throwable;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
@@ -8195,7 +8211,7 @@ public abstract interface annotation class com/tezov/tuucho/core/domain/tool/ann
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
 	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor;)V
-	public fun async (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getContext ()Lkotlin/coroutines/CoroutineContext;
 	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
@@ -8203,16 +8219,15 @@ public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : co
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
-	public abstract fun async (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
-	public static synthetic fun async$default (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Deferred;
-	public abstract fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getContext ()Lkotlin/coroutines/CoroutineContext;
 	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public abstract fun getSupervisorJob ()Lkotlinx/coroutines/Job;
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol$DefaultImpls {
-	public static synthetic fun async$default (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Deferred;
+	public static fun await (Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor {
@@ -8232,6 +8247,11 @@ public final class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMon
 	public final fun getThrowable ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/tool/async/DeferredExtension {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/async/DeferredExtension;
+	public final fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/ExtensionFlow {
@@ -8404,8 +8424,8 @@ abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineContextProto
     abstract val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob|{}supervisorJob[0]
         abstract fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
 
-    abstract fun <#A1: kotlin/Any?> async(kotlin/Function1<kotlin/Throwable, kotlin/Unit>? = ..., kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.async|async(kotlin.Function1<kotlin.Throwable,kotlin.Unit>?;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
-    abstract suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    open suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor { // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor|null[0]
@@ -8460,8 +8480,7 @@ final class com.tezov.tuucho.core.domain.tool.async/CoroutineContext : com.tezov
     final val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob|{}supervisorJob[0]
         final fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
 
-    final fun <#A1: kotlin/Any?> async(kotlin/Function1<kotlin/Throwable, kotlin/Unit>?, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.async|async(kotlin.Function1<kotlin.Throwable,kotlin.Unit>?;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
-    final suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
 final class com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier { // com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier|null[0]
@@ -8489,6 +8508,10 @@ final class com.tezov.tuucho.core.domain.tool.json/JsonElementPath : kotlin.coll
     final fun lastSegment(): kotlin/String? // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.lastSegment|lastSegment(){}[0]
     final fun parent(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.parent|parent(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.toString|toString(){}[0]
+}
+
+final object com.tezov.tuucho.core.domain.tool.async/DeferredExtension { // com.tezov.tuucho.core.domain.tool.async/DeferredExtension|null[0]
+    final fun <#A1: kotlin/Any?> (kotlinx.coroutines/Deferred<#A1>).throwOnFailure() // com.tezov.tuucho.core.domain.tool.async/DeferredExtension.throwOnFailure|throwOnFailure@kotlinx.coroutines.Deferred<0:0>(){0§<kotlin.Any?>}[0]
 }
 
 final object com.tezov.tuucho.core.domain.tool.async/ExtensionFlow { // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow|null[0]

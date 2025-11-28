@@ -21,6 +21,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -46,15 +47,16 @@ class NavigateToUrlUseCase(
     override fun invoke(
         input: Input
     ) {
-        coroutineScopes.useCase.async {
-            (navigationMiddlewares + terminalMiddleware()).execute(
-                context = NavigationMiddleware.ToUrl.Context(
-                    currentUrl = navigationStackRouteRepository.currentRoute()?.value,
-                    input = input,
-                    onShadowerException = null
+        coroutineScopes.useCase
+            .async {
+                (navigationMiddlewares + terminalMiddleware()).execute(
+                    context = NavigationMiddleware.ToUrl.Context(
+                        currentUrl = navigationStackRouteRepository.currentRoute()?.value,
+                        input = input,
+                        onShadowerException = null
+                    )
                 )
-            )
-        }
+            }.throwOnFailure()
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
@@ -153,15 +155,17 @@ class NavigateToUrlUseCase(
                         }
                 }
                 runCatching { process() }.onFailure { failure ->
-                    context.onShadowerException?.invoke(
-                        failure,
-                        context,
-                        ::process
+                    context.onShadowerException?.process(
+                        exception = failure,
+                        context = context,
+                        replay = ::process
                     ) ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
+            } else {
+                job.throwOnFailure()
             }
         }
     }

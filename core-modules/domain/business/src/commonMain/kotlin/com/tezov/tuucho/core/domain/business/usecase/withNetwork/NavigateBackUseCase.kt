@@ -14,6 +14,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Compani
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 class NavigateBackUseCase(
@@ -28,16 +29,17 @@ class NavigateBackUseCase(
     override fun invoke(
         input: Unit
     ) {
-        coroutineScopes.useCase.async {
-            (navigationMiddlewares + terminalMiddleware()).execute(
-                context = NavigationMiddleware.Back.Context(
-                    currentUrl = navigationStackRouteRepository.currentRoute()?.value
-                        ?: throw DomainException.Default("Shouldn't be possible"),
-                    nextUrl = navigationStackRouteRepository.priorRoute()?.value,
-                    onShadowerException = null
+        coroutineScopes.useCase
+            .async {
+                (navigationMiddlewares + terminalMiddleware()).execute(
+                    context = NavigationMiddleware.Back.Context(
+                        currentUrl = navigationStackRouteRepository.currentRoute()?.value
+                            ?: throw DomainException.Default("Shouldn't be possible"),
+                        nextUrl = navigationStackRouteRepository.priorRoute()?.value,
+                        onShadowerException = null
+                    )
                 )
-            )
-        }
+            }.throwOnFailure()
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
@@ -85,18 +87,18 @@ class NavigateBackUseCase(
                             }
                         }
                 }
-                runCatching {
-                    process()
-                }.onFailure { failure ->
-                    context.onShadowerException?.invoke(
-                        failure,
-                        context,
-                        ::process
+                runCatching { process() }.onFailure { failure ->
+                    context.onShadowerException?.process(
+                        exception = failure,
+                        context = context,
+                        replay = ::process
                     ) ?: throw failure
                 }
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
+            } else {
+                job.throwOnFailure()
             }
         }
     }

@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -216,31 +217,32 @@ internal class InteractionLockStack(
     }
 
     private fun wakeup() {
-        coroutineScopes.io.async {
-            val toResumes = mutableListOf<Waiter>()
-            mutex.withLock {
-                val usedLocksKeys = usedLocks.keys.toMutableList()
-                val waiters = waiters.listIterator()
-                while (waiters.hasNext()) {
-                    val next = waiters.next()
-                    if (next.lockTypes.all { it !in usedLocksKeys }) {
-                        waiters.remove()
-                        toResumes.add(next)
-                        interactionLockMonitor?.process(
-                            InteractionLockMonitor.Context(
-                                event = Event.TryAcquireAgain,
-                                requester = listOf(next.requester),
-                                lockTypes = next.lockTypes
+        coroutineScopes.io
+            .async {
+                val toResumes = mutableListOf<Waiter>()
+                mutex.withLock {
+                    val usedLocksKeys = usedLocks.keys.toMutableList()
+                    val waiters = waiters.listIterator()
+                    while (waiters.hasNext()) {
+                        val next = waiters.next()
+                        if (next.lockTypes.all { it !in usedLocksKeys }) {
+                            waiters.remove()
+                            toResumes.add(next)
+                            interactionLockMonitor?.process(
+                                InteractionLockMonitor.Context(
+                                    event = Event.TryAcquireAgain,
+                                    requester = listOf(next.requester),
+                                    lockTypes = next.lockTypes
+                                )
                             )
-                        )
-                        usedLocksKeys.removeAll(next.lockTypes)
-                        if (usedLocksKeys.isEmpty()) {
-                            break
+                            usedLocksKeys.removeAll(next.lockTypes)
+                            if (usedLocksKeys.isEmpty()) {
+                                break
+                            }
                         }
                     }
                 }
-            }
-            toResumes.forEach { it.deferred.complete(Unit) }
-        }
+                toResumes.forEach { it.deferred.complete(Unit) }
+            }.throwOnFailure()
     }
 }

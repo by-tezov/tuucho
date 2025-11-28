@@ -1748,36 +1748,44 @@ public abstract interface class com/tezov/tuucho/core/domain/business/middleware
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lkotlin/jvm/functions/Function3;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Ljava/lang/String;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrentUrl ()Ljava/lang/String;
 	public final fun getNextUrl ()Ljava/lang/String;
-	public final fun getOnShadowerException ()Lkotlin/jvm/functions/Function3;
+	public final fun getOnShadowerException ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$OnShadowerException {
+	public abstract fun process (Ljava/lang/Throwable;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context {
-	public fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/jvm/functions/Function4;)V
+	public fun <init> (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
-	public final fun component3 ()Lkotlin/jvm/functions/Function4;
-	public final fun copy (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/jvm/functions/Function4;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;
+	public final fun copy (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrentUrl ()Ljava/lang/String;
 	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;
-	public final fun getOnShadowerException ()Lkotlin/jvm/functions/Function4;
+	public final fun getOnShadowerException ()Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$OnShadowerException {
+	public abstract fun process (Ljava/lang/Throwable;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {

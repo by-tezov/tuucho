@@ -4,19 +4,17 @@ import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
-import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
-import com.tezov.tuucho.shared.sample._system.Config
 import com.tezov.tuucho.shared.sample._system.Page
-import kotlinx.coroutines.delay
 
 class BeforeNavigateToUrlMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val serverHealthCheck: ServerHealthCheckUseCase,
     private val refreshMaterialCache: RefreshMaterialCacheUseCase,
     private val getValueOrNullFromStore: GetValueOrNullFromStoreUseCase,
+    private val onShadowerException: OnShadowerException,
 ) : NavigationMiddleware.ToUrl {
 
     private companion object {
@@ -33,7 +31,11 @@ class BeforeNavigateToUrlMiddleware(
         if (ensureAuthorizationOrRedirectToLoginPage(context, next)) return
         if (autoLoginOnStart(context, next)) return
         loadLobbyConfigOnStart(context) || loadAuthConfigAfterSuccessfulLogin(context)
-        next.invoke(context.withExceptionHandler())
+        next.invoke(
+            context.copy(
+                onShadowerException = onShadowerException
+            )
+        )
     }
 
     private suspend fun isAuthorizationExist() = useCaseExecutor.await(
@@ -77,10 +79,10 @@ class BeforeNavigateToUrlMiddleware(
         if (context.input.url.startsWith("$AUTH_PREFIX/")) {
             if (!isAuthorizationExist()) {
                 next.invoke(
-                    context.withExceptionHandler()
-                        .copy(
-                            input = context.input.copy(url = Page.login)
-                        )
+                    context.copy(
+                        onShadowerException = onShadowerException,
+                        input = context.input.copy(url = Page.login)
+                    )
                 )
                 return true
             }
@@ -95,10 +97,10 @@ class BeforeNavigateToUrlMiddleware(
         if (context.currentUrl == null && context.input.url == Page.login && isAuthorizationExist() && isAuthorizationValid()) {
             loadAuthConfig()
             next.invoke(
-                context.withExceptionHandler()
-                    .copy(
-                        input = context.input.copy(url = Page.home)
-                    )
+                context.copy(
+                    onShadowerException = onShadowerException,
+                    input = context.input.copy(url = Page.home)
+                )
             )
             return true
         }
@@ -123,25 +125,6 @@ class BeforeNavigateToUrlMiddleware(
             return true
         }
         return false
-    }
-
-    //IMPROVE: need to find a better pattern to react on shadower exception (sync, async)
-    private fun NavigationMiddleware.ToUrl.Context.withExceptionHandler(): NavigationMiddleware.ToUrl.Context {
-        return this.copy(
-            onShadowerException = { exception, context, replay ->
-                val maxRetries = 3
-                var failure: Throwable? = exception
-                for (attempt in 0 until maxRetries) {
-                    val delayMs = (Config.networkMinRetryDelay * (1 shl attempt)).coerceAtMost(Config.networkMaxRetryDelay)
-                    delay(delayMs)
-                    val result = runCatching { replay.invoke() }
-                    failure = result.exceptionOrNull()
-                    if (failure == null) {
-                        break
-                    }
-                }
-                failure?.let { throw failure }
-            })
     }
 }
 
