@@ -146,8 +146,7 @@ class NavigateToUrlUseCase(
                             url = route.value,
                             componentObject = componentObject,
                             types = listOf(Shadower.Type.contextual)
-                        )
-                        .forEach {
+                        ).forEach {
                             coroutineScopes.renderer.await {
                                 view.update(it.jsonObject)
                             }
@@ -163,8 +162,7 @@ class NavigateToUrlUseCase(
             }
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
-            }
-            else {
+            } else {
                 job.invokeOnCompletion {
                     it?.let { throw it }
                 }

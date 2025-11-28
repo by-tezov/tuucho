@@ -33,7 +33,8 @@ class CoroutineContext(
 
     override fun <T> async(
         block: suspend CoroutineScope.() -> T,
-    ) = scope.async(block = block)
+    ) = scope
+        .async(block = block)
         .also { deferred ->
             exceptionMonitor?.let {
                 deferred.invokeOnCompletion { throwable ->

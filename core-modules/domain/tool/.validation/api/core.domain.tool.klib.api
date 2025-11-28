@@ -22,8 +22,8 @@ abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineContextProto
     abstract val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob|{}supervisorJob[0]
         abstract fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
 
-    abstract fun <#A1: kotlin/Any?> async(kotlin/Function1<kotlin/Throwable, kotlin/Unit>? = ..., kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.async|async(kotlin.Function1<kotlin.Throwable,kotlin.Unit>?;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
-    abstract suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    open suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor { // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor|null[0]
@@ -78,8 +78,7 @@ final class com.tezov.tuucho.core.domain.tool.async/CoroutineContext : com.tezov
     final val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob|{}supervisorJob[0]
         final fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
 
-    final fun <#A1: kotlin/Any?> async(kotlin/Function1<kotlin/Throwable, kotlin/Unit>?, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.async|async(kotlin.Function1<kotlin.Throwable,kotlin.Unit>?;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
-    final suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
 final class com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier { // com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier|null[0]

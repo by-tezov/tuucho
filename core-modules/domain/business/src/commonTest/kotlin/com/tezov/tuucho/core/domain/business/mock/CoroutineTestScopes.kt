@@ -36,7 +36,6 @@ internal class CoroutineTestScopes {
         @Suppress("ktlint:standard:max-line-length")
         every {
             async(
-                onException = any(),
                 block = any<suspend CoroutineScope.() -> Any?>()
             )
         } calls { args ->
