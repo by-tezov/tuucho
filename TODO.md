@@ -1,6 +1,5 @@
 ## In progress
 
-- screen lock
 - async throw -> redirect to global catcher to let user plug on it.
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - finir les p'tit dessous + clean

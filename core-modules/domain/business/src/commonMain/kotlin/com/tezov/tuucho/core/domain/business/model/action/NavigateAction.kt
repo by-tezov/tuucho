@@ -8,7 +8,7 @@ object NavigateAction {
     const val command = "navigate"
     private val lockable
         get() = InteractionLockable.Type(
-            listOf(InteractionLockType.Navigation)
+            listOf(InteractionLockType.Screen, InteractionLockType.Navigation)
         )
 
     object Url : ActionProtocol {
