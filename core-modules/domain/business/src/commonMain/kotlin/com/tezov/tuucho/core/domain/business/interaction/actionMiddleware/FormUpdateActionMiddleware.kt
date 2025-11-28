@@ -28,7 +28,7 @@ internal class FormUpdateActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ): Boolean = action.command == FormAction.command && action.authority == FormAction.Update.authority
 
@@ -45,7 +45,7 @@ internal class FormUpdateActionMiddleware(
     }
 
     private suspend fun updateErrorState(
-        route: NavigationRoute.Url,
+        route: NavigationRoute,
         jsonElement: JsonElement?,
     ) {
         jsonElement?.jsonArray?.forEach { param ->

@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.data.repository.parser.assembler
 import com.tezov.tuucho.core.data.repository.di.MaterialAssemblerModule.Name
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser.assembler._system.AbstractAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler._system.MatcherAssemblerProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.state.StateRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
@@ -18,11 +17,7 @@ import org.koin.core.component.inject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class StateAssembler : AbstractAssembler() {
-    override val schemaType: String = TypeSchema.Value.state
-
-    override val matchers: List<MatcherAssemblerProtocol> by inject(
-        Name.Matcher.STATE
-    )
+    override val schemaType = TypeSchema.Value.state
 
     override val childProcessors: List<AbstractAssembler> by inject(
         Name.Processor.STATE

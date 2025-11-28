@@ -25,9 +25,9 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.ui)
+            implementation(libs.compose.backhandler)
 
             implementation(libs.koin.core)
-            // implementation(libs.koin.compose)
         }
     }
 }

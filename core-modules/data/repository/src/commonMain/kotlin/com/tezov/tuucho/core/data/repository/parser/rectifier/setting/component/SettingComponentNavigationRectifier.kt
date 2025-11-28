@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -12,6 +13,8 @@ import kotlinx.serialization.json.JsonElement
 
 @OptIn(TuuchoExperimentalAPI::class)
 class SettingComponentNavigationRectifier : AbstractRectifier() {
+    override val key = ComponentSettingNavigationSchema.root
+
     override val childProcessors = listOf(
         SettingComponentNavigationDefinitionRectifier()
     )

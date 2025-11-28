@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionList.priorLastOrNull
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
@@ -32,9 +33,15 @@ internal class NavigationStackScreenRepository(
     }
 
     override suspend fun getScreenOrNull(
-        route: NavigationRoute.Url
+        route: NavigationRoute
     ) = coroutineScopes.navigation.await {
-        mutex.withLock { stack.firstOrNull { route.id == it.route.id } }
+        mutex.withLock {
+            when (route) {
+                is NavigationRoute.Current -> stack.lastOrNull()
+                is NavigationRoute.Back -> stack.priorLastOrNull()
+                else -> stack.firstOrNull { route.id == it.route.id }
+            }
+        }
     }
 
     override suspend fun getScreensOrNull(

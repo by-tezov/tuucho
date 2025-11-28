@@ -16,18 +16,18 @@ class ProcessActionUseCase(
     private val actionExecutor: ActionExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
     sealed class Input {
-        abstract val route: NavigationRoute.Url?
+        abstract val route: NavigationRoute?
         abstract val lockable: InteractionLockable?
 
         data class JsonElement(
-            override val route: NavigationRoute.Url?,
+            override val route: NavigationRoute?,
             val action: ActionModelDomain,
             override val lockable: InteractionLockable? = null,
             val jsonElement: kotlinx.serialization.json.JsonElement? = null,
         ) : Input()
 
         data class ActionObject(
-            override val route: NavigationRoute.Url?,
+            override val route: NavigationRoute?,
             val actionObject: JsonObject,
             override val lockable: InteractionLockable? = null,
         ) : Input()

@@ -17,7 +17,7 @@ internal class NavigationUrlActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.Url.authority
 

@@ -1,14 +1,15 @@
 ## In progress
 
+- screen lock
+- contextual -> crash if delay over 5000ms
+ 
+- rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
 - finir les p'tit dessous + clean
 
 *** ***
 - still need to fix mock server
-- form field initial value inside state, need to make the matcher for the text and uncomment id update register
-  - fix state error with "" or just string ?
-- rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
-- back button managed
-
+- add more unit test + clean test
+ 
 **** ****
 - Error when Compose enter in the game
 - Add bottom/top screen not react to transition

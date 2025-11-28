@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema.Key
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
@@ -24,6 +25,7 @@ import org.koin.core.component.inject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class TextsRectifier : AbstractRectifier() {
+    override val key = Key.texts
     private val textRectifier: TextRectifier by inject()
 
     override fun beforeAlterObject(

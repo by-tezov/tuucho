@@ -4,6 +4,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.l
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.component.ComponentRectifier
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -15,6 +16,7 @@ import org.koin.core.component.inject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class ContentLayoutLinearItemsRectifier : AbstractRectifier() {
+    override val key = LayoutLinearSchema.Content.Key.items
     private val componentRectifier: ComponentRectifier by inject()
 
     private val matcher = ContentLayoutLinearItemsMatcher()

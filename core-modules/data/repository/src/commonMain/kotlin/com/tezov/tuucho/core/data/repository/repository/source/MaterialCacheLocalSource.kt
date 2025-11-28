@@ -7,8 +7,6 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.data.repository.parser._system.JsonObjectNode
-import com.tezov.tuucho.core.data.repository.parser._system.flatten
 import com.tezov.tuucho.core.data.repository.parser.assembler.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver
@@ -18,7 +16,9 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -72,7 +72,7 @@ internal class MaterialCacheLocalSource(
                 } else {
                     Table.Common
                 }
-                val rootPrimaryKey = rootJsonObjectNode?.let {
+                val rootPrimaryKey = rootJsonObject?.let {
                     materialDatabaseSource.insert(it.toEntity(url), table)
                 }
                 HookEntity(
@@ -84,26 +84,24 @@ internal class MaterialCacheLocalSource(
                         weakLifetime = weakLifetime,
                     ),
                 ).also { materialDatabaseSource.insert(it) }
-                jsonElementNodes
-                    .asSequence()
-                    .flatMap { it.flatten() }
+                jsonObjects
                     .forEach { materialDatabaseSource.insert(it.toEntity(url), table) }
             }
         }
     }
 
-    private fun JsonObjectNode.toEntity(
+    private fun JsonElement.toEntity(
         url: String,
     ): JsonObjectEntity {
-        val idScope = content.onScope(IdSchema::Scope)
+        val idScope = onScope(IdSchema::Scope)
         return JsonObjectEntity(
-            type = content.withScope(TypeSchema::Scope).self
+            type = withScope(TypeSchema::Scope).self
                 ?: throw DataException.Default("Missing type, so there is surely something missing in the rectifier for $this"),
             url = url,
             id = idScope.value
                 ?: throw DataException.Default("Missing Id, so there is surely something missing in the rectifier for $this"),
             idFrom = idScope.source,
-            jsonObject = content
+            jsonObject = jsonObject
         )
     }
 

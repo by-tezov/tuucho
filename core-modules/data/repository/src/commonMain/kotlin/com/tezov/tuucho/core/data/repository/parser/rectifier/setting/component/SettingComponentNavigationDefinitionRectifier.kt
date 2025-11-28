@@ -22,6 +22,8 @@ import kotlinx.serialization.json.jsonObject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class SettingComponentNavigationDefinitionRectifier : AbstractRectifier() {
+    override val key = ComponentSettingNavigationSchema.Definition.root
+
     override fun accept(
         path: JsonElementPath,
         element: JsonElement

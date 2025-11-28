@@ -19,6 +19,7 @@ import org.koin.core.component.inject
 class IdRectifier(
     private val idGenerator: RectifierIdGenerator
 ) : AbstractRectifier() {
+    override val key = IdSchema.root
     override val matchers: List<MatcherRectifierProtocol> by inject(
         Name.Matcher.ID
     )

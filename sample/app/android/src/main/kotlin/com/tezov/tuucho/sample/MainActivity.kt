@@ -9,9 +9,10 @@ import com.tezov.tuucho.shared.sample.AppScreen
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        setContent { AppScreen(listOf(ApplicationModule.invoke(applicationContext))) }
+        setContent {
+            AppScreen(listOf(ApplicationModule.invoke(applicationContext)))
+        }
     }
 
 }

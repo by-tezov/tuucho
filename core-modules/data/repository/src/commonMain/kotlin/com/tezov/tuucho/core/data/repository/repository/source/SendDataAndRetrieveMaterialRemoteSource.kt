@@ -7,6 +7,7 @@ import kotlinx.serialization.json.JsonObject
 internal class SendDataAndRetrieveMaterialRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val networkJsonObject: NetworkJsonObject,
+//    private val materialRectifier: MaterialRectifier,
 ) {
     suspend fun process(
         url: String,
@@ -15,7 +16,11 @@ internal class SendDataAndRetrieveMaterialRemoteSource(
         val response = coroutineScopes.network.await {
             networkJsonObject.send(url, dataObject)
         }
-        // TODO: rectifier response
+//        return response?.let {
+//            coroutineScopes.parser.await {
+//                materialRectifier.process(it)
+//            }
+//        }
         return response
     }
 }

@@ -24,12 +24,9 @@ import org.koin.core.component.inject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class FormValidatorRectifier : AbstractRectifier() {
+    override val key = FormValidatorSchema.root
     override val matchers: List<MatcherRectifierProtocol> by inject(
         MaterialRectifierModule.Name.Matcher.FIELD_VALIDATOR
-    )
-
-    override val childProcessors: List<AbstractRectifier> by inject(
-        MaterialRectifierModule.Name.Processor.FIELD_VALIDATOR
     )
 
     override fun beforeAlterPrimitive(

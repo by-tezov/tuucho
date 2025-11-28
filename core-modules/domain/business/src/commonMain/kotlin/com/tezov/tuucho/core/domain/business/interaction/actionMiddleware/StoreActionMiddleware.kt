@@ -13,7 +13,9 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
@@ -26,7 +28,7 @@ internal class StoreActionMiddleware(
         get() = ActionMiddleware.Priority.DEFAULT
 
     override fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ): Boolean = action.command == StoreAction.command && action.authority == StoreAction.KeyValue.authority && action.query != null
 
@@ -60,13 +62,29 @@ internal class StoreActionMiddleware(
     private suspend fun removeKeys(
         query: JsonElement
     ) {
-        query.jsonArray.forEach {
+        suspend fun execute(
+            key: JsonElement
+        ) {
             useCaseExecutor.await(
                 useCase = removeKeyValueFromStore,
                 input = RemoveKeyValueFromStoreUseCase.Input(
-                    key = it.string.toKey(),
+                    key = key.string.toKey(),
                 )
             )
+        }
+        when (query) {
+            is JsonArray -> {
+                query.jsonArray
+                    .forEach {
+                        execute(it)
+                    }
+            }
+
+            is JsonPrimitive -> {
+                execute(query)
+            }
+
+            else -> {}
         }
     }
 }

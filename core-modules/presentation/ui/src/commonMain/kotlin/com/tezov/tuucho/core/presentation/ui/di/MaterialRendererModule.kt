@@ -31,7 +31,7 @@ internal object MaterialRendererModule {
             TuuchoEngine(
                 coroutineScopes = get(),
                 useCaseExecutor = get(),
-                actionHandler = get(),
+                processAction = get(),
                 registerToScreenTransitionEvent = get(),
                 notifyNavigationTransitionCompleted = get(),
                 getScreensFromRoutes = get(),
@@ -68,7 +68,7 @@ internal object MaterialRendererModule {
         factory<ButtonViewFactory> {
             ButtonViewFactory(
                 useCaseExecutor = get(),
-                actionHandler = get()
+                processAction = get()
             )
         }
 

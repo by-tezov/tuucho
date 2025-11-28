@@ -46,7 +46,7 @@ interface TuuchoEngineProtocol {
 class TuuchoEngine(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
-    private val actionHandler: ProcessActionUseCase,
+    private val processAction: ProcessActionUseCase,
     private val registerToScreenTransitionEvent: RegisterToScreenTransitionEventUseCase,
     private val notifyNavigationTransitionCompleted: NotifyNavigationTransitionCompletedUseCase,
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
@@ -87,7 +87,7 @@ class TuuchoEngine(
             )
         )
         useCaseExecutor.async(
-            useCase = actionHandler,
+            useCase = processAction,
             input = ProcessActionUseCase.Input.JsonElement(
                 route = null,
                 action = ActionModelDomain.from(

@@ -4,7 +4,6 @@ import com.tezov.tuucho.core.data.repository.di.MaterialRectifierModule
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentStartWith
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
@@ -23,9 +22,7 @@ import org.koin.core.component.inject
 
 @OptIn(TuuchoExperimentalAPI::class)
 class SettingComponentRectifier : AbstractRectifier() {
-    override val matchers: List<MatcherRectifierProtocol> by inject(
-        MaterialRectifierModule.Name.Matcher.SETTING
-    )
+    override val key = ComponentSettingSchema.root
 
     override val childProcessors: List<AbstractRectifier> by inject(
         MaterialRectifierModule.Name.Processor.SETTING
