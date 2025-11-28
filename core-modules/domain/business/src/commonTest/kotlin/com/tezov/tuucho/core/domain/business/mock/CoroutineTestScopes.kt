@@ -39,7 +39,7 @@ internal class CoroutineTestScopes {
                 block = any<suspend CoroutineScope.() -> Any?>()
             )
         } calls { args ->
-            val block = args.arg(1) as suspend CoroutineScope.() -> Any?
+            val block = args.arg(0) as suspend CoroutineScope.() -> Any?
             val deferred = CompletableDeferred<Any?>()
             currentScope.launch {
                 val result = block(currentScope)
