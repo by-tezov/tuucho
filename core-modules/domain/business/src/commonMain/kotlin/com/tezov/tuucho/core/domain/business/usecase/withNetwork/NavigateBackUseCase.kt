@@ -14,6 +14,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Compani
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 class NavigateBackUseCase(
@@ -37,7 +38,7 @@ class NavigateBackUseCase(
                     onShadowerException = null
                 )
             )
-        }
+        }.throwOnFailure()
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
@@ -96,9 +97,7 @@ class NavigateBackUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
-                job.invokeOnCompletion {
-                    it?.let { throw it }
-                }
+                job.throwOnFailure()
             }
         }
     }

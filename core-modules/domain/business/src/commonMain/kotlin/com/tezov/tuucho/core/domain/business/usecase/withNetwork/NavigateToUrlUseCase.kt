@@ -21,6 +21,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -54,7 +55,7 @@ class NavigateToUrlUseCase(
                     onShadowerException = null
                 )
             )
-        }
+        }.throwOnFailure()
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
@@ -163,9 +164,7 @@ class NavigateToUrlUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
-                job.invokeOnCompletion {
-                    it?.let { throw it }
-                }
+                job.throwOnFailure()
             }
         }
     }

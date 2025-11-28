@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase.Input
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 
 class RegisterToScreenTransitionEventUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -21,6 +22,6 @@ class RegisterToScreenTransitionEventUseCase(
             navigationAnimatorStackRepository.events
                 .filter { it != Event.TransitionComplete }
                 .forever { input.onEvent.invoke(it) }
-        }
+        }.throwOnFailure()
     }
 }

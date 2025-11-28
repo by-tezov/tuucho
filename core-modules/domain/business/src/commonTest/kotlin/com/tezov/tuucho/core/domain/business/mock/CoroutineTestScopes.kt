@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.mock
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.every
@@ -43,7 +44,8 @@ internal class CoroutineTestScopes {
             val deferred = CompletableDeferred<Any?>()
             currentScope.launch {
                 val result = block(currentScope)
-                deferred.invokeOnCompletion { result }
+                deferred.throwOnFailure()
+                deferred.complete(result)
             }
             deferred
         }

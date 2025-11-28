@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.sync.Mutex
@@ -52,7 +53,7 @@ internal class NavigationStackTransitionRepository(
                 lastEvent = event
                 _events.emit(event)
             }
-        }
+        }.throwOnFailure()
     }
 
     override suspend fun notifyTransitionCompleted() {
