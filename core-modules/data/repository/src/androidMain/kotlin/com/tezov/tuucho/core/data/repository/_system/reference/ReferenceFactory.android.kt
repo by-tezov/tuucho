@@ -11,8 +11,14 @@ class ReferenceFactoryAndroid : ReferenceProtocol.Factory {
         type: KClass<out ReferenceProtocol<*>>,
         value: T?
     ) = when (type) {
-        ReferenceProtocol.Weak::class -> WeakReferenceAndroid(value)
-        ReferenceProtocol.Strong::class -> StrongReferenceAndroid(value)
+        ReferenceProtocol.Weak::class -> WeakReferenceAndroid(
+            value
+        )
+
+        ReferenceProtocol.Strong::class -> StrongReferenceAndroid(
+            value
+        )
+
         else -> throw DataException.Default("incorrect reference type $type")
     }
 }

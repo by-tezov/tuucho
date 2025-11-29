@@ -5,7 +5,9 @@ package com.tezov.tuucho.core.presentation.ui._system
 import androidx.compose.ui.graphics.Color
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 
-fun String.toColor() = toColorOrNull() ?: throw UiException.Default("Unsupported color format")
+fun String.toColor() = toColorOrNull() ?: throw UiException.Default(
+    "Unsupported color format"
+)
 
 fun String.toColorOrNull(): Color? {
     if (!startsWith("#")) return null

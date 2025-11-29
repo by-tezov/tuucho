@@ -29,7 +29,7 @@ internal object SystemCoreModules {
                 SystemCoreDomainModules.invoke(),
                 SystemCoreDataModules.invoke(),
                 SystemCoreUiModules.invoke(),
-                SystemCoreModules.invoke(),
+                invoke(),
                 applicationModules,
             ).flatten().groupBy { it.group }
             modules(map.map { (_, modules) ->

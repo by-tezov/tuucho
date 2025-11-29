@@ -13,25 +13,69 @@ internal fun createCoroutineScopes(
     exceptionMonitor: CoroutineExceptionMonitor?,
 ): CoroutineScopesProtocol = object : CoroutineScopesProtocol {
     override val database: CoroutineContextProtocol =
-        CoroutineContext("Database", Dispatchers.IO, exceptionMonitor)
+        CoroutineContext(
+            "Database",
+            Dispatchers.IO,
+            exceptionMonitor
+        )
     override val network: CoroutineContextProtocol =
-        CoroutineContext("Network", Dispatchers.IO, exceptionMonitor)
+        CoroutineContext(
+            "Network",
+            Dispatchers.IO,
+            exceptionMonitor
+        )
     override val parser: CoroutineContextProtocol =
-        CoroutineContext("Parser", Dispatchers.Default, exceptionMonitor)
+        CoroutineContext(
+            "Parser",
+            Dispatchers.Default,
+            exceptionMonitor
+        )
     override val renderer: CoroutineContextProtocol =
-        CoroutineContext("Renderer", Dispatchers.Default, exceptionMonitor)
+        CoroutineContext(
+            "Renderer",
+            Dispatchers.Default,
+            exceptionMonitor
+        )
     override val navigation: CoroutineContextProtocol =
-        CoroutineContext("Navigation", Dispatchers.Default, exceptionMonitor)
+        CoroutineContext(
+            "Navigation",
+            Dispatchers.Default,
+            exceptionMonitor
+        )
     override val useCase: CoroutineContextProtocol =
-        CoroutineContext("UseCase", Dispatchers.Default, exceptionMonitor)
+        CoroutineContext(
+            "UseCase",
+            Dispatchers.Default,
+            exceptionMonitor
+        )
     override val action: CoroutineContextProtocol =
-        CoroutineContext("Action", Dispatchers.Default, exceptionMonitor)
+        CoroutineContext(
+            "Action",
+            Dispatchers.Default,
+            exceptionMonitor
+        )
     override val event: CoroutineContextProtocol =
-        CoroutineContext("Event", Dispatchers.Default, exceptionMonitor)
+        CoroutineContext(
+            "Event",
+            Dispatchers.Default,
+            exceptionMonitor
+        )
     override val default: CoroutineContextProtocol =
-        CoroutineContext("Default", Dispatchers.Default, exceptionMonitor)
+        CoroutineContext(
+            "Default",
+            Dispatchers.Default,
+            exceptionMonitor
+        )
     override val main: CoroutineContextProtocol =
-        CoroutineContext("Main", Dispatchers.Main, exceptionMonitor)
+        CoroutineContext(
+            "Main",
+            Dispatchers.Main,
+            exceptionMonitor
+        )
     override val io: CoroutineContextProtocol =
-        CoroutineContext("IO", Dispatchers.IO, exceptionMonitor)
+        CoroutineContext(
+            "IO",
+            Dispatchers.IO,
+            exceptionMonitor
+        )
 }

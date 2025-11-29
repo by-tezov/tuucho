@@ -38,10 +38,11 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
         ) = animation.animate(this)
     }
 
-    var step: MutableTransitionState<STEP_PARENT> by DelegateNullFallBack.Ref(
-        null,
-        fallBackValue = { MutableTransitionState(firstStep) }
-    )
+    var step: MutableTransitionState<STEP_PARENT> by DelegateNullFallBack
+        .Ref(
+            null,
+            fallBackValue = { MutableTransitionState(firstStep) }
+        )
 
     val isDone get() = step.currentState == doneStep
 
