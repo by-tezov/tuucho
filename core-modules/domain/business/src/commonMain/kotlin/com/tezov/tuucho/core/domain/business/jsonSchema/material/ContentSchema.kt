@@ -15,7 +15,7 @@ object ContentSchema {
 
     object Value {
         object Group {
-            const val common = "kotlin"
+            const val common = "common"
         }
     }
 

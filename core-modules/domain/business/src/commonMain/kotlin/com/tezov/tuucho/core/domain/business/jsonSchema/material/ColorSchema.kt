@@ -15,7 +15,7 @@ object ColorSchema {
 
     object Value {
         object Group {
-            const val common = "kotlin"
+            const val common = "common"
             const val palette = "palette"
         }
     }

@@ -94,22 +94,19 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
             sourceSets {
                 androidMain {
                     kotlin.srcDirs(
-                        "${project.projectDir.path}/src/androidMain/$buildType",
-                        "${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin"
+                        "${project.projectDir.path}/src/androidMain/$buildType"
                     )
                 }
                 if (isMacOs) {
                     iosMain {
                         kotlin.srcDirs(
-                            "${project.projectDir.path}/src/iosMain/$buildType",
-                            "${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin"
+                            "${project.projectDir.path}/src/iosMain/$buildType"
                         )
                     }
                 }
                 commonMain {
                     kotlin.srcDirs(
-                        "${project.projectDir.path}/src/commonMain/$buildType",
-                        "${project.projectDir.path}/src/commonMain$buildTypeCapitalized/kotlin"
+                        "${project.projectDir.path}/src/commonMain/$buildType"
                     )
                 }
             }
