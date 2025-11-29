@@ -4,6 +4,8 @@
 - async throw -> redirect to global catcher to let user plug on it.
 - finir les p'tit dessous + clean
 
+- update doc StartTuuchoEngine become TuuchoEngineStart
+
 *** ***
 - still need to fix mock server
 - add more unit test + clean test
