@@ -6,5 +6,5 @@ import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import kotlin.uuid.Uuid
 
 internal class IdGenerator : IdGeneratorProtocol<Unit, String> {
-    override fun generate() = Uuid.Companion.random().toHexString()
+    override fun generate() = Uuid.random().toHexString()
 }
