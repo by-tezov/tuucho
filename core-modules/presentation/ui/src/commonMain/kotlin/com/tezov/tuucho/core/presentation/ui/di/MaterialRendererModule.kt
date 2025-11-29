@@ -67,8 +67,10 @@ internal object MaterialRendererModule {
 
         factory<ButtonViewFactory> {
             ButtonViewFactory(
+                coroutineScopes = get(),
                 useCaseExecutor = get(),
-                processAction = get()
+                processAction = get(),
+                interactionLockResolver = get()
             )
         }
 

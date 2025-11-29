@@ -21,7 +21,7 @@ compose-activity = "1.12.0"
 
 #lib - platform
 kermit = "2.0.8"
-ktor = "3.3.2"
+ktor = "3.3.3"
 koin = "4.1.1"
 kotlin-serialization-json = "1.9.0"
 

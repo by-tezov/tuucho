@@ -24,22 +24,21 @@ class NavigateBackUseCase(
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
-) : UseCaseProtocol.Sync<Unit, Unit>,
+) : UseCaseProtocol.Async<Unit, Unit>,
     TuuchoKoinComponent {
-    override fun invoke(
+    override suspend fun invoke(
         input: Unit
     ) {
-        coroutineScopes.useCase
-            .async {
-                (navigationMiddlewares + terminalMiddleware()).execute(
-                    context = NavigationMiddleware.Back.Context(
-                        currentUrl = navigationStackRouteRepository.currentRoute()?.value
-                            ?: throw DomainException.Default("Shouldn't be possible"),
-                        nextUrl = navigationStackRouteRepository.priorRoute()?.value,
-                        onShadowerException = null
-                    )
+        coroutineScopes.useCase.await {
+            (navigationMiddlewares + terminalMiddleware()).execute(
+                context = NavigationMiddleware.Back.Context(
+                    currentUrl = navigationStackRouteRepository.currentRoute()?.value
+                        ?: throw DomainException.Default("Shouldn't be possible"),
+                    nextUrl = navigationStackRouteRepository.priorRoute()?.value,
+                    onShadowerException = null
                 )
-            }.throwOnFailure()
+            )
+        }
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
