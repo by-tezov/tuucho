@@ -88,7 +88,6 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
     }
 
     private fun configureSourceSets(project: Project) = with(project) {
-        val buildTypeCapitalized = buildTypeCapitalized()
         val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {

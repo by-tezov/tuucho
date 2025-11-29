@@ -17,7 +17,9 @@ compose-plugin = "1.9.3"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
+compose = "1.9.5"
 compose-activity = "1.12.0"
+
 
 #lib - platform
 kermit = "2.0.8"
@@ -33,6 +35,8 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 tuucho = { group = "com.tezov", name = "tuucho.core", version.ref = "versionName" }
 tuucho-android = { group = "com.tezov", name = "tuucho.core-android", version.ref = "versionName" }
 #compose - android
+compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - platform
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
