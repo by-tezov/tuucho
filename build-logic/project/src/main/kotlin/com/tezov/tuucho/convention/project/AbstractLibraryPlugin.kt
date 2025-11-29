@@ -173,24 +173,14 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             }
             ignoreFailures.set(System.getenv("IS_CI") == "true")
         }
-        val sourceDirs = mutableSetOf(
-            "src/commonMain/kotlin",
-            "src/androidMain/kotlin",
-            "src/iosMain/kotlin",
-            "src/commonTest/kotlin"
-        )
-        extensions.configure(AndroidComponentsExtension::class.java) {
-            onVariants { variant ->
-                val bt = variant.buildType ?: error("build can't be null")
-                sourceDirs += listOf(
-                    "src/commonMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                    "src/androidMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                    "src/iosMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                )
-            }
-        }
         afterEvaluate {
             tasks.withType(KtLintFormatTask::class.java).configureEach {
+                val sourceDirs = listOf(
+                    "src/commonMain",
+                    "src/androidMain",
+                    "src/iosMain",
+                    "src/commonTest"
+                )
                 setSource(files(sourceDirs))
             }
         }
@@ -207,22 +197,12 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             baseline = file("$projectDir/.validation/detekt/baseline.xml")
             ignoreFailures = System.getenv("IS_CI") == "true"
         }
-        val sourceDirs = mutableSetOf(
-            "src/commonMain/kotlin",
-            "src/androidMain/kotlin",
-            "src/iosMain/kotlin",
-            "src/commonTest/kotlin"
+        val sourceDirs = listOf(
+            "src/commonMain",
+            "src/androidMain",
+            "src/iosMain",
+            "src/commonTest"
         )
-        extensions.configure(AndroidComponentsExtension::class.java) {
-            onVariants { variant ->
-                val bt = variant.buildType ?: error("build can't be null")
-                sourceDirs += listOf(
-                    "src/commonMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                    "src/androidMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                    "src/iosMain${bt.replaceFirstChar { it.uppercase() }}/kotlin",
-                )
-            }
-        }
         afterEvaluate {
             tasks.withType(Detekt::class.java).configureEach {
                 jvmTarget = javaVersionString()
@@ -290,19 +270,25 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     }
 
     private fun configureSourceSets(project: Project) = with(project) {
-        val buildTypeCapitalized = buildTypeCapitalized()
+        val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
                 androidMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/androidMain/$buildType"
+                    )
                 }
                 if (isMacOs) {
                     iosMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")
+                        kotlin.srcDirs(
+                            "${project.projectDir.path}/src/iosMain/$buildType"
+                        )
                     }
                 }
                 commonMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/commonMain$buildTypeCapitalized/kotlin")
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/commonMain/$buildType"
+                    )
                 }
             }
         }

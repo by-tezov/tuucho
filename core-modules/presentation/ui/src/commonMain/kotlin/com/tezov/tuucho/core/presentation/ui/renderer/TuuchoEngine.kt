@@ -51,9 +51,9 @@ class TuuchoEngine(
     private val registerToScreenTransitionEvent: RegisterToScreenTransitionEventUseCase,
     private val notifyNavigationTransitionCompleted: NotifyNavigationTransitionCompletedUseCase,
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
-) : TuuchoEngineProtocol {
+) : com.tezov.tuucho.core.presentation.ui.renderer.TuuchoEngineProtocol {
     private data class Group(
-        val screens: List<ScreenProtocol>,
+        val screens: List<com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenProtocol>,
         val transitionSpecObject: JsonObject,
     )
 

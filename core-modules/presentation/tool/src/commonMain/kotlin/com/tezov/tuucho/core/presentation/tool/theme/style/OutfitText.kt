@@ -50,7 +50,7 @@ object OutfitText {
                     }.get()
 
                 inline val OutfitTextStateColor.asPaletteSize: OutfitPaletteSize<OutfitTextStateColor>
-                    get() = _root_ide_package_.com.tezov.tuucho.core.presentation.tool.theme.style.OutfitPaletteSize(
+                    get() = OutfitPaletteSize(
                         normal = this
                     )
 
