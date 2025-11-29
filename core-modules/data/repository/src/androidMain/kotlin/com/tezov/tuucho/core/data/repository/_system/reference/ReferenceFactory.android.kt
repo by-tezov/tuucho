@@ -16,8 +16,8 @@ class ReferenceFactoryAndroid : ReferenceProtocol.Factory {
         )
 
         ReferenceProtocol.Strong::class -> StrongReferenceAndroid(
-                value
-            )
+            value
+        )
 
         else -> throw DataException.Default("incorrect reference type $type")
     }

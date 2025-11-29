@@ -9,7 +9,6 @@
     <ID>MagicNumber:ColorExtension.kt$8</ID>
     <ID>MagicNumber:TransitionSlideVertical.kt$TransitionSlideVertical.LayerSlideModifier$4</ID>
     <ID>MatchingDeclarationName:TransitionModifier.kt$AbstractModifierTransition : Modifier</ID>
-    <ID>MaxLineLength:ColorExtension.kt$fun</ID>
     <ID>NestedBlockDepth:AbstractView.kt$AbstractView$final override suspend fun update( jsonObject: JsonObject )</ID>
     <ID>PackageNaming:AbstractViewFactory.kt$package com.tezov.tuucho.core.presentation.ui.renderer.view._system</ID>
     <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>

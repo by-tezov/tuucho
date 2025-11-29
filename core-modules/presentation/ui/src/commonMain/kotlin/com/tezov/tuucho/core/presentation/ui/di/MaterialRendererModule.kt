@@ -55,7 +55,7 @@ internal object MaterialRendererModule {
         }
 
         factory<LabelViewFactory> {
-           LabelViewFactory()
+            LabelViewFactory()
         }
 
         factory<FieldViewFactory> {
