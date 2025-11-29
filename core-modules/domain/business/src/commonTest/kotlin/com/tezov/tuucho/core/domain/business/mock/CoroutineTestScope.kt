@@ -16,10 +16,13 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestScope
 
-internal class CoroutineTestScopes {
-    private lateinit var _mock: CoroutineScopesProtocol
+internal class CoroutineTestScope {
+    lateinit var mock: CoroutineScopesProtocol
+        private set
 
-    fun createMock() = mock<CoroutineScopesProtocol>().also { _mock = it }
+    fun setup() {
+        mock<CoroutineScopesProtocol>().also { mock = it }
+    }
 
     private fun createMockContext(
         currentScope: CoroutineScope
@@ -63,7 +66,7 @@ internal class CoroutineTestScopes {
         val mainDispatcher = StandardTestDispatcher(scheduler)
         val mainScope = CoroutineScope(mainDispatcher)
 
-        _mock.apply {
+        mock.apply {
             every { database } returns createMockContext(ioScope)
             every { network } returns createMockContext(ioScope)
             every { parser } returns createMockContext(defaultScope)
@@ -85,6 +88,36 @@ internal class CoroutineTestScopes {
         attach(testScheduler)
         body()
     }
-}
 
-internal fun coroutineTestScope() = CoroutineTestScopes()
+    fun verifyNoMoreCalls() {
+        dev.mokkery.verifyNoMoreCalls(
+            mock.database,
+            mock.network,
+            mock.parser,
+            mock.renderer,
+            mock.navigation,
+            mock.useCase,
+            mock.action,
+            mock.event,
+            mock.default,
+            mock.main,
+            mock.io,
+        )
+    }
+
+    fun resetCalls() {
+        dev.mokkery.resetCalls(
+            mock.database,
+            mock.network,
+            mock.parser,
+            mock.renderer,
+            mock.navigation,
+            mock.useCase,
+            mock.action,
+            mock.event,
+            mock.default,
+            mock.main,
+            mock.io,
+        )
+    }
+}
