@@ -38,25 +38,24 @@ class NavigateToUrlUseCase(
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val navigationMiddlewares: List<NavigationMiddleware.ToUrl>
-) : UseCaseProtocol.Sync<Input, Unit>,
+) : UseCaseProtocol.Async<Input, Unit>,
     TuuchoKoinComponent {
     data class Input(
         val url: String
     )
 
-    override fun invoke(
+    override suspend fun invoke(
         input: Input
     ) {
-        coroutineScopes.useCase
-            .async {
-                (navigationMiddlewares + terminalMiddleware()).execute(
-                    context = NavigationMiddleware.ToUrl.Context(
-                        currentUrl = navigationStackRouteRepository.currentRoute()?.value,
-                        input = input,
-                        onShadowerException = null
-                    )
+        coroutineScopes.useCase.await {
+            (navigationMiddlewares + terminalMiddleware()).execute(
+                context = NavigationMiddleware.ToUrl.Context(
+                    currentUrl = navigationStackRouteRepository.currentRoute()?.value,
+                    input = input,
+                    onShadowerException = null
                 )
-            }.throwOnFailure()
+            )
+        }
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->

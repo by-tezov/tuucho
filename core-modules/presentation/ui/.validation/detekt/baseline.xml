@@ -3,6 +3,7 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>CyclomaticComplexMethod:AbstractView.kt$AbstractView$final override suspend fun update( jsonObject: JsonObject )</ID>
+    <ID>LongParameterList:ButtonView.kt$ButtonView$( private val route: NavigationRoute.Url, componentObject: JsonObject, private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val interactionLockResolver: InteractionLockProtocol.Resolver, private val labelViewFactory: LabelViewFactory, private val actionHandler: ProcessActionUseCase, )</ID>
     <ID>MagicNumber:ColorExtension.kt$16</ID>
     <ID>MagicNumber:ColorExtension.kt$6</ID>
     <ID>MagicNumber:ColorExtension.kt$8</ID>

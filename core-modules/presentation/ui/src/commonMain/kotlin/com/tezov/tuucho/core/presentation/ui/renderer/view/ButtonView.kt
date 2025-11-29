@@ -8,18 +8,25 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
 class ButtonViewFactory(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
+    private val interactionLockResolver: InteractionLockProtocol.Resolver,
     private val processAction: ProcessActionUseCase,
 ) : AbstractViewFactory() {
-    private val labelUiComponentFactory: LabelViewFactory by inject()
+    private val labelViewFactory: LabelViewFactory by inject()
 
     override fun accept(
         componentElement: JsonObject,
@@ -35,7 +42,9 @@ class ButtonViewFactory(
         route = route,
         componentObject = componentObject,
         useCaseExecutor = useCaseExecutor,
-        labelUiComponentFactory = labelUiComponentFactory,
+        interactionLockResolver = interactionLockResolver,
+        labelViewFactory = labelViewFactory,
+        coroutineScopes = coroutineScopes,
         actionHandler = processAction
     ).also { it.init() }
 }
@@ -43,8 +52,10 @@ class ButtonViewFactory(
 class ButtonView(
     private val route: NavigationRoute.Url,
     componentObject: JsonObject,
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
-    private val labelUiComponentFactory: LabelViewFactory,
+    private val interactionLockResolver: InteractionLockProtocol.Resolver,
+    private val labelViewFactory: LabelViewFactory,
     private val actionHandler: ProcessActionUseCase,
 ) : AbstractView(componentObject) {
     override val children: List<ViewProtocol>?
@@ -64,7 +75,7 @@ class ButtonView(
             action?.let { _action = it }
             label?.let { labelObject ->
                 labelView?.update(labelObject) ?: run {
-                    labelView = labelUiComponentFactory
+                    labelView = labelViewFactory
                         .process(route, labelObject)
                 }
 
@@ -81,16 +92,30 @@ class ButtonView(
     private val action
         get(): () -> Unit = ({
             _action?.let {
-                // TODO add lock screen
-
-                useCaseExecutor.async(
-                    useCase = actionHandler,
-                    input = ProcessActionUseCase.Input.ActionObject(
-                        route = route,
-                        actionObject = it,
-                        lockable = null
-                    )
-                )
+                coroutineScopes.action
+                    .async {
+                        val screenLock = interactionLockResolver.tryAcquire(
+                            requester = "$route::ButtonView::${hashCode().toHexString()}",
+                            lockable = InteractionLockable.Type(
+                                value = listOf(InteractionLockType.Screen)
+                            )
+                        )
+                        if (screenLock is InteractionLockable.Empty) {
+                            return@async
+                        }
+                        useCaseExecutor.await(
+                            useCase = actionHandler,
+                            input = ProcessActionUseCase.Input.ActionObject(
+                                route = route,
+                                actionObject = it,
+                                lockable = screenLock.freeze()
+                            )
+                        )
+                        interactionLockResolver.release(
+                            requester = "$route::ButtonView::${hashCode().toHexString()}",
+                            lockable = screenLock
+                        )
+                    }.throwOnFailure()
             }
         })
 

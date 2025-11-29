@@ -78,7 +78,6 @@ internal object UseCaseModule {
 
         factory<ServerHealthCheckUseCase> {
             ServerHealthCheckUseCase(
-                coroutineScopes = get(),
                 serverHealthCheck = get(),
             )
         }
