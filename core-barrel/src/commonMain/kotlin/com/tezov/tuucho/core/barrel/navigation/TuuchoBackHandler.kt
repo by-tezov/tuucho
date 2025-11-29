@@ -34,29 +34,30 @@ internal fun TuuchoBackHandler(
         koin.get<ProcessActionUseCase>()
     }
     BackHandler(enabled = true) {
-        coroutineScopes.action.async {
-            val screenLock = interactionLockResolver.acquire(
-                requester = "BackHandler",
-                lockable = InteractionLockable.Type(
-                    value = listOf(InteractionLockType.Screen)
+        coroutineScopes.action
+            .async {
+                val screenLock = interactionLockResolver.acquire(
+                    requester = "BackHandler",
+                    lockable = InteractionLockable.Type(
+                        value = listOf(InteractionLockType.Screen)
+                    )
                 )
-            )
-            useCaseExecutor.await(
-                useCase = actionHandler,
-                input = ProcessActionUseCase.Input.JsonElement(
-                    route = NavigationRoute.Current,
-                    action = ActionModelDomain.from(
-                        command = NavigateAction.command,
-                        authority = NavigateAction.LocalDestination.authority,
-                        target = NavigateAction.LocalDestination.Target.back,
-                    ),
-                    lockable = screenLock.freeze()
+                useCaseExecutor.await(
+                    useCase = actionHandler,
+                    input = ProcessActionUseCase.Input.JsonElement(
+                        route = NavigationRoute.Current,
+                        action = ActionModelDomain.from(
+                            command = NavigateAction.command,
+                            authority = NavigateAction.LocalDestination.authority,
+                            target = NavigateAction.LocalDestination.Target.back,
+                        ),
+                        lockable = screenLock.freeze()
+                    )
                 )
-            )
-            interactionLockResolver.release(
-                requester = "BackHandler",
-                lockable = screenLock
-            )
-        }.throwOnFailure()
+                interactionLockResolver.release(
+                    requester = "BackHandler",
+                    lockable = screenLock
+                )
+            }.throwOnFailure()
     }
 }

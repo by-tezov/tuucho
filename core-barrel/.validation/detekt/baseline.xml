@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>FunctionNaming:TuuchoBackHandler.kt$@OptIn(ExperimentalComposeUiApi::class) @Composable internal fun TuuchoBackHandler( koin: Koin )</ID>
-    <ID>FunctionNaming:TuuchoEngineStart.kt$@Composable fun TuuchoEngineStart( applicationModules: List&lt;ModuleProtocol&gt;, onStartUrl: String )</ID>
-    <ID>PackageNaming:CoroutineScopes.kt$package com.tezov.tuucho.core.barrel._system</ID>
-  </CurrentIssues>
-</SmellBaseline>

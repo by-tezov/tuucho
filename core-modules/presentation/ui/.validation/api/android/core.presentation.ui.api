@@ -112,7 +112,7 @@ public abstract class com/tezov/tuucho/core/presentation/ui/renderer/view/Abstra
 
 public final class com/tezov/tuucho/core/presentation/ui/renderer/view/ButtonView : com/tezov/tuucho/core/presentation/ui/renderer/view/AbstractView {
 	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/presentation/ui/renderer/view/LabelViewFactory;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Resolver;Lcom/tezov/tuucho/core/presentation/ui/renderer/view/LabelViewFactory;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase;)V
 	public fun getChildren ()Ljava/util/List;
 	public fun processComponent (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun processContent (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -120,7 +120,7 @@ public final class com/tezov/tuucho/core/presentation/ui/renderer/view/ButtonVie
 
 public final class com/tezov/tuucho/core/presentation/ui/renderer/view/ButtonViewFactory : com/tezov/tuucho/core/presentation/ui/renderer/view/_system/AbstractViewFactory {
 	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Resolver;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase;)V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
 	public fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

@@ -92,29 +92,30 @@ class ButtonView(
     private val action
         get(): () -> Unit = ({
             _action?.let {
-                coroutineScopes.action.async {
-                    val screenLock = interactionLockResolver.tryAcquire(
-                        requester = "$route::ButtonView::${hashCode().toHexString()}",
-                        lockable = InteractionLockable.Type(
-                            value = listOf(InteractionLockType.Screen)
+                coroutineScopes.action
+                    .async {
+                        val screenLock = interactionLockResolver.tryAcquire(
+                            requester = "$route::ButtonView::${hashCode().toHexString()}",
+                            lockable = InteractionLockable.Type(
+                                value = listOf(InteractionLockType.Screen)
+                            )
                         )
-                    )
-                    if (screenLock is InteractionLockable.Empty) {
-                        return@async
-                    }
-                    useCaseExecutor.await(
-                        useCase = actionHandler,
-                        input = ProcessActionUseCase.Input.ActionObject(
-                            route = route,
-                            actionObject = it,
-                            lockable = screenLock.freeze()
+                        if (screenLock is InteractionLockable.Empty) {
+                            return@async
+                        }
+                        useCaseExecutor.await(
+                            useCase = actionHandler,
+                            input = ProcessActionUseCase.Input.ActionObject(
+                                route = route,
+                                actionObject = it,
+                                lockable = screenLock.freeze()
+                            )
                         )
-                    )
-                    interactionLockResolver.release(
-                        requester = "$route::ButtonView::${hashCode().toHexString()}",
-                        lockable = screenLock
-                    )
-                }.throwOnFailure()
+                        interactionLockResolver.release(
+                            requester = "$route::ButtonView::${hashCode().toHexString()}",
+                            lockable = screenLock
+                        )
+                    }.throwOnFailure()
             }
         })
 

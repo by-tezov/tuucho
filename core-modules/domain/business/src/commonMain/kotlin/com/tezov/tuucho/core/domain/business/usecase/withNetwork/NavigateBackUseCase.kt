@@ -26,7 +26,6 @@ class NavigateBackUseCase(
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
 ) : UseCaseProtocol.Async<Unit, Unit>,
     TuuchoKoinComponent {
-
     override suspend fun invoke(
         input: Unit
     ) {
