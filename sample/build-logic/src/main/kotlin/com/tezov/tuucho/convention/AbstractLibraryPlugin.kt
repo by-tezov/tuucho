@@ -89,18 +89,28 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
 
     private fun configureSourceSets(project: Project) = with(project) {
         val buildTypeCapitalized = buildTypeCapitalized()
+        val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
                 androidMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin")
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/androidMain/$buildType",
+                        "${project.projectDir.path}/src/androidMain$buildTypeCapitalized/kotlin"
+                    )
                 }
                 if (isMacOs) {
                     iosMain {
-                        kotlin.srcDirs("${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin")
+                        kotlin.srcDirs(
+                            "${project.projectDir.path}/src/iosMain/$buildType",
+                            "${project.projectDir.path}/src/iosMain$buildTypeCapitalized/kotlin"
+                        )
                     }
                 }
                 commonMain {
-                    kotlin.srcDirs("${project.projectDir.path}/src/commonMain$buildTypeCapitalized/kotlin")
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/commonMain/$buildType",
+                        "${project.projectDir.path}/src/commonMain$buildTypeCapitalized/kotlin"
+                    )
                 }
             }
         }

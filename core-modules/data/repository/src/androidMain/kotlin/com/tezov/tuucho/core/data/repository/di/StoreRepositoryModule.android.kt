@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule.Name.STORE_REPOSITORY_CONFIG
 import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT
-import com.tezov.tuucho.core.data.repository.repository.KeyValueStoreRepository
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
@@ -29,7 +28,7 @@ internal object StoreRepositoryModuleAndroid {
         }
 
         factory<KeyValueStoreRepositoryProtocol> {
-            KeyValueStoreRepository(
+            _root_ide_package_.com.tezov.tuucho.core.data.repository.repository.KeyValueStoreRepository(
                 dataStore = get(),
             )
         }

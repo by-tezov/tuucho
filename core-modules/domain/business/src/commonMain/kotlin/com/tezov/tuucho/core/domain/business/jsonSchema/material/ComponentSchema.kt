@@ -22,7 +22,7 @@ object ComponentSchema {
 
     object Value {
         object Group {
-            const val common = "common"
+            const val common = "kotlin"
         }
     }
 

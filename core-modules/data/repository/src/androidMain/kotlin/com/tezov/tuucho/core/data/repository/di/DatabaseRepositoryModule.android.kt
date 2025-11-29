@@ -13,7 +13,9 @@ object DatabaseRepositoryModuleAndroid {
         factory<SqlDriver> {
             AndroidSqliteDriver(
                 schema = Database.Schema,
-                context = get(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT),
+                context = get(
+                    _root_ide_package_.com.tezov.tuucho.core.data.repository.di.SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT
+                ),
                 name = get<DatabaseRepositoryModule.Config>(DATABASE_REPOSITORY_CONFIG).fileName
             )
         }

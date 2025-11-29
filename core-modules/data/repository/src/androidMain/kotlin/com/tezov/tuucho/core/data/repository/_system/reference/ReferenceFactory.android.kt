@@ -11,8 +11,15 @@ class ReferenceFactoryAndroid : ReferenceProtocol.Factory {
         type: KClass<out ReferenceProtocol<*>>,
         value: T?
     ) = when (type) {
-        ReferenceProtocol.Weak::class -> WeakReferenceAndroid(value)
-        ReferenceProtocol.Strong::class -> StrongReferenceAndroid(value)
+        ReferenceProtocol.Weak::class -> _root_ide_package_.com.tezov.tuucho.core.data.repository._system.reference.WeakReferenceAndroid(
+            value
+        )
+
+        ReferenceProtocol.Strong::class -> _root_ide_package_.com.tezov.tuucho.core.data.repository._system.reference
+            .StrongReferenceAndroid(
+                value
+            )
+
         else -> throw DataException.Default("incorrect reference type $type")
     }
 }

@@ -32,7 +32,6 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 #tuucho
 tuucho = { group = "com.tezov", name = "tuucho.core", version.ref = "versionName" }
 tuucho-android = { group = "com.tezov", name = "tuucho.core-android", version.ref = "versionName" }
-tuucho-jvm = { group = "com.tezov", name = "tuucho.core-jvm", version.ref = "versionName" }
 #compose - android
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - platform
@@ -47,7 +46,6 @@ ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "k
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 [plugins]
 #convention
-convention-application-jvm = { id = "com.tezov.tuucho.convention.application-jvm", version = "unspecified" }
 convention-application-android = { id = "com.tezov.tuucho.convention.application-android", version = "unspecified" }
 convention-application-ios = { id = "com.tezov.tuucho.convention.application-ios", version = "unspecified" }
 convention-library-ui = { id = "com.tezov.tuucho.convention.library-ui", version = "unspecified" }

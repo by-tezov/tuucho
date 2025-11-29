@@ -36,8 +36,6 @@ internal fun Project.namespace() = "${namespaceBase()}${path
 
 internal fun Project.buildType() = BuildConfig.BUILD_TYPE
 
-internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.uppercaseChar() }
-
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))
 
 internal fun Project.javaVersionString() = jvmTarget().target

@@ -15,7 +15,7 @@ object DimensionSchema {
 
     object Value {
         object Group {
-            const val common = "common"
+            const val common = "kotlin"
             const val font = "font"
             const val padding = "padding"
         }
