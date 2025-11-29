@@ -110,12 +110,9 @@ class ModifierChainBuilder(
 }
 
 inline fun Modifier.then(
-    block: com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder.() -> Unit
+    block: ModifierChainBuilder.() -> Unit
 ): Modifier {
-    val builder =
-        _root_ide_package_.com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder(
-            this
-        )
+    val builder = ModifierChainBuilder(this)
     builder.block()
     return builder.build()
 }
