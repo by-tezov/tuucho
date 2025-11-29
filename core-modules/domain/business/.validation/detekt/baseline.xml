@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
+    <ID>InvalidPackageDeclaration:SettingComponentNavigationTransitionSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema</ID>
+    <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: NavigationRouteIdGenerator, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
+    <ID>MatchingDeclarationName:CoroutineScopesProtocole.kt$CoroutineScopesProtocol</ID>
+    <ID>MatchingDeclarationName:SettingComponentNavigationOptionSchema.kt$ComponentSettingNavigationOptionSchema</ID>
+    <ID>MatchingDeclarationName:SettingComponentNavigationSchema.kt$ComponentSettingNavigationSchema</ID>
+    <ID>MatchingDeclarationName:SettingComponentNavigationSelectorSchema.kt$ComponentSettingNavigationSelectorSchema</ID>
+    <ID>MatchingDeclarationName:SettingComponentSchema.kt$ComponentSettingSchema</ID>
+    <ID>MatchingDeclarationName:SettingPageSchema.kt$PageSettingSchema</ID>
+    <ID>MatchingDeclarationName:ShadowerDefinition.kt$Shadower</ID>
+    <ID>MaxLineLength:ActionModelDomain.kt$ActionModelDomain.Companion$pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""</ID>
+    <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
+    <ID>MaxLineLength:InteractionLockStackTest.kt$InteractionLockStackTest$assertEquals(2, listOf(InteractionLockType.Screen, InteractionLockType.Navigation).map { it.toString() }.distinct().size)</ID>
+    <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
+    <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
+    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$)</ID>
+    <ID>MayBeConst:InteractionLockStackTest.kt$InteractionLockStackTest.Companion$private val requester = "test"</ID>
+    <ID>NestedBlockDepth:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output?&gt; )</ID>
+    <ID>PackageNaming:ButtonSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
+    <ID>PackageNaming:DelegateSchemaKey.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
+    <ID>PackageNaming:FormFieldSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
+    <ID>PackageNaming:FormSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
+    <ID>PackageNaming:FormValidatorSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
+    <ID>PackageNaming:IdGenerator.kt$package com.tezov.tuucho.core.domain.business._system</ID>
+    <ID>PackageNaming:LabelSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
+    <ID>PackageNaming:LayoutLinearSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout</ID>
+    <ID>PackageNaming:Schema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
+    <ID>PackageNaming:SpacerSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
+    <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
+    <ID>ReturnCount:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
+    <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
+    <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareTuuchoKoinComponent</ID>
+    <ID>TooManyFunctions:InteractionLockStack.kt$InteractionLockStack : Stack</ID>
+    <ID>TooManyFunctions:Schema.kt$OpenSchemaScope&lt;T : OpenSchemaScope&lt;T&gt;&gt;</ID>
+  </CurrentIssues>
+</SmellBaseline>
