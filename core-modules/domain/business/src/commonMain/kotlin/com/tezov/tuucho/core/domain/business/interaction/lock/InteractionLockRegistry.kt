@@ -13,7 +13,11 @@ class InteractionLockRegistry : InteractionLockProtocol.Registry {
     ) {
         when (val lockable = action.lockable) {
             is InteractionLockable.Type -> {
-                storage[action.command to action.authority] = lockable
+                val key = action.command to action.authority
+                if (storage.containsKey(key)) {
+                    throw DomainException.Default("Lock type already registered for $key")
+                }
+                storage[key] = lockable
             }
 
             InteractionLockable.Empty -> { /* nothing */ }

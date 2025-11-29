@@ -72,7 +72,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                     )
                 }
             )
-            sourceDirectories.setFrom(files("$projectDir/src/commonMain"))
+            sourceDirectories.setFrom(files("$projectDir/src/commonMain/kotlin"))
 
             reports {
                 xml.required.set(true)
