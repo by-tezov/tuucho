@@ -1,0 +1,951 @@
+public final class com/tezov/tuucho/core/data/repository/_system/SystemInformationAndroid : com/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol {
+	public fun <init> ()V
+	public fun currentThreadName ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/_system/reference/ReferenceFactoryAndroid : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Factory {
+	public fun <init> ()V
+	public fun create (Lkotlin/reflect/KClass;Ljava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol;
+}
+
+public final class com/tezov/tuucho/core/data/repository/_system/reference/StrongReferenceAndroid : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Strong {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Object;)V
+	public synthetic fun <init> (Ljava/lang/Object;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun clear ()V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getOrNull ()Ljava/lang/Object;
+	public fun getOrThrow ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun set (Ljava/lang/Object;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/_system/reference/WeakReferenceAndroid : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Weak {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Object;)V
+	public synthetic fun <init> (Ljava/lang/Object;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun clear ()V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getOrNull ()Ljava/lang/Object;
+	public fun getOrThrow ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun set (Ljava/lang/Object;)V
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/database/Database : app/cash/sqldelight/Transacter {
+	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/Database$Companion;
+	public abstract fun getHookStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/HookStatementQueries;
+	public abstract fun getJoinStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/JoinStatementQueries;
+	public abstract fun getJsonObjectCommonStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/JsonObjectCommonStatementQueries;
+	public abstract fun getJsonObjectContextualStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/JsonObjectContextualStatementQueries;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/Database$Companion {
+	public final fun getSchema ()Lapp/cash/sqldelight/db/SqlSchema;
+	public final fun invoke (Lapp/cash/sqldelight/db/SqlDriver;Lcom/tezov/tuucho/core/data/repository/database/table/HookEntry$Adapter;Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry$Adapter;Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry$Adapter;)Lcom/tezov/tuucho/core/data/repository/database/Database;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/statement/HookStatementQueries : app/cash/sqldelight/TransacterImpl {
+	public fun <init> (Lapp/cash/sqldelight/db/SqlDriver;Lcom/tezov/tuucho/core/data/repository/database/table/HookEntry$Adapter;)V
+	public final fun deleteAll ()Lapp/cash/sqldelight/db/QueryResult;
+	public final fun deleteByPrimaryKey (J)Lapp/cash/sqldelight/db/QueryResult;
+	public final fun deleteByUrl (Ljava/lang/String;)Lapp/cash/sqldelight/db/QueryResult;
+	public final fun existWithUrl (Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun getByUrl (Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun getByUrl (Ljava/lang/String;Lkotlin/jvm/functions/Function5;)Lapp/cash/sqldelight/Query;
+	public final fun getLifetimeByUrl (Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun insert (Ljava/lang/String;Ljava/lang/Long;Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime;)Lapp/cash/sqldelight/db/QueryResult;
+	public final fun selectAll ()Lapp/cash/sqldelight/Query;
+	public final fun selectAll (Lkotlin/jvm/functions/Function5;)Lapp/cash/sqldelight/Query;
+	public final fun selectByLifetime (Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun selectByLifetime (Ljava/lang/String;Lkotlin/jvm/functions/Function5;)Lapp/cash/sqldelight/Query;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/statement/JoinStatementQueries : app/cash/sqldelight/TransacterImpl {
+	public fun <init> (Lapp/cash/sqldelight/db/SqlDriver;Lcom/tezov/tuucho/core/data/repository/database/table/HookEntry$Adapter;Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry$Adapter;Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry$Adapter;)V
+	public final fun getCommonByTypeIdVisibility (Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Ljava/lang/String;Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun getCommonByTypeIdVisibility (Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+	public final fun getContextualByTypeUrlIdVisibility (Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun getContextualByTypeUrlIdVisibility (Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/statement/JsonObjectCommonStatementQueries : app/cash/sqldelight/TransacterImpl {
+	public fun <init> (Lapp/cash/sqldelight/db/SqlDriver;Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry$Adapter;)V
+	public final fun deleteAll ()Lapp/cash/sqldelight/db/QueryResult;
+	public final fun deleteByUrl (Ljava/lang/String;)Lapp/cash/sqldelight/db/QueryResult;
+	public final fun getByPrimaryKey (J)Lapp/cash/sqldelight/Query;
+	public final fun getByPrimaryKey (JLkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+	public final fun getByTypeUrlId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun getByTypeUrlId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+	public final fun insert (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lapp/cash/sqldelight/db/QueryResult;
+	public final fun lastInsertedId ()Lapp/cash/sqldelight/ExecutableQuery;
+	public final fun selectAll ()Lapp/cash/sqldelight/Query;
+	public final fun selectAll (Lkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/statement/JsonObjectContextualStatementQueries : app/cash/sqldelight/TransacterImpl {
+	public fun <init> (Lapp/cash/sqldelight/db/SqlDriver;Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry$Adapter;)V
+	public final fun deleteAll ()Lapp/cash/sqldelight/db/QueryResult;
+	public final fun deleteByUrl (Ljava/lang/String;)Lapp/cash/sqldelight/db/QueryResult;
+	public final fun getByPrimaryKey (J)Lapp/cash/sqldelight/Query;
+	public final fun getByPrimaryKey (JLkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+	public final fun getByTypeUrlId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lapp/cash/sqldelight/Query;
+	public final fun getByTypeUrlId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+	public final fun insert (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lapp/cash/sqldelight/db/QueryResult;
+	public final fun lastInsertedId ()Lapp/cash/sqldelight/ExecutableQuery;
+	public final fun selectAll ()Lapp/cash/sqldelight/Query;
+	public final fun selectAll (Lkotlin/jvm/functions/Function6;)Lapp/cash/sqldelight/Query;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/table/HookEntry {
+	public fun <init> (JLjava/lang/String;Ljava/lang/Long;Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Long;
+	public final fun component4 ()Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;
+	public final fun component5 ()Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime;
+	public final fun copy (JLjava/lang/String;Ljava/lang/Long;Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime;)Lcom/tezov/tuucho/core/data/repository/database/table/HookEntry;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/table/HookEntry;JLjava/lang/String;Ljava/lang/Long;Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/table/HookEntry;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLifetime ()Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime;
+	public final fun getPrimaryKey ()J
+	public final fun getRootPrimaryKey ()Ljava/lang/Long;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun getVisibility ()Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/table/HookEntry$Adapter {
+	public fun <init> (Lapp/cash/sqldelight/ColumnAdapter;Lapp/cash/sqldelight/ColumnAdapter;)V
+	public final fun getLifetimeAdapter ()Lapp/cash/sqldelight/ColumnAdapter;
+	public final fun getVisibilityAdapter ()Lapp/cash/sqldelight/ColumnAdapter;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry {
+	public fun <init> (JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy (JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getIdFrom ()Ljava/lang/String;
+	public final fun getJsonObject ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getPrimaryKey ()J
+	public final fun getType ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/table/JsonObjectCommonEntry$Adapter {
+	public fun <init> (Lapp/cash/sqldelight/ColumnAdapter;)V
+	public final fun getJsonObjectAdapter ()Lapp/cash/sqldelight/ColumnAdapter;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry {
+	public fun <init> (JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy (JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getIdFrom ()Ljava/lang/String;
+	public final fun getJsonObject ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getPrimaryKey ()J
+	public final fun getType ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/table/JsonObjectContextualEntry$Adapter {
+	public fun <init> (Lapp/cash/sqldelight/ColumnAdapter;)V
+	public final fun getJsonObjectAdapter ()Lapp/cash/sqldelight/ColumnAdapter;
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/database/type/Lifetime {
+	public static final field Type Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Type;
+	public static final field enrolled Ljava/lang/String;
+	public static final field singleUse Ljava/lang/String;
+	public static final field transient Ljava/lang/String;
+	public static final field unlimited Ljava/lang/String;
+	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getValidityKey ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled : com/tezov/tuucho/core/data/repository/database/type/Lifetime {
+	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun getValidityKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Enrolled$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse : com/tezov/tuucho/core/data/repository/database/type/Lifetime {
+	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun getValidityKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class com/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$SingleUse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient : com/tezov/tuucho/core/data/repository/database/type/Lifetime {
+	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient$Companion;
+	public fun <init> (Ljava/lang/String;Lkotlin/time/Instant;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlin/time/Instant;
+	public final fun copy (Ljava/lang/String;Lkotlin/time/Instant;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient;Ljava/lang/String;Lkotlin/time/Instant;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExpirationDateTime ()Lkotlin/time/Instant;
+	public fun getName ()Ljava/lang/String;
+	public fun getValidityKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Transient$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Type {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited : com/tezov/tuucho/core/data/repository/database/type/Lifetime {
+	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun getValidityKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Lifetime$Unlimited$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/database/type/Visibility {
+	public static final field Type Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Type;
+	public static final field contextual Ljava/lang/String;
+	public static final field global Ljava/lang/String;
+	public static final field local Ljava/lang/String;
+	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public abstract fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lcom/tezov/tuucho/core/data/repository/database/type/Visibility;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual : com/tezov/tuucho/core/data/repository/database/type/Visibility {
+	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public final fun getUrlOrigin ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class com/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Visibility$Contextual$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Visibility$Global : com/tezov/tuucho/core/data/repository/database/type/Visibility {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Global;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Visibility$Local : com/tezov/tuucho/core/data/repository/database/type/Visibility {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/database/type/Visibility$Local;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/database/type/Visibility$Type {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModule {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModule;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModule$Config {
+	public abstract fun getFileName ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModule$Name {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModule$Name;
+	public final fun getDATABASE_REPOSITORY_CONFIG ()Lorg/koin/core/qualifier/StringQualifier;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid;
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData : com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Breaker : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Breaker;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Shadower : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Shadower;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/NetworkRepositoryModule {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/NetworkRepositoryModule;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/di/NetworkRepositoryModule$Config {
+	public abstract fun getBaseUrl ()Ljava/lang/String;
+	public abstract fun getHealthEndpoint ()Ljava/lang/String;
+	public abstract fun getResourceEndpoint ()Ljava/lang/String;
+	public abstract fun getSendEndpoint ()Ljava/lang/String;
+	public abstract fun getTimeoutMillis ()J
+	public abstract fun getVersion ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModule {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/StoreRepositoryModule;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModule$Config {
+	public abstract fun getFileName ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/StoreRepositoryModule$Name {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/StoreRepositoryModule$Name;
+	public final fun getSTORE_REPOSITORY_CONFIG ()Lorg/koin/core/qualifier/StringQualifier;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModules {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/SystemCoreDataModules;
+	public final fun invoke ()Ljava/util/List;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid$Name {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/SystemCoreDataModulesAndroid$Name;
+	public final fun getAPPLICATION_CONTEXT ()Lorg/koin/core/qualifier/StringQualifier;
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/exception/DataException : java/lang/Exception {
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/Throwable;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/exception/DataException$Default : com/tezov/tuucho/core/data/repository/exception/DataException {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public fun <init> (Ljava/lang/Throwable;)V
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+}
+
+public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context {
+	public fun <init> (Lio/ktor/client/request/HttpRequestBuilder;)V
+	public final fun component1 ()Lio/ktor/client/request/HttpRequestBuilder;
+	public final fun copy (Lio/ktor/client/request/HttpRequestBuilder;)Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;Lio/ktor/client/request/HttpRequestBuilder;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBuilder ()Lio/ktor/client/request/HttpRequestBuilder;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/_system/MatcherHelperExtensionKt {
+	public static final fun isAnySubsetOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
+	public static final fun isAnySubsetOf (Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
+	public static final fun isAnyTypeOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
+	public static final fun isAnyTypeOf (Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
+	public static final fun isSubsetOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Z
+	public static final fun isSubsetOf (Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Z
+	public static final fun isSubsetStartWith (Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Z
+	public static final fun isTypeOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Z
+	public static final fun isTypeOf (Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Z
+	public static final fun lastSegmentIs (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Ljava/lang/String;)Z
+	public static final fun lastSegmentIsAny (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Ljava/util/List;)Z
+	public static final fun lastSegmentStartWith (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Ljava/lang/String;)Z
+	public static final fun parentIsAnySubsetOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
+	public static final fun parentIsAnyTypeOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
+	public static final fun parentIsSubsetOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Z
+	public static final fun parentIsTypeOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/ActionAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/ColorAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/ComponentAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/ContentAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/DimensionAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/MaterialAssembler : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
+	public fun <init> ()V
+	public fun getKoin ()Lorg/koin/core/Koin;
+	public final fun process (Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/data/repository/parser/assembler/_system/FindAllRefOrNullFetcherProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/OptionAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/StateAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/StyleAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/TextAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getSchemaType ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/assembler/_element/layout/linear/ContentLayoutLinearItemsMatcher : com/tezov/tuucho/core/data/repository/parser/assembler/_system/MatcherAssemblerProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/parser/assembler/_system/AbstractAssembler : com/tezov/tuucho/core/data/repository/parser/assembler/_system/MatcherAssemblerProtocol, com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	protected fun getChildProcessors ()Ljava/util/List;
+	public fun getKoin ()Lorg/koin/core/Koin;
+	protected fun getMatchers ()Ljava/util/List;
+	public abstract fun getSchemaType ()Ljava/lang/String;
+	public final fun process (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Lcom/tezov/tuucho/core/data/repository/parser/assembler/_system/FindAllRefOrNullFetcherProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected fun rectify (Ljava/util/List;Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Ljava/util/List;
+	protected fun rectify (Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonObject;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/parser/assembler/_system/FindAllRefOrNullFetcherProtocol {
+	public abstract fun invoke (Lkotlinx/serialization/json/JsonObject;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/parser/assembler/_system/MatcherAssemblerProtocol {
+	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/button/content/action/ActionButtonMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/button/content/label/ContentButtonLabelMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/button/content/label/ContentButtonLabelRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/FormValidatorRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/field/content/ContentFormFieldTextErrorMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/field/content/ContentFormFieldTextErrorRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/field/content/ContentFormFieldTextMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/field/option/OptionFormFieldValidatorMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/form/field/state/StateFormFieldTextMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/label/content/ContentLabelTextMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/label/style/StyleLabelColorMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/label/style/StyleLabelDimensionMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/layout/linear/ContentLayoutLinearItemsMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/layout/linear/ContentLayoutLinearItemsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/layout/linear/StyleLayoutLinearColorMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_element/spacer/StyleSpacerDimensionMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol, com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	protected fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun afterAlterNull (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun afterAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun afterAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun beforeAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun beforeAlterNull (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	protected fun getChildProcessors ()Ljava/util/List;
+	public abstract fun getKey ()Ljava/lang/String;
+	public fun getKoin ()Lorg/koin/core/Koin;
+	protected fun getMatchers ()Ljava/util/List;
+	public final fun process (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol {
+	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierHelper {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierHelper;
+	public final fun rectifyIds (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;Ljava/lang/String;)Lkotlin/Pair;
+	public final fun retrieveSubsetOrMarkUnknown (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierIdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
+	public synthetic fun generate ()Ljava/lang/Object;
+	public fun generate ()Ljava/lang/String;
+	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun generate (Lkotlin/Unit;)Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/action/ActionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun beforeAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/action/ActionsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/color/ColorRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/color/ColorsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/component/ComponentRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/component/ComponentsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/content/ContentRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/content/ContentsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/dimension/DimensionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/dimension/DimensionsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/id/IdMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/MatcherRectifierProtocol, com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getKoin ()Lorg/koin/core/Koin;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/id/IdRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> (Lcom/tezov/tuucho/core/data/repository/parser/rectifier/_system/RectifierIdGenerator;)V
+	public synthetic fun beforeAlterNull (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/option/OptionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/option/OptionsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/setting/component/SettingComponentNavigationDefinitionRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/setting/component/SettingComponentNavigationRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/setting/component/SettingComponentRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun beforeAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/state/StateRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/state/StatesRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/style/StyleRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/style/StylesRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/text/TextRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/text/TextsRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/_system/AbstractRectifier {
+	public fun <init> ()V
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower : com/tezov/tuucho/core/data/repository/parser/shadower/_system/MatcherShadowerProtocol, com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	protected fun getChildProcessors ()Ljava/util/List;
+	public fun getKoin ()Lorg/koin/core/Koin;
+	protected fun getMatchers ()Ljava/util/List;
+	public final fun process (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Lcom/tezov/tuucho/core/data/repository/parser/shadower/_system/JsonObjectConsumerProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/ComponentShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/ContentShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/MaterialShadower : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent {
+	public fun <init> ()V
+	public fun getKoin ()Lorg/koin/core/Koin;
+	public final fun process (Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/data/repository/parser/shadower/_system/JsonObjectConsumerProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/StateShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/TextShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/_element/layout/linear/ContentLayoutLinearItemsMatcher : com/tezov/tuucho/core/data/repository/parser/shadower/_system/MatcherShadowerProtocol {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/parser/shadower/_system/JsonObjectConsumerProtocol {
+	public abstract fun onDone (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onNext (Lkotlinx/serialization/json/JsonObject;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/parser/shadower/_system/MatcherShadowerProtocol {
+	public abstract fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/core/data/repository/repository/SystemInformation : com/tezov/tuucho/core/domain/tool/protocol/SystemInformationProtocol {
+	public fun <init> (Lcom/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol;)V
+	public fun currentThreadName ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol {
+	public abstract fun currentThreadName ()Ljava/lang/String;
+}
+

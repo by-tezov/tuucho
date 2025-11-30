@@ -8,6 +8,8 @@ import dev.mokkery.answering.returns
 import dev.mokkery.answering.returnsBy
 import dev.mokkery.every
 import dev.mokkery.matcher.MokkeryMatcherScope
+import dev.mokkery.matcher.any
+import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.resetCalls
 import dev.mokkery.verify

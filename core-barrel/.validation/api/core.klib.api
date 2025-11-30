@@ -1,0 +1,24 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.tezov:core>
+sealed class com.tezov.tuucho.core.barrel.di/ModuleGroupCore : com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group { // com.tezov.tuucho.core.barrel.di/ModuleGroupCore|null[0]
+    final object Main : com.tezov.tuucho.core.barrel.di/ModuleGroupCore { // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.toString|toString(){}[0]
+    }
+}
+
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop[0]
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop[0]
+final val com.tezov.tuucho.core.barrel/localTuuchoKoin // com.tezov.tuucho.core.barrel/localTuuchoKoin|{}localTuuchoKoin[0]
+    final fun <get-localTuuchoKoin>(): androidx.compose.runtime/ProvidableCompositionLocal<org.koin.core/Koin> // com.tezov.tuucho.core.barrel/localTuuchoKoin.<get-localTuuchoKoin>|<get-localTuuchoKoin>(){}[0]
+
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol>, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol>;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
