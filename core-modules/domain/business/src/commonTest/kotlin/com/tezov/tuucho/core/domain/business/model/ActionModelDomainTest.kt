@@ -12,7 +12,6 @@ import kotlin.test.assertIs
 import kotlin.test.assertNull
 
 class ActionModelDomainTest {
-
     private fun String.toQuery() = ActionModelDomain.run { toQueryToMap() }
 
     @Test

@@ -8,8 +8,6 @@ import dev.mokkery.answering.returns
 import dev.mokkery.answering.returnsBy
 import dev.mokkery.every
 import dev.mokkery.matcher.MokkeryMatcherScope
-import dev.mokkery.matcher.any
-import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.resetCalls
 import dev.mokkery.verify
@@ -395,7 +393,6 @@ class InteractionLockStackTest {
             coroutineTestScope.mock.default.await<Any>(any())
             coroutineTestScope.mock.io.async<Any>(any())
         }
-
     }
 
     @Test
@@ -420,7 +417,7 @@ class InteractionLockStackTest {
         }
     }
 
-    /* ************  Monitor Tests ************ */
+    // ************  Monitor Tests ************
     @Test
     fun `monitor acquired`() = coroutineTestScope.run {
         sutMonitored.acquire(requester, InteractionLockType.Screen)
@@ -572,10 +569,5 @@ class InteractionLockStackTest {
                 )
             )
         }
-
     }
-
-
-
-
 }

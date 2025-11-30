@@ -6,7 +6,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class SymbolDataTest {
-
     @Test
     fun `ID_REF_INDICATOR has expected value`() {
         assertEquals("*", SymbolData.ID_REF_INDICATOR)

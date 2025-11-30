@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
-import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
@@ -20,7 +19,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class MiddlewareExecutorTest {
-
     private lateinit var sut: MiddlewareExecutorProtocol
 
     @BeforeTest
@@ -190,5 +188,4 @@ class MiddlewareExecutorTest {
         verifyNoMoreCalls(first)
         verifyNoMoreCalls(second)
     }
-
 }

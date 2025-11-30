@@ -18,7 +18,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class SchemaScopeTest {
-
     private lateinit var mapOperator: OpenSchemaScope.MapOperator
 
     private class TestScope(
@@ -254,6 +253,4 @@ class SchemaScopeTest {
         verify { mapOperator.element }
         verify { mapOperator.collect() }
     }
-
-
 }

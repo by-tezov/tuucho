@@ -21,7 +21,6 @@ internal class ActionExecutor(
     private val interactionLockResolver: InteractionLockProtocol.Resolver,
     private val interactionLockRegistry: InteractionLockProtocol.Registry
 ) : ActionExecutorProtocol {
-
     override suspend fun process(
         input: Input
     ) = with(input) {

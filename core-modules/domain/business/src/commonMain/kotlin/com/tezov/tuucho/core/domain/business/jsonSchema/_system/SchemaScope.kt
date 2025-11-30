@@ -54,7 +54,6 @@ class SchemaScope(
 open class OpenSchemaScope<T : OpenSchemaScope<T>>(
     private val argument: SchemaScopeArgument,
 ) {
-
     interface MapOperator : DelegateSchemaKey.MapOperator {
         val hasBeenChanged: Boolean
 

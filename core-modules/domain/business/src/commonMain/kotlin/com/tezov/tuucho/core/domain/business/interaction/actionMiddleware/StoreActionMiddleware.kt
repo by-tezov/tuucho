@@ -30,7 +30,8 @@ internal class StoreActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = action.command == StoreAction.KeyValue.command && action.authority == StoreAction.KeyValue.authority && action.query != null
+    ): Boolean =
+        action.command == StoreAction.KeyValue.command && action.authority == StoreAction.KeyValue.authority && action.query != null
 
     override suspend fun process(
         context: ActionMiddleware.Context,

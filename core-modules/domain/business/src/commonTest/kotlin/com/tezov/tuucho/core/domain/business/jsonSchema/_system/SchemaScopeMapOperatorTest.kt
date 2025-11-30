@@ -15,7 +15,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class SchemaScopeMapOperatorTest {
-
     @BeforeTest
     fun setup() {
     }
@@ -366,4 +365,3 @@ class SchemaScopeMapOperatorTest {
         assertEquals(JsonNull, result)
     }
 }
-

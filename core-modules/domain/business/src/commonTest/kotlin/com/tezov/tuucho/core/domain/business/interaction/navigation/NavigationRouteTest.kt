@@ -6,7 +6,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class NavigationRouteTest {
-
     @Test
     fun `Back accept works`() {
         val backRoute = NavigationRoute.Back
