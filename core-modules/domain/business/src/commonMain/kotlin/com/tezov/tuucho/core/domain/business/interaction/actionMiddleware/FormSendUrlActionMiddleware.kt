@@ -43,7 +43,7 @@ internal class FormSendUrlActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = (action.command == FormAction.command && action.authority == FormAction.Send.authority && action.target != null)
+    ): Boolean = (action.command == FormAction.Send.command && action.authority == FormAction.Send.authority && action.target != null)
 
     override suspend fun process(
         context: ActionMiddleware.Context,
@@ -186,7 +186,7 @@ internal class FormSendUrlActionMiddleware(
             input = ProcessActionUseCase.Input.JsonElement(
                 route = route,
                 action = ActionModelDomain.from(
-                    command = FormAction.command,
+                    command = FormAction.Update.command,
                     authority = FormAction.Update.authority,
                     target = FormAction.Update.Target.error,
                 ),

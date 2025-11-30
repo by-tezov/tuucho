@@ -1,7 +1,10 @@
-package com.tezov.tuucho.core.domain.business.protocol
+@file:Suppress("ktlint:standard:package-name")
+
+package com.tezov.tuucho.core.domain.business.middleware
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
@@ -11,14 +14,28 @@ import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class MiddlewareProtocolTest {
+class MiddlewareExecutorTest {
+
+    private lateinit var sut: MiddlewareExecutorProtocol
+
+    @BeforeTest
+    fun setup() {
+        sut = MiddlewareExecutor()
+    }
+
+    @AfterTest
+    fun tearDown() {
+    }
+
     @Test
     fun `execute with no middleware returns null`() = runTest {
-        val result = emptyList<MiddlewareProtocol<String, String>>().execute("context")
+        val result = sut.process(emptyList<MiddlewareProtocol<String, String>>(), "context")
         assertNull(result)
     }
 
@@ -28,7 +45,7 @@ class MiddlewareProtocolTest {
 
         everySuspend { middleware.process(any(), any()) } returns "value"
 
-        val result = listOf(middleware).execute("context")
+        val result = sut.process(listOf(middleware), "context")
 
         assertEquals("value", result)
 
@@ -46,7 +63,7 @@ class MiddlewareProtocolTest {
             if (receivedNext == null) "ok-null" else "wrong"
         }
 
-        val result = listOf(middleware).execute("context")
+        val result = sut.process(listOf(middleware), "context")
 
         assertEquals("ok-null", result)
 
@@ -68,6 +85,7 @@ class MiddlewareProtocolTest {
             val fromNext = next?.invoke("$context-from-$result")
             "$result-$context+$fromNext"
         }
+
         everySuspend { second.process(any(), any()) } calls { callArgs ->
             val context = callArgs.arg<String>(0)
             val next = callArgs.arg<MiddlewareProtocol.Next<String, String>?>(1)
@@ -76,7 +94,7 @@ class MiddlewareProtocolTest {
             "$result-$context+${fromNext ?: "terminal is null"}"
         }
 
-        val result = listOf(first, second).execute("context")
+        val result = sut.process(listOf(first, second), "context")
 
         assertEquals("first-context+second-context-from-first+terminal is null", result)
 
@@ -113,7 +131,7 @@ class MiddlewareProtocolTest {
             "first-$context+$fromNext"
         }
 
-        val result = listOf(first, second, third).execute("x")
+        val result = sut.process(listOf(first, second, third), "x")
 
         assertEquals("first-x+second-first-x+third-second-first-x", result)
 
@@ -122,6 +140,7 @@ class MiddlewareProtocolTest {
             second.process("first-x", any())
             third.process("second-first-x", any())
         }
+
         verifyNoMoreCalls(first)
         verifyNoMoreCalls(second)
         verifyNoMoreCalls(third)
@@ -132,17 +151,16 @@ class MiddlewareProtocolTest {
         val first = mock<MiddlewareProtocol<String, String>>()
         val second = mock<MiddlewareProtocol<String, String>>()
 
-        everySuspend { first.process(any(), any()) } calls { callArgs ->
-            "stop"
-        }
+        everySuspend { first.process(any(), any()) } calls { "stop" }
 
-        val result = listOf(first, second).execute("context")
+        val result = sut.process(listOf(first, second), "context")
 
         assertEquals("stop", result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             first.process("context", any())
         }
+
         verifyNoMoreCalls(first)
         verifyNoMoreCalls(second)
     }
@@ -161,7 +179,7 @@ class MiddlewareProtocolTest {
             null
         }
 
-        val result = listOf(first, second).execute("context")
+        val result = sut.process(listOf(first, second), "context")
 
         assertEquals(null, result)
 
@@ -169,6 +187,7 @@ class MiddlewareProtocolTest {
             first.process("context", any())
             second.process("context-from-first", any())
         }
+
         verifyNoMoreCalls(first)
         verifyNoMoreCalls(second)
     }
@@ -189,7 +208,7 @@ class MiddlewareProtocolTest {
         }
 
         val error = runCatching {
-            listOf(first, second).execute("context")
+            sut.process(listOf(first, second), "context")
         }.exceptionOrNull()
 
         assert(error is DomainException.Default)
@@ -198,6 +217,7 @@ class MiddlewareProtocolTest {
             first.process("context", any())
             second.process("context-call1", any())
         }
+
         verifyNoMoreCalls(first)
         verifyNoMoreCalls(second)
     }

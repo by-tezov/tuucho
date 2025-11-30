@@ -30,7 +30,7 @@ internal class FormUpdateActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = action.command == FormAction.command && action.authority == FormAction.Update.authority
+    ): Boolean = action.command == FormAction.Update.command && action.authority == FormAction.Update.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,

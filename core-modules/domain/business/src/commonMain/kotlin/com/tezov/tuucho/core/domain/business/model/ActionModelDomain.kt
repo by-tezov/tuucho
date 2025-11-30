@@ -7,6 +7,7 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import org.jetbrains.annotations.VisibleForTesting
 
 data class ActionModelDomain(
     val command: String,
@@ -24,15 +25,16 @@ data class ActionModelDomain(
             pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""
         )
 
-        private fun String.toQueryToMap(): JsonElement? {
+        @VisibleForTesting
+        fun String.toQueryToMap(): JsonElement? {
             if (isEmpty()) return null
 
             return when {
                 contains("=") -> {
                     val pairs = split("&")
-                        .mapNotNull {
+                        .map {
                             val parts = it.split("=", limit = 2)
-                            if (parts.size == 2) parts[0] to JsonPrimitive(parts[1]) else null
+                            parts[0] to JsonPrimitive(parts[1])
                         }
                     JsonObject(pairs.toMap())
                 }

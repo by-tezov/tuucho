@@ -20,7 +20,7 @@ internal class NavigationLocalDestinationActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.LocalDestination.authority
+    ): Boolean = action.command == NavigateAction.LocalDestination.command && action.authority == NavigateAction.LocalDestination.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,

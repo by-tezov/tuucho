@@ -16,6 +16,7 @@ internal object ActionProcessorModule {
         factory<ActionExecutorProtocol> {
             ActionExecutor(
                 coroutineScopes = get(),
+                middlewareExecutor = get(),
                 middlewares = getAll(),
                 interactionLockResolver = get(),
                 interactionLockRegistry = get()

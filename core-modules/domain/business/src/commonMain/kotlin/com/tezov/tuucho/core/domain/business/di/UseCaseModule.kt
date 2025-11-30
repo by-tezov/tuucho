@@ -44,6 +44,7 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
+                middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()
             )
         }
@@ -59,6 +60,7 @@ internal object UseCaseModule {
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 shadowerMaterialRepository = get(),
+                middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()
             )
         }
@@ -86,6 +88,7 @@ internal object UseCaseModule {
             SendDataUseCase(
                 coroutineScopes = get(),
                 sendDataAndRetrieveMaterialRepository = get(),
+                middlewareExecutor = get(),
                 sendDataMiddlewares = getAllOrdered()
             )
         }
@@ -161,6 +164,7 @@ internal object UseCaseModule {
             UpdateViewUseCase(
                 coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
+                middlewareExecutor = get(),
                 updateViewMiddlewares = getAllOrdered()
             )
         }

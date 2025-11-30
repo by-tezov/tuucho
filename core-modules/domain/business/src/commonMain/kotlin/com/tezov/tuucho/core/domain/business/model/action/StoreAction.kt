@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.ActionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 
 object StoreAction {
-    const val command = "store"
+    private const val command = "store"
 
     object KeyValue : ActionProtocol {
         override val lockable get() = InteractionLockable.Empty
