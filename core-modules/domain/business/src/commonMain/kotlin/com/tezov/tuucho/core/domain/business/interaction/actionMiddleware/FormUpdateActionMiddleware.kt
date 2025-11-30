@@ -34,14 +34,14 @@ internal class FormUpdateActionMiddleware(
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
     ) = with(context.input) {
-        route ?: return@with next.invoke(context)
+        route ?: return@with next?.invoke(context)
         when (val target = action.target) {
             FormAction.Update.Target.error -> updateErrorState(route, jsonElement)
             else -> throw DomainException.Default("Unknown target $target")
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 
     private suspend fun updateErrorState(

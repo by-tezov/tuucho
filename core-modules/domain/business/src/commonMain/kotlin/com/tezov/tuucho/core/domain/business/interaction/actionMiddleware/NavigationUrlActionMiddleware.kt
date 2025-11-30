@@ -23,7 +23,7 @@ internal class NavigationUrlActionMiddleware(
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
     ) = with(context.input) {
         action.target?.let { url ->
             useCaseExecutor.await(
@@ -33,6 +33,6 @@ internal class NavigationUrlActionMiddleware(
                 )
             )
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

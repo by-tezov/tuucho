@@ -19,7 +19,7 @@ class HeaderHttpAuthorizationInterceptor(
 
     override suspend fun process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
+        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) = with(context.builder) {
         val route = url.toString()
             .removePrefix("${config.baseUrl}/")
@@ -43,6 +43,6 @@ class HeaderHttpAuthorizationInterceptor(
                 headers.append("authorization", "Bearer $authorizationKey")
             }
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

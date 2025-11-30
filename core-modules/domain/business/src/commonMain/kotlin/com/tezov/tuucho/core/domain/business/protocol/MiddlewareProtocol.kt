@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+import com.tezov.tuucho.core.domain.business.exception.DomainException
+
 fun interface MiddlewareProtocol<C, R> {
     fun interface Next<C, R> {
         suspend fun invoke(
@@ -9,22 +11,24 @@ fun interface MiddlewareProtocol<C, R> {
 
     suspend fun process(
         context: C,
-        next: Next<C, R>
+        next: Next<C, R>?
     ): R?
 
     companion object {
         suspend fun <C, R> List<MiddlewareProtocol<C, R>>.execute(
             context: C
         ): R? {
-            var result: R? = null
-            var next = Next<C, R> { result } // endpoint, loopback
+            var next: Next<C, R>? = null
             for (middleware in asReversed()) {
                 val prev = next
+                var invoked = false
                 next = Next { context ->
-                    middleware.process(context, prev).also { result = it }
+                    if (invoked) throw DomainException.Default("next invoked multiple times")
+                    invoked = true
+                    middleware.process(context, prev)
                 }
             }
-            return next.invoke(context)
+            return next?.invoke(context)
         }
     }
 }

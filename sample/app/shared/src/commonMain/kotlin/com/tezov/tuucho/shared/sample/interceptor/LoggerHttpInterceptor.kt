@@ -13,7 +13,7 @@ class LoggerHttpInterceptor(
 
     override suspend fun process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
+        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) = with(context.builder) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
         logger.debug("NETWORK:request") {
@@ -27,7 +27,7 @@ class LoggerHttpInterceptor(
 //                    }
             }
         }
-        next.invoke(context).also { response ->
+        next?.invoke(context).also { response ->
             logger.debug("NETWORK:response") {
                 buildString {
                     appendLine("${response?.statusCode}")
