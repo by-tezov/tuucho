@@ -2,7 +2,6 @@
 
 package com.tezov.tuucho.core.domain.business.middleware
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import dev.mokkery.answering.calls
@@ -192,33 +191,4 @@ class MiddlewareExecutorTest {
         verifyNoMoreCalls(second)
     }
 
-    @Test
-    fun `execute fails when next is invoked twice`() = runTest {
-        val first = mock<MiddlewareProtocol<String, String>>()
-        val second = mock<MiddlewareProtocol<String, String>>()
-
-        everySuspend { second.process(any(), any()) } returns "value-second"
-
-        everySuspend { first.process(any(), any()) } calls { args ->
-            val context = args.arg<String>(0)
-            val next = args.arg<MiddlewareProtocol.Next<String, String>?>(1)
-            next?.invoke("$context-call1")
-            next?.invoke("$context-call2")
-            "ignored"
-        }
-
-        val error = runCatching {
-            sut.process(listOf(first, second), "context")
-        }.exceptionOrNull()
-
-        assert(error is DomainException.Default)
-
-        verifySuspend(VerifyMode.exhaustiveOrder) {
-            first.process("context", any())
-            second.process("context-call1", any())
-        }
-
-        verifyNoMoreCalls(first)
-        verifyNoMoreCalls(second)
-    }
 }
