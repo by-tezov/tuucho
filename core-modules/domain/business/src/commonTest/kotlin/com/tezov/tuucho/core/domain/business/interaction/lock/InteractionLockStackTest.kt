@@ -369,6 +369,59 @@ class InteractionLockStackTest {
     }
 
     @Test
+    fun `release list none released`() = coroutineTestScope.run {
+        val unreleasableLock = InteractionLock(
+            owner = requester,
+            id = "id",
+            type = InteractionLockType.Screen,
+            canBeReleased = false
+        )
+
+        sut.release(requester, listOf(unreleasableLock))
+    }
+
+    @Test
+    fun `release list all released`() = coroutineTestScope.run {
+        val screenLock = sut.acquire(requester, InteractionLockType.Screen)
+        val navigationLock = sut.acquire(requester, InteractionLockType.Navigation)
+
+        resetCalls(generator)
+        coroutineTestScope.resetCalls()
+
+        sut.release(requester, listOf(screenLock, navigationLock))
+
+        verifySuspend(VerifyMode.exhaustiveOrder) {
+            coroutineTestScope.mock.default.await<Any>(any())
+            coroutineTestScope.mock.default.await<Any>(any())
+            coroutineTestScope.mock.io.async<Any>(any())
+        }
+
+    }
+
+    @Test
+    fun `release list mixed released`() = coroutineTestScope.run {
+        val releasedLock = sut.acquire(requester, InteractionLockType.Screen)
+
+        resetCalls(generator)
+        coroutineTestScope.resetCalls()
+
+        val unreleasableLock = InteractionLock(
+            owner = requester,
+            id = "id",
+            type = InteractionLockType.Navigation,
+            canBeReleased = false
+        )
+
+        sut.release(requester, listOf(releasedLock, unreleasableLock))
+
+        verifySuspend(VerifyMode.exhaustiveOrder) {
+            coroutineTestScope.mock.default.await<Any>(any())
+            coroutineTestScope.mock.io.async<Any>(any())
+        }
+    }
+
+    /* ************  Monitor Tests ************ */
+    @Test
     fun `monitor acquired`() = coroutineTestScope.run {
         sutMonitored.acquire(requester, InteractionLockType.Screen)
         coroutineTestScope.resetCalls()
@@ -495,4 +548,34 @@ class InteractionLockStackTest {
             )
         }
     }
+
+    @Test
+    fun `monitor released mixes requester and foreign owner`() = coroutineTestScope.run {
+        val ownedLock = sutMonitored.acquire(requester, InteractionLockType.Screen)
+        val foreignLock = InteractionLock(
+            owner = "other",
+            id = "id",
+            type = InteractionLockType.Navigation
+        )
+        resetCalls(monitor)
+
+        sutMonitored.release(requester, listOf(ownedLock, foreignLock))
+        coroutineTestScope.resetCalls()
+        resetCalls(generator)
+
+        verify(VerifyMode.exhaustiveOrder) {
+            monitor.process(
+                InteractionLockMonitor.Context(
+                    event = Event.Released,
+                    requester = listOf(requester),
+                    lockTypes = listOf(InteractionLockType.Screen)
+                )
+            )
+        }
+
+    }
+
+
+
+
 }
