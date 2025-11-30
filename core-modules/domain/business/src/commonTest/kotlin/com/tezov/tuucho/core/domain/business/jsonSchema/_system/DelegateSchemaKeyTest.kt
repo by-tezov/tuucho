@@ -21,7 +21,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
 class DelegateSchemaKeyTest {
-
     private lateinit var mapOperator: DelegateSchemaKey.MapOperator
 
     private class TestContainer(

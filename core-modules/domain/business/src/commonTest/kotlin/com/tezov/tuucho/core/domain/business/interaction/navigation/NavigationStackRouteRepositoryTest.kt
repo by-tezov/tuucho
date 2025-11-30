@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.interaction.navigation
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
-import dev.mokkery.matcher.any
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifySuspend
 import kotlinx.serialization.json.buildJsonObject
@@ -664,5 +663,4 @@ class NavigationStackRouteRepositoryTest {
             coroutineTestScope.mock.navigation.await<Any>(any())
         }
     }
-
 }

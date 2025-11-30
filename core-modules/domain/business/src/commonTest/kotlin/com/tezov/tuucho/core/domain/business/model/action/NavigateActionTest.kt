@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class NavigateActionTest {
-
     @Test
     fun `url command is navigate`() {
         assertEquals("navigate", NavigateAction.Url.command)
@@ -22,7 +21,8 @@ class NavigateActionTest {
             listOf(
                 InteractionLockType.Screen,
                 InteractionLockType.Navigation
-            ), NavigateAction.Url.lockable.getTypes()
+            ),
+            NavigateAction.Url.lockable.getTypes()
         )
     }
 
@@ -42,7 +42,8 @@ class NavigateActionTest {
             listOf(
                 InteractionLockType.Screen,
                 InteractionLockType.Navigation
-            ), NavigateAction.Url.lockable.getTypes()
+            ),
+            NavigateAction.Url.lockable.getTypes()
         )
     }
 

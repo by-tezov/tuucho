@@ -15,8 +15,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
-import dev.mokkery.matcher.any
-import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
@@ -34,7 +32,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertSame
 
 class ActionExecutorTest {
-
     private val coroutineTestScope = CoroutineTestScope()
     private lateinit var interactionLockResolver: InteractionLockProtocol.Resolver
     private lateinit var interactionLockRegistry: InteractionLockProtocol.Registry
@@ -352,6 +349,7 @@ class ActionExecutorTest {
 
         val result = sut.process(input)
         val array = result as ProcessActionUseCase.Output.ElementArray
+
         @Suppress("UNCHECKED_CAST")
         val elements = array.rawValue as List<ProcessActionUseCase.Output.Element>
 

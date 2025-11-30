@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class StoreActionTest {
-
     @Test
     fun `keyValue command matches store command`() {
         assertEquals("store", StoreAction.KeyValue.command)
