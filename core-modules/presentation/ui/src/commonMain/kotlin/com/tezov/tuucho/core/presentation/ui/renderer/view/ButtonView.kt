@@ -14,7 +14,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.AbstractViewFactory
 import com.tezov.tuucho.core.presentation.ui.renderer.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonObject
@@ -93,7 +92,9 @@ class ButtonView(
         get(): () -> Unit = ({
             _action?.let {
                 coroutineScopes.action
-                    .async {
+                    .async(
+                        throwOnFailure = true
+                    ) {
                         val screenLock = interactionLockResolver.tryAcquire(
                             requester = "$route::ButtonView::${hashCode().toHexString()}",
                             lockable = InteractionLockable.Type(
@@ -115,7 +116,7 @@ class ButtonView(
                             requester = "$route::ButtonView::${hashCode().toHexString()}",
                             lockable = screenLock
                         )
-                    }.throwOnFailure()
+                    }
             }
         })
 

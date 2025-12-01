@@ -132,7 +132,7 @@ class InteractionLockStackTest {
             generator.generate(matches(InteractionLockType.Screen))
             // release
             coroutineTestScope.mock.default.await<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(any())
+            coroutineTestScope.mock.io.async<Any>(true, any())
             // reacquired
             coroutineTestScope.mock.default.await<Any>(any())
             generator.generate(matches(InteractionLockType.Screen))
@@ -218,7 +218,7 @@ class InteractionLockStackTest {
             coroutineTestScope.mock.io.await<Any>(any())
             // release
             coroutineTestScope.mock.default.await<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(any())
+            coroutineTestScope.mock.io.async<Any>(true, any())
             // acquire second
             coroutineTestScope.mock.default.await<Any>(any())
             generator.generate(matches(InteractionLockType.Screen))
@@ -393,7 +393,7 @@ class InteractionLockStackTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.default.await<Any>(any())
             coroutineTestScope.mock.default.await<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(any())
+            coroutineTestScope.mock.io.async<Any>(true, any())
         }
     }
 
@@ -415,7 +415,7 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.default.await<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(any())
+            coroutineTestScope.mock.io.async<Any>(true, any())
         }
     }
 

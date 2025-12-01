@@ -8,7 +8,8 @@ internal object CoroutineScopeModules {
     fun invoke() = module(ModuleGroupCore.Main) {
         single<CoroutineScopesProtocol> {
             createCoroutineScopes(
-                exceptionMonitor = getOrNull()
+                exceptionMonitor = getOrNull(),
+                uncaughtExceptionHandler = getOrNull()
             )
         }
     }
