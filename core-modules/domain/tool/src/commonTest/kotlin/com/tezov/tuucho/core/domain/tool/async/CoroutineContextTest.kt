@@ -18,16 +18,28 @@ class CoroutineContextTest {
         }
     }
 
+    class UncaughtExceptionHandlerRecorder : CoroutineUncaughtExceptionHandler {
+        val recordedThrowables = mutableListOf<Throwable>()
+
+        override fun process(
+            throwable: Throwable
+        ): Throwable? {
+            recordedThrowables.add(throwable)
+            return null
+        }
+    }
+
     @Test
     fun `async captures exception and notifies monitor`() = runTest {
         val monitorRecorder = MonitorRecorder()
         val coroutineContext = CoroutineContext(
             name = "test-scope",
             context = EmptyCoroutineContext,
-            exceptionMonitor = monitorRecorder
+            exceptionMonitor = monitorRecorder,
+            uncaughtExceptionHandler = null
         )
 
-        val deferredResult = coroutineContext.async { error("boom") }
+        val deferredResult = coroutineContext.async(false) { error("boom") }
 
         assertFailsWith<IllegalStateException> {
             deferredResult.await()
@@ -41,12 +53,13 @@ class CoroutineContextTest {
     fun `async success does not notify monitor`() = runTest {
         val monitorRecorder = MonitorRecorder()
         val coroutineContext = CoroutineContext(
-            name = "ctx",
+            name = "context",
             context = EmptyCoroutineContext,
-            exceptionMonitor = monitorRecorder
+            exceptionMonitor = monitorRecorder,
+            uncaughtExceptionHandler = null
         )
 
-        val deferredResult = coroutineContext.async { 123 }
+        val deferredResult = coroutineContext.async(false) { 123 }
         assertEquals(123, deferredResult.await())
         assertTrue(monitorRecorder.recordedContexts.isEmpty())
     }
@@ -54,11 +67,51 @@ class CoroutineContextTest {
     @Test
     fun `await executes block and returns value`() = runTest {
         val coroutineContext = CoroutineContext(
-            name = "ctx",
+            name = "context",
             context = EmptyCoroutineContext,
-            exceptionMonitor = null
+            exceptionMonitor = null,
+            uncaughtExceptionHandler = null
         )
         val value = coroutineContext.await { 42 }
         assertEquals(42, value)
+    }
+
+    @Test
+    fun `async with throwOnFailure delegates exception to uncaught handler`() = runTest {
+        val handlerRecorder = UncaughtExceptionHandlerRecorder()
+        val coroutineContext = CoroutineContext(
+            name = "context",
+            context = EmptyCoroutineContext,
+            exceptionMonitor = null,
+            uncaughtExceptionHandler = handlerRecorder
+        )
+
+        val deferredResult = coroutineContext.async(true) { error("boom") }
+
+        assertFailsWith<IllegalStateException> {
+            deferredResult.await()
+        }
+
+        assertEquals(1, handlerRecorder.recordedThrowables.size)
+        assertTrue(handlerRecorder.recordedThrowables.first() is IllegalStateException)
+    }
+
+    @Test
+    fun `async without throwOnFailure does not delegate exception to uncaught handler`() = runTest {
+        val handlerRecorder = UncaughtExceptionHandlerRecorder()
+        val coroutineContext = CoroutineContext(
+            name = "context",
+            context = EmptyCoroutineContext,
+            exceptionMonitor = null,
+            uncaughtExceptionHandler = handlerRecorder
+        )
+
+        val deferredResult = coroutineContext.async(false) { error("boom") }
+
+        assertFailsWith<IllegalStateException> {
+            deferredResult.await()
+        }
+
+        assertTrue(handlerRecorder.recordedThrowables.isEmpty())
     }
 }

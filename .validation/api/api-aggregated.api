@@ -8208,20 +8208,22 @@ public abstract interface annotation class com/tezov/tuucho/core/domain/tool/ann
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
-	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor;)V
-	public fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineUncaughtExceptionHandler;)V
+	public fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getContext ()Lkotlin/coroutines/CoroutineContext;
 	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public fun getSupervisorJob ()Lkotlinx/coroutines/Job;
+	public fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
-	public abstract fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public abstract fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getContext ()Lkotlin/coroutines/CoroutineContext;
 	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public abstract fun getSupervisorJob ()Lkotlinx/coroutines/Job;
+	public abstract fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol$DefaultImpls {
@@ -8247,9 +8249,8 @@ public final class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMon
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/tool/async/DeferredExtension {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/async/DeferredExtension;
-	public final fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
+public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineUncaughtExceptionHandler {
+	public abstract fun process (Ljava/lang/Throwable;)Ljava/lang/Throwable;
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/ExtensionFlow {
@@ -8422,7 +8423,8 @@ abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineContextProto
     abstract val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob|{}supervisorJob[0]
         abstract fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
 
-    abstract fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> async(kotlin/Boolean, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.async|async(kotlin.Boolean;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> throwOnFailure(kotlinx.coroutines/Deferred<#A1>) // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.throwOnFailure|throwOnFailure(kotlinx.coroutines.Deferred<0:0>){0§<kotlin.Any?>}[0]
     open suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
@@ -8449,6 +8451,10 @@ abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMon
     }
 }
 
+abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler { // com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler|null[0]
+    abstract fun process(kotlin/Throwable): kotlin/Throwable? // com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler.process|process(kotlin.Throwable){}[0]
+}
+
 abstract interface com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol { // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol|null[0]
     abstract fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol.currentThreadName|currentThreadName(){}[0]
 }
@@ -8469,7 +8475,7 @@ sealed interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.tool._system/Refe
 }
 
 final class com.tezov.tuucho.core.domain.tool.async/CoroutineContext : com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol { // com.tezov.tuucho.core.domain.tool.async/CoroutineContext|null[0]
-    constructor <init>(kotlin/String, kotlin.coroutines/CoroutineContext, com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor?) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.<init>|<init>(kotlin.String;kotlin.coroutines.CoroutineContext;com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor?){}[0]
+    constructor <init>(kotlin/String, kotlin.coroutines/CoroutineContext, com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor?, com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler?) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.<init>|<init>(kotlin.String;kotlin.coroutines.CoroutineContext;com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor?;com.tezov.tuucho.core.domain.tool.async.CoroutineUncaughtExceptionHandler?){}[0]
 
     final val context // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.context|{}context[0]
         final fun <get-context>(): kotlin.coroutines/CoroutineContext // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.context.<get-context>|<get-context>(){}[0]
@@ -8478,7 +8484,8 @@ final class com.tezov.tuucho.core.domain.tool.async/CoroutineContext : com.tezov
     final val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob|{}supervisorJob[0]
         final fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
 
-    final fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> async(kotlin/Boolean, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.async|async(kotlin.Boolean;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> throwOnFailure(kotlinx.coroutines/Deferred<#A1>) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.throwOnFailure|throwOnFailure(kotlinx.coroutines.Deferred<0:0>){0§<kotlin.Any?>}[0]
 }
 
 final class com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier { // com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier|null[0]
@@ -8506,10 +8513,6 @@ final class com.tezov.tuucho.core.domain.tool.json/JsonElementPath : kotlin.coll
     final fun lastSegment(): kotlin/String? // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.lastSegment|lastSegment(){}[0]
     final fun parent(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.parent|parent(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.toString|toString(){}[0]
-}
-
-final object com.tezov.tuucho.core.domain.tool.async/DeferredExtension { // com.tezov.tuucho.core.domain.tool.async/DeferredExtension|null[0]
-    final fun <#A1: kotlin/Any?> (kotlinx.coroutines/Deferred<#A1>).throwOnFailure() // com.tezov.tuucho.core.domain.tool.async/DeferredExtension.throwOnFailure|throwOnFailure@kotlinx.coroutines.Deferred<0:0>(){0§<kotlin.Any?>}[0]
 }
 
 final object com.tezov.tuucho.core.domain.tool.async/ExtensionFlow { // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow|null[0]

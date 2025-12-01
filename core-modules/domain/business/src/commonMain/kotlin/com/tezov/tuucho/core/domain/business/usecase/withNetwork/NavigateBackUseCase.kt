@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 @OpenForTest
@@ -77,7 +76,9 @@ class NavigateBackUseCase(
             ?.navigateBackward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
-            val job = coroutineScopes.navigation.async {
+            val job = coroutineScopes.navigation.async(
+                throwOnFailure = false
+            ) {
                 suspend fun process() {
                     shadowerMaterialRepository
                         .process(
@@ -101,7 +102,7 @@ class NavigateBackUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
-                job.throwOnFailure()
+                coroutineScopes.navigation.throwOnFailure(job)
             }
         }
     }

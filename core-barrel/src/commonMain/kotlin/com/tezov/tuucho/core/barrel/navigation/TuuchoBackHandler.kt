@@ -13,7 +13,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import org.koin.core.Koin
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -35,7 +34,9 @@ internal fun TuuchoBackHandler(
     }
     BackHandler(enabled = true) {
         coroutineScopes.action
-            .async {
+            .async(
+                throwOnFailure = true,
+            ) {
                 val screenLock = interactionLockResolver.acquire(
                     requester = "BackHandler",
                     lockable = InteractionLockable.Type(
@@ -58,6 +59,6 @@ internal fun TuuchoBackHandler(
                     requester = "BackHandler",
                     lockable = screenLock
                 )
-            }.throwOnFailure()
+            }
     }
 }
