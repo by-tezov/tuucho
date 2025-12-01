@@ -16,7 +16,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestScope
 
-internal class CoroutineTestScope {
+class CoroutineTestScope {
     lateinit var mock: CoroutineScopesProtocol
         private set
 
@@ -27,7 +27,6 @@ internal class CoroutineTestScope {
     private fun createMockContext(
         currentScope: CoroutineScope
     ) = mock<CoroutineContextProtocol> {
-        @Suppress("ktlint:standard:max-line-length")
         everySuspend {
             await(
                 block = any<suspend CoroutineScope.() -> Any?>()
@@ -37,7 +36,6 @@ internal class CoroutineTestScope {
             block(currentScope)
         }
 
-        @Suppress("ktlint:standard:max-line-length")
         every {
             async(
                 block = any<suspend CoroutineScope.() -> Any?>()

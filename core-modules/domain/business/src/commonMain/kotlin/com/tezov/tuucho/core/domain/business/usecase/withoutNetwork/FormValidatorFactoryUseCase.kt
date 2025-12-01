@@ -16,8 +16,10 @@ import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMinLe
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMinValueFormValidator
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringNotNullFormValidator
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringOnlyDigitsFormValidator
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 
+@OpenForTest
 class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
     data class Input(
         val prototypeObject: JsonObject,

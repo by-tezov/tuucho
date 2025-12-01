@@ -5,8 +5,10 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase.Input
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 
+@OpenForTest
 class RegisterToScreenTransitionEventUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val navigationAnimatorStackRepository: NavigationRepositoryProtocol.StackTransition,
