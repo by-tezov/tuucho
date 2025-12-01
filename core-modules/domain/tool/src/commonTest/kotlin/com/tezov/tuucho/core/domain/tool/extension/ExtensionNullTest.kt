@@ -192,6 +192,7 @@ class ExtensionNullTest {
         val obj: Any? = null
         assertNull(obj.simpleName)
     }
+
     @Test
     fun `isNull returns true only when object is null`() {
         val nullValue: Any? = null
@@ -221,5 +222,4 @@ class ExtensionNullTest {
         val value: Any? = null
         assertNull(value.simpleName)
     }
-
 }

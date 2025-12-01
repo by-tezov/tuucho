@@ -10,7 +10,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class NotifierTest {
-
     @Test
     fun `tryEmit sends value to once collector`() = runTest {
         val emitter = Emitter<Int>()

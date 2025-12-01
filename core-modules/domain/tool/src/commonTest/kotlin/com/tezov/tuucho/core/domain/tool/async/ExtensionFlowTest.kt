@@ -14,7 +14,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ExtensionFlowTest {
-
     @Test
     fun `collectOnce emits first value only`() = runTest {
         var receivedValue = 0

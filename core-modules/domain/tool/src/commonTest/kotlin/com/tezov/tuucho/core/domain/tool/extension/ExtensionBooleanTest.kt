@@ -151,5 +151,4 @@ class ExtensionBooleanTest {
         )
         assertEquals("false-branch", result)
     }
-
 }

@@ -35,7 +35,6 @@ internal class FormSendUrlActionMiddleware(
     private val sendData: SendDataUseCase,
 ) : ActionMiddleware,
     TuuchoKoinComponent {
-
     private val processAction: ProcessActionUseCase by inject()
 
     override val priority: Int

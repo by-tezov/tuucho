@@ -8,10 +8,12 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class CoroutineContextTest {
-
     class MonitorRecorder : CoroutineExceptionMonitor {
         val recordedContexts = mutableListOf<CoroutineExceptionMonitor.Context>()
-        override fun process(context: CoroutineExceptionMonitor.Context) {
+
+        override fun process(
+            context: CoroutineExceptionMonitor.Context
+        ) {
             recordedContexts.add(context)
         }
     }
