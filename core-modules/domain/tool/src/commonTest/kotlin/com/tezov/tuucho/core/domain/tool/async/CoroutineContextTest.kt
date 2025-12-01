@@ -18,6 +18,16 @@ class CoroutineContextTest {
         }
     }
 
+    class UncaughtExceptionHandlerRecorder : CoroutineUncaughtExceptionHandler {
+        val recordedThrowables = mutableListOf<Throwable>()
+
+        override fun process(throwable: Throwable): Throwable? {
+            recordedThrowables.add(throwable)
+            return null
+        }
+    }
+
+
     @Test
     fun `async captures exception and notifies monitor`() = runTest {
         val monitorRecorder = MonitorRecorder()
@@ -63,5 +73,44 @@ class CoroutineContextTest {
         )
         val value = coroutineContext.await { 42 }
         assertEquals(42, value)
+    }
+
+    @Test
+    fun `async with throwOnFailure delegates exception to uncaught handler`() = runTest {
+        val handlerRecorder = UncaughtExceptionHandlerRecorder()
+        val coroutineContext = CoroutineContext(
+            name = "context",
+            context = EmptyCoroutineContext,
+            exceptionMonitor = null,
+            uncaughtExceptionHandler = handlerRecorder
+        )
+
+        val deferredResult = coroutineContext.async(true) { error("boom") }
+
+        assertFailsWith<IllegalStateException> {
+            deferredResult.await()
+        }
+
+        assertEquals(1, handlerRecorder.recordedThrowables.size)
+        assertTrue(handlerRecorder.recordedThrowables.first() is IllegalStateException)
+    }
+
+    @Test
+    fun `async without throwOnFailure does not delegate exception to uncaught handler`() = runTest {
+        val handlerRecorder = UncaughtExceptionHandlerRecorder()
+        val coroutineContext = CoroutineContext(
+            name = "context",
+            context = EmptyCoroutineContext,
+            exceptionMonitor = null,
+            uncaughtExceptionHandler = handlerRecorder
+        )
+
+        val deferredResult = coroutineContext.async(false) { error("boom") }
+
+        assertFailsWith<IllegalStateException> {
+            deferredResult.await()
+        }
+
+        assertTrue(handlerRecorder.recordedThrowables.isEmpty())
     }
 }
