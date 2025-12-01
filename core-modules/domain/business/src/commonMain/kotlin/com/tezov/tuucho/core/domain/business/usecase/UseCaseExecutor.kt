@@ -16,6 +16,7 @@ class UseCaseExecutor(
     ) {
         coroutineScopes.useCase
             .async(
+                throwOnFailure = false,
                 block = {
                     when (useCase) {
                         is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input)

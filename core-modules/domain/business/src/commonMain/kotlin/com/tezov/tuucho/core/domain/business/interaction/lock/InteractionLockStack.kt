@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -218,7 +217,9 @@ internal class InteractionLockStack(
 
     private fun wakeup() {
         coroutineScopes.io
-            .async {
+            .async(
+                throwOnFailure = true
+            ) {
                 val toResumes = mutableListOf<Waiter>()
                 mutex.withLock {
                     val usedLocksKeys = usedLocks.keys.toMutableSet()
@@ -240,6 +241,6 @@ internal class InteractionLockStack(
                     }
                 }
                 toResumes.forEach { it.deferred.complete(Unit) }
-            }.throwOnFailure()
+            }
     }
 }

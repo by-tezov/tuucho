@@ -20,7 +20,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
-import com.tezov.tuucho.core.domain.tool.async.DeferredExtension.throwOnFailure
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.rememberAnimationProgress
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
@@ -186,7 +185,9 @@ class TuuchoEngine(
         animationProgress?.let {
             LaunchedEffect(redrawTrigger.intValue) {
                 coroutineScopes.event
-                    .async {
+                    .async(
+                        throwOnFailure = true
+                    ) {
                         animationProgress
                             .events
                             .once {
@@ -195,7 +196,7 @@ class TuuchoEngine(
                                     input = Unit
                                 )
                             }
-                    }.throwOnFailure()
+                    }
                 animationProgress.start()
             }
         }
