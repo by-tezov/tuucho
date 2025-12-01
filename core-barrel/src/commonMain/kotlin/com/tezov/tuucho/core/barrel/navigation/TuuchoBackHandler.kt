@@ -47,7 +47,7 @@ internal fun TuuchoBackHandler(
                     input = ProcessActionUseCase.Input.JsonElement(
                         route = NavigationRoute.Current,
                         action = ActionModelDomain.from(
-                            command = NavigateAction.command,
+                            command = NavigateAction.LocalDestination.command,
                             authority = NavigateAction.LocalDestination.authority,
                             target = NavigateAction.LocalDestination.Target.back,
                         ),

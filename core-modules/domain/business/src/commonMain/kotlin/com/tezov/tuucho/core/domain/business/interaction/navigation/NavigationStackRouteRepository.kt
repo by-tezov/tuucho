@@ -68,10 +68,10 @@ internal class NavigationStackRouteRepository(
 
     private fun navigateUrl(
         route: NavigationRoute,
-        option: NavigationOption?,
+        option: NavigationOption,
     ): NavigationRoute.Url? {
         val route = (route as NavigationRoute.Url)
-        val reusableRoute = option?.reuse?.let { reuse ->
+        val reusableRoute = option.reuse?.let { reuse ->
             when (reuse) {
                 Reuse.last -> {
                     stack
@@ -92,13 +92,13 @@ internal class NavigationStackRouteRepository(
                 }
             }
         }
-        if (option?.single == true) {
+        if (option.single) {
             stack.removeAll { it.accept(route) }
         }
-        if (option?.clearStack == true) {
+        if (option.clearStack) {
             stack.clear()
         }
-        option?.popUpTo?.let { popUpTo ->
+        option.popUpTo?.let { popUpTo ->
             val index = if (popUpTo.greedy) {
                 stack.indexOfFirst { it.accept(popUpTo.route) }
             } else {

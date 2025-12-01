@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.ActionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 
 object FormAction {
-    const val command = "form"
+    private const val command = "form"
 
     object Send : ActionProtocol {
         override val lockable get() = NavigateAction.Url.lockable + NavigateAction.LocalDestination.lockable

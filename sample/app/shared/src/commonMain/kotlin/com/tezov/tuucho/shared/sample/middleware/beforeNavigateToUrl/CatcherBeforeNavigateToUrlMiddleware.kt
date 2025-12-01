@@ -10,7 +10,7 @@ class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
     override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {
         processWithRetry(
             context = context,
@@ -22,12 +22,12 @@ class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
     private suspend fun processWithRetry(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
         attempt: Int,
         maxRetries: Int,
     ) {
         try {
-            next.invoke(context)
+            next?.invoke(context)
         } catch (exception: Throwable) {
             //IMPROVE: check exception and design action in accord with exception
             if ((attempt + 1) < maxRetries) {
@@ -35,7 +35,7 @@ class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
                 delay(delayMs)
                 processWithRetry(context, next, attempt + 1, maxRetries)
             } else if (context.input.url != Page.failSafe) {
-                next.invoke(
+                next?.invoke(
                     context.copy(
                         input = context.input.copy(url = Page.failSafe)
                     )

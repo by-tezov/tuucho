@@ -34,10 +34,10 @@ class ProcessActionUseCase(
     }
 
     sealed class Output(
-        val type: KClass<Any>,
+        val type: KClass<out Any>,
     ) {
         class Element(
-            type: KClass<Any>,
+            type: KClass<out Any>,
             val rawValue: Any,
         ) : Output(type) {
             @Suppress("UNCHECKED_CAST")
@@ -48,7 +48,7 @@ class ProcessActionUseCase(
         }
 
         class ElementArray(
-            type: KClass<Any>,
+            type: KClass<out Any>,
             val rawValue: List<Any>,
         ) : Output(type) {
             @Suppress("UNCHECKED_CAST")

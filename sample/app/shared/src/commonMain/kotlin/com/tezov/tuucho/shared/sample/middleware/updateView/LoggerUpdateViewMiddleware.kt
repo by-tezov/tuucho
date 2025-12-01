@@ -12,7 +12,7 @@ class LoggerUpdateViewMiddleware(
 
     override suspend fun process(
         context: UpdateViewMiddleware.Context,
-        next: MiddlewareProtocol.Next<UpdateViewMiddleware.Context, Unit>,
+        next: MiddlewareProtocol.Next<UpdateViewMiddleware.Context, Unit>?,
     ) {
         with(context.input) {
             logger.debug("THREAD") { systemInformation.currentThreadName() }
@@ -23,7 +23,7 @@ class LoggerUpdateViewMiddleware(
                     appendLine(jsonObject.toString())
                 }
             }
-            next.invoke(context)
+            next?.invoke(context)
         }
 
     }

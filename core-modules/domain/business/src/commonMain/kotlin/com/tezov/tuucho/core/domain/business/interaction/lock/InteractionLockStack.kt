@@ -221,7 +221,7 @@ internal class InteractionLockStack(
             .async {
                 val toResumes = mutableListOf<Waiter>()
                 mutex.withLock {
-                    val usedLocksKeys = usedLocks.keys.toMutableList()
+                    val usedLocksKeys = usedLocks.keys.toMutableSet()
                     val waiters = waiters.listIterator()
                     while (waiters.hasNext()) {
                         val next = waiters.next()
@@ -235,10 +235,7 @@ internal class InteractionLockStack(
                                     lockTypes = next.lockTypes
                                 )
                             )
-                            usedLocksKeys.removeAll(next.lockTypes)
-                            if (usedLocksKeys.isEmpty()) {
-                                break
-                            }
+                            usedLocksKeys.addAll(next.lockTypes)
                         }
                     }
                 }

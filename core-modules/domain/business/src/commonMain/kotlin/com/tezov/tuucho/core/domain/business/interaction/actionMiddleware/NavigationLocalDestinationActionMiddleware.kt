@@ -20,11 +20,11 @@ internal class NavigationLocalDestinationActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = action.command == NavigateAction.command && action.authority == NavigateAction.LocalDestination.authority
+    ): Boolean = action.command == NavigateAction.LocalDestination.command && action.authority == NavigateAction.LocalDestination.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
     ) = with(context.input) {
         when (action.target) {
             NavigateAction.LocalDestination.Target.back -> {
@@ -38,6 +38,6 @@ internal class NavigationLocalDestinationActionMiddleware(
                 throw DomainException.Default("Unknown target ${action.target}")
             }
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

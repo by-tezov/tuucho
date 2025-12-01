@@ -12,10 +12,10 @@ class LoggerBeforeNavigateToUrlMiddleware(
 
     override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
         logger.debug("NAVIGATION") { "${context.currentUrl} -> ${context.input.url}" }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

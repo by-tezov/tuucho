@@ -2086,14 +2086,10 @@ final enum class com.tezov.tuucho.core.domain.business.model/LanguageModelDomain
 }
 
 abstract fun interface <#A: kotlin/Any?, #B: kotlin/Any?> com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol|null[0]
-    abstract suspend fun process(#A, com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next<#A, #B>): #B? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.process|process(1:0;com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next<1:0,1:1>){}[0]
+    abstract suspend fun process(#A, com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next<#A, #B>?): #B? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.process|process(1:0;com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next<1:0,1:1>?){}[0]
 
     abstract fun interface <#A1: kotlin/Any?, #B1: kotlin/Any?> Next { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next|null[0]
         abstract suspend fun invoke(#A1): #B1? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next.invoke|invoke(1:0){}[0]
-    }
-
-    final object Companion { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Companion|null[0]
-        final suspend fun <#A2: kotlin/Any?, #B2: kotlin/Any?> (kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A2, #B2>>).execute(#A2): #B2? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Companion.execute|execute@kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>(0:0){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
     }
 }
 
@@ -2185,16 +2181,7 @@ abstract interface com.tezov.tuucho.core.domain.business.interaction.lock/Intera
     }
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator : com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey.MapOperator { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator|null[0]
-    abstract val hasBeenChanged // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator.hasBeenChanged|{}hasBeenChanged[0]
-        abstract fun <get-hasBeenChanged>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator.hasBeenChanged.<get-hasBeenChanged>|<get-hasBeenChanged>(){}[0]
-
-    abstract fun collect(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator.collect|collect(){}[0]
-    abstract fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator.contains|contains(kotlin.String){}[0]
-    abstract fun remove(kotlin/String) // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator.remove|remove(kotlin.String){}[0]
-}
-
-abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output?> { // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware|null[0]
+abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output> { // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware|null[0]
     abstract val priority // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority|{}priority[0]
         abstract fun <get-priority>(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority.<get-priority>|<get-priority>(){}[0]
 
@@ -2325,7 +2312,7 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionExecutor
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol|null[0]
     abstract val authority // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.authority|{}authority[0]
-        abstract fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.authority.<get-authority>|<get-authority>(){}[0]
+        abstract fun <get-authority>(): kotlin/String? // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.authority.<get-authority>|<get-authority>(){}[0]
     abstract val command // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.command|{}command[0]
         abstract fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.command.<get-command>|<get-command>(){}[0]
     abstract val lockable // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.lockable|{}lockable[0]
@@ -2355,6 +2342,10 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScope
         abstract fun <get-renderer>(): com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.renderer.<get-renderer>|<get-renderer>(){}[0]
     abstract val useCase // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.useCase|{}useCase[0]
         abstract fun <get-useCase>(): com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.useCase.<get-useCase>|<get-useCase>(){}[0]
+}
+
+abstract interface com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol|null[0]
+    abstract suspend fun <#A1: kotlin/Any?, #B1: kotlin/Any?> process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A1, #B1>>, #A1): #B1? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol.process|process(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>;0:0){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol // com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol|null[0]
@@ -2492,22 +2483,28 @@ final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope
 }
 
 final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonElement, kotlin/Boolean, com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator?) // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.<init>|<init>(kotlinx.serialization.json.JsonElement;kotlin.Boolean;com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeMapOperator?){}[0]
+    constructor <init>(kotlinx.serialization.json/JsonElement, kotlin/Boolean, com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator?) // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.<init>|<init>(kotlinx.serialization.json.JsonElement;kotlin.Boolean;com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope.MapOperator?){}[0]
 
     final val element // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.element|{}element[0]
         final fun <get-element>(): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.element.<get-element>|<get-element>(){}[0]
     final val mapOperator // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.mapOperator|{}mapOperator[0]
-        final fun <get-mapOperator>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator? // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.mapOperator.<get-mapOperator>|<get-mapOperator>(){}[0]
+        final fun <get-mapOperator>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator? // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.mapOperator.<get-mapOperator>|<get-mapOperator>(){}[0]
     final val moveOnRoot // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.moveOnRoot|{}moveOnRoot[0]
         final fun <get-moveOnRoot>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.moveOnRoot.<get-moveOnRoot>|<get-moveOnRoot>(){}[0]
 
     final fun component1(): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.component1|component1(){}[0]
     final fun component2(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.component2|component2(){}[0]
-    final fun component3(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator? // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.component3|component3(){}[0]
-    final fun copy(kotlinx.serialization.json/JsonElement = ..., kotlin/Boolean = ..., com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator? = ...): com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.copy|copy(kotlinx.serialization.json.JsonElement;kotlin.Boolean;com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeMapOperator?){}[0]
+    final fun component3(): com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator? // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.component3|component3(){}[0]
+    final fun copy(kotlinx.serialization.json/JsonElement = ..., kotlin/Boolean = ..., com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator? = ...): com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.copy|copy(kotlinx.serialization.json.JsonElement;kotlin.Boolean;com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope.MapOperator?){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.toString|toString(){}[0]
+}
+
+final class com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor : com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol { // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor.<init>|<init>(){}[0]
+
+    final suspend fun <#A1: kotlin/Any?, #B1: kotlin/Any?> process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A1, #B1>>, #A1): #B1? // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor.process|process(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>;0:0){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.model/ActionModelDomain { // com.tezov.tuucho.core.domain.business.model/ActionModelDomain|null[0]
@@ -2532,6 +2529,7 @@ final class com.tezov.tuucho.core.domain.business.model/ActionModelDomain { // c
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.toString|toString(){}[0]
 
     final object Companion { // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion|null[0]
+        final fun (kotlin/String).toQueryToMap(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.toQueryToMap|toQueryToMap@kotlin.String(){}[0]
         final fun from(kotlin/String): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String){}[0]
         final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlin/String? = ...): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?){}[0]
         final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlinx.serialization.json/JsonElement?): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
@@ -2584,13 +2582,13 @@ final class com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // c
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<kotlin/Unit, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back>){}[0]
 
     final suspend fun invoke(kotlin/Unit) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.invoke|invoke(kotlin.Unit){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Retrieve, com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Retrieve;com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Retrieve, com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.ToUrl>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Retrieve;com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.ToUrl>){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateToUrlUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input){}[0]
 
@@ -2663,10 +2661,10 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessAct
 
     sealed class Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output|null[0]
         final val type // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.type|{}type[0]
-            final fun <get-type>(): kotlin.reflect/KClass<kotlin/Any> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.type.<get-type>|<get-type>(){}[0]
+            final fun <get-type>(): kotlin.reflect/KClass<out kotlin/Any> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.type.<get-type>|<get-type>(){}[0]
 
         final class Element : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element|null[0]
-            constructor <init>(kotlin.reflect/KClass<kotlin/Any>, kotlin/Any) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.<init>|<init>(kotlin.reflect.KClass<kotlin.Any>;kotlin.Any){}[0]
+            constructor <init>(kotlin.reflect/KClass<out kotlin/Any>, kotlin/Any) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.<init>|<init>(kotlin.reflect.KClass<out|kotlin.Any>;kotlin.Any){}[0]
 
             final val rawValue // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.rawValue|{}rawValue[0]
                 final fun <get-rawValue>(): kotlin/Any // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.rawValue.<get-rawValue>|<get-rawValue>(){}[0]
@@ -2676,7 +2674,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessAct
         }
 
         final class ElementArray : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray|null[0]
-            constructor <init>(kotlin.reflect/KClass<kotlin/Any>, kotlin.collections/List<kotlin/Any>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.<init>|<init>(kotlin.reflect.KClass<kotlin.Any>;kotlin.collections.List<kotlin.Any>){}[0]
+            constructor <init>(kotlin.reflect/KClass<out kotlin/Any>, kotlin.collections/List<kotlin/Any>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.<init>|<init>(kotlin.reflect.KClass<out|kotlin.Any>;kotlin.collections.List<kotlin.Any>){}[0]
 
             final val rawValue // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.rawValue|{}rawValue[0]
                 final fun <get-rawValue>(): kotlin.collections/List<kotlin/Any> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.rawValue.<get-rawValue>|<get-rawValue>(){}[0]
@@ -2707,7 +2705,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/RefreshMat
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.SendDataAndRetrieve, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/SendDataMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.SendDataAndRetrieve;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.SendDataAndRetrieve, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/SendDataMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.SendDataAndRetrieve;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware>){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Output? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase.Input){}[0]
 
@@ -3083,7 +3081,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKey
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/UpdateViewMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/UpdateViewMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware>){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input){}[0]
 
@@ -3167,7 +3165,7 @@ open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSch
     final val hasBeenChanged // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.hasBeenChanged|{}hasBeenChanged[0]
         final fun <get-hasBeenChanged>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.hasBeenChanged.<get-hasBeenChanged>|<get-hasBeenChanged>(){}[0]
     final val mapOperator // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.mapOperator|{}mapOperator[0]
-        final fun <get-mapOperator>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.mapOperator.<get-mapOperator>|<get-mapOperator>(){}[0]
+        final fun <get-mapOperator>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.mapOperator.<get-mapOperator>|<get-mapOperator>(){}[0]
     open val root // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.root|{}root[0]
         open fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.root.<get-root>|<get-root>(){}[0]
 
@@ -3182,6 +3180,17 @@ open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSch
     final fun set(kotlin/String, kotlinx.serialization.json/JsonElement) // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.set|set(kotlin.String;kotlinx.serialization.json.JsonElement){}[0]
     final inline fun <#A1: reified kotlin/Any?> delegate(kotlin/String? = ...): com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey<#A1> // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.delegate|delegate(kotlin.String?){0§<kotlin.Any?>}[0]
     open fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.toString|toString(){}[0]
+
+    abstract interface MapOperator : com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey.MapOperator { // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator|null[0]
+        abstract val element // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.element|{}element[0]
+            abstract fun <get-element>(): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.element.<get-element>|<get-element>(){}[0]
+        abstract val hasBeenChanged // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.hasBeenChanged|{}hasBeenChanged[0]
+            abstract fun <get-hasBeenChanged>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.hasBeenChanged.<get-hasBeenChanged>|<get-hasBeenChanged>(){}[0]
+
+        abstract fun collect(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.collect|collect(){}[0]
+        abstract fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.contains|contains(kotlin.String){}[0]
+        abstract fun remove(kotlin/String) // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.remove|remove(kotlin.String){}[0]
+    }
 }
 
 sealed class com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain : com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain|null[0]
@@ -5119,9 +5128,6 @@ final object com.tezov.tuucho.core.domain.business.middleware/NavigationMiddlewa
 }
 
 final object com.tezov.tuucho.core.domain.business.model.action/FormAction { // com.tezov.tuucho.core.domain.business.model.action/FormAction|null[0]
-    final const val command // com.tezov.tuucho.core.domain.business.model.action/FormAction.command|{}command[0]
-        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.command.<get-command>|<get-command>(){}[0]
-
     final object Send : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send|null[0]
         final val authority // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.authority|{}authority[0]
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.authority.<get-authority>|<get-authority>(){}[0]
@@ -5154,9 +5160,6 @@ final object com.tezov.tuucho.core.domain.business.model.action/FormAction { // 
 }
 
 final object com.tezov.tuucho.core.domain.business.model.action/NavigateAction { // com.tezov.tuucho.core.domain.business.model.action/NavigateAction|null[0]
-    final const val command // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.command|{}command[0]
-        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.command.<get-command>|<get-command>(){}[0]
-
     final object LocalDestination : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination|null[0]
         final val authority // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.authority|{}authority[0]
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.authority.<get-authority>|<get-authority>(){}[0]
@@ -5184,9 +5187,6 @@ final object com.tezov.tuucho.core.domain.business.model.action/NavigateAction {
 }
 
 final object com.tezov.tuucho.core.domain.business.model.action/StoreAction { // com.tezov.tuucho.core.domain.business.model.action/StoreAction|null[0]
-    final const val command // com.tezov.tuucho.core.domain.business.model.action/StoreAction.command|{}command[0]
-        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.command.<get-command>|<get-command>(){}[0]
-
     final object KeyValue : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue|null[0]
         final val authority // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.authority|{}authority[0]
             final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.authority.<get-authority>|<get-authority>(){}[0]
@@ -5330,7 +5330,7 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/Navigatio
 }
 
 final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope|onScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
-final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>, com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeMapOperator? = ...): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope|withScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>;com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeMapOperator?){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
+final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>, com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator? = ...): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope|withScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>;com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope.MapOperator?){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
 
 public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
@@ -5549,7 +5549,7 @@ public class com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchema
 	public final fun get (Ljava/lang/String;)Lkotlinx/serialization/json/JsonElement;
 	public final fun getElement ()Lkotlinx/serialization/json/JsonElement;
 	public final fun getHasBeenChanged ()Z
-	protected final fun getMapOperator ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;
+	protected final fun getMapOperator ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;
 	public fun getRoot ()Ljava/lang/String;
 	public final fun keys ()Ljava/util/Set;
 	public final fun onScope (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
@@ -5559,10 +5559,12 @@ public class com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchema
 	public final fun withScope (Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaKt {
-	public static final fun onScope (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
-	public static final fun withScope (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
-	public static synthetic fun withScope$default (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
+public abstract interface class com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator : com/tezov/tuucho/core/domain/business/jsonSchema/_system/DelegateSchemaKey$MapOperator {
+	public abstract fun collect ()Lkotlinx/serialization/json/JsonObject;
+	public abstract fun contains (Ljava/lang/String;)Z
+	public abstract fun getElement ()Lkotlinx/serialization/json/JsonElement;
+	public abstract fun getHasBeenChanged ()Z
+	public abstract fun remove (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
@@ -5570,25 +5572,24 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/Sche
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument {
-	public fun <init> (Lkotlinx/serialization/json/JsonElement;ZLcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;)V
+	public fun <init> (Lkotlinx/serialization/json/JsonElement;ZLcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;)V
 	public final fun component1 ()Lkotlinx/serialization/json/JsonElement;
 	public final fun component2 ()Z
-	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;
-	public final fun copy (Lkotlinx/serialization/json/JsonElement;ZLcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;Lkotlinx/serialization/json/JsonElement;ZLcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;
+	public final fun copy (Lkotlinx/serialization/json/JsonElement;ZLcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;Lkotlinx/serialization/json/JsonElement;ZLcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getElement ()Lkotlinx/serialization/json/JsonElement;
-	public final fun getMapOperator ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator;
+	public final fun getMapOperator ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;
 	public final fun getMoveOnRoot ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeMapOperator : com/tezov/tuucho/core/domain/business/jsonSchema/_system/DelegateSchemaKey$MapOperator {
-	public abstract fun collect ()Lkotlinx/serialization/json/JsonObject;
-	public abstract fun contains (Ljava/lang/String;)Z
-	public abstract fun getHasBeenChanged ()Z
-	public abstract fun remove (Ljava/lang/String;)V
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeKt {
+	public static final fun onScope (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
+	public static final fun withScope (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
+	public static synthetic fun withScope$default (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SymbolData {
@@ -7074,6 +7075,11 @@ public final class com/tezov/tuucho/core/domain/business/middleware/ActionMiddle
 	public static final field LOW I
 }
 
+public final class com/tezov/tuucho/core/domain/business/middleware/MiddlewareExecutor : com/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol {
+	public fun <init> ()V
+	public fun process (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware;
 }
@@ -7173,6 +7179,7 @@ public final class com/tezov/tuucho/core/domain/business/model/ActionModelDomain
 	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;
 	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;
 	public static synthetic fun from$default (Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/ActionModelDomain;
+	public final fun toQueryToMap (Ljava/lang/String;)Lkotlinx/serialization/json/JsonElement;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/LanguageModelDomain : java/lang/Enum {
@@ -7192,7 +7199,6 @@ public final class com/tezov/tuucho/core/domain/business/model/LanguageModelDoma
 
 public final class com/tezov/tuucho/core/domain/business/model/action/FormAction {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/FormAction;
-	public static final field command Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/FormAction$Send : com/tezov/tuucho/core/domain/business/protocol/ActionProtocol {
@@ -7223,7 +7229,6 @@ public final class com/tezov/tuucho/core/domain/business/model/action/FormAction
 
 public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAction {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/NavigateAction;
-	public static final field command Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAction$LocalDestination : com/tezov/tuucho/core/domain/business/protocol/ActionProtocol {
@@ -7250,7 +7255,6 @@ public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAc
 
 public final class com/tezov/tuucho/core/domain/business/model/action/StoreAction {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/StoreAction;
-	public static final field command Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/action/StoreAction$KeyValue : com/tezov/tuucho/core/domain/business/protocol/ActionProtocol {
@@ -7304,13 +7308,12 @@ public final class com/tezov/tuucho/core/domain/business/protocol/IdGeneratorPro
 	public static fun generate (Lcom/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol;Ljava/lang/Object;)Ljava/lang/Object;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Companion;
-	public abstract fun process (Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol {
+	public abstract fun process (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Companion {
-	public final fun execute (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+	public abstract fun process (Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next {
@@ -7669,14 +7672,14 @@ public final class com/tezov/tuucho/core/domain/business/usecase/UseCaseExecutor
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (Lkotlin/Unit;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7771,7 +7774,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Ref
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$SendDataAndRetrieve;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$SendDataAndRetrieve;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -8102,7 +8105,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

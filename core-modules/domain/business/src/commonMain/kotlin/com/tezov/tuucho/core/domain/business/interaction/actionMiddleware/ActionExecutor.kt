@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
@@ -16,6 +16,7 @@ import com.tezov.tuucho.core.domain.tool.json.string
 
 internal class ActionExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val middlewares: List<ActionMiddleware>,
     private val interactionLockResolver: InteractionLockProtocol.Resolver,
     private val interactionLockRegistry: InteractionLockProtocol.Registry
@@ -75,21 +76,26 @@ internal class ActionExecutor(
             val middlewaresToExecute = middlewares
                 .filter { it.accept(route, action) }
                 .sortedBy { it.priority }
-            val locks = input.lockable.acquireLocks(
-                route = route,
-                action = action
-            )
-            val result = middlewaresToExecute.execute(
-                ActionMiddleware.Context(
-                    lockable = locks.freeze(),
-                    input = input,
+            if (middlewaresToExecute.isNotEmpty()) {
+                val locks = input.lockable.acquireLocks(
+                    route = route,
+                    action = action
                 )
-            )
-            locks.releaseLocks(
-                route = route,
-                action = action
-            )
-            result
+                val result = middlewareExecutor.process(
+                    middlewaresToExecute,
+                    ActionMiddleware.Context(
+                        lockable = locks.freeze(),
+                        input = input,
+                    )
+                )
+                locks.releaseLocks(
+                    route = route,
+                    action = action
+                )
+                result
+            } else {
+                null
+            }
         }
     }
 

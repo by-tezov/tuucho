@@ -26,12 +26,12 @@ class BeforeNavigateToUrlMiddleware(
 
     override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {
         if (ensureAuthorizationOrRedirectToLoginPage(context, next)) return
         if (autoLoginOnStart(context, next)) return
         loadLobbyConfigOnStart(context) || loadAuthConfigAfterSuccessfulLogin(context)
-        next.invoke(
+        next?.invoke(
             context.copy(
                 onShadowerException = onShadowerException
             )
@@ -74,11 +74,11 @@ class BeforeNavigateToUrlMiddleware(
 
     private suspend fun ensureAuthorizationOrRedirectToLoginPage(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ): Boolean {
         if (context.input.url.startsWith("$AUTH_PREFIX/")) {
             if (!isAuthorizationExist()) {
-                next.invoke(
+                next?.invoke(
                     context.copy(
                         onShadowerException = onShadowerException,
                         input = context.input.copy(url = Page.login)
@@ -92,11 +92,11 @@ class BeforeNavigateToUrlMiddleware(
 
     private suspend fun autoLoginOnStart(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ): Boolean {
         if (context.currentUrl == null && context.input.url == Page.login && isAuthorizationExist() && isAuthorizationValid()) {
             loadAuthConfig()
-            next.invoke(
+            next?.invoke(
                 context.copy(
                     onShadowerException = onShadowerException,
                     input = context.input.copy(url = Page.home)

@@ -30,11 +30,12 @@ internal class StoreActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = action.command == StoreAction.command && action.authority == StoreAction.KeyValue.authority && action.query != null
+    ): Boolean =
+        action.command == StoreAction.KeyValue.command && action.authority == StoreAction.KeyValue.authority && action.query != null
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
     ) = with(context.input) {
         val query = action.query ?: throw DomainException.Default("should no be possible")
         when (val target = action.target) {
@@ -42,7 +43,7 @@ internal class StoreActionMiddleware(
             StoreAction.KeyValue.Target.remove -> removeKeys(query)
             else -> throw DomainException.Default("Unknown target $target")
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 
     private suspend fun saveValues(

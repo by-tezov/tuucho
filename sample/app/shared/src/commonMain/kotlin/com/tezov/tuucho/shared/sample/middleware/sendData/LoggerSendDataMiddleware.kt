@@ -13,9 +13,9 @@ class LoggerSendDataMiddleware(
 
     override suspend fun process(
         context: SendDataMiddleware.Context,
-        next: MiddlewareProtocol.Next<SendDataMiddleware.Context, SendDataUseCase.Output>,
+        next: MiddlewareProtocol.Next<SendDataMiddleware.Context, SendDataUseCase.Output>?,
     ) = with(context.input) {
-        val output = next.invoke(context)
+        val output = next?.invoke(context)
         logger.debug("THREAD") { systemInformation.currentThreadName() }
         logger.debug("SEND DATA") {
             buildString {

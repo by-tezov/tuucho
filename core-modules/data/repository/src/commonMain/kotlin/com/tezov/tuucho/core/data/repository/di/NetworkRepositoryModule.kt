@@ -36,6 +36,7 @@ object NetworkRepositoryModule {
             HttpClient(
                 engineFactory = HttpClientEngineFactory(
                     engineFactory = get<io.ktor.client.engine.HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE),
+                    middlewareExecutor = get(),
                     interceptors = getAllOrdered()
                 )
             ) {

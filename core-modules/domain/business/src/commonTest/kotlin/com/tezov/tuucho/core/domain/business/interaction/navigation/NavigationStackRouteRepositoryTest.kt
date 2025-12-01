@@ -582,4 +582,86 @@ class NavigationStackRouteRepositoryTest {
             coroutineTestScope.mock.navigation.await<Any>(any())
         }
     }
+
+    @Test
+    fun `forward reuse last does nothing when no matching route`() = coroutineTestScope.run {
+        sut.forward(NavigationRoute.Url("id-1", "url-A"), null)
+        coroutineTestScope.resetCalls()
+
+        sut.forward(
+            route = NavigationRoute.Url("id-2", "url-B"),
+            navigationOptionObject = buildJsonObject {
+                put("reuse", "last")
+            }
+        )
+
+        val result = sut.routes()
+        assertEquals(
+            listOf(
+                NavigationRoute.Url("id-1", "url-A"),
+                NavigationRoute.Url("id-2", "url-B")
+            ),
+            result
+        )
+
+        verifySuspend(VerifyMode.exhaustiveOrder) {
+            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.navigation.await<Any>(any())
+        }
+    }
+
+    @Test
+    fun `forward reuse first does nothing when no matching route`() = coroutineTestScope.run {
+        val r1 = NavigationRoute.Url("id-1", "url-A")
+        val r2 = NavigationRoute.Url("id-2", "url-B")
+
+        sut.forward(r1, null)
+        coroutineTestScope.resetCalls()
+
+        sut.forward(
+            route = r2,
+            navigationOptionObject = buildJsonObject {
+                put("reuse", "first")
+            }
+        )
+
+        val result = sut.routes()
+
+        assertEquals(
+            listOf(
+                NavigationRoute.Url("id-1", "url-A"),
+                NavigationRoute.Url("id-2", "url-B")
+            ),
+            result
+        )
+
+        verifySuspend(VerifyMode.exhaustiveOrder) {
+            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.navigation.await<Any>(any())
+        }
+    }
+
+    @Test
+    fun `forward with single false keeps previous matching`() = coroutineTestScope.run {
+        val r1 = NavigationRoute.Url("id-1", "url")
+        val r2 = NavigationRoute.Url("id-2", "url")
+
+        sut.forward(r1, null)
+        coroutineTestScope.resetCalls()
+
+        sut.forward(
+            route = r2,
+            navigationOptionObject = buildJsonObject {
+                put("single", false)
+            }
+        )
+
+        val result = sut.routes()
+        assertEquals(listOf(r1, r2), result)
+
+        verifySuspend(VerifyMode.exhaustiveOrder) {
+            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.navigation.await<Any>(any())
+        }
+    }
 }

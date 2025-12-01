@@ -12,10 +12,10 @@ class LoggerBeforeNavigateBackMiddleware(
 
     override suspend fun process(
         context: NavigationMiddleware.Back.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.Back.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.Back.Context, Unit>?,
     ) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
         logger.debug("NAVIGATION") { "${context.currentUrl} -> ${context.nextUrl}" }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }
