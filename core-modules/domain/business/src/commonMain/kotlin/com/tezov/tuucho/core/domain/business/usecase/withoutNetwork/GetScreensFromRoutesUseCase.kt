@@ -6,7 +6,9 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase.Output
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
+@OpenForTest
 class GetScreensFromRoutesUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
 ) : UseCaseProtocol.Async<Input, Output> {

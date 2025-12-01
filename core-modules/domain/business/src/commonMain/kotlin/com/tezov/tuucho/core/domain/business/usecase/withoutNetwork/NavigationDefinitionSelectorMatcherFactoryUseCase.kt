@@ -9,11 +9,13 @@ import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelect
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase.Output
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 
+@OpenForTest
 class NavigationDefinitionSelectorMatcherFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
     data class Input(
         val prototypeObject: JsonObject,

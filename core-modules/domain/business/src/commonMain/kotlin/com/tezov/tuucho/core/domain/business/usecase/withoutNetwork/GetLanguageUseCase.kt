@@ -3,7 +3,9 @@ package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetLanguageUseCase.Output
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
+@OpenForTest
 class GetLanguageUseCase : UseCaseProtocol.Sync<Unit, Output> {
     data class Output(
         val language: LanguageModelDomain,

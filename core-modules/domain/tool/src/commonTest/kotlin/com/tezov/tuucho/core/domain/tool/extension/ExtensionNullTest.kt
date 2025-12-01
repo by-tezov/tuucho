@@ -192,4 +192,34 @@ class ExtensionNullTest {
         val obj: Any? = null
         assertNull(obj.simpleName)
     }
+    @Test
+    fun `isNull returns true only when object is null`() {
+        val nullValue: Any? = null
+        val nonNullValue: Any? = "data"
+
+        assertTrue(nullValue.isNull)
+        assertFalse(nonNullValue.isNull)
+    }
+
+    @Test
+    fun `isNotNull returns true only when object is not null`() {
+        val nullValue: Any? = null
+        val nonNullValue: Any? = 42
+
+        assertFalse(nullValue.isNotNull)
+        assertTrue(nonNullValue.isNotNull)
+    }
+
+    @Test
+    fun `simpleName returns class name when object is not null`() {
+        val value: Any? = "hello"
+        assertEquals("String", value.simpleName)
+    }
+
+    @Test
+    fun `simpleName returns null when object is null`() {
+        val value: Any? = null
+        assertNull(value.simpleName)
+    }
+
 }

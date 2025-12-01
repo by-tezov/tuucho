@@ -8,9 +8,11 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 
+@OpenForTest
 class ProcessActionUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val actionExecutor: ActionExecutorProtocol,
@@ -33,7 +35,7 @@ class ProcessActionUseCase(
         ) : Input()
     }
 
-    sealed class Output() {
+    sealed class Output {
         class Element(
             val type: KClass<out Any>,
             val rawValue: Any,
