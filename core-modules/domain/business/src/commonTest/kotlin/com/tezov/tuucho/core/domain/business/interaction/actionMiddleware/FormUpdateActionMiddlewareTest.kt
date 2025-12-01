@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
@@ -142,7 +142,7 @@ class FormUpdateActionMiddlewareTest {
     fun `process error target with reason sets messageErrorExtra and works when next is null`() = runTest {
         val action = ActionModelDomain.from("form://update/error")
         val failureParam = JsonNull
-            .withScope(FormSendResponseSchema.FailureResult::Scope)
+            .withScope(FormSendSchema.FailureResult::Scope)
             .apply {
                 reason = buildJsonObject { put("code", JsonPrimitive("error-code")) }
             }.collect()

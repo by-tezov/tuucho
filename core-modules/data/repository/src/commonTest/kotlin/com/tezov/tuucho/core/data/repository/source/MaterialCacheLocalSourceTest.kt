@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import com.tezov.tuucho.core.data.repository.mock.coroutineTestScope
-import com.tezov.tuucho.core.data.repository.parser.assembler.MaterialAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver

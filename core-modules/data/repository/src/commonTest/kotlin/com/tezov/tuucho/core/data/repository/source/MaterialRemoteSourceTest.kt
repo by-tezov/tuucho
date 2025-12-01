@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.mock.coroutineTestScope
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
-import com.tezov.tuucho.core.data.repository.parser.rectifier.MaterialRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

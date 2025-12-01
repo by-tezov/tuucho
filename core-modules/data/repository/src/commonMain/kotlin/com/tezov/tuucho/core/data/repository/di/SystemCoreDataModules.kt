@@ -20,9 +20,9 @@ object SystemCoreDataModules {
             }
         },
         MiscModule.invoke(),
-        MaterialRectifierModule.invoke(),
+        RectifierModule.invoke(),
         MaterialBreakerModule.invoke(),
-        MaterialAssemblerModule.invoke(),
+        AssemblerModule.invoke(),
         MaterialShadowerModule.invoke(),
         MaterialRepositoryModule.invoke(),
         DatabaseRepositoryModule.invoke(),
