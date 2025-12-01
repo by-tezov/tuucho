@@ -24,15 +24,15 @@ data class ActionModelDomain(
             pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""
         )
 
-        private fun String.toQueryToMap(): JsonElement? {
+        fun String.toQueryToMap(): JsonElement? {
             if (isEmpty()) return null
 
             return when {
                 contains("=") -> {
                     val pairs = split("&")
-                        .mapNotNull {
+                        .map {
                             val parts = it.split("=", limit = 2)
-                            if (parts.size == 2) parts[0] to JsonPrimitive(parts[1]) else null
+                            parts[0] to JsonPrimitive(parts[1])
                         }
                     JsonObject(pairs.toMap())
                 }

@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Companion.execute
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
@@ -23,6 +23,7 @@ class NavigateBackUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
+    private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
 ) : UseCaseProtocol.Async<Unit, Unit>,
     TuuchoKoinComponent {
@@ -30,7 +31,8 @@ class NavigateBackUseCase(
         input: Unit
     ) {
         coroutineScopes.useCase.await {
-            (navigationMiddlewares + terminalMiddleware()).execute(
+            middlewareExecutor.process(
+                middlewares = navigationMiddlewares + terminalMiddleware(),
                 context = NavigationMiddleware.Back.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
                         ?: throw DomainException.Default("Shouldn't be possible"),

@@ -17,14 +17,14 @@ class FailSafePageHttpInterceptor(
 ) : HttpInterceptor {
     override suspend fun process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
+        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) = with(context.builder) {
         val route = url.toString()
             .removePrefix("${config.baseUrl}/")
             .removePrefix("${config.version}/")
             .removePrefix(config.resourceEndpoint)
 
-        if (route != "/${Page.failSafe}") return@with next.invoke(context)
+        if (route != "/${Page.failSafe}") return@with next?.invoke(context)
 
         HttpResponseData(
             statusCode = HttpStatusCode.OK,

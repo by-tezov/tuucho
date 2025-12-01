@@ -10,9 +10,9 @@ class HeadersHttpInterceptor(
 ) : HttpInterceptor {
     override suspend fun process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
+        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) = with(context.builder) {
         headers.append("platform", config.headerPlatform)
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

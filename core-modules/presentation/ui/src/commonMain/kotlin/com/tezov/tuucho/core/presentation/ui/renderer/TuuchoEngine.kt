@@ -92,7 +92,7 @@ class TuuchoEngine(
             input = ProcessActionUseCase.Input.JsonElement(
                 route = null,
                 action = ActionModelDomain.from(
-                    command = NavigateAction.command,
+                    command = NavigateAction.Url.command,
                     authority = NavigateAction.Url.authority,
                     target = url,
                 )

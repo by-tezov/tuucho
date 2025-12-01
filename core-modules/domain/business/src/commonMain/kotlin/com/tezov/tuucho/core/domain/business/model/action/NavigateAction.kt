@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 
 object NavigateAction {
-    const val command = "navigate"
+    private const val command = "navigate"
     private val lockable
         get() = InteractionLockable.Type(
             listOf(InteractionLockType.Screen, InteractionLockType.Navigation)

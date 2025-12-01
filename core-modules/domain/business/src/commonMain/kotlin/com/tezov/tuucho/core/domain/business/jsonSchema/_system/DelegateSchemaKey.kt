@@ -40,7 +40,7 @@ class DelegateSchemaKey<T : Any?>(
         val value = mapOperator.read(resolveKey(property)) ?: return null
         @Suppress("UNCHECKED_CAST", "IMPLICIT_CAST_TO_ANY")
         return (when (type) {
-            JsonElement::class, JsonPrimitive::class, JsonArray::class, JsonObject::class -> value
+            JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -> value
             String::class -> value.stringOrNull
             Boolean::class -> value.booleanOrNull
             else -> throw DomainException.Default("unknown type")
@@ -59,7 +59,7 @@ class DelegateSchemaKey<T : Any?>(
             mapOperator.write(
                 resolveKey(property),
                 when (type) {
-                    JsonElement::class, JsonPrimitive::class, JsonArray::class, JsonObject::class -> value
+                    JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -> value
                     String::class -> JsonPrimitive(value as String)
                     Boolean::class -> JsonPrimitive(value as Boolean)
                     else -> throw DomainException.Default("unknown type")

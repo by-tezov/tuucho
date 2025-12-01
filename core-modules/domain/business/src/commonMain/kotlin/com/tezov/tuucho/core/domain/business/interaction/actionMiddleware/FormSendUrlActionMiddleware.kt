@@ -43,13 +43,13 @@ internal class FormSendUrlActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = (action.command == FormAction.command && action.authority == FormAction.Send.authority && action.target != null)
+    ): Boolean = (action.command == FormAction.Send.command && action.authority == FormAction.Send.authority && action.target != null)
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
     ) = with(context.input) {
-        val formView = (route as? NavigationRoute.Url)?.getAllFormView() ?: return@with next.invoke(context)
+        val formView = (route as? NavigationRoute.Url)?.getAllFormView() ?: return@with next?.invoke(context)
         if (formView.isAllFormValid()) {
             val response = useCaseExecutor
                 .await(
@@ -72,7 +72,7 @@ internal class FormSendUrlActionMiddleware(
         } else {
             formView.processInvalidLocalForm(route)
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 
     private suspend fun NavigationRoute.Url.getAllFormView() = useCaseExecutor
@@ -186,7 +186,7 @@ internal class FormSendUrlActionMiddleware(
             input = ProcessActionUseCase.Input.JsonElement(
                 route = route,
                 action = ActionModelDomain.from(
-                    command = FormAction.command,
+                    command = FormAction.Update.command,
                     authority = FormAction.Update.authority,
                     target = FormAction.Update.Target.error,
                 ),
