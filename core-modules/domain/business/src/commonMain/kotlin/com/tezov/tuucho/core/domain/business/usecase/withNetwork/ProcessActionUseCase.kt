@@ -33,13 +33,11 @@ class ProcessActionUseCase(
         ) : Input()
     }
 
-    sealed class Output(
-        val type: KClass<out Any>,
-    ) {
+    sealed class Output() {
         class Element(
-            type: KClass<out Any>,
+            val type: KClass<out Any>,
             val rawValue: Any,
-        ) : Output(type) {
+        ) : Output() {
             @Suppress("UNCHECKED_CAST")
             inline fun <reified T> value(): T = rawValue as T
 
@@ -48,15 +46,8 @@ class ProcessActionUseCase(
         }
 
         class ElementArray(
-            type: KClass<out Any>,
-            val rawValue: List<Any>,
-        ) : Output(type) {
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> value(): List<T> = rawValue as List<T>
-
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> valueOrNull(): List<T>? = rawValue as? List<T>
-        }
+            val values: List<Output>,
+        ) : Output()
     }
 
     override suspend fun invoke(

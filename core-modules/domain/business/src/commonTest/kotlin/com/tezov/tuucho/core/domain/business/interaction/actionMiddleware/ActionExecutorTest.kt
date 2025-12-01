@@ -32,6 +32,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 class ActionExecutorTest {
     private val coroutineTestScope = CoroutineTestScope()
@@ -266,7 +267,7 @@ class ActionExecutorTest {
 
         val result = sut.process(input)
         val element = result as ProcessActionUseCase.Output.Element
-        assertSame(expectedOutput, element.rawValue)
+        assertSame(expectedOutput.rawValue, element.rawValue)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.action.await<Any>(any())
@@ -350,11 +351,13 @@ class ActionExecutorTest {
         )
 
         val result = sut.process(input)
-        val array = result as ProcessActionUseCase.Output.ElementArray
+        assertTrue(result is ProcessActionUseCase.Output.ElementArray)
+        result.values.forEach {
+            assertTrue(it is ProcessActionUseCase.Output.Element)
+        }
 
         @Suppress("UNCHECKED_CAST")
-        val elements = array.rawValue as List<ProcessActionUseCase.Output.Element>
-
+        val elements = result.values as List<ProcessActionUseCase.Output.Element>
         assertEquals("one", elements[0].value<String>())
         assertEquals("two", elements[1].value<String>())
 
