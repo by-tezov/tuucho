@@ -31,20 +31,22 @@ public abstract interface annotation class com/tezov/tuucho/core/domain/tool/ann
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContext : com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
-	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor;)V
-	public fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun <init> (Ljava/lang/String;Lkotlin/coroutines/CoroutineContext;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMonitor;Lcom/tezov/tuucho/core/domain/tool/async/CoroutineUncaughtExceptionHandler;)V
+	public fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getContext ()Lkotlin/coroutines/CoroutineContext;
 	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public fun getSupervisorJob ()Lkotlinx/coroutines/Job;
+	public fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol {
-	public abstract fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public abstract fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun await (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getContext ()Lkotlin/coroutines/CoroutineContext;
 	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public abstract fun getSupervisorJob ()Lkotlinx/coroutines/Job;
+	public abstract fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol$DefaultImpls {
@@ -70,9 +72,8 @@ public final class com/tezov/tuucho/core/domain/tool/async/CoroutineExceptionMon
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/tool/async/DeferredExtension {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/async/DeferredExtension;
-	public final fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
+public abstract interface class com/tezov/tuucho/core/domain/tool/async/CoroutineUncaughtExceptionHandler {
+	public abstract fun process (Ljava/lang/Throwable;)Ljava/lang/Throwable;
 }
 
 public final class com/tezov/tuucho/core/domain/tool/async/ExtensionFlow {

@@ -21,12 +21,13 @@ class CoroutineContextTest {
     class UncaughtExceptionHandlerRecorder : CoroutineUncaughtExceptionHandler {
         val recordedThrowables = mutableListOf<Throwable>()
 
-        override fun process(throwable: Throwable): Throwable? {
+        override fun process(
+            throwable: Throwable
+        ): Throwable? {
             recordedThrowables.add(throwable)
             return null
         }
     }
-
 
     @Test
     fun `async captures exception and notifies monitor`() = runTest {

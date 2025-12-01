@@ -22,7 +22,9 @@ interface CoroutineContextProtocol {
         block: suspend CoroutineScope.() -> T
     ): T = async(throwOnFailure = false, block = block).await()
 
-    fun <T> throwOnFailure(deferred: Deferred<T>)
+    fun <T> throwOnFailure(
+        deferred: Deferred<T>
+    )
 }
 
 class CoroutineContext(
@@ -59,7 +61,9 @@ class CoroutineContext(
             }
         }
 
-    override fun <T> throwOnFailure(deferred: Deferred<T>) {
+    override fun <T> throwOnFailure(
+        deferred: Deferred<T>
+    ) {
         deferred.invokeOnCompletion { throwable ->
             throwable ?: return@invokeOnCompletion
             uncaughtExceptionHandler?.let { handler ->

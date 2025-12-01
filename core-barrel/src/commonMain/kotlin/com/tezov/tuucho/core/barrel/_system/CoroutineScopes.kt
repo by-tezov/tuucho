@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor
 import com.tezov.tuucho.core.domain.tool.async.CoroutineUncaughtExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 
 internal fun createCoroutineScopes(
     exceptionMonitor: CoroutineExceptionMonitor?,
