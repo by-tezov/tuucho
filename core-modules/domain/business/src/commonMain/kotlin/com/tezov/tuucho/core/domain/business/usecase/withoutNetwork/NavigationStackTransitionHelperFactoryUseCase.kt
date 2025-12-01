@@ -9,8 +9,10 @@ import com.tezov.tuucho.core.domain.business.protocol.NavigationTransitionStackH
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase.Output
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 
+@OpenForTest
 class NavigationStackTransitionHelperFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
     data class Input(
         val prototypeObject: JsonObject,

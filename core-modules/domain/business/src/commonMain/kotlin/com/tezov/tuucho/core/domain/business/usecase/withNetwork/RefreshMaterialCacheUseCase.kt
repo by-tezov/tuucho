@@ -2,7 +2,9 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
+@OpenForTest
 class RefreshMaterialCacheUseCase(
     private val refreshMaterialCacheRepository: MaterialRepositoryProtocol.RefreshCache,
 ) : UseCaseProtocol.Async<RefreshMaterialCacheUseCase.Input, Unit> {

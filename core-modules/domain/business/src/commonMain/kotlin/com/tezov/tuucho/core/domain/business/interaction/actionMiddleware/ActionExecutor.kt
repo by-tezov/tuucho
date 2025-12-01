@@ -48,16 +48,12 @@ internal class ActionExecutor(
                     }
 
                     outputs.size == 1 -> {
-                        Output.Element(
-                            type = Any::class,
-                            rawValue = outputs.first()
-                        )
+                        outputs.first()
                     }
 
                     else -> {
                         Output.ElementArray(
-                            type = Any::class,
-                            rawValue = outputs
+                            values = outputs
                         )
                     }
                 }

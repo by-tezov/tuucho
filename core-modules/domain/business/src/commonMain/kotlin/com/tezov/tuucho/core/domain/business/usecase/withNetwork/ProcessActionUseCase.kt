@@ -8,9 +8,11 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 
+@OpenForTest
 class ProcessActionUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val actionExecutor: ActionExecutorProtocol,
@@ -33,13 +35,11 @@ class ProcessActionUseCase(
         ) : Input()
     }
 
-    sealed class Output(
-        val type: KClass<out Any>,
-    ) {
+    sealed class Output {
         class Element(
-            type: KClass<out Any>,
+            val type: KClass<out Any>,
             val rawValue: Any,
-        ) : Output(type) {
+        ) : Output() {
             @Suppress("UNCHECKED_CAST")
             inline fun <reified T> value(): T = rawValue as T
 
@@ -48,15 +48,8 @@ class ProcessActionUseCase(
         }
 
         class ElementArray(
-            type: KClass<out Any>,
-            val rawValue: List<Any>,
-        ) : Output(type) {
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> value(): List<T> = rawValue as List<T>
-
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> valueOrNull(): List<T>? = rawValue as? List<T>
-        }
+            val values: List<Output>,
+        ) : Output()
     }
 
     override suspend fun invoke(

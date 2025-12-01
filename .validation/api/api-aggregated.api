@@ -2660,27 +2660,23 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessAct
     }
 
     sealed class Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output|null[0]
-        final val type // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.type|{}type[0]
-            final fun <get-type>(): kotlin.reflect/KClass<out kotlin/Any> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.type.<get-type>|<get-type>(){}[0]
-
         final class Element : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element|null[0]
             constructor <init>(kotlin.reflect/KClass<out kotlin/Any>, kotlin/Any) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.<init>|<init>(kotlin.reflect.KClass<out|kotlin.Any>;kotlin.Any){}[0]
 
             final val rawValue // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.rawValue|{}rawValue[0]
                 final fun <get-rawValue>(): kotlin/Any // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.rawValue.<get-rawValue>|<get-rawValue>(){}[0]
+            final val type // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.type|{}type[0]
+                final fun <get-type>(): kotlin.reflect/KClass<out kotlin/Any> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.type.<get-type>|<get-type>(){}[0]
 
             final inline fun <#A3: reified kotlin/Any?> value(): #A3 // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.value|value(){0§<kotlin.Any?>}[0]
             final inline fun <#A3: reified kotlin/Any?> valueOrNull(): #A3? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.valueOrNull|valueOrNull(){0§<kotlin.Any?>}[0]
         }
 
         final class ElementArray : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray|null[0]
-            constructor <init>(kotlin.reflect/KClass<out kotlin/Any>, kotlin.collections/List<kotlin/Any>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.<init>|<init>(kotlin.reflect.KClass<out|kotlin.Any>;kotlin.collections.List<kotlin.Any>){}[0]
+            constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output>){}[0]
 
-            final val rawValue // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.rawValue|{}rawValue[0]
-                final fun <get-rawValue>(): kotlin.collections/List<kotlin/Any> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.rawValue.<get-rawValue>|<get-rawValue>(){}[0]
-
-            final inline fun <#A3: reified kotlin/Any?> value(): kotlin.collections/List<#A3> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.value|value(){0§<kotlin.Any?>}[0]
-            final inline fun <#A3: reified kotlin/Any?> valueOrNull(): kotlin.collections/List<#A3>? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.valueOrNull|valueOrNull(){0§<kotlin.Any?>}[0]
+            final val values // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.values|{}values[0]
+                final fun <get-values>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.values.<get-values>|<get-values>(){}[0]
         }
     }
 }
@@ -7742,18 +7738,17 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Pro
 }
 
 public abstract class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Output {
-	public synthetic fun <init> (Lkotlin/reflect/KClass;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getType ()Lkotlin/reflect/KClass;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Output$Element : com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Output {
 	public fun <init> (Lkotlin/reflect/KClass;Ljava/lang/Object;)V
 	public final fun getRawValue ()Ljava/lang/Object;
+	public final fun getType ()Lkotlin/reflect/KClass;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Output$ElementArray : com/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Output {
-	public fun <init> (Lkotlin/reflect/KClass;Ljava/util/List;)V
-	public final fun getRawValue ()Ljava/util/List;
+	public fun <init> (Ljava/util/List;)V
+	public final fun getValues ()Ljava/util/List;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/RefreshMaterialCacheUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {

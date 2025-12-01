@@ -75,10 +75,9 @@ internal class StoreActionMiddleware(
         }
         when (query) {
             is JsonArray -> {
-                query.jsonArray
-                    .forEach {
-                        execute(it)
-                    }
+                query.jsonArray.forEach {
+                    execute(it)
+                }
             }
 
             is JsonPrimitive -> {
