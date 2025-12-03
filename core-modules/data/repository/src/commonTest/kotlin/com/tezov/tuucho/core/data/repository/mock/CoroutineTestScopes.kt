@@ -14,18 +14,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.runTest
 
-internal class CoroutineTestScopes {
+class CoroutineTestScope {
     lateinit var mock: CoroutineScopesProtocol
         private set
 
-    fun createMock() = mock<CoroutineScopesProtocol>().also { mock = it }
+    fun setup() {
+        mock<CoroutineScopesProtocol>().also { mock = it }
+    }
 
     private fun createMockContext(
         currentScope: CoroutineScope
     ) = mock<CoroutineContextProtocol> {
-        @Suppress("ktlint:standard:max-line-length")
         everySuspend {
             await(
                 block = any<suspend CoroutineScope.() -> Any?>()
@@ -35,14 +35,13 @@ internal class CoroutineTestScopes {
             block(currentScope)
         }
 
-        @Suppress("ktlint:standard:max-line-length")
         every {
             async(
                 throwOnFailure = true,
                 block = any<suspend CoroutineScope.() -> Any?>()
             )
         } calls { args ->
-            val block = args.arg(0) as suspend CoroutineScope.() -> Any?
+            val block = args.arg(1) as suspend CoroutineScope.() -> Any?
             val deferred = CompletableDeferred<Any?>()
             currentScope.launch {
                 val result = block(currentScope)
@@ -82,10 +81,40 @@ internal class CoroutineTestScopes {
 
     fun run(
         body: suspend TestScope.() -> Unit
-    ) = runTest {
+    ) = kotlinx.coroutines.test.runTest {
         attach(testScheduler)
         body()
     }
-}
 
-internal fun coroutineTestScope() = CoroutineTestScopes()
+    fun verifyNoMoreCalls() {
+        dev.mokkery.verifyNoMoreCalls(
+            mock.database,
+            mock.network,
+            mock.parser,
+            mock.renderer,
+            mock.navigation,
+            mock.useCase,
+            mock.action,
+            mock.event,
+            mock.default,
+            mock.main,
+            mock.io,
+        )
+    }
+
+    fun resetCalls() {
+        dev.mokkery.resetCalls(
+            mock.database,
+            mock.network,
+            mock.parser,
+            mock.renderer,
+            mock.navigation,
+            mock.useCase,
+            mock.action,
+            mock.event,
+            mock.default,
+            mock.main,
+            mock.io,
+        )
+    }
+}

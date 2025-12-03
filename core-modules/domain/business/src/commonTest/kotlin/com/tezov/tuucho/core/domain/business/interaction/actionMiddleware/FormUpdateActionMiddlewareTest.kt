@@ -25,6 +25,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -144,7 +145,7 @@ class FormUpdateActionMiddlewareTest {
         val failureParam = JsonNull
             .withScope(FormSendSchema.FailureResult::Scope)
             .apply {
-                reason = buildJsonObject { put("code", JsonPrimitive("error-code")) }
+                reason = buildJsonObject { put("code", "error-code") }
             }.collect()
         val jsonArray = buildJsonArray {
             add(failureParam)

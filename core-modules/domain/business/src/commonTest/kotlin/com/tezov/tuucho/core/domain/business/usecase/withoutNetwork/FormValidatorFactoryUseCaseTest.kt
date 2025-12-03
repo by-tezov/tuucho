@@ -11,7 +11,6 @@ import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMinLe
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMinValueFormValidator
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringNotNullFormValidator
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringOnlyDigitsFormValidator
-import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import kotlin.test.BeforeTest
@@ -36,7 +35,7 @@ class FormValidatorFactoryUseCaseTest {
             put(FormValidatorSchema.Key.type, type)
             length?.let { put(FormValidatorSchema.Key.length, it) }
             value?.let { put(FormValidatorSchema.Key.value, it) }
-            put(FormValidatorSchema.Key.messageError, buildJsonObject { put("msg", JsonPrimitive("err")) })
+            put(FormValidatorSchema.Key.messageError, buildJsonObject { put("msg", "err") })
         }
     )
 

@@ -27,9 +27,10 @@ import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import kotlin.test.AfterTest
@@ -297,7 +298,7 @@ class FormSendUrlActionMiddlewareTest {
         stubGetScreen(screen = screen)
 
         val responseObject = buildJsonObject {
-            put(FormSendSchema.Key.type, JsonPrimitive("other"))
+            put(FormSendSchema.Key.type, "other")
         }
 
         everySuspend {
@@ -354,18 +355,18 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- remote response with before/validated/after ----------
         val responseObject = buildJsonObject {
-            put(FormSendSchema.Key.subset, JsonPrimitive(FormSendSchema.Value.subset))
-            put(FormSendSchema.Key.allSucceed, JsonPrimitive(true))
+            put(FormSendSchema.Key.subset, FormSendSchema.Value.subset)
+            put(FormSendSchema.Key.allSucceed, true)
             put(
                 FormSendSchema.Key.action,
                 buildJsonObject {
                     put(
                         FormSendSchema.Action.Key.before,
-                        buildJsonArray { add(JsonPrimitive("cmd://before")) }
+                        buildJsonArray { add("cmd://before") }
                     )
                     put(
                         FormSendSchema.Action.Key.after,
-                        buildJsonArray { add(JsonPrimitive("cmd://after")) }
+                        buildJsonArray { add("cmd://after") }
                     )
                 }
             )
@@ -387,7 +388,7 @@ class FormSendUrlActionMiddlewareTest {
             put(
                 ActionFormSchema.Send.Key.validated,
                 buildJsonArray {
-                    add(JsonPrimitive("cmd://validated"))
+                    add("cmd://validated")
                 }
             )
         }
@@ -463,18 +464,18 @@ class FormSendUrlActionMiddlewareTest {
         val failureResultArray = buildJsonArray {
             add(
                 buildJsonObject {
-                    put(FormSendSchema.FailureResult.Key.id, JsonPrimitive("field-failure"))
+                    put(FormSendSchema.FailureResult.Key.id, "field-failure")
                     put(
                         FormSendSchema.FailureResult.Key.reason,
-                        buildJsonObject { put("code", JsonPrimitive("error-code")) }
+                        buildJsonObject { put("code", "error-code") }
                     )
                 }
             )
         }
 
         val responseObject = buildJsonObject {
-            put(FormSendSchema.Key.subset, JsonPrimitive(FormSendSchema.Value.subset))
-            put(FormSendSchema.Key.allSucceed, JsonPrimitive(false))
+            put(FormSendSchema.Key.subset, FormSendSchema.Value.subset)
+            put(FormSendSchema.Key.allSucceed, false)
             put(FormSendSchema.Key.failureResult, failureResultArray)
             put(
                 FormSendSchema.Key.action,
@@ -482,13 +483,13 @@ class FormSendUrlActionMiddlewareTest {
                     put(
                         FormSendSchema.Action.Key.before,
                         buildJsonArray {
-                            add(JsonPrimitive("cmd://before"))
+                            add("cmd://before")
                         }
                     )
                     put(
                         FormSendSchema.Action.Key.after,
                         buildJsonArray {
-                            add(JsonPrimitive("cmd://after"))
+                            add("cmd://after")
                         }
                     )
                 }
@@ -511,7 +512,7 @@ class FormSendUrlActionMiddlewareTest {
             put(
                 ActionFormSchema.Send.Key.denied,
                 buildJsonArray {
-                    add(JsonPrimitive("cmd://denied"))
+                    add("cmd://denied")
                 }
             )
         }

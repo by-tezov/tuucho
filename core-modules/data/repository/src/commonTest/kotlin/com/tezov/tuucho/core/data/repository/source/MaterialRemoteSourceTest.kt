@@ -1,22 +1,25 @@
 package com.tezov.tuucho.core.data.repository.source
 
-import com.tezov.tuucho.core.data.repository.mock.coroutineTestScope
+import com.tezov.tuucho.core.data.repository.mock.CoroutineTestScope
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
+import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MaterialRemoteSourceTest {
-    private val coroutineTestScope = coroutineTestScope()
+    private val coroutineTestScope = CoroutineTestScope()
     private lateinit var networkJsonObject: NetworkJsonObject
     private lateinit var materialRectifier: MaterialRectifier
     private lateinit var sut: MaterialRemoteSource
@@ -25,11 +28,19 @@ class MaterialRemoteSourceTest {
     fun setup() {
         networkJsonObject = mock()
         materialRectifier = mock()
-
+        coroutineTestScope.setup()
         sut = MaterialRemoteSource(
-            coroutineScopes = coroutineTestScope.createMock(),
+            coroutineScopes = coroutineTestScope.mock,
             networkJsonObject = networkJsonObject,
             materialRectifier = materialRectifier
+        )
+    }
+
+    @AfterTest
+    fun tearDown() {
+        coroutineTestScope.verifyNoMoreCalls()
+        verifyNoMoreCalls(
+            networkJsonObject,
         )
     }
 
@@ -47,9 +58,9 @@ class MaterialRemoteSourceTest {
         assertEquals(expected, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.network
+            coroutineTestScope.mock.network.await<Any>(any())
             networkJsonObject.resource(url)
-            coroutineTestScope.mock.parser
+            coroutineTestScope.mock.parser.await<Any>(any())
             materialRectifier.process(networkResponse)
         }
     }

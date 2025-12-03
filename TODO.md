@@ -1,6 +1,5 @@
 ## In progress
 
-- fix test
 - update doc
 - Article Koin Salade
 

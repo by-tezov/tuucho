@@ -32,9 +32,7 @@ internal class SendDataAndRetrieveMaterialRemoteSource(
                                 materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
                             }
                         }
-                    ).also {
-                        println(it)
-                    }
+                    )
             }
         }
     }
