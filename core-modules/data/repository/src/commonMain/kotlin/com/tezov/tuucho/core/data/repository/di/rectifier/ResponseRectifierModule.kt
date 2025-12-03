@@ -16,7 +16,6 @@ import org.koin.dsl.ScopeDSL
 
 @OptIn(TuuchoExperimentalAPI::class)
 internal object Response {
-
     fun ScopeDSL.invoke() {
         factory<List<AbstractRectifier>>(RectifierModule.Name.RECTIFIERS) {
             listOf(
@@ -30,7 +29,7 @@ internal object Response {
     }
 
     private fun ScopeDSL.idModule() {
-        scoped<IdRectifier> {
+        factory<IdRectifier> {
             IdRectifier(
                 scope = this,
                 idGenerator = RectifierIdGenerator(
@@ -39,37 +38,37 @@ internal object Response {
             )
         }
 
-        scoped<List<MatcherRectifierProtocol>>(Matcher.ID) {
+        factory<List<MatcherRectifierProtocol>>(Matcher.ID) {
             listOf(IdMatcher())
         }
     }
 
     private fun ScopeDSL.textModule() {
-        scoped<TextRectifier> {
+        factory<TextRectifier> {
             TextRectifier(scope = this)
         }
 
-        scoped<List<MatcherRectifierProtocol>>(Matcher.TEXT) {
+        factory<List<MatcherRectifierProtocol>>(Matcher.TEXT) {
             emptyList()
         }
 
-        scoped<List<AbstractRectifier>>(Processor.TEXT) {
+        factory<List<AbstractRectifier>>(Processor.TEXT) {
             listOf(get<IdRectifier>())
         }
     }
 
     private fun ScopeDSL.actionModule() {
-        scoped<ActionRectifier> {
+        factory<ActionRectifier> {
             ActionRectifier(scope = this)
         }
 
-        scoped<List<MatcherRectifierProtocol>>(Matcher.ACTION) {
+        factory<List<MatcherRectifierProtocol>>(Matcher.ACTION) {
             listOf(
                 FormActionMatcher()
             )
         }
 
-        scoped<List<AbstractRectifier>>(Processor.ACTION) {
+        factory<List<AbstractRectifier>>(Processor.ACTION) {
             listOf(get<IdRectifier>())
         }
     }

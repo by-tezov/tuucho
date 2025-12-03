@@ -2,6 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
+    <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$200</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$3000</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$500</ID>
@@ -40,6 +42,8 @@
     <ID>MatchingDeclarationName:SystemInformation.ios.kt$SystemInformationIos : PlatformProtocol</ID>
     <ID>MatchingDeclarationName:WeakReference.android.kt$WeakReferenceAndroid&lt;T : Any&gt; : Weak</ID>
     <ID>MatchingDeclarationName:WeakReference.ios.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
+    <ID>MaxLineLength:AbstractAssembler.kt$AbstractAssembler$get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")</ID>
+    <ID>MaxLineLength:AbstractRectifier.kt$AbstractRectifier$get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>

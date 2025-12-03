@@ -17,7 +17,6 @@ import org.koin.dsl.ScopeDSL
 
 @OptIn(TuuchoExperimentalAPI::class)
 object Material {
-
     fun ScopeDSL.invoke() {
         factory<List<AbstractAssembler>>(AssemblerModule.Name.ASSEMBLERS) {
             listOf(
@@ -39,15 +38,15 @@ object Material {
     }
 
     private fun ScopeDSL.componentModule() {
-        scoped<ComponentAssembler> { ComponentAssembler(scope = this) }
+        factory<ComponentAssembler> { ComponentAssembler(scope = this) }
 
-        scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COMPONENT) {
+        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COMPONENT) {
             listOf(
                 ContentLayoutLinearItemsMatcher()
             )
         }
 
-        scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.COMPONENT) {
+        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.COMPONENT) {
             listOf(
                 get<ContentAssembler>(),
                 get<StyleAssembler>(),
@@ -58,9 +57,9 @@ object Material {
     }
 
     private fun ScopeDSL.contentModule() {
-        scoped<ContentAssembler> { ContentAssembler(scope = this) }
+        factory<ContentAssembler> { ContentAssembler(scope = this) }
 
-        scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.CONTENT) {
+        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.CONTENT) {
             listOf(
                 get<TextAssembler>(),
                 get<ActionAssembler>(),
@@ -70,9 +69,9 @@ object Material {
     }
 
     private fun ScopeDSL.styleModule() {
-        scoped<StyleAssembler> { StyleAssembler(scope = this) }
+        factory<StyleAssembler> { StyleAssembler(scope = this) }
 
-        scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STYLE) {
+        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STYLE) {
             listOf(
                 get<ColorAssembler>(),
                 get<DimensionAssembler>()
@@ -81,17 +80,17 @@ object Material {
     }
 
     private fun ScopeDSL.optionModule() {
-        scoped<OptionAssembler> { OptionAssembler(scope = this) }
+        factory<OptionAssembler> { OptionAssembler(scope = this) }
 
-        scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.OPTION) {
+        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.OPTION) {
             emptyList()
         }
     }
 
     private fun ScopeDSL.stateModule() {
-        scoped<StateAssembler> { StateAssembler(scope = this) }
+        factory<StateAssembler> { StateAssembler(scope = this) }
 
-        scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STATE) {
+        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STATE) {
             listOf(
                 get<TextAssembler>(),
             )
@@ -99,33 +98,33 @@ object Material {
     }
 
     private fun ScopeDSL.textModule() {
-        scoped<TextAssembler> { TextAssembler(scope = this) }
+        factory<TextAssembler> { TextAssembler(scope = this) }
 
-        scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
+        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
             emptyList()
         }
     }
 
     private fun ScopeDSL.colorModule() {
-        scoped<ColorAssembler> { ColorAssembler(scope = this) }
+        factory<ColorAssembler> { ColorAssembler(scope = this) }
 
-        scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COLOR) {
+        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COLOR) {
             emptyList()
         }
     }
 
     private fun ScopeDSL.dimensionModule() {
-        scoped<DimensionAssembler> { DimensionAssembler(scope = this) }
+        factory<DimensionAssembler> { DimensionAssembler(scope = this) }
 
-        scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.DIMENSION) {
+        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.DIMENSION) {
             emptyList()
         }
     }
 
     private fun ScopeDSL.actionModule() {
-        scoped<ActionAssembler> { ActionAssembler(scope = this) }
+        factory<ActionAssembler> { ActionAssembler(scope = this) }
 
-        scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
+        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
             emptyList()
         }
     }

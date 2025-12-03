@@ -24,16 +24,17 @@ internal class SendDataAndRetrieveMaterialRemoteSource(
         return response?.let {
             coroutineScopes.parser.await {
                 val responseRectified = responseRectifier.process(it)
-                responseAssembler.process(
-                    responseObject = responseRectified,
-                    findAllRefOrNullFetcher = { from, type ->
-                        coroutineScopes.database.await {
-                            materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
+                responseAssembler
+                    .process(
+                        responseObject = responseRectified,
+                        findAllRefOrNullFetcher = { from, type ->
+                            coroutineScopes.database.await {
+                                materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
+                            }
                         }
+                    ).also {
+                        println(it)
                     }
-                ).also {
-                    println(it)
-                }
             }
         }
     }

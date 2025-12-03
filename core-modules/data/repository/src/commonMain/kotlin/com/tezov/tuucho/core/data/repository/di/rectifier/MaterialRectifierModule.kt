@@ -79,7 +79,7 @@ internal object Material {
     }
 
     private fun ScopeDSL.idModule() {
-        scoped<IdRectifier> {
+        factory<IdRectifier> {
             IdRectifier(
                 scope = this,
                 idGenerator = RectifierIdGenerator(
@@ -88,17 +88,17 @@ internal object Material {
             )
         }
 
-        scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.ID) {
+        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.ID) {
             listOf(IdMatcher())
         }
     }
 
     private fun ScopeDSL.settingModule() {
-        scoped<SettingComponentRectifier> {
+        factory<SettingComponentRectifier> {
             SettingComponentRectifier(scope = this)
         }
 
-        scoped<List<AbstractRectifier>>(Name.Processor.SETTING) {
+        factory<List<AbstractRectifier>>(Name.Processor.SETTING) {
             listOf(
                 get<IdRectifier>(),
                 SettingComponentNavigationRectifier(scope = this),
@@ -107,15 +107,15 @@ internal object Material {
     }
 
     private fun ScopeDSL.componentModule() {
-        scoped<ComponentsRectifier> {
+        factory<ComponentsRectifier> {
             ComponentsRectifier(scope = this)
         }
 
-        scoped<ComponentRectifier> {
+        factory<ComponentRectifier> {
             ComponentRectifier(scope = this)
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.COMPONENT) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.COMPONENT) {
             listOf(
                 get<IdRectifier>(),
                 get<SettingComponentRectifier>(),
@@ -128,15 +128,15 @@ internal object Material {
     }
 
     private fun ScopeDSL.contentModule() {
-        scoped<ContentsRectifier> {
+        factory<ContentsRectifier> {
             ContentsRectifier(scope = this)
         }
 
-        scoped<ContentRectifier> {
+        factory<ContentRectifier> {
             ContentRectifier(scope = this)
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.CONTENT) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.CONTENT) {
             listOf(
                 get<IdRectifier>(),
                 get<ActionRectifier>(),
@@ -155,15 +155,15 @@ internal object Material {
     }
 
     private fun ScopeDSL.styleModule() {
-        scoped<StylesRectifier> {
+        factory<StylesRectifier> {
             StylesRectifier(scope = this)
         }
 
-        scoped<StyleRectifier> {
+        factory<StyleRectifier> {
             StyleRectifier(scope = this)
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.STYLE) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.STYLE) {
             listOf(
                 get<IdRectifier>(),
                 get<ColorRectifier>(),
@@ -173,15 +173,15 @@ internal object Material {
     }
 
     private fun ScopeDSL.optionModule() {
-        scoped<OptionsRectifier> {
+        factory<OptionsRectifier> {
             OptionsRectifier(scope = this)
         }
 
-        scoped<OptionRectifier> {
+        factory<OptionRectifier> {
             OptionRectifier(scope = this)
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.OPTION) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.OPTION) {
             listOf(
                 get<IdRectifier>(),
                 get<FormValidatorRectifier>(),
@@ -190,15 +190,15 @@ internal object Material {
     }
 
     private fun ScopeDSL.stateModule() {
-        scoped<StatesRectifier> {
+        factory<StatesRectifier> {
             StatesRectifier(scope = this)
         }
 
-        scoped<StateRectifier> {
+        factory<StateRectifier> {
             StateRectifier(scope = this)
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.STATE) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.STATE) {
             listOf(
                 get<IdRectifier>(),
                 get<TextRectifier>()
@@ -207,15 +207,15 @@ internal object Material {
     }
 
     private fun ScopeDSL.textModule() {
-        scoped<TextsRectifier> {
+        factory<TextsRectifier> {
             TextsRectifier(scope = this)
         }
 
-        scoped<TextRectifier> {
+        factory<TextRectifier> {
             TextRectifier(scope = this)
         }
 
-        scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.TEXT) {
+        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.TEXT) {
             listOf(
                 ContentLabelTextMatcher(),
                 ContentFormFieldTextMatcher(),
@@ -223,79 +223,79 @@ internal object Material {
             )
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.TEXT) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.TEXT) {
             listOf(get<IdRectifier>())
         }
     }
 
     private fun ScopeDSL.colorModule() {
-        scoped<ColorsRectifier> {
+        factory<ColorsRectifier> {
             ColorsRectifier(scope = this)
         }
 
-        scoped<ColorRectifier> {
+        factory<ColorRectifier> {
             ColorRectifier(scope = this)
         }
 
-        scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.COLOR) {
+        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.COLOR) {
             listOf(
                 StyleLabelColorMatcher(),
                 StyleLayoutLinearColorMatcher(),
             )
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.COLOR) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.COLOR) {
             listOf(get<IdRectifier>())
         }
     }
 
     private fun ScopeDSL.dimensionModule() {
-        scoped<DimensionsRectifier> {
+        factory<DimensionsRectifier> {
             DimensionsRectifier(scope = this)
         }
 
-        scoped<DimensionRectifier> {
+        factory<DimensionRectifier> {
             DimensionRectifier(scope = this)
         }
 
-        scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.DIMENSION) {
+        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.DIMENSION) {
             listOf(
                 StyleLabelDimensionMatcher(),
                 StyleSpacerDimensionMatcher(),
             )
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.DIMENSION) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.DIMENSION) {
             listOf(get<IdRectifier>())
         }
     }
 
     private fun ScopeDSL.actionModule() {
-        scoped<ActionsRectifier> {
+        factory<ActionsRectifier> {
             ActionsRectifier(scope = this)
         }
 
-        scoped<ActionRectifier> {
+        factory<ActionRectifier> {
             ActionRectifier(scope = this)
         }
 
-        scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.ACTION) {
+        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.ACTION) {
             listOf(
                 ActionButtonMatcher()
             )
         }
 
-        scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.ACTION) {
+        factory<List<AbstractRectifier>>(RectifierModule.Name.Processor.ACTION) {
             listOf(get<IdRectifier>())
         }
     }
 
     private fun ScopeDSL.fieldValidatorModule() {
-        scoped<FormValidatorRectifier> {
+        factory<FormValidatorRectifier> {
             FormValidatorRectifier(scope = this)
         }
 
-        scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.FIELD_VALIDATOR) {
+        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.FIELD_VALIDATOR) {
             listOf(
                 OptionFormFieldValidatorMatcher()
             )

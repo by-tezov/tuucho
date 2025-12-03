@@ -1,8 +1,8 @@
 ## In progress
 
-- rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
-  - faire les assembler code
-  - faire completer data send data pour rectifier et assembler la response.
+- fix test
+- update doc
+- Article Koin Salade
 
 - update doc StartTuuchoEngine become TuuchoEngineStart
 - update middleware example ? disappear and next is nullable

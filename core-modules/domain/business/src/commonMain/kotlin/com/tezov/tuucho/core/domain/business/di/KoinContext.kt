@@ -19,7 +19,6 @@ interface TuuchoKoinComponent : org.koin.core.component.KoinComponent {
 interface TuuchoKoinScopeComponent :
     TuuchoKoinComponent,
     org.koin.core.component.KoinScopeComponent {
-
     fun close() {
         scope.close()
     }

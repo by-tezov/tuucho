@@ -13,15 +13,14 @@ import org.koin.dsl.ScopeDSL
 
 @OptIn(TuuchoExperimentalAPI::class)
 object Response {
-
     fun ScopeDSL.invokeScoped() {
         factory<List<AbstractAssembler>>(AssemblerModule.Name.ASSEMBLERS) {
             listOf(
                 FormAssembler()
             )
         }
-        scoped<TextAssembler> { parameters -> TextAssembler(scope = parameters.get()) }
-        scoped<ActionAssembler> { parameters -> ActionAssembler(scope = parameters.get()) }
+        factory<TextAssembler> { parameters -> TextAssembler(scope = parameters.get()) }
+        factory<ActionAssembler> { parameters -> ActionAssembler(scope = parameters.get()) }
     }
 
     fun Module.invoke() {
@@ -31,16 +30,15 @@ object Response {
     }
 
     private fun ScopeDSL.formModule() {
-        scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
+        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
             listOf(
                 FormFailureReasonTextMatcher()
             )
         }
-        scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
+        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
             listOf(
                 FormActionMatcher()
             )
         }
     }
-
 }
