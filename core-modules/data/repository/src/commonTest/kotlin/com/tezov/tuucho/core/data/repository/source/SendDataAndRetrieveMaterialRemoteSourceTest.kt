@@ -84,7 +84,6 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
             assembled
         }
 
-
         val result = sut.process(url, input)
         assertEquals(assembled, result)
 

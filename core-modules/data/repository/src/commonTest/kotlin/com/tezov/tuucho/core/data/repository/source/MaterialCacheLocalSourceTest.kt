@@ -261,7 +261,6 @@ class MaterialCacheLocalSourceTest {
         sut.insert(jsonMaterial, url, visibility, weak)
 
         verifySuspend(exhaustiveOrder) {
-
             coroutineTestScope.mock.parser.await<Any>(any())
             materialBreaker.process(jsonMaterial)
 

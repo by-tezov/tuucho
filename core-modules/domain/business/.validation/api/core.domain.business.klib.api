@@ -82,6 +82,10 @@ abstract interface com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent 
     open fun getKoin(): org.koin.core/Koin // com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent.getKoin|getKoin(){}[0]
 }
 
+abstract interface com.tezov.tuucho.core.domain.business.di/TuuchoKoinScopeComponent : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, org.koin.core.component/KoinScopeComponent { // com.tezov.tuucho.core.domain.business.di/TuuchoKoinScopeComponent|null[0]
+    open fun close() // com.tezov.tuucho.core.domain.business.di/TuuchoKoinScopeComponent.close|close(){}[0]
+}
+
 abstract interface com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor|null[0]
     abstract fun process(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.process|process(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Context){}[0]
 
@@ -2910,103 +2914,118 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchem
     }
 }
 
-final object com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema|null[0]
-    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+final object com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema|null[0]
+    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
 
-        final var action // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.action|{}action[0]
-            final fun <get-action>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.action.<get-action>|<get-action>(){}[0]
-            final fun <set-action>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.action.<set-action>|<set-action>(kotlinx.serialization.json.JsonObject?){}[0]
-        final var allSucceed // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.allSucceed|{}allSucceed[0]
-            final fun <get-allSucceed>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.allSucceed.<get-allSucceed>|<get-allSucceed>(){}[0]
-            final fun <set-allSucceed>(kotlin/Boolean?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.allSucceed.<set-allSucceed>|<set-allSucceed>(kotlin.Boolean?){}[0]
-        final var failureResult // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.failureResult|{}failureResult[0]
-            final fun <get-failureResult>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.failureResult.<get-failureResult>|<get-failureResult>(){}[0]
-            final fun <set-failureResult>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.failureResult.<set-failureResult>|<set-failureResult>(kotlinx.serialization.json.JsonArray?){}[0]
-        final var type // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.type|{}type[0]
-            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.type.<get-type>|<get-type>(){}[0]
-            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
+        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.root|{}root[0]
+            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.root.<get-root>|<get-root>(){}[0]
+
+        final var action // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.action|{}action[0]
+            final fun <get-action>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.action.<get-action>|<get-action>(){}[0]
+            final fun <set-action>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.action.<set-action>|<set-action>(kotlinx.serialization.json.JsonObject?){}[0]
+        final var allSucceed // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.allSucceed|{}allSucceed[0]
+            final fun <get-allSucceed>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.allSucceed.<get-allSucceed>|<get-allSucceed>(){}[0]
+            final fun <set-allSucceed>(kotlin/Boolean?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.allSucceed.<set-allSucceed>|<set-allSucceed>(kotlin.Boolean?){}[0]
+        final var failureResult // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResult|{}failureResult[0]
+            final fun <get-failureResult>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResult.<get-failureResult>|<get-failureResult>(){}[0]
+            final fun <set-failureResult>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResult.<set-failureResult>|<set-failureResult>(kotlinx.serialization.json.JsonArray?){}[0]
+        final var subset // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.subset|{}subset[0]
+            final fun <get-subset>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.subset.<get-subset>|<get-subset>(){}[0]
+            final fun <set-subset>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.subset.<set-subset>|<set-subset>(kotlin.String?){}[0]
+        final var type // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.type|{}type[0]
+            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.type.<get-type>|<get-type>(){}[0]
+            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
     }
 
-    final object Action { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+    final object Action { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action|null[0]
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
 
-            final var after // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope.after|{}after[0]
-                final fun <get-after>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope.after.<get-after>|<get-after>(){}[0]
-                final fun <set-after>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope.after.<set-after>|<set-after>(kotlinx.serialization.json.JsonArray?){}[0]
-            final var before // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope.before|{}before[0]
-                final fun <get-before>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope.before.<get-before>|<get-before>(){}[0]
-                final fun <set-before>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Scope.before.<set-before>|<set-before>(kotlinx.serialization.json.JsonArray?){}[0]
+            final var after // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope.after|{}after[0]
+                final fun <get-after>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope.after.<get-after>|<get-after>(){}[0]
+                final fun <set-after>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope.after.<set-after>|<set-after>(kotlinx.serialization.json.JsonArray?){}[0]
+            final var before // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope.before|{}before[0]
+                final fun <get-before>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope.before.<get-before>|<get-before>(){}[0]
+                final fun <set-before>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Scope.before.<set-before>|<set-before>(kotlinx.serialization.json.JsonArray?){}[0]
         }
 
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Key|null[0]
-            final const val after // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Key.after|{}after[0]
-                final fun <get-after>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Key.after.<get-after>|<get-after>(){}[0]
-            final const val before // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Key.before|{}before[0]
-                final fun <get-before>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Action.Key.before.<get-before>|<get-before>(){}[0]
-        }
-    }
-
-    final object FailureResult { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult|null[0]
-        final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.root|{}root[0]
-            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.root.<get-root>|<get-root>(){}[0]
-
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.root|{}root[0]
-                final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.root.<get-root>|<get-root>(){}[0]
-
-            final var id // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.id|{}id[0]
-                final fun <get-id>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.id.<get-id>|<get-id>(){}[0]
-                final fun <set-id>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.id.<set-id>|<set-id>(kotlin.String?){}[0]
-            final var reason // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.reason|{}reason[0]
-                final fun <get-reason>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.reason.<get-reason>|<get-reason>(){}[0]
-                final fun <set-reason>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Scope.reason.<set-reason>|<set-reason>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Key|null[0]
-            final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Key.id|{}id[0]
-                final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Key.id.<get-id>|<get-id>(){}[0]
-            final const val reason // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Key.reason|{}reason[0]
-                final fun <get-reason>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.FailureResult.Key.reason.<get-reason>|<get-reason>(){}[0]
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Key|null[0]
+            final const val after // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Key.after|{}after[0]
+                final fun <get-after>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Key.after.<get-after>|<get-after>(){}[0]
+            final const val before // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Key.before|{}before[0]
+                final fun <get-before>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Action.Key.before.<get-before>|<get-before>(){}[0]
         }
     }
 
-    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key|null[0]
-        final const val action // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.action|{}action[0]
-            final fun <get-action>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.action.<get-action>|<get-action>(){}[0]
-        final const val allSucceed // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.allSucceed|{}allSucceed[0]
-            final fun <get-allSucceed>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.allSucceed.<get-allSucceed>|<get-allSucceed>(){}[0]
-        final const val failureResult // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.failureResult|{}failureResult[0]
-            final fun <get-failureResult>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.failureResult.<get-failureResult>|<get-failureResult>(){}[0]
-        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.type|{}type[0]
-            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendResponseSchema.Key.type.<get-type>|<get-type>(){}[0]
+    final object FailureResult { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult|null[0]
+        final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.root|{}root[0]
+            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.root.<get-root>|<get-root>(){}[0]
+
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+            final val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.root|{}root[0]
+                final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.root.<get-root>|<get-root>(){}[0]
+
+            final var id // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.id|{}id[0]
+                final fun <get-id>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.id.<get-id>|<get-id>(){}[0]
+                final fun <set-id>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.id.<set-id>|<set-id>(kotlin.String?){}[0]
+            final var reason // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.reason|{}reason[0]
+                final fun <get-reason>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.reason.<get-reason>|<get-reason>(){}[0]
+                final fun <set-reason>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Scope.reason.<set-reason>|<set-reason>(kotlinx.serialization.json.JsonObject?){}[0]
+        }
+
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Key|null[0]
+            final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Key.id|{}id[0]
+                final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Key.id.<get-id>|<get-id>(){}[0]
+            final const val reason // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Key.reason|{}reason[0]
+                final fun <get-reason>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.FailureResult.Key.reason.<get-reason>|<get-reason>(){}[0]
+        }
+    }
+
+    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key|null[0]
+        final const val action // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.action|{}action[0]
+            final fun <get-action>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.action.<get-action>|<get-action>(){}[0]
+        final const val allSucceed // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.allSucceed|{}allSucceed[0]
+            final fun <get-allSucceed>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.allSucceed.<get-allSucceed>|<get-allSucceed>(){}[0]
+        final const val failureResult // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.failureResult|{}failureResult[0]
+            final fun <get-failureResult>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.failureResult.<get-failureResult>|<get-failureResult>(){}[0]
+        final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.subset|{}subset[0]
+            final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.subset.<get-subset>|<get-subset>(){}[0]
+        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.type|{}type[0]
+            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.type.<get-type>|<get-type>(){}[0]
+    }
+
+    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Value|null[0]
+        final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Value.subset|{}subset[0]
+            final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Value.subset.<get-subset>|<get-subset>(){}[0]
     }
 }
 
-final object com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema|null[0]
-    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.root|{}root[0]
-        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.root.<get-root>|<get-root>(){}[0]
+final object com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema|null[0]
+    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema.root|{}root[0]
+        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema.root.<get-root>|<get-root>(){}[0]
 
-    final val type // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.type|@kotlinx.serialization.json.JsonObject{}type[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.type.<get-type>|<get-type>@kotlinx.serialization.json.JsonObject(){}[0]
-
-    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope.root|{}root[0]
-            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope.root.<get-root>|<get-root>(){}[0]
-
-        final var self // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope.self|{}self[0]
-            final fun <get-self>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope.self.<get-self>|<get-self>(){}[0]
-            final fun <set-self>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Scope.self.<set-self>|<set-self>(kotlin.String?){}[0]
+    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema.Value|null[0]
+        final const val form // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema.Value.form|{}form[0]
+            final fun <get-form>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema.Value.form.<get-form>|<get-form>(){}[0]
+        final const val unknown // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema.Value.unknown|{}unknown[0]
+            final fun <get-unknown>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/SubsetSchema.Value.unknown.<get-unknown>|<get-unknown>(){}[0]
     }
+}
 
-    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Value|null[0]
-        final const val form // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Value.form|{}form[0]
-            final fun <get-form>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeResponseSchema.Value.form.<get-form>|<get-form>(){}[0]
+final object com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema|null[0]
+    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.root|{}root[0]
+        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.root.<get-root>|<get-root>(){}[0]
+
+    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.Value|null[0]
+        final const val action // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.Value.action|{}action[0]
+            final fun <get-action>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.Value.action.<get-action>|<get-action>(){}[0]
+        final const val response // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.Value.response|{}response[0]
+            final fun <get-response>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.Value.response.<get-response>|<get-response>(){}[0]
+        final const val text // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.Value.text|{}text[0]
+            final fun <get-text>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/TypeSchema.Value.text.<get-text>|<get-text>(){}[0]
     }
 }
 

@@ -18,6 +18,7 @@
     <ID>MatchingDeclarationName:Assets.ios.kt$AssetsIos : AssetsProtocol</ID>
     <ID>MatchingDeclarationName:AssetsModule.android.kt$AssetsModuleAndroid</ID>
     <ID>MatchingDeclarationName:AssetsModule.ios.kt$AssetsModuleIos</ID>
+    <ID>MatchingDeclarationName:CoroutineTestScopes.kt$CoroutineTestScope</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.android.kt$DatabaseRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.ios.kt$DatabaseRepositoryModuleIos</ID>
     <ID>MatchingDeclarationName:FormFailureReasonMatcher.kt$FormFailureReasonTextMatcher : MatcherAssemblerProtocol</ID>
