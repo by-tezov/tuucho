@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.assembler.material
 
-import com.tezov.tuucho.core.data.repository.di.AssemblerModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.content.ContentRectifier
@@ -23,7 +23,7 @@ class ContentAssembler(
     override val schemaType = TypeSchema.Value.content
 
     override val childProcessors: List<AbstractAssembler> by inject(
-        Name.Processor.CONTENT
+        AssemblerModule.Name.Processor.CONTENT
     )
 
     private val rectifier: ContentRectifier by inject()
@@ -31,7 +31,7 @@ class ContentAssembler(
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
-    ) = path.isTypeOf(element, TypeSchema.Value.content) || super.accept(path, element)
+    ) = path.isTypeOf(element, TypeSchema.Value.content)
 
     private fun JsonObject.rectify(
         parentSubset: String

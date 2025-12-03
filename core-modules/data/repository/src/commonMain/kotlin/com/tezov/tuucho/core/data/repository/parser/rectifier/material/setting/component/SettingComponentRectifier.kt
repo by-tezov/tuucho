@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.setting.component
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.Material.Name
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentStartWith
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier

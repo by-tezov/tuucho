@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.assembler.material
 
-import com.tezov.tuucho.core.data.repository.di.AssemblerModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.style.StyleRectifier
@@ -23,7 +23,7 @@ class StyleAssembler(
     override val schemaType = TypeSchema.Value.style
 
     override val childProcessors: List<AbstractAssembler> by inject(
-        Name.Processor.STYLE
+        AssemblerModule.Name.Processor.STYLE
     )
 
     private val rectifier: StyleRectifier by inject()
@@ -31,7 +31,7 @@ class StyleAssembler(
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
-    ) = path.isTypeOf(element, TypeSchema.Value.style) || super.accept(path, element)
+    ) = path.isTypeOf(element, TypeSchema.Value.style)
 
     private fun JsonObject.rectify(
         parentSubset: String

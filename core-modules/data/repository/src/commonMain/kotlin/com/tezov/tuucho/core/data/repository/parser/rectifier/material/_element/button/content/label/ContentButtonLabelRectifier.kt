@@ -2,10 +2,14 @@
 
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.label
 
+import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
+import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
+import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
@@ -22,13 +26,17 @@ class ContentButtonLabelRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
     override val key = ButtonSchema.Content.Key.label
-    private val matcher = ContentButtonLabelMatcher()
     private val componentRectifier: ComponentRectifier by inject()
 
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
-    ) = matcher.accept(path, element)
+    ): Boolean {
+        if (!path.lastSegmentIs(ButtonSchema.Content.Key.label)) return false
+        val parent = element.find(path.parent())
+        return parent.isSubsetOf(ButtonSchema.Component.Value.subset) &&
+            parent.isTypeOf(TypeSchema.Value.content)
+    }
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,

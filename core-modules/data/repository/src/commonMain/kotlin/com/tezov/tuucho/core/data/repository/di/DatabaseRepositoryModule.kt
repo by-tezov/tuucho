@@ -21,7 +21,7 @@ object DatabaseRepositoryModule {
     }
 
     object Name {
-        val DATABASE_REPOSITORY_CONFIG = named("DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG")
+        val DATABASE_REPOSITORY_CONFIG get() = named("DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG")
     }
 
     internal fun invoke() = module(ModuleGroupData.Main) {

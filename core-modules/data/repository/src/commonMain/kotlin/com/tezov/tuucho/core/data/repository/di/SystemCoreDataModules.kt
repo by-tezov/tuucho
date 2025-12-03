@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.repository.SystemInformation
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module

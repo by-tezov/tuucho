@@ -21,7 +21,6 @@ abstract class AbstractAssembler(
     override val scope: Scope
 ) : MatcherAssemblerProtocol,
     TuuchoKoinScopeComponent {
-    final override var scopeNullable: Scope? = null
 
     abstract val schemaType: String
 

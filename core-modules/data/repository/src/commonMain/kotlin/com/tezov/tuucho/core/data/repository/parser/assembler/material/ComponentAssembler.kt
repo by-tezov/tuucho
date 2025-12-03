@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.assembler.material
 
-import com.tezov.tuucho.core.data.repository.di.AssemblerModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.MatcherAssemblerProtocol
@@ -18,11 +18,11 @@ class ComponentAssembler(
     override val schemaType = TypeSchema.Value.component
 
     override val matchers: List<MatcherAssemblerProtocol> by inject(
-        Name.Matcher.COMPONENT
+        AssemblerModule.Name.Matcher.COMPONENT
     )
 
     override val childProcessors: List<AbstractAssembler> by inject(
-        Name.Processor.COMPONENT
+        AssemblerModule.Name.Processor.COMPONENT
     )
 
     override fun accept(

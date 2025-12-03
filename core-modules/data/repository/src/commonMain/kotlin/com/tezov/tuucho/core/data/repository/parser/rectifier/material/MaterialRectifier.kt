@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentRectifier
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
@@ -19,13 +19,12 @@ import org.koin.core.scope.Scope
 @OpenForTest
 @OptIn(TuuchoExperimentalAPI::class)
 internal class MaterialRectifier : TuuchoKoinScopeComponent {
-    override var scopeNullable: Scope? = null
     override val scope: Scope by lazy {
-        createScope().also { scopeNullable = it }
+        createScope()
     }
 
     private val componentRectifier: ComponentRectifier by inject()
-    private val rectifiers: List<AbstractRectifier> by inject(Name.RECTIFIERS)
+    private val rectifiers: List<AbstractRectifier> by inject(RectifierModule.Name.RECTIFIERS)
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(

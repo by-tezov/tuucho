@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.option
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
@@ -28,7 +28,7 @@ class OptionRectifier(
     override val key = OptionSchema.root
 
     override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.OPTION
+        RectifierModule.Name.Processor.OPTION
     )
 
     override fun accept(

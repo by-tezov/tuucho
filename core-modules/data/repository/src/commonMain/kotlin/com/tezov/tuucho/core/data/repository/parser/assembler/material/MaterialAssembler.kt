@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.assembler.material
 
-import com.tezov.tuucho.core.data.repository.di.AssemblerModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.FindAllRefOrNullFetcherProtocol
@@ -19,12 +19,11 @@ import org.koin.core.scope.Scope
 @OpenForTest
 @OptIn(TuuchoExperimentalAPI::class)
 class MaterialAssembler : TuuchoKoinScopeComponent {
-    override var scopeNullable: Scope? = null
     override val scope: Scope by lazy {
-        createScope().also { scopeNullable = it }
+        createScope()
     }
 
-    private val assemblers: List<AbstractAssembler> by inject(Name.ASSEMBLERS)
+    private val assemblers: List<AbstractAssembler> by inject(AssemblerModule.Name.ASSEMBLERS)
 
     suspend fun process(
         materialObject: JsonObject,

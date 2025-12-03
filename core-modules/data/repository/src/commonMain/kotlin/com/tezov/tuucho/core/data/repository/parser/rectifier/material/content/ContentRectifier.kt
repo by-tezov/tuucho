@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.content
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
@@ -28,7 +28,7 @@ class ContentRectifier(
     override val key = ContentSchema.root
 
     override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.CONTENT
+        RectifierModule.Name.Processor.CONTENT
     )
 
     override fun accept(

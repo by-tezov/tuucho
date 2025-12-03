@@ -1,7 +1,7 @@
 ## In progress
 
 - rectifier for response, cf action TypeResponseSchema. can't work with material rectifier
-  - faire les rectifier + assembler scoped response
+  - faire les assembler code
   - faire completer data send data pour rectifier et assembler la response.
 
 - update doc StartTuuchoEngine become TuuchoEngineStart

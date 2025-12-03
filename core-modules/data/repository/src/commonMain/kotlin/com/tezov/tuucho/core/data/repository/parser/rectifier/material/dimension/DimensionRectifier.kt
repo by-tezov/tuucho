@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
@@ -25,10 +25,10 @@ class DimensionRectifier(
 ) : AbstractRectifier(scope) {
     override val key = DimensionSchema.root
     override val matchers: List<MatcherRectifierProtocol> by inject(
-        Name.Matcher.DIMENSION
+        RectifierModule.Name.Matcher.DIMENSION
     )
     override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.DIMENSION
+        RectifierModule.Name.Processor.DIMENSION
     )
 
     override fun beforeAlterPrimitive(

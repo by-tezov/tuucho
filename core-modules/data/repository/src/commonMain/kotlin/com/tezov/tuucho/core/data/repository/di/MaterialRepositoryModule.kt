@@ -18,7 +18,7 @@ import org.koin.dsl.bind
 
 internal object MaterialRepositoryModule {
     object Name {
-        val SHADOWER_SOURCE = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
+        val SHADOWER_SOURCE get() = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
     }
 
     fun invoke() = module(ModuleGroupData.Main) {
@@ -91,7 +91,10 @@ internal object MaterialRepositoryModule {
         factory<SendDataAndRetrieveMaterialRemoteSource> {
             SendDataAndRetrieveMaterialRemoteSource(
                 coroutineScopes = get(),
-                networkJsonObject = get()
+                networkJsonObject = get(),
+                responseRectifier = get(),
+                responseAssembler = get(),
+                materialDatabaseSource = get()
             )
         }
     }

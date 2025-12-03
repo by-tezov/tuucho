@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.component
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -26,7 +26,7 @@ class ComponentRectifier(
     override val key = ""
 
     override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.COMPONENT
+        RectifierModule.Name.Processor.COMPONENT
     )
 
     override fun beforeAlterPrimitive(

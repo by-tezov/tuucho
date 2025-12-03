@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.text
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
@@ -26,11 +26,11 @@ class TextRectifier(
     override val key = TextSchema.root
 
     override val matchers: List<MatcherRectifierProtocol> by inject(
-        Name.Matcher.TEXT
+        RectifierModule.Name.Matcher.TEXT
     )
 
     override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.TEXT
+        RectifierModule.Name.Processor.TEXT
     )
 
     override fun beforeAlterPrimitive(

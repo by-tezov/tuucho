@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.style
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
@@ -27,7 +27,7 @@ class StyleRectifier(
 ) : AbstractRectifier(scope) {
     override val key = StyleSchema.root
     override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.STYLE
+        RectifierModule.Name.Processor.STYLE
     )
 
     override fun accept(

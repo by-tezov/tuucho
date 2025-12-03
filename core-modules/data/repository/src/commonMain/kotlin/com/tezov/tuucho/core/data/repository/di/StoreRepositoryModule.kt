@@ -10,7 +10,7 @@ object StoreRepositoryModule {
     }
 
     object Name {
-        val STORE_REPOSITORY_CONFIG = named("StoreRepositoryModule.Name.STORE_REPOSITORY_CONFIG")
+        val STORE_REPOSITORY_CONFIG get() = named("StoreRepositoryModule.Name.STORE_REPOSITORY_CONFIG")
     }
 
     internal fun invoke() = module(ModuleGroupData.Main) {

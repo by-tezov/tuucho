@@ -21,8 +21,6 @@ abstract class AbstractRectifier(
     override val scope: Scope
 ) : MatcherRectifierProtocol,
     TuuchoKoinScopeComponent {
-    final override var scopeNullable: Scope? = null
-
     abstract val key: String
     protected open val matchers: List<MatcherRectifierProtocol> = emptyList()
     protected open val childProcessors: List<AbstractRectifier> = emptyList()

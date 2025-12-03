@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.color
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
@@ -25,10 +25,10 @@ class ColorRectifier(
 ) : AbstractRectifier(scope) {
     override val key = ColorSchema.root
     override val matchers: List<MatcherRectifierProtocol> by inject(
-        Name.Matcher.COLOR
+        RectifierModule.Name.Matcher.COLOR
     )
     override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.COLOR
+        RectifierModule.Name.Processor.COLOR
     )
 
     override fun beforeAlterPrimitive(

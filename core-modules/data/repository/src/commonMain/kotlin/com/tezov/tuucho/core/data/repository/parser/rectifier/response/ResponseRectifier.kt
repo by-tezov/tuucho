@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.response
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Response.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
@@ -16,10 +16,9 @@ import org.koin.core.scope.Scope
 @OpenForTest
 @OptIn(TuuchoExperimentalAPI::class)
 internal class ResponseRectifier : TuuchoKoinScopeComponent {
-    override var scopeNullable: Scope? = null
-    override val scope: Scope by lazy { createScope().also { scopeNullable = it } }
+    override val scope: Scope by lazy { createScope() }
 
-    private val rectifiers: List<AbstractRectifier> by inject(Name.RECTIFIERS)
+    private val rectifiers: List<AbstractRectifier> by inject(RectifierModule.Name.RECTIFIERS)
 
     suspend fun process(
         responseObject: JsonObject

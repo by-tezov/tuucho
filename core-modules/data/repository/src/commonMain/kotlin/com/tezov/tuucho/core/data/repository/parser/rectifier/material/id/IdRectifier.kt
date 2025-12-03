@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.id
 
-import com.tezov.tuucho.core.data.repository.di.RectifierModule.Material.Name
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierIdGenerator
@@ -23,7 +23,7 @@ class IdRectifier(
 ) : AbstractRectifier(scope) {
     override val key = IdSchema.root
     override val matchers: List<MatcherRectifierProtocol> by inject(
-        Name.Matcher.ID
+        RectifierModule.Name.Matcher.ID
     )
 
     override fun beforeAlterNull(
