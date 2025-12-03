@@ -16,7 +16,9 @@ import org.koin.core.scope.Scope
 @OpenForTest
 @OptIn(TuuchoExperimentalAPI::class)
 internal class ResponseRectifier : TuuchoKoinScopeComponent {
-    override val scope: Scope by lazy { createScope() }
+    override val scope: Scope by lazy {
+        createScope(this)
+    }
 
     private val rectifiers: List<AbstractRectifier> by inject(RectifierModule.Name.RECTIFIERS)
 

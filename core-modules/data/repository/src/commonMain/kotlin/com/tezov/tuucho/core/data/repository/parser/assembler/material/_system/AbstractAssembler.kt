@@ -4,6 +4,7 @@ package com.tezov.tuucho.core.data.repository.parser.assembler.material._system
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
+import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
@@ -18,11 +19,13 @@ import org.koin.core.scope.Scope
 
 @TuuchoExperimentalAPI
 abstract class AbstractAssembler(
-    override val scope: Scope
+    private val _scope: Scope? = null
 ) : MatcherAssemblerProtocol,
     TuuchoKoinScopeComponent {
-
     abstract val schemaType: String
+
+    override val scope: Scope
+        get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
 
     private val jsonObjectMerger: JsonObjectMerger by inject()
 
@@ -82,9 +85,9 @@ abstract class AbstractAssembler(
                 rectify(path, element)
                     ?.also { _element = element.replaceOrInsert(path, it) }
             } ?: run {
-            // fallback, nothing to rectify
-            this
-        }
+                // fallback, nothing to rectify
+                this
+            }
 
         if (childProcessors.isNotEmpty()) {
             current.keys.forEach { childKey ->

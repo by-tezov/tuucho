@@ -29,7 +29,6 @@ class FormFailureReasonRectifier(
         element: JsonElement
     ) = matcher.accept(path, element)
 
-
     override fun beforeAlterPrimitive(
         path: JsonElementPath,
         element: JsonElement,

@@ -11,17 +11,12 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAsse
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.JsonObjectMerger
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.MatcherAssemblerProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
-import org.koin.core.qualifier.named
 import org.koin.dsl.ScopeDSL
 
 @OptIn(TuuchoExperimentalAPI::class)
 object Material {
-    object Name {
-        val SCOPE = named("AssemblerModule.Material.Name.SCOPE")
-    }
 
     fun ScopeDSL.invoke() {
         factory<List<AbstractAssembler>>(AssemblerModule.Name.ASSEMBLERS) {
@@ -32,11 +27,6 @@ object Material {
                 get<StateAssembler>(),
             )
         }
-
-        scoped<JsonObjectMerger> {
-            JsonObjectMerger()
-        }
-
         componentModule()
         contentModule()
         styleModule()
@@ -49,7 +39,7 @@ object Material {
     }
 
     private fun ScopeDSL.componentModule() {
-        scoped<ComponentAssembler> { ComponentAssembler(scope = get(Name.SCOPE)) }
+        scoped<ComponentAssembler> { ComponentAssembler(scope = this) }
 
         scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COMPONENT) {
             listOf(
@@ -68,7 +58,7 @@ object Material {
     }
 
     private fun ScopeDSL.contentModule() {
-        scoped<ContentAssembler> { ContentAssembler(scope = get(Name.SCOPE)) }
+        scoped<ContentAssembler> { ContentAssembler(scope = this) }
 
         scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.CONTENT) {
             listOf(
@@ -80,7 +70,7 @@ object Material {
     }
 
     private fun ScopeDSL.styleModule() {
-        scoped<StyleAssembler> { StyleAssembler(scope = get(Name.SCOPE)) }
+        scoped<StyleAssembler> { StyleAssembler(scope = this) }
 
         scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STYLE) {
             listOf(
@@ -91,7 +81,7 @@ object Material {
     }
 
     private fun ScopeDSL.optionModule() {
-        scoped<OptionAssembler> { OptionAssembler(scope = get(Name.SCOPE)) }
+        scoped<OptionAssembler> { OptionAssembler(scope = this) }
 
         scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.OPTION) {
             emptyList()
@@ -99,7 +89,7 @@ object Material {
     }
 
     private fun ScopeDSL.stateModule() {
-        scoped<StateAssembler> { StateAssembler(scope = get(Name.SCOPE)) }
+        scoped<StateAssembler> { StateAssembler(scope = this) }
 
         scoped<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STATE) {
             listOf(
@@ -109,7 +99,7 @@ object Material {
     }
 
     private fun ScopeDSL.textModule() {
-        scoped<TextAssembler> { TextAssembler(scope = get(Name.SCOPE)) }
+        scoped<TextAssembler> { TextAssembler(scope = this) }
 
         scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
             emptyList()
@@ -117,7 +107,7 @@ object Material {
     }
 
     private fun ScopeDSL.colorModule() {
-        scoped<ColorAssembler> { ColorAssembler(scope = get(Name.SCOPE)) }
+        scoped<ColorAssembler> { ColorAssembler(scope = this) }
 
         scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COLOR) {
             emptyList()
@@ -125,7 +115,7 @@ object Material {
     }
 
     private fun ScopeDSL.dimensionModule() {
-        scoped<DimensionAssembler> { DimensionAssembler(scope = get(Name.SCOPE)) }
+        scoped<DimensionAssembler> { DimensionAssembler(scope = this) }
 
         scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.DIMENSION) {
             emptyList()
@@ -133,7 +123,7 @@ object Material {
     }
 
     private fun ScopeDSL.actionModule() {
-        scoped<ActionAssembler> { ActionAssembler(scope = get(Name.SCOPE)) }
+        scoped<ActionAssembler> { ActionAssembler(scope = this) }
 
         scoped<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
             emptyList()

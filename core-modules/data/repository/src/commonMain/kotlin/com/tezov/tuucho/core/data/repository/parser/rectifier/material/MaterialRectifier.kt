@@ -20,7 +20,7 @@ import org.koin.core.scope.Scope
 @OptIn(TuuchoExperimentalAPI::class)
 internal class MaterialRectifier : TuuchoKoinScopeComponent {
     override val scope: Scope by lazy {
-        createScope()
+        createScope(this)
     }
 
     private val componentRectifier: ComponentRectifier by inject()

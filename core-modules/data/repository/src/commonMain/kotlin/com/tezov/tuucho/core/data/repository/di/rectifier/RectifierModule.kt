@@ -6,14 +6,10 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseR
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.onClose
-import org.koin.core.module.dsl.withOptions
 import org.koin.core.qualifier.named
-import org.koin.core.scope.Scope
 
 @OptIn(TuuchoExperimentalAPI::class)
 internal object RectifierModule {
-
     object Name {
         val RECTIFIERS get() = named("RectifierModule.Material.Name.RECTIFIERS")
 
@@ -50,11 +46,6 @@ internal object RectifierModule {
         }
         single<MaterialRectifier> {
             MaterialRectifier()
-        } withOptions {
-            onClose { it?.close() }
-        }
-        factory<Scope>(Material.Name.SCOPE) {
-            get<MaterialRectifier>().scope
         }
     }
 
@@ -64,12 +55,6 @@ internal object RectifierModule {
         }
         single<ResponseRectifier> {
             ResponseRectifier()
-        } withOptions {
-            onClose { it?.close() }
-        }
-        factory<Scope>(Response.Name.SCOPE) {
-            get<ResponseRectifier>().scope
         }
     }
-
 }

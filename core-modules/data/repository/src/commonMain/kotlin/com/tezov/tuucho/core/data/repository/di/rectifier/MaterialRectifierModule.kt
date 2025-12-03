@@ -45,8 +45,6 @@ import org.koin.dsl.ScopeDSL
 @OptIn(TuuchoExperimentalAPI::class)
 internal object Material {
     object Name {
-        val SCOPE get() = named("RectifierModule.Material.Name.SCOPE")
-
         object Processor {
             val SETTING get() = named("RectifierModule.Material.Name.Processor.SETTING")
         }
@@ -66,7 +64,6 @@ internal object Material {
                 get<ActionsRectifier>(),
             )
         }
-
         idModule()
         componentModule()
         settingModule()
@@ -84,7 +81,7 @@ internal object Material {
     private fun ScopeDSL.idModule() {
         scoped<IdRectifier> {
             IdRectifier(
-                scope = get(Name.SCOPE),
+                scope = this,
                 idGenerator = RectifierIdGenerator(
                     idGenerator = get()
                 )
@@ -98,24 +95,24 @@ internal object Material {
 
     private fun ScopeDSL.settingModule() {
         scoped<SettingComponentRectifier> {
-            SettingComponentRectifier(scope = get(Name.SCOPE))
+            SettingComponentRectifier(scope = this)
         }
 
         scoped<List<AbstractRectifier>>(Name.Processor.SETTING) {
             listOf(
                 get<IdRectifier>(),
-                SettingComponentNavigationRectifier(scope = get(Name.SCOPE)),
+                SettingComponentNavigationRectifier(scope = this),
             )
         }
     }
 
     private fun ScopeDSL.componentModule() {
         scoped<ComponentsRectifier> {
-            ComponentsRectifier(scope = get(Name.SCOPE))
+            ComponentsRectifier(scope = this)
         }
 
         scoped<ComponentRectifier> {
-            ComponentRectifier(scope = get(Name.SCOPE))
+            ComponentRectifier(scope = this)
         }
 
         scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.COMPONENT) {
@@ -132,11 +129,11 @@ internal object Material {
 
     private fun ScopeDSL.contentModule() {
         scoped<ContentsRectifier> {
-            ContentsRectifier(scope = get(Name.SCOPE))
+            ContentsRectifier(scope = this)
         }
 
         scoped<ContentRectifier> {
-            ContentRectifier(scope = get(Name.SCOPE))
+            ContentRectifier(scope = this)
         }
 
         scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.CONTENT) {
@@ -145,13 +142,13 @@ internal object Material {
                 get<ActionRectifier>(),
                 get<TextRectifier>(),
                 ContentLayoutLinearItemsRectifier(
-                    scope = get(Name.SCOPE),
+                    scope = this,
                 ),
                 ContentButtonLabelRectifier(
-                    scope = get(Name.SCOPE),
+                    scope = this,
                 ),
                 ContentFormFieldTextErrorRectifier(
-                    scope = get(Name.SCOPE),
+                    scope = this,
                 ),
             )
         }
@@ -159,11 +156,11 @@ internal object Material {
 
     private fun ScopeDSL.styleModule() {
         scoped<StylesRectifier> {
-            StylesRectifier(scope = get(Name.SCOPE))
+            StylesRectifier(scope = this)
         }
 
         scoped<StyleRectifier> {
-            StyleRectifier(scope = get(Name.SCOPE))
+            StyleRectifier(scope = this)
         }
 
         scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.STYLE) {
@@ -177,11 +174,11 @@ internal object Material {
 
     private fun ScopeDSL.optionModule() {
         scoped<OptionsRectifier> {
-            OptionsRectifier(scope = get(Name.SCOPE))
+            OptionsRectifier(scope = this)
         }
 
         scoped<OptionRectifier> {
-            OptionRectifier(scope = get(Name.SCOPE))
+            OptionRectifier(scope = this)
         }
 
         scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.OPTION) {
@@ -194,11 +191,11 @@ internal object Material {
 
     private fun ScopeDSL.stateModule() {
         scoped<StatesRectifier> {
-            StatesRectifier(scope = get(Name.SCOPE))
+            StatesRectifier(scope = this)
         }
 
         scoped<StateRectifier> {
-            StateRectifier(scope = get(Name.SCOPE))
+            StateRectifier(scope = this)
         }
 
         scoped<List<AbstractRectifier>>(RectifierModule.Name.Processor.STATE) {
@@ -211,11 +208,11 @@ internal object Material {
 
     private fun ScopeDSL.textModule() {
         scoped<TextsRectifier> {
-            TextsRectifier(scope = get(Name.SCOPE))
+            TextsRectifier(scope = this)
         }
 
         scoped<TextRectifier> {
-            TextRectifier(scope = get(Name.SCOPE))
+            TextRectifier(scope = this)
         }
 
         scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.TEXT) {
@@ -233,11 +230,11 @@ internal object Material {
 
     private fun ScopeDSL.colorModule() {
         scoped<ColorsRectifier> {
-            ColorsRectifier(scope = get(Name.SCOPE))
+            ColorsRectifier(scope = this)
         }
 
         scoped<ColorRectifier> {
-            ColorRectifier(scope = get(Name.SCOPE))
+            ColorRectifier(scope = this)
         }
 
         scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.COLOR) {
@@ -254,11 +251,11 @@ internal object Material {
 
     private fun ScopeDSL.dimensionModule() {
         scoped<DimensionsRectifier> {
-            DimensionsRectifier(scope = get(Name.SCOPE))
+            DimensionsRectifier(scope = this)
         }
 
         scoped<DimensionRectifier> {
-            DimensionRectifier(scope = get(Name.SCOPE))
+            DimensionRectifier(scope = this)
         }
 
         scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.DIMENSION) {
@@ -275,11 +272,11 @@ internal object Material {
 
     private fun ScopeDSL.actionModule() {
         scoped<ActionsRectifier> {
-            ActionsRectifier(scope = get(Name.SCOPE))
+            ActionsRectifier(scope = this)
         }
 
         scoped<ActionRectifier> {
-            ActionRectifier(scope = get(Name.SCOPE))
+            ActionRectifier(scope = this)
         }
 
         scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.ACTION) {
@@ -295,7 +292,7 @@ internal object Material {
 
     private fun ScopeDSL.fieldValidatorModule() {
         scoped<FormValidatorRectifier> {
-            FormValidatorRectifier(scope = get(Name.SCOPE))
+            FormValidatorRectifier(scope = this)
         }
 
         scoped<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.FIELD_VALIDATOR) {

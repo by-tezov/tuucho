@@ -12,20 +12,16 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.Text
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormActionMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormFailureReasonRectifier
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
-import org.koin.core.qualifier.named
 import org.koin.dsl.ScopeDSL
 
 @OptIn(TuuchoExperimentalAPI::class)
 internal object Response {
-    object Name {
-        val SCOPE get() = named("RectifierModule.Response.Name.SCOPE")
-    }
 
     fun ScopeDSL.invoke() {
         factory<List<AbstractRectifier>>(RectifierModule.Name.RECTIFIERS) {
             listOf(
                 get<ActionRectifier>(),
-                FormFailureReasonRectifier(scope = get(Name.SCOPE))
+                FormFailureReasonRectifier(scope = this)
             )
         }
         idModule()
@@ -36,7 +32,7 @@ internal object Response {
     private fun ScopeDSL.idModule() {
         scoped<IdRectifier> {
             IdRectifier(
-                scope = get(Name.SCOPE),
+                scope = this,
                 idGenerator = RectifierIdGenerator(
                     idGenerator = get()
                 )
@@ -50,7 +46,7 @@ internal object Response {
 
     private fun ScopeDSL.textModule() {
         scoped<TextRectifier> {
-            TextRectifier(scope = get(Name.SCOPE))
+            TextRectifier(scope = this)
         }
 
         scoped<List<MatcherRectifierProtocol>>(Matcher.TEXT) {
@@ -64,7 +60,7 @@ internal object Response {
 
     private fun ScopeDSL.actionModule() {
         scoped<ActionRectifier> {
-            ActionRectifier(scope = get(Name.SCOPE))
+            ActionRectifier(scope = this)
         }
 
         scoped<List<MatcherRectifierProtocol>>(Matcher.ACTION) {

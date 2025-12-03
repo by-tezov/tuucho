@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.FindAllRefOrNullFetcherProtocol
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
@@ -20,7 +21,12 @@ import org.koin.core.scope.Scope
 @OptIn(TuuchoExperimentalAPI::class)
 class MaterialAssembler : TuuchoKoinScopeComponent {
     override val scope: Scope by lazy {
-        createScope()
+        createScope(this).also {
+            with(getKoin()) {
+                val materialRectifierScope = get<MaterialRectifier>().scope
+                it.linkTo(materialRectifierScope)
+            }
+        }
     }
 
     private val assemblers: List<AbstractAssembler> by inject(AssemblerModule.Name.ASSEMBLERS)

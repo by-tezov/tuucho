@@ -2,20 +2,15 @@ package com.tezov.tuucho.core.data.repository.di.assembler
 
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.JsonObjectMerger
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseAssembler
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.onClose
-import org.koin.core.module.dsl.withOptions
 import org.koin.core.qualifier.named
-import org.koin.core.scope.Scope
 
 @OptIn(TuuchoExperimentalAPI::class)
 internal object AssemblerModule {
-
     object Name {
         val ASSEMBLERS get() = named("AssemblerModule.Name.ASSEMBLERS")
 
@@ -37,6 +32,9 @@ internal object AssemblerModule {
     }
 
     fun invoke() = ModuleProtocol.module(ModuleGroupData.Assembler) {
+        factory<JsonObjectMerger> {
+            JsonObjectMerger()
+        }
         material()
         response()
     }
@@ -47,33 +45,16 @@ internal object AssemblerModule {
         }
         single<MaterialAssembler> {
             MaterialAssembler()
-        } withOptions {
-            onClose { it?.close() }
-        }
-        factory<Scope>(Material.Name.SCOPE) {
-            get<MaterialAssembler>().scope.also {
-                val materialRectifierScope = get<MaterialRectifier>().scope
-                it.linkTo(materialRectifierScope)
-            }
         }
     }
 
     private fun Module.response() {
         scope<ResponseAssembler> {
-            Response.run { invoke() }
+            Response.run { invokeScoped() }
         }
+        Response.run { invoke() }
         single<ResponseAssembler> {
             ResponseAssembler()
-        } withOptions {
-            onClose { it?.close() }
         }
-        factory<Scope>(Response.Name.SCOPE) {
-            get<ResponseAssembler>().scope.also {
-                val responseRectifierScope = get<ResponseRectifier>().scope
-                it.linkTo(responseRectifierScope)
-            }
-        }
-
     }
-
 }

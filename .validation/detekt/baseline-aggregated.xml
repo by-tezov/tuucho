@@ -18,8 +18,11 @@
     <ID>MatchingDeclarationName:AssetsModule.ios.kt$AssetsModuleIos</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.android.kt$DatabaseRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.ios.kt$DatabaseRepositoryModuleIos</ID>
+    <ID>MatchingDeclarationName:FormFailureReasonMatcher.kt$FormFailureReasonTextMatcher : MatcherAssemblerProtocol</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
     <ID>MatchingDeclarationName:JsonEntityDao.kt$JsonObjectQueries</ID>
+    <ID>MatchingDeclarationName:MaterialAssemblerModule.kt$Material</ID>
+    <ID>MatchingDeclarationName:MaterialRectifierModule.kt$Material</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.dev.kt$NetworkRepositoryModuleAndroidFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.kt$NetworkRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.mock.kt$NetworkRepositoryModuleAndroidFlavor</ID>
@@ -33,6 +36,8 @@
     <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.stage.kt$NetworkRepositoryModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.android.kt$ReferenceFactoryAndroid : Factory</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.ios.kt$ReferenceFactoryIos : Factory</ID>
+    <ID>MatchingDeclarationName:ResponseAssemblerModule.kt$Response</ID>
+    <ID>MatchingDeclarationName:ResponseRectifierModule.kt$Response</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.ios.kt$StoreRepositoryModuleIos</ID>
     <ID>MatchingDeclarationName:StrongReference.android.kt$StrongReferenceAndroid&lt;T : Any&gt; : Strong</ID>
@@ -61,9 +66,7 @@
     <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:ActionButtonMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.action</ID>
-    <ID>PackageNaming:ContentButtonLabelMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.label</ID>
     <ID>PackageNaming:ContentButtonLabelRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.label</ID>
-    <ID>PackageNaming:ContentFormFieldTextErrorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content</ID>
     <ID>PackageNaming:ContentFormFieldTextErrorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content</ID>
     <ID>PackageNaming:ContentFormFieldTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content</ID>
     <ID>PackageNaming:ContentLabelTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.content</ID>
@@ -102,10 +105,7 @@
     <ID>TooGenericExceptionThrown:ResourceService.kt$ResourceService$throw Exception("unknown version $version")</ID>
     <ID>TooGenericExceptionThrown:SendService.kt$SendService$throw Exception("unknown version $version")</ID>
     <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : MatcherRectifierProtocolTuuchoKoinScopeComponent</ID>
-    <ID>TooManyFunctions:RectifierModule.kt$RectifierModule$Material</ID>
-    <ID>UnusedParameter:ResponseAssembler.kt$ResponseAssembler$findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol</ID>
-    <ID>UnusedParameter:ResponseAssembler.kt$ResponseAssembler$responseObject: JsonObject</ID>
-    <ID>UnusedPrivateProperty:ResponseAssembler.kt$ResponseAssembler$private val assemblers: List&lt;AbstractAssembler&gt; by inject(Name.ASSEMBLERS)</ID>
+    <ID>TooManyFunctions:MaterialRectifierModule.kt$Material</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
     <ID>VariableNaming:ResponseRectifier.kt$ResponseRectifier$var _element = element</ID>

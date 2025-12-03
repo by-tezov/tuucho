@@ -28,6 +28,9 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
         sut = SendDataAndRetrieveMaterialRemoteSource(
             coroutineScopes = coroutineTestScope.createMock(),
             networkJsonObject = networkJsonObject,
+            responseRectifier = TODO(),
+            responseAssembler = TODO(),
+            materialDatabaseSource = TODO(),
         )
     }
 
