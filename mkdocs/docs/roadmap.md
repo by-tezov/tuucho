@@ -36,7 +36,7 @@ Work in progress:
 - **Data store**  
   Allow the use of recorded data from the JSON (still need to think about the use case and how)
 
-- **Unit Tests + E2E Tests**  
+- **Unit Tests (Data and Presentation Layer) + E2E Tests**  
   Add as many meaningful tests as possible before production validation to protect from any regression.
 
 - **Real time Data Support**  
@@ -69,6 +69,9 @@ Work in progress:
 ---
 
 ## ✅ Realized
+
+- **Unit Tests + Domain layer** (2025-11)  
+  Add as many as possible test to protect domain layer from regression.
 
 - **Public Api** (2025-11)  
   Add a way to record data key/value on device and use them.

@@ -4,6 +4,17 @@
 
 ---
 
+## 0.0.1-alpha21 - 2025-11-15
+
+- fix timeout network crash uncatchable
+- add lock repository
+- add back handler
+- change tree build type structure
+- add domain unit test
+- add response parser
+
+---
+
 ## 0.0.1-alpha19 - 2025-11-15
 
 - Add middleware

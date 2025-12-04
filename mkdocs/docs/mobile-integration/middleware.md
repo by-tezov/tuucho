@@ -27,7 +27,7 @@ object NavigationMiddleware {
         data class Context(
             val currentUrl: String?,
             val input: NavigateToUrlUseCase.Input,
-            val onShadowerException: (suspend (exception: Throwable, context: Context, replay: suspend () -> Unit) -> Unit)?
+            val onShadowerException: OnShadowerException?
         )
     }
 
@@ -35,7 +35,7 @@ object NavigationMiddleware {
         data class Context(
             val currentUrl: String,
             val nextUrl: String?,
-            val onShadowerException: ((exception: Throwable, context: Context, replay: suspend () -> Unit) -> Unit)?
+            val onShadowerException: OnShadowerException?
         )
     }
 }
@@ -56,7 +56,7 @@ class BeforeNavigateToUrlMiddleware() : NavigationMiddleware.ToUrl {
 
     override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {
         // do something before
         
@@ -99,7 +99,7 @@ class BeforeNavigateBackMiddleware() : NavigationMiddleware.Back {
 
     override suspend fun process(
         context: NavigationMiddleware.Back.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.Back.Context, Unit>,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.Back.Context, Unit>?,
     ) {
         runCatching {
             next.invoke(context.copy(
@@ -176,12 +176,12 @@ class SendDataMiddleware() : SendDataMiddleware {
 
     override suspend fun process(
         context: SendDataMiddleware.Context,
-        next: MiddlewareProtocol.Next<SendDataMiddleware.Context, SendDataUseCase.Output>,
+        next: MiddlewareProtocol.Next<SendDataMiddleware.Context, SendDataUseCase.Output>?,
     ) = with(context.input) {
 
         // do something before
         
-        ouput = next.invoke(context)
+        ouput = next?.invoke(context)
 
         // do something after
         
@@ -217,12 +217,12 @@ class UpdateViewMiddleware() : UpdateViewMiddleware {
 
     override suspend fun process(
         context: UpdateViewMiddleware.Context,
-        next: MiddlewareProtocol.Next<UpdateViewMiddleware.Context, Unit>,
+        next: MiddlewareProtocol.Next<UpdateViewMiddleware.Context, Unit>?,
     ) {
         with(context.input) {
             // do something before
 
-            next.invoke(context)
+            next?.invoke(context)
 
             // do something after
         }

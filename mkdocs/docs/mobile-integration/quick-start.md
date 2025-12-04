@@ -31,7 +31,7 @@ Tuucho exposes a composable engine which loads its configuration from the server
 @Composable
 fun AppScreen(
     applicationModules: List<ModuleProtocol>,
-) = StartTuuchoEngine(
+) = TuuchoEngineStart(
         applicationModules = SystemSharedModules.invoke() + applicationModules,
         onStartUrl = "lobby/page-login"
     )
