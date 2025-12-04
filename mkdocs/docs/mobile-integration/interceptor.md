@@ -22,12 +22,12 @@ class HttpInterceptorImpl(
 
     override suspend fun process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
+        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) = with(context.builder) {
         
         // Do something
 
-        next.invoke(context) // continue the chain
+        next?.invoke(context) // continue the chain
     }
 }
 ```
@@ -89,10 +89,10 @@ class HeadersHttpInterceptor(
     
     override suspend fun process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
+        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) = with(context.builder) {
         headers.append("platform", config.headerPlatform)
-        next.invoke(context)
+        next?.invoke(context)
     }
 }
 ```
@@ -116,7 +116,7 @@ class HeaderHttpAuthorizationInterceptor(
 
     override suspend fun process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>
+        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) = with(context.builder) {
         val route = url.toString()
             .removePrefix("${config.baseUrl}/")
@@ -140,7 +140,7 @@ class HeaderHttpAuthorizationInterceptor(
                 headers.append("authorization", "Bearer $authorizationKey")
             }
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }
 ```

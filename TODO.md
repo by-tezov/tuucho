@@ -1,11 +1,5 @@
 ## In progress
 
-- update doc
-- Article Koin Salade
-
-- update doc StartTuuchoEngine become TuuchoEngineStart
-- update middleware example ? disappear and next is nullable
-
 *** ***
 - still need to fix mock server
  
