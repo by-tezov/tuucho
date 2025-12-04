@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.FormAction
@@ -55,7 +55,7 @@ internal class FormUpdateActionMiddleware(
                     id = param.withScope(IdSchema::Scope).self
                     type = TypeSchema.Value.message
                     subset = FormSchema.Message.Value.Subset.updateErrorState
-                    param.withScope(FormSendResponseSchema.FailureResult::Scope).reason?.let {
+                    param.withScope(FormSendSchema.FailureResult::Scope).reason?.let {
                         messageErrorExtra = it
                     }
                 }.collect()

@@ -218,6 +218,8 @@ final object com.tezov.tuucho.core.domain.tool.extension/ExtensionNull { // com.
     final fun <#A1: kotlin/Any?> (kotlin.collections/MutableList<#A1>?).nullify(): kotlin.collections/MutableList<#A1>? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.nullify|nullify@kotlin.collections.MutableList<0:0>?(){0§<kotlin.Any?>}[0]
 }
 
+final val com.tezov.tuucho.core.domain.tool.json/ROOT_PATH // com.tezov.tuucho.core.domain.tool.json/ROOT_PATH|{}ROOT_PATH[0]
+    final fun <get-ROOT_PATH>(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/ROOT_PATH.<get-ROOT_PATH>|<get-ROOT_PATH>(){}[0]
 final val com.tezov.tuucho.core.domain.tool.json/boolean // com.tezov.tuucho.core.domain.tool.json/boolean|@kotlinx.serialization.json.JsonElement?{}boolean[0]
     final fun (kotlinx.serialization.json/JsonElement?).<get-boolean>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.json/boolean.<get-boolean>|<get-boolean>@kotlinx.serialization.json.JsonElement?(){}[0]
 final val com.tezov.tuucho.core.domain.tool.json/booleanOrNull // com.tezov.tuucho.core.domain.tool.json/booleanOrNull|@kotlinx.serialization.json.JsonElement?{}booleanOrNull[0]

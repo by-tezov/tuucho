@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
-import com.tezov.tuucho.core.domain.tool.json.toPath
+import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
@@ -17,7 +17,7 @@ class MaterialShadower : TuuchoKoinComponent {
         jsonObjectConsumer: JsonObjectConsumerProtocol,
     ) {
         componentShadower.process(
-            path = "".toPath(),
+            path = ROOT_PATH,
             element = componentObject,
             jsonObjectConsumer = object : JsonObjectConsumerProtocol {
                 private val shadowerSettingObject = componentObject

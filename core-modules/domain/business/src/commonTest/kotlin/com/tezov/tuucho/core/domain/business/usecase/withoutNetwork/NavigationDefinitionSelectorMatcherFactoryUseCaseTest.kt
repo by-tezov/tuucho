@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.selector.Pag
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSelectorSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSelectorSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase.Input
-import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -29,9 +29,9 @@ class NavigationDefinitionSelectorMatcherFactoryUseCaseTest {
             put(
                 ComponentSettingNavigationSelectorSchema.Key.values,
                 buildJsonArray {
-                    add(JsonPrimitive("home"))
-                    add(JsonPrimitive("profile"))
-                    add(JsonPrimitive("settings"))
+                    add("home")
+                    add("profile")
+                    add("settings")
                 }
             )
         }

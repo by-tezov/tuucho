@@ -2,6 +2,8 @@ package com.tezov.tuucho.core.domain.tool.json
 
 fun String.toPath() = JsonElementPath(this)
 
+val ROOT_PATH = "".toPath()
+
 class JsonElementPath(
     path: String? = null
 ) : Iterable<String> {

@@ -4,8 +4,7 @@ import com.tezov.tuucho.core.domain.business.di.KoinContext
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.response.TypeResponseSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.FormAction
@@ -28,9 +27,10 @@ import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import kotlin.test.AfterTest
@@ -298,7 +298,7 @@ class FormSendUrlActionMiddlewareTest {
         stubGetScreen(screen = screen)
 
         val responseObject = buildJsonObject {
-            put(FormSendResponseSchema.Key.type, JsonPrimitive("other"))
+            put(FormSendSchema.Key.type, "other")
         }
 
         everySuspend {
@@ -355,18 +355,18 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- remote response with before/validated/after ----------
         val responseObject = buildJsonObject {
-            put(FormSendResponseSchema.Key.type, JsonPrimitive(TypeResponseSchema.Value.form))
-            put(FormSendResponseSchema.Key.allSucceed, JsonPrimitive(true))
+            put(FormSendSchema.Key.subset, FormSendSchema.Value.subset)
+            put(FormSendSchema.Key.allSucceed, true)
             put(
-                FormSendResponseSchema.Key.action,
+                FormSendSchema.Key.action,
                 buildJsonObject {
                     put(
-                        FormSendResponseSchema.Action.Key.before,
-                        buildJsonArray { add(JsonPrimitive("cmd://before")) }
+                        FormSendSchema.Action.Key.before,
+                        buildJsonArray { add("cmd://before") }
                     )
                     put(
-                        FormSendResponseSchema.Action.Key.after,
-                        buildJsonArray { add(JsonPrimitive("cmd://after")) }
+                        FormSendSchema.Action.Key.after,
+                        buildJsonArray { add("cmd://after") }
                     )
                 }
             )
@@ -388,7 +388,7 @@ class FormSendUrlActionMiddlewareTest {
             put(
                 ActionFormSchema.Send.Key.validated,
                 buildJsonArray {
-                    add(JsonPrimitive("cmd://validated"))
+                    add("cmd://validated")
                 }
             )
         }
@@ -464,32 +464,32 @@ class FormSendUrlActionMiddlewareTest {
         val failureResultArray = buildJsonArray {
             add(
                 buildJsonObject {
-                    put(FormSendResponseSchema.FailureResult.Key.id, JsonPrimitive("field-failure"))
+                    put(FormSendSchema.FailureResult.Key.id, "field-failure")
                     put(
-                        FormSendResponseSchema.FailureResult.Key.reason,
-                        buildJsonObject { put("code", JsonPrimitive("error-code")) }
+                        FormSendSchema.FailureResult.Key.reason,
+                        buildJsonObject { put("code", "error-code") }
                     )
                 }
             )
         }
 
         val responseObject = buildJsonObject {
-            put(FormSendResponseSchema.Key.type, JsonPrimitive(TypeResponseSchema.Value.form))
-            put(FormSendResponseSchema.Key.allSucceed, JsonPrimitive(false))
-            put(FormSendResponseSchema.Key.failureResult, failureResultArray)
+            put(FormSendSchema.Key.subset, FormSendSchema.Value.subset)
+            put(FormSendSchema.Key.allSucceed, false)
+            put(FormSendSchema.Key.failureResult, failureResultArray)
             put(
-                FormSendResponseSchema.Key.action,
+                FormSendSchema.Key.action,
                 buildJsonObject {
                     put(
-                        FormSendResponseSchema.Action.Key.before,
+                        FormSendSchema.Action.Key.before,
                         buildJsonArray {
-                            add(JsonPrimitive("cmd://before"))
+                            add("cmd://before")
                         }
                     )
                     put(
-                        FormSendResponseSchema.Action.Key.after,
+                        FormSendSchema.Action.Key.after,
                         buildJsonArray {
-                            add(JsonPrimitive("cmd://after"))
+                            add("cmd://after")
                         }
                     )
                 }
@@ -512,7 +512,7 @@ class FormSendUrlActionMiddlewareTest {
             put(
                 ActionFormSchema.Send.Key.denied,
                 buildJsonArray {
-                    add(JsonPrimitive("cmd://denied"))
+                    add("cmd://denied")
                 }
             )
         }

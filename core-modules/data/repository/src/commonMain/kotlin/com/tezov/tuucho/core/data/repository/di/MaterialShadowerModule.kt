@@ -15,17 +15,17 @@ import org.koin.core.qualifier.named
 internal object MaterialShadowerModule {
     object Name {
         object Processor {
-            val COMPONENT = named("MaterialShadowerModule.Name.Processor.COMPONENT")
-            val CONTENT = named("MaterialShadowerModule.Name.Processor.CONTENT")
-            val STATE = named("MaterialShadowerModule.Name.Processor.STATE")
+            val COMPONENT get() = named("MaterialShadowerModule.Name.Processor.COMPONENT")
+            val CONTENT get() = named("MaterialShadowerModule.Name.Processor.CONTENT")
+            val STATE get() = named("MaterialShadowerModule.Name.Processor.STATE")
             val TEXT = named("MaterialShadowerModule.Name.Processor.TEXT")
         }
 
         object Matcher {
-            val COMPONENT = named("MaterialShadowerModule.Name.Matcher.COMPONENT")
-            val CONTENT = named("MaterialShadowerModule.Name.Matcher.CONTENT")
-            val STATE = named("MaterialShadowerModule.Name.Matcher.STATE")
-            val TEXT = named("MaterialShadowerModule.Name.Matcher.TEXT")
+            val COMPONENT get() = named("MaterialShadowerModule.Name.Matcher.COMPONENT")
+            val CONTENT get() = named("MaterialShadowerModule.Name.Matcher.CONTENT")
+            val STATE get() = named("MaterialShadowerModule.Name.Matcher.STATE")
+            val TEXT get() = named("MaterialShadowerModule.Name.Matcher.TEXT")
         }
     }
 
