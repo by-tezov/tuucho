@@ -19,17 +19,17 @@ class LoggerAction(
     override val priority: Int = ActionMiddleware.Priority.LOW
 
     override fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ) = true
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
     ) = with(context.input) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
         logger.debug("ACTION") { "from ${route?.value}: $action" }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }
 ```
@@ -102,13 +102,13 @@ class CrashApplicationActionMiddleware() : ActionMiddleware {
         get() = ActionMiddleware.Priority.HIGH
 
     override fun accept(
-        route: NavigationRoute.Url?,
+        route: NavigationRoute?,
         action: ActionModelDomain,
     ): Boolean = action.command == "crash-application" && action.authority == "polite"
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output?>
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
     ) = with(context.input) {
 
         val message = context.input.action.query?.jsonObject["message"].stringOrNull
@@ -117,7 +117,7 @@ class CrashApplicationActionMiddleware() : ActionMiddleware {
         // can't be reach because we crash the application, but when you create action,
         // you must always call it to continue the chain
         // and allow adding extension to tis action
-        next.invoke(context)
+        next?.invoke(context)
     }
 }
 ```
