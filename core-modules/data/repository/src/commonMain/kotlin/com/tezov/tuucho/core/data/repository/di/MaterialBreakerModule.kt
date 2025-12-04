@@ -7,7 +7,7 @@ import org.koin.core.qualifier.named
 
 internal object MaterialBreakerModule {
     object Name {
-        val BREAKABLES = named("MaterialBreakerModule.Name.BREAKABLE")
+        val BREAKABLES get() = named("MaterialBreakerModule.Name.BREAKABLE")
     }
 
     fun invoke() = module(ModuleGroupData.Breaker) {

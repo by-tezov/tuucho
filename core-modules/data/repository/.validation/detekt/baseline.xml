@@ -2,6 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
+    <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$200</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$3000</ID>
     <ID>MagicNumber:ResourceService.kt$ResourceService$500</ID>
@@ -10,10 +12,14 @@
     <ID>MatchingDeclarationName:Assets.ios.kt$AssetsIos : AssetsProtocol</ID>
     <ID>MatchingDeclarationName:AssetsModule.android.kt$AssetsModuleAndroid</ID>
     <ID>MatchingDeclarationName:AssetsModule.ios.kt$AssetsModuleIos</ID>
+    <ID>MatchingDeclarationName:CoroutineTestScopes.kt$CoroutineTestScope</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.android.kt$DatabaseRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.ios.kt$DatabaseRepositoryModuleIos</ID>
+    <ID>MatchingDeclarationName:FormFailureReasonMatcher.kt$FormFailureReasonTextMatcher : MatcherAssemblerProtocol</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
     <ID>MatchingDeclarationName:JsonEntityDao.kt$JsonObjectQueries</ID>
+    <ID>MatchingDeclarationName:MaterialAssemblerModule.kt$Material</ID>
+    <ID>MatchingDeclarationName:MaterialRectifierModule.kt$Material</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.dev.kt$NetworkRepositoryModuleAndroidFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.kt$NetworkRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.mock.kt$NetworkRepositoryModuleAndroidFlavor</ID>
@@ -27,6 +33,8 @@
     <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.stage.kt$NetworkRepositoryModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.android.kt$ReferenceFactoryAndroid : Factory</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.ios.kt$ReferenceFactoryIos : Factory</ID>
+    <ID>MatchingDeclarationName:ResponseAssemblerModule.kt$Response</ID>
+    <ID>MatchingDeclarationName:ResponseRectifierModule.kt$Response</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.ios.kt$StoreRepositoryModuleIos</ID>
     <ID>MatchingDeclarationName:StrongReference.android.kt$StrongReferenceAndroid&lt;T : Any&gt; : Strong</ID>
@@ -35,6 +43,8 @@
     <ID>MatchingDeclarationName:SystemInformation.ios.kt$SystemInformationIos : PlatformProtocol</ID>
     <ID>MatchingDeclarationName:WeakReference.android.kt$WeakReferenceAndroid&lt;T : Any&gt; : Weak</ID>
     <ID>MatchingDeclarationName:WeakReference.ios.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
+    <ID>MaxLineLength:AbstractAssembler.kt$AbstractAssembler$get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")</ID>
+    <ID>MaxLineLength:AbstractRectifier.kt$AbstractRectifier$get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
@@ -52,40 +62,38 @@
     <ID>NestedBlockDepth:StatesRectifier.kt$StatesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:StylesRectifier.kt$StylesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:TextsRectifier.kt$TextsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
-    <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
-    <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
-    <ID>PackageNaming:ActionButtonMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.action</ID>
-    <ID>PackageNaming:ContentButtonLabelMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label</ID>
-    <ID>PackageNaming:ContentButtonLabelRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.button.content.label</ID>
-    <ID>PackageNaming:ContentFormFieldTextErrorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content</ID>
-    <ID>PackageNaming:ContentFormFieldTextErrorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content</ID>
-    <ID>PackageNaming:ContentFormFieldTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.content</ID>
-    <ID>PackageNaming:ContentLabelTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.content</ID>
-    <ID>PackageNaming:ContentLayoutLinearItemsMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._element.layout.linear</ID>
-    <ID>PackageNaming:ContentLayoutLinearItemsMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear</ID>
+    <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
+    <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
+    <ID>PackageNaming:ActionButtonMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.action</ID>
+    <ID>PackageNaming:ContentButtonLabelRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.label</ID>
+    <ID>PackageNaming:ContentFormFieldTextErrorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content</ID>
+    <ID>PackageNaming:ContentFormFieldTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content</ID>
+    <ID>PackageNaming:ContentLabelTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.content</ID>
+    <ID>PackageNaming:ContentLayoutLinearItemsMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear</ID>
+    <ID>PackageNaming:ContentLayoutLinearItemsMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear</ID>
     <ID>PackageNaming:ContentLayoutLinearItemsMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear</ID>
-    <ID>PackageNaming:ContentLayoutLinearItemsRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear</ID>
-    <ID>PackageNaming:FindAllRefOrNullFetcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
-    <ID>PackageNaming:FormValidatorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form</ID>
+    <ID>PackageNaming:ContentLayoutLinearItemsRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear</ID>
+    <ID>PackageNaming:FindAllRefOrNullFetcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
+    <ID>PackageNaming:FormValidatorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form</ID>
     <ID>PackageNaming:JsonObjectConsumerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
-    <ID>PackageNaming:JsonObjectMerger.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
+    <ID>PackageNaming:JsonObjectMerger.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:LifetimeResolver.kt$package com.tezov.tuucho.core.data.repository.repository.source._system</ID>
-    <ID>PackageNaming:MatcherAssemblerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler._system</ID>
+    <ID>PackageNaming:MatcherAssemblerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:MatcherHelperExtension.kt$package com.tezov.tuucho.core.data.repository.parser._system</ID>
-    <ID>PackageNaming:MatcherRectifierProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
+    <ID>PackageNaming:MatcherRectifierProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:MatcherShadowerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
-    <ID>PackageNaming:OptionFormFieldValidatorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.option</ID>
-    <ID>PackageNaming:RectifierHelper.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
-    <ID>PackageNaming:RectifierIdGenerator.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._system</ID>
+    <ID>PackageNaming:OptionFormFieldValidatorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.option</ID>
+    <ID>PackageNaming:RectifierHelper.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
+    <ID>PackageNaming:RectifierIdGenerator.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:ReferenceFactory.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:ReferenceFactory.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:StateFormFieldTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.form.field.state</ID>
+    <ID>PackageNaming:StateFormFieldTextMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.state</ID>
     <ID>PackageNaming:StrongReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:StrongReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:StyleLabelColorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.style</ID>
-    <ID>PackageNaming:StyleLabelDimensionMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.label.style</ID>
-    <ID>PackageNaming:StyleLayoutLinearColorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.layout.linear</ID>
-    <ID>PackageNaming:StyleSpacerDimensionMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier._element.spacer</ID>
+    <ID>PackageNaming:StyleLabelColorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style</ID>
+    <ID>PackageNaming:StyleLabelDimensionMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style</ID>
+    <ID>PackageNaming:StyleLayoutLinearColorMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear</ID>
+    <ID>PackageNaming:StyleSpacerDimensionMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.spacer</ID>
     <ID>PackageNaming:SystemInformation.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemInformation.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:WeakReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
@@ -95,9 +103,10 @@
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
     <ID>TooGenericExceptionThrown:ResourceService.kt$ResourceService$throw Exception("unknown version $version")</ID>
     <ID>TooGenericExceptionThrown:SendService.kt$SendService$throw Exception("unknown version $version")</ID>
-    <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : MatcherRectifierProtocolTuuchoKoinComponent</ID>
-    <ID>TooManyFunctions:MaterialRectifierModule.kt$MaterialRectifierModule</ID>
+    <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : MatcherRectifierProtocolTuuchoKoinScopeComponent</ID>
+    <ID>TooManyFunctions:MaterialRectifierModule.kt$Material</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
+    <ID>VariableNaming:ResponseRectifier.kt$ResponseRectifier$var _element = element</ID>
   </CurrentIssues>
 </SmellBaseline>

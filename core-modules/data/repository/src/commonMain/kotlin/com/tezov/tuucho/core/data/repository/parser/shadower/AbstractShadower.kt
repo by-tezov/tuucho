@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectC
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
-import com.tezov.tuucho.core.domain.tool.json.toPath
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -45,7 +45,7 @@ abstract class AbstractShadower :
                 ?: throw DataException.Default(
                     "By design element inside array must be object, so there is surely something missing in the rectifier for $entry "
                 )
-            entry.processObject("".toPath(), entry, jsonObjectConsumer)
+            entry.processObject(ROOT_PATH, entry, jsonObjectConsumer)
         }
     }
 

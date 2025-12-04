@@ -215,6 +215,7 @@ public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPath : java
 }
 
 public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPathKt {
+	public static final fun getROOT_PATH ()Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
 	public static final fun toPath (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
 }
 

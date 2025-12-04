@@ -7,8 +7,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.response.TypeResponseSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.FormAction
@@ -60,8 +59,8 @@ internal class FormSendUrlActionMiddleware(
                     )
                 )?.jsonObject
             response
-                ?.withScope(FormSendResponseSchema::Scope)
-                ?.takeIf { it.type == TypeResponseSchema.Value.form }
+                ?.withScope(FormSendSchema::Scope)
+                ?.takeIf { it.subset == FormSendSchema.Value.subset }
                 ?.run {
                     if (allSucceed.isTrue) {
                         processValidRemoteForm(route, context.lockable, jsonElement)
@@ -112,13 +111,13 @@ internal class FormSendUrlActionMiddleware(
         dispatchActionCommandError(route, results)
     }
 
-    private suspend fun FormSendResponseSchema.Scope.processInvalidRemoteForm(
+    private suspend fun FormSendSchema.Scope.processInvalidRemoteForm(
         route: NavigationRoute.Url,
         lockable: InteractionLockable,
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
-        val responseActionScope = action?.withScope(FormSendResponseSchema.Action::Scope)
+        val responseActionScope = action?.withScope(FormSendSchema.Action::Scope)
         responseActionScope?.before?.forEach {
             it.string.dispatchAction(route, lockable, responseCollect)
         }
@@ -134,13 +133,13 @@ internal class FormSendUrlActionMiddleware(
         }
     }
 
-    private suspend fun FormSendResponseSchema.Scope.processValidRemoteForm(
+    private suspend fun FormSendSchema.Scope.processValidRemoteForm(
         route: NavigationRoute.Url,
         lockable: InteractionLockable,
         jsonElement: JsonElement?,
     ) {
         val responseCollect = collect()
-        val responseActionScope = action?.withScope(FormSendResponseSchema.Action::Scope)
+        val responseActionScope = action?.withScope(FormSendSchema.Action::Scope)
         responseActionScope?.before?.forEach {
             it.string.dispatchAction(route, lockable, responseCollect)
         }
@@ -155,10 +154,10 @@ internal class FormSendUrlActionMiddleware(
         }
     }
 
-    private fun FormSendResponseSchema.Scope.toFailureResult() = failureResult
+    private fun FormSendSchema.Scope.toFailureResult() = failureResult
         ?.jsonArray
         ?.map { result ->
-            val scope = result.withScope(FormSendResponseSchema.FailureResult::Scope)
+            val scope = result.withScope(FormSendSchema.FailureResult::Scope)
             JsonNull
                 .withScope(::SchemaScope)
                 .apply {
@@ -170,7 +169,7 @@ internal class FormSendUrlActionMiddleware(
                             }.collect()
                     }
                     scope.reason?.let {
-                        withScope(FormSendResponseSchema.FailureResult::Scope).apply {
+                        withScope(FormSendSchema.FailureResult::Scope).apply {
                             reason = it
                         }
                     }

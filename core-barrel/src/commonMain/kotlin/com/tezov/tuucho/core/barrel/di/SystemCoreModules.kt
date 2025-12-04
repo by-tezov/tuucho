@@ -9,6 +9,15 @@ import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
+import kotlin.collections.List
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.flatten
+import kotlin.collections.forEach
+import kotlin.collections.groupBy
+import kotlin.collections.listOf
+import kotlin.collections.map
+import kotlin.collections.plus
 
 internal expect fun SystemCoreModules.platformInvoke(): List<ModuleProtocol>
 

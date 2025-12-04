@@ -28,7 +28,7 @@ object NetworkRepositoryModule {
     }
 
     internal object Name {
-        val HTTP_CLIENT_ENGINE = named("NetworkRepositoryModule.Name.HTTP_CLIENT_ENGINE")
+        val HTTP_CLIENT_ENGINE get() = named("NetworkRepositoryModule.Name.HTTP_CLIENT_ENGINE")
     }
 
     internal fun invoke() = module(ModuleGroupData.Main) {

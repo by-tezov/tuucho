@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
+import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.repository.SystemInformation
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
@@ -20,9 +22,9 @@ object SystemCoreDataModules {
             }
         },
         MiscModule.invoke(),
-        MaterialRectifierModule.invoke(),
+        RectifierModule.invoke(),
         MaterialBreakerModule.invoke(),
-        MaterialAssemblerModule.invoke(),
+        AssemblerModule.invoke(),
         MaterialShadowerModule.invoke(),
         MaterialRepositoryModule.invoke(),
         DatabaseRepositoryModule.invoke(),

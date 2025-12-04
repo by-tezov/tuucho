@@ -28,6 +28,6 @@ internal actual fun SystemCoreDataModules.platformInvoke(): List<ModuleProtocol>
 
 object SystemCoreDataModulesAndroid {
     object Name {
-        val APPLICATION_CONTEXT = named("DatabaseRepositoryModuleAndroid.Name.APPLICATION_CONTEXT")
+        val APPLICATION_CONTEXT get() = named("DatabaseRepositoryModuleAndroid.Name.APPLICATION_CONTEXT")
     }
 }

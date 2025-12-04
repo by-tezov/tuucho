@@ -43,6 +43,15 @@ public final class com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent$
 	public static fun getKoin (Lcom/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent;)Lorg/koin/core/Koin;
 }
 
+public abstract interface class com/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, org/koin/core/component/KoinScopeComponent {
+	public fun close ()V
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent$DefaultImpls {
+	public static fun close (Lcom/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent;)V
+	public static fun getKoin (Lcom/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent;)Lorg/koin/core/Koin;
+}
+
 public abstract class com/tezov/tuucho/core/domain/business/exception/DomainException : java/lang/Exception {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1636,21 +1645,21 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/set
 	public static final field transient Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Action {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Action;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Action {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Action;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Action$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Action$Key;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Action$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Action$Key;
 	public static final field after Ljava/lang/String;
 	public static final field before Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Action$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionSchema$OpenScope {
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Action$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionSchema$OpenScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 	public final fun getAfter ()Lkotlinx/serialization/json/JsonArray;
 	public final fun getBefore ()Lkotlinx/serialization/json/JsonArray;
@@ -1658,18 +1667,18 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/For
 	public final fun setBefore (Lkotlinx/serialization/json/JsonArray;)V
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$FailureResult {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$FailureResult;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$FailureResult {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$FailureResult;
 	public static final field root Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$FailureResult$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$FailureResult$Key;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$FailureResult$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$FailureResult$Key;
 	public static final field id Ljava/lang/String;
 	public static final field reason Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$FailureResult$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$FailureResult$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 	public final fun getId ()Ljava/lang/String;
 	public final fun getReason ()Lkotlinx/serialization/json/JsonObject;
@@ -1678,42 +1687,56 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/For
 	public final fun setReason (Lkotlinx/serialization/json/JsonObject;)V
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Key;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Key;
 	public static final field action Ljava/lang/String;
 	public static final field allSucceed Ljava/lang/String;
 	public static final field failureResult Ljava/lang/String;
+	public static final field subset Ljava/lang/String;
 	public static final field type Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendResponseSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 	public final fun getAction ()Lkotlinx/serialization/json/JsonObject;
 	public final fun getAllSucceed ()Ljava/lang/Boolean;
 	public final fun getFailureResult ()Lkotlinx/serialization/json/JsonArray;
+	public fun getRoot ()Ljava/lang/String;
+	public final fun getSubset ()Ljava/lang/String;
 	public final fun getType ()Ljava/lang/String;
 	public final fun setAction (Lkotlinx/serialization/json/JsonObject;)V
 	public final fun setAllSucceed (Ljava/lang/Boolean;)V
 	public final fun setFailureResult (Lkotlinx/serialization/json/JsonArray;)V
+	public final fun setSubset (Ljava/lang/String;)V
 	public final fun setType (Ljava/lang/String;)V
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/TypeResponseSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/TypeResponseSchema;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Value;
+	public static final field subset Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/SubsetSchema {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/SubsetSchema;
 	public static final field root Ljava/lang/String;
-	public final fun getType (Lkotlinx/serialization/json/JsonObject;)Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/TypeResponseSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public fun getRoot ()Ljava/lang/String;
-	public final fun getSelf ()Ljava/lang/String;
-	public final fun setSelf (Ljava/lang/String;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/TypeResponseSchema$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/TypeResponseSchema$Value;
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/SubsetSchema$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/SubsetSchema$Value;
 	public static final field form Ljava/lang/String;
+	public static final field unknown Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/TypeSchema {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/TypeSchema;
+	public static final field root Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/TypeSchema$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/TypeSchema$Value;
+	public static final field action Ljava/lang/String;
+	public static final field response Ljava/lang/String;
+	public static final field text Ljava/lang/String;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/middleware/ActionMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {

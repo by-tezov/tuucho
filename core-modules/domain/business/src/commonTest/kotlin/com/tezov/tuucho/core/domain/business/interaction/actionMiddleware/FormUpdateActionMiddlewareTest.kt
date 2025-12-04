@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendResponseSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
@@ -25,6 +25,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -142,9 +143,9 @@ class FormUpdateActionMiddlewareTest {
     fun `process error target with reason sets messageErrorExtra and works when next is null`() = runTest {
         val action = ActionModelDomain.from("form://update/error")
         val failureParam = JsonNull
-            .withScope(FormSendResponseSchema.FailureResult::Scope)
+            .withScope(FormSendSchema.FailureResult::Scope)
             .apply {
-                reason = buildJsonObject { put("code", JsonPrimitive("error-code")) }
+                reason = buildJsonObject { put("code", "error-code") }
             }.collect()
         val jsonArray = buildJsonArray {
             add(failureParam)
