@@ -1,8 +1,9 @@
 ## In progress
 
 *** ***
-- still need to fix mock server
- 
+- still need to fix mock server -> ned to move it out the library to put is inside the sample application !!!!
+  - library need only release / debug -> the mock / dev / prod / stage is something that belong to application  !!!!
+
 **** ****
 - Shadower
     // do not crash application but 
