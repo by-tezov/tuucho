@@ -1,7 +1,6 @@
 # Cache
 
-All JSON resources managed by TUUCHO can be cached to avoid unnecessary network requests and improve performance.  
-The cache system is controlled through two main mechanisms:
+All JSON resources managed by TUUCHO can be cached to avoid unnecessary network requests and improve performance. The cache system is controlled through two main mechanisms:
 
 - **`ttl`** (Time-To-Live), defined in [Page Setting](object-definition/page-setting.md)
 - **`validity-key`**, defined in [Config](config/index.md)
@@ -35,6 +34,11 @@ Example:
 
 See [Config](config/index.md) for more details.
 
+---
+
+!!! note
+    - The validity-key lets you dynamically change any page with JSON content that the current app version is able to render.
+    - When upgrading the Tuucho library and delivering an application update, you are still responsible for upgrading your server API version (http://domain/vx/endpoint) so it can serve the appropriate version in production for all users.
 ---
 
 ## 2. TTL (Time-To-Live)

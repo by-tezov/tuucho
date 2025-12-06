@@ -4,7 +4,10 @@ comments: true
 
 # Config Definition
 
-The `config` JSON file allow you do define material resource url in order to load, manage, and cache. This (or these files) will be called before to call a page. Any change in the validity key will invalid the corresponding cache.
+The `config` JSON file allow you do define material resource url in order to load, manage, and cache. This (or these files) must be called before to call a page. Any change in the validity key will invalid the corresponding cache.
+
+!!! note
+    The sample application call the config (lobby or auth) with the help of middleware navigation. Check [Mobile Integration](../mobile-integration/middleware.md)
 
 Additional keys and options will be added as the system evolves.
 
