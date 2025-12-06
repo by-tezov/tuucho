@@ -3,10 +3,11 @@ package com.tezov.tuucho.convention
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
+class SharedLibraryPlugin : AbstractConventionPlugin() {
 
     companion object {
         private fun optIn() = listOf<String>(
@@ -23,19 +24,25 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
+            pluginManager.apply(plugin(PluginId.compose))
+            pluginManager.apply(plugin(PluginId.composeCompiler))
         }
     }
 
     override fun configure(
         project: Project,
     ) {
+        project.extra["hasAssets"] = true
         super.configure(project)
-        configureProguard(project)
-        configureMultiplatform(project)
-        configureSourceSets(project)
+        with(project) {
+            configureProguard()
+            configureMultiplatform()
+            configureSourceSets()
+        }
     }
 
-    private fun configureProguard(project: Project) = with(project) {
+
+    private fun Project.configureProguard() {
         extensions.configure(LibraryExtension::class.java) {
             buildTypes {
                 getByName("prod") {
@@ -47,12 +54,12 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         }
     }
 
-    private fun configureMultiplatform(project: Project) = with(project) {
+    private fun Project.configureMultiplatform() {
         extensions.configure(LibraryExtension::class.java) {
             namespace = namespace()
         }
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            jvmToolchain(this@with.javaVersionInt())
+            jvmToolchain(this@configureMultiplatform.javaVersionInt())
             compilerOptions {
                 optIn.addAll(optIn())
                 freeCompilerArgs.addAll(compilerOption())
@@ -62,7 +69,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
             val androidTargets = listOf(androidTarget())
             androidTargets.forEach {
                 it.compilerOptions {
-                    jvmTarget.set(this@with.jvmTarget())
+                    jvmTarget.set(this@configureMultiplatform.jvmTarget())
                 }
             }
             // iOS
@@ -87,7 +94,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         }
     }
 
-    private fun configureSourceSets(project: Project) = with(project) {
+    private fun Project.configureSourceSets() {
         val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
@@ -111,7 +118,5 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
             }
         }
     }
-
 }
-
 

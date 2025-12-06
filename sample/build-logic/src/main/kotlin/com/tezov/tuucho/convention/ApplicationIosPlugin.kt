@@ -6,10 +6,12 @@ import org.gradle.api.Project
 class ApplicationIosPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
-        configureCleanTask(project)
+        with(project) {
+            configureCleanTask()
+        }
     }
 
-    private fun configureCleanTask(iosProject: Project) = with(iosProject) {
+    private fun Project.configureCleanTask() {
         val cleanIosBuild = tasks.register("cleanIosBuild") {
             delete("./build")
         }

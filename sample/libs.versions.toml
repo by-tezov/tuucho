@@ -52,7 +52,7 @@ ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "k
 #convention
 convention-application-android = { id = "com.tezov.tuucho.convention.application-android", version = "unspecified" }
 convention-application-ios = { id = "com.tezov.tuucho.convention.application-ios", version = "unspecified" }
-convention-library-ui = { id = "com.tezov.tuucho.convention.library-ui", version = "unspecified" }
+convention-shared-library = { id = "com.tezov.tuucho.convention.shared-library", version = "unspecified" }
 #convention
 build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig-plugin" }
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
