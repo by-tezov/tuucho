@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 open class LibraryPlainPlugin : AbstractLibraryPlugin() {
 
     private val Project.shouldConfigureTest
-        get() = buildType() == "mock" || buildType() == "dev"
+        get() = buildType() == "debug"
 
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
@@ -39,7 +39,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                 configureCoverage(project)
                 configureTest(project)
             }
-            if (buildType() == "prod") {
+            if (buildType() == "release") {
                 configureApiValidation(project)
             }
         }
@@ -49,9 +49,9 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         extensions.configure(JacocoPluginExtension::class.java) {
             toolVersion = version("jacoco")
         }
-        tasks.register("coverageMockTestReport", JacocoReport::class.java) {
+        tasks.register("coverageDebugTestReport", JacocoReport::class.java) {
             val unitTestTasks = tasks.withType<Test>()
-                .filter { it.name.contains("MockUnitTest") }
+                .filter { it.name.contains("DebugUnitTest") }
             dependsOn(unitTestTasks)
 
             executionData.setFrom(
@@ -62,7 +62,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                 }
             )
             classDirectories.setFrom(
-                fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/mock") {
+                fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/debug") {
                     exclude(
                         "**/R.class",
                         "**/R$*.class",

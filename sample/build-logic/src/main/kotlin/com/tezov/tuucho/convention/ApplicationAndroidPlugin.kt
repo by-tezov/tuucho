@@ -112,8 +112,8 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
                     create("mock") {
                         this.storeFile = storeFile
                         this.storePassword = storePassword
-                        keyAlias = getProperty("keyAliasDev")
-                            ?: error("Missing property: keyAliasDev")
+                        keyAlias = getProperty("keyAliasMock")
+                            ?: error("Missing property: keyAliasMock")
                         keyPassword = storePassword
                     }
                 }
