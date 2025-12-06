@@ -29,13 +29,13 @@ internal class ResourceService(
         version: String,
         request: BackendServer.Request
     ): Boolean {
-        val url = request.url
+        val url = request.url.removePrefix("resource/")
         return when {
-            url.startsWith("resource/auth") -> {
+            url.startsWith("auth") -> {
                 guards.all { it.allowed(version, request) }
             }
 
-            url.startsWith("resource/lobby") -> {
+            url.startsWith("lobby") -> {
                 true
             }
 

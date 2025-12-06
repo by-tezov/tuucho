@@ -21,7 +21,10 @@ internal class HealthService(
     override suspend fun allowed(
         version: String,
         request: BackendServer.Request
-    ) = guards.all { it.allowed(version, request) }
+    ): Boolean {
+        val url = request.url.removePrefix("health/")
+        return guards.all { it.allowed(version, request.copy(url = url)) }
+    }
 
     override suspend fun process(
         version: String,

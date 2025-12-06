@@ -14,8 +14,11 @@ internal class AuthGuardOptional(
     ): Boolean {
         return when (version) {
             "v1" -> {
-                request.headers[HttpHeaders.Authorization] ?: return true
-                authGuard.allowed(version, request)
+                if (request.url.startsWith("auth") || request.headers[HttpHeaders.Authorization] != null) {
+                    authGuard.allowed(version, request)
+                } else {
+                    true
+                }
             }
 
             else -> throw Exception("unknown version $version")
