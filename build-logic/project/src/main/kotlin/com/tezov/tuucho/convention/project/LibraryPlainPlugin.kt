@@ -36,16 +36,16 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         with(project) {
             extra["hasAssets"] = true
             if (shouldConfigureTest) {
-                configureCoverage(project)
-                configureTest(project)
+                configureCoverage()
+                configureTest()
             }
             if (buildType() == "release") {
-                configureApiValidation(project)
+                configureApiValidation()
             }
         }
     }
 
-    private fun configureCoverage(project: Project) = with(project) {
+    private fun Project.configureCoverage() {
         extensions.configure(JacocoPluginExtension::class.java) {
             toolVersion = version("jacoco")
         }
@@ -81,7 +81,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         }
     }
 
-    private fun configureTest(project: Project) = with(project) {
+    private fun Project.configureTest() {
         extensions.configure(AllOpenExtension::class.java) {
             annotation("${namespaceBase()}.core.domain.test._system.OpenForTest")
         }
@@ -96,7 +96,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
     }
 
     @OptIn(ExperimentalAbiValidation::class)
-    private fun configureApiValidation(project: Project) = with(project) {
+    private fun Project.configureApiValidation() = with(project) {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             extensions.configure(AbiValidationMultiplatformExtension::class.java) {
                 enabled.set(true)

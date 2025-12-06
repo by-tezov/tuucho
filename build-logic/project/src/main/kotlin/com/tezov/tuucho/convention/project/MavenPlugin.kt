@@ -21,12 +21,12 @@ class MavenPlugin : Plugin<Project> {
                 if (isCI()) {
                     pluginManager.apply(plugin(PluginId.signing))
                 }
-                configureMaven(project)
+                configureMaven()
             }
         }
     }
 
-    private fun configureMaven(project: Project) = with(project) {
+    private fun Project.configureMaven() {
         val versionName = "${versionName()}${if (isSnapshot()) "-SNAPSHOT" else ""}"
         val artifactId = namespace().removePrefix("${domain()}.")
 

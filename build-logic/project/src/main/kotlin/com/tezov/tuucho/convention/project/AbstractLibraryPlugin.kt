@@ -68,18 +68,18 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     }
 
     protected open fun configure(project: Project) {
-        configureCommonAndroid(project)
-        configureLint(project)
-        configureKtLint(project)
-        configureDetekt(project)
-        configureProguard(project)
-        configureMultiplatform(project)
-        configureSourceSets(project)
+        with(project) {
+            configureCommonAndroid()
+            configureLint()
+            configureKtLint()
+            configureDetekt()
+            configureProguard()
+            configureMultiplatform()
+            configureSourceSets()
+        }
     }
 
-    private fun configureCommonAndroid(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureCommonAndroid() {
         extensions.configure(CommonExtension::class.java) {
             compileSdk = version("compileSdk").toInt()
 
@@ -103,9 +103,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureLint(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureLint() {
         extensions.configure(CommonExtension::class.java) {
             lint {
 //                abortOnError = false
@@ -123,9 +121,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureKtLint(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureKtLint() {
         extensions.configure(KtlintExtension::class.java) {
             version.set(version("ktlintRules"))
             baseline.set(file(".validation/ktlint/baseline.xml"))
@@ -152,9 +148,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureDetekt(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureDetekt() {
         extensions.configure(DetektExtension::class.java) {
             toolVersion = version("detektRules")
             buildUponDefaultConfig = true
@@ -181,7 +175,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureProguard(project: Project) = with(project) {
+    private fun Project.configureProguard() {
         extensions.configure(LibraryExtension::class.java) {
             buildTypes {
                 getByName("release") {
@@ -193,12 +187,12 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureMultiplatform(project: Project) = with(project) {
+    private fun Project.configureMultiplatform() {
         extensions.configure(LibraryExtension::class.java) {
             namespace = namespace()
         }
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            jvmToolchain(this@with.javaVersionInt())
+            jvmToolchain(this@configureMultiplatform.javaVersionInt())
             compilerOptions {
                 optIn.addAll(optIn())
                 freeCompilerArgs.addAll(compilerOption())
@@ -208,7 +202,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             val androidTargets = listOf(androidTarget())
             androidTargets.forEach {
                 it.compilerOptions {
-                    jvmTarget.set(this@with.jvmTarget())
+                    jvmTarget.set(this@configureMultiplatform.jvmTarget())
                 }
             }
             // iOS
@@ -235,7 +229,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureSourceSets(project: Project) = with(project) {
+    private fun Project.configureSourceSets() {
         val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
