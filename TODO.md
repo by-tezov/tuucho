@@ -1,8 +1,5 @@
 ## In progress
 
-*** ***
-- still need to fix mock server
- 
 **** ****
 - Shadower
     // do not crash application but 

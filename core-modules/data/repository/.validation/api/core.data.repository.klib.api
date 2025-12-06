@@ -25,6 +25,10 @@ abstract fun interface com.tezov.tuucho.core.data.repository.parser.assembler.ma
     abstract suspend fun invoke(kotlinx.serialization.json/JsonObject, kotlin/String): kotlin.collections/List<kotlinx.serialization.json/JsonObject>? // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/FindAllRefOrNullFetcherProtocol.invoke|invoke(kotlinx.serialization.json.JsonObject;kotlin.String){}[0]
 }
 
+abstract interface com.tezov.tuucho.core.data.repository.assets/AssetsProtocol { // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol|null[0]
+    abstract fun readFile(kotlin/String): okio/Source // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.readFile|readFile(kotlin.String){}[0]
+}
+
 abstract interface com.tezov.tuucho.core.data.repository.database/Database : app.cash.sqldelight/Transacter { // com.tezov.tuucho.core.data.repository.database/Database|null[0]
     abstract val hookStatementQueries // com.tezov.tuucho.core.data.repository.database/Database.hookStatementQueries|{}hookStatementQueries[0]
         abstract fun <get-hookStatementQueries>(): com.tezov.tuucho.core.data.repository.database.statement/HookStatementQueries // com.tezov.tuucho.core.data.repository.database/Database.hookStatementQueries.<get-hookStatementQueries>|<get-hookStatementQueries>(){}[0]

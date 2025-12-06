@@ -38,8 +38,6 @@ internal fun Project.namespace() = "${namespaceBase()}${path.replace(":", ".")}"
 
 internal fun Project.buildType() = BuildConfig.BUILD_TYPE
 
-internal fun Project.buildTypeCapitalized() = buildType().replaceFirstChar { it.uppercaseChar() }
-
 internal fun Project.keystorePropertiesFilePath() = version("keystorePropertiesFilePath")
 
 internal fun Project.jvmTarget() = JvmTarget.fromTarget(version("javaVersion"))

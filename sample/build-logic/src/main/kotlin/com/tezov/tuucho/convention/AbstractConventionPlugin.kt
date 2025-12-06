@@ -5,6 +5,8 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.kotlin.dsl.extra
+import org.gradle.kotlin.dsl.get
 
 abstract class AbstractConventionPlugin : Plugin<Project> {
 
@@ -17,32 +19,22 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
         const val composeCompiler = "compose.compiler"
     }
 
-    companion object {
-
-        private fun lintDisabled() = setOf<String>(
-//            "ComposableNaming"
-        )
-
-    }
-
     final override fun apply(project: Project) {
         applyPlugins(project)
         configure(project)
     }
 
-    protected open fun applyPlugins(project: Project) {
-
-    }
+    protected open fun applyPlugins(project: Project) {}
 
     protected open fun configure(project: Project) {
-        configureCommonAndroid(project)
-        configureBuildType(project)
-        configureLint(project)
+        with(project) {
+            configureCommonAndroid()
+            configureBuildType()
+            configureAndroidAssets()
+        }
     }
 
-    private fun configureCommonAndroid(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureCommonAndroid() {
         extensions.configure(CommonExtension::class.java) {
             compileSdk = version("compileSdk").toInt()
 
@@ -66,9 +58,7 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureBuildType(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureBuildType() {
         extensions.configure(CommonExtension::class.java) {
             buildTypes {
                 create("prod") {
@@ -98,12 +88,16 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureLint(
-        project: Project,
-    ) = with(project) {
-        extensions.configure(CommonExtension::class.java) {
-            lint {
-                disable.addAll(lintDisabled())
+    private fun Project.configureAndroidAssets() {
+        val buildType = buildType()
+        gradle.afterProject {
+            if (extra.has("hasAssets") && extra.get("hasAssets") == true) {
+                extensions.configure(CommonExtension::class.java) {
+                    sourceSets["main"].assets.srcDirs(
+                        "src/commonMain/assets",
+                        "src/commonMain/$buildType/assets",
+                    )
+                }
             }
         }
     }

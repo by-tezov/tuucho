@@ -1,0 +1,9 @@
+{
+  "texts": {
+    "common": {
+      "server-failure": {
+        "default": "Check your internet connection"
+      }
+    }
+  }
+}

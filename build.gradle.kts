@@ -300,9 +300,9 @@ tasks.register("rootUpdateDetektBaseline") {
 }
 
 // Abi Validation
-tasks.register("rootValidateProdApi") {
+tasks.register("rootValidateReleaseApi") {
     group = "validation"
-    description = "Validate tuucho prod API"
+    description = "Validate tuucho release API"
     val abiTasks = subprojects.flatMap { sub ->
         sub.tasks.matching { it.name.equals("checkLegacyAbi", ignoreCase = true) }
     }
@@ -317,9 +317,9 @@ val cleanApiFolder by tasks.registering(Delete::class) {
     }
     delete(apiProjects.map { it.file(".validation/api") } + rootProject.file(".validation/api"))
 }
-tasks.register("rootUpdateProdApi") {
+tasks.register("rootUpdateReleaseApi") {
     group = "validation"
-    description = "Update tuucho prod API"
+    description = "Update tuucho release API"
     val abiTasks = subprojects.flatMap { sub ->
         sub.tasks.matching { it.name.equals("updateLegacyAbi", ignoreCase = true) }
     }
@@ -368,14 +368,14 @@ tasks.register("rootUpdateProdApi") {
 }
 
 // Unit tests + Coverage
-tasks.register<TestReport>("rootMockUnitTest") {
+tasks.register<TestReport>("rootDebugUnitTest") {
     group = "verification"
     description =
         "Unit test and Aggregates Html unit test reports from all modules into root build folder"
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     val unitTestTasks = subprojects.flatMap { sub ->
         sub.tasks.withType<Test>().matching {
-            it.name.contains("MockUnitTest")
+            it.name.contains("DebugUnitTest")
         }
     }
     dependsOn(unitTestTasks)
@@ -386,14 +386,7 @@ extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
 
-val cleanMavenLocalFolder by tasks.registering {
-    delete(".m2")
-}
-rootProject.tasks.named("clean") {
-    dependsOn(cleanMavenLocalFolder)
-}
-
-tasks.register<JacocoReport>("rootMockCoverageReport") {
+tasks.register<JacocoReport>("rootDebugCoverageReport") {
     group = "verification"
     description = "Aggregates Html coverage report from all modules into root build folder"
 
@@ -403,7 +396,7 @@ tasks.register<JacocoReport>("rootMockCoverageReport") {
                     !it.file("build.gradle.kts").exists()
         }
         .mapNotNull { sub ->
-            sub.tasks.findByName("coverageMockTestReport") as? JacocoReport
+            sub.tasks.findByName("coverageDebugTestReport") as? JacocoReport
         }
 
     executionData.setFrom(reportsList.flatMap { it.executionData.files })
@@ -419,9 +412,12 @@ tasks.register<JacocoReport>("rootMockCoverageReport") {
 }
 
 // Maven Publication
-tasks.register("rootPublishProdToMavenLocal") {
+val cleanMavenLocalFolder by tasks.registering {
+    delete(".m2")
+}
+tasks.register("rootPublishReleaseToMavenLocal") {
     group = "publishing"
-    description = "Publish tuucho prod to maven local"
+    description = "Publish tuucho release to maven local"
 
     val publishTasks = subprojects.flatMap { sub ->
         sub.tasks.withType<PublishToMavenRepository>()

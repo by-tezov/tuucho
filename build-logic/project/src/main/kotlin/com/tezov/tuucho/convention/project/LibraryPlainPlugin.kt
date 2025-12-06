@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 open class LibraryPlainPlugin : AbstractLibraryPlugin() {
 
     private val Project.shouldConfigureTest
-        get() = buildType() == "mock" || buildType() == "dev"
+        get() = buildType() == "debug"
 
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
@@ -36,22 +36,22 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         with(project) {
             extra["hasAssets"] = true
             if (shouldConfigureTest) {
-                configureCoverage(project)
-                configureTest(project)
+                configureCoverage()
+                configureTest()
             }
-            if (buildType() == "prod") {
-                configureApiValidation(project)
+            if (buildType() == "release") {
+                configureApiValidation()
             }
         }
     }
 
-    private fun configureCoverage(project: Project) = with(project) {
+    private fun Project.configureCoverage() {
         extensions.configure(JacocoPluginExtension::class.java) {
             toolVersion = version("jacoco")
         }
-        tasks.register("coverageMockTestReport", JacocoReport::class.java) {
+        tasks.register("coverageDebugTestReport", JacocoReport::class.java) {
             val unitTestTasks = tasks.withType<Test>()
-                .filter { it.name.contains("MockUnitTest") }
+                .filter { it.name.contains("DebugUnitTest") }
             dependsOn(unitTestTasks)
 
             executionData.setFrom(
@@ -62,7 +62,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                 }
             )
             classDirectories.setFrom(
-                fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/mock") {
+                fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/debug") {
                     exclude(
                         "**/R.class",
                         "**/R$*.class",
@@ -81,7 +81,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         }
     }
 
-    private fun configureTest(project: Project) = with(project) {
+    private fun Project.configureTest() {
         extensions.configure(AllOpenExtension::class.java) {
             annotation("${namespaceBase()}.core.domain.test._system.OpenForTest")
         }
@@ -96,7 +96,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
     }
 
     @OptIn(ExperimentalAbiValidation::class)
-    private fun configureApiValidation(project: Project) = with(project) {
+    private fun Project.configureApiValidation() = with(project) {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             extensions.configure(AbiValidationMultiplatformExtension::class.java) {
                 enabled.set(true)

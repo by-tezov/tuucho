@@ -2,7 +2,6 @@ package com.tezov.tuucho.convention.project
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import com.android.build.api.variant.AndroidComponentsExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
@@ -69,19 +68,18 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     }
 
     protected open fun configure(project: Project) {
-        configureCommonAndroid(project)
-        configureBuildType(project)
-        configureLint(project)
-        configureKtLint(project)
-        configureDetekt(project)
-        configureProguard(project)
-        configureMultiplatform(project)
-        configureSourceSets(project)
+        with(project) {
+            configureCommonAndroid()
+            configureLint()
+            configureKtLint()
+            configureDetekt()
+            configureProguard()
+            configureMultiplatform()
+            configureSourceSets()
+        }
     }
 
-    private fun configureCommonAndroid(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureCommonAndroid() {
         extensions.configure(CommonExtension::class.java) {
             compileSdk = version("compileSdk").toInt()
 
@@ -105,41 +103,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureBuildType(
-        project: Project,
-    ) = with(project) {
-        extensions.configure(CommonExtension::class.java) {
-            buildTypes {
-                create("prod") {
-                    initWith(getByName("release"))
-                    matchingFallbacks += listOf("release")
-                }
-                create("stage") {
-                    initWith(getByName("release"))
-                    matchingFallbacks += listOf("release")
-                }
-                create("dev") {
-                    initWith(getByName("debug"))
-                    matchingFallbacks += listOf("debug")
-                }
-                create("mock") {
-                    initWith(getByName("debug"))
-                    matchingFallbacks += listOf("debug")
-                }
-            }
-        }
-        extensions.configure(AndroidComponentsExtension::class.java) {
-            beforeVariants { builder ->
-                if (builder.buildType == "debug" || builder.buildType == "release") {
-                    builder.enable = false
-                }
-            }
-        }
-    }
-
-    private fun configureLint(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureLint() {
         extensions.configure(CommonExtension::class.java) {
             lint {
 //                abortOnError = false
@@ -157,9 +121,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureKtLint(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureKtLint() {
         extensions.configure(KtlintExtension::class.java) {
             version.set(version("ktlintRules"))
             baseline.set(file(".validation/ktlint/baseline.xml"))
@@ -186,9 +148,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureDetekt(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureDetekt() {
         extensions.configure(DetektExtension::class.java) {
             toolVersion = version("detektRules")
             buildUponDefaultConfig = true
@@ -215,10 +175,10 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureProguard(project: Project) = with(project) {
+    private fun Project.configureProguard() {
         extensions.configure(LibraryExtension::class.java) {
             buildTypes {
-                getByName("prod") {
+                getByName("release") {
                     consumerProguardFiles(
                         "proguard-rules.pro"
                     )
@@ -227,12 +187,12 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureMultiplatform(project: Project) = with(project) {
+    private fun Project.configureMultiplatform() {
         extensions.configure(LibraryExtension::class.java) {
             namespace = namespace()
         }
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            jvmToolchain(this@with.javaVersionInt())
+            jvmToolchain(this@configureMultiplatform.javaVersionInt())
             compilerOptions {
                 optIn.addAll(optIn())
                 freeCompilerArgs.addAll(compilerOption())
@@ -242,7 +202,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             val androidTargets = listOf(androidTarget())
             androidTargets.forEach {
                 it.compilerOptions {
-                    jvmTarget.set(this@with.jvmTarget())
+                    jvmTarget.set(this@configureMultiplatform.jvmTarget())
                 }
             }
             // iOS
@@ -269,7 +229,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureSourceSets(project: Project) = with(project) {
+    private fun Project.configureSourceSets() {
         val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
@@ -293,99 +253,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             }
         }
     }
-
-    /* Need to find a way to fix that
-    private fun configureAndroidAssets(project: Project) = with(project) {
-        val buildTypeCapitalized = buildTypeCapitalized()
-        gradle.afterProject {
-            if (extra.has("hasAssets") && extra.get("hasAssets") == true) {
-                extensions.configure(CommonExtension::class.java) {
-                    sourceSets["main"].assets.srcDirs(
-                        "src/commonMain/assets",
-                        "src/commonMain$buildTypeCapitalized/assets",
-                    )
-                }
-            }
-        }
-    }
-
-    private fun configureIosAsset(project: Project) = with(project) {
-        fun resolveIosApp(): File {
-            val targetBuildDir = System.getenv("TARGET_BUILD_DIR")
-                ?: error("TARGET_BUILD_DIR not set")
-            val contentsFolderPath = System.getenv("CONTENTS_FOLDER_PATH")
-                ?: error("CONTENTS_FOLDER_PATH not set")
-            val app = File(targetBuildDir, contentsFolderPath)
-            if (!app.exists()) {
-                error(">>> ios.app not found at $app")
-            }
-            return app
-        }
-
-        fun collectProjectAssets(project: Project, flavorCapitalized: String): List<File> {
-            val baseDir = project.projectDir
-            val dirs = listOf(
-                File(baseDir, "src/commonMain/assets"),
-                File(baseDir, "src/commonMain$flavorCapitalized/assets")
-            )
-            return dirs.filter { it.exists() && it.isDirectory }
-                .flatMap { dir -> dir.walkTopDown().filter { it.isFile }.toList() }
-        }
-
-        fun mergeAllProjectAssets(project: Project) = with(project) {
-            val buildTypeCapitalized = buildTypeCapitalized()
-            val mergedAssetsDir = Files.createTempDirectory("mergedAssets").toFile()
-            rootProject.subprojects
-                .filter {
-                    it.extra.has("hasAssets") && it.extra.get("hasAssets") == true }
-                .forEach { project ->
-                    collectProjectAssets(project, buildTypeCapitalized)
-                        .forEach { file ->
-                            val idx = file.path.indexOf("assets")
-                            val relativePath = file.path.substring(idx + "assets".length + 1)
-                            val target = File(mergedAssetsDir, relativePath)
-                            if (target.exists()) {
-                                println("Overwriting asset: $relativePath (from ${project.path})")
-                            }
-                            target.parentFile.mkdirs()
-                            file.copyTo(target, overwrite = true)
-                        }
-                }
-            mergedAssetsDir
-        }
-
-        fun syncAssetsIntoApp(mergedAssetsDir: File, app: File) {
-            val assetsDirInApp = File(app, "assets")
-            assetsDirInApp.mkdirs()
-            val pb = ProcessBuilder(
-                "rsync", "-a", "--delete",
-                "${mergedAssetsDir.absolutePath}/",
-                assetsDirInApp.absolutePath
-            )
-            pb.inheritIO()
-            val result = pb.start().waitFor()
-            if (result != 0) {
-                error("rsync failed syncing assets into $assetsDirInApp")
-            }
-        }
-
-        val syncIosAssets = tasks.register("syncIosAssets") {
-            doLast {
-                val app = resolveIosApp()
-                val mergedAssetsDir = mergeAllProjectAssets(project)
-                syncAssetsIntoApp(mergedAssetsDir, app)
-                mergedAssetsDir.deleteRecursively()
-            }
-        }
-        gradle.rootProject.allprojects.forEach { project ->
-            project.tasks.matching { it.name == "syncComposeResourcesForIos" }
-                .configureEach {
-                    finalizedBy(syncIosAssets.get())
-                }
-        }
-    }
-    */
-
 }
 
 
