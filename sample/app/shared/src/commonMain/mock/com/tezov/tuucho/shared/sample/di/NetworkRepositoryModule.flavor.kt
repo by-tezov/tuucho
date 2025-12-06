@@ -1,4 +1,4 @@
-package com.tezov.tuucho.shared.sample.repository.di
+package com.tezov.tuucho.shared.sample.di
 
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule

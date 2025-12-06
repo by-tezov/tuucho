@@ -386,13 +386,6 @@ extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
 
-val cleanMavenLocalFolder by tasks.registering {
-    delete(".m2")
-}
-rootProject.tasks.named("clean") {
-    dependsOn(cleanMavenLocalFolder)
-}
-
 tasks.register<JacocoReport>("rootDebugCoverageReport") {
     group = "verification"
     description = "Aggregates Html coverage report from all modules into root build folder"
@@ -419,6 +412,9 @@ tasks.register<JacocoReport>("rootDebugCoverageReport") {
 }
 
 // Maven Publication
+val cleanMavenLocalFolder by tasks.registering {
+    delete(".m2")
+}
 tasks.register("rootPublishReleaseToMavenLocal") {
     group = "publishing"
     description = "Publish tuucho release to maven local"
