@@ -1,8 +1,5 @@
 ## In progress
 
-- Fail safe let it pass on mock
-- the do ios
- 
 **** ****
 - Shadower
     // do not crash application but 
