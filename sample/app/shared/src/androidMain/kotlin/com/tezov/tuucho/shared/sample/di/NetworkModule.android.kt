@@ -7,9 +7,13 @@ import io.ktor.client.engine.okhttp.OkHttp
 
 internal object NetworkModuleAndroid {
 
-    fun invoke() = module(ModuleGroupCore.Main) {
-        factory<HttpClientEngineFactory<*>> {
-            OkHttp
+    object FlavorDefault {
+        fun invoke() = module(ModuleGroupCore.Main) {
+            factory<HttpClientEngineFactory<*>> {
+                OkHttp
+            }
         }
     }
+
+    fun invoke() = NetworkRepositoryModuleAndroidFlavor.invoke()
 }

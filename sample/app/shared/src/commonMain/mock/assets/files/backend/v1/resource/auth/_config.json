@@ -1,0 +1,74 @@
+{
+  "material-resource": {
+    "global": {
+      "subs": [
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-texts"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-styles"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-contents"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-components"
+        }
+      ],
+      "templates": [
+        {
+          "validity-key": "1",
+          "url": "auth/common/templates/template-page-default"
+        }
+      ]
+    },
+    "local": {
+      "pages": [
+        {
+          "validity-key": "1",
+          "url": "auth/page-home"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-help",
+          "pre-download": false
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-a"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-b",
+          "pre-download": false
+        },
+        {
+          "validity-key": "3",
+          "url": "auth/page-c"
+        }
+      ]
+    },
+    "contextual": {
+      "all": [
+        {
+          "validity-key": "1",
+          "url-origin": "auth/page-home",
+          "url": "${url-origin}-contextual-texts"
+        },
+        {
+          "validity-key": "1",
+          "url-origin": "auth/page-home",
+          "url": "${url-origin}-contextual-components"
+        },
+        {
+          "validity-key": "1",
+          "url-origin": "auth/page-c"
+        }
+      ]
+    }
+  }
+}

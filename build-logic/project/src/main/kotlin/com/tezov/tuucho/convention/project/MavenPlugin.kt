@@ -16,17 +16,17 @@ class MavenPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         with(project) {
-            if (buildType() == "prod") {
+            if (buildType() == "release") {
                 pluginManager.apply(plugin(PluginId.maven))
                 if (isCI()) {
                     pluginManager.apply(plugin(PluginId.signing))
                 }
-                configureMaven(project)
+                configureMaven()
             }
         }
     }
 
-    private fun configureMaven(project: Project) = with(project) {
+    private fun Project.configureMaven() {
         val versionName = "${versionName()}${if (isSnapshot()) "-SNAPSHOT" else ""}"
         val artifactId = namespace().removePrefix("${domain()}.")
 
@@ -34,7 +34,7 @@ class MavenPlugin : Plugin<Project> {
         version = versionName
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             androidTarget {
-                publishLibraryVariants("prod")
+                publishLibraryVariants("release")
             }
         }
         extensions.configure(PublishingExtension::class.java) {
@@ -117,7 +117,7 @@ class MavenPlugin : Plugin<Project> {
                     }
                     this.artifactId = when (name) {
                         "kotlinMultiplatform" -> artifactId
-                        "androidProd" -> "$artifactId-android"
+                        "androidRelease" -> "$artifactId-android"
                         "iosArm64" -> "$artifactId-iosArm64"
                         "iosSimulatorArm64" -> "$artifactId-iosSimulatorArm64"
                         "iosX64" -> "$artifactId-iosX64"
