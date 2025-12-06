@@ -77,6 +77,10 @@ public final class com/tezov/tuucho/core/data/repository/_system/reference/WeakR
 	public fun set (Ljava/lang/Object;)V
 }
 
+public abstract interface class com/tezov/tuucho/core/data/repository/assets/AssetsProtocol {
+	public abstract fun readFile (Ljava/lang/String;)Lokio/Source;
+}
+
 public abstract interface class com/tezov/tuucho/core/data/repository/database/Database : app/cash/sqldelight/Transacter {
 	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/Database$Companion;
 	public abstract fun getHookStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/HookStatementQueries;
@@ -1073,6 +1077,10 @@ abstract fun interface com.tezov.tuucho.core.data.repository.network/HttpInterce
 
 abstract fun interface com.tezov.tuucho.core.data.repository.parser.assembler.material._system/FindAllRefOrNullFetcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/FindAllRefOrNullFetcherProtocol|null[0]
     abstract suspend fun invoke(kotlinx.serialization.json/JsonObject, kotlin/String): kotlin.collections/List<kotlinx.serialization.json/JsonObject>? // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/FindAllRefOrNullFetcherProtocol.invoke|invoke(kotlinx.serialization.json.JsonObject;kotlin.String){}[0]
+}
+
+abstract interface com.tezov.tuucho.core.data.repository.assets/AssetsProtocol { // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol|null[0]
+    abstract fun readFile(kotlin/String): okio/Source // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.readFile|readFile(kotlin.String){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.database/Database : app.cash.sqldelight/Transacter { // com.tezov.tuucho.core.data.repository.database/Database|null[0]
@@ -8980,43 +8988,43 @@ public final class com/tezov/tuucho/core/presentation/tool/modifier/ModifierFill
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitBorderKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitBorderKt;
 	public fun <init> ()V
-	public final fun getLambda$1203075824$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1203075824$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitFrameKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitFrameKt;
 	public fun <init> ()V
-	public final fun getLambda$-1338982711$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1338982711$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitPaletteKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitPaletteKt;
 	public fun <init> ()V
-	public final fun getLambda$-1067547400$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1720156493$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$1205206086$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1067547400$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1720156493$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1205206086$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitShapeKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitShapeKt;
 	public fun <init> ()V
-	public final fun getLambda$1391307586$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1391307586$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitStateKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitStateKt;
 	public fun <init> ()V
-	public final fun getLambda$-1850890327$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-377465283$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-969593683$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$1542480369$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$45941209$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1850890327$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-377465283$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-969593683$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1542480369$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$45941209$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitTextKt {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/tool/theme/style/ComposableSingletons$OutfitTextKt;
 	public fun <init> ()V
-	public final fun getLambda$-1902171282$core_presentation_tool_stage ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1902171282$core_presentation_tool_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/tezov/tuucho/core/presentation/tool/theme/style/OutfitBorder {
