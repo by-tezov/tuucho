@@ -1,0 +1,18 @@
+[data-md-color-scheme="slate"] {
+    .md-header {
+      background-color: #1D1D1D;
+    }
+
+    .md-main {
+      background-color: #1C1C1C;
+      color: #DDDDDD;
+    }
+
+    .md-header__source .md-source__icon svg {
+      fill: #2196f3;
+    }
+}
+
+.md-nav__link--active {
+  font-weight: 600;
+}
