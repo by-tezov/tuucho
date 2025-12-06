@@ -33,8 +33,8 @@ class ApplicationIosPlugin : Plugin<Project> {
                 mergedAssetsDir.deleteRecursively()
             }
         }
-        gradle.rootProject.allprojects.forEach { project ->
-            project.tasks.matching { it.name == "syncComposeResourcesForIos" }
+        gradle.rootProject.allprojects.forEach { subProject ->
+            subProject.tasks.matching { it.name == "syncComposeResourcesForIos" }
                 .configureEach {
                     finalizedBy(syncIosAssets.get())
                 }
@@ -55,19 +55,20 @@ class ApplicationIosPlugin : Plugin<Project> {
 
     private fun Project.mergeAllProjectAssets(): File {
         val buildType = buildType()
+        @Suppress("NewApi")
         val mergedAssetsDir = Files.createTempDirectory("mergedAssets").toFile()
         rootProject.subprojects
             .filter {
                 it.extra.has("hasAssets") && it.extra.get("hasAssets") == true
             }
-            .forEach { project ->
-                collectProjectAssets(buildType)
+            .forEach { subProject ->
+                subProject.collectProjectAssets(buildType)
                     .forEach { file ->
                         val idx = file.path.indexOf("assets")
                         val relativePath = file.path.substring(idx + "assets".length + 1)
                         val target = File(mergedAssetsDir, relativePath)
                         if (target.exists()) {
-                            println("Overwriting asset: $relativePath (from ${project.path})")
+                            println("Overwriting asset: $relativePath (from ${subProject.path})")
                         }
                         target.parentFile.mkdirs()
                         file.copyTo(target, overwrite = true)
@@ -77,25 +78,28 @@ class ApplicationIosPlugin : Plugin<Project> {
     }
 
     private fun Project.collectProjectAssets(buildType: String): List<File> {
-        val baseDir = project.projectDir
+        val baseDir = projectDir
         val dirs = listOf(
             File(baseDir, "src/commonMain/assets"),
             File(baseDir, "src/commonMain/$buildType/assets")
         )
         return dirs.filter { it.exists() && it.isDirectory }
-            .flatMap { dir -> dir.walkTopDown().filter { it.isFile }.toList() }
+            .flatMap { dir -> dir.walkTopDown().filter { it.isFile }.toList() }.also {
+
+            }
     }
 
     private fun syncAssetsIntoApp(mergedAssetsDir: File, app: File) {
         val assetsDirInApp = File(app, "assets")
         assetsDirInApp.mkdirs()
-        val pb = ProcessBuilder(
+        val process = ProcessBuilder(
             "rsync", "-a", "--delete",
             "${mergedAssetsDir.absolutePath}/",
             assetsDirInApp.absolutePath
         )
-        pb.inheritIO()
-        val result = pb.start().waitFor()
+        @Suppress("NewApi")
+        process.inheritIO()
+        val result = process.start().waitFor()
         if (result != 0) {
             error("rsync failed syncing assets into $assetsDirInApp")
         }
