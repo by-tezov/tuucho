@@ -4,21 +4,23 @@ comments: true
 
 # TUUCHO - ตู้โชว์ - Rendering Engine
 
-> **Documentation in Progress** — Early stage of development — see [Roadmap](roadmap.md).
+!!! warning
+    **Documentation in Progress** — Early stage of development — see [Roadmap](roadmap.md).
 
 ## Overview
 
 TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interprets a flexible JSON structure describing the entire UI, behaviors and renders the application interface accordingly.
 
-🚀 **It is available on Android and iOS thanks to Kotlin Multiplatform Mobile (KMM).**
+🚀 **It is available on Android and iOS thanks to Kotlin Multiplatform Mobile (KMP).**
 
 ### Supported Features
 
 - **Json Content**
-    - 100% of the application is driven by the server
+    - 100% of the application is driven by the server. Hybrid integration are also possible.
     - Definable components with unique IDs allowing shared references to reduce JSON payload size. This applies to content, styles, text, and more.
     - Intelligent caching: JSON objects are cached locally to minimize repeated network requests. Content is fetched over the network only when necessary.
-    - Dynamic context data fetch asynchronously with TTL capabilities
+    - Dynamic context data fetch asynchronously with TTL (Time To Live) capabilities
+    - Versioning capabilities self managed [Cache Management](cache.md)
 
 - **Navigation Stack**  
   TUUCHO provides its own navigation stack and supports all capabilities offered by Compose Navigation, including:
@@ -33,11 +35,8 @@ TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interpr
     - Slide Vertically
     - Slide Horizontally
 
-- **Cache control**
-    - Time To Live components, contents and texts group and individual
-
 - **Form submission**
-    - Local validator and remote controls with user feedback
+    - Local validator and remote controls with user feedback (error or information)
     - Custom command on success or failure
 
 ### Supported Components
@@ -52,7 +51,8 @@ TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interpr
 
 ---
 
-More to come... For detailed future plans and roadmap, see [Roadmap](roadmap.md).
+!!! info
+    More to come... For detailed future plans and roadmap, see [Roadmap](roadmap.md).
 
 ---
 
@@ -119,11 +119,12 @@ flowchart TD
   "texts": { /* text */ },
   "colors": { /* color */ },
   "dimensions": { /* dimension */ },
-  "actions": { /* action */ }
+  "actions": { /* action */ },
+  "states": { /* states */ }
 }
 ```
 
-Each **PAGE** and **TEMPLATE** **must** include a `root` key, which defines the top-level component of the screen. Other keys such as `components`, `contents`, `styles`, `options`, `texts`, `colors`, `dimensions` and `actions` are optional. Note that the `root` key is **not** required for **SUBS** content.
+Each **PAGE** and **TEMPLATE** **must** include a `root` key, which defines the top-level component of the screen. Other keys such as `components`, `contents`, `styles`, `options`, `texts`, `colors`, `dimensions`, `states` and `actions` are optional. Note that the `root` key is **not** required for **SUBS** content.
 
 - **PAGE** represents a full-screen rendered component.
 - **TEMPLATE** represents a full-screen rendered component with no content. They can be used multiple times with different contents

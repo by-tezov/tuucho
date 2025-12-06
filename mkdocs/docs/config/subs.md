@@ -14,7 +14,8 @@ All subs must be referenced by ID pointer where they are needed as replacement �
     "texts": { ... },
     "colors": { ... },
     "dimensions": { ... },
-    "actions": { ... }
+    "actions": { ... },
+    "states": { ... }
 }
 ```
 
@@ -28,6 +29,7 @@ Each `subs` file can contain any combination of the following keys:
 - `options` – Define data-driven value lists, such as select dropdown choices. See [Options Object Definition](../object-definition/option.md).
 - `styles` – Reusable visual rules (font-size, color, etc.) referenced by components. See [Style Object Definition](../object-definition/style.md).
 - `texts` – Translatable strings organized by group. See [Text Object Definition](../object-definition/text.md).
+- `states` – Initial state value. See [State Object Definition](../object-definition/state.md).
 
 ---
 
@@ -49,8 +51,7 @@ Each `subs` file can contain any combination of the following keys:
 
 Texts are grouped under categories (`common`, `form`, etc.) and are accessed via ID references like `*form@text-body-content-help`.
 
-> ⚠️ **Important:** `common` is the default group.  
-> If no group is specified in a reference, the system will default to searching in the `common` group.  
+> ⚠️ **Important:** `common` is the default group. If no group is specified in a reference, the system will default to searching in the `common` group.  
 > Example: `*my-id` or `*common@my-id` are the same reference.
 
 ---

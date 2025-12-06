@@ -12,7 +12,7 @@ In your **shared module** (`commonMain`) you need the Tuucho core library plus i
 
 ```kotlin
  commonMain.dependencies {
-    implementation("com.tezov:tuucho.core:0.0.1-alpha19_2.2.21") // for kotlin 2.2.21     
+    implementation("com.tezov:tuucho.core:0.0.1-alpha22_2.2.21") // for kotlin 2.2.21     
     implementation("io.insert-koin:koin-core:4.1.1")     
     implementation("io.insert-koin:koin-compose:4.1.1")
     implementation("io.ktor:ktor-client-core:3.3.2")
@@ -71,14 +71,14 @@ The core module defines the `Config` interface for `NetworkRepositoryModule`.
 
 ## 4 Android integration
 
-On Android you have to provide the application `Context` so that Tuucho can access platform services.  Define an `ApplicationModuleDeclaration` that injects the context using Koin:
+On Android you have to provide the application `Context` so that Tuucho can access platform services. Define an `ApplicationModuleDeclaration` that injects the context using Koin:
 
 First you need the to add the dependencies
 
 ```kotlin
  dependencies {
     implementation(project(":app:shared"))
-    implementation("com.tezov:tuucho.core-android:0.0.1-alpha19_2.2.21") // for kotlin 2.2.21   
+    implementation("com.tezov:tuucho.core-android:0.0.1-alpha22_2.2.21") // for kotlin 2.2.21   
 
     implementation("androidx.activity:activity-compose:1.11.0")
     implementation("io.insert-koin:koin-core:4.1.1")
@@ -165,3 +165,6 @@ The engine is under active development.  At the time of writing the UI component
 ## 7 Sample Application
 
 * The `sample` folder is contains all explain above to try. [tuucho‑sample](https://github.com/by-tezov/tuucho)
+
+!!! note
+    The sample application includes a mock server. If you launch it in mock build type, you don't need a backend server.

@@ -8,6 +8,9 @@ Tuucho requires a backend capable of returning JSON structures. This guide expla
 
 This is **not** intended for production but for quick test and experiment with Tuucho.
 
+!!! info
+    The sample application includes an embedded mock server, which you can use to quickly prototype without needing a real backend.
+
 ---
 
 **Mobile Integration**: For the mobile side, follow this guide: [mobile-integration/quick-start.md](mobile-integration/quick-start.md)
@@ -57,13 +60,16 @@ export class AppModule {}
 
 ### Controllers overview
 
-| Controller                 | Endpoint area             | Purpose                                              |
-|----------------------------|---------------------------|------------------------------------------------------|
-| `HealthController`         | `/health`                 | Health probe used by Tuucho                         |
-| `ResourceAuthController`   | `resource/auth`           | Protected resource zone                              |
-| `ResourceLobbyController`  | `resource/lobby` (public) | Unauthenticated resource zone                        |
-| `SendFormLobbyController`  | `send/lobby` (public)     | Receive public form submissions                      |
-| `SendAuthController`       | `send/auth`               | Receive authenticated form submissions               |
+| Controller                 | Endpoint area              | Purpose                                              |
+|----------------------------|----------------------------|------------------------------------------------------|
+| `HealthController`         | `/health`                  | Health probe used by Tuucho                         |
+| `ResourceAuthController`   | `/resource/auth`           | Protected resource zone                              |
+| `ResourceLobbyController`  | `/resource/lobby` (public) | Unauthenticated resource zone                        |
+| `SendFormLobbyController`  | `/send/lobby` (public)     | Receive public form submissions                      |
+| `SendAuthController`       | `/send/auth`               | Receive authenticated form submissions               |
+
+!!! info
+    The endpoint `/health`, `/resource` and `/send` must matches with those defined in the application. Check [Mobile Config](mobile-integration/config.md)
 
 ### Providers
 
@@ -91,8 +97,6 @@ This repository shows:
 - sample forms & actions
 - folder structure recommended for Tuucho
 
-It is the **fastest way** to experiment with Tuucho.
-
 ---
 
 **Requirements** You will need **Node.js v22 or later**.
@@ -106,6 +110,8 @@ It is the **fastest way** to experiment with Tuucho.
 ```
 git clone https://github.com/by-tezov/tuucho-backend
 ```
+
+Checkout on the desired Tag or used the lastest version on master.
 
 ### 2. Checkout the corresponding release branch
 
