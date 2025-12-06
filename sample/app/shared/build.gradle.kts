@@ -3,7 +3,7 @@ import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.convention.library.ui)
+    alias(libs.plugins.convention.shared.library)
     alias(libs.plugins.build.konfig)
 }
 

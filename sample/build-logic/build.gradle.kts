@@ -25,8 +25,8 @@ gradlePlugin {
             id = "${packageName}.application-ios"
             implementationClass = "${packageName}.${name}"
         }
-        register("LibraryUiPlugin") {
-            id = "${packageName}.library-ui"
+        register("SharedLibraryPlugin") {
+            id = "${packageName}.shared-library"
             implementationClass = "${packageName}.${name}"
         }
     }

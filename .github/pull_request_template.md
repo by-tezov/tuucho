@@ -15,12 +15,12 @@
 ---
 - [ ] : push trigger CI when on draft
 - **build type**:
-  - [ ] : ~~mock~~ broken
-  - [x] : dev
+  - [x] : mock broken
+  - [ ] : dev
   - [ ] : ~~stage~~ not available yet
   - [ ] : ~~release~~ not available yet
-- [ ] : static-analysis
-- [ ] : unit-test
+- [x] : static-analysis
+- [x] : unit-test
 ---
 **QA branch name** : master
 
@@ -29,7 +29,7 @@
 - **language**:
   - [x] : en
   - [ ] : fr
-- [ ] : Android test
+- [x] : Android test
   **device**:
   - [x] : android-36-simulator-fluxbox
   - [ ] : android-36-simulator-standalone

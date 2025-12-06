@@ -28,9 +28,9 @@ danger(args) {
    val body = github.pullRequest.body ?: ""
 
    // --- TITLE VALIDATION ---
-   val titleRegex = Regex("^(chore|feat|release|fix)\\s*-\\s*.+$", RegexOption.IGNORE_CASE)
+   val titleRegex = Regex("^(chore|feat|release|fix)\\s*/\\s*.+$", RegexOption.IGNORE_CASE)
    if (!titleRegex.matches(title)) {
-      fail("❌ PR title must start with one of: chore-, feat-, release-, fix-. Example: `feat - add login flow`")
+      fail("❌ PR title must start with one of: chore/, feat/, release/, fix-. Example: `feat / add login flow`")
    }
 
    // --- BODY VALIDATION ---

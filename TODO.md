@@ -1,7 +1,7 @@
 ## In progress
 
-*** ***
-- still need to fix mock server
+- Fail safe let it pass on mock
+- the do ios
  
 **** ****
 - Shadower

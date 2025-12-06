@@ -81,8 +81,8 @@ val generateProjectBuildConfigTask by tasks.registering {
         val file = outputDir.file("com/tezov/tuucho/project/BuildConfig.kt").asFile
         file.parentFile.mkdirs()
         val buildTypeResolved: String? = when {
-            !file.exists() -> buildTypeFound ?: "mock".also {
-                println("⚠️ buildType not found and BuildConfig didn't exist → create BuildConfig.kt with 'mock' build type")
+            !file.exists() -> buildTypeFound ?: "debug".also {
+                println("⚠️ buildType not found and BuildConfig didn't exist → create BuildConfig.kt with 'debug' build type")
             }
 
             buildTypeFound == null -> null.also {

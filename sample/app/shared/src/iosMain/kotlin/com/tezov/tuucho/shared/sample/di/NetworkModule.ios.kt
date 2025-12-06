@@ -7,9 +7,13 @@ import io.ktor.client.engine.darwin.Darwin
 
 internal object NetworkModuleIos {
 
-    fun invoke() = module(ModuleGroupCore.Main) {
-        factory<HttpClientEngineFactory<*>> {
-            Darwin
+    object FlavorDefault {
+        fun invoke() = module(ModuleGroupCore.Main) {
+            factory<HttpClientEngineFactory<*>> {
+                Darwin
+            }
         }
     }
+
+    fun invoke() = NetworkRepositoryModuleIosFlavor.invoke()
 }

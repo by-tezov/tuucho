@@ -32,6 +32,10 @@ public final class com/tezov/tuucho/core/data/repository/_system/reference/WeakR
 	public fun set (Ljava/lang/Object;)V
 }
 
+public abstract interface class com/tezov/tuucho/core/data/repository/assets/AssetsProtocol {
+	public abstract fun readFile (Ljava/lang/String;)Lokio/Source;
+}
+
 public abstract interface class com/tezov/tuucho/core/data/repository/database/Database : app/cash/sqldelight/Transacter {
 	public static final field Companion Lcom/tezov/tuucho/core/data/repository/database/Database$Companion;
 	public abstract fun getHookStatementQueries ()Lcom/tezov/tuucho/core/data/repository/database/statement/HookStatementQueries;

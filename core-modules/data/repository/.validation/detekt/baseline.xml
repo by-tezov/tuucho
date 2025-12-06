@@ -4,10 +4,6 @@
   <CurrentIssues>
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
-    <ID>MagicNumber:ResourceService.kt$ResourceService$200</ID>
-    <ID>MagicNumber:ResourceService.kt$ResourceService$3000</ID>
-    <ID>MagicNumber:ResourceService.kt$ResourceService$500</ID>
-    <ID>MagicNumber:SendService.kt$SendService$200</ID>
     <ID>MatchingDeclarationName:Assets.android.kt$AssetsAndroid : AssetsProtocol</ID>
     <ID>MatchingDeclarationName:Assets.ios.kt$AssetsIos : AssetsProtocol</ID>
     <ID>MatchingDeclarationName:AssetsModule.android.kt$AssetsModuleAndroid</ID>
@@ -22,15 +18,10 @@
     <ID>MatchingDeclarationName:MaterialRectifierModule.kt$Material</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.dev.kt$NetworkRepositoryModuleAndroidFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.kt$NetworkRepositoryModuleAndroid</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.android.mock.kt$NetworkRepositoryModuleAndroidFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.prod.kt$NetworkRepositoryModuleAndroidFlavor</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.android.stage.kt$NetworkRepositoryModuleAndroidFlavor</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.flavor.kt$NetworkRepositoryModuleFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.dev.kt$NetworkRepositoryModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.kt$NetworkRepositoryModuleIos</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.mock.kt$NetworkRepositoryModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.prod.kt$NetworkRepositoryModuleIosFlavor</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.stage.kt$NetworkRepositoryModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.android.kt$ReferenceFactoryAndroid : Factory</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.ios.kt$ReferenceFactoryIos : Factory</ID>
     <ID>MatchingDeclarationName:ResponseAssemblerModule.kt$Response</ID>
@@ -101,8 +92,6 @@
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
     <ID>ReturnCount:MaterialDatabaseSource.kt$MaterialDatabaseSource$@Suppress("RedundantSuspendModifier") suspend fun getRootJsonObjectEntityOrNull( url: String ): JsonObjectEntity?</ID>
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
-    <ID>TooGenericExceptionThrown:ResourceService.kt$ResourceService$throw Exception("unknown version $version")</ID>
-    <ID>TooGenericExceptionThrown:SendService.kt$SendService$throw Exception("unknown version $version")</ID>
     <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : MatcherRectifierProtocolTuuchoKoinScopeComponent</ID>
     <ID>TooManyFunctions:MaterialRectifierModule.kt$Material</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>

@@ -7,7 +7,6 @@ import java.util.Properties
 class ApplicationAndroidPlugin : AbstractConventionPlugin() {
 
     override fun applyPlugins(project: Project) {
-        super.applyPlugins(project)
         with(project) {
             pluginManager.apply(plugin(PluginId.androidApplication))
             pluginManager.apply(plugin(PluginId.koltinAndroid))
@@ -20,22 +19,14 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
         project: Project,
     ) {
         super.configure(project)
-        configureApplication(project)
-        configureProguard(project)
-        configureSigning(project)
-//            packaging {
-//                resources {
-//                    excludes += "/META-INF/{AL2.0,LGPL2.1}"
-//                    excludes += "/META-INF/LICENSE.md"
-//                    excludes += "/META-INF/LICENSE-notice.md"
-//                    excludes += "/META-INF/*.kotlin_module"
-//                }
-//            }
+        with(project) {
+            configureApplication()
+            configureProguard()
+            configureSigning()
+        }
     }
 
-    private fun configureApplication(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureApplication() {
         extensions.configure(ApplicationExtension::class.java) {
             namespace = namespace()
 
@@ -48,7 +39,7 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
         }
     }
 
-    private fun configureProguard(project: Project) = with(project) {
+    private fun Project.configureProguard() {
         extensions.configure(ApplicationExtension::class.java) {
             buildTypes {
                 getByName("prod") {
@@ -64,13 +55,11 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
         }
     }
 
-    private fun configureSigning(
-        project: Project,
-    ) = with(project) {
+    private fun Project.configureSigning() {
         val keystorePropertiesFile = rootProject.file(keystorePropertiesFilePath())
         if (!keystorePropertiesFile.exists()) {
             println("⚠️ No keystore.properties found. Signing will be skipped.")
-            return@with
+            return
         }
         extensions.configure(ApplicationExtension::class.java) {
             signingConfigs {
@@ -112,8 +101,8 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
                     create("mock") {
                         this.storeFile = storeFile
                         this.storePassword = storePassword
-                        keyAlias = getProperty("keyAliasDev")
-                            ?: error("Missing property: keyAliasDev")
+                        keyAlias = getProperty("keyAliasMock")
+                            ?: error("Missing property: keyAliasMock")
                         keyPassword = storePassword
                     }
                 }

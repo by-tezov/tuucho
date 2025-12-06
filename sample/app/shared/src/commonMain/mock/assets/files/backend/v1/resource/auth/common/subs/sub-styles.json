@@ -1,0 +1,82 @@
+{
+  "styles": {
+    "common": {
+      "title-label": {
+        "font-size": "*font@title",
+        "font-color": "*blue"
+      },
+      "title-body": {
+        "font-size": "*font@body",
+        "font-color": "*black"
+      },
+      "label-main-button-form": {
+        "font-size": {
+          "id": "*font@button"
+        },
+        "font-color": {
+          "id": "*green"
+        }
+      },
+      "label-main-button-help": {
+        "font-size": "*font@button",
+        "font-color": {
+          "id": "*gray"
+        }
+      },
+      "label-main-button-back": {
+        "font-size": {
+          "id": "*font@button"
+        },
+        "font-color": "*black"
+      },
+      "label-main-button-default": {
+        "font-size": {
+          "id": "*font@button"
+        },
+        "font-color": "*blue"
+      },
+      "item-spacer-48-v": {
+        "height": "48"
+      },
+      "item-spacer-24-v": {
+        "height": "24"
+      }
+    }
+  },
+  "colors": {
+    "common": {
+      "black": "#FF000000",
+      "gray": "#FFD9D9D9",
+      "red": "#FFFF0000",
+      "green": "#FF00FF00",
+      "blue": "#FF0000FF"
+    },
+    "background": {
+      "gray-light": "#FFD9D9D9",
+      "funny-color": "#FF66D9FF",
+      "why-not-color": "#FF789AC0",
+      "sunny-yellow": "#FFFFD966",
+      "crazy-orange": "#FFFF9966",
+      "minty-green": "#FF66FF99",
+      "royal-purple": "#FF9966FF",
+      "electric-pink": "#FFFF66CC",
+      "aqua-splash": {
+        "default": "#8833CCFF"
+      }
+    }
+  },
+  "dimensions": {
+    "font": {
+      "title": "32",
+      "body": "24",
+      "button": "16"
+    },
+    "padding": {
+      "spacer-24": "48",
+      "spacer-48": "24",
+      "spacer-fill-half": {
+        "default": "0.5"
+      }
+    }
+  }
+}

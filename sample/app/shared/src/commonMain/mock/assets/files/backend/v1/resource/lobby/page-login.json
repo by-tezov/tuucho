@@ -1,0 +1,153 @@
+{
+  "root": {
+    "setting": {
+      "navigation": {
+        "definition": {
+          "option": {
+            "clear-stack": true,
+            "single": true
+          },
+          "transition": "fade"
+        }
+      }
+    },
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "background-color": "*background@gray-light",
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        "*item-spacer",
+        {
+          "subset": "label",
+          "style": "*title-section",
+          "content": {
+            "value": "Please enter your credentials"
+          }
+        },
+        "*item-spacer-24-v",
+        {
+          "id": "input-field-login",
+          "subset": "form-field",
+          "option": {
+            "form-validator": "string-not-null"
+          },
+          "content": {
+            "title": "Login",
+            "placeholder": "login",
+            "message-error": "can not be null"
+          }
+        },
+        {
+          "id": "input-field-password",
+          "subset": "form-field",
+          "option": {
+            "form-validator": "string-not-null"
+          },
+          "content": {
+            "title": "Password",
+            "placeholder": "password",
+            "message-error": "can not be null"
+          }
+        },
+        "*item-spacer",
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": "*label-main-button-default",
+                    "content": {
+                      "value": "Connection"
+                    }
+                  },
+                  "action": "*button@confirm"
+                }
+              },
+              "*item-spacer"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "id": "item-spacer",
+      "subset": "spacer",
+      "style": {
+        "weight": "1.0"
+      }
+    },
+    {
+      "id": "item-spacer-24-v",
+      "subset": "spacer",
+      "style": {
+        "height": "*padding@spacer-24"
+      }
+    },
+    {
+      "id": "item-spacer-half",
+      "subset": "spacer",
+      "style": {
+        "weight": "0.2"
+      }
+    }
+  ],
+  "styles": {
+    "common": {
+      "title-section": {
+        "font-size": "18",
+        "font-color": "*red"
+      },
+      "label-main-button-default": {
+        "font-size": {
+          "id": "*font@button"
+        },
+        "font-color": "*blue"
+      }
+    }
+  },
+  "colors": {
+    "common": {
+      "red": "#FFFF0000",
+      "blue": "#FF0000FF"
+    },
+    "background": {
+      "gray-light": "#FFD9D9D9",
+      "funny-color": "#FF66D9FF"
+    }
+  },
+  "dimensions": {
+    "font": {
+      "button": "16"
+    },
+    "padding": {
+      "spacer-24": "24"
+    }
+  },
+  "actions": {
+    "button": {
+      "confirm": {
+        "primary": "form://send-url/form-from-page-login",
+        "validated": "navigate://url/auth/page-home"
+      }
+    }
+  },
+  "texts": {
+    "common": {
+      "login-init": "from here"
+    }
+  }
+}
