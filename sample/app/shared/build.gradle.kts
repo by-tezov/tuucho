@@ -1,6 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
-import io.kotzilla.gradle.ext.KotzillaKeyGeneration
 import java.util.Properties
 
 plugins {
@@ -51,12 +50,6 @@ buildkonfig {
     }
 }
 
-kotzilla {
-    versionName = "alpha22_2.2.1"
-    keyGeneration = KotzillaKeyGeneration.COMPOSE
-    composeInstrumentation = true
-}
-
 kotlin {
     sourceSets {
         androidMain.dependencies {
@@ -78,7 +71,7 @@ kotlin {
 
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
-            implementation(libs.kotzilla.sdk.compose)
+            implementation(libs.kotzilla.sdk)
             implementation(libs.ktor.core)
         }
     }

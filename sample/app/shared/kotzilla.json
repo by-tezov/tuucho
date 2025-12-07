@@ -2,10 +2,10 @@
   "sdkVersion": "1.4.0",
   "keys": [
     {
-      "appId": "019af8c6-fe06-7de0-8864-d472ad75c1d6",
+      "appId": "019af95b-e8e1-799d-92c6-20e1009b0e71",
       "applicationPackageName": "com.tezov.tuucho.sample.app.shared",
-      "keyId": "019af8c7-15a2-77ac-91b3-fa3a7671dbc8",
-      "apiKey": "ktz-sdk-OYqlYJZYFv1vSdtVJSn97nni4C7KhnmVstVsIo3VK1U"
+      "keyId": "019af95c-16fa-7f42-8ac7-58d496fb5d39",
+      "apiKey": "ktz-sdk-OpZhGuaj7wx-G6nZE7vcpEPuZJE9z6McaseLSxxSJnk"
     }
   ]
 }
