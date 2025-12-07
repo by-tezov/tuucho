@@ -7,16 +7,9 @@ import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
+import org.koin.core.KoinApplication
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
-import kotlin.collections.List
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.flatten
-import kotlin.collections.forEach
-import kotlin.collections.groupBy
-import kotlin.collections.listOf
-import kotlin.collections.map
 import kotlin.collections.plus
 
 internal expect fun SystemCoreModules.platformInvoke(): List<ModuleProtocol>
@@ -30,7 +23,8 @@ internal object SystemCoreModules {
     @OptIn(TuuchoInternalApi::class)
     @Composable
     fun remember(
-        applicationModules: List<ModuleProtocol>,
+        modules: List<ModuleProtocol>,
+        extension: (KoinApplication.() -> Unit)?
     ) = androidx.compose.runtime.remember {
         koinApplication {
             allowOverride(override = false)
@@ -39,7 +33,7 @@ internal object SystemCoreModules {
                 SystemCoreDataModules.invoke(),
                 SystemCoreUiModules.invoke(),
                 invoke(),
-                applicationModules,
+                modules,
             ).flatten().groupBy { it.group }
             modules(map.map { (_, modules) ->
                 module {
@@ -48,6 +42,7 @@ internal object SystemCoreModules {
                     }
                 }
             })
+            extension?.invoke(this)
         }.also { KoinContext.koinApplication = it }
     }
 }
