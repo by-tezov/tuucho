@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.di.KoinContext
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.presentation.ui.renderer.TuuchoEngineProtocol
 import org.koin.core.Koin
+import org.koin.core.KoinApplication
 
 val localTuuchoKoin: ProvidableCompositionLocal<Koin> = staticCompositionLocalOf {
     KoinContext.koin
@@ -17,11 +18,12 @@ val localTuuchoKoin: ProvidableCompositionLocal<Koin> = staticCompositionLocalOf
 
 @Composable
 fun TuuchoEngineStart(
-    applicationModules: List<ModuleProtocol>,
+    koinModules: List<ModuleProtocol>,
+    koinExtension: (KoinApplication.() -> Unit)? = null,
     onStartUrl: String
 ) {
     val tuuchoKoin = SystemCoreModules
-        .remember(applicationModules)
+        .remember(koinModules, koinExtension)
         .koin
 
     TuuchoBackHandler(tuuchoKoin)

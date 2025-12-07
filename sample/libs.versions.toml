@@ -20,11 +20,11 @@ build-konfig-plugin = "0.17.1"
 compose = "1.9.5"
 compose-activity = "1.12.0"
 
-
 #lib - platform
 kermit = "2.0.8"
 ktor = "3.3.3"
 koin = "4.1.1"
+kotzilla = "1.4.1"
 kotlin-serialization-json = "1.9.0"
 
 [libraries]
@@ -42,6 +42,7 @@ compose-activity = { group = "androidx.activity", name = "activity-compose", ver
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+kotzilla-sdk-compose = { group = "io.kotzilla", name = "kotzilla-sdk-compose", version.ref = "kotzilla" }
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 #lib - android
@@ -61,3 +62,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-pl
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
+kotzilla = { id = "io.kotzilla.kotzilla-plugin", version.ref = "kotzilla" }

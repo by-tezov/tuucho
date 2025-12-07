@@ -26,6 +26,7 @@ class SharedLibraryPlugin : AbstractConventionPlugin() {
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
             pluginManager.apply(plugin(PluginId.compose))
             pluginManager.apply(plugin(PluginId.composeCompiler))
+            pluginManager.apply(plugin(PluginId.kotzilla))
         }
     }
 
