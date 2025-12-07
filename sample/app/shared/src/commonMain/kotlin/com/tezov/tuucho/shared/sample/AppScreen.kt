@@ -8,7 +8,11 @@ import com.tezov.tuucho.shared.sample.di.SystemSharedModules
 @Composable
 fun AppScreen(
     applicationModules: List<ModuleProtocol>,
-) = TuuchoEngineStart(
-    applicationModules = SystemSharedModules.invoke() + applicationModules,
-    onStartUrl = "lobby/page-login"
-)
+) {
+    TuuchoEngineStart(
+        koinModules = SystemSharedModules.invoke() + applicationModules,
+        koinExtension = null,
+        onStartUrl = "lobby/page-login"
+    )
+
+}
