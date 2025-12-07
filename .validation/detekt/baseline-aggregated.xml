@@ -5,7 +5,7 @@
   <CurrentIssues>
     <!-- ************ Project: :core ************ -->
     <ID>FunctionNaming:TuuchoBackHandler.kt$@OptIn(ExperimentalComposeUiApi::class) @Composable internal fun TuuchoBackHandler( koin: Koin )</ID>
-    <ID>FunctionNaming:TuuchoEngineStart.kt$@Composable fun TuuchoEngineStart( applicationModules: List&lt;ModuleProtocol&gt;, onStartUrl: String )</ID>
+    <ID>FunctionNaming:TuuchoEngineStart.kt$@Composable fun TuuchoEngineStart( koinModules: List&lt;ModuleProtocol&gt;, koinExtension: (KoinApplication.() -&gt; Unit)? = null, onStartUrl: String )</ID>
     <ID>PackageNaming:CoroutineScopes.kt$package com.tezov.tuucho.core.barrel._system</ID>
     <!-- ************ Project: :core.data.repository ************ -->
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>

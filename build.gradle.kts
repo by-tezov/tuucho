@@ -428,3 +428,45 @@ tasks.register("rootPublishReleaseToMavenLocal") {
     }
     dependsOn(publishTasks)
 }
+
+tasks.register("updateAll") {
+    doLast {
+        fun run(vararg cmd: String) {
+            val process = ProcessBuilder(*cmd)
+                .inheritIO()
+                .start()
+            val exit = process.waitFor()
+            if (exit != 0) throw RuntimeException("Command failed: ${cmd.joinToString(" ")}")
+        }
+
+        run("./gradlew", "rootFormatKtLint")
+        run("./gradlew", "rootKtLintReport")
+        run("./gradlew", "rootDetektReport")
+        run("./gradlew", "rootValidateReleaseApi")
+        run("./gradlew", "rootDebugUnitTest")
+        run("./gradlew", "rootDebugCoverageReport")
+        run("./gradlew", "rootPublishReleaseToMavenLocal")
+    }
+}
+
+tasks.register("adminUpdateAll") {
+    doLast {
+        fun run(vararg cmd: String) {
+            val process = ProcessBuilder(*cmd)
+                .inheritIO()
+                .start()
+            val exit = process.waitFor()
+            if (exit != 0) throw RuntimeException("Command failed: ${cmd.joinToString(" ")}")
+        }
+
+        run("./gradlew", "rootFormatKtLint")
+        run("./gradlew", "rootKtLintReport")
+        run("./gradlew", "rootUpdateDetektBaseline")
+        run("./gradlew", "rootDetektReport")
+        run("./gradlew", "rootUpdateReleaseApi")
+        run("./gradlew", "rootValidateReleaseApi")
+        run("./gradlew", "rootDebugUnitTest")
+        run("./gradlew", "rootDebugCoverageReport")
+        run("./gradlew", "rootPublishReleaseToMavenLocal")
+    }
+}
