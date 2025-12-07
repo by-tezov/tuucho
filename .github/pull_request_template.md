@@ -15,7 +15,7 @@
 ---
 - [ ] : push trigger CI when on draft
 - **build type**:
-  - [x] : mock broken
+    - [x] : mock
   - [ ] : dev
   - [ ] : ~~stage~~ not available yet
   - [ ] : ~~release~~ not available yet

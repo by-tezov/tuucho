@@ -1,6 +1,6 @@
 ************ Project: :core ************
 public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
-	public static final fun TuuchoEngineStart (Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+	public static final fun TuuchoEngineStart (Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 	public static final fun getLocalTuuchoKoin ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
@@ -39,7 +39,7 @@ final val com.tezov.tuucho.core.barrel/localTuuchoKoin // com.tezov.tuucho.core.
 
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol>, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol>;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol>, kotlin/Function1<org.koin.core/KoinApplication, kotlin/Unit>?, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol>;kotlin.Function1<org.koin.core.KoinApplication,kotlin.Unit>?;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 
 
 ************ Project: :core.data.repository ************
