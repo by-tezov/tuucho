@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.id
 
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsAnyTypeOf
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
@@ -12,7 +12,7 @@ import kotlinx.serialization.json.JsonElement
 
 @OptIn(TuuchoExperimentalAPI::class)
 class IdMatcher :
-    MatcherRectifierProtocol,
+    RectifierMatcherProtocol,
     TuuchoKoinComponent {
     private val types = listOf(
         TypeSchema.Value.component,

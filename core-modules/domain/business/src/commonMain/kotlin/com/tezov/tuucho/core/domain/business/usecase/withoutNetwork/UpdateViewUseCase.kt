@@ -19,7 +19,7 @@ class UpdateViewUseCase(
 ) : UseCaseProtocol.Async<Input, Unit> {
     data class Input(
         val route: NavigationRoute,
-        val jsonObject: JsonObject,
+        val jsonObjects: List<JsonObject>,
     )
 
     override suspend fun invoke(
@@ -37,9 +37,9 @@ class UpdateViewUseCase(
 
     private fun terminalMiddleware(): UpdateViewMiddleware = UpdateViewMiddleware { context, _ ->
         with(context.input) {
-            val view = navigationScreenStackRepository.getScreenOrNull(route)
+            val screen = navigationScreenStackRepository.getScreenOrNull(route)
             coroutineScopes.renderer.await {
-                view?.update(jsonObject)
+                screen?.update(jsonObjects)
             }
         }
     }

@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.Dp
 import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
-import com.tezov.tuucho.core.presentation.tool.modifier.thenOnTrue
+import com.tezov.tuucho.core.presentation.tool.modifier.thenIfTrue
 import androidx.compose.ui.graphics.Color as ColorImport
 
 fun Modifier.border(
@@ -28,7 +28,7 @@ fun Modifier.border(
     clip: Boolean = true,
 ) = border?.let {
     sketch?.let {
-        thenOnTrue(clip) {
+        thenIfTrue(clip) {
             clip(sketch.shape)
         }.border(border, sketch.shape)
     } ?: kotlin.run {

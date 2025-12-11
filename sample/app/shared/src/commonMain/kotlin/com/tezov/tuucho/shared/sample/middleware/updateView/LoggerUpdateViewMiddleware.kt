@@ -20,7 +20,7 @@ class LoggerUpdateViewMiddleware(
                 buildString {
                     appendLine(route)
                     appendLine("-- input --")
-                    appendLine(jsonObject.toString())
+                    appendLine(jsonObjects.toString())
                 }
             }
             next?.invoke(context)

@@ -16,18 +16,18 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.scope.Scope
 
-// Improve add meta data 'path' for breaker, assembler and shadower to improve speed
+// IMPROVE add meta data 'path' for breaker, assembler and shadower to improve speed
 @TuuchoExperimentalAPI
 abstract class AbstractRectifier(
     private val _scope: Scope? = null
-) : MatcherRectifierProtocol,
+) : RectifierMatcherProtocol,
     TuuchoKoinScopeComponent {
     abstract val key: String
 
     override val scope: Scope
         get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
 
-    protected open val matchers: List<MatcherRectifierProtocol> = emptyList()
+    protected open val matchers: List<RectifierMatcherProtocol> = emptyList()
     protected open val childProcessors: List<AbstractRectifier> = emptyList()
 
     override fun accept(

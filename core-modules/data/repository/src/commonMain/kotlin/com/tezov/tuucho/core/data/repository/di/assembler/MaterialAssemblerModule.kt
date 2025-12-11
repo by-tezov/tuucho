@@ -9,9 +9,9 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material.OptionAss
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StateAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear.ContentLayoutLinearItemsMatcher
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear.ContentLayoutLinearItemsAssemblerMatcher
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.MatcherAssemblerProtocol
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerMatcherProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.dsl.ScopeDSL
 
@@ -40,12 +40,13 @@ object Material {
     private fun ScopeDSL.componentModule() {
         factory<ComponentAssembler> { ComponentAssembler(scope = this) }
 
-        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COMPONENT) {
+        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.COMPONENT) {
             listOf(
-                ContentLayoutLinearItemsMatcher()
+                ContentLayoutLinearItemsAssemblerMatcher()
             )
         }
 
+        // Used for contextual
         factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.COMPONENT) {
             listOf(
                 get<ContentAssembler>(),
@@ -100,7 +101,7 @@ object Material {
     private fun ScopeDSL.textModule() {
         factory<TextAssembler> { TextAssembler(scope = this) }
 
-        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
+        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
             emptyList()
         }
     }
@@ -108,7 +109,7 @@ object Material {
     private fun ScopeDSL.colorModule() {
         factory<ColorAssembler> { ColorAssembler(scope = this) }
 
-        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.COLOR) {
+        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.COLOR) {
             emptyList()
         }
     }
@@ -116,7 +117,7 @@ object Material {
     private fun ScopeDSL.dimensionModule() {
         factory<DimensionAssembler> { DimensionAssembler(scope = this) }
 
-        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.DIMENSION) {
+        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.DIMENSION) {
             emptyList()
         }
     }
@@ -124,7 +125,7 @@ object Material {
     private fun ScopeDSL.actionModule() {
         factory<ActionAssembler> { ActionAssembler(scope = this) }
 
-        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
+        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
             emptyList()
         }
     }

@@ -24,7 +24,7 @@ internal object NavigationModule {
         single<NavigationRepositoryProtocol.StackScreen> {
             NavigationStackScreenRepository(
                 coroutineScopes = get(),
-                screenRenderer = get()
+                screenFactory = get()
             )
         }
 

@@ -9,6 +9,7 @@ import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.tezov.tuucho.core.domain.tool.async.Notifier
@@ -70,7 +71,7 @@ class AnimationProgress private constructor() {
             spring()
         },
     ): State<Float> {
-        val clampedValue = remember { mutableStateOf(startValue) }
+        val clampedValue = remember { mutableFloatStateOf(startValue) }
         val animatedFloat = transition.animateFloat(
             transitionSpec = {
                 when (transitionState.value.targetState) {
@@ -84,7 +85,7 @@ class AnimationProgress private constructor() {
                 else -> endValue
             }
         }
-        clampedValue.value = when (transitionState.value.targetState) {
+        clampedValue.floatValue = when (transitionState.value.targetState) {
             Step.Running -> animatedFloat.value
             Step.Initial, Step.Head -> startValue
             Step.Tail -> endValue

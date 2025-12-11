@@ -1,15 +1,13 @@
 package com.tezov.tuucho.core.domain.business.validator.formValidator
 
-import kotlinx.serialization.json.JsonObject
-
 class StringMinDigitLengthFormValidator(
-    errorMessages: JsonObject,
+    errorMessagesId: String?,
     private val length: Int,
-) : AbstractFormValidator<String>(errorMessages) {
+) : AbstractFormValidator<String>(errorMessagesId) {
     override fun updateValidity(
-        value: String
+        value: String?
     ) {
-        val digitCount = value.count { it.isDigit() }
+        val digitCount = value?.count { it.isDigit() } ?: 0
         isValid = digitCount >= length
     }
 }

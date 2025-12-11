@@ -43,6 +43,7 @@ internal object UseCaseModule {
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
+                retrieveMaterialRepository = get(),
                 shadowerMaterialRepository = get(),
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()

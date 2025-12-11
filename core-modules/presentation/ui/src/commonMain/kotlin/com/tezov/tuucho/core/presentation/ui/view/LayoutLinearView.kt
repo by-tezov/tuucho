@@ -1,0 +1,101 @@
+package com.tezov.tuucho.core.presentation.ui.view
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
+import com.tezov.tuucho.core.presentation.tool.modifier.then
+import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
+import com.tezov.tuucho.core.presentation.ui._system.subset
+import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.color
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.BooleanProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.StringProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.boolean
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.mutable
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.string
+import com.tezov.tuucho.core.presentation.ui.render.projection.mutable
+import com.tezov.tuucho.core.presentation.ui.render.projection.view.ViewsProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.view.views
+import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
+import com.tezov.tuucho.core.presentation.ui.render.projector.content
+import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
+import com.tezov.tuucho.core.presentation.ui.render.projector.style
+import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import kotlinx.serialization.json.JsonObject
+
+class LayoutLinearViewFactory : ViewFactoryProtocol {
+    override fun accept(
+        componentObject: JsonObject
+    ) = componentObject.subset == LayoutLinearSchema.Component.Value.subset
+
+    override suspend fun process(
+        screenContext: ScreenContextProtocol,
+    ) = LayoutLinearView(
+        screenContext = screenContext,
+    )
+}
+
+class LayoutLinearView(
+    screenContext: ScreenContextProtocol,
+) : AbstractView(screenContext) {
+    private lateinit var backgroundColor: ColorProjectionProtocol
+    private lateinit var orientation: StringProjectionProtocol
+    private lateinit var fillMaxSize: BooleanProjectionProtocol
+    private lateinit var fillMaxWidth: BooleanProjectionProtocol
+    private lateinit var itemViews: ViewsProjectionProtocol
+
+    override suspend fun createComponentProjector() = componentProjector {
+        +style {
+            backgroundColor = +color(Style.Key.backgroundColor).mutable
+            orientation = +string(Style.Key.orientation).mutable
+            fillMaxSize = +boolean(Style.Key.fillMaxSize).mutable
+            fillMaxWidth = +boolean(Style.Key.fillMaxWidth).mutable
+        }.contextual
+        +content {
+            itemViews = +views(
+                LayoutLinearSchema.Content.Key.items,
+                screenContext = screenContext
+            )
+        }.contextual
+    }.contextual
+
+    override fun getResolvedStatus() = itemViews.hasBeenResolved.isTrueOrNull
+
+    @Composable
+    override fun displayComponent(
+        scope: Any?
+    ) {
+        val modifier = Modifier
+            .then {
+                ifTrue(fillMaxSize.value) {
+                    fillMaxSize()
+                } or ifTrue(fillMaxWidth.value) {
+                    fillMaxWidth()
+                }
+            }
+            .thenIfNotNull(backgroundColor.value) { background(it) }
+
+        when (orientation.value) {
+            Orientation.horizontal -> {
+                Row(modifier = modifier) {
+                    itemViews.views.forEach { it.value?.display(this@Row) }
+                }
+            }
+
+            else -> {
+                Column(modifier = modifier) {
+                    itemViews.views.forEach { it.value?.display(this@Column) }
+                }
+            }
+        }
+    }
+}

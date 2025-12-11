@@ -120,16 +120,16 @@
             {
               "type": "string-min-value",
               "value": "18",
-              "id-message-error": "*validator-1"
+              "message-error-id": "*validator-1"
             },
             {
               "type": "string-max-value",
               "value": "65",
-              "id-message-error": "*validator-2"
+              "message-error-id": "*validator-2"
             },
             {
               "type": "string-not-null",
-              "id-message-error": "*validator-4"
+              "message-error-id": "*validator-4"
             }
           ]
         },
@@ -158,11 +158,11 @@
           "validator": [
             {
               "type": "string-email",
-              "id-message-error": "*validator-1"
+              "message-error-id": "*validator-1"
             },
             {
               "type": "string-not-null",
-              "id-message-error": "*validator-2"
+              "message-error-id": "*validator-2"
             }
           ]
         },

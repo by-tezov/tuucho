@@ -1,0 +1,124 @@
+package com.tezov.tuucho.core.presentation.ui.render.projector
+
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
+import com.tezov.tuucho.core.presentation.ui.exception.UiException
+import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateSetterProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProcessorProjectorProtocol
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+
+interface TypeProjectorProtocols :
+    IdProcessorProtocol,
+    TypeProcessorProjectorProtocol,
+    HasUpdatableProtocol,
+    RequestViewUpdateProtocols {
+    operator fun <T : ProjectionProcessorProtocol> T.unaryPlus() = this.also { add(it) }
+}
+
+@TuuchoUiDsl
+class TypeProjector(
+    private val idProcessor: IdProcessorProtocol,
+    override val type: String
+) : TypeProjectorProtocols,
+    IdProcessorProtocol by idProcessor {
+    private val projections = mutableMapOf<String, ProjectionProcessorProtocol>()
+
+    override var requestViewUpdateInvoker: RequestViewUpdateInvokerProtocol? = null
+        private set
+
+    override val updatables: List<UpdatableProcessorProtocol>
+        get() = buildList {
+            projections.forEach { (_, value) ->
+                if (value is UpdatableProcessorProtocol) {
+                    add(value)
+                }
+            }
+        }
+
+    override fun add(
+        projection: ProjectionProcessorProtocol
+    ) {
+        if (projections.contains(projection.key)) {
+            throw UiException.Default("Error, key ${projection.key} already exist for type $type")
+        }
+        projections[projection.key] = projection
+        (projection as? RequestViewUpdateSetterProtocol)?.let { status ->
+            status.setRequestViewUpdater(value = { requestViewUpdateInvoker?.invokeRequestViewUpdate() })
+        }
+    }
+
+    override suspend fun process(
+        jsonElement: JsonElement?
+    ) {
+        if (jsonElement !is JsonObject) return
+        idProcessor.process(jsonElement)
+        projections.forEach { (key, projection) ->
+            jsonElement[key]
+                ?.let { childJsonElement ->
+                    projection.process(childJsonElement)
+                }
+        }
+    }
+
+    override fun setRequestViewUpdater(value: RequestViewUpdateInvokerProtocol) {
+        requestViewUpdateInvoker = value
+    }
+
+    override fun invokeRequestViewUpdate() {
+        requestViewUpdateInvoker?.invokeRequestViewUpdate()
+    }
+}
+
+private class ContextualTypeProjector(
+    private val delegate: TypeProjectorProtocols
+) : TypeProjectorProtocols by delegate,
+    UpdatableProcessorProtocol {
+    override val type get() = delegate.type
+
+    override val updatables: List<UpdatableProcessorProtocol>
+        get() = buildList {
+            add(this@ContextualTypeProjector)
+            addAll(delegate.updatables)
+        }
+}
+
+fun ComponentProjectorProtocols.option(
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols = TypeProjector(
+    type = TypeSchema.Value.option,
+    idProcessor = IdProcessor()
+).also { it.block() }
+
+fun ComponentProjectorProtocols.style(
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols = TypeProjector(
+    type = TypeSchema.Value.style,
+    idProcessor = IdProcessor()
+).also { it.block() }
+
+fun ComponentProjectorProtocols.content(
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols = TypeProjector(
+    type = TypeSchema.Value.content,
+    idProcessor = IdProcessor()
+).also { it.block() }
+
+fun ComponentProjectorProtocols.state(
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols = TypeProjector(
+    type = TypeSchema.Value.state,
+    idProcessor = IdProcessor()
+).also { it.block() }
+
+val TypeProjectorProtocols.contextual
+    get(): TypeProjectorProtocols = ContextualTypeProjector(
+        delegate = this,
+    )

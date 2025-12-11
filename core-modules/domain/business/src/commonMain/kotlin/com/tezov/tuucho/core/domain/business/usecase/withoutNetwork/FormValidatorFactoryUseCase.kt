@@ -37,39 +37,39 @@ class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
             validator = prototypeObject.withScope(FormValidatorSchema::Scope).let {
                 when (it.type) {
                     Type.stringMinLength -> StringMinLengthFormValidator(
-                        errorMessages = it.messageError!!,
+                        errorMessagesId = it.messageErrorId,
                         length = it.length!!.toInt()
                     )
 
                     Type.stringMaxLength -> StringMaxLengthFieldFormValidator(
-                        errorMessages = it.messageError!!,
+                        errorMessagesId = it.messageErrorId,
                         length = it.length!!.toInt()
                     )
 
                     Type.stringMinDigitLength -> StringMinDigitLengthFormValidator(
-                        errorMessages = it.messageError!!,
+                        errorMessagesId = it.messageErrorId,
                         length = it.length!!.toInt()
                     )
 
                     Type.stringOnlyDigits -> StringOnlyDigitsFormValidator(
-                        errorMessages = it.messageError!!
+                        errorMessagesId = it.messageErrorId
                     )
 
                     Type.stringEmail -> StringEmailFormValidator(
-                        errorMessages = it.messageError!!
+                        errorMessagesId = it.messageErrorId
                     )
 
                     Type.stringNotNull -> StringNotNullFormValidator(
-                        errorMessages = it.messageError!!
+                        errorMessagesId = it.messageErrorId
                     )
 
                     Type.stringMinValue -> StringMinValueFormValidator(
-                        errorMessages = it.messageError!!,
+                        errorMessagesId = it.messageErrorId,
                         minValue = it.value!!.toInt()
                     )
 
                     Type.stringMaxValue -> StringMaxValueFormValidator(
-                        errorMessages = it.messageError!!,
+                        errorMessagesId = it.messageErrorId,
                         maxValue = it.value!!.toInt()
                     )
 
