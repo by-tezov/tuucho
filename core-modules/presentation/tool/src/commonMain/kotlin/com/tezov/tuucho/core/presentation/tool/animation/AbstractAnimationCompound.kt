@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.presentation.tool.delegate.DelegateNullFallBack
 
 abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
-    private val animators: MutableMap<KEY, Animator<Any>> = mutableMapOf<KEY, Animator<Any>>(),
+    private val animators: MutableMap<KEY, Animator<Any>> = mutableMapOf(),
 ) {
     interface Animator<STEP_PARENT : Any> {
         @Composable
@@ -55,12 +55,12 @@ abstract class AbstractAnimationCompound<KEY : Any, STEP_PARENT : Any>(
         key: KEY,
         animator: Animator<*>
     ) {
-        animators.put(key, animator as Animator<Any>)
+        animators[key] = animator as Animator<Any>
     }
 
     fun get(
         key: KEY
-    ): Animator<*>? = animators.getValue(key)
+    ): Animator<*> = animators.getValue(key)
 
     fun start() {
         with(step) {

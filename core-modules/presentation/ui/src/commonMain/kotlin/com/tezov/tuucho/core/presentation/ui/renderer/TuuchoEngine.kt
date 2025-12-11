@@ -50,9 +50,9 @@ class TuuchoEngine(
     private val registerToScreenTransitionEvent: RegisterToScreenTransitionEventUseCase,
     private val notifyNavigationTransitionCompleted: NotifyNavigationTransitionCompletedUseCase,
     private val getScreensFromRoutes: GetScreensFromRoutesUseCase,
-) : com.tezov.tuucho.core.presentation.ui.renderer.TuuchoEngineProtocol {
+) : TuuchoEngineProtocol {
     private data class Group(
-        val screens: List<com.tezov.tuucho.core.presentation.ui.renderer.screen._system.ScreenProtocol>,
+        val screens: List<ScreenProtocol>,
         val transitionSpecObject: JsonObject,
     )
 
@@ -125,7 +125,7 @@ class TuuchoEngine(
             transitionSpecObject = event.backgroundGroup.transitionSpecObject
         )
         transitionRequested = true
-        redrawTrigger.intValue = redrawTrigger.intValue + 1
+        redrawTrigger.intValue += 1
     }
 
     private suspend fun onIdleEvent(
@@ -147,7 +147,7 @@ class TuuchoEngine(
         )
         backgroundGroup = null
         transitionRequested = false
-        redrawTrigger.intValue = redrawTrigger.intValue + 1
+        redrawTrigger.intValue += 1
     }
 
     @Composable

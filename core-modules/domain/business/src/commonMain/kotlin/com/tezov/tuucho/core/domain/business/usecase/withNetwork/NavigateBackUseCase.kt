@@ -63,12 +63,10 @@ class NavigateBackUseCase(
         route: NavigationRoute.Url,
         context: NavigationMiddleware.Back.Context
     ) {
-        val view = navigationStackScreenRepository
+        val screen = navigationStackScreenRepository
             .getScreenOrNull(route)
-            ?.view
             ?: return
-        val componentObject = view.componentObject
-        val componentSettingScope = componentObject
+        val componentSettingScope = screen.componentObject
             .onScope(ComponentSettingSchema.Root::Scope)
         val settingShadowerScope = componentSettingScope
             .shadower
@@ -83,11 +81,11 @@ class NavigateBackUseCase(
                     shadowerMaterialRepository
                         .process(
                             url = route.value,
-                            componentObject = componentObject,
+                            componentObject = screen.componentObject,
                             types = listOf(Shadower.Type.contextual)
                         ).forEach {
                             coroutineScopes.renderer.await {
-                                view.update(it.jsonObject)
+                                screen.update(it.jsonObject)
                             }
                         }
                 }

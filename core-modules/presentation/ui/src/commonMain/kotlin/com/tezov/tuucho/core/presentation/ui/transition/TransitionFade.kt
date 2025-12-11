@@ -14,7 +14,7 @@ import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifier
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import kotlinx.serialization.json.JsonObject
 
-object TransitionFade {
+internal object TransitionFade {
     class Spec(
         val duration: Int,
         val alphaInitial: Float,

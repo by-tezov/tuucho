@@ -10,7 +10,7 @@ object ApplicationModule {
     fun invoke(
         applicationContext: Context
     ) = module(ModuleGroupCore.Main) {
-        single<Context>(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT) {
+        factory<Context>(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT) {
             applicationContext
         }
     }
