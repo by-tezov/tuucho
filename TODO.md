@@ -1,5 +1,11 @@
 ## In progress
 
+- Form...todo
+    - code projector, projectable and projection for status
+    - addProjector loop should be done from outside screen to be extensible
+
+- Screen protocol internal
+
 **** ****
 - Shadower
     // do not crash application but 

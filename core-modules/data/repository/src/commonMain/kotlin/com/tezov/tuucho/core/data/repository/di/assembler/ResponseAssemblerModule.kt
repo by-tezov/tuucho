@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.data.repository.di.assembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.MatcherAssemblerProtocol
-import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormActionMatcher
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerMatcherProtocol
+import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormActionAssemblerMatcher
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormFailureReasonTextMatcher
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
@@ -30,14 +30,14 @@ object Response {
     }
 
     private fun ScopeDSL.formModule() {
-        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
+        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
             listOf(
                 FormFailureReasonTextMatcher()
             )
         }
-        factory<List<MatcherAssemblerProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
+        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
             listOf(
-                FormActionMatcher()
+                FormActionAssemblerMatcher()
             )
         }
     }

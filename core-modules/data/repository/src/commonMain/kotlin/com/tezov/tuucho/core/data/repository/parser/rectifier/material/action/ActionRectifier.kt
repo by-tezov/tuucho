@@ -2,8 +2,8 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.action
 
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
@@ -26,7 +26,7 @@ class ActionRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
     override val key = ActionSchema.root
-    override val matchers: List<MatcherRectifierProtocol> by inject(
+    override val matchers: List<RectifierMatcherProtocol> by inject(
         RectifierModule.Name.Matcher.ACTION
     )
 

@@ -35,6 +35,4 @@ object TypeSchema {
         override val root = TypeSchema.root
         var self by delegate<String?>(root)
     }
-
-
 }

@@ -4,7 +4,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element
 
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
@@ -28,7 +28,7 @@ class FormValidatorRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
     override val key = FormValidatorSchema.root
-    override val matchers: List<MatcherRectifierProtocol> by inject(
+    override val matchers: List<RectifierMatcherProtocol> by inject(
         RectifierModule.Name.Matcher.FIELD_VALIDATOR
     )
 
@@ -78,16 +78,16 @@ class FormValidatorRectifier(
         val scope = jsonObject.withScope(FormValidatorSchema::Scope)
         var idMessageErrorRectified: String? = null
         with(scope) {
-            if (idMessageError?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
-                idMessageErrorRectified = idMessageError
+            if (messageErrorId?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
+                idMessageErrorRectified = messageErrorId
                     ?.removePrefix(SymbolData.ID_REF_INDICATOR)
             }
-            idMessageErrorRectified = (idMessageErrorRectified ?: scope.idMessageError)
+            idMessageErrorRectified = (idMessageErrorRectified ?: scope.messageErrorId)
                 ?.takeIf { !it.hasGroup() }
                 ?.addGroup(TextSchema.Value.Group.common)
         }
         idMessageErrorRectified?.let {
-            scope.idMessageError = idMessageErrorRectified
+            scope.messageErrorId = idMessageErrorRectified
         }
         scope.collect()
     })

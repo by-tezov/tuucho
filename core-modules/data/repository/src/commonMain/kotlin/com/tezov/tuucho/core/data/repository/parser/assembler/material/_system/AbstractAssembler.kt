@@ -20,7 +20,7 @@ import org.koin.core.scope.Scope
 @TuuchoExperimentalAPI
 abstract class AbstractAssembler(
     private val _scope: Scope? = null
-) : MatcherAssemblerProtocol,
+) : AssemblerMatcherProtocol,
     TuuchoKoinScopeComponent {
     abstract val schemaType: String
 
@@ -29,7 +29,7 @@ abstract class AbstractAssembler(
 
     private val jsonObjectMerger: JsonObjectMerger by inject()
 
-    protected open val matchers: List<MatcherAssemblerProtocol> = emptyList()
+    protected open val matchers: List<AssemblerMatcherProtocol> = emptyList()
     protected open val childProcessors: List<AbstractAssembler> = emptyList()
 
     private fun <T> List<T>.singleOrThrow(

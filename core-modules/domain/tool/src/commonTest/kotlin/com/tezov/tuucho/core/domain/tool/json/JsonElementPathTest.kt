@@ -22,9 +22,9 @@ class JsonElementPathTest {
     }
 
     @Test
-    fun `leading separators are trimmed`() {
+    fun `leading and trailing separators are trimmed`() {
         val path = JsonElementPath("/a/b/c/")
-        assertEquals("a/b/c/", path.toString())
+        assertEquals("a/b/c", path.toString())
     }
 
     @Test
@@ -105,6 +105,6 @@ class JsonElementPathTest {
     @Test
     fun `toString returns normalized path`() {
         val path = JsonElementPath("/a//b/c/")
-        assertEquals("a/b/c/", path.toString())
+        assertEquals("a/b/c", path.toString())
     }
 }

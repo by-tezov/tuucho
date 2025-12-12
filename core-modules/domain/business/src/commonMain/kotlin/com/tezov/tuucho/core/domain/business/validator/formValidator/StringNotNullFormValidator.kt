@@ -1,13 +1,11 @@
 package com.tezov.tuucho.core.domain.business.validator.formValidator
 
-import kotlinx.serialization.json.JsonObject
-
 class StringNotNullFormValidator(
-    errorMessages: JsonObject,
-) : AbstractFormValidator<String>(errorMessages) {
+    errorMessagesId: String?,
+) : AbstractFormValidator<String>(errorMessagesId) {
     override fun updateValidity(
-        value: String
+        value: String?
     ) {
-        isValid = value.isNotEmpty()
+        isValid = !value.isNullOrBlank()
     }
 }

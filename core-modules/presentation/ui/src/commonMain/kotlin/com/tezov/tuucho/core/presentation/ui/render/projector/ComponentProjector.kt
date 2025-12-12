@@ -1,0 +1,32 @@
+package com.tezov.tuucho.core.presentation.ui.render.projector
+
+import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectorProtocol
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+
+@TuuchoUiDsl
+class ComponentProjector : ComponentProjectorProtocol {
+
+    private val projectors: MutableList<ProjectorProtocol> = mutableListOf()
+
+    override fun add(projector: ProjectorProtocol) {
+        projectors.add(projector)
+    }
+
+    override suspend fun process(
+        jsonElement: JsonElement?
+    ) {
+        if (jsonElement !is JsonObject) return
+        projectors.forEach { projector ->
+            jsonElement[projector.type]
+                ?.let { childJsonElement -> projector.process(childJsonElement) }
+        }
+    }
+}
+
+fun componentProjector(
+    block: ComponentProjectorProtocol.() -> Unit
+): ComponentProjectorProtocol = ComponentProjector()
+    .also { it.block() }
