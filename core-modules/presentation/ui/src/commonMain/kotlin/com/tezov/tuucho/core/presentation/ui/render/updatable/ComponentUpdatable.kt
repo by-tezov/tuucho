@@ -9,19 +9,17 @@ import kotlinx.serialization.json.JsonElement
 class ComponentUpdatable(
     private val componentProjector: ComponentProjectorProtocol
 ) : UpdatableProtocol {
-
     override val type = TypeSchema.Value.component
 
     override lateinit var id: String
 
-    override suspend fun process(jsonElement: JsonElement?) {
-        if(!this::id.isInitialized) {
+    override suspend fun process(
+        jsonElement: JsonElement?
+    ) {
+        if (!this::id.isInitialized) {
             jsonElement?.idValue?.let { id = it }
-        }
-        else {
+        } else {
             componentProjector.process(jsonElement)
         }
-
     }
-
 }

@@ -9,13 +9,22 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 
-object ViewsProjection : TuuchoKoinComponent {
-    private suspend fun getValue(
-        jsonElement: JsonElement?,
-        key: String,
-        screen: Screen,
-        parentPath: JsonElementPath,
-    ): List<ViewProtocol>? = (jsonElement as? JsonArray)
+interface ViewsProjectionProtocol : ProjectionProtocols<List<ViewProtocol>>
+
+class ViewsProjection(
+    key: String,
+    private val screen: Screen,
+    private val parentPath: JsonElementPath,
+) : ViewsProjectionProtocol,
+    ProjectionProtocols<List<ViewProtocol>> by Projection(
+        key = key,
+        storage = Projection.Static()
+    ),
+    TuuchoKoinComponent {
+
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = (jsonElement as? JsonArray)
         ?.let { componentsArray ->
             val factories = getKoin().getAll<ViewFactoryProtocol>()
             buildList {
@@ -31,24 +40,10 @@ object ViewsProjection : TuuchoKoinComponent {
                 }
             }
         }
-
-    class Static(
-        override val key: String,
-        private val screen: Screen,
-        private val parentPath: JsonElementPath,
-    ) : Projection.AbstractStatic<List<ViewProtocol>>(key) {
-        override suspend fun getValue(
-            jsonElement: JsonElement?
-        ) = getValue(jsonElement, key, screen, parentPath)
-    }
-
-    class Mutable(
-        override val key: String,
-        private val screen: Screen,
-        private val parentPath: JsonElementPath,
-    ) : Projection.AbstractMutable<List<ViewProtocol>>(key) {
-        override suspend fun getValue(
-            jsonElement: JsonElement?
-        ) = getValue(jsonElement, key, screen, parentPath)
-    }
 }
+
+fun createViewsProjection(
+    key: String,
+    screen: Screen,
+    parentPath: JsonElementPath,
+): ViewsProjectionProtocol = ViewsProjection(key, screen, parentPath)

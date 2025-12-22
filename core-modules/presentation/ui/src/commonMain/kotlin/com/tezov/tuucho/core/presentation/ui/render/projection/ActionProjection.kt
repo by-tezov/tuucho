@@ -1,23 +1,34 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
-import androidx.compose.runtime.MutableState
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.presentation.ui._system.idValue
+import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-object ActionProjection : TuuchoKoinComponent {
+interface ActionProjectionProtocol : ProjectionProtocols<() -> Unit>
 
-    private fun getValue(
-        jsonElement: JsonElement?,
-        route: NavigationRoute,
-    ): (() -> Unit)? = (jsonElement as? JsonObject)
+class ActionProjection(
+    key: String,
+    private val route: NavigationRoute,
+    storage: ProjectionStorageProtocol<() -> Unit>,
+) : ActionProjectionProtocol,
+    ProjectionProtocols<() -> Unit> by Projection(
+        key = key,
+        storage = storage
+    ),
+    TuuchoKoinComponent {
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = (jsonElement as? JsonObject)
         ?.let { actionObject ->
             val koin = getKoin()
             val coroutineScopes = koin.get<CoroutineScopesProtocol>()
@@ -53,25 +64,39 @@ object ActionProjection : TuuchoKoinComponent {
             }
             action
         }
+}
 
-    class Static(
-        key: String,
-        private val route: NavigationRoute
-    ) : Projection.AbstractStatic<() -> Unit>(key) {
+private class ContextualActionProjection(
+    private val delegate: ActionProjectionProtocol
+) : ActionProjectionProtocol by delegate,
+    UpdatableProtocol {
+    override val type = TypeSchema.Value.action
 
-        override suspend fun getValue(
-            jsonElement: JsonElement?
-        ) = getValue(jsonElement, route)
+    override lateinit var id: String
+        private set
+
+    override suspend fun process(
+        jsonElement: JsonElement?
+    ) {
+        if (!this::id.isInitialized) {
+            jsonElement?.idValue?.let { id = it }
+        }
+        delegate.process(jsonElement)
     }
+}
 
-    class Mutable(
-        key: String,
-        private val route: NavigationRoute
-    ) : Projection.AbstractMutable<() -> Unit>(key),
-        MutableState<(() -> Unit)?> {
-
-        override suspend fun getValue(
-            jsonElement: JsonElement?
-        ) = getValue(jsonElement, route)
+fun createActionProjection(
+    key: String,
+    route: NavigationRoute,
+    mutable: Boolean,
+    contextual: Boolean
+): ActionProjectionProtocol {
+    val projection = when (mutable) {
+        true -> ActionProjection(key, route, Projection.Mutable())
+        false -> ActionProjection(key, route, Projection.Static())
+    }
+    return when {
+        contextual -> ContextualActionProjection(projection)
+        else -> projection
     }
 }

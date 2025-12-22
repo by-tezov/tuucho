@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorP
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol as DomainViewProtocol
 
 interface ViewProtocol : DomainViewProtocol {
-
     val componentProjector: ComponentProjectorProtocol
 
     @Composable

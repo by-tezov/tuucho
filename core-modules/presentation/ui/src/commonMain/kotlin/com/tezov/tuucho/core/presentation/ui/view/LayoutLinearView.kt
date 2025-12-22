@@ -16,7 +16,7 @@ import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projectable.color
-import com.tezov.tuucho.core.presentation.ui.render.projectable.primaryType
+import com.tezov.tuucho.core.presentation.ui.render.projectable.dimension
 import com.tezov.tuucho.core.presentation.ui.render.projectable.projection
 import com.tezov.tuucho.core.presentation.ui.render.projectable.view
 import com.tezov.tuucho.core.presentation.ui.render.projection.BooleanProjection
@@ -49,14 +49,13 @@ class LayoutLinearView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var backgroundColor: ColorProjection.Static
-    private lateinit var orientation: StringProjection.Static
-    private lateinit var fillMaxSize: BooleanProjection.Static
-    private lateinit var fillMaxWidth: BooleanProjection.Static
-    private lateinit var itemViews: ViewsProjection.Static
+    private lateinit var backgroundColor: ColorProjection
+    private lateinit var orientation: StringProjection
+    private lateinit var fillMaxSize: BooleanProjection
+    private lateinit var fillMaxWidth: BooleanProjection
+    private lateinit var itemViews: ViewsProjection
 
     override fun updateReadyStatus() {
         isReady = itemViews.isReady.isTrueOrNull &&
@@ -72,7 +71,7 @@ class LayoutLinearView(
                 color {
                     backgroundColor = projection(Style.Key.backgroundColor)
                 }
-                primaryType {
+                dimension {
                     fillMaxSize = projection(Style.Key.fillMaxSize)
                     fillMaxWidth = projection(Style.Key.fillMaxWidth)
                     orientation = projection(Style.Key.orientation)

@@ -1,69 +1,79 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProtocol
 import kotlinx.serialization.json.JsonElement
 
-sealed class Projection<T : Any>(
-    override val key: String,
-) : ProjectionProtocol,
-    State<T?> {
-    override var isReady: Boolean? = null
-        protected set
+fun interface ValueProjectionProtocol<T : Any> {
+    suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ): T?
+}
 
-    protected open fun updateIsReady(
+sealed interface ProjectionStorageProtocol<T> {
+    var value: T?
+}
+
+interface ProjectionProtocols<T : Any> :
+    ProjectionProtocol,
+    ProjectionStorageProtocol<T>,
+    ValueProjectionProtocol<T> {
+    suspend fun superProcess(
+        jsonElement: JsonElement?
+    )
+}
+
+class Projection<T : Any>(
+    override val key: String,
+    private val storage: ProjectionStorageProtocol<T>,
+    private val getValueOrNull: ValueProjectionProtocol<T> = ValueProjectionProtocol { error("not implemented") }
+) : ProjectionProtocols<T>,
+    ProjectionStorageProtocol<T> by storage,
+    ValueProjectionProtocol<T> by getValueOrNull {
+    class Static<T> : ProjectionStorageProtocol<T> {
+        override var value: T? = null
+
+        override fun equals(
+            other: Any?
+        ) = value == other
+
+        override fun hashCode() = value?.hashCode() ?: 0
+    }
+
+    class Mutable<T> : ProjectionStorageProtocol<T> {
+        private val state = mutableStateOf<T?>(null)
+
+        override var value: T?
+            get() = state.value
+            set(v) {
+                state.value = v
+            }
+
+        override fun equals(
+            other: Any?
+        ) = state == other
+
+        override fun hashCode() = state.hashCode()
+    }
+
+    override var isReady: Boolean? = null
+        private set
+
+    fun updateIsReady(
         jsonElement: JsonElement?
     ) {
         isReady = jsonElement != null && jsonElement.idSourceOrNull == null
     }
 
-    override suspend fun process(
+    override suspend fun superProcess(
         jsonElement: JsonElement?
     ) {
+        value = getValueOrNull(jsonElement)
         updateIsReady(jsonElement)
     }
 
-    abstract suspend fun getValue(
+    override suspend fun process(
         jsonElement: JsonElement?
-    ): T?
-
-    abstract class AbstractStatic<T : Any>(
-        key: String
-    ) : Projection<T>(key) {
-        override var value: T? = null
-
-        override suspend fun process(
-            jsonElement: JsonElement?
-        ) {
-            super.process(jsonElement)
-            value = getValue(jsonElement)
-        }
-    }
-
-    abstract class AbstractMutable<T : Any>(
-        key: String,
-    ) : Projection<T>(key),
-        MutableState<T?> {
-        private val _value = mutableStateOf<T?>(null)
-
-        override var value: T?
-            get() = _value.value
-            set(value) {
-                _value.value = value
-            }
-
-        override fun component1() = _value.component1()
-
-        override fun component2() = _value.component2()
-
-        override suspend fun process(
-            jsonElement: JsonElement?
-        ) {
-            super.process(jsonElement)
-            _value.value = getValue(jsonElement)
-        }
-    }
+    ) = superProcess(jsonElement)
 }

@@ -4,16 +4,17 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
+import com.tezov.tuucho.core.presentation.ui.render.projection.createActionProjection
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
 @TuuchoUiDsl
 class ActionTypeProjectable : ProjectableProtocol {
-
-    private val projections = mutableMapOf<String, ProjectionProtocol>()
+    private val projections = mutableMapOf<String, ProjectionProtocols<() -> Unit>>()
 
     override val keys get() = projections.keys.toSet()
 
@@ -24,17 +25,17 @@ class ActionTypeProjectable : ProjectableProtocol {
         projections[key]?.process(jsonElement)
     }
 
-    fun <T : ProjectionProtocol> newProjection(
+    @Suppress("UNCHECKED_CAST")
+    fun <T : ProjectionProtocols<() -> Unit>> newProjection(
         klass: KClass<out T>,
         key: String,
-        route: NavigationRoute
-    ) =
-        @Suppress("UNCHECKED_CAST")
-        (when (klass) {
-            ActionProjection.Static::class -> ActionProjection.Static(key, route)
-            ActionProjection.Mutable::class -> ActionProjection.Mutable(key, route)
-            else -> throw UiException.Default("not implemented")
-        } as T).also { projections[it.key] = it }
+        route: NavigationRoute,
+        mutable: Boolean,
+        contextual: Boolean
+    ) = (when (klass) {
+        ActionProjection::class, ActionProjectionProtocol::class -> createActionProjection(key, route, mutable, contextual)
+        else -> throw UiException.Default("not implemented")
+    } as T).also { projections[it.key] = it }
 }
 
 fun TypeProjectorProtocol.action(
@@ -44,7 +45,9 @@ fun TypeProjectorProtocol.action(
     it.block()
 }
 
-inline fun <reified T : ProjectionProtocol> ActionTypeProjectable.projection(
+inline fun <reified T : ProjectionProtocols<() -> Unit>> ActionTypeProjectable.projection(
     key: String,
-    route: NavigationRoute
-) = newProjection(klass = T::class, key = key, route = route)
+    route: NavigationRoute,
+    mutable: Boolean = false,
+    contextual: Boolean = false
+) = newProjection(klass = T::class, key = key, route = route, mutable = mutable, contextual = contextual)

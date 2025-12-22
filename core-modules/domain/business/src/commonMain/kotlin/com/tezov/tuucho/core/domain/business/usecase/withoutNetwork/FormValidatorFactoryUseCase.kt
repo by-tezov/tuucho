@@ -35,7 +35,6 @@ class FormValidatorFactoryUseCase : UseCaseProtocol.Sync<Input, Output> {
     ) = with(input) {
         Output(
             validator = prototypeObject.withScope(FormValidatorSchema::Scope).let {
-
                 println(it)
 
                 when (it.type) {

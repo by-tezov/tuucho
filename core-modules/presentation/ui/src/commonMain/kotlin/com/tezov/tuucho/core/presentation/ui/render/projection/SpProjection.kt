@@ -4,33 +4,74 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.tool.json.stringOrNull
+import com.tezov.tuucho.core.presentation.ui._system.idValue
+import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 
-object SpProjection {
+interface SpProjectionProtocol : ProjectionProtocols<TextUnit>
 
-    private fun getValue(
+class SpProjection(
+    key: String,
+    storage: ProjectionStorageProtocol<TextUnit>,
+) : SpProjectionProtocol,
+    ProjectionProtocols<TextUnit> by Projection(
+        key = key,
+        storage = storage,
+        getValueOrNull = { jsonElement ->
+            when (jsonElement) {
+                is JsonObject -> {
+                    jsonElement
+                        .withScope(DimensionSchema::Scope)
+                        .default
+                        ?.toFloatOrNull()
+                        ?.sp
+                }
+
+                is JsonPrimitive -> {
+                    jsonElement.stringOrNull?.toFloatOrNull()?.sp
+                }
+
+                else -> {
+                    null
+                }
+            }
+        }
+    )
+
+private class ContextualSpProjection(
+    private val delegate: SpProjectionProtocol
+) : SpProjectionProtocol by delegate,
+    UpdatableProtocol {
+    override val type = TypeSchema.Value.dimension
+
+    override lateinit var id: String
+        private set
+
+    override suspend fun process(
         jsonElement: JsonElement?
-    ) = jsonElement
-        ?.withScope(DimensionSchema::Scope)
-        ?.default
-        ?.toFloatOrNull()
-        ?.sp
-
-    class Static(
-        key: String
-    ) : Projection.AbstractStatic<TextUnit>(key) {
-
-        override suspend fun getValue(
-            jsonElement: JsonElement?
-        ) = SpProjection.getValue(jsonElement)
+    ) {
+        if (!this::id.isInitialized) {
+            jsonElement?.idValue?.let { id = it }
+        }
+        delegate.process(jsonElement)
     }
+}
 
-    class Mutable(
-        key: String
-    ) : Projection.AbstractMutable<TextUnit>(key) {
-
-        override suspend fun getValue(
-            jsonElement: JsonElement?
-        ) = SpProjection.getValue(jsonElement)
+fun createSpProjection(
+    key: String,
+    mutable: Boolean,
+    contextual: Boolean
+): SpProjectionProtocol {
+    val projection = when (mutable) {
+        true -> SpProjection(key, Projection.Mutable())
+        false -> SpProjection(key, Projection.Static())
+    }
+    return when {
+        contextual -> ContextualSpProjection(projection)
+        else -> projection
     }
 }

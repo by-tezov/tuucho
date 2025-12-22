@@ -13,12 +13,13 @@ import kotlinx.serialization.json.JsonObject
 class MessageProjector(
     override val subset: String
 ) : MessageProjectorProtocol {
-
     private val projectables: MutableList<ProjectableProtocol> = mutableListOf()
 
     override val type = TypeSchema.Value.message
 
-    override fun add(projectable: ProjectableProtocol) {
+    override fun add(
+        projectable: ProjectableProtocol
+    ) {
         projectables.add(projectable)
     }
 

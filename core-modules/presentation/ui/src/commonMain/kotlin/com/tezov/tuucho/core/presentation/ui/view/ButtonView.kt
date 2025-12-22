@@ -37,11 +37,10 @@ class ButtonView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var labelView: ViewProjection.Static
-    private lateinit var action: ActionProjection.Static
+    private lateinit var labelView: ViewProjection
+    private lateinit var action: ActionProjection
 
     override fun updateReadyStatus() {
         isReady = labelView.isReady.isTrueOrNull &&

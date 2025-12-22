@@ -2,17 +2,18 @@ package com.tezov.tuucho.core.presentation.ui.render.projectable
 
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.projection.TextMessageProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.MessageTextProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.MessageTextProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
+import com.tezov.tuucho.core.presentation.ui.render.projection.createMessageTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.protocol.MessageProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
 @TuuchoUiDsl
-class MessageTextTypeProjectable : ProjectableProtocol {
-
-    private val projections = mutableMapOf<String, ProjectionProtocol>()
+class MessageProjectable : ProjectableProtocol {
+    private val projections = mutableMapOf<String, ProjectionProtocols<*>>()
 
     override val keys get() = projections.keys
 
@@ -23,25 +24,27 @@ class MessageTextTypeProjectable : ProjectableProtocol {
         projections[key]?.process(jsonElement)
     }
 
-    fun <T : ProjectionProtocol> newProjection(
+    @Suppress("UNCHECKED_CAST")
+    fun <I, T : ProjectionProtocols<I>> newProjection(
         klass: KClass<out T>,
-        key: String
-    ): T =
-        @Suppress("UNCHECKED_CAST")
-        (when (klass) {
-            TextMessageProjection.Static::class -> TextMessageProjection.Static(key)
-            TextMessageProjection.Mutable::class -> TextMessageProjection.Mutable(key)
-            else -> throw UiException.Default("not implemented")
-        } as T).also { projections[it.key] = it }
+        key: String,
+        mutable: Boolean,
+        contextual: Boolean
+    ): T = (when (klass) {
+        MessageTextProjection::class, MessageTextProjectionProtocol::class -> createMessageTextProjection(key, mutable, contextual)
+        else -> throw UiException.Default("not implemented")
+    } as T).also { projections[it.key] = it }
 }
 
 fun MessageProjectorProtocol.text(
-    block: MessageTextTypeProjectable.() -> Unit,
-): MessageTextTypeProjectable = MessageTextTypeProjectable().also {
+    block: MessageProjectable.() -> Unit,
+): MessageProjectable = MessageProjectable().also {
     add(it)
     it.block()
 }
 
-inline fun <reified T : ProjectionProtocol> MessageTextTypeProjectable.projection(
-    key: String
-) = newProjection(klass = T::class, key = key)
+inline fun <I, reified T : ProjectionProtocols<I>> MessageProjectable.projection(
+    key: String,
+    mutable: Boolean = false,
+    contextual: Boolean = false
+) = newProjection(klass = T::class, key = key, mutable = mutable, contextual = contextual)

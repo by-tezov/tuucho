@@ -7,6 +7,6 @@ class StringMaxValueFormValidator(
     override fun updateValidity(
         value: String?
     ) {
-        isValid = value.isNullOrBlank()|| value.toIntOrNull()?.let { it < maxValue } ?: false
+        isValid = value.isNullOrBlank() || value.toIntOrNull()?.let { it < maxValue } ?: false
     }
 }

@@ -11,4 +11,3 @@ interface ProjectionProtocol {
         jsonElement: JsonElement?
     )
 }
-

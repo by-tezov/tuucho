@@ -5,7 +5,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Content
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Style
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.presentation.ui._system.subset
@@ -42,12 +41,11 @@ class LabelView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var textValue: TextProjection.Mutable
-    private lateinit var fontColor: ColorProjection.Static
-    private lateinit var fontSize: SpProjection.Static
+    private lateinit var textValue: TextProjection
+    private lateinit var fontColor: ColorProjection
+    private lateinit var fontSize: SpProjection
 
     override fun updateReadyStatus() {
         isReady = textValue.isReady.isTrueOrNull &&
@@ -56,25 +54,22 @@ class LabelView(
     }
 
     override suspend fun initProjection() {
-        componentProjector = componentProjector {
+        componentProjector = componentProjector(contextual = true) {
             style {
                 color {
-                    fontColor = projection(Style.Key.fontColor)
+                    fontColor = projection(LabelSchema.Style.Key.fontColor)
                 }
                 dimension {
-                    fontSize = projection(Style.Key.fontSize)
+                    fontSize = projection(LabelSchema.Style.Key.fontSize)
                 }
             }
-            content {
+            content(contextual = true) {
                 text {
-                    textValue = projection(Content.Key.value)
+                    textValue = projection(Content.Key.value, mutable = true, contextual = true)
                 }
             }
         }
         componentProjector.process(componentObject)
-
-
-
     }
 
     @Composable

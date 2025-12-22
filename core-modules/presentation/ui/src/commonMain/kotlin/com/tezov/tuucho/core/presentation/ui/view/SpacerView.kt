@@ -43,12 +43,11 @@ class SpacerView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var width: DpProjection.Static
-    private lateinit var height: DpProjection.Static
-    private lateinit var weight: FloatProjection.Static
+    private lateinit var width: DpProjection
+    private lateinit var height: DpProjection
+    private lateinit var weight: FloatProjection
 
     override fun updateReadyStatus() {
         isReady = width.isReady.isTrueOrNull &&
@@ -89,5 +88,4 @@ class SpacerView(
                 }
         )
     }
-
 }
