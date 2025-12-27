@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 
 private typealias MessageTextProjectionProtocols = ProjectionProtocols<String>
 
 interface MessageTextProjectionProtocol : MessageTextProjectionProtocols {
+    var componentId: String
     var onReceived: ((String?) -> Unit)
 }
 
@@ -15,6 +15,9 @@ class MessageTextProjection(
     private val projection: MessageTextProjectionProtocols,
 ) : MessageTextProjectionProtocol,
     MessageTextProjectionProtocols by projection {
+
+    override lateinit var componentId: String
+
     override lateinit var onReceived: ((String?) -> Unit)
 
     private val textProjection = createTextProjection(key, mutable = false, contextual = false)
@@ -41,23 +44,12 @@ private class ContextualMessageTextProjection(
     UpdatableProtocol {
     override val type = TypeSchema.Value.message
 
-    override lateinit var id: String
-        private set
-
-    override suspend fun process(
-        jsonElement: JsonElement?
-    ) {
-        if (!this::id.isInitialized) {
-            jsonElement?.idValue?.let { id = it }
-        }
-        delegate.process(jsonElement)
-    }
+    override val id get() = delegate.componentId
 }
 
 fun createMessageTextProjection(
     key: String,
-    mutable: Boolean,
-    contextual: Boolean
+    mutable: Boolean
 ): MessageTextProjectionProtocol {
     val projection: MessageTextProjectionProtocols = Projection(
         key = key,
@@ -67,8 +59,5 @@ fun createMessageTextProjection(
         }
     )
     val messageTextProjection = MessageTextProjection(projection)
-    return when {
-        contextual -> ContextualMessageTextProjection(messageTextProjection)
-        else -> messageTextProjection
-    }
+    return ContextualMessageTextProjection(messageTextProjection)
 }

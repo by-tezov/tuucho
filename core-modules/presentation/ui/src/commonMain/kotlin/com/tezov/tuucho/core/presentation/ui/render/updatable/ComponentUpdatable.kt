@@ -2,8 +2,8 @@ package com.tezov.tuucho.core.presentation.ui.render.updatable
 
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 
 class ComponentUpdatable(

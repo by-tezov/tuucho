@@ -32,7 +32,7 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.message
 import com.tezov.tuucho.core.presentation.ui.render.projector.option
 import com.tezov.tuucho.core.presentation.ui.render.projector.state
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
 import kotlinx.serialization.json.JsonObject
@@ -79,13 +79,13 @@ class FieldView(
     }
 
     override suspend fun initProjection() {
-        componentProjector = componentProjector {
+        componentProjector = componentProjector(contextual = true) {
             option {
                 validator {
                     validator = projection(FormSchema.Option.Key.validator)
                 }
             }
-            content {
+            content(contextual = true) {
                 text {
                     titleValue = projection(FormFieldSchema.Content.Key.title)
                     placeholderValue = projection(FormFieldSchema.Content.Key.placeholder)
@@ -96,7 +96,7 @@ class FieldView(
             }
             state {
                 text {
-                    fieldValue = projection(FormFieldSchema.State.Key.initialValue, mutable = true)
+                    fieldValue = projection(FormFieldSchema.State.Key.initialValue, mutable = true, contextual = true)
                 }
             }
             message(FormSchema.Message.Value.Subset.updateErrorState) {
@@ -110,8 +110,11 @@ class FieldView(
             validatorProjection = validator
             fieldValueProjection = fieldValue
         }
-        messageErrorExtra.onReceived = {
-            showError = extensionFormState.isValid() == false || it != null
+        messageErrorExtra.apply {
+            componentId = formState.getId()
+            onReceived = {
+                showError = extensionFormState.isValid() == false || it != null
+            }
         }
         componentProjector.process(componentObject)
     }

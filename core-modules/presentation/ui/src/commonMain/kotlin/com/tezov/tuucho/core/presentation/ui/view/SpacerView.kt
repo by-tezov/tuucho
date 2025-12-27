@@ -20,7 +20,7 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.DpProjectionProto
 import com.tezov.tuucho.core.presentation.ui.render.projection.FloatProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
 import kotlinx.serialization.json.JsonObject

@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.presentation.ui.render.projector
 
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 

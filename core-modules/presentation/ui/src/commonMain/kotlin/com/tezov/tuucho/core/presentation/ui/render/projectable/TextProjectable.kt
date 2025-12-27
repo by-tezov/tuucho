@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtoco
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.TypeProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 

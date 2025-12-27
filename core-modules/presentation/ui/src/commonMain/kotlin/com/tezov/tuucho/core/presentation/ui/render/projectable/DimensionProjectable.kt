@@ -14,7 +14,7 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.createFloatProjec
 import com.tezov.tuucho.core.presentation.ui.render.projection.createSpProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createStringProjection
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.TypeProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 

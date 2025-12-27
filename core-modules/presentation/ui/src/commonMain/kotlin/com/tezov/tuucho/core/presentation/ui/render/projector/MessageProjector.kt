@@ -3,9 +3,9 @@ package com.tezov.tuucho.core.presentation.ui.render.projector
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.subsetOrNull
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.MessageProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.MessageProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 

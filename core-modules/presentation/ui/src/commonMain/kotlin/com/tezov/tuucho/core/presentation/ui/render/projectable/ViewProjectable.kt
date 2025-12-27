@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ViewsProjectionPr
 import com.tezov.tuucho.core.presentation.ui.render.projection.createViewProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createViewsProjection
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.TypeProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
