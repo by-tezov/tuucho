@@ -6,15 +6,16 @@ import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.MessageProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
+interface MessageProjectorProtocols : MessageProjectorProtocol, HasUpdatableProtocol
+
 @TuuchoUiDsl
 class MessageProjector(
     override val subset: String
-) : MessageProjectorProtocol, HasUpdatableProtocol {
+) : MessageProjectorProtocols {
     private val projectables: MutableList<ProjectableProtocol> = mutableListOf()
 
     override val type = TypeSchema.Value.message
@@ -51,10 +52,10 @@ class MessageProjector(
     }
 }
 
-fun ComponentProjectorProtocol.message(
+fun ComponentProjectorProtocols.message(
     subset: String,
-    block: MessageProjectorProtocol.() -> Unit
-): MessageProjectorProtocol = MessageProjector(subset)
+    block: MessageProjectorProtocols.() -> Unit
+): MessageProjectorProtocols = MessageProjector(subset)
     .also {
         add(it)
         it.block()

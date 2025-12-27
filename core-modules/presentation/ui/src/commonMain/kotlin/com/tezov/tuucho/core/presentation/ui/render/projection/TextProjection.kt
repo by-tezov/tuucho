@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
 import com.tezov.tuucho.core.presentation.ui._system.idValue
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -44,18 +45,24 @@ class TextProjection(
 
 class Updatable(
     override val type: String,
-) : UpdatableProtocol {
-
-    override var isReady = false
-        private set
+) : UpdatableProtocol, ReadyStatusProtocol {
 
     override var id: String? = null
         private set
 
+    override var isReady = false
+        private set
+
+    override lateinit var onStatusChanged: () -> Unit
+
     fun updateIsReady(
         jsonElement: JsonElement?
     ) {
+        val previous = isReady
         isReady = jsonElement != null && jsonElement.idSourceOrNull == null
+        if (previous != isReady && this::onStatusChanged.isInitialized) {
+            onStatusChanged.invoke()
+        }
     }
 
     override suspend fun process(jsonElement: JsonElement?) {
@@ -68,7 +75,7 @@ class Updatable(
 
 private class ContextualTextProjection(
     private val delegate: TextProjectionProtocol,
-    private val updatable:Updatable = Updatable(TypeSchema.Value.text)
+    private val updatable: Updatable = Updatable(TypeSchema.Value.text)
 ) : TextProjectionProtocol by delegate,
     UpdatableProtocol by updatable {
 

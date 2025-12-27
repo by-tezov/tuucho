@@ -42,9 +42,6 @@ class FormStateProjection(
 
     override fun getValue() = fieldValueProjection.value
 
-    override var isReady = false
-        private set
-
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
@@ -55,7 +52,6 @@ class FormStateProjection(
                 this[idMessage] = message
             }
         }
-        isReady = true
     }
 
     private fun updateSupportingText() {

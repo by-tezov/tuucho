@@ -7,17 +7,22 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
+interface ComponentProjectorProtocols : ComponentProjectorProtocol, ReadyStatusProtocol
+
 @TuuchoUiDsl
-class ComponentProjector : ComponentProjectorProtocol {
+class ComponentProjector : ComponentProjectorProtocols {
     private val projectors: MutableList<ProjectorProtocol> = mutableListOf()
 
     override var isReady by mutableStateOf(false)
+
+    override lateinit var onStatusChanged: () -> Unit
 
     override val updatables: List<UpdatableProtocol>
         get() = buildList {
@@ -32,7 +37,15 @@ class ComponentProjector : ComponentProjectorProtocol {
         projector: ProjectorProtocol
     ) {
         projectors.add(projector)
-        projector.onStatusChanged = { isReady = isReady && it }
+        (projector as? ReadyStatusProtocol)?.let { status ->
+            status.onStatusChanged = {
+                val previous = isReady
+                isReady = isReady && status.isReady
+                if (previous != isReady && this::onStatusChanged.isInitialized) {
+                    onStatusChanged.invoke()
+                }
+            }
+        }
     }
 
     override suspend fun process(
@@ -47,8 +60,8 @@ class ComponentProjector : ComponentProjectorProtocol {
 }
 
 private class ContextualComponentProjector(
-    private val delegate: ComponentProjectorProtocol
-) : ComponentProjectorProtocol by delegate,
+    private val delegate: ComponentProjectorProtocols
+) : ComponentProjectorProtocols by delegate,
     UpdatableProtocol {
     override val type = TypeSchema.Value.component
 
@@ -73,8 +86,8 @@ private class ContextualComponentProjector(
 
 fun componentProjector(
     contextual: Boolean = false,
-    block: ComponentProjectorProtocol.() -> Unit
-): ComponentProjectorProtocol {
+    block: ComponentProjectorProtocols.() -> Unit
+): ComponentProjectorProtocols {
     val componentProjector = ComponentProjector().also {
         it.block()
     }

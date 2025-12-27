@@ -5,23 +5,38 @@ import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
+import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
+interface TextTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, ReadyStatusProtocol {
+    fun <T : ProjectionProtocols<String>> newProjection(
+        klass: KClass<out T>,
+        key: String,
+        mutable: Boolean,
+        contextual: Boolean
+    ): T
+}
+
 @TuuchoUiDsl
-class TextTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
+class TextTypeProjectable : TextTypeProjectableProtocols {
     private val projections = mutableMapOf<String, ProjectionProtocols<String>>()
 
     override val keys get() = projections.keys
 
+    override var isReady = false
+        private set
+
+    override lateinit var onStatusChanged: () -> Unit
+
     override val updatables: List<UpdatableProtocol>
         get() = buildList {
             projections.values.forEach {
-                if(it is UpdatableProtocol) {
+                if (it is UpdatableProtocol) {
                     add(it)
                 }
             }
@@ -35,7 +50,7 @@ class TextTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : ProjectionProtocols<String>> newProjection(
+    override fun <T : ProjectionProtocols<String>> newProjection(
         klass: KClass<out T>,
         key: String,
         mutable: Boolean,
@@ -46,14 +61,14 @@ class TextTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
     } as T).also { projections[it.key] = it }
 }
 
-fun TypeProjectorProtocol.text(
-    block: TextTypeProjectable.() -> Unit
-): TextTypeProjectable = TextTypeProjectable().also {
+fun TypeProjectorProtocols.text(
+    block: TextTypeProjectableProtocols.() -> Unit
+): TextTypeProjectableProtocols = TextTypeProjectable().also {
     add(it)
     it.block()
 }
 
-inline fun <reified T : ProjectionProtocols<String>> TextTypeProjectable.projection(
+inline fun <reified T : ProjectionProtocols<String>> TextTypeProjectableProtocols.projection(
     key: String,
     mutable: Boolean = false,
     contextual: Boolean = false

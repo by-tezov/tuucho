@@ -27,9 +27,6 @@ class FormValidatorProjection(
     private val useCaseExecutor by inject<UseCaseExecutorProtocol>()
     private val fieldValidatorFactory by inject<FormValidatorFactoryUseCase>()
 
-    override var isReady = false
-        private set
-
     override var validators: List<FormValidatorProtocol<String>>? = null
         private set
 
@@ -58,7 +55,6 @@ class FormValidatorProjection(
                         )?.validator as? FormValidatorProtocol<String>
                 }
             }?.takeIf { it.isNotEmpty() }
-        isReady = true
     }
 }
 

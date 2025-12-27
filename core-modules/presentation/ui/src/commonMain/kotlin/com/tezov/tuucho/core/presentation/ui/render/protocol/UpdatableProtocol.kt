@@ -7,10 +7,6 @@ interface UpdatableProtocol {
 
     val id: String?
 
-    val isReady: Boolean
-
-    var onStatusChanged: () -> Unit
-
     suspend fun process(
         jsonElement: JsonElement?
     )

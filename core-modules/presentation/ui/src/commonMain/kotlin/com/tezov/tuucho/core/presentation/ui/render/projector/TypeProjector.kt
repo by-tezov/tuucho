@@ -5,17 +5,24 @@ import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
+interface TypeProjectorProtocols : TypeProjectorProtocol, HasUpdatableProtocol, ReadyStatusProtocol
+
 @TuuchoUiDsl
 class TypeProjector(
     override val type: String
-) : TypeProjectorProtocol {
+) : TypeProjectorProtocols {
     private val projectables: MutableList<ProjectableProtocol> = mutableListOf()
+
+    override var isReady = false
+        private set
+
+    override lateinit var onStatusChanged: () -> Unit
 
     override val updatables: List<UpdatableProtocol>
         get() = buildList {
@@ -30,10 +37,13 @@ class TypeProjector(
         projectable: ProjectableProtocol
     ) {
         projectables.add(projectable)
-        (projectable as? UpdatableProtocol)?.let {
-            projectable.onStatusChanged = {
-                isReady = isReady && it
-                onStatusChanged.invoke(isReady)
+        (projectable as? ReadyStatusProtocol)?.let { status ->
+            status.onStatusChanged = {
+                val previous = isReady
+                isReady = isReady && status.isReady
+                if (previous != isReady && this::onStatusChanged.isInitialized) {
+                    onStatusChanged.invoke()
+                }
             }
         }
     }
@@ -54,15 +64,13 @@ class TypeProjector(
 }
 
 private class ContextualTypeProjector(
-    private val delegate: TypeProjectorProtocol
-) : TypeProjectorProtocol by delegate,
+    private val delegate: TypeProjectorProtocols
+) : TypeProjectorProtocols by delegate,
     UpdatableProtocol {
+
     override val type get() = delegate.type
 
     override var id: String? = null
-        private set
-
-    override var isReady = false
         private set
 
     override val updatables: List<UpdatableProtocol>
@@ -70,8 +78,6 @@ private class ContextualTypeProjector(
             add(this@ContextualTypeProjector)
             addAll(delegate.updatables)
         }
-
-    override lateinit var onStatusChanged: () -> Unit
 
     override suspend fun process(
         jsonElement: JsonElement?
@@ -83,18 +89,18 @@ private class ContextualTypeProjector(
     }
 }
 
-fun ComponentProjectorProtocol.option(
-    block: TypeProjectorProtocol.() -> Unit
-): TypeProjectorProtocol = TypeProjector(type = TypeSchema.Value.option)
+fun ComponentProjectorProtocols.option(
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols = TypeProjector(type = TypeSchema.Value.option)
     .also {
         add(it)
         it.block()
     }
 
-fun ComponentProjectorProtocol.style(
+fun ComponentProjectorProtocols.style(
     contextual: Boolean = false,
-    block: TypeProjectorProtocol.() -> Unit
-): TypeProjectorProtocol {
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols {
     val typeProjector = TypeProjector(type = TypeSchema.Value.style).also {
         it.block()
     }
@@ -104,10 +110,10 @@ fun ComponentProjectorProtocol.style(
     }.also { add(it) }
 }
 
-fun ComponentProjectorProtocol.content(
+fun ComponentProjectorProtocols.content(
     contextual: Boolean = false,
-    block: TypeProjectorProtocol.() -> Unit
-): TypeProjectorProtocol {
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols {
     val typeProjector = TypeProjector(type = TypeSchema.Value.content).also {
         it.block()
     }
@@ -117,10 +123,10 @@ fun ComponentProjectorProtocol.content(
     }.also { add(it) }
 }
 
-fun ComponentProjectorProtocol.state(
+fun ComponentProjectorProtocols.state(
     contextual: Boolean = false,
-    block: TypeProjectorProtocol.() -> Unit
-): TypeProjectorProtocol {
+    block: TypeProjectorProtocols.() -> Unit
+): TypeProjectorProtocols {
     val typeProjector = TypeProjector(type = TypeSchema.Value.state).also {
         it.block()
     }
