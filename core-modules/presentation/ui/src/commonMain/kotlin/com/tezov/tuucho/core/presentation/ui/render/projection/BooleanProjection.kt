@@ -10,35 +10,38 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-interface BooleanProjectionProtocol : ProjectionProtocols<Boolean>
+private typealias BooleanProjectionProtocols = ProjectionProtocols<Boolean>
+
+interface BooleanProjectionProtocol : BooleanProjectionProtocols
 
 class BooleanProjection(
-    key: String,
-    storage: ProjectionStorageProtocol<Boolean>,
+    private val projection: BooleanProjectionProtocols,
 ) : BooleanProjectionProtocol,
-    ProjectionProtocols<Boolean> by Projection(
-        key = key,
-        storage = storage,
-        getValueOrNull = { jsonElement ->
-            when (jsonElement) {
-                is JsonObject -> {
-                    jsonElement
-                        .withScope(DimensionSchema::Scope)
-                        .default
-                        ?.toBooleanStrictOrNull()
-                }
+    BooleanProjectionProtocols by projection {
+    init {
+        attach(this)
+    }
 
-                is JsonPrimitive -> {
-                    jsonElement.stringOrNull
-                        ?.toBooleanStrictOrNull()
-                }
-
-                else -> {
-                    null
-                }
-            }
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = when (jsonElement) {
+        is JsonObject -> {
+            jsonElement
+                .withScope(DimensionSchema::Scope)
+                .default
+                ?.toBooleanStrictOrNull()
         }
-    )
+
+        is JsonPrimitive -> {
+            jsonElement.stringOrNull
+                ?.toBooleanStrictOrNull()
+        }
+
+        else -> {
+            null
+        }
+    }
+}
 
 private class ContextualBooleanProjection(
     private val delegate: BooleanProjectionProtocol
@@ -64,12 +67,16 @@ fun createBooleanProjection(
     mutable: Boolean,
     contextual: Boolean
 ): BooleanProjectionProtocol {
-    val projection = when (mutable) {
-        true -> BooleanProjection(key, Projection.Mutable())
-        false -> BooleanProjection(key, Projection.Static())
-    }
+    val projection: BooleanProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val booleanProjection = BooleanProjection(projection)
     return when {
-        contextual -> ContextualBooleanProjection(projection)
-        else -> projection
+        contextual -> ContextualBooleanProjection(booleanProjection)
+        else -> booleanProjection
     }
 }

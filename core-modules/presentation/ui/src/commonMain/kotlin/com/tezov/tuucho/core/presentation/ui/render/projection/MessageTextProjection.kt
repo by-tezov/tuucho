@@ -5,19 +5,23 @@ import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 
-interface MessageTextProjectionProtocol : ProjectionProtocols<String>
+private typealias MessageTextProjectionProtocols = ProjectionProtocols<String>
+
+interface MessageTextProjectionProtocol : MessageTextProjectionProtocols {
+    var onReceived: ((String?) -> Unit)
+}
 
 class MessageTextProjection(
-    key: String,
-    storage: ProjectionStorageProtocol<String>,
+    private val projection: MessageTextProjectionProtocols,
 ) : MessageTextProjectionProtocol,
-    ProjectionProtocols<String> by Projection(
-        key = key,
-        storage = storage,
-    ) {
-    lateinit var onReceived: ((String?) -> Unit)
+    MessageTextProjectionProtocols by projection {
+    override lateinit var onReceived: ((String?) -> Unit)
 
     private val textProjection = createTextProjection(key, mutable = false, contextual = false)
+
+    init {
+        attach(this)
+    }
 
     override suspend fun getValueOrNull(
         jsonElement: JsonElement?
@@ -55,12 +59,16 @@ fun createMessageTextProjection(
     mutable: Boolean,
     contextual: Boolean
 ): MessageTextProjectionProtocol {
-    val projection = when (mutable) {
-        true -> MessageTextProjection(key, Projection.Mutable())
-        false -> MessageTextProjection(key, Projection.Static())
-    }
+    val projection: MessageTextProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val messageTextProjection = MessageTextProjection(projection)
     return when {
-        contextual -> ContextualMessageTextProjection(projection)
-        else -> projection
+        contextual -> ContextualMessageTextProjection(messageTextProjection)
+        else -> messageTextProjection
     }
 }

@@ -10,33 +10,36 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-interface TextProjectionProtocol : ProjectionProtocols<String>
+private typealias TextProjectionProtocols = ProjectionProtocols<String>
+
+interface TextProjectionProtocol : TextProjectionProtocols
 
 class TextProjection(
-    key: String,
-    storage: ProjectionStorageProtocol<String>,
+    private val projection: TextProjectionProtocols,
 ) : TextProjectionProtocol,
-    ProjectionProtocols<String> by Projection(
-        key = key,
-        storage = storage,
-        getValueOrNull = { jsonElement ->
-            when (jsonElement) {
-                is JsonObject -> {
-                    jsonElement
-                        .withScope(TextSchema::Scope)
-                        .default
-                }
+    TextProjectionProtocols by projection {
+    init {
+        attach(this)
+    }
 
-                is JsonPrimitive -> {
-                    jsonElement.stringOrNull
-                }
-
-                else -> {
-                    null
-                }
-            }
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = when (jsonElement) {
+        is JsonObject -> {
+            jsonElement
+                .withScope(TextSchema::Scope)
+                .default
         }
-    )
+
+        is JsonPrimitive -> {
+            jsonElement.stringOrNull
+        }
+
+        else -> {
+            null
+        }
+    }
+}
 
 private class ContextualTextProjection(
     private val delegate: TextProjectionProtocol
@@ -62,12 +65,16 @@ fun createTextProjection(
     mutable: Boolean,
     contextual: Boolean
 ): TextProjectionProtocol {
-    val projection = when (mutable) {
-        true -> TextProjection(key, Projection.Mutable())
-        false -> TextProjection(key, Projection.Static())
-    }
+    val projection: TextProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val textProjection = TextProjection(projection)
     return when {
-        contextual -> ContextualTextProjection(projection)
-        else -> projection
+        contextual -> ContextualTextProjection(textProjection)
+        else -> textProjection
     }
 }

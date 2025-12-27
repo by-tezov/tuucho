@@ -2,16 +2,11 @@ package com.tezov.tuucho.core.presentation.ui.render.projectable
 
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.projection.BooleanProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.BooleanProjectionProtocol
-import com.tezov.tuucho.core.presentation.ui.render.projection.DpProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.DpProjectionProtocol
-import com.tezov.tuucho.core.presentation.ui.render.projection.FloatProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.FloatProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
-import com.tezov.tuucho.core.presentation.ui.render.projection.SpProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.SpProjectionProtocol
-import com.tezov.tuucho.core.presentation.ui.render.projection.StringProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.StringProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createBooleanProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createDpProjection
@@ -43,11 +38,11 @@ class DimensionTypeProjectable : ProjectableProtocol {
         mutable: Boolean,
         contextual: Boolean
     ) = (when (klass) {
-        SpProjection::class, SpProjectionProtocol::class -> createSpProjection(key, mutable, contextual)
-        DpProjection::class, DpProjectionProtocol::class -> createDpProjection(key, mutable, contextual)
-        FloatProjection::class, FloatProjectionProtocol::class -> createFloatProjection(key, mutable, contextual)
-        BooleanProjection::class, BooleanProjectionProtocol::class -> createBooleanProjection(key, mutable, contextual)
-        StringProjection::class, StringProjectionProtocol::class -> createStringProjection(key, mutable, contextual)
+        SpProjectionProtocol::class -> createSpProjection(key, mutable, contextual)
+        DpProjectionProtocol::class -> createDpProjection(key, mutable, contextual)
+        FloatProjectionProtocol::class -> createFloatProjection(key, mutable, contextual)
+        BooleanProjectionProtocol::class -> createBooleanProjection(key, mutable, contextual)
+        StringProjectionProtocol::class -> createStringProjection(key, mutable, contextual)
         else -> throw UiException.Default("not implemented")
     } as T).also { projections[it.key] = it }
 }

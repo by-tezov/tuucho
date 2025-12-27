@@ -16,8 +16,8 @@ import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projectable.dimension
 import com.tezov.tuucho.core.presentation.ui.render.projectable.projection
-import com.tezov.tuucho.core.presentation.ui.render.projection.DpProjection
-import com.tezov.tuucho.core.presentation.ui.render.projection.FloatProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.DpProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.FloatProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
@@ -45,9 +45,9 @@ class SpacerView(
 ) : AbstractView(screen, path) {
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var width: DpProjection
-    private lateinit var height: DpProjection
-    private lateinit var weight: FloatProjection
+    private lateinit var width: DpProjectionProtocol
+    private lateinit var height: DpProjectionProtocol
+    private lateinit var weight: FloatProjectionProtocol
 
     override fun updateReadyStatus() {
         isReady = width.isReady.isTrueOrNull &&

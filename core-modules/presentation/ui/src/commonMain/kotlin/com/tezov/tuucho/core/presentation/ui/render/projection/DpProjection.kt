@@ -12,35 +12,38 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-interface DpProjectionProtocol : ProjectionProtocols<Dp>
+private typealias DpProjectionProtocols = ProjectionProtocols<Dp>
+
+interface DpProjectionProtocol : DpProjectionProtocols
 
 class DpProjection(
-    key: String,
-    storage: ProjectionStorageProtocol<Dp>,
+    private val projection: DpProjectionProtocols,
 ) : DpProjectionProtocol,
-    ProjectionProtocols<Dp> by Projection(
-        key = key,
-        storage = storage,
-        getValueOrNull = { jsonElement ->
-            when (jsonElement) {
-                is JsonObject -> {
-                    jsonElement
-                        .withScope(DimensionSchema::Scope)
-                        .default
-                        ?.toFloatOrNull()
-                        ?.dp
-                }
+    DpProjectionProtocols by projection {
+    init {
+        attach(this)
+    }
 
-                is JsonPrimitive -> {
-                    jsonElement.stringOrNull?.toFloatOrNull()?.dp
-                }
-
-                else -> {
-                    null
-                }
-            }
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = when (jsonElement) {
+        is JsonObject -> {
+            jsonElement
+                .withScope(DimensionSchema::Scope)
+                .default
+                ?.toFloatOrNull()
+                ?.dp
         }
-    )
+
+        is JsonPrimitive -> {
+            jsonElement.stringOrNull?.toFloatOrNull()?.dp
+        }
+
+        else -> {
+            null
+        }
+    }
+}
 
 private class ContextualDpProjection(
     private val delegate: DpProjectionProtocol
@@ -66,12 +69,16 @@ fun createDpProjection(
     mutable: Boolean,
     contextual: Boolean
 ): DpProjectionProtocol {
-    val projection = when (mutable) {
-        true -> DpProjection(key, Projection.Mutable())
-        false -> DpProjection(key, Projection.Static())
-    }
+    val projection: DpProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val dpProjection = DpProjection(projection)
     return when {
-        contextual -> ContextualDpProjection(projection)
-        else -> projection
+        contextual -> ContextualDpProjection(dpProjection)
+        else -> dpProjection
     }
 }

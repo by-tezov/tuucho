@@ -12,9 +12,9 @@ import com.tezov.tuucho.core.presentation.ui.render.projectable.color
 import com.tezov.tuucho.core.presentation.ui.render.projectable.dimension
 import com.tezov.tuucho.core.presentation.ui.render.projectable.projection
 import com.tezov.tuucho.core.presentation.ui.render.projectable.text
-import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjection
-import com.tezov.tuucho.core.presentation.ui.render.projection.SpProjection
-import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.SpProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
@@ -43,9 +43,9 @@ class LabelView(
 ) : AbstractView(screen, path) {
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var textValue: TextProjection
-    private lateinit var fontColor: ColorProjection
-    private lateinit var fontSize: SpProjection
+    private lateinit var textValue: TextProjectionProtocol
+    private lateinit var fontColor: ColorProjectionProtocol
+    private lateinit var fontSize: SpProjectionProtocol
 
     override fun updateReadyStatus() {
         isReady = textValue.isReady.isTrueOrNull &&

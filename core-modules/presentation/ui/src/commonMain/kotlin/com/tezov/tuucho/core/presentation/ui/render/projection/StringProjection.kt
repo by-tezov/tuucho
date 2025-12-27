@@ -10,33 +10,36 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-interface StringProjectionProtocol : ProjectionProtocols<String>
+private typealias StringProjectionProtocols = ProjectionProtocols<String>
+
+interface StringProjectionProtocol : StringProjectionProtocols
 
 class StringProjection(
-    key: String,
-    storage: ProjectionStorageProtocol<String>,
+    private val projection: StringProjectionProtocols,
 ) : StringProjectionProtocol,
-    ProjectionProtocols<String> by Projection(
-        key = key,
-        storage = storage,
-        getValueOrNull = { jsonElement ->
-            when (jsonElement) {
-                is JsonObject -> {
-                    jsonElement
-                        .withScope(DimensionSchema::Scope)
-                        .default
-                }
+    StringProjectionProtocols by projection {
+    init {
+        attach(this)
+    }
 
-                is JsonPrimitive -> {
-                    jsonElement.stringOrNull
-                }
-
-                else -> {
-                    null
-                }
-            }
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = when (jsonElement) {
+        is JsonObject -> {
+            jsonElement
+                .withScope(DimensionSchema::Scope)
+                .default
         }
-    )
+
+        is JsonPrimitive -> {
+            jsonElement.stringOrNull
+        }
+
+        else -> {
+            null
+        }
+    }
+}
 
 private class ContextualStringProjection(
     private val delegate: StringProjectionProtocol
@@ -62,12 +65,16 @@ fun createStringProjection(
     mutable: Boolean,
     contextual: Boolean
 ): StringProjectionProtocol {
-    val projection = when (mutable) {
-        true -> StringProjection(key, Projection.Mutable())
-        false -> StringProjection(key, Projection.Static())
-    }
+    val projection: StringProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val stringProjection = StringProjection(projection)
     return when {
-        contextual -> ContextualStringProjection(projection)
-        else -> projection
+        contextual -> ContextualStringProjection(stringProjection)
+        else -> stringProjection
     }
 }

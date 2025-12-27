@@ -9,18 +9,20 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 
-interface ViewsProjectionProtocol : ProjectionProtocols<List<ViewProtocol>>
+private typealias ViewsProjectionProtocols = ProjectionProtocols<List<ViewProtocol>>
+
+interface ViewsProjectionProtocol : ViewsProjectionProtocols
 
 class ViewsProjection(
-    key: String,
     private val screen: Screen,
     private val parentPath: JsonElementPath,
+    private val projection: ViewsProjectionProtocols,
 ) : ViewsProjectionProtocol,
-    ProjectionProtocols<List<ViewProtocol>> by Projection(
-        key = key,
-        storage = Projection.Static()
-    ),
+    ViewsProjectionProtocols by projection,
     TuuchoKoinComponent {
+    init {
+        attach(this)
+    }
 
     override suspend fun getValueOrNull(
         jsonElement: JsonElement?
@@ -46,4 +48,11 @@ fun createViewsProjection(
     key: String,
     screen: Screen,
     parentPath: JsonElementPath,
-): ViewsProjectionProtocol = ViewsProjection(key, screen, parentPath)
+): ViewsProjectionProtocol = ViewsProjection(
+    screen = screen,
+    parentPath = parentPath,
+    projection = Projection(
+        key = key,
+        storage = Projection.Static()
+    )
+)

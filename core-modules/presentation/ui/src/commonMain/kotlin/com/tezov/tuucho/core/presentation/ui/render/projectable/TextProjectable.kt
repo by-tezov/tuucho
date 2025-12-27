@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.presentation.ui.render.projectable
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
-import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
@@ -31,7 +30,7 @@ class TextTypeProjectable : ProjectableProtocol {
         mutable: Boolean,
         contextual: Boolean
     ): T = (when (klass) {
-        TextProjection::class, TextProjectionProtocol::class -> createTextProjection(key, mutable, contextual)
+        TextProjectionProtocol::class -> createTextProjection(key, mutable, contextual)
         else -> throw UiException.Default("not implemented")
     } as T).also { projections[it.key] = it }
 }

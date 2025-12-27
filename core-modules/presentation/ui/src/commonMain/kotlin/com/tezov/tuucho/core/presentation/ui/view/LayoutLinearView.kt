@@ -19,10 +19,10 @@ import com.tezov.tuucho.core.presentation.ui.render.projectable.color
 import com.tezov.tuucho.core.presentation.ui.render.projectable.dimension
 import com.tezov.tuucho.core.presentation.ui.render.projectable.projection
 import com.tezov.tuucho.core.presentation.ui.render.projectable.view
-import com.tezov.tuucho.core.presentation.ui.render.projection.BooleanProjection
-import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjection
-import com.tezov.tuucho.core.presentation.ui.render.projection.StringProjection
-import com.tezov.tuucho.core.presentation.ui.render.projection.ViewsProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.BooleanProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.StringProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ViewsProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
@@ -51,11 +51,11 @@ class LayoutLinearView(
 ) : AbstractView(screen, path) {
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var backgroundColor: ColorProjection
-    private lateinit var orientation: StringProjection
-    private lateinit var fillMaxSize: BooleanProjection
-    private lateinit var fillMaxWidth: BooleanProjection
-    private lateinit var itemViews: ViewsProjection
+    private lateinit var backgroundColor: ColorProjectionProtocol
+    private lateinit var orientation: StringProjectionProtocol
+    private lateinit var fillMaxSize: BooleanProjectionProtocol
+    private lateinit var fillMaxWidth: BooleanProjectionProtocol
+    private lateinit var itemViews: ViewsProjectionProtocol
 
     override fun updateReadyStatus() {
         isReady = itemViews.isReady.isTrueOrNull &&

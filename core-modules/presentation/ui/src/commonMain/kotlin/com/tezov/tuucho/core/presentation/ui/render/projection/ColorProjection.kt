@@ -12,34 +12,37 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-interface ColorProjectionProtocol : ProjectionProtocols<Color>
+private typealias ColorProjectionProtocols = ProjectionProtocols<Color>
+
+interface ColorProjectionProtocol : ColorProjectionProtocols
 
 class ColorProjection(
-    key: String,
-    storage: ProjectionStorageProtocol<Color>,
+    private val projection: ColorProjectionProtocols,
 ) : ColorProjectionProtocol,
-    ProjectionProtocols<Color> by Projection(
-        key = key,
-        storage = storage,
-        getValueOrNull = { jsonElement ->
-            when (jsonElement) {
-                is JsonObject -> {
-                    jsonElement
-                        .withScope(DimensionSchema::Scope)
-                        .default
-                        ?.toColorOrNull()
-                }
+    ColorProjectionProtocols by projection {
+    init {
+        attach(this)
+    }
 
-                is JsonPrimitive -> {
-                    jsonElement.stringOrNull?.toColorOrNull()
-                }
-
-                else -> {
-                    null
-                }
-            }
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = when (jsonElement) {
+        is JsonObject -> {
+            jsonElement
+                .withScope(DimensionSchema::Scope)
+                .default
+                ?.toColorOrNull()
         }
-    )
+
+        is JsonPrimitive -> {
+            jsonElement.stringOrNull?.toColorOrNull()
+        }
+
+        else -> {
+            null
+        }
+    }
+}
 
 private class ContextualColorProjection(
     private val delegate: ColorProjectionProtocol
@@ -65,12 +68,16 @@ fun createColorProjection(
     mutable: Boolean,
     contextual: Boolean
 ): ColorProjectionProtocol {
-    val projection = when (mutable) {
-        true -> ColorProjection(key, Projection.Mutable())
-        false -> ColorProjection(key, Projection.Static())
-    }
+    val projection: ColorProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val colorProjection = ColorProjection(projection)
     return when {
-        contextual -> ContextualColorProjection(projection)
-        else -> projection
+        contextual -> ContextualColorProjection(colorProjection)
+        else -> colorProjection
     }
 }

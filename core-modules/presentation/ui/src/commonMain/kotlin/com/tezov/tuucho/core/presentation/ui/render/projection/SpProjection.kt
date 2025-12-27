@@ -12,35 +12,38 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-interface SpProjectionProtocol : ProjectionProtocols<TextUnit>
+private typealias SpProjectionProtocols = ProjectionProtocols<TextUnit>
+
+interface SpProjectionProtocol : SpProjectionProtocols
 
 class SpProjection(
-    key: String,
-    storage: ProjectionStorageProtocol<TextUnit>,
+    private val projection: SpProjectionProtocols,
 ) : SpProjectionProtocol,
-    ProjectionProtocols<TextUnit> by Projection(
-        key = key,
-        storage = storage,
-        getValueOrNull = { jsonElement ->
-            when (jsonElement) {
-                is JsonObject -> {
-                    jsonElement
-                        .withScope(DimensionSchema::Scope)
-                        .default
-                        ?.toFloatOrNull()
-                        ?.sp
-                }
+    SpProjectionProtocols by projection {
+    init {
+        attach(this)
+    }
 
-                is JsonPrimitive -> {
-                    jsonElement.stringOrNull?.toFloatOrNull()?.sp
-                }
-
-                else -> {
-                    null
-                }
-            }
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = when (jsonElement) {
+        is JsonObject -> {
+            jsonElement
+                .withScope(DimensionSchema::Scope)
+                .default
+                ?.toFloatOrNull()
+                ?.sp
         }
-    )
+
+        is JsonPrimitive -> {
+            jsonElement.stringOrNull?.toFloatOrNull()?.sp
+        }
+
+        else -> {
+            null
+        }
+    }
+}
 
 private class ContextualSpProjection(
     private val delegate: SpProjectionProtocol
@@ -66,12 +69,16 @@ fun createSpProjection(
     mutable: Boolean,
     contextual: Boolean
 ): SpProjectionProtocol {
-    val projection = when (mutable) {
-        true -> SpProjection(key, Projection.Mutable())
-        false -> SpProjection(key, Projection.Static())
-    }
+    val projection: SpProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val spProjection = SpProjection(projection)
     return when {
-        contextual -> ContextualSpProjection(projection)
-        else -> projection
+        contextual -> ContextualSpProjection(spProjection)
+        else -> spProjection
     }
 }

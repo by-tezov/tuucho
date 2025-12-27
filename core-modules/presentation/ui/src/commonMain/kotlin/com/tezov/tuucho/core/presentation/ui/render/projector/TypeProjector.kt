@@ -1,12 +1,10 @@
 package com.tezov.tuucho.core.presentation.ui.render.projector
 
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.TypeProjectorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -68,25 +66,4 @@ fun ComponentProjectorProtocol.state(
     .also {
         add(it)
         it.block()
-    }
-
-val TypeProjectorProtocol.contextual
-    get(): TypeProjectorProtocol = object : TypeProjectorProtocol, UpdatableProtocol {
-        override val type = TypeSchema.Value.component
-
-        override lateinit var id: String
-            private set
-
-        override fun add(
-            projectable: ProjectableProtocol
-        ) = this@contextual.add(projectable)
-
-        override suspend fun process(
-            jsonElement: JsonElement?
-        ) {
-            if (!this::id.isInitialized) {
-                jsonElement?.idValue?.let { id = it }
-            }
-            this@contextual.process(jsonElement)
-        }
     }

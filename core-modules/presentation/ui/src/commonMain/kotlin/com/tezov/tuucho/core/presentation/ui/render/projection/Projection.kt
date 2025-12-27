@@ -5,7 +5,11 @@ import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProtocol
 import kotlinx.serialization.json.JsonElement
 
-fun interface ValueProjectionProtocol<T : Any> {
+interface ValueProjectionProtocol<T : Any> {
+    fun attach(
+        valueProjection: ValueProjectionProtocol<T>
+    )
+
     suspend fun getValueOrNull(
         jsonElement: JsonElement?
     ): T?
@@ -26,11 +30,9 @@ interface ProjectionProtocols<T : Any> :
 
 class Projection<T : Any>(
     override val key: String,
-    private val storage: ProjectionStorageProtocol<T>,
-    private val getValueOrNull: ValueProjectionProtocol<T> = ValueProjectionProtocol { error("not implemented") }
+    private val storage: ProjectionStorageProtocol<T>
 ) : ProjectionProtocols<T>,
-    ProjectionStorageProtocol<T> by storage,
-    ValueProjectionProtocol<T> by getValueOrNull {
+    ProjectionStorageProtocol<T> by storage {
     class Static<T> : ProjectionStorageProtocol<T> {
         override var value: T? = null
 
@@ -57,6 +59,14 @@ class Projection<T : Any>(
         override fun hashCode() = state.hashCode()
     }
 
+    private lateinit var valueProjection: ValueProjectionProtocol<T>
+
+    override fun attach(
+        valueProjection: ValueProjectionProtocol<T>
+    ) {
+        this.valueProjection = valueProjection
+    }
+
     override var isReady: Boolean? = null
         private set
 
@@ -76,4 +86,8 @@ class Projection<T : Any>(
     override suspend fun process(
         jsonElement: JsonElement?
     ) = superProcess(jsonElement)
+
+    override suspend fun getValueOrNull(
+        jsonElement: JsonElement?
+    ) = valueProjection.getValueOrNull(jsonElement)
 }

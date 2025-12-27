@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.presentation.ui.render.projectable
 import androidx.compose.ui.graphics.Color
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.createColorProjection
@@ -32,7 +31,7 @@ class ColorTypeProjectable : ProjectableProtocol {
         mutable: Boolean,
         contextual: Boolean
     ) = (when (klass) {
-        ColorProjection::class, ColorProjectionProtocol::class -> createColorProjection(key, mutable, contextual)
+        ColorProjectionProtocol::class -> createColorProjection(key, mutable, contextual)
         else -> throw UiException.Default("not implemented")
     } as T).also { projections[it.key] = it }
 }

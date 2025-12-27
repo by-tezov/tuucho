@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.presentation.ui.render.projectable
 
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.projection.MessageTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.MessageTextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.createMessageTextProjection
@@ -31,7 +30,7 @@ class MessageProjectable : ProjectableProtocol {
         mutable: Boolean,
         contextual: Boolean
     ): T = (when (klass) {
-        MessageTextProjection::class, MessageTextProjectionProtocol::class -> createMessageTextProjection(key, mutable, contextual)
+        MessageTextProjectionProtocol::class -> createMessageTextProjection(key, mutable, contextual)
         else -> throw UiException.Default("not implemented")
     } as T).also { projections[it.key] = it }
 }

@@ -14,18 +14,20 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-interface ActionProjectionProtocol : ProjectionProtocols<() -> Unit>
+private typealias ActionProjectionProtocols = ProjectionProtocols<() -> Unit>
+
+interface ActionProjectionProtocol : ActionProjectionProtocols
 
 class ActionProjection(
-    key: String,
     private val route: NavigationRoute,
-    storage: ProjectionStorageProtocol<() -> Unit>,
+    private val projection: ActionProjectionProtocols
 ) : ActionProjectionProtocol,
-    ProjectionProtocols<() -> Unit> by Projection(
-        key = key,
-        storage = storage
-    ),
+    ActionProjectionProtocols by projection,
     TuuchoKoinComponent {
+    init {
+        attach(this)
+    }
+
     override suspend fun getValueOrNull(
         jsonElement: JsonElement?
     ) = (jsonElement as? JsonObject)
@@ -91,12 +93,16 @@ fun createActionProjection(
     mutable: Boolean,
     contextual: Boolean
 ): ActionProjectionProtocol {
-    val projection = when (mutable) {
-        true -> ActionProjection(key, route, Projection.Mutable())
-        false -> ActionProjection(key, route, Projection.Static())
-    }
+    val projection: ActionProjectionProtocols = Projection(
+        key = key,
+        storage = when (mutable) {
+            true -> Projection.Mutable()
+            false -> Projection.Static()
+        }
+    )
+    val actionProjection = ActionProjection(route, projection)
     return when {
-        contextual -> ContextualActionProjection(projection)
-        else -> projection
+        contextual -> ContextualActionProjection(actionProjection)
+        else -> actionProjection
     }
 }

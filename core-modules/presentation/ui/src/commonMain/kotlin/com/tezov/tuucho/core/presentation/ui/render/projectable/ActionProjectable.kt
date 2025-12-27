@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.presentation.ui.render.projectable
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.createActionProjection
@@ -33,7 +32,7 @@ class ActionTypeProjectable : ProjectableProtocol {
         mutable: Boolean,
         contextual: Boolean
     ) = (when (klass) {
-        ActionProjection::class, ActionProjectionProtocol::class -> createActionProjection(key, route, mutable, contextual)
+        ActionProjectionProtocol::class -> createActionProjection(key, route, mutable, contextual)
         else -> throw UiException.Default("not implemented")
     } as T).also { projections[it.key] = it }
 }

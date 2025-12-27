@@ -10,8 +10,8 @@ import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projectable.action
 import com.tezov.tuucho.core.presentation.ui.render.projectable.projection
 import com.tezov.tuucho.core.presentation.ui.render.projectable.view
-import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjection
-import com.tezov.tuucho.core.presentation.ui.render.projection.ViewProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ViewProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ComponentProjectorProtocol
@@ -39,8 +39,8 @@ class ButtonView(
 ) : AbstractView(screen, path) {
     override lateinit var componentProjector: ComponentProjectorProtocol
 
-    private lateinit var labelView: ViewProjection
-    private lateinit var action: ActionProjection
+    private lateinit var labelView: ViewProjectionProtocol
+    private lateinit var action: ActionProjectionProtocol
 
     override fun updateReadyStatus() {
         isReady = labelView.isReady.isTrueOrNull &&
