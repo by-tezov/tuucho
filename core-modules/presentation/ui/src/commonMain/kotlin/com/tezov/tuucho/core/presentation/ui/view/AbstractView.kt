@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.presentation.ui.composable.shimmerComposable
+import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewProtocol
 import kotlinx.serialization.json.jsonObject
@@ -22,6 +23,8 @@ abstract class AbstractView(
 ) : ViewProtocol {
     val componentObject get() = screen.componentObject.find(path).jsonObject
 
+    lateinit var componentProjector: ComponentProjectorProtocol
+
     protected var isInitialized = false
 
     protected var isReady by mutableStateOf(false)
@@ -29,13 +32,17 @@ abstract class AbstractView(
     protected abstract fun updateReadyStatus()
 
     suspend fun init() {
-        initProjection()
+        componentProjector = createComponentProjectorProjection().also {
+            it.process(componentObject)
+        }
         updateReadyStatus()
         isInitialized = true
         screen.addView(this)
     }
 
-    abstract suspend fun initProjection()
+    abstract suspend fun createComponentProjectorProjection(): ComponentProjectorProtocol
+
+    override val updatables get() = componentProjector.updatables
 
     @Composable
     final override fun display(

@@ -14,7 +14,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionP
 import com.tezov.tuucho.core.presentation.ui.render.projection.ViewProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
 import kotlinx.serialization.json.JsonObject
@@ -37,7 +36,6 @@ class ButtonView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-    override lateinit var componentProjector: ComponentProjectorProtocol
 
     private lateinit var labelView: ViewProjectionProtocol
     private lateinit var action: ActionProjectionProtocol
@@ -47,25 +45,22 @@ class ButtonView(
             action.isReady.isTrueOrNull
     }
 
-    override suspend fun initProjection() {
-        componentProjector = componentProjector {
-            content {
-                action {
-                    action = projection(
-                        key = Content.Key.action,
-                        route = screen.route
-                    )
-                }
-                view {
-                    labelView = projection(
-                        key = Content.Key.label,
-                        screen = screen,
-                        path = path.child(this@content.type)
-                    )
-                }
+    override suspend fun createComponentProjectorProjection() = componentProjector {
+        content {
+            action {
+                action = projection(
+                    key = Content.Key.action,
+                    route = screen.route
+                )
+            }
+            view {
+                labelView = projection(
+                    key = Content.Key.label,
+                    screen = screen,
+                    path = path.child(this@content.type)
+                )
             }
         }
-        componentProjector.process(componentObject)
     }
 
     @Composable

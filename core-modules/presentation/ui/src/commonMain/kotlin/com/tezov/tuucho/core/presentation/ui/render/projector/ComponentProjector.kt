@@ -1,6 +1,10 @@
 package com.tezov.tuucho.core.presentation.ui.render.projector
 
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ProjectorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -9,6 +13,15 @@ import kotlinx.serialization.json.JsonObject
 @TuuchoUiDsl
 class ComponentProjector : ComponentProjectorProtocol {
     private val projectors: MutableList<ProjectorProtocol> = mutableListOf()
+
+    override val updatables: List<UpdatableProtocol>
+        get() = buildList {
+            projectors.forEach {
+                if (it is HasUpdatableProtocol) {
+                    addAll(it.updatables)
+                }
+            }
+        }
 
     override fun add(
         projector: ProjectorProtocol
@@ -27,8 +40,40 @@ class ComponentProjector : ComponentProjectorProtocol {
     }
 }
 
+private class ContextualComponentProjector(
+    private val delegate: ComponentProjectorProtocol
+) : ComponentProjectorProtocol by delegate,
+    UpdatableProtocol {
+    override val type = TypeSchema.Value.component
+
+    override lateinit var id: String
+        private set
+
+    override val updatables: List<UpdatableProtocol>
+        get() = buildList {
+            add(this@ContextualComponentProjector)
+            addAll(delegate.updatables)
+        }
+
+    override suspend fun process(
+        jsonElement: JsonElement?
+    ) {
+        if (!this::id.isInitialized) {
+            jsonElement?.idValue?.let { id = it }
+        }
+        delegate.process(jsonElement)
+    }
+}
+
 fun componentProjector(
     contextual: Boolean = false,
     block: ComponentProjectorProtocol.() -> Unit
-): ComponentProjectorProtocol = ComponentProjector()
-    .also { it.block() }
+): ComponentProjectorProtocol {
+    val componentProjector = ComponentProjector().also {
+        it.block()
+    }
+    return when {
+        contextual -> ContextualComponentProjector(componentProjector)
+        else -> componentProjector
+    }
+}

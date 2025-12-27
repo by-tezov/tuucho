@@ -5,16 +5,27 @@ import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
 @TuuchoUiDsl
-class TextTypeProjectable : ProjectableProtocol {
+class TextTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
     private val projections = mutableMapOf<String, ProjectionProtocols<String>>()
 
     override val keys get() = projections.keys
+
+    override val updatables: List<UpdatableProtocol>
+        get() = buildList {
+            projections.values.forEach {
+                if(it is UpdatableProtocol) {
+                    add(it)
+                }
+            }
+        }
 
     override suspend fun process(
         jsonElement: JsonElement?,

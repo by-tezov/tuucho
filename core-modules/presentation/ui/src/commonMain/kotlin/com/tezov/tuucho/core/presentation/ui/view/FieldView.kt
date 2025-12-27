@@ -32,7 +32,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.message
 import com.tezov.tuucho.core.presentation.ui.render.projector.option
 import com.tezov.tuucho.core.presentation.ui.render.projector.state
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
 import kotlinx.serialization.json.JsonObject
@@ -56,7 +55,6 @@ class FieldView(
     path: JsonElementPath,
 ) : AbstractView(screen, path),
     FormStateProtocol.Extension {
-    override lateinit var componentProjector: ComponentProjectorProtocol
 
     private var showError by mutableStateOf(false)
 
@@ -78,33 +76,32 @@ class FieldView(
             formState.isReady.isTrueOrNull
     }
 
-    override suspend fun initProjection() {
-        componentProjector = componentProjector(contextual = true) {
-            option {
-                validator {
-                    validator = projection(FormSchema.Option.Key.validator)
-                }
-            }
-            content(contextual = true) {
-                text {
-                    titleValue = projection(FormFieldSchema.Content.Key.title)
-                    placeholderValue = projection(FormFieldSchema.Content.Key.placeholder)
-                }
-                field {
-                    formState = projection(FormFieldSchema.Content.Key.messageError)
-                }
-            }
-            state {
-                text {
-                    fieldValue = projection(FormFieldSchema.State.Key.initialValue, mutable = true, contextual = true)
-                }
-            }
-            message(FormSchema.Message.Value.Subset.updateErrorState) {
-                text {
-                    messageErrorExtra = projection(FormSchema.Message.Key.messageErrorExtra)
-                }
+    override suspend fun createComponentProjectorProjection() = componentProjector(contextual = true) {
+        option {
+            validator {
+                validator = projection(FormSchema.Option.Key.validator)
             }
         }
+        content(contextual = true) {
+            text {
+                titleValue = projection(FormFieldSchema.Content.Key.title)
+                placeholderValue = projection(FormFieldSchema.Content.Key.placeholder)
+            }
+            field {
+                formState = projection(FormFieldSchema.Content.Key.messageError)
+            }
+        }
+        state(contextual = true) {
+            text {
+                fieldValue = projection(FormFieldSchema.State.Key.initialValue, mutable = true, contextual = true)
+            }
+        }
+        message(FormSchema.Message.Value.Subset.updateErrorState) {
+            text {
+                messageErrorExtra = projection(FormSchema.Message.Key.messageErrorExtra)
+            }
+        }
+    }.also {
         formState.apply {
             componentId = componentObject.idValue
             validatorProjection = validator
@@ -116,7 +113,6 @@ class FieldView(
                 showError = extensionFormState.isValid() == false || it != null
             }
         }
-        componentProjector.process(componentObject)
     }
 
     @Composable

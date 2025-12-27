@@ -13,16 +13,27 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.createDpProjectio
 import com.tezov.tuucho.core.presentation.ui.render.projection.createFloatProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createSpProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createStringProjection
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
 @TuuchoUiDsl
-class DimensionTypeProjectable : ProjectableProtocol {
+class DimensionTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
     private val projections = mutableMapOf<String, ProjectionProtocols<*>>()
 
     override val keys get() = projections.keys
+
+    override val updatables: List<UpdatableProtocol>
+        get() = buildList {
+            projections.values.forEach {
+                if(it is UpdatableProtocol) {
+                    add(it)
+                }
+            }
+        }
 
     override suspend fun process(
         jsonElement: JsonElement?,

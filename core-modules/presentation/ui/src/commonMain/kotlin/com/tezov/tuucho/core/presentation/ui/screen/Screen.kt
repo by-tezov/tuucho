@@ -52,24 +52,18 @@ class Screen(
             screen = this,
             path = ROOT_PATH
         )
-        addView(rootView)
     }
 
     fun addView(
         view: ViewProtocol
     ) {
         views.add(view)
-    }
-
-    private fun addUpdatable(
-        vararg updatables: UpdatableProtocol
-    ) {
-        updatables.forEach { updatable ->
+        view.updatables.forEach { updatable ->
             val keyTypeId = keyTypeId(updatable.type, updatable.id)
-            if (this.updatables.contains(keyTypeId)) {
+            if (this@Screen.updatables.contains(keyTypeId)) {
                 throw UiException.Default("Warning, typeId $keyTypeId already exist")
             }
-            this.updatables[keyTypeId] = updatable
+            this@Screen.updatables[keyTypeId] = updatable
         }
     }
 

@@ -20,7 +20,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.DpProjectionProto
 import com.tezov.tuucho.core.presentation.ui.render.projection.FloatProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
 import kotlinx.serialization.json.JsonObject
@@ -43,7 +42,6 @@ class SpacerView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-    override lateinit var componentProjector: ComponentProjectorProtocol
 
     private lateinit var width: DpProjectionProtocol
     private lateinit var height: DpProjectionProtocol
@@ -55,17 +53,14 @@ class SpacerView(
             weight.isReady.isTrueOrNull
     }
 
-    override suspend fun initProjection() {
-        componentProjector = componentProjector {
-            style {
-                dimension {
-                    width = projection(StyleSchema.Key.width)
-                    height = projection(StyleSchema.Key.height)
-                    weight = projection(Style.Key.weight)
-                }
+    override suspend fun createComponentProjectorProjection() = componentProjector {
+        style {
+            dimension {
+                width = projection(StyleSchema.Key.width)
+                height = projection(StyleSchema.Key.height)
+                weight = projection(Style.Key.weight)
             }
         }
-        componentProjector.process(componentObject)
     }
 
     @Composable

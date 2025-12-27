@@ -26,7 +26,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ViewsProjectionPr
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
 import kotlinx.serialization.json.JsonObject
@@ -49,7 +48,6 @@ class LayoutLinearView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-    override lateinit var componentProjector: ComponentProjectorProtocol
 
     private lateinit var backgroundColor: ColorProjectionProtocol
     private lateinit var orientation: StringProjectionProtocol
@@ -65,29 +63,26 @@ class LayoutLinearView(
             fillMaxWidth.isReady.isTrueOrNull
     }
 
-    override suspend fun initProjection() {
-        componentProjector = componentProjector {
-            style {
-                color {
-                    backgroundColor = projection(Style.Key.backgroundColor)
-                }
-                dimension {
-                    fillMaxSize = projection(Style.Key.fillMaxSize)
-                    fillMaxWidth = projection(Style.Key.fillMaxWidth)
-                    orientation = projection(Style.Key.orientation)
-                }
+    override suspend fun createComponentProjectorProjection() = componentProjector {
+        style {
+            color {
+                backgroundColor = projection(Style.Key.backgroundColor)
             }
-            content {
-                view {
-                    itemViews = projection(
-                        key = LayoutLinearSchema.Content.Key.items,
-                        screen = screen,
-                        path = path.child(this@content.type)
-                    )
-                }
+            dimension {
+                fillMaxSize = projection(Style.Key.fillMaxSize)
+                fillMaxWidth = projection(Style.Key.fillMaxWidth)
+                orientation = projection(Style.Key.orientation)
             }
         }
-        componentProjector.process(componentObject)
+        content {
+            view {
+                itemViews = projection(
+                    key = LayoutLinearSchema.Content.Key.items,
+                    screen = screen,
+                    path = path.child(this@content.type)
+                )
+            }
+        }
     }
 
     @Composable

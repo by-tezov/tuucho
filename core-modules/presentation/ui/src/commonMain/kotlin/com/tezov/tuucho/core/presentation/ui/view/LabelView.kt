@@ -18,7 +18,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionPro
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
 import kotlinx.serialization.json.JsonObject
@@ -41,7 +40,6 @@ class LabelView(
     screen: Screen,
     path: JsonElementPath,
 ) : AbstractView(screen, path) {
-    override lateinit var componentProjector: ComponentProjectorProtocol
 
     private lateinit var textValue: TextProjectionProtocol
     private lateinit var fontColor: ColorProjectionProtocol
@@ -53,23 +51,20 @@ class LabelView(
             fontSize.isReady.isTrueOrNull
     }
 
-    override suspend fun initProjection() {
-        componentProjector = componentProjector(contextual = true) {
-            style {
-                color {
-                    fontColor = projection(LabelSchema.Style.Key.fontColor)
-                }
-                dimension {
-                    fontSize = projection(LabelSchema.Style.Key.fontSize)
-                }
+    override suspend fun createComponentProjectorProjection() = componentProjector(contextual = true) {
+        style {
+            color {
+                fontColor = projection(LabelSchema.Style.Key.fontColor)
             }
-            content(contextual = true) {
-                text {
-                    textValue = projection(Content.Key.value, mutable = true, contextual = true)
-                }
+            dimension {
+                fontSize = projection(LabelSchema.Style.Key.fontSize)
             }
         }
-        componentProjector.process(componentObject)
+        content(contextual = true) {
+            text {
+                textValue = projection(Content.Key.value, mutable = true, contextual = true)
+            }
+        }
     }
 
     @Composable
