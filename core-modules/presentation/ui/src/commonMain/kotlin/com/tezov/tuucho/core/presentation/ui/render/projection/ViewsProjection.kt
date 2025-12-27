@@ -9,16 +9,16 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 
-private typealias ViewsProjectionProtocols = ProjectionProtocols<List<ViewProtocol>>
+private typealias ViewsProjectionTypeAlias = ProjectionProtocols<List<ViewProtocol>>
 
-interface ViewsProjectionProtocol : ViewsProjectionProtocols
+interface ViewsProjectionProtocol : ViewsProjectionTypeAlias
 
 class ViewsProjection(
     private val screen: Screen,
     private val parentPath: JsonElementPath,
-    private val projection: ViewsProjectionProtocols,
+    private val projection: ViewsProjectionTypeAlias,
 ) : ViewsProjectionProtocol,
-    ViewsProjectionProtocols by projection,
+    ViewsProjectionTypeAlias by projection,
     TuuchoKoinComponent {
     init {
         attach(this)

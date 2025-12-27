@@ -12,14 +12,14 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-private typealias DpProjectionProtocols = ProjectionProtocols<Dp>
+private typealias DpProjectionTypeAlias = ProjectionProtocols<Dp>
 
-interface DpProjectionProtocol : DpProjectionProtocols
+interface DpProjectionProtocol : DpProjectionTypeAlias
 
 class DpProjection(
-    private val projection: DpProjectionProtocols,
+    private val projection: DpProjectionTypeAlias,
 ) : DpProjectionProtocol,
-    DpProjectionProtocols by projection {
+    DpProjectionTypeAlias by projection {
     init {
         attach(this)
     }
@@ -69,7 +69,7 @@ fun createDpProjection(
     mutable: Boolean,
     contextual: Boolean
 ): DpProjectionProtocol {
-    val projection: DpProjectionProtocols = Projection(
+    val projection: DpProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()

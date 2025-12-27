@@ -10,14 +10,14 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-private typealias FloatProjectionProtocols = ProjectionProtocols<Float>
+private typealias FloatProjectionTypeAlias = ProjectionProtocols<Float>
 
-interface FloatProjectionProtocol : FloatProjectionProtocols
+interface FloatProjectionProtocol : FloatProjectionTypeAlias
 
 class FloatProjection(
-    private val projection: FloatProjectionProtocols,
+    private val projection: FloatProjectionTypeAlias,
 ) : FloatProjectionProtocol,
-    FloatProjectionProtocols by projection {
+    FloatProjectionTypeAlias by projection {
     init {
         attach(this)
     }
@@ -66,7 +66,7 @@ fun createFloatProjection(
     mutable: Boolean,
     contextual: Boolean
 ): FloatProjectionProtocol {
-    val projection: FloatProjectionProtocols = Projection(
+    val projection: FloatProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()

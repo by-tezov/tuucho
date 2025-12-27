@@ -4,17 +4,17 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 
-private typealias MessageTextProjectionProtocols = ProjectionProtocols<String>
+private typealias MessageTextProjectionTypeAlias = ProjectionProtocols<String>
 
-interface MessageTextProjectionProtocol : MessageTextProjectionProtocols {
+interface MessageTextProjectionProtocol : MessageTextProjectionTypeAlias {
     var componentId: String
     var onReceived: ((String?) -> Unit)
 }
 
 class MessageTextProjection(
-    private val projection: MessageTextProjectionProtocols,
+    private val projection: MessageTextProjectionTypeAlias,
 ) : MessageTextProjectionProtocol,
-    MessageTextProjectionProtocols by projection {
+    MessageTextProjectionTypeAlias by projection {
 
     override lateinit var componentId: String
 
@@ -51,7 +51,7 @@ fun createMessageTextProjection(
     key: String,
     mutable: Boolean
 ): MessageTextProjectionProtocol {
-    val projection: MessageTextProjectionProtocols = Projection(
+    val projection: MessageTextProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()

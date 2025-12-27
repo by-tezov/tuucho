@@ -10,14 +10,14 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-private typealias StringProjectionProtocols = ProjectionProtocols<String>
+private typealias StringProjectionTypeAlias = ProjectionProtocols<String>
 
-interface StringProjectionProtocol : StringProjectionProtocols
+interface StringProjectionProtocol : StringProjectionTypeAlias
 
 class StringProjection(
-    private val projection: StringProjectionProtocols,
+    private val projection: StringProjectionTypeAlias,
 ) : StringProjectionProtocol,
-    StringProjectionProtocols by projection {
+    StringProjectionTypeAlias by projection {
     init {
         attach(this)
     }
@@ -65,7 +65,7 @@ fun createStringProjection(
     mutable: Boolean,
     contextual: Boolean
 ): StringProjectionProtocol {
-    val projection: StringProjectionProtocols = Projection(
+    val projection: StringProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()

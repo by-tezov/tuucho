@@ -20,7 +20,7 @@ interface ComponentProjectorProtocols : ComponentProjectorProtocol, ReadyStatusP
 class ComponentProjector : ComponentProjectorProtocols {
     private val projectors: MutableList<ProjectorProtocol> = mutableListOf()
 
-    override var isReady by mutableStateOf(false)
+    override var isReady by mutableStateOf(true)
 
     override lateinit var onStatusChanged: () -> Unit
 

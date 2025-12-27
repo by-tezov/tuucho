@@ -12,14 +12,14 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-private typealias SpProjectionProtocols = ProjectionProtocols<TextUnit>
+private typealias SpProjectionTypeAlias = ProjectionProtocols<TextUnit>
 
-interface SpProjectionProtocol : SpProjectionProtocols
+interface SpProjectionProtocol : SpProjectionTypeAlias
 
 class SpProjection(
-    private val projection: SpProjectionProtocols,
+    private val projection: SpProjectionTypeAlias,
 ) : SpProjectionProtocol,
-    SpProjectionProtocols by projection {
+    SpProjectionTypeAlias by projection {
     init {
         attach(this)
     }
@@ -69,7 +69,7 @@ fun createSpProjection(
     mutable: Boolean,
     contextual: Boolean
 ): SpProjectionProtocol {
-    val projection: SpProjectionProtocols = Projection(
+    val projection: SpProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()

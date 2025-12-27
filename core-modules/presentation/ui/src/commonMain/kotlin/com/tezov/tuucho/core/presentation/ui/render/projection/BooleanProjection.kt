@@ -10,14 +10,14 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-private typealias BooleanProjectionProtocols = ProjectionProtocols<Boolean>
+private typealias BooleanProjectionTypeAlias = ProjectionProtocols<Boolean>
 
-interface BooleanProjectionProtocol : BooleanProjectionProtocols
+interface BooleanProjectionProtocol : BooleanProjectionTypeAlias
 
 class BooleanProjection(
-    private val projection: BooleanProjectionProtocols,
+    private val projection: BooleanProjectionTypeAlias,
 ) : BooleanProjectionProtocol,
-    BooleanProjectionProtocols by projection {
+    BooleanProjectionTypeAlias by projection {
     init {
         attach(this)
     }
@@ -67,7 +67,7 @@ fun createBooleanProjection(
     mutable: Boolean,
     contextual: Boolean
 ): BooleanProjectionProtocol {
-    val projection: BooleanProjectionProtocols = Projection(
+    val projection: BooleanProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()

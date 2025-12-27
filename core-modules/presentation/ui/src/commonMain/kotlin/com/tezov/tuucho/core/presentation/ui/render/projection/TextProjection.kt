@@ -4,22 +4,22 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
-import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
-import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.updatable.ReadyStatus
+import com.tezov.tuucho.core.presentation.ui.render.updatable.Updatable
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-private typealias TextProjectionProtocols = ProjectionProtocols<String>
+private typealias TextProjectionTypeAlias = ProjectionProtocols<String>
 
-interface TextProjectionProtocol : TextProjectionProtocols
+interface TextProjectionProtocol : TextProjectionTypeAlias
 
-class TextProjection(
-    private val projection: TextProjectionProtocols,
+private class TextProjection(
+    private val projection: TextProjectionTypeAlias,
 ) : TextProjectionProtocol,
-    TextProjectionProtocols by projection {
+    TextProjectionTypeAlias by projection {
     init {
         attach(this)
     }
@@ -43,47 +43,20 @@ class TextProjection(
     }
 }
 
-class Updatable(
-    override val type: String,
-) : UpdatableProtocol, ReadyStatusProtocol {
-
-    override var id: String? = null
-        private set
-
-    override var isReady = false
-        private set
-
-    override lateinit var onStatusChanged: () -> Unit
-
-    fun updateIsReady(
-        jsonElement: JsonElement?
-    ) {
-        val previous = isReady
-        isReady = jsonElement != null && jsonElement.idSourceOrNull == null
-        if (previous != isReady && this::onStatusChanged.isInitialized) {
-            onStatusChanged.invoke()
-        }
-    }
-
-    override suspend fun process(jsonElement: JsonElement?) {
-        if (id == null) {
-            jsonElement?.idValue?.let { id = it }
-        }
-        updateIsReady(jsonElement)
-    }
-}
-
 private class ContextualTextProjection(
     private val delegate: TextProjectionProtocol,
-    private val updatable: Updatable = Updatable(TypeSchema.Value.text)
+    private val updatable: UpdatableProtocol,
+    private val readyStatus: ReadyStatusProtocol
 ) : TextProjectionProtocol by delegate,
-    UpdatableProtocol by updatable {
+    UpdatableProtocol by updatable,
+    ReadyStatusProtocol by readyStatus {
 
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
         delegate.process(jsonElement)
         updatable.process(jsonElement)
+        readyStatus.updateIsReady(jsonElement)
     }
 }
 
@@ -92,7 +65,7 @@ fun createTextProjection(
     mutable: Boolean,
     contextual: Boolean
 ): TextProjectionProtocol {
-    val projection: TextProjectionProtocols = Projection(
+    val projection: TextProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()
@@ -101,7 +74,11 @@ fun createTextProjection(
     )
     val textProjection = TextProjection(projection)
     return when {
-        contextual -> ContextualTextProjection(textProjection)
+        contextual -> ContextualTextProjection(
+            delegate = textProjection,
+            updatable = Updatable(TypeSchema.Value.text),
+            readyStatus = ReadyStatus()
+        )
         else -> textProjection
     }
 }

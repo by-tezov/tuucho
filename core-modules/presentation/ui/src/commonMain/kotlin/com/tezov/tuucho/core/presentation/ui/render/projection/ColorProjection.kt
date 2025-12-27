@@ -12,14 +12,14 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-private typealias ColorProjectionProtocols = ProjectionProtocols<Color>
+private typealias ColorProjectionTypeAlias = ProjectionProtocols<Color>
 
-interface ColorProjectionProtocol : ColorProjectionProtocols
+interface ColorProjectionProtocol : ColorProjectionTypeAlias
 
 class ColorProjection(
-    private val projection: ColorProjectionProtocols,
+    private val projection: ColorProjectionTypeAlias,
 ) : ColorProjectionProtocol,
-    ColorProjectionProtocols by projection {
+    ColorProjectionTypeAlias by projection {
     init {
         attach(this)
     }
@@ -68,7 +68,7 @@ fun createColorProjection(
     mutable: Boolean,
     contextual: Boolean
 ): ColorProjectionProtocol {
-    val projection: ColorProjectionProtocols = Projection(
+    val projection: ColorProjectionTypeAlias = Projection(
         key = key,
         storage = when (mutable) {
             true -> Projection.Mutable()

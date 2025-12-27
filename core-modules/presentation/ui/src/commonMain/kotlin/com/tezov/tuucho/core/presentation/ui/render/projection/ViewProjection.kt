@@ -8,16 +8,16 @@ import com.tezov.tuucho.core.presentation.ui.view._system.ViewProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-private typealias ViewProjectionProtocols = ProjectionProtocols<ViewProtocol>
+private typealias ViewProjectionTypeAlias = ProjectionProtocols<ViewProtocol>
 
-interface ViewProjectionProtocol : ViewProjectionProtocols
+interface ViewProjectionProtocol : ViewProjectionTypeAlias
 
 class ViewProjection(
     private val screen: Screen,
     private val parentPath: JsonElementPath,
-    private val projection: ViewProjectionProtocols
+    private val projection: ViewProjectionTypeAlias
 ) : ViewProjectionProtocol,
-    ViewProjectionProtocols by projection,
+    ViewProjectionTypeAlias by projection,
     TuuchoKoinComponent {
     init {
         attach(this)
