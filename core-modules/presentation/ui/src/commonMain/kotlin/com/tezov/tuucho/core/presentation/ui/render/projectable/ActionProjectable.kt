@@ -7,14 +7,14 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionP
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.createActionProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
-interface ActionTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, ReadyStatusProtocol {
+interface ActionTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, HasStatusProtocol {
     fun <T : ProjectionProtocols<() -> Unit>> newProjection(
         klass: KClass<out T>,
         key: String,
@@ -63,7 +63,7 @@ class ActionTypeProjectable : ActionTypeProjectableProtocols {
         else -> throw UiException.Default("not implemented")
     } as T).also {
         projections[it.key] = it
-        (it as? ReadyStatusProtocol)?.let { status ->
+        (it as? HasStatusProtocol)?.let { status ->
             status.onStatusChanged = {
                 val previous = isReady
                 isReady = isReady && status.isReady

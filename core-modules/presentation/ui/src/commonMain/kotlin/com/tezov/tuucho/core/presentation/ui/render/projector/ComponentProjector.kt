@@ -6,15 +6,15 @@ import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-interface ComponentProjectorProtocols : ComponentProjectorProtocol, ReadyStatusProtocol
+interface ComponentProjectorProtocols : ComponentProjectorProtocol, HasStatusProtocol
 
 @TuuchoUiDsl
 class ComponentProjector : ComponentProjectorProtocols {
@@ -37,7 +37,7 @@ class ComponentProjector : ComponentProjectorProtocols {
         projector: ProjectorProtocol
     ) {
         projectors.add(projector)
-        (projector as? ReadyStatusProtocol)?.let { status ->
+        (projector as? HasStatusProtocol)?.let { status ->
             status.onStatusChanged = {
                 val previous = isReady
                 isReady = isReady && status.isReady

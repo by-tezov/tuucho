@@ -6,14 +6,14 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtoco
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
-interface TextTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, ReadyStatusProtocol {
+interface TextTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, HasStatusProtocol {
     fun <T : ProjectionProtocols<String>> newProjection(
         klass: KClass<out T>,
         key: String,

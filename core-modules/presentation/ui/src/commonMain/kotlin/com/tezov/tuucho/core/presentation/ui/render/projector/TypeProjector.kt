@@ -3,15 +3,15 @@ package com.tezov.tuucho.core.presentation.ui.render.projector
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-interface TypeProjectorProtocols : TypeProjectorProtocol, HasUpdatableProtocol, ReadyStatusProtocol
+interface TypeProjectorProtocols : TypeProjectorProtocol, HasUpdatableProtocol, HasStatusProtocol
 
 @TuuchoUiDsl
 class TypeProjector(
@@ -37,7 +37,7 @@ class TypeProjector(
         projectable: ProjectableProtocol
     ) {
         projectables.add(projectable)
-        (projectable as? ReadyStatusProtocol)?.let { status ->
+        (projectable as? HasStatusProtocol)?.let { status ->
             status.onStatusChanged = {
                 val previous = isReady
                 isReady = isReady && status.isReady

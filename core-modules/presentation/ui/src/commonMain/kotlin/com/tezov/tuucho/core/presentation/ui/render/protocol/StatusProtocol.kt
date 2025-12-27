@@ -2,12 +2,10 @@ package com.tezov.tuucho.core.presentation.ui.render.protocol
 
 import kotlinx.serialization.json.JsonElement
 
-interface ReadyStatusProtocol {
-    val isReady: Boolean
+interface StatusProtocol : HasStatusProtocol {
 
-    var onStatusChanged: () -> Unit
-
-    fun updateIsReady(
+    fun update(
         jsonElement: JsonElement?
-    )
+    ) {
+    }
 }
