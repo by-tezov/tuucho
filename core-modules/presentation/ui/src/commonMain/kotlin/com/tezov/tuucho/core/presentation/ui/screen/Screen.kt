@@ -9,8 +9,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
-import com.tezov.tuucho.core.presentation.ui._system.idValue
-import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
@@ -58,12 +56,14 @@ class Screen(
         view: ViewProtocol
     ) {
         views.add(view)
+        println("|> ${view::class.simpleName}")
         view.updatables.forEach { updatable ->
-            val keyTypeId = keyTypeId(updatable.type, updatable.id)
-            if (this@Screen.updatables.contains(keyTypeId)) {
-                throw UiException.Default("Warning, typeId $keyTypeId already exist")
-            }
-            this@Screen.updatables[keyTypeId] = updatable
+            println("|> ${updatable.type}")
+//            val keyTypeId = keyTypeId(updatable.type, updatable.id)
+//            if (this@Screen.updatables.contains(keyTypeId)) {
+//                throw UiException.Default("Warning, typeId $keyTypeId already exist")
+//            }
+//            this@Screen.updatables[keyTypeId] = updatable
         }
     }
 
@@ -77,9 +77,9 @@ class Screen(
     override suspend fun update(
         jsonObject: JsonObject
     ) {
-        val id = jsonObject.idValue
-        val type = jsonObject.type
-        updatables[keyTypeId(type, id)]?.process(jsonObject)
+//        val id = jsonObject.idValue
+//        val type = jsonObject.type
+//        updatables[keyTypeId(type, id)]?.process(jsonObject)
     }
 
     @Suppress("UNCHECKED_CAST")

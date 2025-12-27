@@ -82,7 +82,7 @@ class FieldView(
                 validator = projection(FormSchema.Option.Key.validator)
             }
         }
-        content(contextual = true) {
+        content(contextual = false) {
             text {
                 titleValue = projection(FormFieldSchema.Content.Key.title)
                 placeholderValue = projection(FormFieldSchema.Content.Key.placeholder)

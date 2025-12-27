@@ -98,7 +98,7 @@ fun ComponentProjectorProtocol.content(
         it.block()
     }
     return when {
-        contextual -> ContextualTypeProjector(typeProjector)
+        contextual -> ContextualTypeProjector(typeProjector).also { println("|> ICI !!!!") }
         else -> typeProjector
     }
 }
