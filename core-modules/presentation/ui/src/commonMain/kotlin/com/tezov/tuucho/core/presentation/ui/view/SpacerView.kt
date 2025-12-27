@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema.Style
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui._system.subset
@@ -46,12 +45,6 @@ class SpacerView(
     private lateinit var width: DpProjectionProtocol
     private lateinit var height: DpProjectionProtocol
     private lateinit var weight: FloatProjectionProtocol
-
-    override fun updateReadyStatus() {
-        isReady = width.isReady.isTrueOrNull &&
-            height.isReady.isTrueOrNull &&
-            weight.isReady.isTrueOrNull
-    }
 
     override suspend fun createComponentProjectorProjection() = componentProjector {
         style {

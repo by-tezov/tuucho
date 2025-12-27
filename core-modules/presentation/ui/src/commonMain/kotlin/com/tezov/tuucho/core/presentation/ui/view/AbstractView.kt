@@ -4,9 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
@@ -27,15 +24,10 @@ abstract class AbstractView(
 
     protected var isInitialized = false
 
-    protected var isReady by mutableStateOf(false)
-
-    protected abstract fun updateReadyStatus()
-
     suspend fun init() {
         componentProjector = createComponentProjectorProjection().also {
             it.process(componentObject)
         }
-        updateReadyStatus()
         isInitialized = true
         screen.addView(this)
     }
@@ -48,7 +40,7 @@ abstract class AbstractView(
     final override fun display(
         scope: Any?
     ) {
-        if (isReady) {
+        if (componentProjector.isReady) {
             displayComponent(scope)
         } else {
             displayPlaceholder(scope)

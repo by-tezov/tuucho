@@ -30,6 +30,12 @@ class TypeProjector(
         projectable: ProjectableProtocol
     ) {
         projectables.add(projectable)
+        (projectable as? UpdatableProtocol)?.let {
+            projectable.onStatusChanged = {
+                isReady = isReady && it
+                onStatusChanged.invoke(isReady)
+            }
+        }
     }
 
     override suspend fun process(
@@ -56,11 +62,16 @@ private class ContextualTypeProjector(
     override var id: String? = null
         private set
 
+    override var isReady = false
+        private set
+
     override val updatables: List<UpdatableProtocol>
         get() = buildList {
             add(this@ContextualTypeProjector)
             addAll(delegate.updatables)
         }
+
+    override lateinit var onStatusChanged: () -> Unit
 
     override suspend fun process(
         jsonElement: JsonElement?
@@ -72,15 +83,6 @@ private class ContextualTypeProjector(
     }
 }
 
-
-fun ComponentProjectorProtocol.style(
-    block: TypeProjectorProtocol.() -> Unit
-): TypeProjectorProtocol = TypeProjector(type = TypeSchema.Value.style)
-    .also {
-        add(it)
-        it.block()
-    }
-
 fun ComponentProjectorProtocol.option(
     block: TypeProjectorProtocol.() -> Unit
 ): TypeProjectorProtocol = TypeProjector(type = TypeSchema.Value.option)
@@ -88,6 +90,19 @@ fun ComponentProjectorProtocol.option(
         add(it)
         it.block()
     }
+
+fun ComponentProjectorProtocol.style(
+    contextual: Boolean = false,
+    block: TypeProjectorProtocol.() -> Unit
+): TypeProjectorProtocol {
+    val typeProjector = TypeProjector(type = TypeSchema.Value.style).also {
+        it.block()
+    }
+    return when {
+        contextual -> ContextualTypeProjector(typeProjector)
+        else -> typeProjector
+    }.also { add(it) }
+}
 
 fun ComponentProjectorProtocol.content(
     contextual: Boolean = false,

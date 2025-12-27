@@ -4,7 +4,6 @@ import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema.Content
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projectable.action
@@ -39,11 +38,6 @@ class ButtonView(
 
     private lateinit var labelView: ViewProjectionProtocol
     private lateinit var action: ActionProjectionProtocol
-
-    override fun updateReadyStatus() {
-        isReady = labelView.isReady.isTrueOrNull &&
-            action.isReady.isTrueOrNull
-    }
 
     override suspend fun createComponentProjectorProjection() = componentProjector {
         content {

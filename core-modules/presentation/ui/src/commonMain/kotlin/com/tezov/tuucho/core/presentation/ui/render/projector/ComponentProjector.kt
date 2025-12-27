@@ -1,5 +1,8 @@
 package com.tezov.tuucho.core.presentation.ui.render.projector
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
@@ -14,6 +17,8 @@ import kotlinx.serialization.json.JsonObject
 class ComponentProjector : ComponentProjectorProtocol {
     private val projectors: MutableList<ProjectorProtocol> = mutableListOf()
 
+    override var isReady by mutableStateOf(false)
+
     override val updatables: List<UpdatableProtocol>
         get() = buildList {
             projectors.forEach {
@@ -27,6 +32,7 @@ class ComponentProjector : ComponentProjectorProtocol {
         projector: ProjectorProtocol
     ) {
         projectors.add(projector)
+        projector.onStatusChanged = { isReady = isReady && it }
     }
 
     override suspend fun process(

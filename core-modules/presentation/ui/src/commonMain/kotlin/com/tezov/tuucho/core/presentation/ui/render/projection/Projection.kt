@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import androidx.compose.runtime.mutableStateOf
-import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProtocol
 import kotlinx.serialization.json.JsonElement
 
@@ -67,20 +66,10 @@ class Projection<T : Any>(
         this.valueProjection = valueProjection
     }
 
-    override var isReady: Boolean? = null
-        private set
-
-    fun updateIsReady(
-        jsonElement: JsonElement?
-    ) {
-        isReady = jsonElement != null && jsonElement.idSourceOrNull == null
-    }
-
     override suspend fun superProcess(
         jsonElement: JsonElement?
     ) {
         value = getValueOrNull(jsonElement)
-        updateIsReady(jsonElement)
     }
 
     override suspend fun process(

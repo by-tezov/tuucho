@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.tool.modifier.thenOnNotNull
@@ -54,14 +53,6 @@ class LayoutLinearView(
     private lateinit var fillMaxSize: BooleanProjectionProtocol
     private lateinit var fillMaxWidth: BooleanProjectionProtocol
     private lateinit var itemViews: ViewsProjectionProtocol
-
-    override fun updateReadyStatus() {
-        isReady = itemViews.isReady.isTrueOrNull &&
-            backgroundColor.isReady.isTrueOrNull &&
-            orientation.isReady.isTrueOrNull &&
-            fillMaxSize.isReady.isTrueOrNull &&
-            fillMaxWidth.isReady.isTrueOrNull
-    }
 
     override suspend fun createComponentProjectorProjection() = componentProjector {
         style {

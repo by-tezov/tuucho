@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.sp
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormFieldSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormSchema
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.subset
@@ -66,15 +65,6 @@ class FieldView(
     private lateinit var formState: FormStateProjectionProtocol
 
     override val extensionFormState get() = formState
-
-    override fun updateReadyStatus() {
-        isReady = fieldValue.isReady.isTrueOrNull &&
-            titleValue.isReady.isTrueOrNull &&
-            placeholderValue.isReady.isTrueOrNull &&
-            messageErrorExtra.isReady.isTrueOrNull &&
-            validator.isReady.isTrueOrNull &&
-            formState.isReady.isTrueOrNull
-    }
 
     override suspend fun createComponentProjectorProjection() = componentProjector(contextual = true) {
         option {
