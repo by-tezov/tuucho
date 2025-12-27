@@ -50,13 +50,13 @@ private class ContextualColorProjection(
     UpdatableProtocol {
     override val type = TypeSchema.Value.color
 
-    override lateinit var id: String
+    override var id: String? = null
         private set
 
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
-        if (!this::id.isInitialized) {
+        if (id == null) {
             jsonElement?.idValue?.let { id = it }
         }
         delegate.process(jsonElement)

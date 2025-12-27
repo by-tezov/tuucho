@@ -5,7 +5,7 @@ import kotlinx.serialization.json.JsonElement
 interface UpdatableProtocol {
     val type: String
 
-    val id: String
+    val id: String?
 
     suspend fun process(
         jsonElement: JsonElement?

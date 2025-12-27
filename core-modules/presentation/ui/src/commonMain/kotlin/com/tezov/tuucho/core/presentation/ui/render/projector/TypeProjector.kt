@@ -53,7 +53,7 @@ private class ContextualTypeProjector(
     UpdatableProtocol {
     override val type get() = delegate.type
 
-    override lateinit var id: String
+    override var id: String? = null
         private set
 
     override val updatables: List<UpdatableProtocol>
@@ -65,7 +65,7 @@ private class ContextualTypeProjector(
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
-        if (!this::id.isInitialized) {
+        if (id == null) {
             jsonElement?.idValue?.let { id = it }
         }
         delegate.process(jsonElement)
@@ -94,13 +94,12 @@ fun ComponentProjectorProtocol.content(
     block: TypeProjectorProtocol.() -> Unit
 ): TypeProjectorProtocol {
     val typeProjector = TypeProjector(type = TypeSchema.Value.content).also {
-        add(it)
         it.block()
     }
     return when {
-        contextual -> ContextualTypeProjector(typeProjector).also { println("|> ICI !!!!") }
+        contextual -> ContextualTypeProjector(typeProjector)
         else -> typeProjector
-    }
+    }.also { add(it) }
 }
 
 fun ComponentProjectorProtocol.state(
@@ -108,11 +107,10 @@ fun ComponentProjectorProtocol.state(
     block: TypeProjectorProtocol.() -> Unit
 ): TypeProjectorProtocol {
     val typeProjector = TypeProjector(type = TypeSchema.Value.state).also {
-        add(it)
         it.block()
     }
     return when {
         contextual -> ContextualTypeProjector(typeProjector)
         else -> typeProjector
-    }
+    }.also { add(it) }
 }
