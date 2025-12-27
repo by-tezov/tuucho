@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelS
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Content
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projectable.color
 import com.tezov.tuucho.core.presentation.ui.render.projectable.dimension
@@ -20,7 +21,11 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
+import kotlin.random.Random
 
 class LabelViewFactory : ViewFactoryProtocol {
     override fun accept(
@@ -63,6 +68,16 @@ class LabelView(
         content(contextual = true) {
             text {
                 textValue = projection(Content.Key.value, mutable = true, contextual = true)
+            }
+        }
+        GlobalScope.launch {
+            delay(3000)
+            var i = 0
+            repeat(1000 + Random.nextInt(0, 1000)) {
+                textValue.value = i.toString()
+                println("|> ${componentObject.idValue} update to $i")
+                delay(1000L + Random.nextInt(0, 1000))
+                i++
             }
         }
     }
