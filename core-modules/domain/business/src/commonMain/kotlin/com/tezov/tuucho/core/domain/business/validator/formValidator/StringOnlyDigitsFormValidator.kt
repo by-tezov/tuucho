@@ -1,13 +1,11 @@
 package com.tezov.tuucho.core.domain.business.validator.formValidator
 
-import kotlinx.serialization.json.JsonObject
-
 class StringOnlyDigitsFormValidator(
-    errorMessages: JsonObject,
-) : AbstractFormValidator<String>(errorMessages) {
+    errorMessagesId: String?,
+) : AbstractFormValidator<String>(errorMessagesId) {
     override fun updateValidity(
-        value: String
+        value: String?
     ) {
-        isValid = value.isEmpty() || value.all { it.isDigit() }
+        isValid = value.isNullOrBlank() || value.all { it.isDigit() } == true
     }
 }

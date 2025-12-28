@@ -14,7 +14,7 @@ import com.tezov.tuucho.core.domain.business.model.action.FormAction
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
-import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
+import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
@@ -23,9 +23,9 @@ import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.put
 import org.koin.core.component.inject
 
 internal class FormSendUrlActionMiddleware(
@@ -79,21 +79,21 @@ internal class FormSendUrlActionMiddleware(
             useCase = getScreenOrNull,
             input = GetScreenOrNullUseCase.Input(route = this)
         )?.screen
-        ?.views(FormViewProtocol.Extension::class)
-        ?.map { it.formView }
+        ?.views(FormStateProtocol.Extension::class)
+        ?.map { it.extensionFormState }
 
-    private fun List<FormViewProtocol>.isAllFormValid(): Boolean {
+    private fun List<FormStateProtocol>.isAllFormValid(): Boolean {
         forEach { it.updateValidity() }
         return all { it.isValid() ?: true }
     }
 
-    private fun List<FormViewProtocol>.data() = buildMap<String, JsonPrimitive> {
-        this@data.forEach {
-            put(it.getId(), JsonPrimitive(it.getValue()))
+    private fun List<FormStateProtocol>.data() = buildJsonObject {
+        forEach {
+            put(it.getId(), it.getValue())
         }
-    }.let(::JsonObject)
+    }
 
-    private suspend fun List<FormViewProtocol>.processInvalidLocalForm(
+    private suspend fun List<FormStateProtocol>.processInvalidLocalForm(
         route: NavigationRoute.Url,
     ) {
         val results = filter { it.isValid() == false }

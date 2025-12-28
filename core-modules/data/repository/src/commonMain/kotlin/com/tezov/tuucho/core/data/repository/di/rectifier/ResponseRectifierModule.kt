@@ -3,13 +3,13 @@ package com.tezov.tuucho.core.data.repository.di.rectifier
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule.Name.Matcher
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule.Name.Processor
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierIdGenerator
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormActionMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormActionRectifierMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormFailureReasonRectifier
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.dsl.ScopeDSL
@@ -38,7 +38,7 @@ internal object Response {
             )
         }
 
-        factory<List<MatcherRectifierProtocol>>(Matcher.ID) {
+        factory<List<RectifierMatcherProtocol>>(Matcher.ID) {
             listOf(IdMatcher())
         }
     }
@@ -48,7 +48,7 @@ internal object Response {
             TextRectifier(scope = this)
         }
 
-        factory<List<MatcherRectifierProtocol>>(Matcher.TEXT) {
+        factory<List<RectifierMatcherProtocol>>(Matcher.TEXT) {
             emptyList()
         }
 
@@ -62,9 +62,9 @@ internal object Response {
             ActionRectifier(scope = this)
         }
 
-        factory<List<MatcherRectifierProtocol>>(Matcher.ACTION) {
+        factory<List<RectifierMatcherProtocol>>(Matcher.ACTION) {
             listOf(
-                FormActionMatcher()
+                FormActionRectifierMatcher()
             )
         }
 

@@ -48,7 +48,7 @@ Validation options defining rules applied to the field input.
 
 - `form-validator`: A [Validator object](../../object-definition/form-validator.md) or an array of such objects defining validation rules.
 
-**Note:** The `id-message-error` key inside each validator object links to the corresponding error message defined in the component's `content/message-error` array or object by matching the same ID.
+**Note:** The `message-error-id` key inside each validator object links to the corresponding error message defined in the component's `content/message-error` array or object by matching the same ID.
 
 ---
 

@@ -37,9 +37,9 @@ class UpdateViewUseCase(
 
     private fun terminalMiddleware(): UpdateViewMiddleware = UpdateViewMiddleware { context, _ ->
         with(context.input) {
-            val view = navigationScreenStackRepository.getScreenOrNull(route)
+            val screen = navigationScreenStackRepository.getScreenOrNull(route)
             coroutineScopes.renderer.await {
-                view?.update(jsonObject)
+                screen?.update(jsonObject)
             }
         }
     }

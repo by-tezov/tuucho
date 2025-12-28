@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.barrel.di.SystemCoreModules
 import com.tezov.tuucho.core.barrel.navigation.TuuchoBackHandler
 import com.tezov.tuucho.core.domain.business.di.KoinContext
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
-import com.tezov.tuucho.core.presentation.ui.renderer.TuuchoEngineProtocol
+import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngineProtocol
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
 

@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
+import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenFactoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
-import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
 import dev.mokkery.answering.returns
 import dev.mokkery.answering.sequentiallyReturns
 import dev.mokkery.every
@@ -21,23 +21,23 @@ import kotlin.test.assertEquals
 
 class NavigationStackScreenRepositoryTest {
     private val coroutineTestScope = CoroutineTestScope()
-    private lateinit var screenRenderer: ScreenRendererProtocol
+    private lateinit var screenFactory: ScreenFactoryProtocol
     private lateinit var sut: NavigationStackScreenRepository
 
     @BeforeTest
     fun setup() {
         coroutineTestScope.setup()
-        screenRenderer = mock()
+        screenFactory = mock()
         sut = NavigationStackScreenRepository(
             coroutineScopes = coroutineTestScope.mock,
-            screenRenderer = screenRenderer
+            screenFactory = screenFactory
         )
     }
 
     @AfterTest
     fun tearDown() {
         coroutineTestScope.verifyNoMoreCalls()
-        verifyNoMoreCalls(screenRenderer)
+        verifyNoMoreCalls(screenFactory)
     }
 
     @Test
@@ -55,7 +55,7 @@ class NavigationStackScreenRepositoryTest {
         val pushedRoute = NavigationRoute.Url("route-id", "route-url")
         val pushedScreen = mock<ScreenProtocol>()
         every { pushedScreen.route } returns pushedRoute
-        everySuspend { screenRenderer.process(pushedRoute, any()) } returns pushedScreen
+        everySuspend { screenFactory.create(pushedRoute, any()) } returns pushedScreen
 
         sut.forward(pushedRoute, buildJsonObject {})
 
@@ -64,7 +64,7 @@ class NavigationStackScreenRepositoryTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.navigation.await<Any>(any())
-            screenRenderer.process(pushedRoute, any())
+            screenFactory.create(pushedRoute, any())
             coroutineTestScope.mock.navigation.await<Any>(any())
         }
     }
@@ -80,7 +80,7 @@ class NavigationStackScreenRepositoryTest {
         every { firstScreen.route } returns firstRoute
         every { secondScreen.route } returns secondRoute
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(firstScreen, secondScreen))
 
         sut.forward(firstRoute, buildJsonObject {})
@@ -91,8 +91,8 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(listOf(firstRoute, secondRoute), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            screenRenderer.process(firstRoute, any())
-            screenRenderer.process(secondRoute, any())
+            screenFactory.create(firstRoute, any())
+            screenFactory.create(secondRoute, any())
             coroutineTestScope.mock.navigation.await<Any>(any())
         }
     }
@@ -111,13 +111,13 @@ class NavigationStackScreenRepositoryTest {
         every { screenNoMatch.route } returns routeNoMatch
         every { screenMatchB.route } returns routeMatchB
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenMatchA, screenNoMatch, screenMatchB))
 
         sut.forward(routeMatchA, buildJsonObject {})
         sut.forward(routeNoMatch, buildJsonObject {})
         sut.forward(routeMatchB, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreens(listOf(routeMatchA, routeMatchB))
@@ -139,12 +139,12 @@ class NavigationStackScreenRepositoryTest {
         every { firstScreen.route } returns firstRoute
         every { lastScreen.route } returns lastRoute
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(firstScreen, lastScreen))
 
         sut.forward(firstRoute, buildJsonObject {})
         sut.forward(lastRoute, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreenOrNull(NavigationRoute.Current)
@@ -166,12 +166,12 @@ class NavigationStackScreenRepositoryTest {
         every { initialScreen.route } returns initialRoute
         every { nextScreen.route } returns nextRoute
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(initialScreen, nextScreen))
 
         sut.forward(initialRoute, buildJsonObject {})
         sut.forward(nextRoute, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreenOrNull(NavigationRoute.Back)
@@ -193,12 +193,12 @@ class NavigationStackScreenRepositoryTest {
         every { firstScreen.route } returns firstRoute
         every { targetScreen.route } returns targetRoute
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(firstScreen, targetScreen))
 
         sut.forward(firstRoute, buildJsonObject {})
         sut.forward(targetRoute, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreenOrNull(targetRoute)
@@ -223,13 +223,13 @@ class NavigationStackScreenRepositoryTest {
         every { screenBeta.route } returns routeBeta
         every { screenOther.route } returns routeOther
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenAlpha, screenBeta, screenOther))
 
         sut.forward(routeAlpha, buildJsonObject {})
         sut.forward(routeBeta, buildJsonObject {})
         sut.forward(routeOther, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreensOrNull("shared-url")
@@ -254,13 +254,13 @@ class NavigationStackScreenRepositoryTest {
         every { screenRemove.route } returns routeRemove
         every { screenKeepB.route } returns routeKeepB
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenKeepA, screenRemove, screenKeepB))
 
         sut.forward(routeKeepA, buildJsonObject {})
         sut.forward(routeRemove, buildJsonObject {})
         sut.forward(routeKeepB, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         sut.backward(listOf(routeKeepA, routeKeepB))
@@ -282,11 +282,11 @@ class NavigationStackScreenRepositoryTest {
         val existingScreen = mock<ScreenProtocol>()
         every { existingScreen.route } returns existingRoute
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(existingScreen))
 
         sut.forward(existingRoute, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreenOrNull(missingRoute)
@@ -308,12 +308,12 @@ class NavigationStackScreenRepositoryTest {
         every { screenA.route } returns routeA
         every { screenB.route } returns routeB
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenA, screenB))
 
         sut.forward(routeA, buildJsonObject {})
         sut.forward(routeB, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreensOrNull("unknown-url")
@@ -335,12 +335,12 @@ class NavigationStackScreenRepositoryTest {
         every { screenA.route } returns routeA
         every { screenB.route } returns routeB
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenA, screenB))
 
         sut.forward(routeA, buildJsonObject {})
         sut.forward(routeB, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         sut.backward(emptyList())
@@ -368,13 +368,13 @@ class NavigationStackScreenRepositoryTest {
         every { screenMiddle.route } returns routeMiddle
         every { screenLast.route } returns routeLast
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenFirst, screenMiddle, screenLast))
 
         sut.forward(routeFirst, buildJsonObject {})
         sut.forward(routeMiddle, buildJsonObject {})
         sut.forward(routeLast, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.routes()
@@ -392,11 +392,11 @@ class NavigationStackScreenRepositoryTest {
         val screenUnique = mock<ScreenProtocol>()
         every { screenUnique.route } returns routeUnique
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenUnique))
 
         sut.forward(routeUnique, buildJsonObject {})
-        resetCalls(screenRenderer)
+        resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
         val result = sut.getScreens(listOf(routeUnique, routeUnique))
@@ -418,7 +418,7 @@ class NavigationStackScreenRepositoryTest {
         every { screenA.route } returns routeA
         every { screenB.route } returns routeB
 
-        everySuspend { screenRenderer.process(any(), any()) }
+        everySuspend { screenFactory.create(any(), any()) }
             .sequentiallyReturns(listOf(screenA, screenB))
 
         sut.forward(routeA, buildJsonObject {})
@@ -426,8 +426,8 @@ class NavigationStackScreenRepositoryTest {
         coroutineTestScope.resetCalls()
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            screenRenderer.process(routeA, any())
-            screenRenderer.process(routeB, any())
+            screenFactory.create(routeA, any())
+            screenFactory.create(routeB, any())
         }
     }
 }

@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.repository.parser.assembler.material
 import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.MatcherAssemblerProtocol
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerMatcherProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
@@ -17,7 +17,7 @@ class DimensionAssembler(
 ) : AbstractAssembler(scope) {
     override val schemaType = TypeSchema.Value.dimension
 
-    override val matchers: List<MatcherAssemblerProtocol> by inject(
+    override val matchers: List<AssemblerMatcherProtocol> by inject(
         AssemblerModule.Name.Matcher.DIMENSION
     )
 

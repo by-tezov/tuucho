@@ -1,0 +1,63 @@
+package com.tezov.tuucho.core.presentation.ui.render.projectable
+
+import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
+import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
+import com.tezov.tuucho.core.presentation.ui.exception.UiException
+import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
+import com.tezov.tuucho.core.presentation.ui.render.projection.ViewProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ViewsProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.createViewProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.createViewsProjection
+import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.Screen
+import kotlinx.serialization.json.JsonElement
+import kotlin.reflect.KClass
+
+interface ViewProjectableProtocols : ProjectableProtocol {
+    fun <I, T : ProjectionProtocols<I>> newProjection(
+        klass: KClass<out T>,
+        key: String,
+        screen: Screen,
+        path: JsonElementPath
+    ): T
+}
+
+@TuuchoUiDsl
+class ViewProjectable : ViewProjectableProtocols {
+    private val projections = mutableMapOf<String, ProjectionProtocols<*>>()
+
+    override val keys get() = projections.keys
+
+    override suspend fun process(
+        jsonElement: JsonElement?,
+        key: String
+    ) {
+        projections[key]?.process(jsonElement)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <I, T : ProjectionProtocols<I>> newProjection(
+        klass: KClass<out T>,
+        key: String,
+        screen: Screen,
+        path: JsonElementPath
+    ) = (when (klass) {
+        ViewsProjectionProtocol::class -> createViewsProjection(key, screen, path)
+        ViewProjectionProtocol::class -> createViewProjection(key, screen, path)
+        else -> throw UiException.Default("not implemented")
+    } as T).also { projections[it.key] = it }
+}
+
+fun TypeProjectorProtocols.view(
+    block: ViewProjectableProtocols.() -> Unit
+): ViewProjectableProtocols = ViewProjectable().also {
+    add(it)
+    it.block()
+}
+
+inline fun <I, reified T : ProjectionProtocols<I>> ViewProjectableProtocols.projection(
+    key: String,
+    screen: Screen,
+    path: JsonElementPath,
+) = newProjection(klass = T::class, key = key, screen = screen, path = path)

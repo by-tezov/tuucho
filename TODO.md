@@ -1,5 +1,13 @@
 ## In progress
 
+
+- is Ready must be better
+- form contextual
+- form error validation?
+- form correct validation
+
+- Screen protocol internal
+
 **** ****
 - Shadower
     // do not crash application but 

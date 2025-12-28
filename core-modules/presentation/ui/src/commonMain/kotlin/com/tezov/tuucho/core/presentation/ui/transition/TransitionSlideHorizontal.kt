@@ -24,7 +24,7 @@ import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionNavigat
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen
 import kotlinx.serialization.json.JsonObject
 
-object TransitionSlideHorizontal {
+internal object TransitionSlideHorizontal {
     class Spec(
         val duration: Int,
         val exitDarkAlphaFactor: Float,

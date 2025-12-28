@@ -1,10 +1,7 @@
 package com.tezov.tuucho.core.domain.business.jsonSchema.material
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import kotlinx.serialization.json.JsonObject
 
 object TypeSchema {
     const val root = "type"
@@ -38,8 +35,4 @@ object TypeSchema {
         override val root = TypeSchema.root
         var self by delegate<String?>(root)
     }
-
-    val JsonObject.type
-        get() = withScope(::Scope).self
-            ?: throw DomainException.Default("type value is null for $this")
 }
