@@ -6,14 +6,15 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtoco
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.defaultStatus
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
-interface TextTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, HasStatusProtocol {
+interface TextTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, HasReadyStatusProtocol {
     fun <T : ProjectionProtocols<String>> newProjection(
         klass: KClass<out T>,
         key: String,
@@ -28,7 +29,7 @@ class TextTypeProjectable : TextTypeProjectableProtocols {
 
     override val keys get() = projections.keys
 
-    override var isReady = false
+    override var isReady = defaultStatus
         private set
 
     override lateinit var onStatusChanged: () -> Unit
@@ -58,7 +59,27 @@ class TextTypeProjectable : TextTypeProjectableProtocols {
     ): T = (when (klass) {
         TextProjectionProtocol::class -> createTextProjection(key, mutable, contextual)
         else -> throw UiException.Default("not implemented")
-    } as T).also { projections[it.key] = it }
+    } as T).also {
+        projections[it.key] = it
+        (it as? HasReadyStatusProtocol)?.let { status ->
+            status.onStatusChanged = {
+                val previous = isReady
+                val next = projections.values.fold(defaultStatus) { acc, projection ->
+                    if (projection is HasReadyStatusProtocol) {
+                        acc && projection.isReady
+                    } else {
+                        acc
+                    }
+                }
+                if (previous != next) {
+                    isReady = next
+                    if (this::onStatusChanged.isInitialized) {
+                        onStatusChanged.invoke()
+                    }
+                }
+            }
+        }
+    }
 }
 
 fun TypeProjectorProtocols.text(

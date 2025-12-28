@@ -1,12 +1,13 @@
-package com.tezov.tuucho.core.presentation.ui.render.updatable
+package com.tezov.tuucho.core.presentation.ui.render.misc
 
 import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
-import com.tezov.tuucho.core.presentation.ui.render.protocol.StatusProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.defaultStatus
 import kotlinx.serialization.json.JsonElement
 
-class Status() : StatusProtocol {
+class ReadyStatus() : ReadyStatusProtocol {
 
-    override var isReady = false
+    override var isReady = defaultStatus
         private set
 
     override lateinit var onStatusChanged: () -> Unit

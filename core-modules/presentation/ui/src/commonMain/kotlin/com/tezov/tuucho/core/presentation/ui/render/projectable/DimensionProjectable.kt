@@ -13,18 +13,34 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.createDpProjectio
 import com.tezov.tuucho.core.presentation.ui.render.projection.createFloatProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createSpProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createStringProjection
+import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.defaultStatus
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
+interface DimensionProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, HasReadyStatusProtocol {
+    fun <I, T : ProjectionProtocols<I>> newProjection(
+        klass: KClass<out T>,
+        key: String,
+        mutable: Boolean,
+        contextual: Boolean
+    ): T
+}
+
 @TuuchoUiDsl
-class DimensionTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
+class DimensionProjectable : DimensionProjectableProtocols {
     private val projections = mutableMapOf<String, ProjectionProtocols<*>>()
 
     override val keys get() = projections.keys
+
+    override var isReady = defaultStatus
+        private set
+
+    override lateinit var onStatusChanged: () -> Unit
 
     override val updatables: List<UpdatableProtocol>
         get() = buildList {
@@ -43,7 +59,7 @@ class DimensionTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <I, T : ProjectionProtocols<I>> newProjection(
+    override fun <I, T : ProjectionProtocols<I>> newProjection(
         klass: KClass<out T>,
         key: String,
         mutable: Boolean,
@@ -55,17 +71,28 @@ class DimensionTypeProjectable : ProjectableProtocol, HasUpdatableProtocol {
         BooleanProjectionProtocol::class -> createBooleanProjection(key, mutable, contextual)
         StringProjectionProtocol::class -> createStringProjection(key, mutable, contextual)
         else -> throw UiException.Default("not implemented")
-    } as T).also { projections[it.key] = it }
+    } as T).also {
+        projections[it.key] = it
+        (it as? HasReadyStatusProtocol)?.let { status ->
+            status.onStatusChanged = {
+                val previous = isReady
+                isReady = isReady && status.isReady
+                if (previous != isReady && this::onStatusChanged.isInitialized) {
+                    onStatusChanged.invoke()
+                }
+            }
+        }
+    }
 }
 
-fun TypeProjectorProtocol.dimension(
-    block: DimensionTypeProjectable.() -> Unit
-): DimensionTypeProjectable = DimensionTypeProjectable().also {
+fun TypeProjectorProtocols.dimension(
+    block: DimensionProjectableProtocols.() -> Unit
+): DimensionProjectableProtocols = DimensionProjectable().also {
     add(it)
     it.block()
 }
 
-inline fun <I, reified T : ProjectionProtocols<I>> DimensionTypeProjectable.projection(
+inline fun <I, reified T : ProjectionProtocols<I>> DimensionProjectableProtocols.projection(
     key: String,
     mutable: Boolean = false,
     contextual: Boolean = false

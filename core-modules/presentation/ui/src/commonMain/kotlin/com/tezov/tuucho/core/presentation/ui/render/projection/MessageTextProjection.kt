@@ -1,6 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.presentation.ui.render.misc.ReadyStatus
+import com.tezov.tuucho.core.presentation.ui.render.misc.Updatable
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 
@@ -39,12 +42,22 @@ class MessageTextProjection(
 }
 
 private class ContextualMessageTextProjection(
-    private val delegate: MessageTextProjection
+    private val delegate: MessageTextProjection,
+    private val updatable: UpdatableProtocol,
+    private val status: ReadyStatusProtocol
 ) : MessageTextProjectionProtocol by delegate,
-    UpdatableProtocol {
-    override val type = TypeSchema.Value.message
+    UpdatableProtocol by updatable,
+    ReadyStatusProtocol by status {
 
     override val id get() = delegate.componentId
+
+    override suspend fun process(
+        jsonElement: JsonElement?
+    ) {
+        delegate.process(jsonElement)
+        updatable.process(jsonElement)
+        status.update(jsonElement)
+    }
 }
 
 fun createMessageTextProjection(
@@ -59,5 +72,9 @@ fun createMessageTextProjection(
         }
     )
     val messageTextProjection = MessageTextProjection(projection)
-    return ContextualMessageTextProjection(messageTextProjection)
+    return ContextualMessageTextProjection(
+        delegate = messageTextProjection,
+        updatable = Updatable(TypeSchema.Value.message),
+        status = ReadyStatus()
+    )
 }

@@ -5,8 +5,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
-import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
+import com.tezov.tuucho.core.presentation.ui.render.misc.ReadyStatus
+import com.tezov.tuucho.core.presentation.ui.render.misc.Updatable
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -45,21 +47,19 @@ class ColorProjection(
 }
 
 private class ContextualColorProjection(
-    private val delegate: ColorProjectionProtocol
+    private val delegate: ColorProjectionProtocol,
+    private val updatable: UpdatableProtocol,
+    private val status: ReadyStatusProtocol
 ) : ColorProjectionProtocol by delegate,
-    UpdatableProtocol {
-    override val type = TypeSchema.Value.color
-
-    override var id: String? = null
-        private set
+    UpdatableProtocol by updatable,
+    ReadyStatusProtocol by status {
 
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
-        if (id == null) {
-            jsonElement?.idValue?.let { id = it }
-        }
         delegate.process(jsonElement)
+        updatable.process(jsonElement)
+        status.update(jsonElement)
     }
 }
 
@@ -77,7 +77,11 @@ fun createColorProjection(
     )
     val colorProjection = ColorProjection(projection)
     return when {
-        contextual -> ContextualColorProjection(colorProjection)
+        contextual -> ContextualColorProjection(
+            delegate = colorProjection,
+            updatable = Updatable(TypeSchema.Value.color),
+            status = ReadyStatus()
+        )
         else -> colorProjection
     }
 }

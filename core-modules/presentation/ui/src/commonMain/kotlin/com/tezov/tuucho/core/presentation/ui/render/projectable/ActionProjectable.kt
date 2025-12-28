@@ -7,14 +7,15 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionP
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.createActionProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.defaultStatus
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
-interface ActionTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, HasStatusProtocol {
+interface ActionProjectableProtocols : ProjectableProtocol, HasUpdatableProtocol, HasReadyStatusProtocol {
     fun <T : ProjectionProtocols<() -> Unit>> newProjection(
         klass: KClass<out T>,
         key: String,
@@ -25,12 +26,12 @@ interface ActionTypeProjectableProtocols : ProjectableProtocol, HasUpdatableProt
 }
 
 @TuuchoUiDsl
-class ActionTypeProjectable : ActionTypeProjectableProtocols {
+class ActionProjectable : ActionProjectableProtocols {
     private val projections = mutableMapOf<String, ProjectionProtocols<() -> Unit>>()
 
     override val keys get() = projections.keys.toSet()
 
-    override var isReady = false
+    override var isReady = defaultStatus
         private set
 
     override lateinit var onStatusChanged: () -> Unit
@@ -63,7 +64,7 @@ class ActionTypeProjectable : ActionTypeProjectableProtocols {
         else -> throw UiException.Default("not implemented")
     } as T).also {
         projections[it.key] = it
-        (it as? HasStatusProtocol)?.let { status ->
+        (it as? HasReadyStatusProtocol)?.let { status ->
             status.onStatusChanged = {
                 val previous = isReady
                 isReady = isReady && status.isReady
@@ -76,13 +77,13 @@ class ActionTypeProjectable : ActionTypeProjectableProtocols {
 }
 
 fun TypeProjectorProtocols.action(
-    block: ActionTypeProjectableProtocols.() -> Unit
-): ActionTypeProjectableProtocols = ActionTypeProjectable().also {
+    block: ActionProjectableProtocols.() -> Unit
+): ActionProjectableProtocols = ActionProjectable().also {
     add(it)
     it.block()
 }
 
-inline fun <reified T : ProjectionProtocols<() -> Unit>> ActionTypeProjectableProtocols.projection(
+inline fun <reified T : ProjectionProtocols<() -> Unit>> ActionProjectableProtocols.projection(
     key: String,
     route: NavigationRoute,
     mutable: Boolean = false,

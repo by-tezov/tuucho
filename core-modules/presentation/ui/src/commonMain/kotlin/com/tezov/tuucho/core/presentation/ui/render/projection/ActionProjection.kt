@@ -9,7 +9,9 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import com.tezov.tuucho.core.presentation.ui._system.idValue
+import com.tezov.tuucho.core.presentation.ui.render.misc.ReadyStatus
+import com.tezov.tuucho.core.presentation.ui.render.misc.Updatable
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -69,21 +71,19 @@ class ActionProjection(
 }
 
 private class ContextualActionProjection(
-    private val delegate: ActionProjectionProtocol
+    private val delegate: ActionProjectionProtocol,
+    private val updatable: UpdatableProtocol,
+    private val status: ReadyStatusProtocol
 ) : ActionProjectionProtocol by delegate,
-    UpdatableProtocol {
-    override val type = TypeSchema.Value.action
-
-    override var id: String? = null
-        private set
+    UpdatableProtocol by updatable,
+    ReadyStatusProtocol by status {
 
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
-        if (id == null) {
-            jsonElement?.idValue?.let { id = it }
-        }
         delegate.process(jsonElement)
+        updatable.process(jsonElement)
+        status.update(jsonElement)
     }
 }
 
@@ -102,7 +102,12 @@ fun createActionProjection(
     )
     val actionProjection = ActionProjection(route, projection)
     return when {
-        contextual -> ContextualActionProjection(actionProjection)
+        contextual -> ContextualActionProjection(
+            delegate = actionProjection,
+            updatable = Updatable(TypeSchema.Value.action),
+            status = ReadyStatus()
+        )
+
         else -> actionProjection
     }
 }

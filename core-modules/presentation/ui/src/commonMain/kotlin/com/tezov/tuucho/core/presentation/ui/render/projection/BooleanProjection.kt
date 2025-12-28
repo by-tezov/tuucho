@@ -4,7 +4,9 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
-import com.tezov.tuucho.core.presentation.ui._system.idValue
+import com.tezov.tuucho.core.presentation.ui.render.misc.ReadyStatus
+import com.tezov.tuucho.core.presentation.ui.render.misc.Updatable
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -44,21 +46,19 @@ class BooleanProjection(
 }
 
 private class ContextualBooleanProjection(
-    private val delegate: BooleanProjectionProtocol
+    private val delegate: BooleanProjectionProtocol,
+    private val updatable: UpdatableProtocol,
+    private val status: ReadyStatusProtocol
 ) : BooleanProjectionProtocol by delegate,
-    UpdatableProtocol {
-    override val type = TypeSchema.Value.dimension
-
-    override var id: String? = null
-        private set
+    UpdatableProtocol by updatable,
+    ReadyStatusProtocol by status {
 
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
-        if (id == null) {
-            jsonElement?.idValue?.let { id = it }
-        }
         delegate.process(jsonElement)
+        updatable.process(jsonElement)
+        status.update(jsonElement)
     }
 }
 
@@ -76,7 +76,11 @@ fun createBooleanProjection(
     )
     val booleanProjection = BooleanProjection(projection)
     return when {
-        contextual -> ContextualBooleanProjection(booleanProjection)
+        contextual -> ContextualBooleanProjection(
+            delegate = booleanProjection,
+            updatable = Updatable(TypeSchema.Value.dimension),
+            status = ReadyStatus()
+        )
         else -> booleanProjection
     }
 }

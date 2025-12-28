@@ -4,10 +4,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
-import com.tezov.tuucho.core.presentation.ui.render.protocol.StatusProtocol
+import com.tezov.tuucho.core.presentation.ui.render.misc.ReadyStatus
+import com.tezov.tuucho.core.presentation.ui.render.misc.Updatable
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.updatable.Status
-import com.tezov.tuucho.core.presentation.ui.render.updatable.Updatable
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -46,10 +46,10 @@ private class TextProjection(
 private class ContextualTextProjection(
     private val delegate: TextProjectionProtocol,
     private val updatable: UpdatableProtocol,
-    private val status: StatusProtocol
+    private val status: ReadyStatusProtocol
 ) : TextProjectionProtocol by delegate,
     UpdatableProtocol by updatable,
-    StatusProtocol by status {
+    ReadyStatusProtocol by status {
 
     override suspend fun process(
         jsonElement: JsonElement?
@@ -77,7 +77,7 @@ fun createTextProjection(
         contextual -> ContextualTextProjection(
             delegate = textProjection,
             updatable = Updatable(TypeSchema.Value.text),
-            status = Status()
+            status = ReadyStatus()
         )
         else -> textProjection
     }

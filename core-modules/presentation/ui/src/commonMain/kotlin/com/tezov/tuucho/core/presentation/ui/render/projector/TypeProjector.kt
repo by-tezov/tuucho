@@ -3,15 +3,16 @@ package com.tezov.tuucho.core.presentation.ui.render.projector
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.defaultStatus
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-interface TypeProjectorProtocols : TypeProjectorProtocol, HasUpdatableProtocol, HasStatusProtocol
+interface TypeProjectorProtocols : TypeProjectorProtocol, HasUpdatableProtocol, HasReadyStatusProtocol
 
 @TuuchoUiDsl
 class TypeProjector(
@@ -19,7 +20,7 @@ class TypeProjector(
 ) : TypeProjectorProtocols {
     private val projectables: MutableList<ProjectableProtocol> = mutableListOf()
 
-    override var isReady = false
+    override var isReady = defaultStatus
         private set
 
     override lateinit var onStatusChanged: () -> Unit
@@ -37,12 +38,21 @@ class TypeProjector(
         projectable: ProjectableProtocol
     ) {
         projectables.add(projectable)
-        (projectable as? HasStatusProtocol)?.let { status ->
+        (projectable as? HasReadyStatusProtocol)?.let { status ->
             status.onStatusChanged = {
                 val previous = isReady
-                isReady = isReady && status.isReady
-                if (previous != isReady && this::onStatusChanged.isInitialized) {
-                    onStatusChanged.invoke()
+                val next = projectables.fold(defaultStatus) { acc, projection ->
+                    if (projection is HasReadyStatusProtocol) {
+                        acc && projection.isReady
+                    } else {
+                        acc
+                    }
+                }
+                if (previous != next) {
+                    isReady = next
+                    if (this::onStatusChanged.isInitialized) {
+                        onStatusChanged.invoke()
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.render.updatable
+package com.tezov.tuucho.core.presentation.ui.render.misc
 
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol

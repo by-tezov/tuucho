@@ -8,14 +8,23 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ViewProjectionPro
 import com.tezov.tuucho.core.presentation.ui.render.projection.ViewsProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createViewProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.createViewsProjection
+import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.screen.Screen
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
+interface ViewProjectableProtocols : ProjectableProtocol {
+    fun <I, T : ProjectionProtocols<I>> newProjection(
+        klass: KClass<out T>,
+        key: String,
+        screen: Screen,
+        path: JsonElementPath
+    ): T
+}
+
 @TuuchoUiDsl
-class ViewProjectable : ProjectableProtocol {
+class ViewProjectable : ViewProjectableProtocols {
     private val projections = mutableMapOf<String, ProjectionProtocols<*>>()
 
     override val keys get() = projections.keys
@@ -28,7 +37,7 @@ class ViewProjectable : ProjectableProtocol {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <I, T : ProjectionProtocols<I>> newProjection(
+    override fun <I, T : ProjectionProtocols<I>> newProjection(
         klass: KClass<out T>,
         key: String,
         screen: Screen,
@@ -40,14 +49,14 @@ class ViewProjectable : ProjectableProtocol {
     } as T).also { projections[it.key] = it }
 }
 
-fun TypeProjectorProtocol.view(
-    block: ViewProjectable.() -> Unit
-): ViewProjectable = ViewProjectable().also {
+fun TypeProjectorProtocols.view(
+    block: ViewProjectableProtocols.() -> Unit
+): ViewProjectableProtocols = ViewProjectable().also {
     add(it)
     it.block()
 }
 
-inline fun <I, reified T : ProjectionProtocols<I>> ViewProjectable.projection(
+inline fun <I, reified T : ProjectionProtocols<I>> ViewProjectableProtocols.projection(
     key: String,
     screen: Screen,
     path: JsonElementPath,

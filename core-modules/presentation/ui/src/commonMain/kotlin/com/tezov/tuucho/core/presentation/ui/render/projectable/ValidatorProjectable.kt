@@ -4,14 +4,21 @@ import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.projection.FormValidatorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createFormValidatorProjection
+import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
+interface ValidatorProjectableProtocols : ProjectableProtocol {
+    fun <T : ProjectionProtocol> newProjection(
+        klass: KClass<out T>,
+        key: String,
+    ): T
+}
+
 @TuuchoUiDsl
-class ValidatorProjectable : ProjectableProtocol {
+class ValidatorProjectable : ValidatorProjectableProtocols {
     private val projections = mutableMapOf<String, ProjectionProtocol>()
 
     override val keys get() = projections.keys.toSet()
@@ -24,7 +31,7 @@ class ValidatorProjectable : ProjectableProtocol {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : ProjectionProtocol> newProjection(
+    override fun <T : ProjectionProtocol> newProjection(
         klass: KClass<out T>,
         key: String,
     ) = (when (klass) {
@@ -33,13 +40,13 @@ class ValidatorProjectable : ProjectableProtocol {
     } as T).also { projections[it.key] = it }
 }
 
-fun TypeProjectorProtocol.validator(
-    block: ValidatorProjectable.() -> Unit
-): ValidatorProjectable = ValidatorProjectable().also {
+fun TypeProjectorProtocols.validator(
+    block: ValidatorProjectableProtocols.() -> Unit
+): ValidatorProjectableProtocols = ValidatorProjectable().also {
     add(it)
     it.block()
 }
 
-inline fun <reified T : ProjectionProtocol> ValidatorProjectable.projection(
+inline fun <reified T : ProjectionProtocol> ValidatorProjectableProtocols.projection(
     key: String,
 ) = newProjection(klass = T::class, key = key)

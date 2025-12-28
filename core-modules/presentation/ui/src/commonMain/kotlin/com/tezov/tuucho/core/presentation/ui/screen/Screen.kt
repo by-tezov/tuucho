@@ -81,8 +81,6 @@ class Screen(
     ) {
         val id = jsonObject.idValue
         val type = jsonObject.type
-        println("|> update ${keyTypeId(type, id)} $jsonObject")
-
         updatables[keyTypeId(type, id)]?.process(jsonObject)
     }
 

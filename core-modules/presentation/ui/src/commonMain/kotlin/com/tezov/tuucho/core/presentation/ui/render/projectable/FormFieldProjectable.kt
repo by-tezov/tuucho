@@ -4,14 +4,21 @@ import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.projection.FormStateProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createFormStateProjection
+import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.reflect.KClass
 
+interface FormFieldProjectableProtocols : ProjectableProtocol {
+    fun <T : ProjectionProtocol> newProjection(
+        klass: KClass<out T>,
+        key: String
+    ): T
+}
+
 @TuuchoUiDsl
-class FormFieldProjectable : ProjectableProtocol {
+class FormFieldProjectable : FormFieldProjectableProtocols {
     private val projections = mutableMapOf<String, ProjectionProtocol>()
 
     override val keys get() = projections.keys.toSet()
@@ -23,24 +30,23 @@ class FormFieldProjectable : ProjectableProtocol {
         projections[key]?.process(jsonElement)
     }
 
-    fun <T : ProjectionProtocol> newProjection(
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ProjectionProtocol> newProjection(
         klass: KClass<out T>,
         key: String
-    ) =
-        @Suppress("UNCHECKED_CAST")
-        (when (klass) {
-            FormStateProjectionProtocol::class -> createFormStateProjection(key)
-            else -> throw UiException.Default("not implemented")
-        } as T).also { projections[it.key] = it }
+    ) = (when (klass) {
+        FormStateProjectionProtocol::class -> createFormStateProjection(key)
+        else -> throw UiException.Default("not implemented")
+    } as T).also { projections[it.key] = it }
 }
 
-fun TypeProjectorProtocol.field(
-    block: FormFieldProjectable.() -> Unit
-): FormFieldProjectable = FormFieldProjectable().also {
+fun TypeProjectorProtocols.field(
+    block: FormFieldProjectableProtocols.() -> Unit
+): FormFieldProjectableProtocols = FormFieldProjectable().also {
     add(it)
     it.block()
 }
 
-inline fun <reified T : ProjectionProtocol> FormFieldProjectable.projection(
+inline fun <reified T : ProjectionProtocol> FormFieldProjectableProtocols.projection(
     key: String,
 ) = newProjection(klass = T::class, key = key)

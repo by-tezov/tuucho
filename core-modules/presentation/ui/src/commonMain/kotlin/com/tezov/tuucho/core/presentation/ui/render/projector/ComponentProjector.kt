@@ -6,21 +6,22 @@ import androidx.compose.runtime.setValue
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasStatusProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasReadyStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.defaultStatus
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-interface ComponentProjectorProtocols : ComponentProjectorProtocol, HasStatusProtocol
+interface ComponentProjectorProtocols : ComponentProjectorProtocol, HasReadyStatusProtocol
 
 @TuuchoUiDsl
 class ComponentProjector : ComponentProjectorProtocols {
     private val projectors: MutableList<ProjectorProtocol> = mutableListOf()
 
-    override var isReady by mutableStateOf(true)
+    override var isReady by mutableStateOf(defaultStatus)
 
     override lateinit var onStatusChanged: () -> Unit
 
@@ -37,12 +38,21 @@ class ComponentProjector : ComponentProjectorProtocols {
         projector: ProjectorProtocol
     ) {
         projectors.add(projector)
-        (projector as? HasStatusProtocol)?.let { status ->
+        (projector as? HasReadyStatusProtocol)?.let { status ->
             status.onStatusChanged = {
                 val previous = isReady
-                isReady = isReady && status.isReady
-                if (previous != isReady && this::onStatusChanged.isInitialized) {
-                    onStatusChanged.invoke()
+                val next = projectors.fold(defaultStatus) { acc, projection ->
+                    if (projection is HasReadyStatusProtocol) {
+                        acc && projection.isReady
+                    } else {
+                        acc
+                    }
+                }
+                if (previous != next) {
+                    isReady = next
+                    if (this::onStatusChanged.isInitialized) {
+                        onStatusChanged.invoke()
+                    }
                 }
             }
         }
