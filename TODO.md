@@ -1,8 +1,10 @@
 ## In progress
 
-- Form...todo
-    - code projector, projectable and projection for status
-    - addProjector loop should be done from outside screen to be extensible
+
+- is Ready must be better
+- form contextual
+- form error validation?
+- form correct validation
 
 - Screen protocol internal
 
