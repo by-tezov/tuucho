@@ -1,6 +1,4 @@
-@file:Suppress("ktlint:standard:package-name")
-
-package com.tezov.tuucho.core.presentation.ui.view._system
+package com.tezov.tuucho.core.presentation.ui.view.protocol
 
 import kotlinx.serialization.json.JsonObject
 

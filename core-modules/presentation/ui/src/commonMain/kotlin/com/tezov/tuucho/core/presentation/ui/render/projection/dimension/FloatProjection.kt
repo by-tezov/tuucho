@@ -6,15 +6,15 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
+import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.MutableStorageProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
-import com.tezov.tuucho.core.presentation.ui.render.projection.ValueProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -37,7 +37,7 @@ private class FloatProjection(
     FloatProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by status {
     init {
-        attach(this as ValueProjectionProtocol<FloatTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<FloatTypeAlias>)
     }
 
     override suspend fun process(
@@ -48,7 +48,7 @@ private class FloatProjection(
         status.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = when (jsonElement) {
         is JsonObject -> {
@@ -81,7 +81,7 @@ private class ContextualFloatProjection(
     private val delegate: FloatProjectionProtocol,
     override val type: String
 ) : FloatProjectionProtocol by delegate,
-    UpdatableProcessorProtocol
+    ContextualUpdaterProcessorProtocol
 
 val FloatProjectionProtocol.mutable
     get(): FloatProjectionProtocol = MutableFloatProjection(

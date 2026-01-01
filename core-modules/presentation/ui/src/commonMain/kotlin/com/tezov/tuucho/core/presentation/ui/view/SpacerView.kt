@@ -7,8 +7,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema.Component
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema.Style
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.presentation.tool.modifier.then
@@ -19,25 +20,46 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.dp
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.float
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
+
+interface SpacerViewProtocol : ViewProtocol {
+    @Composable
+    fun ComposeComponent(
+        scope: Any?,
+        weight: Float?,
+        width: Dp?,
+        height: Dp?,
+    )
+
+    @Composable
+    fun ComposePlaceHolder()
+}
+
+fun createSpacerView(
+    screenContext: ScreenContextProtocol,
+): SpacerViewProtocol = SpacerView(
+    screenContext = screenContext
+)
 
 class SpacerViewFactory : ViewFactoryProtocol {
     override fun accept(
         componentObject: JsonObject
-    ) = componentObject.subset == SpacerSchema.Component.Value.subset
+    ) = componentObject.subset == Component.Value.subset
 
     override suspend fun process(
         screenContext: ScreenContextProtocol,
-    ) = SpacerView(
+    ): SpacerViewProtocol = createSpacerView(
         screenContext = screenContext,
     )
 }
 
-class SpacerView(
+private class SpacerView(
     screenContext: ScreenContextProtocol,
-) : AbstractView(screenContext) {
+) : AbstractView(screenContext),
+    SpacerViewProtocol {
     private lateinit var width: DpProjectionProtocol
     private lateinit var height: DpProjectionProtocol
     private lateinit var weight: FloatProjectionProtocol
@@ -58,20 +80,40 @@ class SpacerView(
     override fun displayComponent(
         scope: Any?
     ) {
+        ComposeComponent(
+            scope = scope,
+            weight = weight.value,
+            width = width.value,
+            height = height.value
+        )
+    }
+
+    @Composable
+    override fun ComposeComponent(
+        scope: Any?,
+        weight: Float?,
+        width: Dp?,
+        height: Dp?,
+    ) {
         Spacer(
             modifier = Modifier
                 .then {
-                    ifNotNull(weight.value) { weight ->
+                    ifNotNull(weight) { weight ->
                         when (scope) {
                             is ColumnScope -> scope.run { weight(weight) }
                             is RowScope -> scope.run { weight(weight) }
                             else -> this
                         }
                     } or {
-                        ifNotNull(width.value) { width(it) }
-                        ifNotNull(height.value) { height(it) }
+                        ifNotNull(width) { width(it) }
+                        ifNotNull(height) { height(it) }
                     }
                 }
         )
+    }
+
+    @Composable
+    override fun ComposePlaceHolder() {
+        displayPlaceholder(null)
     }
 }

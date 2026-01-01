@@ -10,19 +10,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.presentation.ui.composable.shimmerComposable
 import com.tezov.tuucho.core.presentation.ui.render.projector.ComponentProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
+import kotlin.concurrent.atomics.AtomicBoolean
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
+@OptIn(ExperimentalAtomicApi::class)
 abstract class AbstractView(
     protected var screenContext: ScreenContextProtocol
 ) : ViewProtocol {
     lateinit var componentProjector: ComponentProjectorProtocols
 
-    override val updatables get() = componentProjector.updatables
+    override val contextualUpdater get() = componentProjector.contextualUpdater
 
     private var isReady = false
-    private var requestUpdate = true
+    private var requestUpdate: AtomicBoolean = AtomicBoolean(true)
     private val redrawTrigger = mutableIntStateOf(0)
 
     abstract fun getResolvedStatus(): Boolean
@@ -32,15 +35,14 @@ abstract class AbstractView(
     ) {
         componentProjector = createComponentProjector().apply {
             process(componentObject)
-            setRequestViewUpdater(value = { requestUpdate = true })
+            setRequestViewUpdater(value = { requestUpdate.store(true) })
         }
     }
 
     abstract suspend fun createComponentProjector(): ComponentProjectorProtocols
 
     override fun updateIfNeeded() {
-        if (requestUpdate) {
-            requestUpdate = false
+        if (requestUpdate.compareAndSet(expectedValue = true, newValue = false)) {
             redrawTrigger.intValue += 1
         }
     }

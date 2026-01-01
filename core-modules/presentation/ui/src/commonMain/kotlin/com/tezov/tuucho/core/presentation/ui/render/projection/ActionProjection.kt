@@ -12,9 +12,9 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -38,7 +38,7 @@ private class ActionProjection(
     ResolveStatusProcessorProtocol by status,
     TuuchoKoinComponent {
     init {
-        attach(this as ValueProjectionProtocol<ActionTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<ActionTypeAlias>)
     }
 
     override suspend fun process(
@@ -49,7 +49,7 @@ private class ActionProjection(
         status.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = (jsonElement as? JsonObject)
         ?.let { actionObject ->
@@ -102,7 +102,7 @@ private class ContextualActionProjection(
     private val delegate: ActionProjectionProtocol,
     override val type: String
 ) : ActionProjectionProtocol by delegate,
-    UpdatableProcessorProtocol
+    ContextualUpdaterProcessorProtocol
 
 val ActionProjectionProtocol.mutable
     get(): ActionProjectionProtocol = MutableActionProjection(

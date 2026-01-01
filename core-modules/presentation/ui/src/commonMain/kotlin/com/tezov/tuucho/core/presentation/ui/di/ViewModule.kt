@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.presentation.ui.view.FieldViewFactory
 import com.tezov.tuucho.core.presentation.ui.view.LabelViewFactory
 import com.tezov.tuucho.core.presentation.ui.view.LayoutLinearViewFactory
 import com.tezov.tuucho.core.presentation.ui.view.SpacerViewFactory
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import org.koin.dsl.bind
 
 internal object ViewModule {

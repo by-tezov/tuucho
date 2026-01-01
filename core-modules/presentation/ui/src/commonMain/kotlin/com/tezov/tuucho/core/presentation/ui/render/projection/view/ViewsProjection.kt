@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.tool.json.toIndexPath
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasResolveStatusProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 

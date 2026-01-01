@@ -1,13 +1,13 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.view
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
-import com.tezov.tuucho.core.presentation.ui.render.projection.ValueProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -24,10 +24,10 @@ private class ViewProjection(
     ViewProjectionTypeAlias by projection,
     TuuchoKoinComponent {
     init {
-        attach(this as ValueProjectionProtocol<ViewTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<ViewTypeAlias>)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = (jsonElement as? JsonObject)
         ?.let { componentObject ->

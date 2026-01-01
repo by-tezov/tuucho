@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <baseline>
+  <!-- ************ Project: :core.presentation.ui ************ -->
+  <file name="src/androidMain/debug/com/tezov/tuucho/presentation/ui/preview/_system/ScreenContext.kt">
+          <error line="1" column="9" source="standard:package-name" />
+      </file>
 </baseline>

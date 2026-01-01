@@ -7,9 +7,9 @@ import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -32,7 +32,7 @@ private class TextProjection(
     TextProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by statusProcessor {
     init {
-        attach(this as ValueProjectionProtocol<TextTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<TextTypeAlias>)
     }
 
     override suspend fun process(
@@ -43,7 +43,7 @@ private class TextProjection(
         statusProcessor.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = when (jsonElement) {
         is JsonObject -> {
@@ -75,7 +75,7 @@ private class ContextualTextProjection(
     private val delegate: TextProjectionProtocol,
     override val type: String
 ) : TextProjectionProtocol by delegate,
-    UpdatableProcessorProtocol
+    ContextualUpdaterProcessorProtocol
 
 val TextProjectionProtocol.mutable
     get(): TextProjectionProtocol = MutableTextProjection(
