@@ -48,8 +48,8 @@ internal class FormUpdateActionMiddleware(
         route: NavigationRoute,
         jsonElement: JsonElement?,
     ) {
-        jsonElement?.jsonArray?.forEach { param ->
-            val message = JsonNull
+        val messages = jsonElement?.jsonArray?.map { param ->
+            JsonNull
                 .withScope(FormSchema.Message::Scope)
                 .apply {
                     id = param.withScope(IdSchema::Scope).self
@@ -59,11 +59,13 @@ internal class FormUpdateActionMiddleware(
                         messageErrorExtra = it
                     }
                 }.collect()
+        }
+        messages?.let {
             useCaseExecutor.await(
                 useCase = updateView,
                 input = UpdateViewUseCase.Input(
                     route = route,
-                    jsonObject = message
+                    jsonObjects = messages
                 )
             )
         }

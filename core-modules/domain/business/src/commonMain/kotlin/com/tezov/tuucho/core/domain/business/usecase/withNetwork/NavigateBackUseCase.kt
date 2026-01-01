@@ -23,6 +23,7 @@ class NavigateBackUseCase(
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
+    private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
@@ -63,11 +64,10 @@ class NavigateBackUseCase(
         route: NavigationRoute.Url,
         context: NavigationMiddleware.Back.Context
     ) {
-        val view = navigationStackScreenRepository
+        val screen = navigationStackScreenRepository
             .getScreenOrNull(route)
-            ?.view
             ?: return
-        val componentObject = view.componentObject
+        val componentObject = retrieveMaterialRepository.process(route.value)
         val componentSettingScope = componentObject
             .onScope(ComponentSettingSchema.Root::Scope)
         val settingShadowerScope = componentSettingScope
@@ -80,16 +80,15 @@ class NavigateBackUseCase(
                 throwOnFailure = false
             ) {
                 suspend fun process() {
-                    shadowerMaterialRepository
+                    val jsonObjects = shadowerMaterialRepository
                         .process(
                             url = route.value,
                             componentObject = componentObject,
                             types = listOf(Shadower.Type.contextual)
-                        ).forEach {
-                            coroutineScopes.renderer.await {
-                                view.update(it.jsonObject)
-                            }
-                        }
+                        ).map { it.jsonObject }
+                    coroutineScopes.renderer.await {
+                        screen.update(jsonObjects)
+                    }
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.process(

@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 @TuuchoInternalApi
 object SystemCoreUiModules {
     fun invoke(): List<ModuleProtocol> = listOf(
-        MaterialRendererModule.invoke(),
+        TuuchoEngineModule.invoke(),
+        ViewModule.invoke(),
     )
 }

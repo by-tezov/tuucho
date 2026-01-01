@@ -22,7 +22,7 @@ class FormFailureReasonRectifier(
     override val key = FormSendSchema.Key.failureResult
     private val textRectifier: TextRectifier by inject()
 
-    private val matcher = FormFailureReasonMatcher()
+    private val matcher = FormFailureReasonRectifierMatcher()
 
     override fun accept(
         path: JsonElementPath,

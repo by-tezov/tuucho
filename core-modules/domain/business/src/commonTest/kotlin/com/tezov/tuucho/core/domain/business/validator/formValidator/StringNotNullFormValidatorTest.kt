@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.business.validator.formValidator
 
-import kotlinx.serialization.json.JsonObject
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -11,7 +10,7 @@ class StringNotNullFormValidatorTest {
 
     @BeforeTest
     fun setUp() {
-        sut = StringNotNullFormValidator(JsonObject(emptyMap()))
+        sut = StringNotNullFormValidator("error-messages-id")
     }
 
     @Test

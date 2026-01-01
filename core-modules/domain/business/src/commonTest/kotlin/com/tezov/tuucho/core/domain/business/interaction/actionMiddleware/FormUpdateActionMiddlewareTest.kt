@@ -131,10 +131,6 @@ class FormUpdateActionMiddlewareTest {
                 useCase = updateViewUseCase,
                 input = any()
             )
-            useCaseExecutor.await(
-                useCase = updateViewUseCase,
-                input = any()
-            )
             next.invoke(context)
         }
     }

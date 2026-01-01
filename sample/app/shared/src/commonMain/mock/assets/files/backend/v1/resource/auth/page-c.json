@@ -3,7 +3,7 @@
     "setting": {
       "shadower": {
         "navigate-forward": {
-          "wait-done-to-render": false,
+          "wait-done-to-render": true,
           "enable": true
         }
       },

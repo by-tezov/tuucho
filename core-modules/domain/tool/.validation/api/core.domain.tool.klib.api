@@ -104,14 +104,22 @@ final class com.tezov.tuucho.core.domain.tool.json/InstantSerializer : kotlinx.s
 }
 
 final class com.tezov.tuucho.core.domain.tool.json/JsonElementPath : kotlin.collections/Iterable<kotlin/String> { // com.tezov.tuucho.core.domain.tool.json/JsonElementPath|null[0]
-    constructor <init>(kotlin/String? = ...) // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.<init>|<init>(kotlin.String?){}[0]
+    constructor <init>(kotlin/String? = ..., kotlin/Int? = ...) // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.<init>|<init>(kotlin.String?;kotlin.Int?){}[0]
 
-    final fun child(kotlin/String): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.child|child(kotlin.String){}[0]
+    final fun atIndex(kotlin/Int): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.atIndex|atIndex(kotlin.Int){}[0]
+    final fun child(kotlin/String, kotlin/Int? = ...): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.child|child(kotlin.String;kotlin.Int?){}[0]
     final fun isEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.isEmpty|isEmpty(){}[0]
     final fun iterator(): kotlin.collections/Iterator<kotlin/String> // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.iterator|iterator(){}[0]
     final fun lastSegment(): kotlin/String? // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.lastSegment|lastSegment(){}[0]
     final fun parent(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.parent|parent(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.toString|toString(){}[0]
+
+    final object Companion { // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion|null[0]
+        final const val INDEX_SEPARATOR // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.INDEX_SEPARATOR|{}INDEX_SEPARATOR[0]
+            final fun <get-INDEX_SEPARATOR>(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.INDEX_SEPARATOR.<get-INDEX_SEPARATOR>|<get-INDEX_SEPARATOR>(){}[0]
+        final const val SEGMENT_SEPARATOR // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.SEGMENT_SEPARATOR|{}SEGMENT_SEPARATOR[0]
+            final fun <get-SEGMENT_SEPARATOR>(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.SEGMENT_SEPARATOR.<get-SEGMENT_SEPARATOR>|<get-SEGMENT_SEPARATOR>(){}[0]
+    }
 }
 
 final object com.tezov.tuucho.core.domain.tool.async/ExtensionFlow { // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow|null[0]
@@ -229,7 +237,8 @@ final val com.tezov.tuucho.core.domain.tool.json/string // com.tezov.tuucho.core
 final val com.tezov.tuucho.core.domain.tool.json/stringOrNull // com.tezov.tuucho.core.domain.tool.json/stringOrNull|@kotlinx.serialization.json.JsonElement?{}stringOrNull[0]
     final fun (kotlinx.serialization.json/JsonElement?).<get-stringOrNull>(): kotlin/String? // com.tezov.tuucho.core.domain.tool.json/stringOrNull.<get-stringOrNull>|<get-stringOrNull>@kotlinx.serialization.json.JsonElement?(){}[0]
 
-final fun (kotlin/String).com.tezov.tuucho.core.domain.tool.json/toPath(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/toPath|toPath@kotlin.String(){}[0]
+final fun (kotlin/Int).com.tezov.tuucho.core.domain.tool.json/toIndexPath(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/toIndexPath|toIndexPath@kotlin.Int(){}[0]
+final fun (kotlin/String).com.tezov.tuucho.core.domain.tool.json/toPath(kotlin/Int? = ...): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/toPath|toPath@kotlin.String(kotlin.Int?){}[0]
 final fun (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.tool.json/find(com.tezov.tuucho.core.domain.tool.json/JsonElementPath): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.domain.tool.json/find|find@kotlinx.serialization.json.JsonElement(com.tezov.tuucho.core.domain.tool.json.JsonElementPath){}[0]
 final fun (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.tool.json/findOrNull(com.tezov.tuucho.core.domain.tool.json/JsonElementPath): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.tool.json/findOrNull|findOrNull@kotlinx.serialization.json.JsonElement(com.tezov.tuucho.core.domain.tool.json.JsonElementPath){}[0]
 final fun (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.tool.json/replaceOrInsert(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.domain.tool.json/replaceOrInsert|replaceOrInsert@kotlinx.serialization.json.JsonElement(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]

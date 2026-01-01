@@ -202,11 +202,15 @@ public final class com/tezov/tuucho/core/domain/tool/json/JsonElementExtensionKt
 }
 
 public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPath : java/lang/Iterable, kotlin/jvm/internal/markers/KMappedMarker {
-	public static final field SEPARATOR Ljava/lang/String;
+	public static final field Companion Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath$Companion;
+	public static final field INDEX_SEPARATOR Ljava/lang/String;
+	public static final field SEGMENT_SEPARATOR Ljava/lang/String;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun child (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
+	public fun <init> (Ljava/lang/String;Ljava/lang/Integer;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun atIndex (I)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
+	public final fun child (Ljava/lang/String;Ljava/lang/Integer;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
+	public static synthetic fun child$default (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
 	public final fun isEmpty ()Z
 	public fun iterator ()Ljava/util/Iterator;
 	public final fun lastSegment ()Ljava/lang/String;
@@ -214,9 +218,14 @@ public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPath : java
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPath$Companion {
+}
+
 public final class com/tezov/tuucho/core/domain/tool/json/JsonElementPathKt {
 	public static final fun getROOT_PATH ()Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
-	public static final fun toPath (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
+	public static final fun toIndexPath (I)Ljava/lang/String;
+	public static final fun toPath (Ljava/lang/String;Ljava/lang/Integer;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
+	public static synthetic fun toPath$default (Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/tool/protocol/SystemInformationProtocol {

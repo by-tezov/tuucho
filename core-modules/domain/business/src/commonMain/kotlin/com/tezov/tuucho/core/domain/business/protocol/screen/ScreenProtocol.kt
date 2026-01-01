@@ -8,10 +8,12 @@ import kotlin.reflect.KClass
 interface ScreenProtocol {
     val route: NavigationRoute.Url
 
-    val view: ViewProtocol
-
     suspend fun update(
         jsonObject: JsonObject
+    )
+
+    suspend fun update(
+        jsonObjects: List<JsonObject>
     )
 
     fun <V : ViewProtocol> views(

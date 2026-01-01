@@ -12,7 +12,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
-import com.tezov.tuucho.core.domain.business.protocol.screen.view.form.FormViewProtocol
+import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
@@ -178,8 +178,8 @@ class FormSendUrlActionMiddlewareTest {
         val action = defaultAction()
         val routeUrl = defaultRoute()
 
-        val formViewInvalid = mock<FormViewProtocol>()
-        val formViewValid = mock<FormViewProtocol>()
+        val formViewInvalid = mock<FormStateProtocol>()
+        val formViewValid = mock<FormStateProtocol>()
 
         // ---------- map form views from extensions ----------
         val screen = mockScreenWithFormViews(formViewInvalid, formViewValid)
@@ -234,7 +234,7 @@ class FormSendUrlActionMiddlewareTest {
         val action = defaultAction()
         val routeUrl = defaultRoute()
 
-        val formViewValid = mock<FormViewProtocol>()
+        val formViewValid = mock<FormStateProtocol>()
 
         // ---------- map form views from extensions ----------
         val screen = mockScreenWithFormViews(formViewValid)
@@ -286,7 +286,7 @@ class FormSendUrlActionMiddlewareTest {
         val action = defaultAction()
         val routeUrl = defaultRoute()
 
-        val formViewValid = mock<FormViewProtocol>()
+        val formViewValid = mock<FormStateProtocol>()
 
         // ---------- map form views from extensions ----------
         val screen = mockScreenWithFormViews(formViewValid)
@@ -342,7 +342,7 @@ class FormSendUrlActionMiddlewareTest {
         val action = defaultAction()
         val routeUrl = defaultRoute()
 
-        val formViewValid = mock<FormViewProtocol>()
+        val formViewValid = mock<FormStateProtocol>()
 
         // ---------- map form views from extensions ----------
         val screen = mockScreenWithFormViews(formViewValid)
@@ -450,7 +450,7 @@ class FormSendUrlActionMiddlewareTest {
         val action = defaultAction()
         val routeUrl = defaultRoute()
 
-        val formViewValid = mock<FormViewProtocol>()
+        val formViewValid = mock<FormStateProtocol>()
 
         // ---------- map form views from extensions ----------
         val screen = mockScreenWithFormViews(formViewValid)
@@ -579,7 +579,7 @@ class FormSendUrlActionMiddlewareTest {
         val routeUrl = defaultRoute()
 
         // ---------- form and screen setup ----------
-        val formViewValid = mock<FormViewProtocol>()
+        val formViewValid = mock<FormStateProtocol>()
         val screen = mockScreenWithFormViews(formViewValid)
 
         // ---------- valid form so we actually reach the sendData branch ----------
@@ -636,20 +636,20 @@ class FormSendUrlActionMiddlewareTest {
     )
 
     private fun mockScreenWithFormViews(
-        vararg formViews: FormViewProtocol
+        vararg formViews: FormStateProtocol
     ): ScreenProtocol {
         val screen = mock<ScreenProtocol>()
         val extensions = formViews.map { formView ->
-            val ext = mock<FormViewProtocol.Extension<FormViewProtocol>>()
-            every { ext.formView } returns formView
+            val ext = mock<FormStateProtocol.Extension>()
+            every { ext.extensionFormState } returns formView
             ext
         }
-        every { screen.views(FormViewProtocol.Extension::class) } returns extensions
+        every { screen.views(FormStateProtocol.Extension::class) } returns extensions
         return screen
     }
 
     private fun stubValidFormView(
-        formView: FormViewProtocol,
+        formView: FormStateProtocol,
         id: String = "field",
         value: String = "value"
     ) {
@@ -660,7 +660,7 @@ class FormSendUrlActionMiddlewareTest {
     }
 
     private fun stubInvalidFormView(
-        formView: FormViewProtocol,
+        formView: FormStateProtocol,
         id: String
     ) {
         every { formView.updateValidity() } returns Unit

@@ -22,7 +22,7 @@ class ContentLayoutLinearItemsRectifier(
     override val key = LayoutLinearSchema.Content.Key.items
     private val componentRectifier: ComponentRectifier by inject()
 
-    private val matcher = ContentLayoutLinearItemsMatcher()
+    private val matcher = ContentLayoutLinearItemsRectifierMatcher()
 
     override fun accept(
         path: JsonElementPath,
