@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.repository.mock.CoroutineTestScope
-import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
+import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.FindAllRefOrNullFetcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseAssembler
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
@@ -25,7 +25,7 @@ import kotlin.test.assertNull
 
 class SendDataAndRetrieveMaterialRemoteSourceTest {
     private val coroutineTestScope = CoroutineTestScope()
-    private lateinit var networkJsonObject: NetworkJsonObject
+    private lateinit var networkJsonObject: NetworkJsonObjectProtocol
     private lateinit var responseRectifier: ResponseRectifier
     private lateinit var responseAssembler: ResponseAssembler
     private lateinit var materialDatabaseSource: MaterialDatabaseSource

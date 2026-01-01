@@ -1,5 +1,6 @@
 package com.tezov.tuucho.convention.project
 
+import dev.mokkery.gradle.MokkeryGradleExtension
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.extra
@@ -82,6 +83,12 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
     }
 
     private fun Project.configureTest() {
+        extensions.configure(MokkeryGradleExtension::class.java) {
+            with(stubs) {
+                allowConcreteClassInstantiation.set(true)
+                allowClassInheritance.set(true)
+            }
+        }
         extensions.configure(AllOpenExtension::class.java) {
             annotation("${namespaceBase()}.core.domain.test._system.OpenForTest")
         }

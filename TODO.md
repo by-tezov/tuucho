@@ -1,7 +1,5 @@
 ## In progress
 
-- finir preview Field, then do the layout preview.
-
 - update lib and check why mokkery complain on some class
 - then refactor to allow feature UI (Processor, Data, Domain Schema)
 

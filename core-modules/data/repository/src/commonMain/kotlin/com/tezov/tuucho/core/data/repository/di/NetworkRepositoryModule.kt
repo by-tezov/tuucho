@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.network.HttpClientEngineFactory
 import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
+import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
 import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
@@ -72,7 +73,7 @@ object NetworkRepositoryModule {
             )
         }
 
-        single<NetworkJsonObject> {
+        single<NetworkJsonObjectProtocol> {
             NetworkJsonObject(
                 networkHttpRequestSource = get(),
                 jsonConverter = get()
