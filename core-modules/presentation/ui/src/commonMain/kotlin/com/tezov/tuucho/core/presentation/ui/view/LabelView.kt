@@ -60,7 +60,8 @@ class LabelViewFactory : ViewFactoryProtocol {
 
 private class LabelView(
     screenContext: ScreenContextProtocol,
-) : LabelViewProtocol, AbstractView(screenContext) {
+) : AbstractView(screenContext),
+    LabelViewProtocol {
     private lateinit var textValue: TextProjectionProtocol
     private lateinit var fontColor: ColorProjectionProtocol
     private lateinit var fontSize: SpProjectionProtocol

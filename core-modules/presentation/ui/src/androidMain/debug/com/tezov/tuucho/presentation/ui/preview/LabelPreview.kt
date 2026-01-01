@@ -38,7 +38,8 @@ private class LabelPreviewDataProvider : PreviewParameterProvider<LabelPreviewDa
 
 @Preview(
     showSystemUi = false,
-    showBackground = true, backgroundColor = 0xD9D9D9,
+    showBackground = true,
+    backgroundColor = 0xD9D9D9,
 )
 @Composable
 private fun LabelPreviewComponentFromSequence(

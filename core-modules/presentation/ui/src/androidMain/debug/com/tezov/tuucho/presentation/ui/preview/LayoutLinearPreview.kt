@@ -28,19 +28,27 @@ private object LayoutLinearPreviewSampleView {
             fontSize = 56.sp,
         )
     }
-    fun labelSection(color: Color): @Composable Any.() -> Unit = {
+
+    fun labelSection(
+        color: Color
+    ): @Composable Any.() -> Unit = {
         LabelPreviewComponent(
             textValue = "Label Section",
             fontColor = color,
             fontSize = 32.sp,
         )
     }
-    fun field(title: String, showError: Boolean = false): @Composable Any.() -> Unit = {
+
+    fun field(
+        title: String,
+        showError: Boolean = false
+    ): @Composable Any.() -> Unit = {
         FieldPreviewComponent(
             showError = showError,
             titleValue = title,
         )
     }
+
     val button: @Composable Any.() -> Unit = {
         ButtonPreviewComponent(
             content = {
@@ -52,18 +60,25 @@ private object LayoutLinearPreviewSampleView {
             }
         )
     }
-    fun spacerWeight(value: Float): @Composable Any.() -> Unit = {
+
+    fun spacerWeight(
+        value: Float
+    ): @Composable Any.() -> Unit = {
         SpacerPreviewComponent(
             scope = this,
             weight = value
         )
     }
-    fun spacerHeight(value: Dp): @Composable Any.() -> Unit = {
+
+    fun spacerHeight(
+        value: Dp
+    ): @Composable Any.() -> Unit = {
         SpacerPreviewComponent(
             scope = this,
             height = value
         )
     }
+
     val rowLayout: @Composable Any.() -> Unit = {
         LayoutLinearPreviewComponent(
             backgroundColor = Color.Gray,
@@ -128,7 +143,8 @@ private class LayoutLinearPreviewDataProvider : PreviewParameterProvider<LayoutL
 @Preview(
     locale = "fr-FR",
     showSystemUi = false,
-    showBackground = true, backgroundColor = 0xD9D9D9,
+    showBackground = true,
+    backgroundColor = 0xD9D9D9,
 )
 @Composable
 private fun LayoutLinearPreviewComponentFromSequence(

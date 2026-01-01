@@ -5,8 +5,9 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdate
 import kotlinx.serialization.json.JsonObject
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol as DomainViewProtocol
 
-interface ViewProtocol : DomainViewProtocol, HasContextualUpdaterProtocol {
-
+interface ViewProtocol :
+    DomainViewProtocol,
+    HasContextualUpdaterProtocol {
     suspend fun initialize(
         componentObject: JsonObject
     )

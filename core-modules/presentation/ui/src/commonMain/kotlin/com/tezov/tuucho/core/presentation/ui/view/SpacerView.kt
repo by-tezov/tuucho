@@ -58,7 +58,8 @@ class SpacerViewFactory : ViewFactoryProtocol {
 
 private class SpacerView(
     screenContext: ScreenContextProtocol,
-) : SpacerViewProtocol, AbstractView(screenContext) {
+) : AbstractView(screenContext),
+    SpacerViewProtocol {
     private lateinit var width: DpProjectionProtocol
     private lateinit var height: DpProjectionProtocol
     private lateinit var weight: FloatProjectionProtocol

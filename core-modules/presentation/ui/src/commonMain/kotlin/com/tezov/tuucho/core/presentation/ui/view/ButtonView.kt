@@ -51,7 +51,8 @@ class ButtonViewFactory : ViewFactoryProtocol {
 
 private class ButtonView(
     screenContext: ScreenContextProtocol,
-) : ButtonViewProtocol, AbstractView(screenContext) {
+) : AbstractView(screenContext),
+    ButtonViewProtocol {
     private lateinit var labelView: ViewProjectionProtocol
     private lateinit var action: ActionProjectionProtocol
 
@@ -96,5 +97,3 @@ private class ButtonView(
         displayPlaceholder(null)
     }
 }
-
-

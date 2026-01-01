@@ -48,7 +48,6 @@ private class SpacerPreviewDataProvider : PreviewParameterProvider<SpacerPreview
         SpacerPreviewData.RowScopeComponent(
             width = 12.dp,
         ),
-
         // Column
         SpacerPreviewData.ColumnScopeComponent(
             weight = 1.0f,
@@ -81,7 +80,8 @@ private fun SpacerPreviewSquare(
 
 @Preview(
     showSystemUi = false,
-    showBackground = true, backgroundColor = 0xD9D9D9,
+    showBackground = true,
+    backgroundColor = 0xD9D9D9,
 )
 @Composable
 private fun SpacerPreviewComponentFromSequence(
@@ -115,7 +115,6 @@ private fun SpacerPreviewComponentFromSequence(
                     .width(56.dp)
                     .height(256.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-
             ) {
                 SpacerPreviewSquare()
                 Spacer(modifier = Modifier.weight(1.0f))

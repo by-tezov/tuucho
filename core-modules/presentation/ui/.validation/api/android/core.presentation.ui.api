@@ -120,6 +120,11 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projection/Color
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol {
 }
 
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol {
+	public abstract fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol;)V
+	public abstract fun extract (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/MutableStorageProjection : com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol {
 	public static final field $stable I
 	public fun <init> ()V
@@ -131,16 +136,16 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projection/Mutab
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/Projection : com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols, com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;)V
+	public fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol;)V
 	public fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol;)V
-	public fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ValueProjectionProtocol;)V
+	public fun extract (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKey ()Ljava/lang/String;
 	public fun getValue ()Ljava/lang/Object;
-	public fun getValueOrNull (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setValue (Ljava/lang/Object;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols : com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol, com/tezov/tuucho/core/presentation/ui/render/projection/ValueProjectionProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols : com/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol, com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol {
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/StaticStorageProjection : com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol {
@@ -151,10 +156,8 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projection/Stati
 	public fun setValue (Ljava/lang/Object;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/projection/ValueStorageProjectionProtocol {
 	public abstract fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol;)V
-	public abstract fun getValue ()Ljava/lang/Object;
-	public abstract fun setValue (Ljava/lang/Object;)V
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/TextProjectionKt {
@@ -176,9 +179,9 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 	public abstract fun getTexts ()Ljava/util/List;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ValueProjectionProtocol {
-	public abstract fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ValueProjectionProtocol;)V
-	public abstract fun getValueOrNull (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ValueStorageProjectionProtocol {
+	public abstract fun getValue ()Ljava/lang/Object;
+	public abstract fun setValue (Ljava/lang/Object;)V
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionKt {
@@ -268,33 +271,20 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/view/ViewProjectionKt {
-	public static final fun createViewProjection (Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewProjectionProtocol;
-	public static final fun view (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewProjectionProtocol;
+	public static final fun createViewProjection (Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewProjectionProtocol;
+	public static final fun view (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewProjectionProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/view/ViewProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols {
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/view/ViewsProjectionKt {
-	public static final fun createViewsProjection (Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewsProjectionProtocol;
-	public static final fun views (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewsProjectionProtocol;
+	public static final fun createViewsProjection (Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewsProjectionProtocol;
+	public static final fun views (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/view/ViewsProjectionProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/view/ViewsProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasResolveStatusProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol {
 	public abstract fun getViews ()Ljava/util/List;
-}
-
-public final class com/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjector : com/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol;)V
-	public fun add (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;)V
-	public fun getId ()Ljava/lang/String;
-	public fun getRequestViewUpdateInvoker ()Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;
-	public fun getUpdatables ()Ljava/util/List;
-	public fun invokeRequestViewUpdate ()V
-	public fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun setRequestViewUpdater (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;)V
-	public fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorKt {
@@ -310,22 +300,6 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projector/Compon
 	public static fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/render/projector/MessageProjector : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols {
-	public static final field $stable I
-	public fun <init> (Lkotlin/Lazy;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
-	public fun add (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)V
-	public fun getId ()Ljava/lang/String;
-	public fun getKoin ()Lorg/koin/core/Koin;
-	public fun getLazyId ()Lkotlin/Lazy;
-	public fun getRequestViewUpdateInvoker ()Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;
-	public fun getSubset ()Ljava/lang/String;
-	public fun getType ()Ljava/lang/String;
-	public fun invokeRequestViewUpdate ()V
-	public fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun setRequestViewUpdater (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;)V
-	public fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;
-}
-
 public final class com/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorKt {
 	public static final fun message (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols;
 }
@@ -339,20 +313,6 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projector/Messag
 	public static fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols;Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjector : com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol;Ljava/lang/String;)V
-	public fun add (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)V
-	public fun getId ()Ljava/lang/String;
-	public fun getRequestViewUpdateInvoker ()Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;
-	public fun getType ()Ljava/lang/String;
-	public fun getUpdatables ()Ljava/util/List;
-	public fun invokeRequestViewUpdate ()V
-	public fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun setRequestViewUpdater (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;)V
-	public fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;
-}
-
 public final class com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorKt {
 	public static final fun content (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;
 	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;)Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;
@@ -361,12 +321,21 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projector/TypePr
 	public static final fun style (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasUpdatableProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/TypeProcessorProjectorProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasContextualUpdaterProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/TypeProcessorProjectorProtocol {
 	public fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols$DefaultImpls {
 	public static fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/ContextualUpdaterProcessorProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasIdProtocol {
+	public abstract fun getType ()Ljava/lang/String;
+	public abstract fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/HasContextualUpdaterProtocol {
+	public abstract fun getContextualUpdater ()Ljava/util/List;
 }
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/HasIdProtocol {
@@ -379,10 +348,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/HasResolveStatusProtocol {
 	public abstract fun getHasBeenResolved ()Ljava/lang/Boolean;
-}
-
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/HasUpdatableProtocol {
-	public abstract fun getUpdatables ()Ljava/util/List;
 }
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasIdProtocol {
@@ -409,12 +374,7 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 	public abstract fun update (Lkotlinx/serialization/json/JsonElement;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/UpdatableProcessorProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasIdProtocol {
-	public abstract fun getType ()Ljava/lang/String;
-	public abstract fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/projector/ComponentProcessorProjectorProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasUpdatableProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/projector/ComponentProcessorProjectorProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasContextualUpdaterProtocol {
 	public abstract fun add (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;)V
 	public abstract fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -433,36 +393,17 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 	public abstract fun add (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)V
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/screen/Screen : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/presentation/ui/screen/ScreenProtocol {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;)V
-	public fun display (Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)V
-	public fun getKoin ()Lorg/koin/core/Koin;
-	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
-	public final fun initialize (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun update (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun update (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun views (Lkotlin/reflect/KClass;)Ljava/util/List;
-}
-
-public final class com/tezov/tuucho/core/presentation/ui/screen/ScreenContext : com/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlin/jvm/functions/Function1;)V
-	public fun addView (Lcom/tezov/tuucho/core/presentation/ui/view/_system/ViewProtocol;)V
-	public fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
-}
-
-public abstract interface class com/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol {
-	public abstract fun addView (Lcom/tezov/tuucho/core/presentation/ui/view/_system/ViewProtocol;)V
+public abstract interface class com/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol {
+	public abstract fun addView (Lcom/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol;)V
 	public abstract fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/screen/ScreenProtocol : com/tezov/tuucho/core/domain/business/protocol/screen/ScreenProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenProtocol : com/tezov/tuucho/core/domain/business/protocol/screen/ScreenProtocol {
 	public abstract fun display (Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)V
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/screen/ScreenProtocol$ComposeDefaultImpls {
-	public static final fun display$default (Ljava/lang/Object;Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenProtocol;Landroidx/compose/runtime/Composer;II)V
+public final class com/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenProtocol$ComposeDefaultImpls {
+	public static final fun display$default (Ljava/lang/Object;Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenProtocol;Landroidx/compose/runtime/Composer;II)V
 }
 
 public abstract class com/tezov/tuucho/core/presentation/ui/transition/_system/AbstractModifierTransition : androidx/compose/ui/Modifier {
@@ -502,108 +443,115 @@ public final class com/tezov/tuucho/core/presentation/ui/transition/_system/Dire
 	public final fun from (Lkotlinx/serialization/json/JsonObject;)Lcom/tezov/tuucho/core/presentation/ui/transition/_system/DirectionScreen;
 }
 
-public abstract class com/tezov/tuucho/core/presentation/ui/view/AbstractView : com/tezov/tuucho/core/presentation/ui/view/_system/ViewProtocol {
+public abstract class com/tezov/tuucho/core/presentation/ui/view/AbstractView : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
 	public static final field $stable I
 	public field componentProjector Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)V
+	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)V
 	public abstract fun createComponentProjector (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun display (Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)V
 	protected abstract fun displayComponent (Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)V
 	protected fun displayPlaceholder (Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)V
 	public final fun getComponentProjector ()Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;
+	public fun getContextualUpdater ()Ljava/util/List;
 	public abstract fun getResolvedStatus ()Z
-	protected final fun getScreenContext ()Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;
-	public fun getUpdatables ()Ljava/util/List;
+	protected final fun getScreenContext ()Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;
 	public fun initialize (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setComponentProjector (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;)V
-	protected final fun setScreenContext (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)V
+	protected final fun setScreenContext (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)V
 	public fun updateIfNeeded ()V
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/ButtonView : com/tezov/tuucho/core/presentation/ui/view/AbstractView {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)V
-	public fun createComponentProjector (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getResolvedStatus ()Z
-}
-
-public final class com/tezov/tuucho/core/presentation/ui/view/ButtonViewFactory : com/tezov/tuucho/core/presentation/ui/view/_system/ViewFactoryProtocol {
+public final class com/tezov/tuucho/core/presentation/ui/view/ButtonViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
-	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/FieldView : com/tezov/tuucho/core/presentation/ui/view/AbstractView, com/tezov/tuucho/core/domain/business/protocol/screen/view/FormStateProtocol$Extension {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)V
-	public fun createComponentProjector (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun getExtensionFormState ()Lcom/tezov/tuucho/core/domain/business/protocol/screen/view/FormStateProtocol;
-	public fun getExtensionFormState ()Lcom/tezov/tuucho/core/presentation/ui/render/projection/form/FormStateProjectionProtocol;
-	public fun getResolvedStatus ()Z
+public final class com/tezov/tuucho/core/presentation/ui/view/ButtonViewKt {
+	public static final fun createButtonView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/view/ButtonViewProtocol;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/FieldViewFactory : com/tezov/tuucho/core/presentation/ui/view/_system/ViewFactoryProtocol {
-	public static final field $stable I
-	public fun <init> ()V
-	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
-	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/presentation/ui/view/ButtonViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
+	public abstract fun ComposeComponent (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/LabelView : com/tezov/tuucho/core/presentation/ui/view/AbstractView {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)V
-	public fun createComponentProjector (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getResolvedStatus ()Z
-}
-
-public final class com/tezov/tuucho/core/presentation/ui/view/LabelViewFactory : com/tezov/tuucho/core/presentation/ui/view/_system/ViewFactoryProtocol {
+public final class com/tezov/tuucho/core/presentation/ui/view/FieldViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
-	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/LayoutLinearView : com/tezov/tuucho/core/presentation/ui/view/AbstractView {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)V
-	public fun createComponentProjector (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getResolvedStatus ()Z
+public final class com/tezov/tuucho/core/presentation/ui/view/FieldViewKt {
+	public static final fun createFieldView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/view/FieldViewProtocol;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/LayoutLinearViewFactory : com/tezov/tuucho/core/presentation/ui/view/_system/ViewFactoryProtocol {
-	public static final field $stable I
-	public fun <init> ()V
-	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
-	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/presentation/ui/view/FieldViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
+	public abstract fun ComposeComponent (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ValueStorageProjectionProtocol;Landroidx/compose/runtime/MutableState;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/SpacerView : com/tezov/tuucho/core/presentation/ui/view/AbstractView {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;)V
-	public fun createComponentProjector (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getResolvedStatus ()Z
-}
-
-public final class com/tezov/tuucho/core/presentation/ui/view/SpacerViewFactory : com/tezov/tuucho/core/presentation/ui/view/_system/ViewFactoryProtocol {
+public final class com/tezov/tuucho/core/presentation/ui/view/LabelViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
-	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/view/_system/ViewFactoryMatcherProtocol {
+public final class com/tezov/tuucho/core/presentation/ui/view/LabelViewKt {
+	public static final fun createLabelView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/view/LabelViewProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/view/LabelViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
+	public abstract fun ComposeComponent-TpZydGg (Ljava/lang/String;Landroidx/compose/ui/graphics/Color;Landroidx/compose/ui/unit/TextUnit;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/view/LayoutLinearViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
+	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/view/LayoutLinearViewKt {
+	public static final fun createLayoutLinearView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/view/LayoutLinearViewProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/view/LayoutLinearViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
+	public abstract fun ComposeComponent-iRkQZW0 (Landroidx/compose/ui/graphics/Color;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/util/List;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/view/SpacerViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
+	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/view/SpacerViewKt {
+	public static final fun createSpacerView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/core/presentation/ui/view/SpacerViewProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/view/SpacerViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
+	public abstract fun ComposeComponent-gWFMV-M (Ljava/lang/Object;Ljava/lang/Float;Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/unit/Dp;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryMatcherProtocol {
 	public abstract fun accept (Lkotlinx/serialization/json/JsonObject;)Z
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/view/_system/ViewProtocol : com/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol : com/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/HasContextualUpdaterProtocol {
 	public abstract fun display (Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)V
-	public abstract fun getUpdatables ()Ljava/util/List;
 	public abstract fun initialize (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateIfNeeded ()V
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/view/_system/ViewProtocol$ComposeDefaultImpls {
-	public static final fun display$default (Ljava/lang/Object;Lcom/tezov/tuucho/core/presentation/ui/view/_system/ViewProtocol;Landroidx/compose/runtime/Composer;II)V
+public final class com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol$ComposeDefaultImpls {
+	public static final fun display$default (Ljava/lang/Object;Lcom/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol;Landroidx/compose/runtime/Composer;II)V
 }
 

@@ -68,7 +68,8 @@ class LayoutLinearViewFactory : ViewFactoryProtocol {
 
 private class LayoutLinearView(
     screenContext: ScreenContextProtocol,
-) : LayoutLinearViewProtocol, AbstractView(screenContext) {
+) : AbstractView(screenContext),
+    LayoutLinearViewProtocol {
     private lateinit var backgroundColor: ColorProjectionProtocol
     private lateinit var orientation: StringProjectionProtocol
     private lateinit var fillMaxSize: BooleanProjectionProtocol
@@ -126,8 +127,7 @@ private class LayoutLinearView(
                 } or ifTrue(fillMaxWidth) {
                     fillMaxWidth()
                 }
-            }
-            .thenIfNotNull(backgroundColor) { background(it) }
+            }.thenIfNotNull(backgroundColor) { background(it) }
         when (orientation) {
             Orientation.horizontal -> Row(modifier = modifier) {
                 contents.forEach { it.invoke(this) }

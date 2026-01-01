@@ -458,7 +458,6 @@ tasks.register("adminUpdateAll") {
             val exit = process.waitFor()
             if (exit != 0) throw RuntimeException("Command failed: ${cmd.joinToString(" ")}")
         }
-
         run("./gradlew", "rootFormatKtLint")
         run("./gradlew", "rootKtLintReport")
         run("./gradlew", "rootUpdateDetektBaseline")

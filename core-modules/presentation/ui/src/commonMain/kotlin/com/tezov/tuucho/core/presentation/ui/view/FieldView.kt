@@ -75,7 +75,8 @@ class FieldViewFactory : ViewFactoryProtocol {
 
 private class FieldView(
     screenContext: ScreenContextProtocol,
-) : FieldViewProtocol, AbstractView(screenContext),
+) : AbstractView(screenContext),
+    FieldViewProtocol,
     FormStateProtocol.Extension {
     private var showError = mutableStateOf(false)
     private lateinit var titleValue: TextProjectionProtocol
