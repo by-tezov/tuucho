@@ -68,7 +68,9 @@ class TypeProjector(
         }
     }
 
-    override fun setRequestViewUpdater(value: RequestViewUpdateInvokerProtocol) {
+    override fun setRequestViewUpdater(
+        value: RequestViewUpdateInvokerProtocol
+    ) {
         requestViewUpdateInvoker = value
     }
 

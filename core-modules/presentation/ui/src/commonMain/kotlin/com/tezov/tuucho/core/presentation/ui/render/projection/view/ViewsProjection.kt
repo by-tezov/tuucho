@@ -9,7 +9,9 @@ import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
-interface ViewsProjectionProtocol : ProjectionProcessorProtocol, HasResolveStatusProtocol {
+interface ViewsProjectionProtocol :
+    ProjectionProcessorProtocol,
+    HasResolveStatusProtocol {
     val views: List<ViewProjectionProtocol>
 }
 
@@ -18,7 +20,6 @@ private class ViewsProjection(
     private val screenContext: ScreenContextProtocol
 ) : ViewsProjectionProtocol,
     TuuchoKoinComponent {
-
     override var hasBeenResolved: Boolean? = null
         private set
 
@@ -41,8 +42,6 @@ private class ViewsProjection(
         }
         hasBeenResolved = true
     }
-
-
 }
 
 fun createViewsProjection(

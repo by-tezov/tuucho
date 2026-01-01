@@ -49,7 +49,7 @@ abstract class AbstractView(
     final override fun display(
         scope: Any?
     ) {
-        isReady = remember(redrawTrigger.intValue)  {  getResolvedStatus() }
+        isReady = remember(redrawTrigger.intValue) { getResolvedStatus() }
         if (isReady) {
             displayComponent(scope)
         } else {

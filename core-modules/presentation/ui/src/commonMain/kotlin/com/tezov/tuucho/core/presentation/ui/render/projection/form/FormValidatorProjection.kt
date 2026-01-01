@@ -12,7 +12,9 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 
-interface FormValidatorProjectionProtocol : ProjectionProcessorProtocol, HasResolveStatusProtocol {
+interface FormValidatorProjectionProtocol :
+    ProjectionProcessorProtocol,
+    HasResolveStatusProtocol {
     val validators: List<FormValidatorProtocol<String>>
 
     fun updateValidity(

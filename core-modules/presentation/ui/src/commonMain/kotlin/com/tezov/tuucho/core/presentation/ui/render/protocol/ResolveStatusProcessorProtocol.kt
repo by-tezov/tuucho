@@ -6,7 +6,10 @@ interface HasResolveStatusProtocol {
     val hasBeenResolved: Boolean?
 }
 
-interface ResolveStatusProcessorProtocol : HasResolveStatusProtocol, HasRequestViewUpdateProtocol, RequestViewUpdateSetterProtocol {
+interface ResolveStatusProcessorProtocol :
+    HasResolveStatusProtocol,
+    HasRequestViewUpdateProtocol,
+    RequestViewUpdateSetterProtocol {
     fun update(
         jsonElement: JsonElement?
     )

@@ -16,7 +16,7 @@ class ResolveStatusProcessor : ResolveStatusProcessorProtocol {
         jsonElement: JsonElement?
     ) {
         val previous = hasBeenResolved
-        if(jsonElement != null) {
+        if (jsonElement != null) {
             hasBeenResolved = jsonElement.idSourceOrNull == null
         }
         if (previous != hasBeenResolved) {
@@ -24,7 +24,9 @@ class ResolveStatusProcessor : ResolveStatusProcessorProtocol {
         }
     }
 
-    override fun setRequestViewUpdater(value: RequestViewUpdateInvokerProtocol) {
+    override fun setRequestViewUpdater(
+        value: RequestViewUpdateInvokerProtocol
+    ) {
         requestViewUpdateInvoker = value
     }
 }

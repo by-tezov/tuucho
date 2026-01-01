@@ -5,11 +5,16 @@ fun interface RequestViewUpdateInvokerProtocol {
 }
 
 interface RequestViewUpdateSetterProtocol {
-    fun setRequestViewUpdater(value: RequestViewUpdateInvokerProtocol)
+    fun setRequestViewUpdater(
+        value: RequestViewUpdateInvokerProtocol
+    )
 }
 
 interface HasRequestViewUpdateProtocol {
     val requestViewUpdateInvoker: RequestViewUpdateInvokerProtocol?
 }
 
-interface RequestViewUpdateProtocols : HasRequestViewUpdateProtocol, RequestViewUpdateSetterProtocol, RequestViewUpdateInvokerProtocol
+interface RequestViewUpdateProtocols :
+    HasRequestViewUpdateProtocol,
+    RequestViewUpdateSetterProtocol,
+    RequestViewUpdateInvokerProtocol

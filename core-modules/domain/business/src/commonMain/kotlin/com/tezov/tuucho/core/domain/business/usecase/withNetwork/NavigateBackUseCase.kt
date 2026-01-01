@@ -80,11 +80,12 @@ class NavigateBackUseCase(
                 throwOnFailure = false
             ) {
                 suspend fun process() {
-                    val jsonObjects = shadowerMaterialRepository.process(
-                        url = route.value,
-                        componentObject = componentObject,
-                        types = listOf(Shadower.Type.contextual)
-                    ).map { it.jsonObject }
+                    val jsonObjects = shadowerMaterialRepository
+                        .process(
+                            url = route.value,
+                            componentObject = componentObject,
+                            types = listOf(Shadower.Type.contextual)
+                        ).map { it.jsonObject }
                     coroutineScopes.renderer.await {
                         screen.update(jsonObjects)
                     }

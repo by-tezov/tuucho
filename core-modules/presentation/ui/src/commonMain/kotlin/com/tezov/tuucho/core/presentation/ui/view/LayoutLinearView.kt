@@ -81,8 +81,7 @@ class LayoutLinearView(
                 } or ifTrue(fillMaxWidth.value) {
                     fillMaxWidth()
                 }
-            }
-            .thenIfNotNull(backgroundColor.value) { background(it) }
+            }.thenIfNotNull(backgroundColor.value) { background(it) }
 
         when (orientation.value) {
             Orientation.horizontal -> {

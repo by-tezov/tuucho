@@ -7,14 +7,15 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessor
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 
-interface TextsProjectionProtocol : ProjectionProcessorProtocol, HasResolveStatusProtocol {
+interface TextsProjectionProtocol :
+    ProjectionProcessorProtocol,
+    HasResolveStatusProtocol {
     val texts: List<TextProjectionProtocol>
 }
 
 private class TextsProjection(
     override val key: String,
 ) : TextsProjectionProtocol {
-
     override var hasBeenResolved: Boolean? = null
         private set
 

@@ -49,7 +49,9 @@ class Screen(
         id: String
     ) = "$type+$id"
 
-    suspend fun initialize(componentObject: JsonObject) {
+    suspend fun initialize(
+        componentObject: JsonObject
+    ) {
         val type = componentObject.withScope(TypeSchema::Scope).self
         if (type != TypeSchema.Value.component) {
             throw UiException.Default("object is not a component $componentObject")

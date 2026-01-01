@@ -54,7 +54,6 @@ class SpacerView(
         height.hasBeenResolved.isTrueOrNull &&
         weight.hasBeenResolved.isTrueOrNull
 
-
     @Composable
     override fun displayComponent(
         scope: Any?

@@ -54,7 +54,6 @@ class FieldView(
     screenContext: ScreenContextProtocol,
 ) : AbstractView(screenContext),
     FormStateProtocol.Extension {
-
     private var showError by mutableStateOf(false)
     private lateinit var titleValue: TextProjectionProtocol
     private lateinit var placeholderValue: TextProjectionProtocol
