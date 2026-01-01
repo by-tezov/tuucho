@@ -6,6 +6,7 @@ dependencies {
     implementation(libs.android.gradle.plugin)
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.all.open)
+    implementation(libs.mokkery)
     implementation(libs.maven)
     implementation(libs.ktlint)
     implementation(libs.detekt)

@@ -507,6 +507,11 @@ public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface class com/tezov/tuucho/core/data/repository/network/NetworkJsonObjectProtocol {
+	public abstract fun resource (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun send (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class com/tezov/tuucho/core/data/repository/parser/_system/MatcherHelperExtensionKt {
 	public static final fun isAnySubsetOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
 	public static final fun isAnySubsetOf (Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z

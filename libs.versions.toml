@@ -13,9 +13,9 @@ detektRules = "1.23.8"
 
 #plugin
 android-plugin = "8.13.2"
-kotlin-plugin = "2.2.21"
+kotlin-plugin = "2.3.0"
 compose-plugin = "1.9.3"
-kotlin-serialization-plugin = "2.2.21"
+kotlin-serialization-plugin = "2.3.0"
 maven-plugin = "0.35.0"
 ktlint = "14.0.1"
 detekt = "1.23.8"
@@ -31,13 +31,13 @@ kotlin-datetime = "0.7.1"
 okio = "3.16.4"
 
 #lib - android
-compose-activity = "1.12.1"
+compose-activity = "1.12.2"
 compose-backhandler= "1.9.3"
 datastore-preferences = "1.2.0"
 
 #test
 jacoco = "0.8.13"
-mokkery = "3.0.0"
+mokkery = "3.1.1"
 
 [libraries]
 #build-logic

@@ -552,6 +552,11 @@ public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface class com/tezov/tuucho/core/data/repository/network/NetworkJsonObjectProtocol {
+	public abstract fun resource (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun send (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class com/tezov/tuucho/core/data/repository/parser/_system/MatcherHelperExtensionKt {
 	public static final fun isAnySubsetOf (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
 	public static final fun isAnySubsetOf (Lkotlinx/serialization/json/JsonElement;Ljava/util/List;)Z
@@ -1099,6 +1104,11 @@ abstract interface com.tezov.tuucho.core.data.repository.database/Database : app
 
         final fun invoke(app.cash.sqldelight.db/SqlDriver, com.tezov.tuucho.core.data.repository.database.table/HookEntry.Adapter, com.tezov.tuucho.core.data.repository.database.table/JsonObjectCommonEntry.Adapter, com.tezov.tuucho.core.data.repository.database.table/JsonObjectContextualEntry.Adapter): com.tezov.tuucho.core.data.repository.database/Database // com.tezov.tuucho.core.data.repository.database/Database.Companion.invoke|invoke(app.cash.sqldelight.db.SqlDriver;com.tezov.tuucho.core.data.repository.database.table.HookEntry.Adapter;com.tezov.tuucho.core.data.repository.database.table.JsonObjectCommonEntry.Adapter;com.tezov.tuucho.core.data.repository.database.table.JsonObjectContextualEntry.Adapter){}[0]
     }
+}
+
+abstract interface com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol { // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol|null[0]
+    abstract suspend fun resource(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol.resource|resource(kotlin.String){}[0]
+    abstract suspend fun send(kotlin/String, kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol.send|send(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol|null[0]
