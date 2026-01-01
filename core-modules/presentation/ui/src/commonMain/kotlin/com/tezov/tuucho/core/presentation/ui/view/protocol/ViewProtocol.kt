@@ -1,14 +1,11 @@
-@file:Suppress("ktlint:standard:package-name")
-
-package com.tezov.tuucho.core.presentation.ui.view._system
+package com.tezov.tuucho.core.presentation.ui.view.protocol
 
 import androidx.compose.runtime.Composable
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
 import kotlinx.serialization.json.JsonObject
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol as DomainViewProtocol
 
-interface ViewProtocol : DomainViewProtocol {
-    val updatables: List<UpdatableProcessorProtocol>
+interface ViewProtocol : DomainViewProtocol, HasContextualUpdaterProtocol {
 
     suspend fun initialize(
         componentObject: JsonObject

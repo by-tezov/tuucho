@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.render.protocol.projector
 
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
 import kotlinx.serialization.json.JsonElement
 
-interface ComponentProcessorProjectorProtocol : HasUpdatableProtocol {
+interface ComponentProcessorProjectorProtocol : HasContextualUpdaterProtocol {
     fun add(
         projector: ProcessorProjectorProtocol
     )

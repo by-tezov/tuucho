@@ -24,7 +24,7 @@ import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.rememberAnimationProgress
 import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionFade.fade
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionNone.none
 import com.tezov.tuucho.core.presentation.ui.transition.TransitionSlideHorizontal.slideHorizontal

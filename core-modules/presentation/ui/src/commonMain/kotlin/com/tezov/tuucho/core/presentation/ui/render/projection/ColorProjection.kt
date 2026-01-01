@@ -9,9 +9,9 @@ import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -78,7 +78,7 @@ private class ContextualColorProjection(
     private val delegate: ColorProjectionProtocol,
     override val type: String
 ) : ColorProjectionProtocol by delegate,
-    UpdatableProcessorProtocol
+    ContextualUpdaterProcessorProtocol
 
 val ColorProjectionProtocol.mutable
     get(): ColorProjectionProtocol = MutableColorProjection(

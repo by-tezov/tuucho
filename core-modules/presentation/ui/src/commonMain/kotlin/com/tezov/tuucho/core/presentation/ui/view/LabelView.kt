@@ -3,7 +3,8 @@ package com.tezov.tuucho.core.presentation.ui.view
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema
+import androidx.compose.ui.text.TextStyle
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Component
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Content
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Style
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
@@ -21,25 +22,44 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.dummyScreenContext
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
+
+interface LabelViewProtocol : ViewProtocol {
+    @Composable
+    fun ComposeComponent(
+        textStyle: TextStyle,
+        textValue: String,
+    )
+
+    @Composable
+    fun ComposePlaceHolder()
+}
+
+fun createLabelView(
+    screenContext: ScreenContextProtocol = dummyScreenContext(),
+): LabelViewProtocol = LabelView(
+    screenContext = screenContext
+)
 
 class LabelViewFactory : ViewFactoryProtocol {
     override fun accept(
         componentObject: JsonObject
-    ) = componentObject.subset == LabelSchema.Component.Value.subset
+    ) = componentObject.subset == Component.Value.subset
 
     override suspend fun process(
         screenContext: ScreenContextProtocol,
-    ) = LabelView(
+    ): LabelViewProtocol = createLabelView(
         screenContext = screenContext,
     )
 }
 
-class LabelView(
+private class LabelView(
     screenContext: ScreenContextProtocol,
-) : AbstractView(screenContext) {
+) : LabelViewProtocol, AbstractView(screenContext) {
     private lateinit var textValue: TextProjectionProtocol
     private lateinit var fontColor: ColorProjectionProtocol
     private lateinit var fontSize: SpProjectionProtocol
@@ -68,9 +88,25 @@ class LabelView(
                 fontSize = fontSize.value ?: current.fontSize,
             )
         }
+        ComposeComponent(
+            textStyle = textStyle,
+            textValue = textValue.value ?: ""
+        )
+    }
+
+    @Composable
+    override fun ComposeComponent(
+        textStyle: TextStyle,
+        textValue: String,
+    ) {
         Text(
-            text = textValue.value ?: "",
+            text = textValue,
             style = textStyle
         )
+    }
+
+    @Composable
+    override fun ComposePlaceHolder() {
+        displayPlaceholder(null)
     }
 }

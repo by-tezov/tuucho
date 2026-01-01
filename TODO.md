@@ -1,9 +1,9 @@
 ## In progress
 
-- Screen protocol internal + class private
-- then refactor to allow feature UI (Processor, Data, Domain Schema)
-- refactor a little bit to support preview
+- finir preview Field, then do the layout preview.
+
 - update lib and check why mokkery complain on some class
+- then refactor to allow feature UI (Processor, Data, Domain Schema)
 
 **** ****
 - Shadower

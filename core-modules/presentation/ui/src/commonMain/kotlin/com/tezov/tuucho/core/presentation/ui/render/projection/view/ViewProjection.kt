@@ -5,9 +5,9 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.ValueProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 

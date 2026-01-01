@@ -28,9 +28,12 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
+
+interface LayoutLinearViewProtocol : ViewProtocol
 
 class LayoutLinearViewFactory : ViewFactoryProtocol {
     override fun accept(
@@ -39,14 +42,14 @@ class LayoutLinearViewFactory : ViewFactoryProtocol {
 
     override suspend fun process(
         screenContext: ScreenContextProtocol,
-    ) = LayoutLinearView(
+    ): LayoutLinearViewProtocol = LayoutLinearView(
         screenContext = screenContext,
     )
 }
 
-class LayoutLinearView(
+private class LayoutLinearView(
     screenContext: ScreenContextProtocol,
-) : AbstractView(screenContext) {
+) : LayoutLinearViewProtocol, AbstractView(screenContext) {
     private lateinit var backgroundColor: ColorProjectionProtocol
     private lateinit var orientation: StringProjectionProtocol
     private lateinit var fillMaxSize: BooleanProjectionProtocol
@@ -81,7 +84,8 @@ class LayoutLinearView(
                 } or ifTrue(fillMaxWidth.value) {
                     fillMaxWidth()
                 }
-            }.thenIfNotNull(backgroundColor.value) { background(it) }
+            }
+            .thenIfNotNull(backgroundColor.value) { background(it) }
 
         when (orientation.value) {
             Orientation.horizontal -> {

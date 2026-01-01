@@ -12,9 +12,9 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtoco
 import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ValueProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -82,7 +82,7 @@ private class ContextualBooleanProjection(
     private val delegate: BooleanProjectionProtocol,
     override val type: String
 ) : BooleanProjectionProtocol by delegate,
-    UpdatableProcessorProtocol
+    ContextualUpdaterProcessorProtocol
 
 val BooleanProjectionProtocol.mutable
     get(): BooleanProjectionProtocol = MutableBooleanProjection(

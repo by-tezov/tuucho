@@ -11,28 +11,22 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol as DomainViewProtocol
 
-class ScreenContext(
-    override val route: NavigationRoute,
-    private val addViewBlock: (view: ViewProtocol) -> Unit
-) : ScreenContextProtocol {
-    override fun addView(
-        view: ViewProtocol
-    ) = addViewBlock(view)
-}
-
 private data class Updatable(
     val viewIndex: Int,
-    val updatableProcessor: UpdatableProcessorProtocol
+    val updaterProcessor: ContextualUpdaterProcessorProtocol
 )
 
-class Screen(
+internal class Screen(
     override val route: NavigationRoute.Url
 ) : ScreenProtocol,
     TuuchoKoinComponent {
@@ -43,6 +37,7 @@ class Screen(
     private lateinit var rootView: ViewProtocol
     private val views = mutableListOf<ViewProtocol>()
     private val updatables = mutableMapOf<String, Updatable>()
+    private val updateMutex = Mutex()
 
     private fun keyTypeId(
         type: String,
@@ -77,19 +72,24 @@ class Screen(
     ) {
         views.add(view)
         val viewIndex = views.lastIndex
-        view.updatables.forEach { updatable ->
+        view.contextualUpdater.forEach { updatable ->
             updatable.id?.let { id ->
                 val keyTypeId = keyTypeId(updatable.type, id)
-                if (this@Screen.updatables.contains(keyTypeId)) {
+                if (this.updatables.contains(keyTypeId)) {
                     throw UiException.Default("Error, typeId $keyTypeId already exist")
                 }
                 this@Screen.updatables[keyTypeId] = Updatable(
                     viewIndex = viewIndex,
-                    updatableProcessor = updatable
+                    updaterProcessor = updatable
                 )
             }
         }
     }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <V : DomainViewProtocol> views(
+        klass: KClass<V>
+    ) = views.filter { klass.isInstance(it) } as List<V>
 
     @Composable
     override fun display(
@@ -104,7 +104,7 @@ class Screen(
         val id = jsonObject.idValue
         val type = jsonObject.type
         return updatables[keyTypeId(type, id)]?.let {
-            it.updatableProcessor.process(jsonObject)
+            it.updaterProcessor.process(jsonObject)
             it.viewIndex
         }
     }
@@ -112,27 +112,26 @@ class Screen(
     override suspend fun update(
         jsonObject: JsonObject
     ) {
-        val updatedIndexView = updateAndReturnViewIndex(jsonObject)
-        updatedIndexView?.let { views[it].updateIfNeeded() }
+        updateMutex.withLock {
+            val updatedIndexView = updateAndReturnViewIndex(jsonObject)
+            updatedIndexView?.let { views[it].updateIfNeeded() }
+        }
     }
 
     override suspend fun update(
         jsonObjects: List<JsonObject>
     ) {
-        val updatedIndexViews = buildList {
-            jsonObjects.forEach {
-                updateAndReturnViewIndex(it)?.let(::add)
+        updateMutex.withLock {
+            val updatedIndexViews = buildList {
+                jsonObjects.forEach {
+                    updateAndReturnViewIndex(it)?.let(::add)
+                }
+            }
+            updatedIndexViews.forEach {
+                views[it].updateIfNeeded()
             }
         }
-        updatedIndexViews.forEach {
-            views[it].updateIfNeeded()
-        }
     }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <V : DomainViewProtocol> views(
-        klass: KClass<V>
-    ) = views.filter { klass.isInstance(it) } as List<V>
 
     private fun <T> List<T>.singleOrThrow(
         id: String?,

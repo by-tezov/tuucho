@@ -207,9 +207,11 @@
     <ID>PackageNaming:DirectionScreen.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>PackageNaming:SchemaExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
     <ID>PackageNaming:TransitionModifier.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
-    <ID>PackageNaming:ViewFactoryMatcherProtocol.kt$package com.tezov.tuucho.core.presentation.ui.view._system</ID>
-    <ID>PackageNaming:ViewFactoryProtocol.kt$package com.tezov.tuucho.core.presentation.ui.view._system</ID>
-    <ID>PackageNaming:ViewProtocol.kt$package com.tezov.tuucho.core.presentation.ui.view._system</ID>
+    <ID>PackageNaming:ViewFactoryMatcherProtocol.kt$package
+        com.tezov.tuucho.core.presentation.ui.view.protocol</ID>
+    <ID>PackageNaming:ViewFactoryProtocol.kt$package
+        com.tezov.tuucho.core.presentation.ui.view.protocol</ID>
+    <ID>PackageNaming:ViewProtocol.kt$package com.tezov.tuucho.core.presentation.ui.view.protocol</ID>
     <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
   </CurrentIssues>
