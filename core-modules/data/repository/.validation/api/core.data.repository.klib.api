@@ -47,6 +47,11 @@ abstract interface com.tezov.tuucho.core.data.repository.database/Database : app
     }
 }
 
+abstract interface com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol { // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol|null[0]
+    abstract suspend fun resource(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol.resource|resource(kotlin.String){}[0]
+    abstract suspend fun send(kotlin/String, kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol.send|send(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+}
+
 abstract interface com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol|null[0]
     abstract fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
