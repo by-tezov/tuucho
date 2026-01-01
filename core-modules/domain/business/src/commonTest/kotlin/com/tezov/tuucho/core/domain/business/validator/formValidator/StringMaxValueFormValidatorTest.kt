@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.business.validator.formValidator
 
-import kotlinx.serialization.json.JsonObject
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -11,7 +10,7 @@ class StringMaxValueFormValidatorTest {
 
     @BeforeTest
     fun setUp() {
-        sut = StringMaxValueFormValidator(JsonObject(emptyMap()), maxValue = 10)
+        sut = StringMaxValueFormValidator("error-messages-id", maxValue = 10)
     }
 
     @Test

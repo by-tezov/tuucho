@@ -11,20 +11,19 @@ targetSdk = "36"
 compileSdk = "36"
 
 #plugin
-android-plugin = "8.13.1"
+android-plugin = "8.13.2"
 kotlin-plugin = "2.2.21"
 compose-plugin = "1.9.3"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
-compose = "1.9.5"
-compose-activity = "1.12.0"
-
+compose = "1.10.0"
+compose-activity = "1.12.1"
 
 #lib - platform
 kermit = "2.0.8"
 ktor = "3.3.3"
-koin = "4.1.1"
+koin = "4.2.0-beta2"
 kotlin-serialization-json = "1.9.0"
 
 [libraries]

@@ -4,4 +4,6 @@ import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 
 sealed class ModuleGroupPresentation : ModuleProtocol.Group {
     data object Main : ModuleGroupPresentation()
+
+    data object View : ModuleGroupPresentation()
 }

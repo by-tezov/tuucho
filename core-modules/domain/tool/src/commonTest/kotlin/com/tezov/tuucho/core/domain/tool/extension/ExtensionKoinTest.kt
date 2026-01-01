@@ -113,10 +113,10 @@ class ExtensionKoinTest {
         val koin = koinApplication {
             modules(
                 module {
-                    single { SimpleA() } bind SimpleProtocol::class
-                    single { SimpleB() } bind SimpleProtocol::class
                     single { SimpleC() } bind SimpleProtocol::class
                     single { SimpleD() } bind SimpleProtocol::class
+                    single { SimpleA() } bind SimpleProtocol::class
+                    single { SimpleB() } bind SimpleProtocol::class
                 }
             )
         }.koin
@@ -127,7 +127,8 @@ class ExtensionKoinTest {
         assertEquals(setOf("SimpleA", "SimpleB", "SimpleC", "SimpleD"), names.toSet())
 
         // this is not guaranteed to pass since order is not documented but I keep it to warn me if it fail.
-        assertNotEquals(listOf("SimpleA", "SimpleB", "SimpleC", "SimpleD"), names)
+        assertNotEquals(listOf("SimpleC", "SimpleD", "SimpleA", "SimpleB"), names)
+        assertEquals(listOf("SimpleA", "SimpleB", "SimpleC", "SimpleD"), names)
     }
 
     @Test

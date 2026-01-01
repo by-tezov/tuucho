@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData.ID_GROUP_SEPARATOR
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData.ID_REF_INDICATOR
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -51,11 +50,4 @@ object IdSchema {
     } else {
         "$value$ID_GROUP_SEPARATOR$this"
     }
-
-    val JsonObject.idValue
-        get() = onScope(::Scope).value
-            ?: throw DomainException.Default("id value is null for $this")
-
-    val JsonObject.idSourceOrNull
-        get() = onScope(::Scope).source
 }

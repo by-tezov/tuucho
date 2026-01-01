@@ -1,21 +1,21 @@
 package com.tezov.tuucho.core.data.repository.di.rectifier
 
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.action.ActionButtonMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.action.ActionButtonRectifierMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.label.ContentButtonLabelRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.FormValidatorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content.ContentFormFieldTextErrorRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content.ContentFormFieldTextMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.option.OptionFormFieldValidatorMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.state.StateFormFieldTextMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.content.ContentLabelTextMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style.StyleLabelColorMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style.StyleLabelDimensionMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content.ContentFormFieldTextRectifierMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.option.OptionFormFieldValidatorRectifierMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.state.StateFormFieldTextRectifierMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.content.ContentLabelTextRectifierMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style.StyleLabelColorRectifierMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style.StyleLabelDimensionRectifierMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear.ContentLayoutLinearItemsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear.StyleLayoutLinearColorMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.spacer.StyleSpacerDimensionMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear.StyleLayoutLinearColorRectifierMatcher
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.spacer.StyleSpacerDimensionRectifierMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.MatcherRectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierIdGenerator
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.color.ColorRectifier
@@ -88,7 +88,7 @@ internal object Material {
             )
         }
 
-        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.ID) {
+        factory<List<RectifierMatcherProtocol>>(RectifierModule.Name.Matcher.ID) {
             listOf(IdMatcher())
         }
     }
@@ -215,11 +215,11 @@ internal object Material {
             TextRectifier(scope = this)
         }
 
-        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.TEXT) {
+        factory<List<RectifierMatcherProtocol>>(RectifierModule.Name.Matcher.TEXT) {
             listOf(
-                ContentLabelTextMatcher(),
-                ContentFormFieldTextMatcher(),
-                StateFormFieldTextMatcher(),
+                ContentLabelTextRectifierMatcher(),
+                ContentFormFieldTextRectifierMatcher(),
+                StateFormFieldTextRectifierMatcher(),
             )
         }
 
@@ -237,10 +237,10 @@ internal object Material {
             ColorRectifier(scope = this)
         }
 
-        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.COLOR) {
+        factory<List<RectifierMatcherProtocol>>(RectifierModule.Name.Matcher.COLOR) {
             listOf(
-                StyleLabelColorMatcher(),
-                StyleLayoutLinearColorMatcher(),
+                StyleLabelColorRectifierMatcher(),
+                StyleLayoutLinearColorRectifierMatcher(),
             )
         }
 
@@ -258,10 +258,10 @@ internal object Material {
             DimensionRectifier(scope = this)
         }
 
-        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.DIMENSION) {
+        factory<List<RectifierMatcherProtocol>>(RectifierModule.Name.Matcher.DIMENSION) {
             listOf(
-                StyleLabelDimensionMatcher(),
-                StyleSpacerDimensionMatcher(),
+                StyleLabelDimensionRectifierMatcher(),
+                StyleSpacerDimensionRectifierMatcher(),
             )
         }
 
@@ -279,9 +279,9 @@ internal object Material {
             ActionRectifier(scope = this)
         }
 
-        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.ACTION) {
+        factory<List<RectifierMatcherProtocol>>(RectifierModule.Name.Matcher.ACTION) {
             listOf(
-                ActionButtonMatcher()
+                ActionButtonRectifierMatcher()
             )
         }
 
@@ -295,9 +295,9 @@ internal object Material {
             FormValidatorRectifier(scope = this)
         }
 
-        factory<List<MatcherRectifierProtocol>>(RectifierModule.Name.Matcher.FIELD_VALIDATOR) {
+        factory<List<RectifierMatcherProtocol>>(RectifierModule.Name.Matcher.FIELD_VALIDATOR) {
             listOf(
-                OptionFormFieldValidatorMatcher()
+                OptionFormFieldValidatorRectifierMatcher()
             )
         }
     }

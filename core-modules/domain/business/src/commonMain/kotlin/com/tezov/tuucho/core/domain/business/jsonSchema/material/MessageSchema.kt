@@ -24,6 +24,6 @@ object MessageSchema {
 
         var id by delegate<JsonElement?>(Key.id)
         var type by delegate<String?>(Key.type)
-        var subset by delegate<String?>(OptionSchema.Key.subset)
+        var subset by delegate<String?>(Key.subset)
     }
 }

@@ -34,7 +34,7 @@ fun Modifier.updateToMaxHeight(
 fun Modifier.fillMaxHeight(
     heightState: MutableState<Dp>,
     enabled: Boolean = true
-) = updateToMaxHeight(heightState, enabled).thenOnTrue(enabled) { height(heightState.value) }
+) = updateToMaxHeight(heightState, enabled).thenIfTrue(enabled) { height(heightState.value) }
 
 fun Modifier.fillMaxHeightRemembered(
     enabled: Boolean = true
@@ -51,7 +51,7 @@ fun Modifier.fillDefaultMinHeight(
 ) = updateToMaxHeight(
     heightState,
     enabled
-).thenOnTrue(enabled) { defaultMinSize(minHeight = heightState.value) }
+).thenIfTrue(enabled) { defaultMinSize(minHeight = heightState.value) }
 
 fun Modifier.fillDefaultMinHeightRemembered(
     enabled: Boolean = true

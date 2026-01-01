@@ -11,7 +11,7 @@ object FormValidatorSchema {
 
     object Key {
         const val type = "type"
-        const val idMessageError = "id-message-error"
+        const val messageErrorId = "message-error-id"
         const val messageError = "message-error"
 
         const val length = "length"
@@ -37,7 +37,7 @@ object FormValidatorSchema {
         override val root = FormValidatorSchema.root
 
         var type by delegate<String?>(Key.type)
-        var idMessageError by delegate<String?>(Key.idMessageError)
+        var messageErrorId by delegate<String?>(Key.messageErrorId)
         var messageError by delegate<JsonObject?>(Key.messageError)
 
         var length by delegate<String?>(Key.length)

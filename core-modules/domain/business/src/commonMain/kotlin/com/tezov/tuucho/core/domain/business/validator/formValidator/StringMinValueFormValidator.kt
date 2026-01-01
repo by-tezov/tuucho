@@ -1,14 +1,12 @@
 package com.tezov.tuucho.core.domain.business.validator.formValidator
 
-import kotlinx.serialization.json.JsonObject
-
 class StringMinValueFormValidator(
-    errorMessages: JsonObject,
+    errorMessagesId: String?,
     private val minValue: Int,
-) : AbstractFormValidator<String>(errorMessages) {
+) : AbstractFormValidator<String>(errorMessagesId) {
     override fun updateValidity(
-        value: String
+        value: String?
     ) {
-        isValid = value.isEmpty() || value.toIntOrNull()?.let { it > minValue } ?: false
+        isValid = value.isNullOrBlank() || value.toIntOrNull()?.let { it > minValue } ?: false
     }
 }

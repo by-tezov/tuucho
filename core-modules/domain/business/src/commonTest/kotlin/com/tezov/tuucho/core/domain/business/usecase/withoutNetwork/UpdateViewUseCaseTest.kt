@@ -55,17 +55,17 @@ class UpdateViewUseCaseTest {
     @Test
     fun `invoke updates view when view exists`() = coroutineTestScope.run {
         val routeValue = NavigationRoute.Back
-        val jsonObject = JsonObject(emptyMap())
+        val jsonObjects = listOf(JsonObject(emptyMap()))
 
         val input = UpdateViewUseCase.Input(
             route = routeValue,
-            jsonObject = jsonObject
+            jsonObjects = jsonObjects
         )
 
         val screen = mock<ScreenProtocol>()
 
         everySuspend { navigationScreenStackRepository.getScreenOrNull(routeValue) } returns screen
-        everySuspend { screen.update(any()) } returns Unit
+        everySuspend { screen.update(any<List<JsonObject>>()) } returns Unit
 
         everySuspend {
             middlewareExecutor.process<Context, Unit>(any(), any())
@@ -82,18 +82,18 @@ class UpdateViewUseCaseTest {
             middlewareExecutor.process<Context, Unit>(any(), any())
             navigationScreenStackRepository.getScreenOrNull(routeValue)
             coroutineTestScope.mock.renderer.await<Any>(any())
-            screen.update(jsonObject)
+            screen.update(jsonObjects)
         }
     }
 
     @Test
     fun `invoke does nothing when view does not exist`() = coroutineTestScope.run {
         val routeValue = NavigationRoute.Current
-        val jsonObject = JsonObject(emptyMap())
+        val jsonObjects = listOf(JsonObject(emptyMap()))
 
         val input = UpdateViewUseCase.Input(
             route = routeValue,
-            jsonObject = jsonObject
+            jsonObjects = jsonObjects
         )
 
         everySuspend { navigationScreenStackRepository.getScreenOrNull(routeValue) } returns null

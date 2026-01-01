@@ -83,7 +83,7 @@ class NavigateToUrlUseCase(
                         route = newRoute,
                         componentObject = componentObject
                     )
-                    runShadower(newRoute, context)
+                    runShadower(newRoute, componentObject, context)
                 }
                 navigationStackTransitionRepository.forward(
                     routes = navigationStackRouteRepository.routes(),
@@ -128,13 +128,12 @@ class NavigateToUrlUseCase(
 
     private suspend fun runShadower(
         route: NavigationRoute.Url,
+        componentObject: JsonObject,
         context: NavigationMiddleware.ToUrl.Context
     ) {
-        val view = navigationStackScreenRepository
+        val screen = navigationStackScreenRepository
             .getScreenOrNull(route)
-            ?.view
             ?: return
-        val componentObject = view.componentObject
         val componentSettingScope = componentObject
             .onScope(ComponentSettingSchema.Root::Scope)
         val settingShadowerScope = componentSettingScope
@@ -147,16 +146,15 @@ class NavigateToUrlUseCase(
                 throwOnFailure = false
             ) {
                 suspend fun process() {
-                    shadowerMaterialRepository
+                    val jsonObjects = shadowerMaterialRepository
                         .process(
                             url = route.value,
                             componentObject = componentObject,
                             types = listOf(Shadower.Type.contextual)
-                        ).forEach {
-                            coroutineScopes.renderer.await {
-                                view.update(it.jsonObject)
-                            }
-                        }
+                        ).map { it.jsonObject }
+                    coroutineScopes.renderer.await {
+                        screen.update(jsonObjects)
+                    }
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.process(

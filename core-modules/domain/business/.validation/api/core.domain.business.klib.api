@@ -63,14 +63,15 @@ abstract fun interface com.tezov.tuucho.core.domain.business.middleware/UpdateVi
 }
 
 abstract interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.protocol/FormValidatorProtocol : com.tezov.tuucho.core.domain.business.protocol/ValidatorProtocol<#A> { // com.tezov.tuucho.core.domain.business.protocol/FormValidatorProtocol|null[0]
-    abstract fun getErrorMessage(com.tezov.tuucho.core.domain.business.model/LanguageModelDomain): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/FormValidatorProtocol.getErrorMessage|getErrorMessage(com.tezov.tuucho.core.domain.business.model.LanguageModelDomain){}[0]
+    abstract val errorMessagesId // com.tezov.tuucho.core.domain.business.protocol/FormValidatorProtocol.errorMessagesId|{}errorMessagesId[0]
+        abstract fun <get-errorMessagesId>(): kotlin/String? // com.tezov.tuucho.core.domain.business.protocol/FormValidatorProtocol.errorMessagesId.<get-errorMessagesId>|<get-errorMessagesId>(){}[0]
 }
 
 abstract interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.protocol/ValidatorProtocol { // com.tezov.tuucho.core.domain.business.protocol/ValidatorProtocol|null[0]
     abstract val isValid // com.tezov.tuucho.core.domain.business.protocol/ValidatorProtocol.isValid|{}isValid[0]
         abstract fun <get-isValid>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol/ValidatorProtocol.isValid.<get-isValid>|<get-isValid>(){}[0]
 
-    abstract fun updateValidity(#A) // com.tezov.tuucho.core.domain.business.protocol/ValidatorProtocol.updateValidity|updateValidity(1:0){}[0]
+    abstract fun updateValidity(#A?) // com.tezov.tuucho.core.domain.business.protocol/ValidatorProtocol.updateValidity|updateValidity(1:0?){}[0]
 }
 
 abstract interface <#A: kotlin/Any?, #B: kotlin/Any?> com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol { // com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol|null[0]
@@ -205,48 +206,31 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/Key
     }
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol : com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol|null[0]
-    abstract val validators // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol.validators|{}validators[0]
-        abstract fun <get-validators>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/FormValidatorProtocol<kotlin/String>>? // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol.validators.<get-validators>|<get-validators>(){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol|null[0]
+    abstract fun getId(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.getId|getId(){}[0]
+    abstract fun getValue(): kotlin/String? // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.getValue|getValue(){}[0]
+    abstract fun isValid(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.isValid|isValid(){}[0]
+    abstract fun updateValidity() // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.updateValidity|updateValidity(){}[0]
 
-    abstract interface Extension : com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.Extension<com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol> { // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol.Extension|null[0]
-        abstract val formView // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol.Extension.formView|{}formView[0]
-            abstract fun <get-formView>(): com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FieldFormViewProtocol.Extension.formView.<get-formView>|<get-formView>(){}[0]
+    abstract interface Extension : com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.Extension|null[0]
+        abstract val extensionFormState // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.Extension.extensionFormState|{}extensionFormState[0]
+            abstract fun <get-extensionFormState>(): com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.Extension.extensionFormState.<get-extensionFormState>|<get-extensionFormState>(){}[0]
     }
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol|null[0]
-    abstract fun attach(com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol) // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.attach|attach(com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol){}[0]
-    abstract fun getId(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.getId|getId(){}[0]
-    abstract fun getValue(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.getValue|getValue(){}[0]
-    abstract fun isValid(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.isValid|isValid(){}[0]
-    abstract fun updateValidity() // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.updateValidity|updateValidity(){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol // com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol|null[0]
 
-    abstract interface <#A1: com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol> Extension : com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.Extension|null[0]
-        abstract val formView // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.Extension.formView|{}formView[0]
-            abstract fun <get-formView>(): #A1 // com.tezov.tuucho.core.domain.business.protocol.screen.view.form/FormViewProtocol.Extension.formView.<get-formView>|<get-formView>(){}[0]
-    }
-}
-
-abstract interface com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol|null[0]
-    abstract val componentObject // com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol.componentObject|{}componentObject[0]
-        abstract fun <get-componentObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol.componentObject.<get-componentObject>|<get-componentObject>(){}[0]
-
-    abstract suspend fun update(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol.update|update(kotlinx.serialization.json.JsonObject){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.protocol.screen/ScreenFactoryProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenFactoryProtocol|null[0]
+    abstract suspend fun create(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlinx.serialization.json/JsonObject): com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenFactoryProtocol.create|create(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol|null[0]
     abstract val route // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.route|{}route[0]
         abstract fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.route.<get-route>|<get-route>(){}[0]
-    abstract val view // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.view|{}view[0]
-        abstract fun <get-view>(): com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.view.<get-view>|<get-view>(){}[0]
 
     abstract fun <#A1: com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol> views(kotlin.reflect/KClass<#A1>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.views|views(kotlin.reflect.KClass<0:0>){0§<com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol>}[0]
+    abstract suspend fun update(kotlin.collections/List<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlin.collections.List<kotlinx.serialization.json.JsonObject>){}[0]
     abstract suspend fun update(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlinx.serialization.json.JsonObject){}[0]
-}
-
-abstract interface com.tezov.tuucho.core.domain.business.protocol.screen/ScreenRendererProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenRendererProtocol|null[0]
-    abstract suspend fun process(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlinx.serialization.json/JsonObject): com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenRendererProtocol.process|process(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol|null[0]
@@ -317,13 +301,14 @@ sealed interface <#A: kotlin/Any, #B: kotlin/Any> com.tezov.tuucho.core.domain.b
 }
 
 abstract class <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator : com.tezov.tuucho.core.domain.business.protocol/FormValidatorProtocol<#A> { // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject){}[0]
+    constructor <init>(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.<init>|<init>(kotlin.String?){}[0]
+
+    open val errorMessagesId // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.errorMessagesId|{}errorMessagesId[0]
+        open fun <get-errorMessagesId>(): kotlin/String? // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.errorMessagesId.<get-errorMessagesId>|<get-errorMessagesId>(){}[0]
 
     open var isValid // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.isValid|{}isValid[0]
         open fun <get-isValid>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.isValid.<get-isValid>|<get-isValid>(){}[0]
         open fun <set-isValid>(kotlin/Boolean) // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.isValid.<set-isValid>|<set-isValid>(kotlin.Boolean){}[0]
-
-    open fun getErrorMessage(com.tezov.tuucho.core.domain.business.model/LanguageModelDomain): kotlin/String // com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator.getErrorMessage|getErrorMessage(com.tezov.tuucho.core.domain.business.model.LanguageModelDomain){}[0]
 }
 
 abstract class com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType|null[0]
@@ -525,7 +510,7 @@ final class com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // c
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<kotlin/Unit, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Retrieve, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Back>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Retrieve;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Back>){}[0]
 
     final suspend fun invoke(kotlin/Unit) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase.invoke|invoke(kotlin.Unit){}[0]
 }
@@ -1025,16 +1010,16 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateV
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input){}[0]
 
     final class Input { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute, kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute;kotlinx.serialization.json.JsonObject){}[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute, kotlin.collections/List<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute;kotlin.collections.List<kotlinx.serialization.json.JsonObject>){}[0]
 
-        final val jsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.jsonObject|{}jsonObject[0]
-            final fun <get-jsonObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.jsonObject.<get-jsonObject>|<get-jsonObject>(){}[0]
+        final val jsonObjects // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.jsonObjects|{}jsonObjects[0]
+            final fun <get-jsonObjects>(): kotlin.collections/List<kotlinx.serialization.json/JsonObject> // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.jsonObjects.<get-jsonObjects>|<get-jsonObjects>(){}[0]
         final val route // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.route|{}route[0]
             final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.route.<get-route>|<get-route>(){}[0]
 
         final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.component1|component1(){}[0]
-        final fun component2(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.component2|component2(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute = ..., kotlinx.serialization.json/JsonObject = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute;kotlinx.serialization.json.JsonObject){}[0]
+        final fun component2(): kotlin.collections/List<kotlinx.serialization.json/JsonObject> // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute = ..., kotlin.collections/List<kotlinx.serialization.json/JsonObject> = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute;kotlin.collections.List<kotlinx.serialization.json.JsonObject>){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input.toString|toString(){}[0]
@@ -1049,51 +1034,51 @@ final class com.tezov.tuucho.core.domain.business.usecase/UseCaseExecutor : com.
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringEmailFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringEmailFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringEmailFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject){}[0]
+    constructor <init>(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringEmailFormValidator.<init>|<init>(kotlin.String?){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringEmailFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringEmailFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxLengthFieldFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxLengthFieldFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxLengthFieldFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject;kotlin.Int){}[0]
+    constructor <init>(kotlin/String?, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxLengthFieldFormValidator.<init>|<init>(kotlin.String?;kotlin.Int){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxLengthFieldFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxLengthFieldFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxValueFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxValueFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxValueFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject;kotlin.Int){}[0]
+    constructor <init>(kotlin/String?, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxValueFormValidator.<init>|<init>(kotlin.String?;kotlin.Int){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxValueFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMaxValueFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinDigitLengthFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinDigitLengthFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinDigitLengthFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject;kotlin.Int){}[0]
+    constructor <init>(kotlin/String?, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinDigitLengthFormValidator.<init>|<init>(kotlin.String?;kotlin.Int){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinDigitLengthFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinDigitLengthFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinLengthFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinLengthFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinLengthFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject;kotlin.Int){}[0]
+    constructor <init>(kotlin/String?, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinLengthFormValidator.<init>|<init>(kotlin.String?;kotlin.Int){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinLengthFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinLengthFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinValueFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinValueFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinValueFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject;kotlin.Int){}[0]
+    constructor <init>(kotlin/String?, kotlin/Int) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinValueFormValidator.<init>|<init>(kotlin.String?;kotlin.Int){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinValueFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringMinValueFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringNotNullFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringNotNullFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringNotNullFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject){}[0]
+    constructor <init>(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringNotNullFormValidator.<init>|<init>(kotlin.String?){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringNotNullFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringNotNullFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.validator.formValidator/StringOnlyDigitsFormValidator : com.tezov.tuucho.core.domain.business.validator.formValidator/AbstractFormValidator<kotlin/String> { // com.tezov.tuucho.core.domain.business.validator.formValidator/StringOnlyDigitsFormValidator|null[0]
-    constructor <init>(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringOnlyDigitsFormValidator.<init>|<init>(kotlinx.serialization.json.JsonObject){}[0]
+    constructor <init>(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringOnlyDigitsFormValidator.<init>|<init>(kotlin.String?){}[0]
 
-    final fun updateValidity(kotlin/String) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringOnlyDigitsFormValidator.updateValidity|updateValidity(kotlin.String){}[0]
+    final fun updateValidity(kotlin/String?) // com.tezov.tuucho.core.domain.business.validator.formValidator/StringOnlyDigitsFormValidator.updateValidity|updateValidity(kotlin.String?){}[0]
 }
 
 open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope { // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope|null[0]
@@ -1478,15 +1463,15 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.
         final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.root|{}root[0]
             final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.root.<get-root>|<get-root>(){}[0]
 
-        final var idMessageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.idMessageError|{}idMessageError[0]
-            final fun <get-idMessageError>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.idMessageError.<get-idMessageError>|<get-idMessageError>(){}[0]
-            final fun <set-idMessageError>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.idMessageError.<set-idMessageError>|<set-idMessageError>(kotlin.String?){}[0]
         final var length // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length|{}length[0]
             final fun <get-length>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length.<get-length>|<get-length>(){}[0]
             final fun <set-length>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length.<set-length>|<set-length>(kotlin.String?){}[0]
         final var messageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageError|{}messageError[0]
             final fun <get-messageError>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageError.<get-messageError>|<get-messageError>(){}[0]
             final fun <set-messageError>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageError.<set-messageError>|<set-messageError>(kotlinx.serialization.json.JsonObject?){}[0]
+        final var messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId|{}messageErrorId[0]
+            final fun <get-messageErrorId>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
+            final fun <set-messageErrorId>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId.<set-messageErrorId>|<set-messageErrorId>(kotlin.String?){}[0]
         final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.type|{}type[0]
             final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.type.<get-type>|<get-type>(){}[0]
             final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
@@ -1496,12 +1481,12 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.
     }
 
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key|null[0]
-        final const val idMessageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.idMessageError|{}idMessageError[0]
-            final fun <get-idMessageError>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.idMessageError.<get-idMessageError>|<get-idMessageError>(){}[0]
         final const val length // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.length|{}length[0]
             final fun <get-length>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.length.<get-length>|<get-length>(){}[0]
         final const val messageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageError|{}messageError[0]
             final fun <get-messageError>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageError.<get-messageError>|<get-messageError>(){}[0]
+        final const val messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageErrorId|{}messageErrorId[0]
+            final fun <get-messageErrorId>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
         final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.type|{}type[0]
             final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.type.<get-type>|<get-type>(){}[0]
         final const val value // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.value|{}value[0]
@@ -2333,17 +2318,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ColorSche
 }
 
 final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema|null[0]
-    final val contentOrNull // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.contentOrNull|@kotlinx.serialization.json.JsonObject{}contentOrNull[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-contentOrNull>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.contentOrNull.<get-contentOrNull>|<get-contentOrNull>@kotlinx.serialization.json.JsonObject(){}[0]
-    final val messageOrNull // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.messageOrNull|@kotlinx.serialization.json.JsonObject{}messageOrNull[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-messageOrNull>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.messageOrNull.<get-messageOrNull>|<get-messageOrNull>@kotlinx.serialization.json.JsonObject(){}[0]
-    final val optionOrNull // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.optionOrNull|@kotlinx.serialization.json.JsonObject{}optionOrNull[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-optionOrNull>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.optionOrNull.<get-optionOrNull>|<get-optionOrNull>@kotlinx.serialization.json.JsonObject(){}[0]
-    final val stateOrNull // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.stateOrNull|@kotlinx.serialization.json.JsonObject{}stateOrNull[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-stateOrNull>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.stateOrNull.<get-stateOrNull>|<get-stateOrNull>@kotlinx.serialization.json.JsonObject(){}[0]
-    final val styleOrNull // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.styleOrNull|@kotlinx.serialization.json.JsonObject{}styleOrNull[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-styleOrNull>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.styleOrNull.<get-styleOrNull>|<get-styleOrNull>@kotlinx.serialization.json.JsonObject(){}[0]
-
     final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.Scope|null[0]
         constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ComponentSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
     }
@@ -2500,10 +2474,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema 
     final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.root|{}root[0]
         final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.root.<get-root>|<get-root>(){}[0]
 
-    final val idSourceOrNull // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.idSourceOrNull|@kotlinx.serialization.json.JsonObject{}idSourceOrNull[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-idSourceOrNull>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.idSourceOrNull.<get-idSourceOrNull>|<get-idSourceOrNull>@kotlinx.serialization.json.JsonObject(){}[0]
-    final val idValue // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.idValue|@kotlinx.serialization.json.JsonObject{}idValue[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-idValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.idValue.<get-idValue>|<get-idValue>@kotlinx.serialization.json.JsonObject(){}[0]
     final val isRef // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isRef|@kotlin.String{}isRef[0]
         final fun (kotlin/String).<get-isRef>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isRef.<get-isRef>|<get-isRef>@kotlin.String(){}[0]
 
@@ -2866,9 +2836,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/TextSchem
 final object com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema|null[0]
     final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.root|{}root[0]
         final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.root.<get-root>|<get-root>(){}[0]
-
-    final val type // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.type|@kotlinx.serialization.json.JsonObject{}type[0]
-        final fun (kotlinx.serialization.json/JsonObject).<get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.type.<get-type>|<get-type>@kotlinx.serialization.json.JsonObject(){}[0]
 
     final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Scope|null[0]
         constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]

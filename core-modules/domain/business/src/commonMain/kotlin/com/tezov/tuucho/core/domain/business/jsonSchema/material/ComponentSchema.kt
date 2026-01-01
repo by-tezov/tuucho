@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -45,19 +44,4 @@ object ComponentSchema {
         var setting by delegate<JsonObject?>(Key.setting)
         var message by delegate<JsonObject?>(Key.message)
     }
-
-    val JsonObject.contentOrNull
-        get() = withScope(::Scope).content
-
-    val JsonObject.styleOrNull
-        get() = withScope(::Scope).style
-
-    val JsonObject.optionOrNull
-        get() = withScope(::Scope).option
-
-    val JsonObject.stateOrNull
-        get() = withScope(::Scope).state
-
-    val JsonObject.messageOrNull
-        get() = withScope(::Scope).message
 }

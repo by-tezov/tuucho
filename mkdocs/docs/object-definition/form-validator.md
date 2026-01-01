@@ -11,7 +11,7 @@ You can define multiple validators using an array of objects.
 Each validator object must include:
 
 - `type`: the validation type (e.g., `"string-not-null"`, `"string-min-value"`, `"string-email"`, etc.)
-- `id-message-error`: a reference to the error message shown when validation fails. This must be an ID pointing to a message defined in the content section. It is context-dependent—refer to the desired component's documentation for more details.
+- `message-error-id`: a reference to the error message shown when validation fails. This must be an ID pointing to a message defined in the content section. It is context-dependent—refer to the desired component's documentation for more details.
 - Additional keys may be required depending on the `type` (e.g., `value` for min/max validators).
 
 Example:
@@ -21,16 +21,16 @@ Example:
   {
     "type": "string-min-value",
     "value": "18",
-    "id-message-error": "*validator-1"
+    "message-error-id": "*validator-1"
   },
   {
     "type": "string-max-value",
     "value": "65",
-    "id-message-error": "*validator-2"
+    "message-error-id": "*validator-2"
   },
   {
     "type": "string-not-null",
-    "id-message-error": "*validator-4"
+    "message-error-id": "*validator-4"
   }
 ]
 ```
@@ -44,7 +44,7 @@ When only one validator is needed, you can define it as a single object:
 ```json
 "form-validator": {
   "type": "string-email",
-  "id-message-error": "*validator-1"
+  "message-error-id": "*validator-1"
 }
 ```
 
@@ -59,7 +59,7 @@ For basic use cases, you can use a simple string to define the validator type.
 In this format:
 
 - The string value is used as the `type`.
-- The `id-message-error` is auto-resolved using the first message found in the `content` section.
+- The `message-error-id` is auto-resolved using the first message found in the `content` section.
 
 Example:
 
@@ -72,7 +72,7 @@ Equivalent to:
 ```json
 "form-validator": {
   "type": "string-not-null",
-  "id-message-error": /* auto-resolved */
+  "message-error-id": /* auto-resolved */
 }
 ```
 
@@ -116,7 +116,7 @@ Below are the currently supported validator types:
 ## Important Notes
 
 - The `type` field is **mandatory** in all formats.
-- The `id-message-error` field is also **mandatory**, unless using the short string format—then it is automatically resolved.
+- The `message-error-id` field is also **mandatory**, unless using the short string format—then it is automatically resolved.
 - Additional keys like `value` are required depending on the validator `type`.
 
 ---

@@ -5,12 +5,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
-fun Modifier.thenOnTrue(
+fun Modifier.thenIfTrue(
     condition: Boolean?,
     block: @Composable Modifier.() -> Modifier,
 ) = thenInternal(condition, onTrue = block)
 
-fun Modifier.thenOnFalse(
+fun Modifier.thenIfFalse(
     condition: Boolean?,
     block: @Composable Modifier.() -> Modifier,
 ) = thenInternal(condition, onFalse = block)
@@ -25,16 +25,16 @@ private fun Modifier.thenInternal(
     onFalse?.let { composed { then(it()) } }
 }) ?: this
 
-fun <T : Any> Modifier.thenOnNotNull(
+fun <T : Any> Modifier.thenIfNotNull(
     condition: T?,
     block: @Composable Modifier.(T) -> Modifier,
 ) = thenInternal(condition, onNotNull = block)
 
-fun Modifier.thenOnNotNull(
+fun Modifier.thenIfNotNull(
     condition: Modifier?
 ) = thenInternal(condition, onNotNull = { then(it) })
 
-fun <T : Any> Modifier.thenOnNull(
+fun <T : Any> Modifier.thenIfNull(
     condition: T?,
     block: @Composable Modifier.() -> Modifier,
 ) = thenInternal(condition, onNull = block)

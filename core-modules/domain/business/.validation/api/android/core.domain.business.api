@@ -370,11 +370,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/Col
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ComponentSchema {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/ComponentSchema;
-	public final fun getContentOrNull (Lkotlinx/serialization/json/JsonObject;)Lkotlinx/serialization/json/JsonObject;
-	public final fun getMessageOrNull (Lkotlinx/serialization/json/JsonObject;)Lkotlinx/serialization/json/JsonObject;
-	public final fun getOptionOrNull (Lkotlinx/serialization/json/JsonObject;)Lkotlinx/serialization/json/JsonObject;
-	public final fun getStateOrNull (Lkotlinx/serialization/json/JsonObject;)Lkotlinx/serialization/json/JsonObject;
-	public final fun getStyleOrNull (Lkotlinx/serialization/json/JsonObject;)Lkotlinx/serialization/json/JsonObject;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ComponentSchema$Key {
@@ -500,8 +495,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/IdS
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/IdSchema;
 	public static final field root Ljava/lang/String;
 	public final fun addGroup (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-	public final fun getIdSourceOrNull (Lkotlinx/serialization/json/JsonObject;)Ljava/lang/String;
-	public final fun getIdValue (Lkotlinx/serialization/json/JsonObject;)Ljava/lang/String;
 	public final fun hasGroup (Ljava/lang/String;)Z
 	public final fun isRef (Ljava/lang/String;)Z
 	public final fun requireIsRef (Ljava/lang/String;)Ljava/lang/String;
@@ -788,7 +781,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/Tex
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/TypeSchema {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/TypeSchema;
 	public static final field root Ljava/lang/String;
-	public final fun getType (Lkotlinx/serialization/json/JsonObject;)Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/TypeSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
@@ -1044,24 +1036,24 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_el
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Key;
-	public static final field idMessageError Ljava/lang/String;
 	public static final field length Ljava/lang/String;
 	public static final field messageError Ljava/lang/String;
+	public static final field messageErrorId Ljava/lang/String;
 	public static final field type Ljava/lang/String;
 	public static final field value Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getIdMessageError ()Ljava/lang/String;
 	public final fun getLength ()Ljava/lang/String;
 	public final fun getMessageError ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getMessageErrorId ()Ljava/lang/String;
 	public fun getRoot ()Ljava/lang/String;
 	public final fun getType ()Ljava/lang/String;
 	public final fun getValue ()Ljava/lang/String;
-	public final fun setIdMessageError (Ljava/lang/String;)V
 	public final fun setLength (Ljava/lang/String;)V
 	public final fun setMessageError (Lkotlinx/serialization/json/JsonObject;)V
+	public final fun setMessageErrorId (Ljava/lang/String;)V
 	public final fun setType (Ljava/lang/String;)V
 	public final fun setValue (Ljava/lang/String;)V
 }
@@ -1985,7 +1977,7 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/C
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/FormValidatorProtocol : com/tezov/tuucho/core/domain/business/protocol/ValidatorProtocol {
-	public abstract fun getErrorMessage (Lcom/tezov/tuucho/core/domain/business/model/LanguageModelDomain;)Ljava/lang/String;
+	public abstract fun getErrorMessagesId ()Ljava/lang/String;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
@@ -2318,40 +2310,29 @@ public final class com/tezov/tuucho/core/domain/business/protocol/repository/Nav
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/ScreenFactoryProtocol {
+	public abstract fun create (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/ScreenProtocol {
 	public abstract fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;
-	public abstract fun getView ()Lcom/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol;
+	public abstract fun update (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun update (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun views (Lkotlin/reflect/KClass;)Ljava/util/List;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/ScreenRendererProtocol {
-	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute$Url;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol {
-	public abstract fun getComponentObject ()Lkotlinx/serialization/json/JsonObject;
-	public abstract fun update (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/form/FieldFormViewProtocol : com/tezov/tuucho/core/domain/business/protocol/screen/view/form/FormViewProtocol {
-	public abstract fun getValidators ()Ljava/util/List;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/form/FieldFormViewProtocol$Extension : com/tezov/tuucho/core/domain/business/protocol/screen/view/form/FormViewProtocol$Extension {
-	public abstract fun getFormView ()Lcom/tezov/tuucho/core/domain/business/protocol/screen/view/form/FieldFormViewProtocol;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/form/FormViewProtocol {
-	public abstract fun attach (Lcom/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol;)V
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/FormStateProtocol {
 	public abstract fun getId ()Ljava/lang/String;
 	public abstract fun getValue ()Ljava/lang/String;
 	public abstract fun isValid ()Ljava/lang/Boolean;
 	public abstract fun updateValidity ()V
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/form/FormViewProtocol$Extension : com/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol {
-	public abstract fun getFormView ()Lcom/tezov/tuucho/core/domain/business/protocol/screen/view/form/FormViewProtocol;
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/FormStateProtocol$Extension : com/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol {
+	public abstract fun getExtensionFormState ()Lcom/tezov/tuucho/core/domain/business/protocol/screen/view/FormStateProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/screen/view/ViewProtocol {
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/UseCaseExecutor : com/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol {
@@ -2361,7 +2342,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/UseCaseExecutor
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (Lkotlin/Unit;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -2799,69 +2780,69 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Ljava/util/List;)V
 	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
-	public final fun component2 ()Lkotlinx/serialization/json/JsonObject;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/UpdateViewUseCase$Input;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getJsonObject ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getJsonObjects ()Ljava/util/List;
 	public final fun getRoute ()Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public abstract class com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator : com/tezov/tuucho/core/domain/business/protocol/FormValidatorProtocol {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;)V
-	public fun getErrorMessage (Lcom/tezov/tuucho/core/domain/business/model/LanguageModelDomain;)Ljava/lang/String;
+	public fun <init> (Ljava/lang/String;)V
+	public fun getErrorMessagesId ()Ljava/lang/String;
 	public fun isValid ()Z
 	protected fun setValid (Z)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringEmailFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;)V
+	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringMaxLengthFieldFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;I)V
+	public fun <init> (Ljava/lang/String;I)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringMaxValueFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;I)V
+	public fun <init> (Ljava/lang/String;I)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringMinDigitLengthFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;I)V
+	public fun <init> (Ljava/lang/String;I)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringMinLengthFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;I)V
+	public fun <init> (Ljava/lang/String;I)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringMinValueFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;I)V
+	public fun <init> (Ljava/lang/String;I)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringNotNullFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;)V
+	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/validator/formValidator/StringOnlyDigitsFormValidator : com/tezov/tuucho/core/domain/business/validator/formValidator/AbstractFormValidator {
-	public fun <init> (Lkotlinx/serialization/json/JsonObject;)V
+	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun updateValidity (Ljava/lang/Object;)V
 	public fun updateValidity (Ljava/lang/String;)V
 }

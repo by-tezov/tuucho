@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.domain.business.interaction.navigation
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen
+import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenFactoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
-import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenRendererProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionList.priorLastOrNull
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -12,7 +12,7 @@ import kotlinx.serialization.json.JsonObject
 
 internal class NavigationStackScreenRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val screenRenderer: ScreenRendererProtocol,
+    private val screenFactory: ScreenFactoryProtocol,
 ) : StackScreen,
     TuuchoKoinComponent {
     private val stack = mutableListOf<ScreenProtocol>()
@@ -55,8 +55,8 @@ internal class NavigationStackScreenRepository(
         componentObject: JsonObject,
     ) {
         coroutineScopes.navigation.await {
-            screenRenderer
-                .process(
+            screenFactory
+                .create(
                     route = route,
                     componentObject = componentObject
                 ).also {
