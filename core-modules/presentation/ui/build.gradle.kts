@@ -16,5 +16,9 @@ kotlin {
             implementation(compose.material3)
             implementation(libs.kotlin.collections.immutable)
         }
+        androidMain.dependencies {
+            implementation("androidx.compose.ui:ui-tooling-preview")
+            implementation("androidx.compose.ui:ui-tooling")
+        }
     }
 }

@@ -1,8 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.view
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema.Component
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.ButtonSchema.Content
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
@@ -14,25 +15,44 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.view.view
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
+
+interface ButtonViewProtocol : ViewProtocol {
+    @Composable
+    fun ComposeComponent(
+        onClick: (() -> Unit)?,
+        content: @Composable RowScope.() -> Unit,
+    )
+
+    @Composable
+    fun ComposePlaceHolder()
+}
+
+fun createButtonView(
+    screenContext: ScreenContextProtocol,
+): ButtonViewProtocol = ButtonView(
+    screenContext = screenContext
+)
 
 class ButtonViewFactory : ViewFactoryProtocol {
     override fun accept(
         componentObject: JsonObject,
-    ) = componentObject.subset == ButtonSchema.Component.Value.subset
+    ) = componentObject.subset == Component.Value.subset
 
     override suspend fun process(
         screenContext: ScreenContextProtocol,
-    ) = ButtonView(
+    ): ButtonViewProtocol = createButtonView(
         screenContext = screenContext,
     )
 }
 
-class ButtonView(
+private class ButtonView(
     screenContext: ScreenContextProtocol,
-) : AbstractView(screenContext) {
+) : AbstractView(screenContext),
+    ButtonViewProtocol {
     private lateinit var labelView: ViewProjectionProtocol
     private lateinit var action: ActionProjectionProtocol
 
@@ -45,7 +65,7 @@ class ButtonView(
             labelView = +view(
                 key = Content.Key.label,
                 screenContext = screenContext
-            ) // TODO could be contextual ?
+            ) // TODO could be contextual but it will clash with contextual added on componentProjector?
         }.contextual
     }.contextual
 
@@ -55,9 +75,25 @@ class ButtonView(
     override fun displayComponent(
         scope: Any?
     ) {
-        Button(
-            onClick = action.value ?: {},
+        ComposeComponent(
+            onClick = action.value,
             content = { labelView.value?.display(this) }
         )
+    }
+
+    @Composable
+    override fun ComposeComponent(
+        onClick: (() -> Unit)?,
+        content: @Composable RowScope.() -> Unit,
+    ) {
+        Button(
+            onClick = onClick ?: {},
+            content = content
+        )
+    }
+
+    @Composable
+    override fun ComposePlaceHolder() {
+        displayPlaceholder(null)
     }
 }

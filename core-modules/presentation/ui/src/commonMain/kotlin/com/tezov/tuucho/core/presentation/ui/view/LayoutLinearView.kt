@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema.Style.Value.Orientation
@@ -28,9 +29,30 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.screen.ScreenContextProtocol
-import com.tezov.tuucho.core.presentation.ui.view._system.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
+import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
+
+interface LayoutLinearViewProtocol : ViewProtocol {
+    @Composable
+    fun ComposeComponent(
+        backgroundColor: Color?,
+        orientation: String?,
+        fillMaxSize: Boolean?,
+        fillMaxWidth: Boolean?,
+        contents: List<@Composable Any.() -> Unit>,
+    )
+
+    @Composable
+    fun ComposePlaceHolder()
+}
+
+fun createLayoutLinearView(
+    screenContext: ScreenContextProtocol,
+): LayoutLinearViewProtocol = LayoutLinearView(
+    screenContext = screenContext
+)
 
 class LayoutLinearViewFactory : ViewFactoryProtocol {
     override fun accept(
@@ -39,14 +61,15 @@ class LayoutLinearViewFactory : ViewFactoryProtocol {
 
     override suspend fun process(
         screenContext: ScreenContextProtocol,
-    ) = LayoutLinearView(
+    ): LayoutLinearViewProtocol = LayoutLinearView(
         screenContext = screenContext,
     )
 }
 
-class LayoutLinearView(
+private class LayoutLinearView(
     screenContext: ScreenContextProtocol,
-) : AbstractView(screenContext) {
+) : AbstractView(screenContext),
+    LayoutLinearViewProtocol {
     private lateinit var backgroundColor: ColorProjectionProtocol
     private lateinit var orientation: StringProjectionProtocol
     private lateinit var fillMaxSize: BooleanProjectionProtocol
@@ -74,27 +97,50 @@ class LayoutLinearView(
     override fun displayComponent(
         scope: Any?
     ) {
+        ComposeComponent(
+            backgroundColor = backgroundColor.value,
+            orientation = orientation.value,
+            fillMaxSize = fillMaxSize.value,
+            fillMaxWidth = fillMaxWidth.value,
+            contents = buildList {
+                itemViews.views.let { views ->
+                    for (view in views) {
+                        add({ view.value?.display(this) })
+                    }
+                }
+            }
+        )
+    }
+
+    @Composable
+    override fun ComposeComponent(
+        backgroundColor: Color?,
+        orientation: String?,
+        fillMaxSize: Boolean?,
+        fillMaxWidth: Boolean?,
+        contents: List<@Composable Any.() -> Unit>,
+    ) {
         val modifier = Modifier
             .then {
-                ifTrue(fillMaxSize.value) {
+                ifTrue(fillMaxSize) {
                     fillMaxSize()
-                } or ifTrue(fillMaxWidth.value) {
+                } or ifTrue(fillMaxWidth) {
                     fillMaxWidth()
                 }
-            }.thenIfNotNull(backgroundColor.value) { background(it) }
-
-        when (orientation.value) {
-            Orientation.horizontal -> {
-                Row(modifier = modifier) {
-                    itemViews.views.forEach { it.value?.display(this@Row) }
-                }
+            }.thenIfNotNull(backgroundColor) { background(it) }
+        when (orientation) {
+            Orientation.horizontal -> Row(modifier = modifier) {
+                contents.forEach { it.invoke(this) }
             }
 
-            else -> {
-                Column(modifier = modifier) {
-                    itemViews.views.forEach { it.value?.display(this@Column) }
-                }
+            else -> Column(modifier = modifier) {
+                contents.forEach { it.invoke(this) }
             }
         }
+    }
+
+    @Composable
+    override fun ComposePlaceHolder() {
+        displayPlaceholder(null)
     }
 }

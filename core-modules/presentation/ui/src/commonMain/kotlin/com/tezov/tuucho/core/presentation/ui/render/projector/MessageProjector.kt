@@ -5,17 +5,18 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.subsetOrNull
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasIdProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateInvokerProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateSetterProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.MessageProcessorProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
+@TuuchoUiDsl
 interface MessageProjectorProtocols :
     MessageProcessorProjectorProtocol,
     RequestViewUpdateProtocols,
@@ -25,8 +26,7 @@ interface MessageProjectorProtocols :
     operator fun <T : ProjectionProcessorProtocol> T.unaryPlus() = this.also { add(it) }
 }
 
-@TuuchoUiDsl
-class MessageProjector(
+private class MessageProjector(
     override val lazyId: Lazy<String?>,
     override val subset: String,
     private var onReceived: () -> Unit
@@ -82,11 +82,11 @@ class MessageProjector(
 private class ContextualMessageProjector(
     private val delegate: MessageProjectorProtocols
 ) : MessageProjectorProtocols by delegate,
-    HasUpdatableProtocol,
-    UpdatableProcessorProtocol {
+    HasContextualUpdaterProtocol,
+    ContextualUpdaterProcessorProtocol {
     override val type get() = delegate.type
 
-    override val updatables get() = listOf(this)
+    override val contextualUpdater get() = listOf(this)
 }
 
 fun ComponentProjectorProtocols.message(

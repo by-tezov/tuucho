@@ -4,27 +4,27 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasUpdatableProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateInvokerProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateSetterProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.UpdatableProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProcessorProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
+@TuuchoUiDsl
 interface TypeProjectorProtocols :
     IdProcessorProtocol,
     TypeProcessorProjectorProtocol,
-    HasUpdatableProtocol,
+    HasContextualUpdaterProtocol,
     RequestViewUpdateProtocols {
     operator fun <T : ProjectionProcessorProtocol> T.unaryPlus() = this.also { add(it) }
 }
 
-@TuuchoUiDsl
-class TypeProjector(
+private class TypeProjector(
     private val idProcessor: IdProcessorProtocol,
     override val type: String
 ) : TypeProjectorProtocols,
@@ -34,10 +34,10 @@ class TypeProjector(
     override var requestViewUpdateInvoker: RequestViewUpdateInvokerProtocol? = null
         private set
 
-    override val updatables: List<UpdatableProcessorProtocol>
+    override val contextualUpdater: List<ContextualUpdaterProcessorProtocol>
         get() = buildList {
             projections.forEach { (_, value) ->
-                if (value is UpdatableProcessorProtocol) {
+                if (value is ContextualUpdaterProcessorProtocol) {
                     add(value)
                 }
             }
@@ -82,13 +82,13 @@ class TypeProjector(
 private class ContextualTypeProjector(
     private val delegate: TypeProjectorProtocols
 ) : TypeProjectorProtocols by delegate,
-    UpdatableProcessorProtocol {
+    ContextualUpdaterProcessorProtocol {
     override val type get() = delegate.type
 
-    override val updatables: List<UpdatableProcessorProtocol>
+    override val contextualUpdater: List<ContextualUpdaterProcessorProtocol>
         get() = buildList {
             add(this@ContextualTypeProjector)
-            addAll(delegate.updatables)
+            addAll(delegate.contextualUpdater)
         }
 }
 

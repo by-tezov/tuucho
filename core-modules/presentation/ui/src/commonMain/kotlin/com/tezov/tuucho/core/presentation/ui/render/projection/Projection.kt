@@ -7,28 +7,30 @@ import kotlinx.serialization.json.JsonElement
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-interface ValueProjectionProtocol<T : Any> {
-    fun attach(
-        valueProjection: ValueProjectionProtocol<T>
-    )
-
-    suspend fun getValueOrNull(
-        jsonElement: JsonElement?
-    ): T?
+interface ValueStorageProjectionProtocol<T : Any> {
+    var value: T?
 }
 
-interface StorageProjectionProtocol<T : Any> {
+interface StorageProjectionProtocol<T : Any> : ValueStorageProjectionProtocol<T> {
     fun attach(
         storageProjection: StorageProjectionProtocol<T>
     )
+}
 
-    var value: T?
+interface ExtractorProjectionProtocol<T : Any> {
+    fun attach(
+        valueProjection: ExtractorProjectionProtocol<T>
+    )
+
+    suspend fun extract(
+        jsonElement: JsonElement?
+    ): T?
 }
 
 interface ProjectionProtocols<T : Any> :
     ProjectionProcessorProtocol,
     StorageProjectionProtocol<T>,
-    ValueProjectionProtocol<T>
+    ExtractorProjectionProtocol<T>
 
 class StaticStorageProjection<T : Any> : StorageProjectionProtocol<T> {
     override var value: T? = null
@@ -82,11 +84,11 @@ class Projection<T : Any>(
     override val key: String,
 ) : ProjectionProtocols<T>,
     StorageProjectionProtocol<T> {
-    private lateinit var valueProjection: ValueProjectionProtocol<T>
+    private lateinit var valueProjection: ExtractorProjectionProtocol<T>
     private var storageProjection: StorageProjectionProtocol<T> by LazyStorageProjection()
 
     override fun attach(
-        valueProjection: ValueProjectionProtocol<T>
+        valueProjection: ExtractorProjectionProtocol<T>
     ) {
         this.valueProjection = valueProjection
     }
@@ -106,10 +108,10 @@ class Projection<T : Any>(
     override suspend fun process(
         jsonElement: JsonElement?
     ) {
-        value = getValueOrNull(jsonElement)
+        value = extract(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
-    ) = valueProjection.getValueOrNull(jsonElement)
+    ) = valueProjection.extract(jsonElement)
 }
