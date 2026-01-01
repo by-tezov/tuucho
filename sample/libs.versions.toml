@@ -12,13 +12,13 @@ compileSdk = "36"
 
 #plugin
 android-plugin = "8.13.2"
-kotlin-plugin = "2.2.21"
+kotlin-plugin = "2.3.0"
 compose-plugin = "1.9.3"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
 compose = "1.10.0"
-compose-activity = "1.12.1"
+compose-activity = "1.12.2"
 
 #lib - platform
 kermit = "2.0.8"

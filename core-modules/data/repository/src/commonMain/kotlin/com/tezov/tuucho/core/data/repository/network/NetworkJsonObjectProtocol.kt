@@ -3,16 +3,25 @@ package com.tezov.tuucho.core.data.repository.network
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
 import com.tezov.tuucho.core.data.repository.network.source.RemoteRequest
-import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
-@OpenForTest
+interface NetworkJsonObjectProtocol {
+    suspend fun resource(
+        url: String
+    ): JsonObject
+
+    suspend fun send(
+        url: String,
+        data: JsonObject
+    ): JsonObject?
+}
+
 internal class NetworkJsonObject(
     private val networkHttpRequestSource: NetworkHttpRequestSource,
     private val jsonConverter: Json
-) {
-    suspend fun resource(
+) : NetworkJsonObjectProtocol {
+    override suspend fun resource(
         url: String
     ): JsonObject {
         val response = networkHttpRequestSource.getResource(url)
@@ -24,7 +33,7 @@ internal class NetworkJsonObject(
         return jsonElement
     }
 
-    suspend fun send(
+    override suspend fun send(
         url: String,
         data: JsonObject
     ): JsonObject? {
