@@ -2,6 +2,8 @@
 
 - Screen protocol internal + class private
 - then refactor to allow feature UI (Processor, Data, Domain Schema)
+- refactor a little bit to support preview
+- update lib and check why mokkery complain on some class
 
 **** ****
 - Shadower
