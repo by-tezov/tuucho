@@ -3,7 +3,8 @@ package com.tezov.tuucho.core.presentation.ui.view
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.TextUnit
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Component
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Content
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.LabelSchema.Style
@@ -22,7 +23,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.screen.dummyScreenContext
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
@@ -31,8 +31,9 @@ import kotlinx.serialization.json.JsonObject
 interface LabelViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
-        textStyle: TextStyle,
-        textValue: String,
+        textValue: String?,
+        fontColor: Color?,
+        fontSize: TextUnit?,
     )
 
     @Composable
@@ -40,7 +41,7 @@ interface LabelViewProtocol : ViewProtocol {
 }
 
 fun createLabelView(
-    screenContext: ScreenContextProtocol = dummyScreenContext(),
+    screenContext: ScreenContextProtocol,
 ): LabelViewProtocol = LabelView(
     screenContext = screenContext
 )
@@ -82,25 +83,27 @@ private class LabelView(
     override fun displayComponent(
         scope: Any?
     ) {
-        val textStyle = LocalTextStyle.current.let { current ->
-            current.copy(
-                color = fontColor.value ?: current.color,
-                fontSize = fontSize.value ?: current.fontSize,
-            )
-        }
         ComposeComponent(
-            textStyle = textStyle,
-            textValue = textValue.value ?: ""
+            textValue = textValue.value,
+            fontColor = fontColor.value,
+            fontSize = fontSize.value
         )
     }
 
     @Composable
     override fun ComposeComponent(
-        textStyle: TextStyle,
-        textValue: String,
+        textValue: String?,
+        fontColor: Color?,
+        fontSize: TextUnit?,
     ) {
+        val textStyle = LocalTextStyle.current.let { current ->
+            current.copy(
+                color = fontColor ?: current.color,
+                fontSize = fontSize ?: current.fontSize,
+            )
+        }
         Text(
-            text = textValue,
+            text = textValue ?: "",
             style = textStyle
         )
     }

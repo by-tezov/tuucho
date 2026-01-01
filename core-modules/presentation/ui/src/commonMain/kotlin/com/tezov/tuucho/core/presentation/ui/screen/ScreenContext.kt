@@ -12,9 +12,3 @@ internal class ScreenContext(
         view: ViewProtocol
     ) = addViewBlock(view)
 }
-
-// Needed for Preview
-fun dummyScreenContext(): ScreenContextProtocol = ScreenContext(
-    route = NavigationRoute.Current,
-    addViewBlock = {}
-)

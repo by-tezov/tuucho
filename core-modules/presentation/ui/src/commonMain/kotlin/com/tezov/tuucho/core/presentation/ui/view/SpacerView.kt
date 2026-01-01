@@ -20,7 +20,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.dp
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.float
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.screen.dummyScreenContext
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
@@ -28,19 +27,9 @@ import kotlinx.serialization.json.JsonObject
 
 interface SpacerViewProtocol : ViewProtocol {
     @Composable
-    fun ComposeRowComponent(
-        scope: RowScope,
-        weight: Float
-    )
-
-    @Composable
-    fun ComposeColumnComponent(
-        scope: ColumnScope,
-        weight: Float
-    )
-
-    @Composable
-    fun ComposeDefaultComponent(
+    fun ComposeComponent(
+        scope: Any?,
+        weight: Float?,
         width: Dp?,
         height: Dp?,
     )
@@ -50,7 +39,7 @@ interface SpacerViewProtocol : ViewProtocol {
 }
 
 fun createSpacerView(
-    screenContext: ScreenContextProtocol = dummyScreenContext(),
+    screenContext: ScreenContextProtocol,
 ): SpacerViewProtocol = SpacerView(
     screenContext = screenContext
 )
@@ -90,40 +79,36 @@ private class SpacerView(
     override fun displayComponent(
         scope: Any?
     ) {
-        weight.value?.let {
-            when (scope) {
-                is ColumnScope -> ComposeColumnComponent(scope, it)
-                is RowScope -> ComposeRowComponent(scope, it)
-                else -> ComposeDefaultComponent(width.value, height.value)
-            }
-        } ?: ComposeDefaultComponent(width.value, height.value)
+        ComposeComponent(
+            scope = scope,
+            weight = weight.value,
+            width = width.value,
+            height = height.value
+        )
     }
 
     @Composable
-    override fun ComposeRowComponent(
-        scope: RowScope,
-        weight: Float
-    ) {
-        Spacer(modifier = scope.run { Modifier.weight(weight) })
-    }
-
-    @Composable
-    override fun ComposeColumnComponent(
-        scope: ColumnScope,
-        weight: Float
-    ) {
-        Spacer(modifier = scope.run { Modifier.weight(weight) })
-    }
-
-    @Composable
-    override fun ComposeDefaultComponent(
+    override fun ComposeComponent(
+        scope: Any?,
+        weight: Float?,
         width: Dp?,
         height: Dp?,
     ) {
-        Spacer(modifier = Modifier.then {
-            ifNotNull(width) { width(it) }
-            ifNotNull(height) { height(it) }
-        })
+        Spacer(
+            modifier = Modifier
+                .then {
+                    ifNotNull(weight) { weight ->
+                        when (scope) {
+                            is ColumnScope -> scope.run { weight(weight) }
+                            is RowScope -> scope.run { weight(weight) }
+                            else -> this
+                        }
+                    } or {
+                        ifNotNull(width) { width(it) }
+                        ifNotNull(height) { height(it) }
+                    }
+                }
+        )
     }
 
     @Composable

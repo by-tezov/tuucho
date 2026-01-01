@@ -38,7 +38,7 @@ private class ActionProjection(
     ResolveStatusProcessorProtocol by status,
     TuuchoKoinComponent {
     init {
-        attach(this as ValueProjectionProtocol<ActionTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<ActionTypeAlias>)
     }
 
     override suspend fun process(
@@ -49,7 +49,7 @@ private class ActionProjection(
         status.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = (jsonElement as? JsonObject)
         ?.let { actionObject ->

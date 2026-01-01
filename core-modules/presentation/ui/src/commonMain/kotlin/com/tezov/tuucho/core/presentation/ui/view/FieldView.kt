@@ -19,6 +19,7 @@ import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextsProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ValueStorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.form.FormStateProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.form.FormValidatorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.form.field
@@ -34,7 +35,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projector.message
 import com.tezov.tuucho.core.presentation.ui.render.projector.option
 import com.tezov.tuucho.core.presentation.ui.render.projector.state
-import com.tezov.tuucho.core.presentation.ui.screen.dummyScreenContext
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
@@ -43,7 +43,7 @@ import kotlinx.serialization.json.JsonObject
 interface FieldViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
-        fieldValue: MutableState<String>,
+        fieldValue: ValueStorageProjectionProtocol<String>,
         showError: MutableState<Boolean>,
         titleValue: String?,
         placeholderValue: String?,
@@ -56,7 +56,7 @@ interface FieldViewProtocol : ViewProtocol {
 }
 
 fun createFieldView(
-    screenContext: ScreenContextProtocol = dummyScreenContext(),
+    screenContext: ScreenContextProtocol,
 ): FieldViewProtocol = FieldView(
     screenContext = screenContext
 )
@@ -129,7 +129,7 @@ private class FieldView(
         scope: Any?
     ) {
         ComposeComponent(
-            fieldValue = mutableStateOf(""), ///TODO FIX that
+            fieldValue = fieldValue,
             showError = showError,
             titleValue = titleValue.value,
             placeholderValue = placeholderValue.value,
@@ -140,7 +140,7 @@ private class FieldView(
 
     @Composable
     override fun ComposeComponent(
-        fieldValue: MutableState<String>, ///TODO FIX that
+        fieldValue: ValueStorageProjectionProtocol<String>,
         showError: MutableState<Boolean>,
         titleValue: String?,
         placeholderValue: String?,
@@ -154,7 +154,7 @@ private class FieldView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 4.dp),
-            value = fieldValue.value,
+            value = fieldValue.value ?: "",
             onValueChange = { newValue ->
                 showError.value = false
                 fieldValue.value = newValue

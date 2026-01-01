@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.message
 
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
+import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
-import com.tezov.tuucho.core.presentation.ui.render.projection.ValueProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.MessageProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
@@ -26,7 +26,7 @@ private class MessageTextProjection(
     private val textProjection = createTextProjection(key)
 
     init {
-        attach(this as ValueProjectionProtocol<MessageTextTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<MessageTextTypeAlias>)
     }
 
     override suspend fun process(
@@ -36,9 +36,9 @@ private class MessageTextProjection(
         status.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
-    ) = textProjection.getValueOrNull(jsonElement)
+    ) = textProjection.extract(jsonElement)
 }
 
 fun createMessageTextProjection(

@@ -32,7 +32,7 @@ private class TextProjection(
     TextProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by statusProcessor {
     init {
-        attach(this as ValueProjectionProtocol<TextTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<TextTypeAlias>)
     }
 
     override suspend fun process(
@@ -43,7 +43,7 @@ private class TextProjection(
         statusProcessor.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = when (jsonElement) {
         is JsonObject -> {

@@ -34,7 +34,7 @@ private class ColorProjection(
     ColorProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by status {
     init {
-        attach(this as ValueProjectionProtocol<ColorTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<ColorTypeAlias>)
     }
 
     override suspend fun process(
@@ -45,7 +45,7 @@ private class ColorProjection(
         status.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = when (jsonElement) {
         is JsonObject -> {

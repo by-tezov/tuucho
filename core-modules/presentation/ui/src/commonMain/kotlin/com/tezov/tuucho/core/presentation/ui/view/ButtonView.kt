@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.view.view
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
-import com.tezov.tuucho.core.presentation.ui.screen.dummyScreenContext
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
@@ -24,7 +23,7 @@ import kotlinx.serialization.json.JsonObject
 interface ButtonViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
-        onClick: () -> Unit,
+        onClick: (() -> Unit)?,
         content: @Composable RowScope.() -> Unit,
     )
 
@@ -33,7 +32,7 @@ interface ButtonViewProtocol : ViewProtocol {
 }
 
 fun createButtonView(
-    screenContext: ScreenContextProtocol = dummyScreenContext(),
+    screenContext: ScreenContextProtocol,
 ): ButtonViewProtocol = ButtonView(
     screenContext = screenContext
 )
@@ -76,18 +75,18 @@ private class ButtonView(
         scope: Any?
     ) {
         ComposeComponent(
-            onClick = action.value ?: {},
+            onClick = action.value,
             content = { labelView.value?.display(this) }
         )
     }
 
     @Composable
     override fun ComposeComponent(
-        onClick: () -> Unit,
+        onClick: (() -> Unit)?,
         content: @Composable RowScope.() -> Unit,
     ) {
         Button(
-            onClick = onClick,
+            onClick = onClick ?: {},
             content = content
         )
     }

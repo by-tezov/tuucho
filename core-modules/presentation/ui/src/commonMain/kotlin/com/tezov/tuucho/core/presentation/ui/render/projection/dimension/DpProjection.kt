@@ -8,11 +8,11 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
+import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.MutableStorageProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
-import com.tezov.tuucho.core.presentation.ui.render.projection.ValueProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
@@ -39,7 +39,7 @@ private class DpProjection(
     DpProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by status {
     init {
-        attach(this as ValueProjectionProtocol<DpTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<DpTypeAlias>)
     }
 
     override suspend fun process(
@@ -50,7 +50,7 @@ private class DpProjection(
         status.update(jsonElement)
     }
 
-    override suspend fun getValueOrNull(
+    override suspend fun extract(
         jsonElement: JsonElement?
     ) = when (jsonElement) {
         is JsonObject -> {
