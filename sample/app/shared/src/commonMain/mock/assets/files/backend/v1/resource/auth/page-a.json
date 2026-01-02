@@ -11,7 +11,7 @@
         "extra": {
           "is-background-solid": true
         },
-        "definition": [
+        "definitions": [
           {
             "selector": {
               "type": "page-bread-crumb",

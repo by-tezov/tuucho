@@ -73,7 +73,7 @@ Example for the `form-send` action:
 ```json
 "action": {
   "id": /* id object */,
-  "primary": ["form-send://url/form-from-page-home"],
+  "primaries": ["form-send://url/form-from-page-home"],
   "validated": "form-send://url/form-from-page-home"
 }
 ```
@@ -94,7 +94,7 @@ This is equivalent to:
 
 ```json
 "action": {
-  "primary": "navigate://url/page-help"
+  "primaries": "navigate://url/page-help"
 ```
 
 ---

@@ -19,7 +19,7 @@ import org.koin.core.scope.Scope
 class FormFailureReasonRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-    override val key = FormSendSchema.Key.failureResult
+    override val key = FormSendSchema.Key.failureResults
     private val textRectifier: TextRectifier by inject()
 
     private val matcher = FormFailureReasonRectifierMatcher()

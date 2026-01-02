@@ -13,7 +13,7 @@
         }
       },
       "navigation": {
-        "definition": {
+        "definitions": {
           "option": {
             "clear-stack": true,
             "single": true,
@@ -52,7 +52,7 @@
                     }
                   },
                   "action": {
-                    "primary": [
+                    "primaries": [
                       "store://key-value/remove?login-authorization",
                       "navigate://url/lobby/page-login"
                     ]
@@ -92,12 +92,12 @@
           "id": "comment",
           "subset": "form-field",
           "option": {
-            "form-validator": "string-not-null"
+            "form-validators": "string-not-null"
           },
           "content": {
             "title": "any comment?",
             "placeholder": "short comment, please I'm lazy to read",
-            "message-error": "Can't be empty, bro say something"
+            "message-errors": "Can't be empty, bro say something"
           }
         },
         {
@@ -196,7 +196,7 @@
       "id": "input-field-age",
       "subset": "form-field",
       "option": {
-        "form-validator": [
+        "form-validators": [
           {
             "type": "string-min-value",
             "value": "18",
@@ -216,7 +216,7 @@
       "content": {
         "title": "*form@text-form-age-title",
         "placeholder": "*form@text-form-age-placeholder",
-        "message-error": [
+        "message-errors": [
           {
             "id": "validator-1",
             "default": "you must have at least 18 years"
@@ -236,7 +236,7 @@
       "id": "input-field-email",
       "subset": "form-field",
       "option": {
-        "form-validator": [
+        "form-validators": [
           {
             "type": "string-email",
             "message-error-id": "*validator-1"
@@ -255,7 +255,7 @@
       "content": {
         "label": "*button-form-label",
         "action": {
-          "primary": "form://send-url/auth/form-from-page-home",
+          "primaries": "form://send-url/auth/form-from-page-home",
           "validated": "navigate://url/auth/page-confirmation"
         }
       }

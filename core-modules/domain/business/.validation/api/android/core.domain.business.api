@@ -365,7 +365,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/Col
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ColorSchema$Value$Group {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/ColorSchema$Value$Group;
 	public static final field common Ljava/lang/String;
-	public static final field palette Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ComponentSchema {
@@ -487,8 +486,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/Dim
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/DimensionSchema$Value$Group {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/DimensionSchema$Value$Group;
 	public static final field common Ljava/lang/String;
-	public static final field font Ljava/lang/String;
-	public static final field padding Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/IdSchema {
@@ -935,17 +932,17 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_el
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content$Key;
-	public static final field messageError Ljava/lang/String;
+	public static final field messageErrors Ljava/lang/String;
 	public static final field placeholder Ljava/lang/String;
 	public static final field title Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getMessageError ()Lkotlinx/serialization/json/JsonArray;
+	public final fun getMessageErrors ()Lkotlinx/serialization/json/JsonArray;
 	public final fun getPlaceholder ()Lkotlinx/serialization/json/JsonObject;
 	public final fun getTitle ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setMessageError (Lkotlinx/serialization/json/JsonArray;)V
+	public final fun setMessageErrors (Lkotlinx/serialization/json/JsonArray;)V
 	public final fun setPlaceholder (Lkotlinx/serialization/json/JsonObject;)V
 	public final fun setTitle (Lkotlinx/serialization/json/JsonObject;)V
 }
@@ -1016,13 +1013,13 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_el
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$Key;
-	public static final field validator Ljava/lang/String;
+	public static final field validators Ljava/lang/String;
 }
 
 public class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/material/OptionSchema$OpenScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getValidator ()Lkotlinx/serialization/json/JsonArray;
-	public final fun setValidator (Lkotlinx/serialization/json/JsonArray;)V
+	public final fun getValidators ()Lkotlinx/serialization/json/JsonArray;
+	public final fun setValidators (Lkotlinx/serialization/json/JsonArray;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$OpenScope {
@@ -1037,7 +1034,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_el
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Key;
 	public static final field length Ljava/lang/String;
-	public static final field messageError Ljava/lang/String;
 	public static final field messageErrorId Ljava/lang/String;
 	public static final field type Ljava/lang/String;
 	public static final field value Ljava/lang/String;
@@ -1046,13 +1042,11 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_el
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 	public final fun getLength ()Ljava/lang/String;
-	public final fun getMessageError ()Lkotlinx/serialization/json/JsonObject;
 	public final fun getMessageErrorId ()Ljava/lang/String;
 	public fun getRoot ()Ljava/lang/String;
 	public final fun getType ()Ljava/lang/String;
 	public final fun getValue ()Ljava/lang/String;
 	public final fun setLength (Ljava/lang/String;)V
-	public final fun setMessageError (Lkotlinx/serialization/json/JsonObject;)V
 	public final fun setMessageErrorId (Ljava/lang/String;)V
 	public final fun setType (Ljava/lang/String;)V
 	public final fun setValue (Ljava/lang/String;)V
@@ -1167,18 +1161,18 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/act
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionSchema$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionSchema$Key;
 	public static final field id Ljava/lang/String;
-	public static final field primary Ljava/lang/String;
+	public static final field primaries Ljava/lang/String;
 	public static final field type Ljava/lang/String;
 }
 
 public class com/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionSchema$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 	public final fun getId ()Lkotlinx/serialization/json/JsonElement;
-	public final fun getPrimary ()Lkotlinx/serialization/json/JsonArray;
+	public final fun getPrimaries ()Lkotlinx/serialization/json/JsonArray;
 	public fun getRoot ()Ljava/lang/String;
 	public final fun getType ()Ljava/lang/String;
 	public final fun setId (Lkotlinx/serialization/json/JsonElement;)V
-	public final fun setPrimary (Lkotlinx/serialization/json/JsonArray;)V
+	public final fun setPrimaries (Lkotlinx/serialization/json/JsonArray;)V
 	public final fun setType (Ljava/lang/String;)V
 }
 
@@ -1193,154 +1187,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/act
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionSchema$Value$Group {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionSchema$Value$Group;
 	public static final field common Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema;
-	public static final field root Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Key;
-	public static final field backward Ljava/lang/String;
-	public static final field forward Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getBackward ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getForward ()Lkotlinx/serialization/json/JsonObject;
-	public fun getRoot ()Ljava/lang/String;
-	public final fun setBackward (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setForward (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Set {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Set;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Set$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Set$Key;
-	public static final field enter Ljava/lang/String;
-	public static final field exit Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Set$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getEnter ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getExit ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setEnter (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setExit (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Key;
-	public static final field directionNavigation Ljava/lang/String;
-	public static final field directionScreen Ljava/lang/String;
-	public static final field type Ljava/lang/String;
-}
-
-public class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getDirectionNavigation ()Ljava/lang/String;
-	public final fun getDirectionScreen ()Ljava/lang/String;
-	public final fun getType ()Ljava/lang/String;
-	public final fun setDirectionNavigation (Ljava/lang/String;)V
-	public final fun setDirectionScreen (Ljava/lang/String;)V
-	public final fun setType (Ljava/lang/String;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionNavigation {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionNavigation;
-	public static final field backward Ljava/lang/String;
-	public static final field forward Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionScreen {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionScreen;
-	public static final field enter Ljava/lang/String;
-	public static final field exit Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$Type {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$Type;
-	public static final field fade Ljava/lang/String;
-	public static final field none Ljava/lang/String;
-	public static final field slideHorizontal Ljava/lang/String;
-	public static final field slideVertical Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade$Key;
-	public static final field alphaInitial Ljava/lang/String;
-	public static final field duration Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getAlphaInitial ()Ljava/lang/String;
-	public final fun getDuration ()Ljava/lang/String;
-	public final fun setAlphaInitial (Ljava/lang/String;)V
-	public final fun setDuration (Ljava/lang/String;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Key;
-	public static final field duration Ljava/lang/String;
-	public static final field effect Ljava/lang/String;
-	public static final field entrance Ljava/lang/String;
-	public static final field exitDarkAlphaFactor Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getDuration ()Ljava/lang/String;
-	public final fun getEffect ()Ljava/lang/String;
-	public final fun getEntrance ()Ljava/lang/String;
-	public final fun getExitDarkAlphaFactor ()Ljava/lang/String;
-	public final fun setDuration (Ljava/lang/String;)V
-	public final fun setEffect (Ljava/lang/String;)V
-	public final fun setEntrance (Ljava/lang/String;)V
-	public final fun setExitDarkAlphaFactor (Ljava/lang/String;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Effect {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Effect;
-	public static final field cover Ljava/lang/String;
-	public static final field coverPush Ljava/lang/String;
-	public static final field push Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Entrance {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/componentSetting/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Entrance;
-	public static final field fromBottom Ljava/lang/String;
-	public static final field fromEnd Ljava/lang/String;
-	public static final field fromStart Ljava/lang/String;
-	public static final field fromTop Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/ComponentSettingSchema {
@@ -1544,16 +1390,16 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/set
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/ComponentSettingNavigationSchema$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/ComponentSettingNavigationSchema$Key;
-	public static final field definition Ljava/lang/String;
+	public static final field definitions Ljava/lang/String;
 	public static final field extra Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/ComponentSettingNavigationSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getDefinition ()Lkotlinx/serialization/json/JsonArray;
+	public final fun getDefinitions ()Lkotlinx/serialization/json/JsonArray;
 	public final fun getExtra ()Lkotlinx/serialization/json/JsonObject;
 	public fun getRoot ()Ljava/lang/String;
-	public final fun setDefinition (Lkotlinx/serialization/json/JsonArray;)V
+	public final fun setDefinitions (Lkotlinx/serialization/json/JsonArray;)V
 	public final fun setExtra (Lkotlinx/serialization/json/JsonObject;)V
 }
 
@@ -1585,6 +1431,154 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/set
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/ComponentSettingNavigationSelectorSchema$Value$Type {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/ComponentSettingNavigationSelectorSchema$Value$Type;
 	public static final field pageBreadCrumb Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema;
+	public static final field root Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Key;
+	public static final field backward Ljava/lang/String;
+	public static final field forward Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getBackward ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getForward ()Lkotlinx/serialization/json/JsonObject;
+	public fun getRoot ()Ljava/lang/String;
+	public final fun setBackward (Lkotlinx/serialization/json/JsonObject;)V
+	public final fun setForward (Lkotlinx/serialization/json/JsonObject;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Set {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Set;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Set$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Set$Key;
+	public static final field enter Ljava/lang/String;
+	public static final field exit Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Set$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getEnter ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getExit ()Lkotlinx/serialization/json/JsonObject;
+	public final fun setEnter (Lkotlinx/serialization/json/JsonObject;)V
+	public final fun setExit (Lkotlinx/serialization/json/JsonObject;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Key;
+	public static final field directionNavigation Ljava/lang/String;
+	public static final field directionScreen Ljava/lang/String;
+	public static final field type Ljava/lang/String;
+}
+
+public class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getDirectionNavigation ()Ljava/lang/String;
+	public final fun getDirectionScreen ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public final fun setDirectionNavigation (Ljava/lang/String;)V
+	public final fun setDirectionScreen (Ljava/lang/String;)V
+	public final fun setType (Ljava/lang/String;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionNavigation {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionNavigation;
+	public static final field backward Ljava/lang/String;
+	public static final field forward Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionScreen {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$DirectionScreen;
+	public static final field enter Ljava/lang/String;
+	public static final field exit Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$Type {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$Value$Type;
+	public static final field fade Ljava/lang/String;
+	public static final field none Ljava/lang/String;
+	public static final field slideHorizontal Ljava/lang/String;
+	public static final field slideVertical Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade$Key;
+	public static final field alphaInitial Ljava/lang/String;
+	public static final field duration Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecFade$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getAlphaInitial ()Ljava/lang/String;
+	public final fun getDuration ()Ljava/lang/String;
+	public final fun setAlphaInitial (Ljava/lang/String;)V
+	public final fun setDuration (Ljava/lang/String;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Key;
+	public static final field duration Ljava/lang/String;
+	public static final field effect Ljava/lang/String;
+	public static final field entrance Ljava/lang/String;
+	public static final field exitDarkAlphaFactor Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$Spec$OpenScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getDuration ()Ljava/lang/String;
+	public final fun getEffect ()Ljava/lang/String;
+	public final fun getEntrance ()Ljava/lang/String;
+	public final fun getExitDarkAlphaFactor ()Ljava/lang/String;
+	public final fun setDuration (Ljava/lang/String;)V
+	public final fun setEffect (Ljava/lang/String;)V
+	public final fun setEntrance (Ljava/lang/String;)V
+	public final fun setExitDarkAlphaFactor (Ljava/lang/String;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Effect {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Effect;
+	public static final field cover Ljava/lang/String;
+	public static final field coverPush Ljava/lang/String;
+	public static final field push Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Entrance {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/setting/component/navigationSchema/SettingComponentNavigationTransitionSchema$SpecSlide$Value$Entrance;
+	public static final field fromBottom Ljava/lang/String;
+	public static final field fromEnd Ljava/lang/String;
+	public static final field fromStart Ljava/lang/String;
+	public static final field fromTop Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/setting/page/PageSettingSchema {
@@ -1683,7 +1677,7 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/For
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/response/FormSendSchema$Key;
 	public static final field action Ljava/lang/String;
 	public static final field allSucceed Ljava/lang/String;
-	public static final field failureResult Ljava/lang/String;
+	public static final field failureResults Ljava/lang/String;
 	public static final field subset Ljava/lang/String;
 	public static final field type Ljava/lang/String;
 }
@@ -1692,13 +1686,13 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/For
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 	public final fun getAction ()Lkotlinx/serialization/json/JsonObject;
 	public final fun getAllSucceed ()Ljava/lang/Boolean;
-	public final fun getFailureResult ()Lkotlinx/serialization/json/JsonArray;
+	public final fun getFailureResults ()Lkotlinx/serialization/json/JsonArray;
 	public fun getRoot ()Ljava/lang/String;
 	public final fun getSubset ()Ljava/lang/String;
 	public final fun getType ()Ljava/lang/String;
 	public final fun setAction (Lkotlinx/serialization/json/JsonObject;)V
 	public final fun setAllSucceed (Ljava/lang/Boolean;)V
-	public final fun setFailureResult (Lkotlinx/serialization/json/JsonArray;)V
+	public final fun setFailureResults (Lkotlinx/serialization/json/JsonArray;)V
 	public final fun setSubset (Ljava/lang/String;)V
 	public final fun setType (Ljava/lang/String;)V
 }

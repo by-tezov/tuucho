@@ -21,7 +21,7 @@ Navigation is always defined inside each page's `root` under:
         "extra": {
           "is-background-solid": true/false
         },
-        "definition": [
+        "definitions": [
           {
             "selector": { /* selector object */ },
             "option": { /* option object */ },
@@ -37,7 +37,7 @@ Navigation is always defined inside each page's `root` under:
 - **`extra`**: Helps the stack preparator for transitions.  
   Example: if a screen is an overlay, `is-background-solid` helps determine whether the previous screen should be included in the transition. (by default to true)
 
-- **`definition`**: Defines navigation rules, options, and transitions.
+- **`definitions`**: Defines navigation rules, options, and transitions.
     - Can be a **single object** if no selector is needed.
     - Multiple definitions can be used with a **selector** to pick the correct navigation logic based on the current stack.
 

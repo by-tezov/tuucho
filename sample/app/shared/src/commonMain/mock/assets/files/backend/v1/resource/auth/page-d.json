@@ -5,7 +5,7 @@
         "extra": {
           "is-background-solid": false
         },
-        "definition": {
+        "definitions": {
           "option": {
             "single": true
           },

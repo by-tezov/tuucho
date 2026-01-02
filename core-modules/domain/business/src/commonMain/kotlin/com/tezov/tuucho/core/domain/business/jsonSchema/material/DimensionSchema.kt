@@ -16,8 +16,6 @@ object DimensionSchema {
     object Value {
         object Group {
             const val common = "common"
-            const val font = "font"
-            const val padding = "padding"
         }
     }
 

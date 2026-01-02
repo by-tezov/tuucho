@@ -4,13 +4,13 @@
       "id": "input-field-on-demand",
       "subset": "field",
       "option": {
-        "form-validator": "string-not-null"
+        "form-validators": "string-not-null"
       },
       "content": {
         "id": "input-field-age-content",
         "title": "secret hobbies",
         "placeholder": "cook dead body parts",
-        "message-error": "can't be null, i'm sure you have secret"
+        "message-errors": "can't be null, i'm sure you have secret"
       }
     }
   ]

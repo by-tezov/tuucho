@@ -154,7 +154,7 @@ internal class FormSendUrlActionMiddleware(
         }
     }
 
-    private fun FormSendSchema.Scope.toFailureResult() = failureResult
+    private fun FormSendSchema.Scope.toFailureResult() = failureResults
         ?.jsonArray
         ?.map { result ->
             val scope = result.withScope(FormSendSchema.FailureResult::Scope)

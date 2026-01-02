@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.transition.DefaultNavigationTransitionStackHelper
 import com.tezov.tuucho.core.domain.business.interaction.navigation.transition.FadeNavigationTransitionStackHelper
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase.Output
 import kotlinx.serialization.json.JsonNull

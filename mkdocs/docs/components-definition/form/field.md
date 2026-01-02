@@ -9,12 +9,12 @@ A `Field` component represents an input form field that supports validation rule
   "id": /* id object */,
   "subset": "form-field",
   "option": {
-    "form-validator": /* validator object or array of validator objects */
+    "form-validators": /* validator object or array of validator objects */
   },
   "content": {
     "title": /* text object */,
     "placeholder": /* text object */,
-    "message-error": /* text object or array of text objects */
+    "message-errors": /* text object or array of text objects */
   },
   "state": {
     "initial-value": /* text object */
@@ -60,7 +60,7 @@ The content provides user-facing text such as titles, placeholders, and validati
 "content": {
   "title": /* text object */,
   "placeholder": /* text object */,
-  "message-error": /* text object or array of text objects */
+  "message-errors": /* text object or array of text objects */
 }
 ```
 

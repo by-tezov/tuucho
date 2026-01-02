@@ -12,9 +12,8 @@ In your **shared module** (`commonMain`) you need the Tuucho core library plus i
 
 ```kotlin
  commonMain.dependencies {
-    implementation("com.tezov:tuucho.core:0.0.1-alpha22_2.2.21") // for kotlin 2.2.21     
-    implementation("io.insert-koin:koin-core:4.1.1")     
-    implementation("io.insert-koin:koin-compose:4.1.1")
+    implementation("com.tezov:tuucho.core:0.0.1-alpha23_2.3.0") // for kotlin 2.3.0     
+    implementation("io.insert-koin:koin-core:4.2.0-beta2")     
     implementation("io.ktor:ktor-client-core:3.3.2")
 
     implementation(compose.runtime)
@@ -78,10 +77,10 @@ First you need the to add the dependencies
 ```kotlin
  dependencies {
     implementation(project(":app:shared"))
-    implementation("com.tezov:tuucho.core-android:0.0.1-alpha22_2.2.21") // for kotlin 2.2.21   
+    implementation("com.tezov:tuucho.core:0.0.1-alpha23_2.3.0") // for kotlin 2.3.0     
+    implementation("io.insert-koin:koin-core:4.2.0-beta2")
 
-    implementation("androidx.activity:activity-compose:1.11.0")
-    implementation("io.insert-koin:koin-core:4.1.1")
+    implementation("androidx.activity:activity-compose:1.12.2")
  }
 ```
 

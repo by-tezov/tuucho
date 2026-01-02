@@ -17,7 +17,7 @@ Each validator object must include:
 Example:
 
 ```json
-"form-validator": [
+"form-validators": [
   {
     "type": "string-min-value",
     "value": "18",
@@ -42,7 +42,7 @@ Example:
 When only one validator is needed, you can define it as a single object:
 
 ```json
-"form-validator": {
+"form-validators": {
   "type": "string-email",
   "message-error-id": "*validator-1"
 }
@@ -64,13 +64,13 @@ In this format:
 Example:
 
 ```json
-"form-validator": "string-not-null"
+"form-validators": "string-not-null"
 ```
 
 Equivalent to:
 
 ```json
-"form-validator": {
+"form-validators": {
   "type": "string-not-null",
   "message-error-id": /* auto-resolved */
 }
