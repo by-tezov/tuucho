@@ -8,8 +8,8 @@ interface HasResolveStatusProtocol {
 
 interface ResolveStatusProcessorProtocol :
     HasResolveStatusProtocol,
-    HasRequestViewUpdateProtocol,
-    RequestViewUpdateSetterProtocol {
+    HasReadyStatusInvalidateInvokerProtocol,
+    ReadyStatusInvalidateInvokerSetterProtocol {
     fun update(
         jsonElement: JsonElement?
     )

@@ -2,8 +2,10 @@ package com.tezov.tuucho.core.presentation.ui.render.projection.message
 
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.MutableStorageProjection
 import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
+import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.createTextProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.MessageProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
@@ -41,12 +43,27 @@ private class MessageTextProjection(
     ) = textProjection.extract(jsonElement)
 }
 
+private class MutableMessageTextProjection(
+    delegate: MessageTextProjectionProtocol,
+    storage: StorageProjectionProtocol<MessageTextTypeAlias>
+) : MessageTextProjectionProtocol by delegate {
+    init {
+        attach(storage)
+    }
+}
+
 fun createMessageTextProjection(
     key: String
 ): MessageTextProjectionProtocol = MessageTextProjection(
     projection = Projection(key = key),
     status = ResolveStatusProcessor()
 )
+
+val MessageTextProjectionProtocol.mutable
+    get(): MessageTextProjectionProtocol = MutableMessageTextProjection(
+        delegate = this,
+        storage = MutableStorageProjection()
+    )
 
 fun MessageProjectorProtocols.text(
     key: String,
