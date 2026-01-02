@@ -8,7 +8,7 @@
         "placeholder": {
           "id": "*form@text-form-email-placeholder"
         },
-        "message-error": [
+        "message-errors": [
           {
             "id": {
               "value": "validator-1"

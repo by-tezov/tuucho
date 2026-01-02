@@ -13,9 +13,10 @@ comments: true
 
 Work in progress:
 
-- **Presentation Layer + Dev documentation**
-  - Define architecture to allow custom view features
-  - Add Dokka doc + ktlint + Danger for CI
+- **Component Feature**
+  - Split presentation layer to move component into additional dependencies. Keep only core functionalities
+  - Add a dev documentation to demonstrate how to create a new View from scratch
+  - Add Dokka doc for CI
 
 - **Images / Assets store**  
   Add a way to cache images and use them (or remote assets)
@@ -28,7 +29,6 @@ Work in progress:
 
 - **Advanced UI Components**  
   - Add comprehensive, fully tested UI components to cover a wider range of application needs.
-  - Support UI components as independent modules for easier customization and extensibility.
 
 - **Validators, Navigation, Settings, other useful solvable by pointer**
   - Minimise and keep only what is useful and start to think about the public dev API
@@ -69,6 +69,9 @@ Work in progress:
 ---
 
 ## ✅ Realized
+
+- **Presentation layer** (2026-01)  
+  Add dsl to allow easy view creation + allow use of Compose Preview.
 
 - **Unit Tests + Domain layer** (2025-11)  
   Add as many as possible test to protect domain layer from regression.

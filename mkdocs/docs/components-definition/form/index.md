@@ -24,7 +24,7 @@ Used in a `Button` component:
 
 ```json
 "action": {
-  "primary": "form-send://url/form-from-page-home",
+  "primaries": "form-send://url/form-from-page-home",
   "validated": "navigate://url/page-confirmation"
 }
 ```
@@ -87,7 +87,7 @@ The server must return one of the following:
 {
   "type": "form",
   "all-succeed": false,
-  "failure-result": [
+  "failure-results": [
     {
       "id": "id of invalid field",
       "reason": /* Text object */

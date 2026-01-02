@@ -47,7 +47,7 @@ class ActionRectifier(
                 id = JsonPrimitive(value)
             } else {
                 id = JsonNull
-                primary = listOf(this.element).let(::JsonArray)
+                primaries = listOf(this.element).let(::JsonArray)
             }
         }.collect()
 
@@ -60,7 +60,7 @@ class ActionRectifier(
         .apply {
             type = TypeSchema.Value.action
             id = JsonNull
-            primary = this.element.jsonArray
+            primaries = this.element.jsonArray
         }.collect()
 
     override fun beforeAlterObject(

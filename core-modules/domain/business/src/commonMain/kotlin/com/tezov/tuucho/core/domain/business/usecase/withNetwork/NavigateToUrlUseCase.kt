@@ -70,7 +70,7 @@ class NavigateToUrlUseCase(
                     .navigation
                 val navigationDefinitionObject = navigationSettingObject
                     ?.withScope(ComponentSettingNavigationSchema::Scope)
-                    ?.definition
+                    ?.definitions
                     ?.navigationResolver()
                 val newRoute = navigationStackRouteRepository.forward(
                     route = NavigationRoute.Url(navigationRouteIdGenerator.generate(), url),

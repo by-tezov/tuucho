@@ -15,7 +15,7 @@ class FormFailureReasonRectifierMatcher : RectifierMatcherProtocol {
         path: JsonElementPath,
         element: JsonElement
     ): Boolean {
-        if (!path.lastSegmentIs(FormSendSchema.Key.failureResult)) return false
+        if (!path.lastSegmentIs(FormSendSchema.Key.failureResults)) return false
         val parent = element.find(path.parent())
         return parent.isSubsetOf(FormSendSchema.Value.subset)
     }

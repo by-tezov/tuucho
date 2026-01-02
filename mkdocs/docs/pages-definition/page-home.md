@@ -47,7 +47,7 @@
           "content": {
             "title": "any comment?",
             "placeholder": "short comment, please I'm lazy to read",
-            "message-error": "Can't be empty, bro say something"
+            "message-errors": "Can't be empty, bro say something"
           }
         },
         {
@@ -136,7 +136,7 @@
         "content": {
           "title": "*form@text-form-age-title",
           "placeholder": "*form@text-form-age-placeholder",
-          "message-error": [
+          "message-errors": [
             {
               "id": "validator-1",
               "default": "you must have at least 18 years"

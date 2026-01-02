@@ -62,7 +62,7 @@ class ActionsRectifier(
                     }.collect()
             } else {
                 id = key.addGroup(group).let(::JsonPrimitive)
-                primary = listOf(jsonPrimitive).let(::JsonArray)
+                primaries = listOf(jsonPrimitive).let(::JsonArray)
             }
         }.collect()
 
@@ -74,7 +74,7 @@ class ActionsRectifier(
         .withScope(ActionSchema::Scope)
         .apply {
             id = key.addGroup(group).let(::JsonPrimitive)
-            primary = jsonArray
+            primaries = jsonArray
         }.collect()
 
     private fun alterObject(

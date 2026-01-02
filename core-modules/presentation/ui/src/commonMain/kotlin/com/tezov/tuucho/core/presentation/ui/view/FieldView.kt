@@ -91,12 +91,12 @@ private class FieldView(
 
     override suspend fun createComponentProjector() = componentProjector {
         +option {
-            validator = +validator(FormSchema.Option.Key.validator)
+            validator = +validator(FormSchema.Option.Key.validators)
         }.contextual
         +content {
             titleValue = +text(FormFieldSchema.Content.Key.title).mutable
             placeholderValue = +text(FormFieldSchema.Content.Key.placeholder).mutable
-            messageError = +texts(FormFieldSchema.Content.Key.messageError)
+            messageError = +texts(FormFieldSchema.Content.Key.messageErrors)
         }.contextual
         +state {
             fieldValue = +text(FormFieldSchema.State.Key.initialValue).mutable

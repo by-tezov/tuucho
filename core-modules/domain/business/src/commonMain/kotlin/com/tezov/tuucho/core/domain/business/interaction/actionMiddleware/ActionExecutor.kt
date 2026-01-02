@@ -29,7 +29,7 @@ internal class ActionExecutor(
                 val outputs: List<Output> = buildList {
                     actionObject
                         .withScope(ActionSchema::Scope)
-                        .primary
+                        .primaries
                         ?.forEach { jsonElement ->
                             val output = process(
                                 Input.JsonElement(
