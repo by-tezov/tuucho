@@ -3,12 +3,14 @@ package com.tezov.tuucho.core.presentation.ui.render.projector
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
+import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateInvokerProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateSetterProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerSetterProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateProtocols
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProcessorProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ProcessorProjectorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -17,18 +19,21 @@ import kotlinx.serialization.json.JsonObject
 @TuuchoUiDsl
 interface ComponentProjectorProtocols :
     IdProcessorProtocol,
+    ResolveStatusProcessorProtocol,
     ComponentProcessorProjectorProtocol,
-    RequestViewUpdateProtocols {
+    ReadyStatusInvalidateProtocols {
     operator fun <T : ProcessorProjectorProtocol> T.unaryPlus() = this.also { add(it) }
 }
 
 private class ComponentProjector(
     private val idProcessor: IdProcessorProtocol,
+    private val statusProcessor: ResolveStatusProcessorProtocol
 ) : ComponentProjectorProtocols,
-    IdProcessorProtocol by idProcessor {
+    IdProcessorProtocol by idProcessor,
+    ResolveStatusProcessorProtocol by statusProcessor {
     private val projectors: MutableList<ProcessorProjectorProtocol> = mutableListOf()
 
-    override var requestViewUpdateInvoker: RequestViewUpdateInvokerProtocol? = null
+    override var readyStatusInvalidateInvoker: ReadyStatusInvalidateInvokerProtocol? = null
         private set
 
     override val contextualUpdater: List<ContextualUpdaterProcessorProtocol>
@@ -44,8 +49,8 @@ private class ComponentProjector(
         projector: ProcessorProjectorProtocol
     ) {
         projectors.add(projector)
-        (projector as? RequestViewUpdateSetterProtocol)?.let { status ->
-            status.setRequestViewUpdater(value = { requestViewUpdateInvoker?.invokeRequestViewUpdate() })
+        (projector as? ReadyStatusInvalidateInvokerSetterProtocol)?.let { status ->
+            status.setReadyStatusInvalidateInvoker(value = { readyStatusInvalidateInvoker?.invalidateReadyStatus() })
         }
     }
 
@@ -58,16 +63,17 @@ private class ComponentProjector(
             jsonElement[projector.type]
                 ?.let { childJsonElement -> projector.process(childJsonElement) }
         }
+        statusProcessor.update(jsonElement)
     }
 
-    override fun setRequestViewUpdater(
-        value: RequestViewUpdateInvokerProtocol
+    override fun setReadyStatusInvalidateInvoker(
+        value: ReadyStatusInvalidateInvokerProtocol
     ) {
-        requestViewUpdateInvoker = value
+        readyStatusInvalidateInvoker = value
     }
 
-    override fun invokeRequestViewUpdate() {
-        requestViewUpdateInvoker?.invokeRequestViewUpdate()
+    override fun invalidateReadyStatus() {
+        readyStatusInvalidateInvoker?.invalidateReadyStatus()
     }
 }
 
@@ -87,7 +93,8 @@ private class ContextualComponentProjector(
 fun componentProjector(
     block: ComponentProjectorProtocols.() -> Unit
 ): ComponentProjectorProtocols = ComponentProjector(
-    idProcessor = IdProcessor()
+    idProcessor = IdProcessor(),
+    statusProcessor = ResolveStatusProcessor()
 ).also {
     it.block()
 }

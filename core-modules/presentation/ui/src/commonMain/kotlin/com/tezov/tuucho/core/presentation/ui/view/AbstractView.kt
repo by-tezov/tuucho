@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import com.tezov.tuucho.core.presentation.ui.composable.shimmerComposable
 import com.tezov.tuucho.core.presentation.ui.render.projector.ComponentProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
@@ -24,9 +26,8 @@ abstract class AbstractView(
 
     override val contextualUpdater get() = componentProjector.contextualUpdater
 
-    private var isReady = false
-    private var requestUpdate: AtomicBoolean = AtomicBoolean(true)
-    private val redrawTrigger = mutableIntStateOf(0)
+    private var isReady by mutableStateOf(false)
+    private var readyStatusInvalidated: AtomicBoolean = AtomicBoolean(true)
 
     abstract fun getResolvedStatus(): Boolean
 
@@ -35,15 +36,16 @@ abstract class AbstractView(
     ) {
         componentProjector = createComponentProjector().apply {
             process(componentObject)
-            setRequestViewUpdater(value = { requestUpdate.store(true) })
+            setReadyStatusInvalidateInvoker(value = { readyStatusInvalidated.store(true) })
         }
+        updateIfNeeded()
     }
 
     abstract suspend fun createComponentProjector(): ComponentProjectorProtocols
 
     override fun updateIfNeeded() {
-        if (requestUpdate.compareAndSet(expectedValue = true, newValue = false)) {
-            redrawTrigger.intValue += 1
+        if (readyStatusInvalidated.compareAndSet(expectedValue = true, newValue = false)) {
+            isReady = componentProjector.hasBeenResolved.isTrue && getResolvedStatus()
         }
     }
 
@@ -51,7 +53,6 @@ abstract class AbstractView(
     final override fun display(
         scope: Any?
     ) {
-        isReady = remember(redrawTrigger.intValue) { getResolvedStatus() }
         if (isReady) {
             displayComponent(scope)
         } else {

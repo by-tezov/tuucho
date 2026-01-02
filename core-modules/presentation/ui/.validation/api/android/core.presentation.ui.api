@@ -95,8 +95,8 @@ public final class com/tezov/tuucho/core/presentation/ui/render/misc/ResolveStat
 	public static final field $stable I
 	public fun <init> ()V
 	public fun getHasBeenResolved ()Ljava/lang/Boolean;
-	public fun getRequestViewUpdateInvoker ()Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;
-	public fun setRequestViewUpdater (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;)V
+	public fun getReadyStatusInvalidateInvoker ()Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerProtocol;
+	public fun setReadyStatusInvalidateInvoker (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerProtocol;)V
 	public fun update (Lkotlinx/serialization/json/JsonElement;)V
 }
 
@@ -243,7 +243,7 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 	public abstract fun getFieldValueProjection ()Lcom/tezov/tuucho/core/presentation/ui/render/projection/TextProjectionProtocol;
 	public abstract fun getMessageErrorProjection ()Lcom/tezov/tuucho/core/presentation/ui/render/projection/TextsProjectionProtocol;
 	public abstract fun getMessageLazyId ()Lkotlin/Lazy;
-	public abstract fun getSupportingTexts ()Ljava/util/List;
+	public abstract fun getSupportingTexts ()Landroidx/compose/runtime/MutableState;
 	public abstract fun getValidatorProjection ()Lcom/tezov/tuucho/core/presentation/ui/render/projection/form/FormValidatorProjectionProtocol;
 	public abstract fun setFieldValueProjection (Lcom/tezov/tuucho/core/presentation/ui/render/projection/TextProjectionProtocol;)V
 	public abstract fun setMessageErrorProjection (Lcom/tezov/tuucho/core/presentation/ui/render/projection/TextsProjectionProtocol;)V
@@ -253,7 +253,7 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/form/FormValidatorProjectionKt {
 	public static final fun createFormValidatorProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/form/FormValidatorProjectionProtocol;
-	public static final fun validator (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/form/FormValidatorProjectionProtocol;
+	public static final fun validators (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/form/FormValidatorProjectionProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/form/FormValidatorProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasResolveStatusProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol {
@@ -264,6 +264,7 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/message/MessageTextProjectionKt {
 	public static final fun createMessageTextProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageTextProjectionProtocol;
+	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageTextProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageTextProjectionProtocol;
 	public static final fun text (Lcom/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageTextProjectionProtocol;
 }
 
@@ -292,7 +293,7 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projector/Compon
 	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;)Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/ComponentProcessorProjectorProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/ComponentProcessorProjectorProtocol {
 	public fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/projector/ProcessorProjectorProtocol;
 }
 
@@ -304,7 +305,7 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projector/Messag
 	public static final fun message (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasIdProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/MessageProcessorProjectorProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasIdProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/MessageProcessorProjectorProtocol {
 	public abstract fun getLazyId ()Lkotlin/Lazy;
 	public fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;
 }
@@ -321,7 +322,7 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projector/TypePr
 	public static final fun style (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasContextualUpdaterProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/TypeProcessorProjectorProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasContextualUpdaterProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/projector/TypeProcessorProjectorProtocol {
 	public fun unaryPlus (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ProjectionProcessorProtocol;
 }
 
@@ -342,8 +343,8 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 	public abstract fun getId ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/HasRequestViewUpdateProtocol {
-	public abstract fun getRequestViewUpdateInvoker ()Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/HasReadyStatusInvalidateInvokerProtocol {
+	public abstract fun getReadyStatusInvalidateInvoker ()Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/HasResolveStatusProtocol {
@@ -359,18 +360,18 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 	public abstract fun process (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol {
-	public abstract fun invokeRequestViewUpdate ()V
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerProtocol {
+	public abstract fun invalidateReadyStatus ()V
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasRequestViewUpdateProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateSetterProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerSetterProtocol {
+	public abstract fun setReadyStatusInvalidateInvoker (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerProtocol;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateSetterProtocol {
-	public abstract fun setRequestViewUpdater (Lcom/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateInvokerProtocol;)V
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateProtocols : com/tezov/tuucho/core/presentation/ui/render/protocol/HasReadyStatusInvalidateInvokerProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerSetterProtocol {
 }
 
-public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasRequestViewUpdateProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/HasResolveStatusProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/RequestViewUpdateSetterProtocol {
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol : com/tezov/tuucho/core/presentation/ui/render/protocol/HasReadyStatusInvalidateInvokerProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/HasResolveStatusProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ReadyStatusInvalidateInvokerSetterProtocol {
 	public abstract fun update (Lkotlinx/serialization/json/JsonElement;)V
 }
 

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.presentation.ui.render.misc
 
 import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 
@@ -9,7 +9,7 @@ class ResolveStatusProcessor : ResolveStatusProcessorProtocol {
     override var hasBeenResolved: Boolean? = null
         private set
 
-    override var requestViewUpdateInvoker: RequestViewUpdateInvokerProtocol? = null
+    override var readyStatusInvalidateInvoker: ReadyStatusInvalidateInvokerProtocol? = null
         private set
 
     override fun update(
@@ -20,13 +20,13 @@ class ResolveStatusProcessor : ResolveStatusProcessorProtocol {
             hasBeenResolved = jsonElement.idSourceOrNull == null
         }
         if (previous != hasBeenResolved) {
-            requestViewUpdateInvoker?.invokeRequestViewUpdate()
+            readyStatusInvalidateInvoker?.invalidateReadyStatus()
         }
     }
 
-    override fun setRequestViewUpdater(
-        value: RequestViewUpdateInvokerProtocol
+    override fun setReadyStatusInvalidateInvoker(
+        value: ReadyStatusInvalidateInvokerProtocol
     ) {
-        requestViewUpdateInvoker = value
+        readyStatusInvalidateInvoker = value
     }
 }
