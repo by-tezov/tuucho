@@ -9,7 +9,7 @@
 
 [![Docs](https://img.shields.io/badge/Docs-tuucho.com-blue)](https://doc.tuucho.com/latest/)
 [![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin_Multiplatform-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org/docs/multiplatform.html)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.3.0-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Jenkins](https://img.shields.io/badge/Jenkins-Passing-2C2D72?logo=jenkins&logoColor=white)](https://jenkins.example.com/job/tuucho/)
 [![Ktlint 1.7.1](https://img.shields.io/badge/ktlint-1.7.1-blue.svg)](https://pinterest.github.io/ktlint/)
