@@ -1358,9 +1358,9 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.
         final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ContentSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope|null[0]
             constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
 
-            final var messageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageError|{}messageError[0]
-                final fun <get-messageError>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageError.<get-messageError>|<get-messageError>(){}[0]
-                final fun <set-messageError>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageError.<set-messageError>|<set-messageError>(kotlinx.serialization.json.JsonArray?){}[0]
+            final var messageErrors // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageErrors|{}messageErrors[0]
+                final fun <get-messageErrors>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageErrors.<get-messageErrors>|<get-messageErrors>(){}[0]
+                final fun <set-messageErrors>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageErrors.<set-messageErrors>|<set-messageErrors>(kotlinx.serialization.json.JsonArray?){}[0]
             final var placeholder // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.placeholder|{}placeholder[0]
                 final fun <get-placeholder>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
                 final fun <set-placeholder>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.placeholder.<set-placeholder>|<set-placeholder>(kotlinx.serialization.json.JsonObject?){}[0]
@@ -1370,8 +1370,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.
         }
 
         final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key|null[0]
-            final const val messageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.messageError|{}messageError[0]
-                final fun <get-messageError>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.messageError.<get-messageError>|<get-messageError>(){}[0]
+            final const val messageErrors // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.messageErrors|{}messageErrors[0]
+                final fun <get-messageErrors>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.messageErrors.<get-messageErrors>|<get-messageErrors>(){}[0]
             final const val placeholder // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.placeholder|{}placeholder[0]
                 final fun <get-placeholder>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
             final const val title // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.title|{}title[0]
@@ -1441,14 +1441,14 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.
         open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema.material/OptionSchema.OpenScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope|null[0]
             constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
 
-            final var validator // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validator|{}validator[0]
-                final fun <get-validator>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validator.<get-validator>|<get-validator>(){}[0]
-                final fun <set-validator>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validator.<set-validator>|<set-validator>(kotlinx.serialization.json.JsonArray?){}[0]
+            final var validators // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validators|{}validators[0]
+                final fun <get-validators>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validators.<get-validators>|<get-validators>(){}[0]
+                final fun <set-validators>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validators.<set-validators>|<set-validators>(kotlinx.serialization.json.JsonArray?){}[0]
         }
 
         final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key|null[0]
-            final const val validator // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key.validator|{}validator[0]
-                final fun <get-validator>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key.validator.<get-validator>|<get-validator>(){}[0]
+            final const val validators // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key.validators|{}validators[0]
+                final fun <get-validators>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key.validators.<get-validators>|<get-validators>(){}[0]
         }
     }
 }
@@ -1466,9 +1466,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.
         final var length // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length|{}length[0]
             final fun <get-length>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length.<get-length>|<get-length>(){}[0]
             final fun <set-length>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length.<set-length>|<set-length>(kotlin.String?){}[0]
-        final var messageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageError|{}messageError[0]
-            final fun <get-messageError>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageError.<get-messageError>|<get-messageError>(){}[0]
-            final fun <set-messageError>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageError.<set-messageError>|<set-messageError>(kotlinx.serialization.json.JsonObject?){}[0]
         final var messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId|{}messageErrorId[0]
             final fun <get-messageErrorId>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
             final fun <set-messageErrorId>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId.<set-messageErrorId>|<set-messageErrorId>(kotlin.String?){}[0]
@@ -1483,8 +1480,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key|null[0]
         final const val length // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.length|{}length[0]
             final fun <get-length>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.length.<get-length>|<get-length>(){}[0]
-        final const val messageError // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageError|{}messageError[0]
-            final fun <get-messageError>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageError.<get-messageError>|<get-messageError>(){}[0]
         final const val messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageErrorId|{}messageErrorId[0]
             final fun <get-messageErrorId>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
         final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.type|{}type[0]
@@ -1717,9 +1712,9 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.action/Ac
         final var id // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.id|{}id[0]
             final fun <get-id>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.id.<get-id>|<get-id>(){}[0]
             final fun <set-id>(kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.id.<set-id>|<set-id>(kotlinx.serialization.json.JsonElement?){}[0]
-        final var primary // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.primary|{}primary[0]
-            final fun <get-primary>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.primary.<get-primary>|<get-primary>(){}[0]
-            final fun <set-primary>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.primary.<set-primary>|<set-primary>(kotlinx.serialization.json.JsonArray?){}[0]
+        final var primaries // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.primaries|{}primaries[0]
+            final fun <get-primaries>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.primaries.<get-primaries>|<get-primaries>(){}[0]
+            final fun <set-primaries>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.primaries.<set-primaries>|<set-primaries>(kotlinx.serialization.json.JsonArray?){}[0]
         final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.type|{}type[0]
             final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.type.<get-type>|<get-type>(){}[0]
             final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.OpenScope.type.<set-type>|<set-type>(kotlin.String?){}[0]
@@ -1728,8 +1723,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.action/Ac
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key|null[0]
         final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.id|{}id[0]
             final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.id.<get-id>|<get-id>(){}[0]
-        final const val primary // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.primary|{}primary[0]
-            final fun <get-primary>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.primary.<get-primary>|<get-primary>(){}[0]
+        final const val primaries // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.primaries|{}primaries[0]
+            final fun <get-primaries>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.primaries.<get-primaries>|<get-primaries>(){}[0]
         final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.type|{}type[0]
             final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Key.type.<get-type>|<get-type>(){}[0]
     }
@@ -1738,180 +1733,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.action/Ac
         final object Group { // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Value.Group|null[0]
             final const val common // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Value.Group.common|{}common[0]
                 final fun <get-common>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.action/ActionSchema.Value.Group.common.<get-common>|<get-common>(){}[0]
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema|null[0]
-    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.root|{}root[0]
-        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.root.<get-root>|<get-root>(){}[0]
-
-    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.root|{}root[0]
-            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.root.<get-root>|<get-root>(){}[0]
-
-        final var backward // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.backward|{}backward[0]
-            final fun <get-backward>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.backward.<get-backward>|<get-backward>(){}[0]
-            final fun <set-backward>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.backward.<set-backward>|<set-backward>(kotlinx.serialization.json.JsonObject?){}[0]
-        final var forward // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.forward|{}forward[0]
-            final fun <get-forward>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.forward.<get-forward>|<get-forward>(){}[0]
-            final fun <set-forward>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.forward.<set-forward>|<set-forward>(kotlinx.serialization.json.JsonObject?){}[0]
-    }
-
-    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Key|null[0]
-        final const val backward // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Key.backward|{}backward[0]
-            final fun <get-backward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Key.backward.<get-backward>|<get-backward>(){}[0]
-        final const val forward // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Key.forward|{}forward[0]
-            final fun <get-forward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Key.forward.<get-forward>|<get-forward>(){}[0]
-    }
-
-    final object Set { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var enter // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.enter|{}enter[0]
-                final fun <get-enter>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.enter.<get-enter>|<get-enter>(){}[0]
-                final fun <set-enter>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.enter.<set-enter>|<set-enter>(kotlinx.serialization.json.JsonObject?){}[0]
-            final var exit // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.exit|{}exit[0]
-                final fun <get-exit>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.exit.<get-exit>|<get-exit>(){}[0]
-                final fun <set-exit>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.exit.<set-exit>|<set-exit>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key|null[0]
-            final const val enter // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.enter|{}enter[0]
-                final fun <get-enter>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.enter.<get-enter>|<get-enter>(){}[0]
-            final const val exit // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.exit|{}exit[0]
-                final fun <get-exit>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.exit.<get-exit>|<get-exit>(){}[0]
-        }
-    }
-
-    final object Spec { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-        }
-
-        open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var directionNavigation // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionNavigation|{}directionNavigation[0]
-                final fun <get-directionNavigation>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionNavigation.<get-directionNavigation>|<get-directionNavigation>(){}[0]
-                final fun <set-directionNavigation>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionNavigation.<set-directionNavigation>|<set-directionNavigation>(kotlin.String?){}[0]
-            final var directionScreen // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionScreen|{}directionScreen[0]
-                final fun <get-directionScreen>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionScreen.<get-directionScreen>|<get-directionScreen>(){}[0]
-                final fun <set-directionScreen>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionScreen.<set-directionScreen>|<set-directionScreen>(kotlin.String?){}[0]
-            final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.type|{}type[0]
-                final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.type.<get-type>|<get-type>(){}[0]
-                final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.type.<set-type>|<set-type>(kotlin.String?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key|null[0]
-            final const val directionNavigation // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionNavigation|{}directionNavigation[0]
-                final fun <get-directionNavigation>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionNavigation.<get-directionNavigation>|<get-directionNavigation>(){}[0]
-            final const val directionScreen // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionScreen|{}directionScreen[0]
-                final fun <get-directionScreen>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionScreen.<get-directionScreen>|<get-directionScreen>(){}[0]
-            final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.type|{}type[0]
-                final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.type.<get-type>|<get-type>(){}[0]
-        }
-
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value|null[0]
-            final object DirectionNavigation { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation|null[0]
-                final const val backward // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.backward|{}backward[0]
-                    final fun <get-backward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.backward.<get-backward>|<get-backward>(){}[0]
-                final const val forward // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.forward|{}forward[0]
-                    final fun <get-forward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.forward.<get-forward>|<get-forward>(){}[0]
-            }
-
-            final object DirectionScreen { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen|null[0]
-                final const val enter // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.enter|{}enter[0]
-                    final fun <get-enter>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.enter.<get-enter>|<get-enter>(){}[0]
-                final const val exit // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.exit|{}exit[0]
-                    final fun <get-exit>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.exit.<get-exit>|<get-exit>(){}[0]
-            }
-
-            final object Type { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type|null[0]
-                final const val fade // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.fade|{}fade[0]
-                    final fun <get-fade>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.fade.<get-fade>|<get-fade>(){}[0]
-                final const val none // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.none|{}none[0]
-                    final fun <get-none>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.none.<get-none>|<get-none>(){}[0]
-                final const val slideHorizontal // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideHorizontal|{}slideHorizontal[0]
-                    final fun <get-slideHorizontal>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideHorizontal.<get-slideHorizontal>|<get-slideHorizontal>(){}[0]
-                final const val slideVertical // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideVertical|{}slideVertical[0]
-                    final fun <get-slideVertical>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideVertical.<get-slideVertical>|<get-slideVertical>(){}[0]
-            }
-        }
-    }
-
-    final object SpecFade { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var alphaInitial // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.alphaInitial|{}alphaInitial[0]
-                final fun <get-alphaInitial>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.alphaInitial.<get-alphaInitial>|<get-alphaInitial>(){}[0]
-                final fun <set-alphaInitial>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.alphaInitial.<set-alphaInitial>|<set-alphaInitial>(kotlin.String?){}[0]
-            final var duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.duration|{}duration[0]
-                final fun <get-duration>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.duration.<get-duration>|<get-duration>(){}[0]
-                final fun <set-duration>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.duration.<set-duration>|<set-duration>(kotlin.String?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key|null[0]
-            final const val alphaInitial // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.alphaInitial|{}alphaInitial[0]
-                final fun <get-alphaInitial>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.alphaInitial.<get-alphaInitial>|<get-alphaInitial>(){}[0]
-            final const val duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.duration|{}duration[0]
-                final fun <get-duration>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.duration.<get-duration>|<get-duration>(){}[0]
-        }
-    }
-
-    final object SpecSlide { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.duration|{}duration[0]
-                final fun <get-duration>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.duration.<get-duration>|<get-duration>(){}[0]
-                final fun <set-duration>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.duration.<set-duration>|<set-duration>(kotlin.String?){}[0]
-            final var effect // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.effect|{}effect[0]
-                final fun <get-effect>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.effect.<get-effect>|<get-effect>(){}[0]
-                final fun <set-effect>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.effect.<set-effect>|<set-effect>(kotlin.String?){}[0]
-            final var entrance // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.entrance|{}entrance[0]
-                final fun <get-entrance>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.entrance.<get-entrance>|<get-entrance>(){}[0]
-                final fun <set-entrance>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.entrance.<set-entrance>|<set-entrance>(kotlin.String?){}[0]
-            final var exitDarkAlphaFactor // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.exitDarkAlphaFactor|{}exitDarkAlphaFactor[0]
-                final fun <get-exitDarkAlphaFactor>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.exitDarkAlphaFactor.<get-exitDarkAlphaFactor>|<get-exitDarkAlphaFactor>(){}[0]
-                final fun <set-exitDarkAlphaFactor>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.exitDarkAlphaFactor.<set-exitDarkAlphaFactor>|<set-exitDarkAlphaFactor>(kotlin.String?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key|null[0]
-            final const val duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.duration|{}duration[0]
-                final fun <get-duration>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.duration.<get-duration>|<get-duration>(){}[0]
-            final const val effect // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.effect|{}effect[0]
-                final fun <get-effect>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.effect.<get-effect>|<get-effect>(){}[0]
-            final const val entrance // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.entrance|{}entrance[0]
-                final fun <get-entrance>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.entrance.<get-entrance>|<get-entrance>(){}[0]
-            final const val exitDarkAlphaFactor // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.exitDarkAlphaFactor|{}exitDarkAlphaFactor[0]
-                final fun <get-exitDarkAlphaFactor>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.exitDarkAlphaFactor.<get-exitDarkAlphaFactor>|<get-exitDarkAlphaFactor>(){}[0]
-        }
-
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value|null[0]
-            final object Effect { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect|null[0]
-                final const val cover // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.cover|{}cover[0]
-                    final fun <get-cover>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.cover.<get-cover>|<get-cover>(){}[0]
-                final const val coverPush // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.coverPush|{}coverPush[0]
-                    final fun <get-coverPush>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.coverPush.<get-coverPush>|<get-coverPush>(){}[0]
-                final const val push // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.push|{}push[0]
-                    final fun <get-push>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.push.<get-push>|<get-push>(){}[0]
-            }
-
-            final object Entrance { // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance|null[0]
-                final const val fromBottom // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromBottom|{}fromBottom[0]
-                    final fun <get-fromBottom>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromBottom.<get-fromBottom>|<get-fromBottom>(){}[0]
-                final const val fromEnd // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromEnd|{}fromEnd[0]
-                    final fun <get-fromEnd>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromEnd.<get-fromEnd>|<get-fromEnd>(){}[0]
-                final const val fromStart // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromStart|{}fromStart[0]
-                    final fun <get-fromStart>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromStart.<get-fromStart>|<get-fromStart>(){}[0]
-                final const val fromTop // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromTop|{}fromTop[0]
-                    final fun <get-fromTop>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromTop.<get-fromTop>|<get-fromTop>(){}[0]
-            }
         }
     }
 }
@@ -2002,9 +1823,9 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.c
         final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.root|{}root[0]
             final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.root.<get-root>|<get-root>(){}[0]
 
-        final var definition // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.definition|{}definition[0]
-            final fun <get-definition>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.definition.<get-definition>|<get-definition>(){}[0]
-            final fun <set-definition>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.definition.<set-definition>|<set-definition>(kotlinx.serialization.json.JsonArray?){}[0]
+        final var definitions // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.definitions|{}definitions[0]
+            final fun <get-definitions>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.definitions.<get-definitions>|<get-definitions>(){}[0]
+            final fun <set-definitions>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.definitions.<set-definitions>|<set-definitions>(kotlinx.serialization.json.JsonArray?){}[0]
         final var extra // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.extra|{}extra[0]
             final fun <get-extra>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.extra.<get-extra>|<get-extra>(){}[0]
             final fun <set-extra>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Scope.extra.<set-extra>|<set-extra>(kotlinx.serialization.json.JsonObject?){}[0]
@@ -2063,8 +1884,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.c
     }
 
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Key|null[0]
-        final const val definition // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Key.definition|{}definition[0]
-            final fun <get-definition>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Key.definition.<get-definition>|<get-definition>(){}[0]
+        final const val definitions // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Key.definitions|{}definitions[0]
+            final fun <get-definitions>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Key.definitions.<get-definitions>|<get-definitions>(){}[0]
         final const val extra // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Key.extra|{}extra[0]
             final fun <get-extra>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSchema.Key.extra.<get-extra>|<get-extra>(){}[0]
     }
@@ -2101,6 +1922,180 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.c
         final object Type { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSelectorSchema.Value.Type|null[0]
             final const val pageBreadCrumb // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSelectorSchema.Value.Type.pageBreadCrumb|{}pageBreadCrumb[0]
                 final fun <get-pageBreadCrumb>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/ComponentSettingNavigationSelectorSchema.Value.Type.pageBreadCrumb.<get-pageBreadCrumb>|<get-pageBreadCrumb>(){}[0]
+        }
+    }
+}
+
+final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema|null[0]
+    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.root|{}root[0]
+        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.root.<get-root>|<get-root>(){}[0]
+
+    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.root|{}root[0]
+            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.root.<get-root>|<get-root>(){}[0]
+
+        final var backward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.backward|{}backward[0]
+            final fun <get-backward>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.backward.<get-backward>|<get-backward>(){}[0]
+            final fun <set-backward>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.backward.<set-backward>|<set-backward>(kotlinx.serialization.json.JsonObject?){}[0]
+        final var forward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.forward|{}forward[0]
+            final fun <get-forward>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.forward.<get-forward>|<get-forward>(){}[0]
+            final fun <set-forward>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Scope.forward.<set-forward>|<set-forward>(kotlinx.serialization.json.JsonObject?){}[0]
+    }
+
+    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Key|null[0]
+        final const val backward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Key.backward|{}backward[0]
+            final fun <get-backward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Key.backward.<get-backward>|<get-backward>(){}[0]
+        final const val forward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Key.forward|{}forward[0]
+            final fun <get-forward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Key.forward.<get-forward>|<get-forward>(){}[0]
+    }
+
+    final object Set { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set|null[0]
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+            final var enter // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.enter|{}enter[0]
+                final fun <get-enter>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.enter.<get-enter>|<get-enter>(){}[0]
+                final fun <set-enter>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.enter.<set-enter>|<set-enter>(kotlinx.serialization.json.JsonObject?){}[0]
+            final var exit // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.exit|{}exit[0]
+                final fun <get-exit>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.exit.<get-exit>|<get-exit>(){}[0]
+                final fun <set-exit>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Scope.exit.<set-exit>|<set-exit>(kotlinx.serialization.json.JsonObject?){}[0]
+        }
+
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key|null[0]
+            final const val enter // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.enter|{}enter[0]
+                final fun <get-enter>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.enter.<get-enter>|<get-enter>(){}[0]
+            final const val exit // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.exit|{}exit[0]
+                final fun <get-exit>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Set.Key.exit.<get-exit>|<get-exit>(){}[0]
+        }
+    }
+
+    final object Spec { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec|null[0]
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+        }
+
+        open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+            final var directionNavigation // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionNavigation|{}directionNavigation[0]
+                final fun <get-directionNavigation>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionNavigation.<get-directionNavigation>|<get-directionNavigation>(){}[0]
+                final fun <set-directionNavigation>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionNavigation.<set-directionNavigation>|<set-directionNavigation>(kotlin.String?){}[0]
+            final var directionScreen // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionScreen|{}directionScreen[0]
+                final fun <get-directionScreen>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionScreen.<get-directionScreen>|<get-directionScreen>(){}[0]
+                final fun <set-directionScreen>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.directionScreen.<set-directionScreen>|<set-directionScreen>(kotlin.String?){}[0]
+            final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.type|{}type[0]
+                final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.type.<get-type>|<get-type>(){}[0]
+                final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope.type.<set-type>|<set-type>(kotlin.String?){}[0]
+        }
+
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key|null[0]
+            final const val directionNavigation // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionNavigation|{}directionNavigation[0]
+                final fun <get-directionNavigation>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionNavigation.<get-directionNavigation>|<get-directionNavigation>(){}[0]
+            final const val directionScreen // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionScreen|{}directionScreen[0]
+                final fun <get-directionScreen>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.directionScreen.<get-directionScreen>|<get-directionScreen>(){}[0]
+            final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.type|{}type[0]
+                final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Key.type.<get-type>|<get-type>(){}[0]
+        }
+
+        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value|null[0]
+            final object DirectionNavigation { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation|null[0]
+                final const val backward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.backward|{}backward[0]
+                    final fun <get-backward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.backward.<get-backward>|<get-backward>(){}[0]
+                final const val forward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.forward|{}forward[0]
+                    final fun <get-forward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation.forward.<get-forward>|<get-forward>(){}[0]
+            }
+
+            final object DirectionScreen { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen|null[0]
+                final const val enter // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.enter|{}enter[0]
+                    final fun <get-enter>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.enter.<get-enter>|<get-enter>(){}[0]
+                final const val exit // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.exit|{}exit[0]
+                    final fun <get-exit>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen.exit.<get-exit>|<get-exit>(){}[0]
+            }
+
+            final object Type { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type|null[0]
+                final const val fade // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.fade|{}fade[0]
+                    final fun <get-fade>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.fade.<get-fade>|<get-fade>(){}[0]
+                final const val none // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.none|{}none[0]
+                    final fun <get-none>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.none.<get-none>|<get-none>(){}[0]
+                final const val slideHorizontal // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideHorizontal|{}slideHorizontal[0]
+                    final fun <get-slideHorizontal>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideHorizontal.<get-slideHorizontal>|<get-slideHorizontal>(){}[0]
+                final const val slideVertical // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideVertical|{}slideVertical[0]
+                    final fun <get-slideVertical>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.Value.Type.slideVertical.<get-slideVertical>|<get-slideVertical>(){}[0]
+            }
+        }
+    }
+
+    final object SpecFade { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade|null[0]
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+            final var alphaInitial // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.alphaInitial|{}alphaInitial[0]
+                final fun <get-alphaInitial>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.alphaInitial.<get-alphaInitial>|<get-alphaInitial>(){}[0]
+                final fun <set-alphaInitial>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.alphaInitial.<set-alphaInitial>|<set-alphaInitial>(kotlin.String?){}[0]
+            final var duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.duration|{}duration[0]
+                final fun <get-duration>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.duration.<get-duration>|<get-duration>(){}[0]
+                final fun <set-duration>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Scope.duration.<set-duration>|<set-duration>(kotlin.String?){}[0]
+        }
+
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key|null[0]
+            final const val alphaInitial // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.alphaInitial|{}alphaInitial[0]
+                final fun <get-alphaInitial>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.alphaInitial.<get-alphaInitial>|<get-alphaInitial>(){}[0]
+            final const val duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.duration|{}duration[0]
+                final fun <get-duration>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecFade.Key.duration.<get-duration>|<get-duration>(){}[0]
+        }
+    }
+
+    final object SpecSlide { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide|null[0]
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.Spec.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+            final var duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.duration|{}duration[0]
+                final fun <get-duration>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.duration.<get-duration>|<get-duration>(){}[0]
+                final fun <set-duration>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.duration.<set-duration>|<set-duration>(kotlin.String?){}[0]
+            final var effect // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.effect|{}effect[0]
+                final fun <get-effect>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.effect.<get-effect>|<get-effect>(){}[0]
+                final fun <set-effect>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.effect.<set-effect>|<set-effect>(kotlin.String?){}[0]
+            final var entrance // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.entrance|{}entrance[0]
+                final fun <get-entrance>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.entrance.<get-entrance>|<get-entrance>(){}[0]
+                final fun <set-entrance>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.entrance.<set-entrance>|<set-entrance>(kotlin.String?){}[0]
+            final var exitDarkAlphaFactor // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.exitDarkAlphaFactor|{}exitDarkAlphaFactor[0]
+                final fun <get-exitDarkAlphaFactor>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.exitDarkAlphaFactor.<get-exitDarkAlphaFactor>|<get-exitDarkAlphaFactor>(){}[0]
+                final fun <set-exitDarkAlphaFactor>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Scope.exitDarkAlphaFactor.<set-exitDarkAlphaFactor>|<set-exitDarkAlphaFactor>(kotlin.String?){}[0]
+        }
+
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key|null[0]
+            final const val duration // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.duration|{}duration[0]
+                final fun <get-duration>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.duration.<get-duration>|<get-duration>(){}[0]
+            final const val effect // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.effect|{}effect[0]
+                final fun <get-effect>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.effect.<get-effect>|<get-effect>(){}[0]
+            final const val entrance // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.entrance|{}entrance[0]
+                final fun <get-entrance>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.entrance.<get-entrance>|<get-entrance>(){}[0]
+            final const val exitDarkAlphaFactor // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.exitDarkAlphaFactor|{}exitDarkAlphaFactor[0]
+                final fun <get-exitDarkAlphaFactor>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Key.exitDarkAlphaFactor.<get-exitDarkAlphaFactor>|<get-exitDarkAlphaFactor>(){}[0]
+        }
+
+        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value|null[0]
+            final object Effect { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect|null[0]
+                final const val cover // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.cover|{}cover[0]
+                    final fun <get-cover>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.cover.<get-cover>|<get-cover>(){}[0]
+                final const val coverPush // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.coverPush|{}coverPush[0]
+                    final fun <get-coverPush>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.coverPush.<get-coverPush>|<get-coverPush>(){}[0]
+                final const val push // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.push|{}push[0]
+                    final fun <get-push>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect.push.<get-push>|<get-push>(){}[0]
+            }
+
+            final object Entrance { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance|null[0]
+                final const val fromBottom // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromBottom|{}fromBottom[0]
+                    final fun <get-fromBottom>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromBottom.<get-fromBottom>|<get-fromBottom>(){}[0]
+                final const val fromEnd // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromEnd|{}fromEnd[0]
+                    final fun <get-fromEnd>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromEnd.<get-fromEnd>|<get-fromEnd>(){}[0]
+                final const val fromStart // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromStart|{}fromStart[0]
+                    final fun <get-fromStart>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromStart.<get-fromStart>|<get-fromStart>(){}[0]
+                final const val fromTop // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromTop|{}fromTop[0]
+                    final fun <get-fromTop>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema/SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance.fromTop.<get-fromTop>|<get-fromTop>(){}[0]
+            }
         }
     }
 }
@@ -2311,8 +2306,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ColorSche
         final object Group { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ColorSchema.Value.Group|null[0]
             final const val common // com.tezov.tuucho.core.domain.business.jsonSchema.material/ColorSchema.Value.Group.common|{}common[0]
                 final fun <get-common>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ColorSchema.Value.Group.common.<get-common>|<get-common>(){}[0]
-            final const val palette // com.tezov.tuucho.core.domain.business.jsonSchema.material/ColorSchema.Value.Group.palette|{}palette[0]
-                final fun <get-palette>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ColorSchema.Value.Group.palette.<get-palette>|<get-palette>(){}[0]
         }
     }
 }
@@ -2462,10 +2455,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/Dimension
         final object Group { // com.tezov.tuucho.core.domain.business.jsonSchema.material/DimensionSchema.Value.Group|null[0]
             final const val common // com.tezov.tuucho.core.domain.business.jsonSchema.material/DimensionSchema.Value.Group.common|{}common[0]
                 final fun <get-common>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/DimensionSchema.Value.Group.common.<get-common>|<get-common>(){}[0]
-            final const val font // com.tezov.tuucho.core.domain.business.jsonSchema.material/DimensionSchema.Value.Group.font|{}font[0]
-                final fun <get-font>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/DimensionSchema.Value.Group.font.<get-font>|<get-font>(){}[0]
-            final const val padding // com.tezov.tuucho.core.domain.business.jsonSchema.material/DimensionSchema.Value.Group.padding|{}padding[0]
-                final fun <get-padding>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/DimensionSchema.Value.Group.padding.<get-padding>|<get-padding>(){}[0]
         }
     }
 }
@@ -2894,9 +2883,9 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendS
         final var allSucceed // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.allSucceed|{}allSucceed[0]
             final fun <get-allSucceed>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.allSucceed.<get-allSucceed>|<get-allSucceed>(){}[0]
             final fun <set-allSucceed>(kotlin/Boolean?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.allSucceed.<set-allSucceed>|<set-allSucceed>(kotlin.Boolean?){}[0]
-        final var failureResult // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResult|{}failureResult[0]
-            final fun <get-failureResult>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResult.<get-failureResult>|<get-failureResult>(){}[0]
-            final fun <set-failureResult>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResult.<set-failureResult>|<set-failureResult>(kotlinx.serialization.json.JsonArray?){}[0]
+        final var failureResults // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResults|{}failureResults[0]
+            final fun <get-failureResults>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResults.<get-failureResults>|<get-failureResults>(){}[0]
+            final fun <set-failureResults>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.failureResults.<set-failureResults>|<set-failureResults>(kotlinx.serialization.json.JsonArray?){}[0]
         final var subset // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.subset|{}subset[0]
             final fun <get-subset>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.subset.<get-subset>|<get-subset>(){}[0]
             final fun <set-subset>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Scope.subset.<set-subset>|<set-subset>(kotlin.String?){}[0]
@@ -2956,8 +2945,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendS
             final fun <get-action>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.action.<get-action>|<get-action>(){}[0]
         final const val allSucceed // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.allSucceed|{}allSucceed[0]
             final fun <get-allSucceed>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.allSucceed.<get-allSucceed>|<get-allSucceed>(){}[0]
-        final const val failureResult // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.failureResult|{}failureResult[0]
-            final fun <get-failureResult>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.failureResult.<get-failureResult>|<get-failureResult>(){}[0]
+        final const val failureResults // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.failureResults|{}failureResults[0]
+            final fun <get-failureResults>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.failureResults.<get-failureResults>|<get-failureResults>(){}[0]
         final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.subset|{}subset[0]
             final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.subset.<get-subset>|<get-subset>(){}[0]
         final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.response/FormSendSchema.Key.type|{}type[0]
