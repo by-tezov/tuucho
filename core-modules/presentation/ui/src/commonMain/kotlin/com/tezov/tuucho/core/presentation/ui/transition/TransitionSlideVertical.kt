@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema.SpecSlide.Value.Effect
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema.SpecSlide.Value.Entrance
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition

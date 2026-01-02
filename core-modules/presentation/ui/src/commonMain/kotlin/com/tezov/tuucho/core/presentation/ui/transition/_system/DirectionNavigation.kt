@@ -3,7 +3,7 @@
 package com.tezov.tuucho.core.presentation.ui.transition._system
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import kotlinx.serialization.json.JsonObject
 

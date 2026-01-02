@@ -2,7 +2,7 @@
   "root": {
     "setting": {
       "navigation": {
-        "definition": {
+        "definitions": {
           "option": {
             "clear-stack": true,
             "single": true
@@ -32,24 +32,24 @@
           "id": "input-field-login",
           "subset": "form-field",
           "option": {
-            "form-validator": "string-not-null"
+            "form-validators": "string-not-null"
           },
           "content": {
             "title": "Login",
             "placeholder": "login",
-            "message-error": "can not be null"
+            "message-errors": "can not be null"
           }
         },
         {
           "id": "input-field-password",
           "subset": "form-field",
           "option": {
-            "form-validator": "string-not-null"
+            "form-validators": "string-not-null"
           },
           "content": {
             "title": "Password",
             "placeholder": "password",
-            "message-error": "can not be null"
+            "message-errors": "can not be null"
           }
         },
         "*item-spacer",
@@ -140,7 +140,7 @@
   "actions": {
     "button": {
       "confirm": {
-        "primary": "form://send-url/form-from-page-login",
+        "primaries": "form://send-url/form-from-page-login",
         "validated": "navigate://url/auth/page-home"
       }
     }

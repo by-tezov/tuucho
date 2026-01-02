@@ -20,7 +20,7 @@ class OptionFormFieldValidatorRectifierMatcher : RectifierMatcherProtocol {
         path: JsonElementPath,
         element: JsonElement
     ): Boolean {
-        if (!path.lastSegmentIs(FormSchema.Option.Key.validator)) return false
+        if (!path.lastSegmentIs(FormSchema.Option.Key.validators)) return false
         val parent = element.find(path.parent())
         return parent.isTypeOf(TypeSchema.Value.option) &&
             parent.isSubsetOf(FormFieldSchema.Component.Value.subset)

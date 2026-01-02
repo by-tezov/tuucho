@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Size
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.ui.transition._system.AbstractModifierTransition
 import com.tezov.tuucho.core.presentation.ui.transition._system.DirectionScreen

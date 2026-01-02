@@ -7,7 +7,7 @@
   "root": {
     "setting": {
       "navigation": {
-        "definition": [
+        "definitions": [
           {
             "option": {
               "single": true

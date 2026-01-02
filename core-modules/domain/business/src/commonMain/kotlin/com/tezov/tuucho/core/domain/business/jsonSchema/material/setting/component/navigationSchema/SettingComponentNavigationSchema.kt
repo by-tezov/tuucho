@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compon
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -12,7 +11,7 @@ object ComponentSettingNavigationSchema {
 
     object Key {
         const val extra = Extra.root
-        const val definition = Definition.root
+        const val definitions = Definition.root
     }
 
     class Scope(
@@ -21,7 +20,7 @@ object ComponentSettingNavigationSchema {
         override val root = ComponentSettingSchema.root
 
         var extra by delegate<JsonObject?>(Key.extra)
-        var definition by delegate<JsonArray?>(Key.definition)
+        var definitions by delegate<JsonArray?>(Key.definitions)
     }
 
     object Extra {
@@ -41,7 +40,7 @@ object ComponentSettingNavigationSchema {
     }
 
     object Definition {
-        const val root = "definition"
+        const val root = "definitions"
 
         object Key {
             const val selector = ComponentSettingNavigationSelectorSchema.root

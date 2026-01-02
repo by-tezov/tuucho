@@ -17,7 +17,7 @@ object FormSchema {
 
     object Option {
         object Key {
-            const val validator = FormValidatorSchema.root
+            const val validators = FormValidatorSchema.root
         }
 
         class Scope(
@@ -27,7 +27,7 @@ object FormSchema {
         open class OpenScope<T : OpenScope<T>>(
             argument: SchemaScopeArgument
         ) : OptionSchema.OpenScope<T>(argument) {
-            var validator by delegate<JsonArray?>(Key.validator)
+            var validators by delegate<JsonArray?>(Key.validators)
         }
     }
 

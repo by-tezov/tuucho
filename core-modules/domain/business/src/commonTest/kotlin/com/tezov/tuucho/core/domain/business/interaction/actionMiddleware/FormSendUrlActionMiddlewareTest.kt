@@ -476,7 +476,7 @@ class FormSendUrlActionMiddlewareTest {
         val responseObject = buildJsonObject {
             put(FormSendSchema.Key.subset, FormSendSchema.Value.subset)
             put(FormSendSchema.Key.allSucceed, false)
-            put(FormSendSchema.Key.failureResult, failureResultArray)
+            put(FormSendSchema.Key.failureResults, failureResultArray)
             put(
                 FormSendSchema.Key.action,
                 buildJsonObject {

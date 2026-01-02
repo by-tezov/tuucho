@@ -35,7 +35,7 @@ class FormValidatorFactoryUseCaseTest {
             put(FormValidatorSchema.Key.type, type)
             length?.let { put(FormValidatorSchema.Key.length, it) }
             value?.let { put(FormValidatorSchema.Key.value, it) }
-            put(FormValidatorSchema.Key.messageError, buildJsonObject { put("msg", "err") })
+            put(FormValidatorSchema.Key.messageErrors, buildJsonObject { put("msg", "err") })
         }
     )
 

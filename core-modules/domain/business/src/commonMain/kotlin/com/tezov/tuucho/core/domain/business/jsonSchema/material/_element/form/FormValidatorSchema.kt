@@ -4,15 +4,13 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import kotlinx.serialization.json.JsonObject
 
 object FormValidatorSchema {
-    const val root = "form-validator"
+    const val root = "form-validators"
 
     object Key {
         const val type = "type"
         const val messageErrorId = "message-error-id"
-        const val messageError = "message-error"
 
         const val length = "length"
         const val value = "value"
@@ -38,7 +36,6 @@ object FormValidatorSchema {
 
         var type by delegate<String?>(Key.type)
         var messageErrorId by delegate<String?>(Key.messageErrorId)
-        var messageError by delegate<JsonObject?>(Key.messageError)
 
         var length by delegate<String?>(Key.length)
         var value by delegate<String?>(Key.value)

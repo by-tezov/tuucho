@@ -20,7 +20,7 @@ object FormFieldSchema {
         object Key {
             const val title = "title"
             const val placeholder = "placeholder"
-            const val messageError = "message-error"
+            const val messageErrors = "message-errors"
         }
 
         class Scope(
@@ -28,7 +28,7 @@ object FormFieldSchema {
         ) : ContentSchema.OpenScope<Scope>(argument) {
             var title by delegate<JsonObject?>(Key.title)
             var placeholder by delegate<JsonObject?>(Key.placeholder)
-            var messageError by delegate<JsonArray?>(Key.messageError)
+            var messageErrors by delegate<JsonArray?>(Key.messageErrors)
         }
     }
 

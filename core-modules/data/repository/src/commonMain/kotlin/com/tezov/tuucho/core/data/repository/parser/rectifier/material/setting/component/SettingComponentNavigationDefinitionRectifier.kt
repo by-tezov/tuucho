@@ -4,11 +4,11 @@ import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.componentSetting.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSelectorSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionNavigation
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.DirectionScreen
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
@@ -30,7 +30,7 @@ class SettingComponentNavigationDefinitionRectifier(
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
-    ): Boolean = path.lastSegmentIs(ComponentSettingNavigationSchema.Key.definition)
+    ): Boolean = path.lastSegmentIs(ComponentSettingNavigationSchema.Key.definitions)
 
     override fun beforeAlterObject(
         path: JsonElementPath,

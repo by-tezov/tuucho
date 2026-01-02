@@ -48,7 +48,7 @@ internal class SendFormLoginService(
                 body = """{
                   "subset" : "form",
                   "all-succeed": true,
-                  "failure-result": "*server-failure",
+                  "failure-results": "*server-failure",
                   "action": {
                     "before": "store://key-value/save?login-authorization=${token}"
                   }

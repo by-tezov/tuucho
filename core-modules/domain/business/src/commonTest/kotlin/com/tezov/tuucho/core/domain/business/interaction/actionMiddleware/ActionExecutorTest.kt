@@ -238,7 +238,7 @@ class ActionExecutorTest {
         val actionModel = ActionModelDomain.from(actionString)
 
         val actionObject = buildJsonObject {
-            put("primary", JsonArray(listOf(JsonPrimitive(actionString))))
+            put("primaries", JsonArray(listOf(JsonPrimitive(actionString))))
         }
 
         every { middlewareFirst.accept(null, actionModel) } returns true
@@ -300,7 +300,7 @@ class ActionExecutorTest {
 
         val actionObject = buildJsonObject {
             put(
-                "primary",
+                "primaries",
                 JsonArray(
                     listOf(
                         JsonPrimitive(actionStringFirst),

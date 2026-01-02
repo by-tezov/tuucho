@@ -23,14 +23,14 @@ import org.koin.core.scope.Scope
 class ContentFormFieldTextErrorRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-    override val key = FormFieldSchema.Content.Key.messageError
+    override val key = FormFieldSchema.Content.Key.messageErrors
     private val textRectifier: TextRectifier by inject()
 
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
     ): Boolean {
-        if (!path.lastSegmentIs(FormFieldSchema.Content.Key.messageError)) return false
+        if (!path.lastSegmentIs(FormFieldSchema.Content.Key.messageErrors)) return false
         val parent = element.find(path.parent())
         return parent.isSubsetOf(FormFieldSchema.Component.Value.subset) &&
             parent.isTypeOf(TypeSchema.Value.content)

@@ -17,7 +17,7 @@ object FormSendSchema {
         const val subset = SubsetSchema.root
 
         const val allSucceed = "all-succeed"
-        const val failureResult = FailureResult.root
+        const val failureResults = FailureResult.root
         const val action = ActionSchema.root
     }
 
@@ -30,12 +30,12 @@ object FormSendSchema {
         var subset by delegate<String?>(Key.subset)
 
         var allSucceed by delegate<Boolean?>(Key.allSucceed)
-        var failureResult by delegate<JsonArray?>(Key.failureResult)
+        var failureResults by delegate<JsonArray?>(Key.failureResults)
         var action by delegate<JsonObject?>(Key.action)
     }
 
     object FailureResult {
-        const val root = "failure-result"
+        const val root = "failure-results"
 
         object Key {
             const val id = IdSchema.root

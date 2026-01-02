@@ -14,7 +14,7 @@ object ActionSchema {
         const val id = IdSchema.root
         const val type = TypeSchema.root
 
-        const val primary = "primary"
+        const val primaries = "primaries"
     }
 
     object Value {
@@ -35,6 +35,6 @@ object ActionSchema {
         var id by delegate<JsonElement>(Key.id)
         var type by delegate<String?>(Key.type)
 
-        var primary by delegate<JsonArray?>(Key.primary)
+        var primaries by delegate<JsonArray?>(Key.primaries)
     }
 }
