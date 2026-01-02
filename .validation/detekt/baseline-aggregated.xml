@@ -167,6 +167,7 @@
     <ID>UnusedParameter:ModifierConditionnal.kt$ModifierChainBuilder$next: ModifierChainBuilder</ID>
     <ID>UseCheckOrError:AbstractAnimationCompound.kt$AbstractAnimationCompound.AnimatorIdle$throw IllegalStateException("Should never be called!")</ID>
     <!-- ************ Project: :core.presentation.ui ************ -->
+    <ID>ForbiddenComment:ReadyStatusInvalidateProtocol.kt$// TODO: not scalable, check the TODO to do something better. Will do the job for now</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: (() -&gt; Unit)? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
     <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: (() -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>
@@ -195,14 +196,14 @@
     <ID>MagicNumber:ColorExtension.kt$8</ID>
     <ID>MagicNumber:LayoutLinearPreview.kt$LayoutLinearPreviewDataProvider$0.5f</ID>
     <ID>MagicNumber:TransitionSlideVertical.kt$TransitionSlideVertical.LayerSlideModifier$4</ID>
-    <ID>MatchingDeclarationName:ComponentProjector.kt$ComponentProjectorProtocols : IdProcessorProtocolComponentProcessorProjectorProtocolRequestViewUpdateProtocols</ID>
+    <ID>MatchingDeclarationName:ComponentProjector.kt$ComponentProjectorProtocols : IdProcessorProtocolResolveStatusProcessorProtocolComponentProcessorProjectorProtocolReadyStatusInvalidateProtocols</ID>
     <ID>MatchingDeclarationName:FormStateProjection.kt$FormStateProjectionProtocol : FormStateProtocol</ID>
     <ID>MatchingDeclarationName:FormValidatorProjection.kt$FormValidatorProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
-    <ID>MatchingDeclarationName:MessageProjector.kt$MessageProjectorProtocols : MessageProcessorProjectorProtocolRequestViewUpdateProtocolsHasIdProtocol</ID>
+    <ID>MatchingDeclarationName:MessageProjector.kt$MessageProjectorProtocols : MessageProcessorProjectorProtocolReadyStatusInvalidateProtocolsHasIdProtocol</ID>
     <ID>MatchingDeclarationName:TextsProjection.kt$TextsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
     <ID>MatchingDeclarationName:TransitionModifier.kt$AbstractModifierTransition : Modifier</ID>
     <ID>MatchingDeclarationName:TuuchoAnnotations.kt$TuuchoUiDsl</ID>
-    <ID>MatchingDeclarationName:TypeProjector.kt$TypeProjectorProtocols : IdProcessorProtocolTypeProcessorProjectorProtocolHasContextualUpdaterProtocolRequestViewUpdateProtocols</ID>
+    <ID>MatchingDeclarationName:TypeProjector.kt$TypeProjectorProtocols : IdProcessorProtocolTypeProcessorProjectorProtocolHasContextualUpdaterProtocolReadyStatusInvalidateProtocols</ID>
     <ID>MatchingDeclarationName:ViewsProjection.kt$ViewsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
     <ID>MaxLineLength:FormStateProjection.kt$FormStateProjection$?:</ID>
     <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>

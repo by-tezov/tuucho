@@ -30,7 +30,7 @@ private class ComponentProjector(
     private val statusProcessor: ResolveStatusProcessorProtocol
 ) : ComponentProjectorProtocols,
     IdProcessorProtocol by idProcessor,
-    ResolveStatusProcessorProtocol by statusProcessor{
+    ResolveStatusProcessorProtocol by statusProcessor {
     private val projectors: MutableList<ProcessorProjectorProtocol> = mutableListOf()
 
     override var readyStatusInvalidateInvoker: ReadyStatusInvalidateInvokerProtocol? = null
