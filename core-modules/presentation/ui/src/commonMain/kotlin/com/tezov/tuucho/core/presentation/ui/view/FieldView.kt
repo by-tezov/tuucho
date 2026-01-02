@@ -23,8 +23,9 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ValueStorageProje
 import com.tezov.tuucho.core.presentation.ui.render.projection.form.FormStateProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.form.FormValidatorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.form.field
-import com.tezov.tuucho.core.presentation.ui.render.projection.form.validator
+import com.tezov.tuucho.core.presentation.ui.render.projection.form.validators
 import com.tezov.tuucho.core.presentation.ui.render.projection.message.MessageTextProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.message.mutable
 import com.tezov.tuucho.core.presentation.ui.render.projection.message.text
 import com.tezov.tuucho.core.presentation.ui.render.projection.mutable
 import com.tezov.tuucho.core.presentation.ui.render.projection.text
@@ -82,21 +83,21 @@ private class FieldView(
     private lateinit var titleValue: TextProjectionProtocol
     private lateinit var placeholderValue: TextProjectionProtocol
     private lateinit var fieldValue: TextProjectionProtocol
-    private lateinit var messageError: TextsProjectionProtocol
+    private lateinit var messageErrors: TextsProjectionProtocol
     private lateinit var messageErrorExtra: MessageTextProjectionProtocol
-    private lateinit var validator: FormValidatorProjectionProtocol
+    private lateinit var validators: FormValidatorProjectionProtocol
     private lateinit var formState: FormStateProjectionProtocol
 
     override val extensionFormState get() = formState
 
     override suspend fun createComponentProjector() = componentProjector {
         +option {
-            validator = +validator(FormSchema.Option.Key.validators)
+            validators = +validators(FormSchema.Option.Key.validators)
         }.contextual
         +content {
             titleValue = +text(FormFieldSchema.Content.Key.title).mutable
             placeholderValue = +text(FormFieldSchema.Content.Key.placeholder).mutable
-            messageError = +texts(FormFieldSchema.Content.Key.messageErrors)
+            messageErrors = +texts(FormFieldSchema.Content.Key.messageErrors)
         }.contextual
         +state {
             fieldValue = +text(FormFieldSchema.State.Key.initialValue).mutable
@@ -105,12 +106,12 @@ private class FieldView(
             FormSchema.Message.Value.Subset.updateErrorState,
             onReceived = ::onReceivedUpdateErrorMessage
         ) {
-            messageErrorExtra = +text(FormSchema.Message.Key.messageErrorExtra)
+            messageErrorExtra = +text(FormSchema.Message.Key.messageErrorExtra).mutable
         }
         formState = field().apply {
             messageLazyId = message.lazyId
-            messageErrorProjection = messageError
-            validatorProjection = validator
+            messageErrorProjection = messageErrors
+            validatorProjection = validators
             fieldValueProjection = fieldValue
         }
     }.contextual
@@ -121,9 +122,9 @@ private class FieldView(
 
     override fun getResolvedStatus() = titleValue.hasBeenResolved.isTrueOrNull &&
         placeholderValue.hasBeenResolved.isTrueOrNull &&
-        messageError.hasBeenResolved.isTrueOrNull &&
+        messageErrors.hasBeenResolved.isTrueOrNull &&
         messageErrorExtra.hasBeenResolved.isTrueOrNull &&
-        validator.hasBeenResolved.isTrueOrNull
+        validators.hasBeenResolved.isTrueOrNull
 
     @Composable
     override fun displayComponent(
@@ -134,7 +135,7 @@ private class FieldView(
             showError = showError,
             titleValue = titleValue.value,
             placeholderValue = placeholderValue.value,
-            supportingTexts = formState.supportingTexts,
+            supportingTexts = formState.supportingTexts.value,
             messageErrorExtra = messageErrorExtra.value
         )
     }

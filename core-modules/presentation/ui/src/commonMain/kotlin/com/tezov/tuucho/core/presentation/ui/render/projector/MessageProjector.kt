@@ -9,9 +9,8 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterPr
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasIdProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateInvokerProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateSetterProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.MessageProcessorProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -19,7 +18,7 @@ import kotlinx.serialization.json.JsonObject
 @TuuchoUiDsl
 interface MessageProjectorProtocols :
     MessageProcessorProjectorProtocol,
-    RequestViewUpdateProtocols,
+    ReadyStatusInvalidateProtocols,
     HasIdProtocol {
     val lazyId: Lazy<String?>
 
@@ -38,7 +37,7 @@ private class MessageProjector(
 
     override val type = TypeSchema.Value.message
 
-    override var requestViewUpdateInvoker: RequestViewUpdateInvokerProtocol? = null
+    override var readyStatusInvalidateInvoker: ReadyStatusInvalidateInvokerProtocol? = null
         private set
 
     override fun add(
@@ -48,9 +47,6 @@ private class MessageProjector(
             throw UiException.Default("Error, key ${projection.key} already exist for type $type")
         }
         projections[projection.key] = projection
-        (projection as? RequestViewUpdateSetterProtocol)?.let { status ->
-            status.setRequestViewUpdater(value = { requestViewUpdateInvoker?.invokeRequestViewUpdate() })
-        }
     }
 
     override suspend fun process(
@@ -68,14 +64,14 @@ private class MessageProjector(
         onReceived.invoke()
     }
 
-    override fun setRequestViewUpdater(
-        value: RequestViewUpdateInvokerProtocol
+    override fun setReadyStatusInvalidateInvoker(
+        value: ReadyStatusInvalidateInvokerProtocol
     ) {
-        requestViewUpdateInvoker = value
+        readyStatusInvalidateInvoker = value
     }
 
-    override fun invokeRequestViewUpdate() {
-        requestViewUpdateInvoker?.invokeRequestViewUpdate()
+    override fun invalidateReadyStatus() {
+        readyStatusInvalidateInvoker?.invalidateReadyStatus()
     }
 }
 

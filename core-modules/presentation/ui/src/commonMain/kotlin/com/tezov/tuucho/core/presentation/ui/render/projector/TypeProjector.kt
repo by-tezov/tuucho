@@ -8,9 +8,9 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterPr
 import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateInvokerProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.RequestViewUpdateSetterProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerSetterProtocol
+import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.TypeProcessorProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -20,7 +20,7 @@ interface TypeProjectorProtocols :
     IdProcessorProtocol,
     TypeProcessorProjectorProtocol,
     HasContextualUpdaterProtocol,
-    RequestViewUpdateProtocols {
+    ReadyStatusInvalidateProtocols {
     operator fun <T : ProjectionProcessorProtocol> T.unaryPlus() = this.also { add(it) }
 }
 
@@ -31,7 +31,7 @@ private class TypeProjector(
     IdProcessorProtocol by idProcessor {
     private val projections = mutableMapOf<String, ProjectionProcessorProtocol>()
 
-    override var requestViewUpdateInvoker: RequestViewUpdateInvokerProtocol? = null
+    override var readyStatusInvalidateInvoker: ReadyStatusInvalidateInvokerProtocol? = null
         private set
 
     override val contextualUpdater: List<ContextualUpdaterProcessorProtocol>
@@ -50,8 +50,8 @@ private class TypeProjector(
             throw UiException.Default("Error, key ${projection.key} already exist for type $type")
         }
         projections[projection.key] = projection
-        (projection as? RequestViewUpdateSetterProtocol)?.let { status ->
-            status.setRequestViewUpdater(value = { requestViewUpdateInvoker?.invokeRequestViewUpdate() })
+        (projection as? ReadyStatusInvalidateInvokerSetterProtocol)?.let { status ->
+            status.setReadyStatusInvalidateInvoker(value = { readyStatusInvalidateInvoker?.invalidateReadyStatus() })
         }
     }
 
@@ -68,14 +68,14 @@ private class TypeProjector(
         }
     }
 
-    override fun setRequestViewUpdater(
-        value: RequestViewUpdateInvokerProtocol
+    override fun setReadyStatusInvalidateInvoker(
+        value: ReadyStatusInvalidateInvokerProtocol
     ) {
-        requestViewUpdateInvoker = value
+        readyStatusInvalidateInvoker = value
     }
 
-    override fun invokeRequestViewUpdate() {
-        requestViewUpdateInvoker?.invokeRequestViewUpdate()
+    override fun invalidateReadyStatus() {
+        readyStatusInvalidateInvoker?.invalidateReadyStatus()
     }
 }
 

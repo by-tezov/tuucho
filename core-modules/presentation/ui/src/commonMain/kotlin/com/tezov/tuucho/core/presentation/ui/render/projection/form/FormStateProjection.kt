@@ -1,12 +1,14 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.form
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextsProjectionProtocol
 
 interface FormStateProjectionProtocol : FormStateProtocol {
-    val supportingTexts: List<String>?
+    val supportingTexts: MutableState<List<String>?>
 
     var messageLazyId: Lazy<String?>
     var messageErrorProjection: TextsProjectionProtocol
@@ -21,7 +23,7 @@ private class FormStateProjection : FormStateProjectionProtocol {
     override lateinit var validatorProjection: FormValidatorProjectionProtocol
     override lateinit var fieldValueProjection: TextProjectionProtocol
 
-    override var supportingTexts: List<String>? = null
+    override var supportingTexts: MutableState<List<String>?> = mutableStateOf(null)
 
     override fun updateValidity() {
         validatorProjection.updateValidity(getValue())
@@ -35,7 +37,7 @@ private class FormStateProjection : FormStateProjectionProtocol {
     override fun getValue() = fieldValueProjection.value
 
     private fun updateSupportingText() {
-        supportingTexts = buildList {
+        supportingTexts.value = buildList {
             validatorProjection.validators.forEach { validator ->
                 if (!validator.isValid) {
                     val messageObject = validator.errorMessagesId?.let {

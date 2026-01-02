@@ -75,6 +75,6 @@ fun createFormValidatorProjection(
     key = key,
 )
 
-fun TypeProjectorProtocols.validator(
+fun TypeProjectorProtocols.validators(
     key: String,
 ): FormValidatorProjectionProtocol = createFormValidatorProjection(key)
