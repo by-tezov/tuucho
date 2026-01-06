@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.view
+package com.tezov.tuucho.ui_component.stable.presentation.view
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
@@ -9,8 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema.Component
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema.Style
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui._system.subset
@@ -21,8 +19,11 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.float
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
+import com.tezov.tuucho.core.presentation.ui.view.AbstractView
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
+import com.tezov.tuucho.ui_component.stable.domain.jsonSchema.material.SpacerSchema.Component
+import com.tezov.tuucho.ui_component.stable.domain.jsonSchema.material.SpacerSchema.Style
 import kotlinx.serialization.json.JsonObject
 
 interface SpacerViewProtocol : ViewProtocol {

@@ -31,17 +31,17 @@ package com.tezov.tuucho.core.domain.tool.annotation
 )
 annotation class TuuchoInternalApi
 
-@Suppress("ktlint:standard:max-line-length")
-@RequiresOptIn(
-    message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API.",
-    level = RequiresOptIn.Level.WARNING
-)
-@Target(
-    AnnotationTarget.CLASS,
-    AnnotationTarget.TYPEALIAS,
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY,
-    AnnotationTarget.FIELD,
-    AnnotationTarget.CONSTRUCTOR,
-)
-annotation class TuuchoExperimentalAPI
+// @Suppress("ktlint:standard:max-line-length")
+// @RequiresOptIn(
+//    message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API.",
+//    level = RequiresOptIn.Level.WARNING
+// )
+// @Target(
+//    AnnotationTarget.CLASS,
+//    AnnotationTarget.TYPEALIAS,
+//    AnnotationTarget.FUNCTION,
+//    AnnotationTarget.PROPERTY,
+//    AnnotationTarget.FIELD,
+//    AnnotationTarget.CONSTRUCTOR,
+// )
+// annotation class TuuchoExperimentalAPI

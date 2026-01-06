@@ -1,33 +1,35 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.component
 
-import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ContentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
-import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
+sealed class ComponentAssociation {
+    object Rectifier : ComponentAssociation()
+}
+
 class ComponentRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
     override val key = ""
 
-    override val childProcessors: List<AbstractRectifier> by inject(
-        RectifierModule.Name.Processor.COMPONENT
-    )
+    override val childProcessors: List<RectifierProtocol> by lazy {
+        scope.getAllAssociated(ComponentAssociation.Rectifier::class)
+    }
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,

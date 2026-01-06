@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.option.Op
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -16,7 +15,6 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
 class OptionAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {

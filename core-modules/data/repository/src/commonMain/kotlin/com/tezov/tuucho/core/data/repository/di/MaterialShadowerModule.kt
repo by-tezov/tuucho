@@ -8,8 +8,9 @@ import com.tezov.tuucho.core.data.repository.parser.shadower.StateShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.TextShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 
 internal object MaterialShadowerModule {
@@ -30,7 +31,7 @@ internal object MaterialShadowerModule {
     }
 
     fun invoke() = module(ModuleGroupData.Shadower) {
-        single<MaterialShadower> { MaterialShadower() }
+        singleOf(::MaterialShadower)
 
         componentModule()
         contentModule()
@@ -39,7 +40,7 @@ internal object MaterialShadowerModule {
     }
 
     private fun Module.componentModule() {
-        single<ComponentShadower> { ComponentShadower() }
+        singleOf(::ComponentShadower)
 
         single<List<MatcherShadowerProtocol>>(Name.Matcher.COMPONENT) {
             listOf(
@@ -55,7 +56,7 @@ internal object MaterialShadowerModule {
     }
 
     private fun Module.contentModule() {
-        single<ContentShadower> { ContentShadower() }
+        singleOf(::ContentShadower)
 
         single<List<MatcherShadowerProtocol>>(Name.Matcher.CONTENT) {
             emptyList()
@@ -70,7 +71,7 @@ internal object MaterialShadowerModule {
     }
 
     private fun Module.stateModule() {
-        single<StateShadower> { StateShadower() }
+        singleOf(::StateShadower)
 
         single<List<MatcherShadowerProtocol>>(Name.Matcher.STATE) {
             emptyList()
@@ -82,7 +83,7 @@ internal object MaterialShadowerModule {
     }
 
     private fun Module.textModule() {
-        single<TextShadower> { TextShadower() }
+        singleOf(::TextShadower)
 
         single<List<MatcherShadowerProtocol>>(Name.Matcher.TEXT) {
             emptyList()

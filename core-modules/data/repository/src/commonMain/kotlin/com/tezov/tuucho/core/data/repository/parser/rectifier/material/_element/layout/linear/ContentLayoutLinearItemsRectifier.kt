@@ -5,7 +5,6 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout.LayoutLinearSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -15,7 +14,6 @@ import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
 class ContentLayoutLinearItemsRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {

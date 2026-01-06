@@ -1,6 +1,4 @@
-@file:Suppress("ktlint:standard:package-name")
-
-package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.spacer
+package com.tezov.tuucho.ui_component.stable.data.parser.rectifier.material.spacer
 
 import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
@@ -8,16 +6,15 @@ import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIsAny
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.SpacerSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
+import com.tezov.tuucho.ui_component.stable.domain.jsonSchema.material.SpacerSchema.Component
+import com.tezov.tuucho.ui_component.stable.domain.jsonSchema.material.SpacerSchema.Style
 import kotlinx.serialization.json.JsonElement
 
-@OptIn(TuuchoExperimentalAPI::class)
 class StyleSpacerDimensionRectifierMatcher : RectifierMatcherProtocol {
     private val segments = listOf(
-        SpacerSchema.Style.Key.weight,
+        Style.Key.weight,
         StyleSchema.Key.width,
         StyleSchema.Key.height
     )
@@ -29,6 +26,6 @@ class StyleSpacerDimensionRectifierMatcher : RectifierMatcherProtocol {
         if (!path.lastSegmentIsAny(segments)) return false
         val parent = element.find(path.parent())
         return parent.isTypeOf(TypeSchema.Value.style) &&
-            parent.isSubsetOf(SpacerSchema.Component.Value.subset)
+            parent.isSubsetOf(Component.Value.subset)
     }
 }

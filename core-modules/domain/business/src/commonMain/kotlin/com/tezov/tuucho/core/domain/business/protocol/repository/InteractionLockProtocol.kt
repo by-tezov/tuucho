@@ -83,14 +83,12 @@ sealed class InteractionLockable {
                 is Type -> mergeTypes(this, other)
                 is Lock -> Composite(this, other)
                 is Composite -> Composite(mergeTypes(this, other.type), other.lock)
-                else -> other
             }
 
             is Lock -> when (other) {
                 is Lock -> mergeLocks(this, other)
                 is Type -> Composite(other, this)
                 is Composite -> Composite(other.type, mergeLocks(this, other.lock))
-                else -> other
             }
 
             is Composite -> when (other) {
@@ -102,11 +100,7 @@ sealed class InteractionLockable {
                     mergeTypes(type, other.type),
                     mergeLocks(lock, other.lock)
                 )
-
-                else -> other
             }
-
-            else -> other
         }
     }
 }

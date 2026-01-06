@@ -9,7 +9,6 @@ import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -18,10 +17,9 @@ import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
 @OpenForTest
-@OptIn(TuuchoExperimentalAPI::class)
 class ResponseAssembler : TuuchoKoinScopeComponent {
     override val scope: Scope by lazy {
-        createScope().also {
+        createScope<ResponseAssembler>().also {
             with(getKoin()) {
                 val responseRectifierScope = get<ResponseRectifier>().scope
                 it.linkTo(responseRectifierScope)

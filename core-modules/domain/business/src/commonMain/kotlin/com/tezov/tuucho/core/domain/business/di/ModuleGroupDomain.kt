@@ -1,11 +1,9 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+sealed class ModuleGroupDomain : Koin.ModuleGroup {
+    object Main : ModuleGroupDomain()
 
-sealed class ModuleGroupDomain : ModuleProtocol.Group {
-    data object Main : ModuleGroupDomain()
+    object UseCase : ModuleGroupDomain()
 
-    data object UseCase : ModuleGroupDomain()
-
-    data object Middleware : ModuleGroupDomain()
+    object Middleware : ModuleGroupDomain()
 }

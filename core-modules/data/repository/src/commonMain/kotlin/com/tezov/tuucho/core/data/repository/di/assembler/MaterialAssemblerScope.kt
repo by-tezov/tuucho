@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository.di.assembler
 
+import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Assembler.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ColorAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssembler
@@ -12,12 +13,14 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssem
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear.ContentLayoutLinearItemsAssemblerMatcher
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerMatcherProtocol
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.scope
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
 
-@OptIn(TuuchoExperimentalAPI::class)
-object Material {
-    fun ScopeDSL.invoke() {
+object MaterialAssemblerScope {
+    fun invoke() = scope(ScopeContext.Material) {
+        factory<Scope> { this }
         factory<List<AbstractAssembler>>(AssemblerModule.Name.ASSEMBLERS) {
             listOf(
                 get<ComponentAssembler>(),
@@ -38,7 +41,7 @@ object Material {
     }
 
     private fun ScopeDSL.componentModule() {
-        factory<ComponentAssembler> { ComponentAssembler(scope = this) }
+        factoryOf(::ComponentAssembler)
 
         factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.COMPONENT) {
             listOf(
@@ -58,7 +61,7 @@ object Material {
     }
 
     private fun ScopeDSL.contentModule() {
-        factory<ContentAssembler> { ContentAssembler(scope = this) }
+        factoryOf(::ContentAssembler)
 
         factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.CONTENT) {
             listOf(
@@ -70,7 +73,7 @@ object Material {
     }
 
     private fun ScopeDSL.styleModule() {
-        factory<StyleAssembler> { StyleAssembler(scope = this) }
+        factoryOf(::StyleAssembler)
 
         factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STYLE) {
             listOf(
@@ -81,7 +84,7 @@ object Material {
     }
 
     private fun ScopeDSL.optionModule() {
-        factory<OptionAssembler> { OptionAssembler(scope = this) }
+        factoryOf(::OptionAssembler)
 
         factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.OPTION) {
             emptyList()
@@ -89,7 +92,7 @@ object Material {
     }
 
     private fun ScopeDSL.stateModule() {
-        factory<StateAssembler> { StateAssembler(scope = this) }
+        factoryOf(::StateAssembler)
 
         factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STATE) {
             listOf(
@@ -99,7 +102,7 @@ object Material {
     }
 
     private fun ScopeDSL.textModule() {
-        factory<TextAssembler> { TextAssembler(scope = this) }
+        factoryOf(::TextAssembler)
 
         factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
             emptyList()
@@ -107,7 +110,7 @@ object Material {
     }
 
     private fun ScopeDSL.colorModule() {
-        factory<ColorAssembler> { ColorAssembler(scope = this) }
+        factoryOf(::ColorAssembler)
 
         factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.COLOR) {
             emptyList()
@@ -115,7 +118,7 @@ object Material {
     }
 
     private fun ScopeDSL.dimensionModule() {
-        factory<DimensionAssembler> { DimensionAssembler(scope = this) }
+        factoryOf(::DimensionAssembler)
 
         factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.DIMENSION) {
             emptyList()
@@ -123,7 +126,7 @@ object Material {
     }
 
     private fun ScopeDSL.actionModule() {
-        factory<ActionAssembler> { ActionAssembler(scope = this) }
+        factoryOf(::ActionAssembler)
 
         factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
             emptyList()

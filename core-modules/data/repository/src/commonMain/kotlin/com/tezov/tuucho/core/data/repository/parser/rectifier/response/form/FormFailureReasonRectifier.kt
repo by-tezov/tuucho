@@ -5,7 +5,6 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.response.form
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -15,7 +14,6 @@ import kotlinx.serialization.json.jsonArray
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
 class FormFailureReasonRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {

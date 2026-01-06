@@ -1,6 +1,4 @@
-@file:Suppress("ktlint:standard:package-name")
-
-package com.tezov.tuucho.core.domain.business.jsonSchema.material._element
+package com.tezov.tuucho.ui_component.stable.domain.jsonSchema.material
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema

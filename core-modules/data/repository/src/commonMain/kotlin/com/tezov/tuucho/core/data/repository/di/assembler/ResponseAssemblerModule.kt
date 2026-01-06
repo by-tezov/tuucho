@@ -7,20 +7,21 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.A
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormActionAssemblerMatcher
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormFailureReasonTextMatcher
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
 
-@OptIn(TuuchoExperimentalAPI::class)
-object Response {
+object ResponseAssemblerModule {
     fun ScopeDSL.invokeScoped() {
+        factory<Scope> { this }
         factory<List<AbstractAssembler>>(AssemblerModule.Name.ASSEMBLERS) {
             listOf(
                 FormAssembler()
             )
         }
-        factory<TextAssembler> { parameters -> TextAssembler(scope = parameters.get()) }
-        factory<ActionAssembler> { parameters -> ActionAssembler(scope = parameters.get()) }
+        factoryOf(::TextAssembler)
+        factoryOf(::ActionAssembler)
     }
 
     fun Module.invoke() {

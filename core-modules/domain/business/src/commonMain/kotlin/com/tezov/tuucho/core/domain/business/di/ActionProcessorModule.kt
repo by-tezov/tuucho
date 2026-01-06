@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.di
 
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.ActionExecutor
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormSendUrlActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormUpdateActionMiddleware
@@ -8,7 +9,7 @@ import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.Naviga
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.StoreActionMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
 internal object ActionProcessorModule {
@@ -22,42 +23,10 @@ internal object ActionProcessorModule {
                 interactionLockRegistry = get()
             )
         }
-
-        factory<FormSendUrlActionMiddleware> {
-            FormSendUrlActionMiddleware(
-                useCaseExecutor = get(),
-                getScreenOrNull = get(),
-                sendData = get()
-            )
-        } bind ActionMiddleware::class
-
-        factory<FormUpdateActionMiddleware> {
-            FormUpdateActionMiddleware(
-                useCaseExecutor = get(),
-                updateView = get()
-            )
-        } bind ActionMiddleware::class
-
-        factory<NavigationLocalDestinationActionMiddleware> {
-            NavigationLocalDestinationActionMiddleware(
-                useCaseExecutor = get(),
-                navigateBack = get()
-            )
-        } bind ActionMiddleware::class
-
-        factory<NavigationUrlActionMiddleware> {
-            NavigationUrlActionMiddleware(
-                useCaseExecutor = get(),
-                navigateToUrl = get()
-            )
-        } bind ActionMiddleware::class
-
-        factory<StoreActionMiddleware> {
-            StoreActionMiddleware(
-                useCaseExecutor = get(),
-                saveKeyValueToStore = get(),
-                removeKeyValueFromStore = get()
-            )
-        } bind ActionMiddleware::class
+        factoryOf(::FormSendUrlActionMiddleware) bind ActionMiddleware::class
+        factoryOf(::FormUpdateActionMiddleware) bind ActionMiddleware::class
+        factoryOf(::NavigationLocalDestinationActionMiddleware) bind ActionMiddleware::class
+        factoryOf(::NavigationUrlActionMiddleware) bind ActionMiddleware::class
+        factoryOf(::StoreActionMiddleware) bind ActionMiddleware::class
     }
 }

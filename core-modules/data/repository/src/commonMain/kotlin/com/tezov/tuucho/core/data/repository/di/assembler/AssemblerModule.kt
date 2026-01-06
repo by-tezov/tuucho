@@ -4,12 +4,12 @@ import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.JsonObjectMerger
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseAssembler
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 
-@OptIn(TuuchoExperimentalAPI::class)
 internal object AssemblerModule {
     object Name {
         val ASSEMBLERS get() = named("AssemblerModule.Name.ASSEMBLERS")
@@ -31,30 +31,18 @@ internal object AssemblerModule {
         }
     }
 
-    fun invoke() = ModuleProtocol.module(ModuleGroupData.Assembler) {
-        factory<JsonObjectMerger> {
-            JsonObjectMerger()
-        }
-        material()
-        response()
-    }
+    fun invoke() = module(ModuleGroupData.Assembler) {
+        factoryOf(::JsonObjectMerger)
+        singleOf(::MaterialAssembler)
 
-    private fun Module.material() {
-        scope<MaterialAssembler> {
-            Material.run { invoke() }
-        }
-        single<MaterialAssembler> {
-            MaterialAssembler()
-        }
+        response() // TODO Group Scope
     }
 
     private fun Module.response() {
+        singleOf(::ResponseAssembler)
         scope<ResponseAssembler> {
-            Response.run { invokeScoped() }
+            ResponseAssemblerModule.run { invokeScoped() }
         }
-        Response.run { invoke() }
-        single<ResponseAssembler> {
-            ResponseAssembler()
-        }
+        ResponseAssemblerModule.run { invoke() }
     }
 }

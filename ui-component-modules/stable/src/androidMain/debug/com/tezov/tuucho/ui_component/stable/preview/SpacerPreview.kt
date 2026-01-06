@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tezov.tuucho.core.presentation.ui.view.createSpacerView
 import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
+import com.tezov.tuucho.ui_component.stable.presentation.view.createSpacerView
 
 private sealed class SpacerPreviewData {
     data class RowScopeComponent(

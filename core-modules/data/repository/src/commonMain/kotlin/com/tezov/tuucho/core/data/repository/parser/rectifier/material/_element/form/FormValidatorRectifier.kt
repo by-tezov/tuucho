@@ -2,16 +2,15 @@
 
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form
 
-import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -20,17 +19,19 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
-import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
+sealed class FieldValidatorAssociation {
+    object Matcher : FieldValidatorAssociation()
+}
+
 class FormValidatorRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
     override val key = FormValidatorSchema.root
-    override val matchers: List<RectifierMatcherProtocol> by inject(
-        RectifierModule.Name.Matcher.FIELD_VALIDATOR
-    )
+    override val matchers: List<RectifierMatcherProtocol> by lazy {
+        scope.getAllAssociated(FieldValidatorAssociation.Matcher::class)
+    }
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,

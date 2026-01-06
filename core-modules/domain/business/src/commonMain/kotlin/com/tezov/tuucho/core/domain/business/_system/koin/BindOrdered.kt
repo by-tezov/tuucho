@@ -1,20 +1,21 @@
-package com.tezov.tuucho.core.domain.tool.extension
+@file:Suppress("ktlint:standard:package-name")
+
+package com.tezov.tuucho.core.domain.business._system.koin
 
 import org.koin.core.Koin
 import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.definition.KoinDefinition
 import org.koin.core.definition.indexKey
-import org.koin.core.instance.InstanceFactory
 import org.koin.core.instance.ResolutionContext
-import org.koin.core.module.OptionDslMarker
+import org.koin.core.module.KoinDslMarker
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.dsl.bind
 import kotlin.reflect.KClass
 
-object ExtensionKoin {
+object BindOrdered {
     @OptIn(KoinInternalApi::class)
-    @OptionDslMarker
+    @KoinDslMarker
     infix fun <S : Any> KoinDefinition<out S>.bindOrdered(
         clazz: KClass<S>
     ): KoinDefinition<out S> {
@@ -29,13 +30,21 @@ object ExtensionKoin {
     }
 
     @OptIn(KoinInternalApi::class)
-    inline fun <reified T : Any> Koin.getAllOrdered(): List<T> = scopeRegistry.rootScope.getAllOrdered()
+    @KoinDslMarker
+    inline fun <reified T : Any> Koin.getAllOrdered(): List<T> = scopeRegistry.rootScope.getAllOrdered(T::class)
+
+    @KoinDslMarker
+    inline fun <reified T : Any> Scope.getAllOrdered(): List<T> = getAllOrdered(T::class)
 
     @OptIn(KoinInternalApi::class)
-    inline fun <reified T : Any> Scope.getAllOrdered(): List<T> = with(getKoin()) {
-        val typeName = T::class.qualifiedName ?: error("class qualifier name is null")
+    @KoinDslMarker
+    fun <T : Any> Scope.getAllOrdered(
+        clazz: KClass<T>
+    ): List<T> = with(getKoin()) {
+        val typeName = clazz.qualifiedName ?: error("class qualifier name is null")
         val orderedInstances = instanceRegistry.instances.entries
             .filter { (key, _) ->
+                // TODO scope protection and linked scope
                 key.contains("$typeName#ordered#")
             }.mapNotNull { (key, factory) ->
                 val index = key
@@ -45,20 +54,17 @@ object ExtensionKoin {
                 index to factory
             }.sortedBy { it.first }
             .map { (_, factory) ->
-                @Suppress("UNCHECKED_CAST")
-                factory as InstanceFactory<T>
                 val beanDefinition = factory.beanDefinition
-                val scopeId = beanDefinition.scopeQualifier.value
-                val scope = getScopeOrNull(scopeId) ?: scopeRegistry.rootScope
                 val context = ResolutionContext(
                     logger = logger,
-                    scope = scope,
+                    scope = this@getAllOrdered,
                     clazz = beanDefinition.primaryType,
                     qualifier = beanDefinition.qualifier,
                     parameters = null
                 )
-                factory.get(context)
-            }.toMutableList()
+                @Suppress("UNCHECKED_CAST")
+                factory.get(context) as T
+            }.toList()
         return orderedInstances
     }
 }
