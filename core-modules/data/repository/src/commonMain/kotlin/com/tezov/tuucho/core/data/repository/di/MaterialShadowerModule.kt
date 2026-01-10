@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.data.repository.parser.shadower.ContentShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.StateShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.TextShadower
-import com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear.ContentLayoutLinearItemsMatcher
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
 import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import org.koin.core.module.Module
@@ -44,7 +43,7 @@ internal object MaterialShadowerModule {
 
         single<List<MatcherShadowerProtocol>>(Name.Matcher.COMPONENT) {
             listOf(
-                ContentLayoutLinearItemsMatcher()
+//                ContentLayoutLinearItemsMatcher() //TODO
             )
         }
 

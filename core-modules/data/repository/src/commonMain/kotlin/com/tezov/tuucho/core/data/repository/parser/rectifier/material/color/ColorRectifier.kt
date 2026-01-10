@@ -33,7 +33,7 @@ class ColorRectifier(
         scope.getAllAssociated(ColorAssociation.Matcher::class)
     }
     override val childProcessors: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(ColorAssociation.Matcher::class)
+        scope.getAllAssociated(ColorAssociation.Rectifier::class)
     }
 
     override fun beforeAlterPrimitive(
