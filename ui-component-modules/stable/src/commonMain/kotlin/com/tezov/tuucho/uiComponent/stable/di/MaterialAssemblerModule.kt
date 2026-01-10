@@ -1,0 +1,20 @@
+package com.tezov.tuucho.uiComponent.stable.di
+
+import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssociation
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.scope
+import com.tezov.tuucho.uiComponent.stable.data.parser.assembler.material.layout.linear.ContentLayoutLinearItemsAssemblerMatcher
+import org.koin.dsl.ScopeDSL
+
+internal object MaterialAssemblerModule {
+    fun invoke() = scope(ModuleGroupData.Assembler.ScopeContext.Material) {
+        componentAssociation()
+    }
+
+    private fun ScopeDSL.componentAssociation() {
+        associate<ComponentAssociation.Matcher> {
+            factoryOf(::ContentLayoutLinearItemsAssemblerMatcher)
+        }
+    }
+}

@@ -13,9 +13,7 @@ import org.koin.dsl.bind
 internal object TuuchoEngineModule {
     fun invoke() = module(ModuleGroupPresentation.Main) {
         factoryOf(::RendererIdGenerator)
-
         factoryOf(::ScreenFactory) bind ScreenFactoryProtocol::class
-
         singleOf(::TuuchoEngine) bind TuuchoEngineProtocol::class
     }
 }

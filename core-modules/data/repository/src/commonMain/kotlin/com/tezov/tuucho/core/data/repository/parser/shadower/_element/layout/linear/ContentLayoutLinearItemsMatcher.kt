@@ -2,16 +2,13 @@
 
 package com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear
 
-import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
-import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
-import kotlinx.serialization.json.JsonElement
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear.ContentLayoutLinearItemsRectifierMatcher as ContentLayoutLinearItemsMatcherRectifier
+// TODO
 
-class ContentLayoutLinearItemsMatcher : MatcherShadowerProtocol {
-    private val matcher = ContentLayoutLinearItemsMatcherRectifier()
-
-    override fun accept(
-        path: JsonElementPath,
-        element: JsonElement
-    ) = matcher.accept(path, element)
-}
+// class ContentLayoutLinearItemsMatcher : MatcherShadowerProtocol {
+//    private val matcher = ContentLayoutLinearItemsMatcherRectifier()
+//
+//    override fun accept(
+//        path: JsonElementPath,
+//        element: JsonElement
+//    ) = matcher.accept(path, element)
+// }

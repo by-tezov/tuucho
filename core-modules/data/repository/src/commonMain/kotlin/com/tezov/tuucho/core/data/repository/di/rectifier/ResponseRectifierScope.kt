@@ -41,17 +41,14 @@ internal object ResponseRectifierScope {
     }
 
     private fun ScopeDSL.idAssociation() {
-        // matchers
         factoryOf(::IdMatcher) associate IdAssociation.Matcher::class
     }
 
     private fun ScopeDSL.textAssociation() {
-        // matchers
         declaration<IdRectifier>() associate TextAssociation.Matcher::class
     }
 
     private fun ScopeDSL.actionAssociation() {
-        // matchers
         associate<ActionAssociation.Matcher> {
             declaration<IdRectifier>()
             factoryOf(::FormActionRectifierMatcher)

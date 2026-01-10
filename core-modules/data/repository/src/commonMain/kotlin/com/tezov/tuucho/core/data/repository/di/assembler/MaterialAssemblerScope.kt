@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material.StateAsso
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear.ContentLayoutLinearItemsAssemblerMatcher
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
 import com.tezov.tuucho.core.domain.business.di.Koin.Companion.scope
@@ -30,12 +29,7 @@ object MaterialAssemblerScope {
         componentAssociation()
         contentAssociation()
         styleAssociation()
-        optionAssociation()
         stateAssociation()
-        textAssociation()
-        colorAssociation()
-        dimensionAssociation()
-        actionAssociation()
     }
 
     private fun ScopeDSL.assemblers() {
@@ -58,21 +52,16 @@ object MaterialAssemblerScope {
     }
 
     private fun ScopeDSL.componentAssociation() {
-        // matchers
-        factoryOf(::ContentLayoutLinearItemsAssemblerMatcher) associate ComponentAssociation.Matcher::class
-
         // Used for contextual
         associate<ComponentAssociation.Assembler> {
             declaration<ContentAssembler>()
             declaration<StyleAssembler>()
             declaration<OptionAssembler>()
             declaration<StateAssembler>()
-
         }
     }
 
     private fun ScopeDSL.contentAssociation() {
-        // assemblers
         associate<ContentAssociation.Assembler> {
             declaration<TextAssembler>()
             declaration<ActionAssembler>()
@@ -81,35 +70,13 @@ object MaterialAssemblerScope {
     }
 
     private fun ScopeDSL.styleAssociation() {
-        // assemblers
         associate<StyleAssociation.Assembler> {
             declaration<ColorAssembler>()
             declaration<DimensionAssembler>()
         }
     }
 
-    private fun ScopeDSL.optionAssociation() {
-
-    }
-
     private fun ScopeDSL.stateAssociation() {
-        // assemblers
         declaration<TextAssembler>() associate StateAssociation.Assembler::class
-    }
-
-    private fun ScopeDSL.textAssociation() {
-
-    }
-
-    private fun ScopeDSL.colorAssociation() {
-
-    }
-
-    private fun ScopeDSL.dimensionAssociation() {
-
-    }
-
-    private fun ScopeDSL.actionAssociation() {
-
     }
 }

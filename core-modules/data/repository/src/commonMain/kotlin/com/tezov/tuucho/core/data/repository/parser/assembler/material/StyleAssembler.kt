@@ -25,7 +25,7 @@ class StyleAssembler(
 ) : AbstractAssembler(scope) {
     override val schemaType = TypeSchema.Value.style
 
-    override val childProcessors: List<AssemblerProtocol>  by lazy {
+    override val childProcessors: List<AssemblerProtocol> by lazy {
         scope.getAllAssociated(StyleAssociation.Assembler::class)
     }
 

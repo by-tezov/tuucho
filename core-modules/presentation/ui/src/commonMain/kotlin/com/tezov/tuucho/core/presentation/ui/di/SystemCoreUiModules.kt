@@ -7,6 +7,5 @@ import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 object SystemCoreUiModules {
     fun invoke(): List<Koin> = listOf(
         TuuchoEngineModule.invoke(),
-        ViewModule.invoke(),
     )
 }

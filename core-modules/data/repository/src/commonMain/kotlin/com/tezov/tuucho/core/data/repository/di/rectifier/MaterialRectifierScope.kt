@@ -2,19 +2,6 @@ package com.tezov.tuucho.core.data.repository.di.rectifier
 
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Rectifier.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialAssociation
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.action.ActionButtonRectifierMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.label.ContentButtonLabelRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.FieldValidatorAssociation
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.FormValidatorRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content.ContentFormFieldTextErrorRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content.ContentFormFieldTextRectifierMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.option.OptionFormFieldValidatorRectifierMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.state.StateFormFieldTextRectifierMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.content.ContentLabelTextRectifierMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style.StyleLabelColorRectifierMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style.StyleLabelDimensionRectifierMatcher
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear.ContentLayoutLinearItemsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear.StyleLayoutLinearColorRectifierMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierIdGenerator
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionRectifier
@@ -31,6 +18,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.content.C
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionsRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material.form.FormValidatorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdRectifier
@@ -72,7 +60,6 @@ internal object MaterialRectifierScope {
         colorAssociation()
         dimensionAssociation()
         actionAssociation()
-        fieldValidatorModule()
     }
 
     private fun ScopeDSL.rectifiers() {
@@ -117,13 +104,11 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.settingAssociation() {
-        // rectifiers
         factoryOf(::SettingComponentNavigationRectifier) associate SettingAssociation.Rectifier::class
         declaration<IdRectifier>() associate SettingAssociation.Rectifier::class
     }
 
     private fun ScopeDSL.componentAssociation() {
-        // rectifiers
         associate<ComponentAssociation.Rectifier> {
             declaration<IdRectifier>()
             declaration<SettingComponentRectifier>()
@@ -135,19 +120,14 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.contentAssociation() {
-        // rectifiers
         associate<ContentAssociation.Rectifier> {
             declaration<IdRectifier>()
             declaration<ActionRectifier>()
             declaration<TextRectifier>()
-            factoryOf(::ContentLayoutLinearItemsRectifier)
-            factoryOf(::ContentButtonLabelRectifier)
-            factoryOf(::ContentFormFieldTextErrorRectifier)
         }
     }
 
     private fun ScopeDSL.styleAssociation() {
-        // rectifiers
         associate<StyleAssociation.Rectifier> {
             declaration<IdRectifier>()
             declaration<DimensionRectifier>()
@@ -156,7 +136,6 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.optionAssociation() {
-        // rectifiers
         associate<OptionAssociation.Rectifier> {
             declaration<IdRectifier>()
             declaration<FormValidatorRectifier>()
@@ -164,7 +143,6 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.stateAssociation() {
-        // rectifiers
         associate<StateAssociation.Rectifier> {
             declaration<IdRectifier>()
             declaration<TextRectifier>()
@@ -172,42 +150,18 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.textAssociation() {
-        // matchers
-        associate<TextAssociation.Matcher> {
-            factoryOf(::ContentLabelTextRectifierMatcher)
-            factoryOf(::ContentFormFieldTextRectifierMatcher)
-            factoryOf(::StateFormFieldTextRectifierMatcher)
-        }
-        // rectifiers
         declaration<IdRectifier>() associate TextAssociation.Rectifier::class
     }
 
     private fun ScopeDSL.colorAssociation() {
-        // matchers
-        associate<ColorAssociation.Matcher> {
-            factoryOf(::StyleLabelColorRectifierMatcher)
-            factoryOf(::StyleLayoutLinearColorRectifierMatcher)
-        }
-        // rectifiers
         declaration<IdRectifier>() associate ColorAssociation.Rectifier::class
     }
 
     private fun ScopeDSL.dimensionAssociation() {
-        // matchers
-        factoryOf(::StyleLabelDimensionRectifierMatcher) associate DimensionAssociation.Matcher::class
-        // rectifiers
         declaration<IdRectifier>() associate DimensionAssociation.Rectifier::class
     }
 
     private fun ScopeDSL.actionAssociation() {
-        // matchers
-        factoryOf(::ActionButtonRectifierMatcher) associate ActionAssociation.Matcher::class
-        // rectifiers
         declaration<IdRectifier>() associate ActionAssociation.Rectifier::class
-    }
-
-    private fun ScopeDSL.fieldValidatorModule() {
-        // matchers
-        factoryOf(::OptionFormFieldValidatorRectifierMatcher) associate FieldValidatorAssociation.Matcher::class
     }
 }
