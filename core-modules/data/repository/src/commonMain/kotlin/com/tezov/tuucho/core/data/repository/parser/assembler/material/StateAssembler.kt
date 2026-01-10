@@ -1,9 +1,10 @@
 package com.tezov.tuucho.core.data.repository.parser.assembler.material
 
-import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.state.StateRectifier
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
@@ -15,14 +16,18 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
+sealed class StateAssociation {
+    object Assembler : StateAssociation()
+}
+
 class StateAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
     override val schemaType = TypeSchema.Value.state
 
-    override val childProcessors: List<AbstractAssembler> by inject(
-        AssemblerModule.Name.Processor.STATE
-    )
+    override val childProcessors: List<AssemblerProtocol> by lazy {
+        scope.getAllAssociated(StateAssociation.Assembler::class)
+    }
 
     private val rectifier: StateRectifier by inject()
 

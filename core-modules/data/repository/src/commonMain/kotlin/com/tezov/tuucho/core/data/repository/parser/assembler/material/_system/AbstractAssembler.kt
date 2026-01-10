@@ -18,9 +18,8 @@ import org.koin.core.scope.Scope
 
 abstract class AbstractAssembler(
     private val _scope: Scope? = null
-) : AssemblerMatcherProtocol,
+) : AssemblerProtocol,
     TuuchoKoinScopeComponent {
-    abstract val schemaType: String
 
     override val scope: Scope
         get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
@@ -28,7 +27,7 @@ abstract class AbstractAssembler(
     private val jsonObjectMerger: JsonObjectMerger by inject()
 
     protected open val matchers: List<AssemblerMatcherProtocol> = emptyList()
-    protected open val childProcessors: List<AbstractAssembler> = emptyList()
+    protected open val childProcessors: List<AssemblerProtocol> = emptyList()
 
     private fun <T> List<T>.singleOrThrow(
         path: JsonElementPath
@@ -42,7 +41,7 @@ abstract class AbstractAssembler(
         element: JsonElement,
     ) = matchers.any { it.accept(path, element) }
 
-    suspend fun process(
+    override suspend fun process(
         path: JsonElementPath,
         element: JsonElement,
         findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol

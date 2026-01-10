@@ -15,15 +15,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.scope.Scope
 
-interface RectifierProtocol : RectifierMatcherProtocol {
-    val key: String
-
-    fun process(
-        path: JsonElementPath,
-        element: JsonElement
-    ): JsonElement
-}
-
 // IMPROVE add meta data 'path' for breaker, assembler and shadower to improve speed
 abstract class AbstractRectifier(
     private val _scope: Scope? = null

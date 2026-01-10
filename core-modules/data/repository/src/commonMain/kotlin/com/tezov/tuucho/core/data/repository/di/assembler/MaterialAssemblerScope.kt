@@ -4,15 +4,20 @@ import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Assembler.ScopeC
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ColorAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ContentAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.ContentAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.DimensionAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.OptionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StateAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.StateAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear.ContentLayoutLinearItemsAssemblerMatcher
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerMatcherProtocol
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
 import com.tezov.tuucho.core.domain.business.di.Koin.Companion.scope
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
@@ -21,115 +26,90 @@ import org.koin.dsl.ScopeDSL
 object MaterialAssemblerScope {
     fun invoke() = scope(ScopeContext.Material) {
         factory<Scope> { this }
-        factory<List<AbstractAssembler>>(AssemblerModule.Name.ASSEMBLERS) {
-            listOf(
-                get<ComponentAssembler>(),
-                get<ContentAssembler>(),
-                get<TextAssembler>(),
-                get<StateAssembler>(),
-            )
-        }
-        componentModule()
-        contentModule()
-        styleModule()
-        optionModule()
-        stateModule()
-        textModule()
-        colorModule()
-        dimensionModule()
-        actionModule()
+        assemblers()
+        componentAssociation()
+        contentAssociation()
+        styleAssociation()
+        optionAssociation()
+        stateAssociation()
+        textAssociation()
+        colorAssociation()
+        dimensionAssociation()
+        actionAssociation()
     }
 
-    private fun ScopeDSL.componentModule() {
+    private fun ScopeDSL.assemblers() {
         factoryOf(::ComponentAssembler)
-
-        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.COMPONENT) {
-            listOf(
-                ContentLayoutLinearItemsAssemblerMatcher()
-            )
-        }
-
-        // Used for contextual
-        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.COMPONENT) {
-            listOf(
-                get<ContentAssembler>(),
-                get<StyleAssembler>(),
-                get<OptionAssembler>(),
-                get<StateAssembler>(),
-            )
-        }
-    }
-
-    private fun ScopeDSL.contentModule() {
         factoryOf(::ContentAssembler)
-
-        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.CONTENT) {
-            listOf(
-                get<TextAssembler>(),
-                get<ActionAssembler>(),
-                get<ComponentAssembler>()
-            )
-        }
-    }
-
-    private fun ScopeDSL.styleModule() {
         factoryOf(::StyleAssembler)
-
-        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STYLE) {
-            listOf(
-                get<ColorAssembler>(),
-                get<DimensionAssembler>()
-            )
-        }
-    }
-
-    private fun ScopeDSL.optionModule() {
         factoryOf(::OptionAssembler)
-
-        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.OPTION) {
-            emptyList()
-        }
-    }
-
-    private fun ScopeDSL.stateModule() {
         factoryOf(::StateAssembler)
-
-        factory<List<AbstractAssembler>>(AssemblerModule.Name.Processor.STATE) {
-            listOf(
-                get<TextAssembler>(),
-            )
-        }
-    }
-
-    private fun ScopeDSL.textModule() {
         factoryOf(::TextAssembler)
-
-        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.TEXT) {
-            emptyList()
-        }
-    }
-
-    private fun ScopeDSL.colorModule() {
         factoryOf(::ColorAssembler)
-
-        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.COLOR) {
-            emptyList()
-        }
-    }
-
-    private fun ScopeDSL.dimensionModule() {
         factoryOf(::DimensionAssembler)
-
-        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.DIMENSION) {
-            emptyList()
-        }
-    }
-
-    private fun ScopeDSL.actionModule() {
         factoryOf(::ActionAssembler)
 
-        factory<List<AssemblerMatcherProtocol>>(AssemblerModule.Name.Matcher.ACTION) {
-            emptyList()
+        associate<MaterialAssociation.Assembler> {
+            declaration<ComponentAssembler>()
+            declaration<ContentAssembler>()
+            declaration<TextAssembler>()
+            declaration<StateAssembler>()
         }
+    }
+
+    private fun ScopeDSL.componentAssociation() {
+        // matchers
+        factoryOf(::ContentLayoutLinearItemsAssemblerMatcher) associate ComponentAssociation.Matcher::class
+
+        // Used for contextual
+        associate<ComponentAssociation.Assembler> {
+            declaration<ContentAssembler>()
+            declaration<StyleAssembler>()
+            declaration<OptionAssembler>()
+            declaration<StateAssembler>()
+
+        }
+    }
+
+    private fun ScopeDSL.contentAssociation() {
+        // assemblers
+        associate<ContentAssociation.Assembler> {
+            declaration<TextAssembler>()
+            declaration<ActionAssembler>()
+            declaration<ComponentAssembler>()
+        }
+    }
+
+    private fun ScopeDSL.styleAssociation() {
+        // assemblers
+        associate<StyleAssociation.Assembler> {
+            declaration<ColorAssembler>()
+            declaration<DimensionAssembler>()
+        }
+    }
+
+    private fun ScopeDSL.optionAssociation() {
+
+    }
+
+    private fun ScopeDSL.stateAssociation() {
+        // assemblers
+        declaration<TextAssembler>() associate StateAssociation.Assembler::class
+    }
+
+    private fun ScopeDSL.textAssociation() {
+
+    }
+
+    private fun ScopeDSL.colorAssociation() {
+
+    }
+
+    private fun ScopeDSL.dimensionAssociation() {
+
+    }
+
+    private fun ScopeDSL.actionAssociation() {
+
     }
 }
