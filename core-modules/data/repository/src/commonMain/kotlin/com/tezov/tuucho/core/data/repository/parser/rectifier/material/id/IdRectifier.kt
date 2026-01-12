@@ -14,17 +14,18 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import org.koin.core.scope.Scope
 
-sealed class IdAssociation {
-    object Matcher : IdAssociation()
-}
-
 class IdRectifier(
     scope: Scope,
     private val idGenerator: RectifierIdGenerator
 ) : AbstractRectifier(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+    }
+
     override val key = IdSchema.root
     override val matchers: List<RectifierMatcherProtocol> by lazy {
-        scope.getAllAssociated(IdAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
 
     override fun beforeAlterNull(

@@ -9,17 +9,18 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.scope.Scope
 
-sealed class DimensionAssociation {
-    object Matcher : DimensionAssociation()
-}
-
 class DimensionAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+    }
+
     override val schemaType = TypeSchema.Value.dimension
 
     override val matchers: List<AssemblerMatcherProtocol> by lazy {
-        scope.getAllAssociated(DimensionAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
 
     override fun accept(

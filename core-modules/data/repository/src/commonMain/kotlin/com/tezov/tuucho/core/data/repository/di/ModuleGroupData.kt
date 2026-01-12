@@ -10,6 +10,10 @@ sealed class ModuleGroupData : Koin.ModuleGroup {
             override val group get() = Assembler
 
             object Material : ScopeContext()
+
+            object Response : ScopeContext() {
+                object Form : ScopeContext()
+            }
         }
     }
 

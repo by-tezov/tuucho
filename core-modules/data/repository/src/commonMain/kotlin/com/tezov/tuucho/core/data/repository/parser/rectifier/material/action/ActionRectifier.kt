@@ -20,21 +20,22 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.scope.Scope
 
-sealed class ActionAssociation {
-    object Matcher : ActionAssociation()
-
-    object Rectifier : ActionAssociation()
-}
-
 class ActionRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+
+        object Processor : Association()
+    }
+
     override val key = ActionSchema.root
     override val matchers: List<RectifierMatcherProtocol> by lazy {
-        scope.getAllAssociated(ActionAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
     override val childProcessors: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(ActionAssociation.Rectifier::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     override fun beforeAlterPrimitive(

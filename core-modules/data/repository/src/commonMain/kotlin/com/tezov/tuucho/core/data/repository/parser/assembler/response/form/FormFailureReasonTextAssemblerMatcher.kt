@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormFailureReasonRectifierMatcher as FormFailureReasonMatcherRectifier
 
-class FormFailureReasonTextMatcher : AssemblerMatcherProtocol {
+class FormFailureReasonTextAssemblerMatcher : AssemblerMatcherProtocol {
     private val matcher = FormFailureReasonMatcherRectifier()
 
     override fun accept(

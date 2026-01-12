@@ -11,20 +11,19 @@ import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.scope.Scope
 
-sealed class ResponseAssociation {
-    object Rectifier : ResponseAssociation()
-}
-
 @OpenForTest
 internal class ResponseRectifier : TuuchoKoinScopeComponent {
+
+    sealed class Association {
+        object Processor : Association()
+    }
+
     override val scope: Scope by lazy {
-        with(getKoin()) {
-            createScope(ScopeContext.Response.value, ScopeContext.Response)
-        }
+        getKoin().createScope(ScopeContext.Response.value, ScopeContext.Response)
     }
 
     private val rectifiers: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(ResponseAssociation.Rectifier::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     suspend fun process(

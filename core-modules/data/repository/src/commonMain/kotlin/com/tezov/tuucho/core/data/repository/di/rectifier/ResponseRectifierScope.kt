@@ -2,14 +2,11 @@ package com.tezov.tuucho.core.data.repository.di.rectifier
 
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Rectifier.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierIdGenerator
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseAssociation
+import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormActionRectifierMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormFailureReasonRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
@@ -34,22 +31,22 @@ internal object ResponseRectifierScope {
         factoryOf(::TextRectifier)
         factoryOf(::ActionRectifier)
 
-        associate<ResponseAssociation.Rectifier> {
+        associate<ResponseRectifier.Association.Processor> {
             declaration<ActionRectifier>()
             factoryOf(::FormFailureReasonRectifier)
         }
     }
 
     private fun ScopeDSL.idAssociation() {
-        factoryOf(::IdMatcher) associate IdAssociation.Matcher::class
+        factoryOf(::IdMatcher) associate IdRectifier.Association.Matcher::class
     }
 
     private fun ScopeDSL.textAssociation() {
-        declaration<IdRectifier>() associate TextAssociation.Matcher::class
+        declaration<IdRectifier>() associate TextRectifier.Association.Matcher::class
     }
 
     private fun ScopeDSL.actionAssociation() {
-        associate<ActionAssociation.Matcher> {
+        associate<ActionRectifier.Association.Matcher> {
             declaration<IdRectifier>()
             factoryOf(::FormActionRectifierMatcher)
         }

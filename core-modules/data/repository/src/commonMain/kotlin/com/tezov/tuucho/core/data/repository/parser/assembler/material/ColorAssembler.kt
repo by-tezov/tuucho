@@ -9,17 +9,18 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.scope.Scope
 
-sealed class ColorAssociation {
-    object Matcher : ColorAssociation()
-}
-
 class ColorAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+    }
+
     override val schemaType = TypeSchema.Value.color
 
     override val matchers: List<AssemblerMatcherProtocol> by lazy {
-        scope.getAllAssociated(ColorAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
 
     override fun accept(

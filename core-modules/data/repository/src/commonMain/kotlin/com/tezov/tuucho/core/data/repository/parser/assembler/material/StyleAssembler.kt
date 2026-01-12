@@ -16,17 +16,18 @@ import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-sealed class StyleAssociation {
-    object Assembler : StyleAssociation()
-}
-
 class StyleAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
+
+    sealed class Association {
+        object Processor : Association()
+    }
+
     override val schemaType = TypeSchema.Value.style
 
     override val childProcessors: List<AssemblerProtocol> by lazy {
-        scope.getAllAssociated(StyleAssociation.Assembler::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     private val rectifier: StyleRectifier by inject()

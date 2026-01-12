@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.di.assembler.MaterialAssemblerScope
+import com.tezov.tuucho.core.data.repository.di.assembler.ResponseAssemblerScope
 import com.tezov.tuucho.core.data.repository.di.rectifier.MaterialRectifierScope
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.di.rectifier.ResponseRectifierScope
@@ -29,7 +30,8 @@ object SystemCoreDataModules {
         MaterialBreakerModule.invoke(),
         AssemblerModule.invoke(),
         MaterialAssemblerScope.invoke(),
-//        ResponseAssemblerScope.invoke(),
+        ResponseAssemblerScope.invoke(),
+        ResponseAssemblerScope.Form.invoke(),
         MaterialShadowerModule.invoke(),
         MaterialRepositoryModule.invoke(),
         DatabaseRepositoryModule.invoke(),

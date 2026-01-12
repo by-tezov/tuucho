@@ -9,17 +9,18 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.scope.Scope
 
-sealed class TextAssociation {
-    object Matcher : TextAssociation()
-}
-
 class TextAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+    }
+
     override val schemaType = TypeSchema.Value.text
 
     override val matchers: List<AssemblerMatcherProtocol> by lazy {
-        scope.getAllAssociated(TextAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
 
     override fun accept(

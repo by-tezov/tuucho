@@ -15,23 +15,23 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.scope.Scope
 
-sealed class MaterialAssociation {
-    object Assembler : MaterialAssociation()
-}
-
 @OpenForTest
 class MaterialAssembler : TuuchoKoinScopeComponent {
+
+    sealed class Association {
+        object Processor : Association()
+    }
+
     override val scope: Scope by lazy {
         with(getKoin()) {
             createScope(ScopeContext.Material.value, ScopeContext.Material).also {
-                val materialRectifierScope = get<MaterialRectifier>().scope
-                it.linkTo(materialRectifierScope)
+                it.linkTo(get<MaterialRectifier>().scope)
             }
         }
     }
 
     private val assemblers: List<AssemblerProtocol> by lazy {
-        scope.getAllAssociated(MaterialAssociation.Assembler::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     suspend fun process(

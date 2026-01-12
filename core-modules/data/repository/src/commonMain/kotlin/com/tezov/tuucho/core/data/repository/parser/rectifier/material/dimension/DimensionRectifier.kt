@@ -18,22 +18,22 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.scope.Scope
 
-sealed class DimensionAssociation {
-    object Matcher : DimensionAssociation()
-
-    object Rectifier : DimensionAssociation()
-}
-
 class DimensionRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+        object Processor : Association()
+    }
+
     override val key = DimensionSchema.root
 
     override val matchers: List<RectifierMatcherProtocol> by lazy {
-        scope.getAllAssociated(DimensionAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
     override val childProcessors: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(DimensionAssociation.Rectifier::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     override fun beforeAlterPrimitive(

@@ -20,17 +20,18 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.scope.Scope
 
-sealed class SettingAssociation {
-    object Rectifier : SettingAssociation()
-}
-
 class SettingComponentRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
+
+    sealed class Association {
+        object Processor : Association()
+    }
+
     override val key = ComponentSettingSchema.root
 
     override val childProcessors: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(SettingAssociation.Rectifier::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     override fun accept(

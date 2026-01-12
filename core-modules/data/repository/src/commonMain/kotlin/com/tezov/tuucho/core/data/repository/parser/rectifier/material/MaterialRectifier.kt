@@ -15,22 +15,21 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-sealed class MaterialAssociation {
-    object Rectifier : MaterialAssociation()
-}
-
 @OpenForTest
 internal class MaterialRectifier : TuuchoKoinScopeComponent {
+
+    sealed class Association {
+        object Processor : Association()
+    }
+
     override val scope: Scope by lazy {
-        with(getKoin()) {
-            createScope(ScopeContext.Material.value, ScopeContext.Material)
-        }
+        getKoin().createScope(ScopeContext.Material.value, ScopeContext.Material)
     }
 
     private val componentRectifier: ComponentRectifier by inject()
 
     private val rectifiers: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(MaterialAssociation.Rectifier::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     @Suppress("RedundantSuspendModifier")

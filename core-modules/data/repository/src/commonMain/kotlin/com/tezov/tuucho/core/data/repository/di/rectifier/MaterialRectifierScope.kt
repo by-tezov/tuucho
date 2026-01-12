@@ -1,40 +1,29 @@
 package com.tezov.tuucho.core.data.repository.di.rectifier
 
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Rectifier.ScopeContext
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialAssociation
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierIdGenerator
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.color.ColorAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.color.ColorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.color.ColorsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.content.ContentAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.content.ContentRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.content.ContentsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.form.FormValidatorRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.option.OptionAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.option.OptionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.option.OptionsRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.setting.component.SettingAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.setting.component.SettingComponentNavigationRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.setting.component.SettingComponentRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.state.StateAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.state.StateRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.state.StatesRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.style.StyleAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.style.StyleRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.style.StylesRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextAssociation
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextsRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
@@ -86,7 +75,7 @@ internal object MaterialRectifierScope {
         factoryOf(::ActionRectifier)
         factoryOf(::FormValidatorRectifier)
 
-        associate<MaterialAssociation.Rectifier> {
+        associate<MaterialRectifier.Association.Processor> {
             declaration<ComponentsRectifier>()
             declaration<ContentsRectifier>()
             declaration<StylesRectifier>()
@@ -100,16 +89,16 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.idAssociation() {
-        factoryOf(::IdMatcher) associate IdAssociation.Matcher::class
+        factoryOf(::IdMatcher) associate IdRectifier.Association.Matcher::class
     }
 
     private fun ScopeDSL.settingAssociation() {
-        factoryOf(::SettingComponentNavigationRectifier) associate SettingAssociation.Rectifier::class
-        declaration<IdRectifier>() associate SettingAssociation.Rectifier::class
+        factoryOf(::SettingComponentNavigationRectifier) associate SettingComponentRectifier.Association.Processor::class
+        declaration<IdRectifier>() associate SettingComponentRectifier.Association.Processor::class
     }
 
     private fun ScopeDSL.componentAssociation() {
-        associate<ComponentAssociation.Rectifier> {
+        associate<ComponentRectifier.Association.Processor> {
             declaration<IdRectifier>()
             declaration<SettingComponentRectifier>()
             declaration<ContentRectifier>()
@@ -120,7 +109,7 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.contentAssociation() {
-        associate<ContentAssociation.Rectifier> {
+        associate<ContentRectifier.Association.Processor> {
             declaration<IdRectifier>()
             declaration<ActionRectifier>()
             declaration<TextRectifier>()
@@ -128,7 +117,7 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.styleAssociation() {
-        associate<StyleAssociation.Rectifier> {
+        associate<StyleRectifier.Association.Processor> {
             declaration<IdRectifier>()
             declaration<DimensionRectifier>()
             declaration<ColorRectifier>()
@@ -136,32 +125,32 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.optionAssociation() {
-        associate<OptionAssociation.Rectifier> {
+        associate<OptionRectifier.Association.Processor> {
             declaration<IdRectifier>()
             declaration<FormValidatorRectifier>()
         }
     }
 
     private fun ScopeDSL.stateAssociation() {
-        associate<StateAssociation.Rectifier> {
+        associate<StateRectifier.Association.Processor> {
             declaration<IdRectifier>()
             declaration<TextRectifier>()
         }
     }
 
     private fun ScopeDSL.textAssociation() {
-        declaration<IdRectifier>() associate TextAssociation.Rectifier::class
+        declaration<IdRectifier>() associate TextRectifier.Association.Processor::class
     }
 
     private fun ScopeDSL.colorAssociation() {
-        declaration<IdRectifier>() associate ColorAssociation.Rectifier::class
+        declaration<IdRectifier>() associate ColorRectifier.Association.Processor::class
     }
 
     private fun ScopeDSL.dimensionAssociation() {
-        declaration<IdRectifier>() associate DimensionAssociation.Rectifier::class
+        declaration<IdRectifier>() associate DimensionRectifier.Association.Processor::class
     }
 
     private fun ScopeDSL.actionAssociation() {
-        declaration<IdRectifier>() associate ActionAssociation.Rectifier::class
+        declaration<IdRectifier>() associate ActionRectifier.Association.Processor::class
     }
 }

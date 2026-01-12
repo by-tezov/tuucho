@@ -19,16 +19,17 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import org.koin.core.scope.Scope
 
-sealed class FieldValidatorAssociation {
-    object Matcher : FieldValidatorAssociation()
-}
-
 class FormValidatorRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+    }
+
     override val key = FormValidatorSchema.root
     override val matchers: List<RectifierMatcherProtocol> by lazy {
-        scope.getAllAssociated(FieldValidatorAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
 
     override fun beforeAlterPrimitive(

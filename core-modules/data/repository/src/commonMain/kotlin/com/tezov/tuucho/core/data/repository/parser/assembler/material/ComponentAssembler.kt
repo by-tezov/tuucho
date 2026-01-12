@@ -10,23 +10,24 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.scope.Scope
 
-sealed class ComponentAssociation {
-    object Matcher : ComponentAssociation()
-
-    object Assembler : ComponentAssociation()
-}
-
 class ComponentAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
+
+    sealed class Association {
+        object Matcher : Association()
+
+        object Processor : Association()
+    }
+
     override val schemaType = TypeSchema.Value.component
 
     override val matchers: List<AssemblerMatcherProtocol> by lazy {
-        scope.getAllAssociated(ComponentAssociation.Matcher::class)
+        scope.getAllAssociated(Association.Matcher::class)
     }
 
     override val childProcessors: List<AssemblerProtocol> by lazy {
-        scope.getAllAssociated(ComponentAssociation.Assembler::class)
+        scope.getAllAssociated(Association.Processor::class)
     }
 
     override fun accept(

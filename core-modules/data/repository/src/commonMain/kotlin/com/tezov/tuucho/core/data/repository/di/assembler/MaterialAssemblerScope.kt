@@ -4,16 +4,12 @@ import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Assembler.ScopeC
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ColorAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ContentAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material.ContentAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.DimensionAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssociation
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.OptionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StateAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material.StateAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAssembler
-import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAssociation
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssembler
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
@@ -43,7 +39,7 @@ object MaterialAssemblerScope {
         factoryOf(::DimensionAssembler)
         factoryOf(::ActionAssembler)
 
-        associate<MaterialAssociation.Assembler> {
+        associate<MaterialAssembler.Association.Processor> {
             declaration<ComponentAssembler>()
             declaration<ContentAssembler>()
             declaration<TextAssembler>()
@@ -53,7 +49,7 @@ object MaterialAssemblerScope {
 
     private fun ScopeDSL.componentAssociation() {
         // Used for contextual
-        associate<ComponentAssociation.Assembler> {
+        associate<ComponentAssembler.Association.Processor> {
             declaration<ContentAssembler>()
             declaration<StyleAssembler>()
             declaration<OptionAssembler>()
@@ -62,7 +58,7 @@ object MaterialAssemblerScope {
     }
 
     private fun ScopeDSL.contentAssociation() {
-        associate<ContentAssociation.Assembler> {
+        associate<ContentAssembler.Association.Processor> {
             declaration<TextAssembler>()
             declaration<ActionAssembler>()
             declaration<ComponentAssembler>()
@@ -70,13 +66,13 @@ object MaterialAssemblerScope {
     }
 
     private fun ScopeDSL.styleAssociation() {
-        associate<StyleAssociation.Assembler> {
+        associate<StyleAssembler.Association.Processor> {
             declaration<ColorAssembler>()
             declaration<DimensionAssembler>()
         }
     }
 
     private fun ScopeDSL.stateAssociation() {
-        declaration<TextAssembler>() associate StateAssociation.Assembler::class
+        declaration<TextAssembler>() associate StateAssembler.Association.Processor::class
     }
 }
