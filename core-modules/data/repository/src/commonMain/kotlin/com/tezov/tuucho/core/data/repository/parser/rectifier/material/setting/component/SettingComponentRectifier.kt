@@ -1,14 +1,14 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.setting.component
 
-import com.tezov.tuucho.core.data.repository.di.rectifier.Material.Name
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentStartWith
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -18,18 +18,20 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
-import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
 class SettingComponentRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
+    sealed class Association {
+        object Processor : Association()
+    }
+
     override val key = ComponentSettingSchema.root
 
-    override val childProcessors: List<AbstractRectifier> by inject(
-        Name.Processor.SETTING
-    )
+    override val childProcessors: List<RectifierProtocol> by lazy {
+        scope.getAllAssociated(Association.Processor::class)
+    }
 
     override fun accept(
         path: JsonElementPath,

@@ -29,7 +29,8 @@ listOf(
     "core-barrel",
     "core-modules/data",
     "core-modules/domain",
-    "core-modules/presentation"
+    "core-modules/presentation",
+    "ui-component-modules/stable"
 ).forEach { basePath ->
     file(basePath).listFiles()
         ?.filter {
@@ -40,8 +41,14 @@ listOf(
                 .relativeTo(rootDir).invariantSeparatorsPath
 
         }?.forEach { path ->
-            val id = path.replaceFirst(Regex("^/?core-[^/]+"), "core")
-            val name = id.replace('/', '.')
+            val segments = path.split("/", limit = 2)
+            val firstSegment = when {
+                segments[0] == "core-barrel" -> "core"
+                segments[0].endsWith("-modules") -> segments[0].removeSuffix("-modules")
+                else -> segments[0]
+            }
+            val id = if (segments.size > 1) "$firstSegment/${segments[1]}" else firstSegment
+            val name = id.replace('/', '.').replace('-', '_')
             include(":$name")
             project(":$name").apply {
                 this.name = name

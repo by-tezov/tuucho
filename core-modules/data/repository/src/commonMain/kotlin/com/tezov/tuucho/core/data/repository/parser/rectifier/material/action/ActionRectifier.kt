@@ -1,15 +1,15 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.action
 
-import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -18,21 +18,24 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
-import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
 class ActionRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-    override val key = ActionSchema.root
-    override val matchers: List<RectifierMatcherProtocol> by inject(
-        RectifierModule.Name.Matcher.ACTION
-    )
+    sealed class Association {
+        object Matcher : Association()
 
-    override val childProcessors: List<AbstractRectifier> by inject(
-        RectifierModule.Name.Processor.ACTION
-    )
+        object Processor : Association()
+    }
+
+    override val key = ActionSchema.root
+    override val matchers: List<RectifierMatcherProtocol> by lazy {
+        scope.getAllAssociated(Association.Matcher::class)
+    }
+    override val childProcessors: List<RectifierProtocol> by lazy {
+        scope.getAllAssociated(Association.Processor::class)
+    }
 
     override fun beforeAlterPrimitive(
         path: JsonElementPath,

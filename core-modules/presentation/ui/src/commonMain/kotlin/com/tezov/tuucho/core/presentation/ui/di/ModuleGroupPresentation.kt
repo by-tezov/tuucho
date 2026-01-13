@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.di.Koin
 
-sealed class ModuleGroupPresentation : ModuleProtocol.Group {
-    data object Main : ModuleGroupPresentation()
+sealed class ModuleGroupPresentation : Koin.ModuleGroup {
+    object Main : ModuleGroupPresentation()
 
-    data object View : ModuleGroupPresentation()
+    object View : ModuleGroupPresentation()
 }

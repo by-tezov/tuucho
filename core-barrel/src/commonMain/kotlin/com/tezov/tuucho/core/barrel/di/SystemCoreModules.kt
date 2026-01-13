@@ -2,20 +2,19 @@ package com.tezov.tuucho.core.barrel.di
 
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
+import com.tezov.tuucho.core.domain.business.di.Koin
 import com.tezov.tuucho.core.domain.business.di.KoinContext
 import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
 import org.koin.core.KoinApplication
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
-import kotlin.collections.plus
 
-internal expect fun SystemCoreModules.platformInvoke(): List<ModuleProtocol>
+internal expect fun SystemCoreModules.platformInvoke(): List<Koin>
 
 internal object SystemCoreModules {
-    fun invoke(): List<ModuleProtocol> = listOf(
+    fun invoke(): List<Koin> = listOf(
         CoroutineScopeModules.invoke(),
     ) +
         platformInvoke()
@@ -23,23 +22,31 @@ internal object SystemCoreModules {
     @OptIn(TuuchoInternalApi::class)
     @Composable
     fun remember(
-        modules: List<ModuleProtocol>,
+        modules: List<Koin>,
         extension: (KoinApplication.() -> Unit)?
     ) = androidx.compose.runtime.remember {
+        val koins = SystemCoreDomainModules.invoke() +
+            SystemCoreDataModules.invoke() +
+            SystemCoreUiModules.invoke() +
+            invoke() +
+            modules
         koinApplication {
             allowOverride(override = false)
-            val map = listOf(
-                SystemCoreDomainModules.invoke(),
-                SystemCoreDataModules.invoke(),
-                SystemCoreUiModules.invoke(),
-                invoke(),
-                modules,
-            ).flatten().groupBy { it.group }
-            modules(map.map { (_, modules) ->
+            modules(koins.groupBy { it.group }.map { (_, groups) ->
+                val (modules, scopes) = groups.partition { it is Koin.Module }
                 module {
-                    modules.forEach { module ->
-                        module.run { declaration() }
+                    @Suppress("UNCHECKED_CAST")
+                    (modules as List<Koin.Module>).forEach { module ->
+                        module.declaration(this)
                     }
+                    @Suppress("UNCHECKED_CAST")
+                    (scopes as List<Koin.Scope>)
+                        .groupBy { it.scopeContext }
+                        .forEach { (scopeContext, koinScopes) ->
+                            scope(scopeContext) {
+                                koinScopes.forEach { it.declaration(this) }
+                            }
+                        }
                 }
             })
             extension?.invoke(this)

@@ -6,13 +6,11 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.A
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import kotlinx.serialization.json.JsonElement
 import org.koin.core.scope.Scope
 
-@OptIn(TuuchoExperimentalAPI::class)
 class SettingComponentNavigationRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {

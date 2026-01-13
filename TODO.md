@@ -1,14 +1,13 @@
 ## In progress
 
+- bom
+- Miss option and style in shadower, so contextual won't work
 
 ### Need to fix: 
+
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
 - contextual register, when outer receive later, the inner did not succeed to register
   - check message of contextual field, they never request update view after click
-
-
-- update lib and check why mokkery complain on some class
-- then refactor to allow feature UI (Processor, Data, Domain Schema)
 
 **** ****
 - Shadower

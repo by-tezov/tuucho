@@ -64,6 +64,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kermit)
             implementation(libs.tuucho)
+            implementation("com.tezov:tuucho.ui_component.stable:0.0.1-alpha24_2.3.0")
 
             implementation(compose.runtime)
             implementation(compose.foundation)

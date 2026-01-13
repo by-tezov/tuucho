@@ -1,3 +1,83 @@
+public final class com/tezov/tuucho/core/domain/business/_system/koin/AssociateDSL {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/AssociateDSL;
+	public final fun associate (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
+	public final fun associate (Lorg/koin/core/instance/InstanceFactory;Lkotlin/reflect/KClass;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/AssociateModule {
+	public fun <init> (Lkotlin/reflect/KClass;Lorg/koin/core/module/Module;)V
+	public final fun factory (Ljava/lang/String;)V
+	public final fun getAssociation ()Lkotlin/reflect/KClass;
+	public final fun getModule ()Lorg/koin/core/module/Module;
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/AssociateScopeDSL {
+	public fun <init> (Lkotlin/reflect/KClass;Lorg/koin/dsl/ScopeDSL;)V
+	public final fun factory (Ljava/lang/String;)V
+	public final fun getAssociation ()Lkotlin/reflect/KClass;
+	public final fun getScopeDSL ()Lorg/koin/dsl/ScopeDSL;
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/BindOrdered {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/BindOrdered;
+	public final fun bindOrdered (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
+	public final fun getAllOrdered (Lorg/koin/core/scope/Scope;Lkotlin/reflect/KClass;)Ljava/util/List;
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/Constant {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/Constant;
+	public final fun getKoinRootScopeQualifier ()Lorg/koin/core/qualifier/StringQualifier;
+}
+
+public abstract class com/tezov/tuucho/core/domain/business/di/Koin {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/di/Koin$Companion;
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/Koin$Companion {
+	public final fun module (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
+	public final fun scope (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/Koin$Module : com/tezov/tuucho/core/domain/business/di/Koin {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/Koin$Scope : com/tezov/tuucho/core/domain/business/di/Koin {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+	public final fun getScopeContext ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext : org/koin/core/qualifier/Qualifier {
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+	public fun getValue ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext$DefaultImpls {
+	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;)Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
 	public static field koinApplication Lorg/koin/core/KoinApplication;
@@ -6,28 +86,19 @@ public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
 	public final fun setKoinApplication (Lorg/koin/core/KoinApplication;)V
 }
 
-public abstract class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain : com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
+public abstract class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
 }
 
 public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/di/SystemCoreDomainModules {
@@ -202,6 +273,108 @@ public final class com/tezov/tuucho/core/domain/business/interaction/navigation/
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/transition/FadeNavigationTransitionStackHelper : com/tezov/tuucho/core/domain/business/protocol/NavigationTransitionStackHelperProtocol {
 	public fun <init> ()V
 	public fun isForeground (Lkotlinx/serialization/json/JsonObject;)Z
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Component {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Component;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Component$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Component$Value;
+	public static final field subset Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$Key;
+	public static final field messageErrorExtra Ljava/lang/String;
+}
+
+public class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/material/MessageSchema$OpenScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getMessageErrorExtra ()Lkotlinx/serialization/json/JsonObject;
+	public final fun setMessageErrorExtra (Lkotlinx/serialization/json/JsonObject;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$OpenScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$Value;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$Value$Subset {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Message$Value$Subset;
+	public static final field updateErrorState Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Option {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Option;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Option$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Option$Key;
+	public static final field validators Ljava/lang/String;
+}
+
+public class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Option$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/material/OptionSchema$OpenScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getValidators ()Lkotlinx/serialization/json/JsonArray;
+	public final fun setValidators (Lkotlinx/serialization/json/JsonArray;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Option$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormSchema$Option$OpenScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema;
+	public static final field root Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema$Key {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema$Key;
+	public static final field length Ljava/lang/String;
+	public static final field messageErrorId Ljava/lang/String;
+	public static final field type Ljava/lang/String;
+	public static final field value Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getLength ()Ljava/lang/String;
+	public final fun getMessageErrorId ()Ljava/lang/String;
+	public fun getRoot ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+	public final fun setLength (Ljava/lang/String;)V
+	public final fun setMessageErrorId (Ljava/lang/String;)V
+	public final fun setType (Ljava/lang/String;)V
+	public final fun setValue (Ljava/lang/String;)V
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema$Value {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema$Value;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema$Value$Type {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/_element/form/FormValidatorSchema$Value$Type;
+	public static final field stringEmail Ljava/lang/String;
+	public static final field stringMaxLength Ljava/lang/String;
+	public static final field stringMaxValue Ljava/lang/String;
+	public static final field stringMinDigitLength Ljava/lang/String;
+	public static final field stringMinLength Ljava/lang/String;
+	public static final field stringMinValue Ljava/lang/String;
+	public static final field stringNotNull Ljava/lang/String;
+	public static final field stringOnlyDigits Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/DelegateSchemaKey {
@@ -735,11 +908,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/Sub
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/SubsetSchema$Value {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/SubsetSchema$Value;
-	public static final field button Ljava/lang/String;
-	public static final field field Ljava/lang/String;
-	public static final field label Ljava/lang/String;
-	public static final field layoutLinear Ljava/lang/String;
-	public static final field spacer Ljava/lang/String;
 	public static final field unknown Ljava/lang/String;
 }
 
@@ -806,328 +974,6 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/Typ
 	public static final field component Ljava/lang/String;
 	public static final field page Ljava/lang/String;
 	public static final field prefix Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Component {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Component;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Component$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Component$Value;
-	public static final field subset Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Content {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Content;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Content$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Content$Key;
-	public static final field action Ljava/lang/String;
-	public static final field label Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/ButtonSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getAction ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getLabel ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setAction (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setLabel (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Component {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Component;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Component$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Component$Value;
-	public static final field subset Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Content {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Content;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Content$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Content$Key;
-	public static final field value Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getValue ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setValue (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Style {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Style;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Style$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Style$Key;
-	public static final field fontColor Ljava/lang/String;
-	public static final field fontSize Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/LabelSchema$Style$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StyleSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getFontColor ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getFontSize ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setFontColor (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setFontSize (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Component {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Component;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Component$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Component$Value;
-	public static final field subset Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Style {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Style;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Style$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Style$Key;
-	public static final field weight Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/SpacerSchema$Style$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StyleSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getWeight ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setWeight (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Component {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Component;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Component$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Component$Value;
-	public static final field subset Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content$Key;
-	public static final field messageErrors Ljava/lang/String;
-	public static final field placeholder Ljava/lang/String;
-	public static final field title Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getMessageErrors ()Lkotlinx/serialization/json/JsonArray;
-	public final fun getPlaceholder ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getTitle ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setMessageErrors (Lkotlinx/serialization/json/JsonArray;)V
-	public final fun setPlaceholder (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setTitle (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$State {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$State;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$State$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$State$Key;
-	public static final field initialValue Ljava/lang/String;
-}
-
-public class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$State$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StateSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getInitialValue ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setInitialValue (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$State$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormFieldSchema$State$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Component {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Component;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Component$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Component$Value;
-	public static final field subset Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$Key;
-	public static final field messageErrorExtra Ljava/lang/String;
-}
-
-public class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/material/MessageSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getMessageErrorExtra ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setMessageErrorExtra (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$Value;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$Value$Subset {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Message$Value$Subset;
-	public static final field updateErrorState Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$Key;
-	public static final field validators Ljava/lang/String;
-}
-
-public class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/material/OptionSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getValidators ()Lkotlinx/serialization/json/JsonArray;
-	public final fun setValidators (Lkotlinx/serialization/json/JsonArray;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormSchema$Option$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema;
-	public static final field root Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Key;
-	public static final field length Ljava/lang/String;
-	public static final field messageErrorId Ljava/lang/String;
-	public static final field type Ljava/lang/String;
-	public static final field value Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getLength ()Ljava/lang/String;
-	public final fun getMessageErrorId ()Ljava/lang/String;
-	public fun getRoot ()Ljava/lang/String;
-	public final fun getType ()Ljava/lang/String;
-	public final fun getValue ()Ljava/lang/String;
-	public final fun setLength (Ljava/lang/String;)V
-	public final fun setMessageErrorId (Ljava/lang/String;)V
-	public final fun setType (Ljava/lang/String;)V
-	public final fun setValue (Ljava/lang/String;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Value;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Value$Type {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/form/FormValidatorSchema$Value$Type;
-	public static final field stringEmail Ljava/lang/String;
-	public static final field stringMaxLength Ljava/lang/String;
-	public static final field stringMaxValue Ljava/lang/String;
-	public static final field stringMinDigitLength Ljava/lang/String;
-	public static final field stringMinLength Ljava/lang/String;
-	public static final field stringMinValue Ljava/lang/String;
-	public static final field stringNotNull Ljava/lang/String;
-	public static final field stringOnlyDigits Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Component {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Component;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Component$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Component$Value;
-	public static final field subset Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Content {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Content;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Content$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Content$Key;
-	public static final field items Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getItems ()Lkotlinx/serialization/json/JsonArray;
-	public final fun setItems (Lkotlinx/serialization/json/JsonArray;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style$Key {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style$Key;
-	public static final field backgroundColor Ljava/lang/String;
-	public static final field fillMaxSize Ljava/lang/String;
-	public static final field fillMaxWidth Ljava/lang/String;
-	public static final field orientation Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StyleSchema$OpenScope {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getBackgroundColor ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getFillMaxSize ()Ljava/lang/Boolean;
-	public final fun getFillMaxWidth ()Ljava/lang/Boolean;
-	public final fun getOrientation ()Ljava/lang/String;
-	public final fun setBackgroundColor (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setFillMaxSize (Ljava/lang/Boolean;)V
-	public final fun setFillMaxWidth (Ljava/lang/Boolean;)V
-	public final fun setOrientation (Ljava/lang/String;)V
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style$Value {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style$Value;
-}
-
-public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style$Value$Orientation {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/_element/layout/LayoutLinearSchema$Style$Value$Orientation;
-	public static final field horizontal Ljava/lang/String;
-	public static final field vertical Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/action/ActionFormSchema {
@@ -1993,27 +1839,6 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/M
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next {
 	public abstract fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion;
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
-	public final fun component2 ()Lkotlin/jvm/functions/Function1;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
-	public final fun getGroup ()Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Companion {
-	public final fun module (Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/protocol/ModuleProtocol;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ModuleProtocol$Group {
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/NavigationDefinitionSelectorMatcherProtocol {

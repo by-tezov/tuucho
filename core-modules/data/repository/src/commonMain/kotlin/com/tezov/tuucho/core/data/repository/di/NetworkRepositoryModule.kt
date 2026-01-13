@@ -7,16 +7,19 @@ import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.getAllOrdered
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
+import org.koin.dsl.bind
 
 object NetworkRepositoryModule {
     interface Config {
@@ -33,7 +36,7 @@ object NetworkRepositoryModule {
     }
 
     internal fun invoke() = module(ModuleGroupData.Main) {
-        single<HttpClient> {
+        single {
             HttpClient(
                 engineFactory = HttpClientEngineFactory(
                     engineFactory = get<io.ktor.client.engine.HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE),
@@ -66,26 +69,10 @@ object NetworkRepositoryModule {
             }
         }
 
-        factory<NetworkHttpRequestSource> {
-            NetworkHttpRequestSource(
-                httpClient = get(),
-                config = get()
-            )
-        }
+        factoryOf(::NetworkHttpRequestSource)
 
-        single<NetworkJsonObjectProtocol> {
-            NetworkJsonObject(
-                networkHttpRequestSource = get(),
-                jsonConverter = get()
-            )
-        }
+        singleOf(::NetworkJsonObject) bind NetworkJsonObjectProtocol::class
 
-        factory<ServerHealthCheckProtocol> {
-            NetworkHealthCheck(
-                coroutineScopes = get(),
-                networkHttpRequestSource = get(),
-                jsonConverter = get()
-            )
-        }
+        factoryOf(::NetworkHealthCheck) bind ServerHealthCheckProtocol::class
     }
 }

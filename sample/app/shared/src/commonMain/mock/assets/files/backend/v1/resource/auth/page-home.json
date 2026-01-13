@@ -72,7 +72,6 @@
             "value": "*form@text-form-section-title"
           }
         },
-        "*item-spacer-48-v",
         {
           "id": "*item-spacer-24-v"
         },
@@ -114,6 +113,7 @@
             }
           }
         },
+        "*item-spacer-24-v",
         {
           "subset": "form-field",
           "id": {

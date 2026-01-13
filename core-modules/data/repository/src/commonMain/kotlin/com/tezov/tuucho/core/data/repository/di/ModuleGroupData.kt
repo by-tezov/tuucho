@@ -1,17 +1,35 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
+import com.tezov.tuucho.core.domain.business.di.Koin
 
-sealed class ModuleGroupData : ModuleProtocol.Group {
-    data object Main : ModuleGroupData()
+sealed class ModuleGroupData : Koin.ModuleGroup {
+    object Main : ModuleGroupData()
 
-    data object Assembler : ModuleGroupData()
+    object Assembler : ModuleGroupData() {
+        sealed class ScopeContext : Koin.ScopeContext {
+            override val group get() = Assembler
 
-    data object Breaker : ModuleGroupData()
+            object Material : ScopeContext()
 
-    data object Rectifier : ModuleGroupData()
+            object Response : ScopeContext() {
+                object Form : ScopeContext()
+            }
+        }
+    }
 
-    data object Shadower : ModuleGroupData()
+    object Breaker : ModuleGroupData()
 
-    data object Interceptor : ModuleGroupData()
+    object Rectifier : ModuleGroupData() {
+        sealed class ScopeContext : Koin.ScopeContext {
+            override val group get() = Rectifier
+
+            object Material : ScopeContext()
+
+            object Response : ScopeContext()
+        }
+    }
+
+    object Shadower : ModuleGroupData()
+
+    object Interceptor : ModuleGroupData()
 }
