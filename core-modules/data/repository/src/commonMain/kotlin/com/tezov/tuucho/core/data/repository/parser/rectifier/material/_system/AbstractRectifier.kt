@@ -4,7 +4,6 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system
 
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
@@ -17,25 +16,22 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.scope.Scope
 
 // IMPROVE add meta data 'path' for breaker, assembler and shadower to improve speed
-@TuuchoExperimentalAPI
 abstract class AbstractRectifier(
     private val _scope: Scope? = null
-) : RectifierMatcherProtocol,
+) : RectifierProtocol,
     TuuchoKoinScopeComponent {
-    abstract val key: String
-
     override val scope: Scope
         get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
 
     protected open val matchers: List<RectifierMatcherProtocol> = emptyList()
-    protected open val childProcessors: List<AbstractRectifier> = emptyList()
+    protected open val childProcessors: List<RectifierProtocol> = emptyList()
 
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
     ) = matchers.any { it.accept(path, element) }
 
-    fun process(
+    override fun process(
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement {

@@ -10,9 +10,10 @@ import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRem
 import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ContextualShadowerMaterialSource
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ShadowerMaterialSourceProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 
@@ -38,20 +39,11 @@ internal object MaterialRepositoryModule {
             )
         }
 
-        factory<MaterialRepositoryProtocol.Retrieve> {
-            RetrieveMaterialRepository(
-                materialCacheLocalSource = get(),
-                materialRemoteSource = get()
-            )
-        }
+        factoryOf(::RefreshMaterialCacheRepository) bind MaterialRepositoryProtocol.RefreshCache::class
+        factoryOf(::RetrieveMaterialRepository) bind MaterialRepositoryProtocol.Retrieve::class
+        factoryOf(::SendDataAndRetrieveMaterialRepository) bind MaterialRepositoryProtocol.SendDataAndRetrieve::class
 
-        factory<MaterialRepositoryProtocol.SendDataAndRetrieve> {
-            SendDataAndRetrieveMaterialRepository(
-                sendObjectAndRetrieveMaterialRemoteSource = get()
-            )
-        }
-
-        single<ShadowerMaterialRepository> {
+        single {
             ShadowerMaterialRepository(
                 coroutineScopes = get(),
                 materialShadower = get(),
@@ -61,42 +53,13 @@ internal object MaterialRepositoryModule {
     }
 
     private fun Module.localSource() {
-        factory<MaterialCacheLocalSource> {
-            MaterialCacheLocalSource(
-                coroutineScopes = get(),
-                materialDatabaseSource = get(),
-                materialBreaker = get(),
-                materialAssembler = get(),
-                lifetimeResolver = get(),
-            )
-        }
+        factoryOf(::MaterialCacheLocalSource)
     }
 
     private fun Module.remoteSource() {
-        factory<MaterialRemoteSource> {
-            MaterialRemoteSource(
-                coroutineScopes = get(),
-                networkJsonObject = get(),
-                materialRectifier = get()
-            )
-        }
-
-        factory<RetrieveObjectRemoteSource> {
-            RetrieveObjectRemoteSource(
-                coroutineScopes = get(),
-                networkJsonObject = get()
-            )
-        }
-
-        factory<SendDataAndRetrieveMaterialRemoteSource> {
-            SendDataAndRetrieveMaterialRemoteSource(
-                coroutineScopes = get(),
-                networkJsonObject = get(),
-                responseRectifier = get(),
-                responseAssembler = get(),
-                materialDatabaseSource = get()
-            )
-        }
+        factoryOf(::MaterialRemoteSource)
+        factoryOf(::RetrieveObjectRemoteSource)
+        factoryOf(::SendDataAndRetrieveMaterialRemoteSource)
     }
 
     private fun Module.compositeSource() {

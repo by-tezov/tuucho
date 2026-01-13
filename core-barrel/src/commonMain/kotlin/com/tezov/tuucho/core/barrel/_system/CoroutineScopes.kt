@@ -10,10 +10,10 @@ import com.tezov.tuucho.core.domain.tool.async.CoroutineUncaughtExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
-internal fun createCoroutineScopes(
+internal class CoroutineScopes(
     exceptionMonitor: CoroutineExceptionMonitor?,
     uncaughtExceptionHandler: CoroutineUncaughtExceptionHandler?
-): CoroutineScopesProtocol = object : CoroutineScopesProtocol {
+) : CoroutineScopesProtocol {
     override val database: CoroutineContextProtocol =
         CoroutineContext(
             name = "Database",

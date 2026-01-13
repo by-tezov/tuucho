@@ -336,6 +336,42 @@ final class <#A: kotlin/Any?> com.tezov.tuucho.core.domain.business.jsonSchema._
     }
 }
 
+final class com.tezov.tuucho.core.domain.business._system.koin/AssociateModule { // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule|null[0]
+    constructor <init>(kotlin.reflect/KClass<*>, org.koin.core.module/Module) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.<init>|<init>(kotlin.reflect.KClass<*>;org.koin.core.module.Module){}[0]
+
+    final val association // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.association|{}association[0]
+        final fun <get-association>(): kotlin.reflect/KClass<*> // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.association.<get-association>|<get-association>(){}[0]
+    final val module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.module|{}module[0]
+        final fun <get-module>(): org.koin.core.module/Module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.module.<get-module>|<get-module>(){}[0]
+
+    final fun factory(kotlin/String) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factory|factory(kotlin.String){}[0]
+    final inline fun <#A1: reified kotlin/Any> declaration(org.koin.core.qualifier/Qualifier? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.declaration|declaration(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factoryOf|factoryOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> singleOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.singleOf|singleOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> factory(org.koin.core.qualifier/Qualifier? = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factory|factory(org.koin.core.qualifier.Qualifier?;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factoryOf|factoryOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> single(org.koin.core.qualifier/Qualifier? = ..., kotlin/Boolean = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.single|single(org.koin.core.qualifier.Qualifier?;kotlin.Boolean;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> singleOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.singleOf|singleOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
+}
+
+final class com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL { // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL|null[0]
+    constructor <init>(kotlin.reflect/KClass<*>, org.koin.dsl/ScopeDSL) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.<init>|<init>(kotlin.reflect.KClass<*>;org.koin.dsl.ScopeDSL){}[0]
+
+    final val association // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.association|{}association[0]
+        final fun <get-association>(): kotlin.reflect/KClass<*> // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.association.<get-association>|<get-association>(){}[0]
+    final val scopeDSL // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scopeDSL|{}scopeDSL[0]
+        final fun <get-scopeDSL>(): org.koin.dsl/ScopeDSL // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scopeDSL.<get-scopeDSL>|<get-scopeDSL>(){}[0]
+
+    final fun factory(kotlin/String) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.factory|factory(kotlin.String){}[0]
+    final inline fun <#A1: reified kotlin/Any> declaration(org.koin.core.qualifier/Qualifier? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.declaration|declaration(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.factoryOf|factoryOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> scopedOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scopedOf|scopedOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> factory(org.koin.core.qualifier/Qualifier? = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.factory|factory(org.koin.core.qualifier.Qualifier?;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.factoryOf|factoryOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> scoped(org.koin.core.qualifier/Qualifier? = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scoped|scoped(org.koin.core.qualifier.Qualifier?;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> scopedOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scopedOf|scopedOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
     constructor <init>() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(){}[0]
 
@@ -485,28 +521,6 @@ final class com.tezov.tuucho.core.domain.business.protocol.repository/Interactio
     final fun freeze(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.freeze|freeze(){}[0]
     final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock.toString|toString(){}[0]
-}
-
-final class com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
-
-    final val declaration // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration|{}declaration[0]
-        final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.declaration.<get-declaration>|<get-declaration>(){}[0]
-    final val group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group|{}group[0]
-        final fun <get-group>(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.group.<get-group>|<get-group>(){}[0]
-
-    final fun component1(): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.component1|component1(){}[0]
-    final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.component2|component2(){}[0]
-    final fun copy(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.copy|copy(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.toString|toString(){}[0]
-
-    abstract interface Group // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group|null[0]
-
-    final object Companion { // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Companion|null[0]
-        final fun module(com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol // com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Companion.module|module(com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Group;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
-    }
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase : com.tezov.tuucho.core.domain.business.di/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<kotlin/Unit, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBackUseCase|null[0]
@@ -1117,24 +1131,65 @@ open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSch
     }
 }
 
-sealed class com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain : com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol.Group { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain|null[0]
-    final object Main : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Main|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Main.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Main.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Main.toString|toString(){}[0]
+sealed class com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin|null[0]
+    abstract val group // com.tezov.tuucho.core.domain.business.di/Koin.group|{}group[0]
+        abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.group.<get-group>|<get-group>(){}[0]
+
+    abstract interface ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup|null[0]
+
+    abstract interface ScopeContext : org.koin.core.qualifier/Qualifier { // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext|null[0]
+        abstract val group // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.group|{}group[0]
+            abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.group.<get-group>|<get-group>(){}[0]
+        open val value // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.value|{}value[0]
+            open fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.value.<get-value>|<get-value>(){}[0]
     }
 
-    final object Middleware : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Middleware|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Middleware.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Middleware.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Middleware.toString|toString(){}[0]
+    final class Module : com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin.Module|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/Koin.Module.<init>|<init>(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+
+        final val declaration // com.tezov.tuucho.core.domain.business.di/Koin.Module.declaration|{}declaration[0]
+            final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Module.declaration.<get-declaration>|<get-declaration>(){}[0]
+        final val group // com.tezov.tuucho.core.domain.business.di/Koin.Module.group|{}group[0]
+            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Module.group.<get-group>|<get-group>(){}[0]
+
+        final fun component1(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Module.component1|component1(){}[0]
+        final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Module.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/Koin.Module // com.tezov.tuucho.core.domain.business.di/Koin.Module.copy|copy(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/Koin.Module.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/Koin.Module.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.Module.toString|toString(){}[0]
     }
 
-    final object UseCase : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.UseCase|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.UseCase.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.UseCase.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.UseCase.toString|toString(){}[0]
+    final class Scope : com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/Koin.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+
+        final val declaration // com.tezov.tuucho.core.domain.business.di/Koin.Scope.declaration|{}declaration[0]
+            final fun <get-declaration>(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Scope.declaration.<get-declaration>|<get-declaration>(){}[0]
+        final val group // com.tezov.tuucho.core.domain.business.di/Koin.Scope.group|{}group[0]
+            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Scope.group.<get-group>|<get-group>(){}[0]
+        final val scopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.scopeContext|{}scopeContext[0]
+            final fun <get-scopeContext>(): com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.scopeContext.<get-scopeContext>|<get-scopeContext>(){}[0]
+
+        final fun component1(): com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.component1|component1(){}[0]
+        final fun component2(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Scope.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext = ..., kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.domain.business.di/Koin.Scope.copy|copy(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/Koin.Scope.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/Koin.Scope.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.Scope.toString|toString(){}[0]
     }
+
+    final object Companion { // com.tezov.tuucho.core.domain.business.di/Koin.Companion|null[0]
+        final fun module(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/Koin.Module // com.tezov.tuucho.core.domain.business.di/Koin.Companion.module|module(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+        final fun scope(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.domain.business.di/Koin.Companion.scope|scope(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+    }
+}
+
+sealed class com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain|null[0]
+    final object Main : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Main|null[0]
+
+    final object Middleware : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Middleware|null[0]
+
+    final object UseCase : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.UseCase|null[0]
 }
 
 sealed class com.tezov.tuucho.core.domain.business.exception/DomainException : kotlin/Exception { // com.tezov.tuucho.core.domain.business.exception/DomainException|null[0]
@@ -1250,6 +1305,29 @@ sealed class com.tezov.tuucho.core.domain.business.protocol.repository/Interacti
     }
 }
 
+final object com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL { // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL|null[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.definition/KoinDefinition<out #A1>).associate(kotlin.reflect/KClass<*>): org.koin.core.definition/KoinDefinition<out #A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.core.definition.KoinDefinition<out|0:0>(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.instance/InstanceFactory<#A1>).associate(kotlin.reflect/KClass<*>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.core.instance.InstanceFactory<0:0>(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).associate(kotlin/Function1<com.tezov.tuucho.core.domain.business._system.koin/AssociateModule, kotlin/Unit>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.core.module.Module(kotlin.Function1<com.tezov.tuucho.core.domain.business._system.koin.AssociateModule,kotlin.Unit>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).declaration(org.koin.core.qualifier/Qualifier? = ...): org.koin.core.instance/InstanceFactory<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.declaration|declaration@org.koin.core.module.Module(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.scope/Scope).getAllAssociated(kotlin.reflect/KClass<*>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.getAllAssociated|getAllAssociated@org.koin.core.scope.Scope(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core/Koin).getAllAssociated(kotlin.reflect/KClass<*>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.getAllAssociated|getAllAssociated@org.koin.core.Koin(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).associate(kotlin/Function1<com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.dsl.ScopeDSL(kotlin.Function1<com.tezov.tuucho.core.domain.business._system.koin.AssociateScopeDSL,kotlin.Unit>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).declaration(org.koin.core.qualifier/Qualifier? = ...): org.koin.core.instance/InstanceFactory<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.declaration|declaration@org.koin.dsl.ScopeDSL(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
+}
+
+final object com.tezov.tuucho.core.domain.business._system.koin/BindOrdered { // com.tezov.tuucho.core.domain.business._system.koin/BindOrdered|null[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.definition/KoinDefinition<out #A1>).bindOrdered(kotlin.reflect/KClass<#A1>): org.koin.core.definition/KoinDefinition<out #A1> // com.tezov.tuucho.core.domain.business._system.koin/BindOrdered.bindOrdered|bindOrdered@org.koin.core.definition.KoinDefinition<out|0:0>(kotlin.reflect.KClass<0:0>){0§<kotlin.Any>}[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.scope/Scope).getAllOrdered(kotlin.reflect/KClass<#A1>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/BindOrdered.getAllOrdered|getAllOrdered@org.koin.core.scope.Scope(kotlin.reflect.KClass<0:0>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.scope/Scope).getAllOrdered(): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/BindOrdered.getAllOrdered|getAllOrdered@org.koin.core.scope.Scope(){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core/Koin).getAllOrdered(): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/BindOrdered.getAllOrdered|getAllOrdered@org.koin.core.Koin(){0§<kotlin.Any>}[0]
+}
+
+final object com.tezov.tuucho.core.domain.business._system.koin/Constant { // com.tezov.tuucho.core.domain.business._system.koin/Constant|null[0]
+    final val koinRootScopeQualifier // com.tezov.tuucho.core.domain.business._system.koin/Constant.koinRootScopeQualifier|{}koinRootScopeQualifier[0]
+        final fun <get-koinRootScopeQualifier>(): org.koin.core.qualifier/StringQualifier // com.tezov.tuucho.core.domain.business._system.koin/Constant.koinRootScopeQualifier.<get-koinRootScopeQualifier>|<get-koinRootScopeQualifier>(){}[0]
+}
+
 final object com.tezov.tuucho.core.domain.business.di/KoinContext { // com.tezov.tuucho.core.domain.business.di/KoinContext|null[0]
     final val koin // com.tezov.tuucho.core.domain.business.di/KoinContext.koin|{}koin[0]
         final fun <get-koin>(): org.koin.core/Koin // com.tezov.tuucho.core.domain.business.di/KoinContext.koin.<get-koin>|<get-koin>(){}[0]
@@ -1260,7 +1338,118 @@ final object com.tezov.tuucho.core.domain.business.di/KoinContext { // com.tezov
 }
 
 final object com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules { // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ModuleProtocol> // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin> // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules.invoke|invoke(){}[0]
+}
+
+final object com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema|null[0]
+    final object Component { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Component|null[0]
+        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Component.Value|null[0]
+            final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Component.Value.subset|{}subset[0]
+                final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Component.Value.subset.<get-subset>|<get-subset>(){}[0]
+        }
+    }
+
+    final object Message { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message|null[0]
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+        }
+
+        open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema.material/MessageSchema.OpenScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.OpenScope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+            final var messageErrorExtra // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.OpenScope.messageErrorExtra|{}messageErrorExtra[0]
+                final fun <get-messageErrorExtra>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.OpenScope.messageErrorExtra.<get-messageErrorExtra>|<get-messageErrorExtra>(){}[0]
+                final fun <set-messageErrorExtra>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.OpenScope.messageErrorExtra.<set-messageErrorExtra>|<set-messageErrorExtra>(kotlinx.serialization.json.JsonObject?){}[0]
+        }
+
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Key|null[0]
+            final const val messageErrorExtra // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Key.messageErrorExtra|{}messageErrorExtra[0]
+                final fun <get-messageErrorExtra>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Key.messageErrorExtra.<get-messageErrorExtra>|<get-messageErrorExtra>(){}[0]
+        }
+
+        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Value|null[0]
+            final object Subset { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Value.Subset|null[0]
+                final const val updateErrorState // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Value.Subset.updateErrorState|{}updateErrorState[0]
+                    final fun <get-updateErrorState>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Message.Value.Subset.updateErrorState.<get-updateErrorState>|<get-updateErrorState>(){}[0]
+            }
+        }
+    }
+
+    final object Option { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option|null[0]
+        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.Scope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+        }
+
+        open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema.material/OptionSchema.OpenScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.OpenScope|null[0]
+            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+            final var validators // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.OpenScope.validators|{}validators[0]
+                final fun <get-validators>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.OpenScope.validators.<get-validators>|<get-validators>(){}[0]
+                final fun <set-validators>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.OpenScope.validators.<set-validators>|<set-validators>(kotlinx.serialization.json.JsonArray?){}[0]
+        }
+
+        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.Key|null[0]
+            final const val validators // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.Key.validators|{}validators[0]
+                final fun <get-validators>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema.Option.Key.validators.<get-validators>|<get-validators>(){}[0]
+        }
+    }
+}
+
+final object com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema|null[0]
+    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.root|{}root[0]
+        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.root.<get-root>|<get-root>(){}[0]
+
+    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+        final val root // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.root|{}root[0]
+            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.root.<get-root>|<get-root>(){}[0]
+
+        final var length // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.length|{}length[0]
+            final fun <get-length>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.length.<get-length>|<get-length>(){}[0]
+            final fun <set-length>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.length.<set-length>|<set-length>(kotlin.String?){}[0]
+        final var messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.messageErrorId|{}messageErrorId[0]
+            final fun <get-messageErrorId>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
+            final fun <set-messageErrorId>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.messageErrorId.<set-messageErrorId>|<set-messageErrorId>(kotlin.String?){}[0]
+        final var type // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.type|{}type[0]
+            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.type.<get-type>|<get-type>(){}[0]
+            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
+        final var value // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.value|{}value[0]
+            final fun <get-value>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.value.<get-value>|<get-value>(){}[0]
+            final fun <set-value>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Scope.value.<set-value>|<set-value>(kotlin.String?){}[0]
+    }
+
+    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key|null[0]
+        final const val length // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.length|{}length[0]
+            final fun <get-length>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.length.<get-length>|<get-length>(){}[0]
+        final const val messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.messageErrorId|{}messageErrorId[0]
+            final fun <get-messageErrorId>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
+        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.type|{}type[0]
+            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.type.<get-type>|<get-type>(){}[0]
+        final const val value // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.value|{}value[0]
+            final fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Key.value.<get-value>|<get-value>(){}[0]
+    }
+
+    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value|null[0]
+        final object Type { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type|null[0]
+            final const val stringEmail // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringEmail|{}stringEmail[0]
+                final fun <get-stringEmail>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringEmail.<get-stringEmail>|<get-stringEmail>(){}[0]
+            final const val stringMaxLength // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMaxLength|{}stringMaxLength[0]
+                final fun <get-stringMaxLength>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMaxLength.<get-stringMaxLength>|<get-stringMaxLength>(){}[0]
+            final const val stringMaxValue // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMaxValue|{}stringMaxValue[0]
+                final fun <get-stringMaxValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMaxValue.<get-stringMaxValue>|<get-stringMaxValue>(){}[0]
+            final const val stringMinDigitLength // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMinDigitLength|{}stringMinDigitLength[0]
+                final fun <get-stringMinDigitLength>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMinDigitLength.<get-stringMinDigitLength>|<get-stringMinDigitLength>(){}[0]
+            final const val stringMinLength // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMinLength|{}stringMinLength[0]
+                final fun <get-stringMinLength>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMinLength.<get-stringMinLength>|<get-stringMinLength>(){}[0]
+            final const val stringMinValue // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMinValue|{}stringMinValue[0]
+                final fun <get-stringMinValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringMinValue.<get-stringMinValue>|<get-stringMinValue>(){}[0]
+            final const val stringNotNull // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringNotNull|{}stringNotNull[0]
+                final fun <get-stringNotNull>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringNotNull.<get-stringNotNull>|<get-stringNotNull>(){}[0]
+            final const val stringOnlyDigits // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringOnlyDigits|{}stringOnlyDigits[0]
+                final fun <get-stringOnlyDigits>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormValidatorSchema.Value.Type.stringOnlyDigits.<get-stringOnlyDigits>|<get-stringOnlyDigits>(){}[0]
+        }
+    }
 }
 
 final object com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData|null[0]
@@ -1342,330 +1531,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchem
                 final fun <get-global>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.global.<get-global>|<get-global>(){}[0]
             final const val local // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.local|{}local[0]
                 final fun <get-local>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.local.<get-local>|<get-local>(){}[0]
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema|null[0]
-    final object Component { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Component|null[0]
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Component.Value|null[0]
-            final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Component.Value.subset|{}subset[0]
-                final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Component.Value.subset.<get-subset>|<get-subset>(){}[0]
-        }
-    }
-
-    final object Content { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ContentSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var messageErrors // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageErrors|{}messageErrors[0]
-                final fun <get-messageErrors>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageErrors.<get-messageErrors>|<get-messageErrors>(){}[0]
-                final fun <set-messageErrors>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.messageErrors.<set-messageErrors>|<set-messageErrors>(kotlinx.serialization.json.JsonArray?){}[0]
-            final var placeholder // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.placeholder|{}placeholder[0]
-                final fun <get-placeholder>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
-                final fun <set-placeholder>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.placeholder.<set-placeholder>|<set-placeholder>(kotlinx.serialization.json.JsonObject?){}[0]
-            final var title // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.title|{}title[0]
-                final fun <get-title>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.title.<get-title>|<get-title>(){}[0]
-                final fun <set-title>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Scope.title.<set-title>|<set-title>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key|null[0]
-            final const val messageErrors // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.messageErrors|{}messageErrors[0]
-                final fun <get-messageErrors>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.messageErrors.<get-messageErrors>|<get-messageErrors>(){}[0]
-            final const val placeholder // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.placeholder|{}placeholder[0]
-                final fun <get-placeholder>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
-            final const val title // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.title|{}title[0]
-                final fun <get-title>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.Content.Key.title.<get-title>|<get-title>(){}[0]
-        }
-    }
-
-    final object State { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-        }
-
-        open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema.material/StateSchema.OpenScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.OpenScope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var initialValue // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.OpenScope.initialValue|{}initialValue[0]
-                final fun <get-initialValue>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.OpenScope.initialValue.<get-initialValue>|<get-initialValue>(){}[0]
-                final fun <set-initialValue>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.OpenScope.initialValue.<set-initialValue>|<set-initialValue>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.Key|null[0]
-            final const val initialValue // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.Key.initialValue|{}initialValue[0]
-                final fun <get-initialValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormFieldSchema.State.Key.initialValue.<get-initialValue>|<get-initialValue>(){}[0]
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema|null[0]
-    final object Component { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Component|null[0]
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Component.Value|null[0]
-            final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Component.Value.subset|{}subset[0]
-                final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Component.Value.subset.<get-subset>|<get-subset>(){}[0]
-        }
-    }
-
-    final object Message { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-        }
-
-        open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema.material/MessageSchema.OpenScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.OpenScope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var messageErrorExtra // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.OpenScope.messageErrorExtra|{}messageErrorExtra[0]
-                final fun <get-messageErrorExtra>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.OpenScope.messageErrorExtra.<get-messageErrorExtra>|<get-messageErrorExtra>(){}[0]
-                final fun <set-messageErrorExtra>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.OpenScope.messageErrorExtra.<set-messageErrorExtra>|<set-messageErrorExtra>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Key|null[0]
-            final const val messageErrorExtra // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Key.messageErrorExtra|{}messageErrorExtra[0]
-                final fun <get-messageErrorExtra>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Key.messageErrorExtra.<get-messageErrorExtra>|<get-messageErrorExtra>(){}[0]
-        }
-
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Value|null[0]
-            final object Subset { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Value.Subset|null[0]
-                final const val updateErrorState // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Value.Subset.updateErrorState|{}updateErrorState[0]
-                    final fun <get-updateErrorState>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Message.Value.Subset.updateErrorState.<get-updateErrorState>|<get-updateErrorState>(){}[0]
-            }
-        }
-    }
-
-    final object Option { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-        }
-
-        open class <#A2: com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope<#A2>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema.material/OptionSchema.OpenScope<#A2> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var validators // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validators|{}validators[0]
-                final fun <get-validators>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validators.<get-validators>|<get-validators>(){}[0]
-                final fun <set-validators>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.OpenScope.validators.<set-validators>|<set-validators>(kotlinx.serialization.json.JsonArray?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key|null[0]
-            final const val validators // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key.validators|{}validators[0]
-                final fun <get-validators>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormSchema.Option.Key.validators.<get-validators>|<get-validators>(){}[0]
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema|null[0]
-    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.root|{}root[0]
-        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.root.<get-root>|<get-root>(){}[0]
-
-    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.root|{}root[0]
-            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.root.<get-root>|<get-root>(){}[0]
-
-        final var length // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length|{}length[0]
-            final fun <get-length>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length.<get-length>|<get-length>(){}[0]
-            final fun <set-length>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.length.<set-length>|<set-length>(kotlin.String?){}[0]
-        final var messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId|{}messageErrorId[0]
-            final fun <get-messageErrorId>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
-            final fun <set-messageErrorId>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.messageErrorId.<set-messageErrorId>|<set-messageErrorId>(kotlin.String?){}[0]
-        final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.type|{}type[0]
-            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.type.<get-type>|<get-type>(){}[0]
-            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
-        final var value // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.value|{}value[0]
-            final fun <get-value>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.value.<get-value>|<get-value>(){}[0]
-            final fun <set-value>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Scope.value.<set-value>|<set-value>(kotlin.String?){}[0]
-    }
-
-    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key|null[0]
-        final const val length // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.length|{}length[0]
-            final fun <get-length>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.length.<get-length>|<get-length>(){}[0]
-        final const val messageErrorId // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageErrorId|{}messageErrorId[0]
-            final fun <get-messageErrorId>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.messageErrorId.<get-messageErrorId>|<get-messageErrorId>(){}[0]
-        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.type|{}type[0]
-            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.type.<get-type>|<get-type>(){}[0]
-        final const val value // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.value|{}value[0]
-            final fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Key.value.<get-value>|<get-value>(){}[0]
-    }
-
-    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value|null[0]
-        final object Type { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type|null[0]
-            final const val stringEmail // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringEmail|{}stringEmail[0]
-                final fun <get-stringEmail>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringEmail.<get-stringEmail>|<get-stringEmail>(){}[0]
-            final const val stringMaxLength // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMaxLength|{}stringMaxLength[0]
-                final fun <get-stringMaxLength>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMaxLength.<get-stringMaxLength>|<get-stringMaxLength>(){}[0]
-            final const val stringMaxValue // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMaxValue|{}stringMaxValue[0]
-                final fun <get-stringMaxValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMaxValue.<get-stringMaxValue>|<get-stringMaxValue>(){}[0]
-            final const val stringMinDigitLength // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMinDigitLength|{}stringMinDigitLength[0]
-                final fun <get-stringMinDigitLength>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMinDigitLength.<get-stringMinDigitLength>|<get-stringMinDigitLength>(){}[0]
-            final const val stringMinLength // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMinLength|{}stringMinLength[0]
-                final fun <get-stringMinLength>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMinLength.<get-stringMinLength>|<get-stringMinLength>(){}[0]
-            final const val stringMinValue // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMinValue|{}stringMinValue[0]
-                final fun <get-stringMinValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringMinValue.<get-stringMinValue>|<get-stringMinValue>(){}[0]
-            final const val stringNotNull // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringNotNull|{}stringNotNull[0]
-                final fun <get-stringNotNull>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringNotNull.<get-stringNotNull>|<get-stringNotNull>(){}[0]
-            final const val stringOnlyDigits // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringOnlyDigits|{}stringOnlyDigits[0]
-                final fun <get-stringOnlyDigits>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form/FormValidatorSchema.Value.Type.stringOnlyDigits.<get-stringOnlyDigits>|<get-stringOnlyDigits>(){}[0]
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema|null[0]
-    final object Component { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Component|null[0]
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Component.Value|null[0]
-            final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Component.Value.subset|{}subset[0]
-                final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Component.Value.subset.<get-subset>|<get-subset>(){}[0]
-        }
-    }
-
-    final object Content { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ContentSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var items // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Scope.items|{}items[0]
-                final fun <get-items>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Scope.items.<get-items>|<get-items>(){}[0]
-                final fun <set-items>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Scope.items.<set-items>|<set-items>(kotlinx.serialization.json.JsonArray?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Key|null[0]
-            final const val items // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Key.items|{}items[0]
-                final fun <get-items>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Content.Key.items.<get-items>|<get-items>(){}[0]
-        }
-    }
-
-    final object Style { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var backgroundColor // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.backgroundColor|{}backgroundColor[0]
-                final fun <get-backgroundColor>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.backgroundColor.<get-backgroundColor>|<get-backgroundColor>(){}[0]
-                final fun <set-backgroundColor>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.backgroundColor.<set-backgroundColor>|<set-backgroundColor>(kotlinx.serialization.json.JsonObject?){}[0]
-            final var fillMaxSize // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.fillMaxSize|{}fillMaxSize[0]
-                final fun <get-fillMaxSize>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.fillMaxSize.<get-fillMaxSize>|<get-fillMaxSize>(){}[0]
-                final fun <set-fillMaxSize>(kotlin/Boolean?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.fillMaxSize.<set-fillMaxSize>|<set-fillMaxSize>(kotlin.Boolean?){}[0]
-            final var fillMaxWidth // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.fillMaxWidth|{}fillMaxWidth[0]
-                final fun <get-fillMaxWidth>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.fillMaxWidth.<get-fillMaxWidth>|<get-fillMaxWidth>(){}[0]
-                final fun <set-fillMaxWidth>(kotlin/Boolean?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.fillMaxWidth.<set-fillMaxWidth>|<set-fillMaxWidth>(kotlin.Boolean?){}[0]
-            final var orientation // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.orientation|{}orientation[0]
-                final fun <get-orientation>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.orientation.<get-orientation>|<get-orientation>(){}[0]
-                final fun <set-orientation>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Scope.orientation.<set-orientation>|<set-orientation>(kotlin.String?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key|null[0]
-            final const val backgroundColor // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.backgroundColor|{}backgroundColor[0]
-                final fun <get-backgroundColor>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.backgroundColor.<get-backgroundColor>|<get-backgroundColor>(){}[0]
-            final const val fillMaxSize // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.fillMaxSize|{}fillMaxSize[0]
-                final fun <get-fillMaxSize>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.fillMaxSize.<get-fillMaxSize>|<get-fillMaxSize>(){}[0]
-            final const val fillMaxWidth // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.fillMaxWidth|{}fillMaxWidth[0]
-                final fun <get-fillMaxWidth>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.fillMaxWidth.<get-fillMaxWidth>|<get-fillMaxWidth>(){}[0]
-            final const val orientation // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.orientation|{}orientation[0]
-                final fun <get-orientation>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Key.orientation.<get-orientation>|<get-orientation>(){}[0]
-        }
-
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Value|null[0]
-            final object Orientation { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Value.Orientation|null[0]
-                final const val horizontal // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Value.Orientation.horizontal|{}horizontal[0]
-                    final fun <get-horizontal>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Value.Orientation.horizontal.<get-horizontal>|<get-horizontal>(){}[0]
-                final const val vertical // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Value.Orientation.vertical|{}vertical[0]
-                    final fun <get-vertical>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout/LayoutLinearSchema.Style.Value.Orientation.vertical.<get-vertical>|<get-vertical>(){}[0]
-            }
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema|null[0]
-    final object Component { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Component|null[0]
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Component.Value|null[0]
-            final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Component.Value.subset|{}subset[0]
-                final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Component.Value.subset.<get-subset>|<get-subset>(){}[0]
-        }
-    }
-
-    final object Content { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ContentSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var action // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope.action|{}action[0]
-                final fun <get-action>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope.action.<get-action>|<get-action>(){}[0]
-                final fun <set-action>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope.action.<set-action>|<set-action>(kotlinx.serialization.json.JsonObject?){}[0]
-            final var label // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope.label|{}label[0]
-                final fun <get-label>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope.label.<get-label>|<get-label>(){}[0]
-                final fun <set-label>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Scope.label.<set-label>|<set-label>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Key|null[0]
-            final const val action // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Key.action|{}action[0]
-                final fun <get-action>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Key.action.<get-action>|<get-action>(){}[0]
-            final const val label // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Key.label|{}label[0]
-                final fun <get-label>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/ButtonSchema.Content.Key.label.<get-label>|<get-label>(){}[0]
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema|null[0]
-    final object Component { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Component|null[0]
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Component.Value|null[0]
-            final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Component.Value.subset|{}subset[0]
-                final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Component.Value.subset.<get-subset>|<get-subset>(){}[0]
-        }
-    }
-
-    final object Content { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ContentSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var value // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Scope.value|{}value[0]
-                final fun <get-value>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Scope.value.<get-value>|<get-value>(){}[0]
-                final fun <set-value>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Scope.value.<set-value>|<set-value>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Key|null[0]
-            final const val value // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Key.value|{}value[0]
-                final fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Content.Key.value.<get-value>|<get-value>(){}[0]
-        }
-    }
-
-    final object Style { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var fontColor // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope.fontColor|{}fontColor[0]
-                final fun <get-fontColor>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope.fontColor.<get-fontColor>|<get-fontColor>(){}[0]
-                final fun <set-fontColor>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope.fontColor.<set-fontColor>|<set-fontColor>(kotlinx.serialization.json.JsonObject?){}[0]
-            final var fontSize // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope.fontSize|{}fontSize[0]
-                final fun <get-fontSize>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope.fontSize.<get-fontSize>|<get-fontSize>(){}[0]
-                final fun <set-fontSize>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Scope.fontSize.<set-fontSize>|<set-fontSize>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Key|null[0]
-            final const val fontColor // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Key.fontColor|{}fontColor[0]
-                final fun <get-fontColor>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Key.fontColor.<get-fontColor>|<get-fontColor>(){}[0]
-            final const val fontSize // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Key.fontSize|{}fontSize[0]
-                final fun <get-fontSize>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/LabelSchema.Style.Key.fontSize.<get-fontSize>|<get-fontSize>(){}[0]
-        }
-    }
-}
-
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema|null[0]
-    final object Component { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Component|null[0]
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Component.Value|null[0]
-            final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Component.Value.subset|{}subset[0]
-                final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Component.Value.subset.<get-subset>|<get-subset>(){}[0]
-        }
-    }
-
-    final object Style { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var weight // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Scope.weight|{}weight[0]
-                final fun <get-weight>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Scope.weight.<get-weight>|<get-weight>(){}[0]
-                final fun <set-weight>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Scope.weight.<set-weight>|<set-weight>(kotlinx.serialization.json.JsonObject?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Key|null[0]
-            final const val weight // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Key.weight|{}weight[0]
-                final fun <get-weight>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material._element/SpacerSchema.Style.Key.weight.<get-weight>|<get-weight>(){}[0]
         }
     }
 }
@@ -2769,16 +2634,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSch
     }
 
     final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value|null[0]
-        final const val button // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.button|{}button[0]
-            final fun <get-button>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.button.<get-button>|<get-button>(){}[0]
-        final const val field // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.field|{}field[0]
-            final fun <get-field>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.field.<get-field>|<get-field>(){}[0]
-        final const val label // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.label|{}label[0]
-            final fun <get-label>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.label.<get-label>|<get-label>(){}[0]
-        final const val layoutLinear // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.layoutLinear|{}layoutLinear[0]
-            final fun <get-layoutLinear>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.layoutLinear.<get-layoutLinear>|<get-layoutLinear>(){}[0]
-        final const val spacer // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.spacer|{}spacer[0]
-            final fun <get-spacer>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.spacer.<get-spacer>|<get-spacer>(){}[0]
         final const val unknown // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.unknown|{}unknown[0]
             final fun <get-unknown>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/SubsetSchema.Value.unknown.<get-unknown>|<get-unknown>(){}[0]
     }

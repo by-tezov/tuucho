@@ -1,26 +1,29 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.response
 
-import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Rectifier.ScopeContext
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoExperimentalAPI
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.createScope
-import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
 @OpenForTest
-@OptIn(TuuchoExperimentalAPI::class)
 internal class ResponseRectifier : TuuchoKoinScopeComponent {
-    override val scope: Scope by lazy {
-        createScope(this)
+    sealed class Association {
+        object Processor : Association()
     }
 
-    private val rectifiers: List<AbstractRectifier> by inject(RectifierModule.Name.RECTIFIERS)
+    override val scope: Scope by lazy {
+        getKoin().createScope(ScopeContext.Response.value, ScopeContext.Response)
+    }
+
+    private val rectifiers: List<RectifierProtocol> by lazy {
+        scope.getAllAssociated(Association.Processor::class)
+    }
 
     suspend fun process(
         responseObject: JsonObject

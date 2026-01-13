@@ -12,7 +12,8 @@ import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAda
 import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 
 object DatabaseRepositoryModule {
@@ -31,19 +32,11 @@ object DatabaseRepositoryModule {
             }
         }
 
-        factory<JsonObjectAdapter> {
-            JsonObjectAdapter(json = get())
-        }
+        factoryOf(::JsonObjectAdapter)
+        factoryOf(::VisibilityAdapter)
+        factoryOf(::LifetimeAdapter)
 
-        factory<LifetimeAdapter> {
-            LifetimeAdapter(json = get())
-        }
-
-        factory<VisibilityAdapter> {
-            VisibilityAdapter(json = get())
-        }
-
-        single<Database> {
+        single {
             Database(
                 driver = get(),
                 jsonObjectCommonEntryAdapter = JsonObjectCommonEntry.Adapter(
@@ -59,30 +52,9 @@ object DatabaseRepositoryModule {
             )
         }
 
-        factory<JsonObjectQueries> {
-            JsonObjectQueries(
-                database = get()
-            )
-        }
-
-        factory<HookQueries> {
-            HookQueries(
-                database = get()
-            )
-        }
-
-        factory<DatabaseTransactionFactory> {
-            DatabaseTransactionFactory(
-                database = get()
-            )
-        }
-
-        factory<MaterialDatabaseSource> {
-            MaterialDatabaseSource(
-                transactionFactory = get(),
-                hookQueries = get(),
-                jsonObjectQueries = get()
-            )
-        }
+        factoryOf(::JsonObjectQueries)
+        factoryOf(::HookQueries)
+        factoryOf(::DatabaseTransactionFactory)
+        factoryOf(::MaterialDatabaseSource)
     }
 }

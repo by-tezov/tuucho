@@ -2,9 +2,9 @@ package com.tezov.tuucho.shared.sample.di
 
 import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.getAllOrdered
+import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
+import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import com.tezov.tuucho.shared.sample.repository.network.HttpClientMockConfig
 import com.tezov.tuucho.shared.sample.repository.network.HttpClientMockEngineFactory
 import com.tezov.tuucho.shared.sample.repository.network.backendServer.BackendServer

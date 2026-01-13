@@ -8,10 +8,12 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule.Name.STORE_REPOSITORY_CONFIG
 import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT
 import com.tezov.tuucho.core.data.repository.repository.KeyValueStoreRepository
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.bind
 
 internal object StoreRepositoryModuleAndroid {
     fun invoke() = module(ModuleGroupData.Main) {
@@ -28,10 +30,6 @@ internal object StoreRepositoryModuleAndroid {
             )
         }
 
-        factory<KeyValueStoreRepositoryProtocol> {
-            KeyValueStoreRepository(
-                dataStore = get(),
-            )
-        }
+        factoryOf(::KeyValueStoreRepository) bind KeyValueStoreRepositoryProtocol::class
     }
 }

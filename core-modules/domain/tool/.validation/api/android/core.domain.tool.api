@@ -24,9 +24,6 @@ public abstract interface class com/tezov/tuucho/core/domain/tool/_system/Refere
 public abstract interface class com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol$Weak : com/tezov/tuucho/core/domain/tool/_system/ReferenceProtocol {
 }
 
-public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoExperimentalAPI : java/lang/annotation/Annotation {
-}
-
 public abstract interface annotation class com/tezov/tuucho/core/domain/tool/annotation/TuuchoInternalApi : java/lang/annotation/Annotation {
 }
 
@@ -139,11 +136,6 @@ public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionInt {
 	public final fun isOdd (I)Z
 	public final fun onEven (ILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun onOdd (ILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionKoin {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/tool/extension/ExtensionKoin;
-	public final fun bindOrdered (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
 }
 
 public final class com/tezov/tuucho/core/domain/tool/extension/ExtensionList {

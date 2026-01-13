@@ -4,11 +4,8 @@ import com.tezov.tuucho.core.barrel.di.ModuleGroupCore
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
+import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
 import com.tezov.tuucho.sample.app.shared.BuildKonfig
-import org.koin.dsl.ModuleDeclaration
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol
-import org.koin.core.module.Module
-import com.tezov.tuucho.core.domain.business.protocol.ModuleProtocol.Companion.module
 
 internal object ConfigModuleIos {
 

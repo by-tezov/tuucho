@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormValidatorSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase.Input
