@@ -29,7 +29,7 @@
     "local": {
       "pages": [
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "auth/page-home"
         },
         {
