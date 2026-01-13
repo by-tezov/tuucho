@@ -182,7 +182,7 @@
     <ID>PackageNaming:ValueStorageProjection.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
     <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
-    <!-- ************ Project: :ui_component.stable ************ -->
+    <!-- ************ Project: :ui-component.stable ************ -->
     <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: (() -&gt; Unit)? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
     <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: (() -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>

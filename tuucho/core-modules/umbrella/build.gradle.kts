@@ -21,6 +21,8 @@ kotlin {
             api(project(":core.data.repository"))
             api(project(":core.presentation.tool"))
             api(project(":core.presentation.ui"))
+
+            implementation(libs.compose.runtime)
         }
     }
 }
