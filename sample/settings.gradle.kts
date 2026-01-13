@@ -3,7 +3,7 @@ pluginManagement {
     repositories {
         maven {
             name = "projectMaven"
-            url = uri("${rootDir}/../.m2")
+            url = uri("${rootDir}/../tuucho/.m2")
         }
         mavenCentral()
         google()
@@ -21,7 +21,7 @@ dependencyResolutionManagement {
     repositories {
         maven {
             name = "projectMaven"
-            url = uri("${rootDir}/../.m2")
+            url = uri("${rootDir}/../tuucho/.m2")
         }
         mavenCentral()
         google()

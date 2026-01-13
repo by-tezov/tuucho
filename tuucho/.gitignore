@@ -1,11 +1,10 @@
 .DS_Store
 *.iml
 /.idea/
-/keystore.properties
-/keystore.jks
-/build
-/config.properties
+/maven.properties
 .gradle/
-.kotlin/
+.m2/
 /local.properties
+/build
+/.kotlin/
 /build-logic/.kotlin/errors/
