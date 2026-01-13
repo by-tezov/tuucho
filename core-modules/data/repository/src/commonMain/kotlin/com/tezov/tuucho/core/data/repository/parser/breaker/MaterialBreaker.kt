@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.breaker
 
-import com.tezov.tuucho.core.data.repository.di.MaterialBreakerModule.Name
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
@@ -9,7 +9,6 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import org.koin.core.component.inject
 
 @OpenForTest
 internal class MaterialBreaker : TuuchoKoinComponent {
@@ -18,7 +17,13 @@ internal class MaterialBreaker : TuuchoKoinComponent {
         val jsonObjects: List<JsonObject>,
     )
 
-    private val breakables: List<String> by inject(Name.BREAKABLES)
+    sealed class Association {
+        object Breakable : Association()
+    }
+
+    private val breakables: List<String> by lazy {
+        getKoin().getAllAssociated(Association.Breakable::class)
+    }
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
