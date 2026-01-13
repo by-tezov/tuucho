@@ -1,12 +1,3 @@
-/maven.properties
 .DS_Store
 *.iml
-.gradle/
-.m2/
-/local.properties
 /.idea/
-/build
-/.venv/
-/mkdocs/site/
-/.kotlin/
-/build-logic/.kotlin/errors/
