@@ -4,6 +4,7 @@ package com.tezov.tuucho.core.domain.business._system.koin
 
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
+import org.koin.core.definition.Definition
 import org.koin.core.definition.KoinDefinition
 import org.koin.core.instance.InstanceFactory
 import org.koin.core.module.KoinDslMarker
@@ -11,6 +12,7 @@ import org.koin.core.module.dsl.DefinitionOptions
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.scopedOf
 import org.koin.core.qualifier.Qualifier
+import org.koin.core.qualifier.named
 import org.koin.dsl.ScopeDSL
 import kotlin.reflect.KClass
 
@@ -30,14 +32,26 @@ class AssociateScopeDSL(
     }
 
     @KoinDslMarker
+    inline fun <reified T> scoped(
+        qualifier: Qualifier? = null,
+        noinline definition: Definition<T>,
+    ) {
+        with(scopeDSL) {
+            val koinDefinition = scoped(qualifier, definition)
+            @Suppress("UNCHECKED_CAST")
+            (koinDefinition as KoinDefinition<Any>) associate association
+        }
+    }
+
+    @KoinDslMarker
     inline fun <reified R> scopedOf(
         crossinline constructor: () -> R,
         noinline options: DefinitionOptions<R>? = null,
     ) {
         with(scopeDSL) {
-            val definition = scopedOf<R>(constructor, options)
+            val koinDefinition = scopedOf<R>(constructor, options)
             @Suppress("UNCHECKED_CAST")
-            (definition as KoinDefinition<Any>) associate association
+            (koinDefinition as KoinDefinition<Any>) associate association
         }
     }
 
@@ -47,9 +61,21 @@ class AssociateScopeDSL(
         noinline options: DefinitionOptions<R>? = null,
     ) {
         with(scopeDSL) {
-            val definition = scopedOf<R, T1>(constructor, options)
+            val koinDefinition = scopedOf<R, T1>(constructor, options)
             @Suppress("UNCHECKED_CAST")
-            (definition as KoinDefinition<Any>) associate association
+            (koinDefinition as KoinDefinition<Any>) associate association
+        }
+    }
+
+    @KoinDslMarker
+    inline fun <reified T> factory(
+        qualifier: Qualifier? = null,
+        noinline definition: Definition<T>,
+    ) {
+        with(scopeDSL) {
+            val koinDefinition = factory(qualifier, definition)
+            @Suppress("UNCHECKED_CAST")
+            (koinDefinition as KoinDefinition<Any>) associate association
         }
     }
 
@@ -59,9 +85,9 @@ class AssociateScopeDSL(
         noinline options: DefinitionOptions<R>? = null,
     ) {
         with(scopeDSL) {
-            val definition = factoryOf<R>(constructor, options)
+            val koinDefinition = factoryOf<R>(constructor, options)
             @Suppress("UNCHECKED_CAST")
-            (definition as KoinDefinition<Any>) associate association
+            (koinDefinition as KoinDefinition<Any>) associate association
         }
     }
 
@@ -71,9 +97,14 @@ class AssociateScopeDSL(
         noinline options: DefinitionOptions<R>? = null,
     ) {
         with(scopeDSL) {
-            val definition = factoryOf<R, T1>(constructor, options)
+            val koinDefinition = factoryOf<R, T1>(constructor, options)
             @Suppress("UNCHECKED_CAST")
-            (definition as KoinDefinition<Any>) associate association
+            (koinDefinition as KoinDefinition<Any>) associate association
         }
+    }
+
+    @KoinDslMarker
+    fun factory(value: String) {
+        factory(named(value)) { value }
     }
 }

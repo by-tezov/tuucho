@@ -16,11 +16,11 @@ class ComponentShadower : AbstractShadower() {
     }
 
     override val matchers: List<ShadowerMatcherProtocol> by lazy {
-        getKoin().getAllAssociated<ShadowerMatcherProtocol>(Association.Matcher::class)
+        getKoin().getAllAssociated(Association.Matcher::class)
     }
 
     override val childProcessors: List<ShadowerProtocol> by lazy {
-        getKoin().getAllAssociated<ShadowerProtocol>(Association.Processor::class)
+        getKoin().getAllAssociated(Association.Processor::class)
     }
 
     override fun accept(
