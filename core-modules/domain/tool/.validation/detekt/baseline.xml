@@ -5,8 +5,9 @@
     <ID>CyclomaticComplexMethod:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$fun process( input: String, now: Instant = Clock.System.now(), ): String</ID>
     <ID>MagicNumber:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$3</ID>
     <ID>MagicNumber:Println.kt$4000</ID>
+    <ID>MatchingDeclarationName:TuuchoAnnotations.kt$TuuchoInternalApi</ID>
     <ID>MaxLineLength:JsonElementExtension.kt$if (path.contains(JsonElementPath.INDEX_SEPARATOR)) throw IllegalArgumentException("doesn't not work with array -&gt; $path")</ID>
-    <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoExperimentalAPI$message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API."</ID>
+    <ID>MaxLineLength:TuuchoAnnotations.kt$// message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API.",</ID>
     <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoInternalApi$message = "API marked as @TuuchoInternalApi and is intended for internal framework use only. It may change or be removed in future releases without notice. External usage is strongly discouraged."</ID>
     <ID>PackageNaming:Println.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
     <ID>PackageNaming:ReferenceProtocol.kt$package com.tezov.tuucho.core.domain.tool._system</ID>

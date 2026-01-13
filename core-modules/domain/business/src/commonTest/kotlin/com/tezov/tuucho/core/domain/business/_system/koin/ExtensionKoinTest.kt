@@ -1,7 +1,9 @@
-package com.tezov.tuucho.core.domain.tool.extension
+@file:Suppress("ktlint:standard:package-name")
 
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.bindOrdered
-import com.tezov.tuucho.core.domain.tool.extension.ExtensionKoin.getAllOrdered
+package com.tezov.tuucho.core.domain.business._system.koin
+
+import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
+import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
 import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.koinApplication

@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form.FormValidatorSchema.Value.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormValidatorSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormValidatorSchema.Value.Type
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringEmailFormValidator
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMaxLengthFieldFormValidator
 import com.tezov.tuucho.core.domain.business.validator.formValidator.StringMaxValueFormValidator

@@ -1,16 +1,16 @@
 package com.tezov.tuucho.uiComponent.stable.preview
 
- import androidx.compose.runtime.Composable
- import androidx.compose.ui.graphics.Color
- import androidx.compose.ui.tooling.preview.Preview
- import androidx.compose.ui.tooling.preview.PreviewParameter
- import androidx.compose.ui.tooling.preview.PreviewParameterProvider
- import androidx.compose.ui.unit.Dp
- import androidx.compose.ui.unit.dp
- import androidx.compose.ui.unit.sp
- import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
- import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.layout.LayoutLinearSchema.Style.Value.Orientation
- import com.tezov.tuucho.uiComponent.stable.presentation.view.createLayoutLinearView
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
+import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.layout.LayoutLinearSchema.Style.Value.Orientation
+import com.tezov.tuucho.uiComponent.stable.presentation.view.createLayoutLinearView
 
 private data class LayoutLinearPreviewData(
     val backgroundColor: Color? = null,
@@ -18,9 +18,9 @@ private data class LayoutLinearPreviewData(
     val fillMaxSize: Boolean? = null,
     val fillMaxWidth: Boolean? = null,
     val contents: List<@Composable Any.() -> Unit>,
- )
+)
 
- private object LayoutLinearPreviewSampleView {
+private object LayoutLinearPreviewSampleView {
     val labelTitle: @Composable Any.() -> Unit = {
         LabelPreviewComponent(
             textValue = "Label Title",
@@ -91,9 +91,9 @@ private data class LayoutLinearPreviewData(
             }
         )
     }
- }
+}
 
- private class LayoutLinearPreviewDataProvider : PreviewParameterProvider<LayoutLinearPreviewData> {
+private class LayoutLinearPreviewDataProvider : PreviewParameterProvider<LayoutLinearPreviewData> {
     override val values = buildList {
         add(
             LayoutLinearPreviewData(
@@ -138,19 +138,19 @@ private data class LayoutLinearPreviewData(
             )
         )
     }.asSequence()
- }
+}
 
- @Preview(
+@Preview(
     locale = "fr-FR",
     showSystemUi = false,
     showBackground = true,
     backgroundColor = 0xD9D9D9,
- )
- @Composable
- private fun LayoutLinearPreviewComponentFromSequence(
+)
+@Composable
+private fun LayoutLinearPreviewComponentFromSequence(
     @PreviewParameter(LayoutLinearPreviewDataProvider::class)
     data: LayoutLinearPreviewData
- ) {
+) {
     LayoutLinearPreviewComponent(
         backgroundColor = data.backgroundColor,
         orientation = data.orientation,
@@ -158,16 +158,16 @@ private data class LayoutLinearPreviewData(
         fillMaxWidth = data.fillMaxWidth,
         contents = data.contents
     )
- }
+}
 
- @Composable
- fun LayoutLinearPreviewComponent(
+@Composable
+fun LayoutLinearPreviewComponent(
     backgroundColor: Color? = Color.LightGray,
     orientation: String? = Orientation.vertical,
     fillMaxSize: Boolean? = null,
     fillMaxWidth: Boolean? = null,
     contents: List<@Composable Any.() -> Unit>,
- ) {
+) {
     val view = createLayoutLinearView(screenContext = dummyScreenContext())
     view.ComposeComponent(
         backgroundColor = backgroundColor,
@@ -176,4 +176,4 @@ private data class LayoutLinearPreviewData(
         fillMaxWidth = fillMaxWidth,
         contents = contents
     )
- }
+}

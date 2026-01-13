@@ -5,7 +5,7 @@
   <CurrentIssues>
     <!-- ************ Project: :core ************ -->
     <ID>FunctionNaming:TuuchoBackHandler.kt$@OptIn(ExperimentalComposeUiApi::class) @Composable internal fun TuuchoBackHandler( koin: Koin )</ID>
-    <ID>FunctionNaming:TuuchoEngineStart.kt$@Composable fun TuuchoEngineStart( koinModules: List&lt;ModuleProtocol&gt;, koinExtension: (KoinApplication.() -&gt; Unit)? = null, onStartUrl: String )</ID>
+    <ID>FunctionNaming:TuuchoEngineStart.kt$@Composable fun TuuchoEngineStart( koinModules: List&lt;com.tezov.tuucho.core.domain.business.di.Koin&gt;, koinExtension: (KoinApplication.() -&gt; Unit)? = null, onStartUrl: String )</ID>
     <ID>PackageNaming:CoroutineScopes.kt$package com.tezov.tuucho.core.barrel._system</ID>
     <!-- ************ Project: :core.data.repository ************ -->
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
@@ -17,11 +17,8 @@
     <ID>MatchingDeclarationName:CoroutineTestScopes.kt$CoroutineTestScope</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.android.kt$DatabaseRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:DatabaseRepositoryModule.ios.kt$DatabaseRepositoryModuleIos</ID>
-    <ID>MatchingDeclarationName:FormFailureReasonAssemblerMatcher.kt$FormFailureReasonTextMatcher : AssemblerMatcherProtocol</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
     <ID>MatchingDeclarationName:JsonEntityDao.kt$JsonObjectQueries</ID>
-    <ID>MatchingDeclarationName:MaterialAssemblerModule.kt$Material</ID>
-    <ID>MatchingDeclarationName:MaterialRectifierModule.kt$Material</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.dev.kt$NetworkRepositoryModuleAndroidFlavor</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.kt$NetworkRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:NetworkRepositoryModule.android.prod.kt$NetworkRepositoryModuleAndroidFlavor</ID>
@@ -30,8 +27,6 @@
     <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.prod.kt$NetworkRepositoryModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.android.kt$ReferenceFactoryAndroid : Factory</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.ios.kt$ReferenceFactoryIos : Factory</ID>
-    <ID>MatchingDeclarationName:ResponseAssemblerModule.kt$Response</ID>
-    <ID>MatchingDeclarationName:ResponseRectifierModule.kt$Response</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.ios.kt$StoreRepositoryModuleIos</ID>
     <ID>MatchingDeclarationName:StrongReference.android.kt$StrongReferenceAndroid&lt;T : Any&gt; : Strong</ID>
@@ -45,6 +40,7 @@
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
+    <ID>MaxLineLength:MaterialRectifierScope.kt$MaterialRectifierScope$factoryOf(::SettingComponentNavigationRectifier) associate SettingComponentRectifier.Association.Processor::class</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( path: JsonElementPath, element: JsonElement )</ID>
     <ID>NestedBlockDepth:ActionsRectifier.kt$ActionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:ColorsRectifier.kt$ColorsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
@@ -61,36 +57,23 @@
     <ID>NestedBlockDepth:TextsRectifier.kt$TextsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>PackageNaming:AbstractAssembler.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:AbstractRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
-    <ID>PackageNaming:ActionButtonRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.action</ID>
     <ID>PackageNaming:AssemblerMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
-    <ID>PackageNaming:ContentButtonLabelRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.button.content.label</ID>
-    <ID>PackageNaming:ContentFormFieldTextErrorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content</ID>
-    <ID>PackageNaming:ContentFormFieldTextRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.content</ID>
-    <ID>PackageNaming:ContentLabelTextRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.content</ID>
-    <ID>PackageNaming:ContentLayoutLinearItemsAssemblerMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._element.layout.linear</ID>
-    <ID>PackageNaming:ContentLayoutLinearItemsMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._element.layout.linear</ID>
-    <ID>PackageNaming:ContentLayoutLinearItemsRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear</ID>
-    <ID>PackageNaming:ContentLayoutLinearItemsRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear</ID>
+    <ID>PackageNaming:AssemblerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:FindAllRefOrNullFetcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
-    <ID>PackageNaming:FormValidatorRectifier.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form</ID>
     <ID>PackageNaming:JsonObjectConsumerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:JsonObjectMerger.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:LifetimeResolver.kt$package com.tezov.tuucho.core.data.repository.repository.source._system</ID>
     <ID>PackageNaming:MatcherHelperExtension.kt$package com.tezov.tuucho.core.data.repository.parser._system</ID>
-    <ID>PackageNaming:MatcherShadowerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
-    <ID>PackageNaming:OptionFormFieldValidatorRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.option</ID>
     <ID>PackageNaming:RectifierHelper.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:RectifierIdGenerator.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:RectifierMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
+    <ID>PackageNaming:RectifierProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:ReferenceFactory.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:ReferenceFactory.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:StateFormFieldTextRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.form.field.state</ID>
+    <ID>PackageNaming:ShadowerMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
+    <ID>PackageNaming:ShadowerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:StrongReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:StrongReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:StyleLabelColorRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style</ID>
-    <ID>PackageNaming:StyleLabelDimensionRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.label.style</ID>
-    <ID>PackageNaming:StyleLayoutLinearColorRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.layout.linear</ID>
-    <ID>PackageNaming:StyleSpacerDimensionRectifierMatcher.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._element.spacer</ID>
     <ID>PackageNaming:SystemInformation.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemInformation.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:WeakReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
@@ -98,8 +81,8 @@
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
     <ID>ReturnCount:MaterialDatabaseSource.kt$MaterialDatabaseSource$@Suppress("RedundantSuspendModifier") suspend fun getRootJsonObjectEntityOrNull( url: String ): JsonObjectEntity?</ID>
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
-    <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : RectifierMatcherProtocolTuuchoKoinScopeComponent</ID>
-    <ID>TooManyFunctions:MaterialRectifierModule.kt$Material</ID>
+    <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : RectifierProtocolTuuchoKoinScopeComponent</ID>
+    <ID>TooManyFunctions:MaterialRectifierScope.kt$MaterialRectifierScope</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
     <ID>VariableNaming:ResponseRectifier.kt$ResponseRectifier$var _element = element</ID>
@@ -109,6 +92,7 @@
     <ID>EmptyFunctionBlock:SchemaScopeMapOperatorTest.kt$SchemaScopeMapOperatorTest${ }</ID>
     <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, )</ID>
     <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: NavigationRouteIdGenerator, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
+    <ID>MatchingDeclarationName:AssociateScope.kt$AssociateScopeDSL</ID>
     <ID>MatchingDeclarationName:CoroutineScopesProtocole.kt$CoroutineScopesProtocol</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationOptionSchema.kt$ComponentSettingNavigationOptionSchema</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationSchema.kt$ComponentSettingNavigationSchema</ID>
@@ -118,26 +102,29 @@
     <ID>MatchingDeclarationName:ShadowerDefinition.kt$Shadower</ID>
     <ID>MaxLineLength:ActionExecutorTest.kt$ActionExecutorTest$every { interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority) } returns lockTypesForAction</ID>
     <ID>MaxLineLength:ActionModelDomain.kt$ActionModelDomain.Companion$pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""</ID>
+    <ID>MaxLineLength:AssociateDSL.kt$AssociateDSL$(factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))</ID>
     <ID>MaxLineLength:DelegateSchemaKey.kt$DelegateSchemaKey$JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -&gt; value</ID>
     <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
     <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$action.command == StoreAction.KeyValue.command &amp;&amp; action.authority == StoreAction.KeyValue.authority &amp;&amp; action.query != null</ID>
+    <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) @KoinDslMarker infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
     <ID>NestedBlockDepth:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output&gt;? )</ID>
-    <ID>PackageNaming:ButtonSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
+    <ID>PackageNaming:AssociateDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:AssociateModule.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:AssociateScope.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:BindOrdered.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:Constant.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:DelegateSchemaKey.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:DelegateSchemaKeyTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
-    <ID>PackageNaming:FormFieldSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
-    <ID>PackageNaming:FormSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
-    <ID>PackageNaming:FormValidatorSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.form</ID>
+    <ID>PackageNaming:ExtensionKoinTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:FormSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._element.form</ID>
+    <ID>PackageNaming:FormValidatorSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._element.form</ID>
     <ID>PackageNaming:IdGenerator.kt$package com.tezov.tuucho.core.domain.business._system</ID>
-    <ID>PackageNaming:LabelSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
-    <ID>PackageNaming:LayoutLinearSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element.layout</ID>
     <ID>PackageNaming:SchemaScope.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScopeMapOperator.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScopeMapOperatorTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScopeTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
-    <ID>PackageNaming:SpacerSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema.material._element</ID>
     <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SymbolDataTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>ReturnCount:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
@@ -151,8 +138,9 @@
     <ID>CyclomaticComplexMethod:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$fun process( input: String, now: Instant = Clock.System.now(), ): String</ID>
     <ID>MagicNumber:ExpirationDateTimeRectifier.kt$ExpirationDateTimeRectifier$3</ID>
     <ID>MagicNumber:Println.kt$4000</ID>
+    <ID>MatchingDeclarationName:TuuchoAnnotations.kt$TuuchoInternalApi</ID>
     <ID>MaxLineLength:JsonElementExtension.kt$if (path.contains(JsonElementPath.INDEX_SEPARATOR)) throw IllegalArgumentException("doesn't not work with array -&gt; $path")</ID>
-    <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoExperimentalAPI$message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API."</ID>
+    <ID>MaxLineLength:TuuchoAnnotations.kt$// message = "API marked as @TuuchoExperimentalAPI. The current API is actively under development, and may change or be removed without notice. Feedback will help stabilize this API.",</ID>
     <ID>MaxLineLength:TuuchoAnnotations.kt$TuuchoInternalApi$message = "API marked as @TuuchoInternalApi and is intended for internal framework use only. It may change or be removed in future releases without notice. External usage is strongly discouraged."</ID>
     <ID>PackageNaming:Println.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
     <ID>PackageNaming:ReferenceProtocol.kt$package com.tezov.tuucho.core.domain.tool._system</ID>
@@ -168,6 +156,33 @@
     <ID>UseCheckOrError:AbstractAnimationCompound.kt$AbstractAnimationCompound.AnimatorIdle$throw IllegalStateException("Should never be called!")</ID>
     <!-- ************ Project: :core.presentation.ui ************ -->
     <ID>ForbiddenComment:ReadyStatusInvalidateProtocol.kt$// TODO: not scalable, check the TODO to do something better. Will do the job for now</ID>
+    <ID>InvalidPackageDeclaration:ScreenContext.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
+    <ID>InvalidPackageDeclaration:ValueStorageProjection.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
+    <ID>MagicNumber:ColorExtension.kt$16</ID>
+    <ID>MagicNumber:ColorExtension.kt$6</ID>
+    <ID>MagicNumber:ColorExtension.kt$8</ID>
+    <ID>MagicNumber:TransitionSlideVertical.kt$TransitionSlideVertical.LayerSlideModifier$4</ID>
+    <ID>MatchingDeclarationName:ComponentProjector.kt$ComponentProjectorProtocols : IdProcessorProtocolResolveStatusProcessorProtocolComponentProcessorProjectorProtocolReadyStatusInvalidateProtocols</ID>
+    <ID>MatchingDeclarationName:FormStateProjection.kt$FormStateProjectionProtocol : FormStateProtocol</ID>
+    <ID>MatchingDeclarationName:FormValidatorProjection.kt$FormValidatorProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
+    <ID>MatchingDeclarationName:MessageProjector.kt$MessageProjectorProtocols : MessageProcessorProjectorProtocolReadyStatusInvalidateProtocolsHasIdProtocol</ID>
+    <ID>MatchingDeclarationName:TextsProjection.kt$TextsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
+    <ID>MatchingDeclarationName:TransitionModifier.kt$AbstractModifierTransition : Modifier</ID>
+    <ID>MatchingDeclarationName:TuuchoAnnotations.kt$TuuchoUiDsl</ID>
+    <ID>MatchingDeclarationName:TypeProjector.kt$TypeProjectorProtocols : IdProcessorProtocolTypeProcessorProjectorProtocolHasContextualUpdaterProtocolReadyStatusInvalidateProtocols</ID>
+    <ID>MatchingDeclarationName:ViewsProjection.kt$ViewsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
+    <ID>MaxLineLength:FormStateProjection.kt$FormStateProjection$?:</ID>
+    <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>
+    <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
+    <ID>PackageNaming:DirectionNavigation.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
+    <ID>PackageNaming:DirectionScreen.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
+    <ID>PackageNaming:SchemaExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
+    <ID>PackageNaming:ScreenContext.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
+    <ID>PackageNaming:TransitionModifier.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
+    <ID>PackageNaming:ValueStorageProjection.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
+    <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
+    <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
+    <!-- ************ Project: :ui_component.stable ************ -->
     <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: (() -&gt; Unit)? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
     <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: (() -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>
@@ -191,31 +206,7 @@
     <ID>FunctionNaming:SpacerView.kt$SpacerViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>LongParameterList:FieldPreview.kt$( fieldValue: String? = "value", showError: Boolean = false, titleValue: String? = "title", placeholderValue: String? = "placeholder", supportingTexts: List&lt;String&gt;? = listOf("error message 1"), messageErrorExtra: String? = null, )</ID>
     <ID>LongParameterList:FieldView.kt$FieldViewProtocol$( fieldValue: ValueStorageProjectionProtocol&lt;String&gt;, showError: MutableState&lt;Boolean&gt;, titleValue: String?, placeholderValue: String?, supportingTexts: List&lt;String&gt;?, messageErrorExtra: String?, )</ID>
-    <ID>MagicNumber:ColorExtension.kt$16</ID>
-    <ID>MagicNumber:ColorExtension.kt$6</ID>
-    <ID>MagicNumber:ColorExtension.kt$8</ID>
     <ID>MagicNumber:LayoutLinearPreview.kt$LayoutLinearPreviewDataProvider$0.5f</ID>
-    <ID>MagicNumber:TransitionSlideVertical.kt$TransitionSlideVertical.LayerSlideModifier$4</ID>
-    <ID>MatchingDeclarationName:ComponentProjector.kt$ComponentProjectorProtocols : IdProcessorProtocolResolveStatusProcessorProtocolComponentProcessorProjectorProtocolReadyStatusInvalidateProtocols</ID>
-    <ID>MatchingDeclarationName:FormStateProjection.kt$FormStateProjectionProtocol : FormStateProtocol</ID>
-    <ID>MatchingDeclarationName:FormValidatorProjection.kt$FormValidatorProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
-    <ID>MatchingDeclarationName:MessageProjector.kt$MessageProjectorProtocols : MessageProcessorProjectorProtocolReadyStatusInvalidateProtocolsHasIdProtocol</ID>
-    <ID>MatchingDeclarationName:TextsProjection.kt$TextsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
-    <ID>MatchingDeclarationName:TransitionModifier.kt$AbstractModifierTransition : Modifier</ID>
-    <ID>MatchingDeclarationName:TuuchoAnnotations.kt$TuuchoUiDsl</ID>
-    <ID>MatchingDeclarationName:TypeProjector.kt$TypeProjectorProtocols : IdProcessorProtocolTypeProcessorProjectorProtocolHasContextualUpdaterProtocolReadyStatusInvalidateProtocols</ID>
-    <ID>MatchingDeclarationName:ViewsProjection.kt$ViewsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
-    <ID>MaxLineLength:FormStateProjection.kt$FormStateProjection$?:</ID>
-    <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>
-    <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
-    <ID>PackageNaming:DirectionNavigation.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
-    <ID>PackageNaming:DirectionScreen.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
-    <ID>PackageNaming:SchemaExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
-    <ID>PackageNaming:ScreenContext.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
-    <ID>PackageNaming:TransitionModifier.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
-    <ID>PackageNaming:ValueStorageProjection.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
-    <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
-    <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
     <ID>UnusedPrivateMember:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
     <ID>UnusedPrivateMember:FieldPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun FieldPreviewComponentFromSequence( @PreviewParameter(FieldPreviewDataProvider::class) data: FieldPreviewData )</ID>
     <ID>UnusedPrivateMember:LabelPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun LabelPreviewComponentFromSequence( @PreviewParameter(LabelPreviewDataProvider::class) data: LabelPreviewData )</ID>

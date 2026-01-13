@@ -1,14 +1,14 @@
 package com.tezov.tuucho.uiComponent.stable.preview
 
- import androidx.compose.foundation.layout.RowScope
- import androidx.compose.runtime.Composable
- import androidx.compose.ui.graphics.Color
- import androidx.compose.ui.tooling.preview.Preview
- import androidx.compose.ui.tooling.preview.PreviewParameter
- import androidx.compose.ui.tooling.preview.PreviewParameterProvider
- import androidx.compose.ui.unit.sp
- import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
- import com.tezov.tuucho.uiComponent.stable.presentation.view.createButtonView
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.sp
+import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
+import com.tezov.tuucho.uiComponent.stable.presentation.view.createButtonView
 
 private object ButtonPreviewSampleView {
     val labelSmall: @Composable RowScope.() -> Unit = {
@@ -32,14 +32,14 @@ private object ButtonPreviewSampleView {
             fontSize = 32.sp,
         )
     }
- }
+}
 
- private data class ButtonPreviewData(
+private data class ButtonPreviewData(
     val onClick: (() -> Unit)? = null,
     val content: @Composable RowScope.() -> Unit,
- )
+)
 
- private class ButtonPreviewDataProvider : PreviewParameterProvider<ButtonPreviewData> {
+private class ButtonPreviewDataProvider : PreviewParameterProvider<ButtonPreviewData> {
     override val values = buildList {
         add(
             ButtonPreviewData(
@@ -57,32 +57,32 @@ private object ButtonPreviewSampleView {
             )
         )
     }.asSequence()
- }
+}
 
- @Preview(
+@Preview(
     showSystemUi = false,
     showBackground = true,
     backgroundColor = 0xD9D9D9,
- )
- @Composable
- private fun ButtonPreviewComponentFromSequence(
+)
+@Composable
+private fun ButtonPreviewComponentFromSequence(
     @PreviewParameter(ButtonPreviewDataProvider::class)
     data: ButtonPreviewData
- ) {
+) {
     ButtonPreviewComponent(
         onClick = data.onClick,
         content = data.content
     )
- }
+}
 
- @Composable
- fun ButtonPreviewComponent(
+@Composable
+fun ButtonPreviewComponent(
     onClick: (() -> Unit)? = null,
     content: @Composable RowScope.() -> Unit,
- ) {
+) {
     val view = createButtonView(screenContext = dummyScreenContext())
     view.ComposeComponent(
         onClick = onClick,
         content = content
     )
- }
+}

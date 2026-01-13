@@ -1,14 +1,14 @@
 package com.tezov.tuucho.uiComponent.stable.preview
 
- import androidx.compose.runtime.Composable
- import androidx.compose.runtime.mutableStateOf
- import androidx.compose.runtime.remember
- import androidx.compose.ui.tooling.preview.Preview
- import androidx.compose.ui.tooling.preview.PreviewParameter
- import androidx.compose.ui.tooling.preview.PreviewParameterProvider
- import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
- import com.tezov.tuucho.presentation.ui.preview._system.storageOf
- import com.tezov.tuucho.uiComponent.stable.presentation.view.createFieldView
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
+import com.tezov.tuucho.presentation.ui.preview._system.storageOf
+import com.tezov.tuucho.uiComponent.stable.presentation.view.createFieldView
 
 private data class FieldPreviewData(
     val fieldValue: String? = null,
@@ -17,9 +17,9 @@ private data class FieldPreviewData(
     val placeholderValue: String? = null,
     val supportingTexts: List<String>? = null,
     val messageErrorExtra: String? = null
- )
+)
 
- private class FieldPreviewDataProvider : PreviewParameterProvider<FieldPreviewData> {
+private class FieldPreviewDataProvider : PreviewParameterProvider<FieldPreviewData> {
     override val values = sequenceOf(
         FieldPreviewData(
             titleValue = "title"
@@ -56,18 +56,18 @@ private data class FieldPreviewData(
             messageErrorExtra = "extra message error",
         ),
     )
- }
+}
 
- @Preview(
+@Preview(
     showSystemUi = false,
     showBackground = true,
     backgroundColor = 0xD9D9D9,
- )
- @Composable
- private fun FieldPreviewComponentFromSequence(
+)
+@Composable
+private fun FieldPreviewComponentFromSequence(
     @PreviewParameter(FieldPreviewDataProvider::class)
     data: FieldPreviewData
- ) {
+) {
     FieldPreviewComponent(
         fieldValue = data.fieldValue,
         showError = data.showError,
@@ -76,17 +76,17 @@ private data class FieldPreviewData(
         supportingTexts = data.supportingTexts,
         messageErrorExtra = data.messageErrorExtra
     )
- }
+}
 
- @Composable
- fun FieldPreviewComponent(
+@Composable
+fun FieldPreviewComponent(
     fieldValue: String? = "value",
     showError: Boolean = false,
     titleValue: String? = "title",
     placeholderValue: String? = "placeholder",
     supportingTexts: List<String>? = listOf("error message 1"),
     messageErrorExtra: String? = null,
- ) {
+) {
     val view = createFieldView(screenContext = dummyScreenContext())
     view.ComposeComponent(
         fieldValue = storageOf(fieldValue),
@@ -96,4 +96,4 @@ private data class FieldPreviewData(
         supportingTexts = supportingTexts,
         messageErrorExtra = messageErrorExtra
     )
- }
+}
