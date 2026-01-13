@@ -104,7 +104,9 @@ class AssociateScopeDSL(
     }
 
     @KoinDslMarker
-    fun factory(value: String) {
+    fun factory(
+        value: String
+    ) {
         factory(named(value)) { value }
     }
 }
