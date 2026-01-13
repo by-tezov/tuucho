@@ -14,7 +14,7 @@ detektRules = "1.23.8"
 #plugin
 android-plugin = "8.13.2"
 kotlin-plugin = "2.3.0"
-compose-plugin = "1.9.3"
+compose-plugin = "1.10.0"
 kotlin-serialization-plugin = "2.3.0"
 maven-plugin = "0.35.0"
 ktlint = "14.0.1"
@@ -32,7 +32,7 @@ okio = "3.16.4"
 
 #lib - android
 compose-activity = "1.12.2"
-compose-backhandler= "1.9.3"
+compose-backhandler= "1.10.0"
 datastore-preferences = "1.2.0"
 compose-ui-tooling = "1.10.0"
 
