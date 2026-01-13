@@ -12,7 +12,6 @@ import org.koin.core.scope.Scope
 class ActionAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
-
     sealed class Association {
         object Matcher : Association()
     }

@@ -9,7 +9,6 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 
 internal object AssemblerModule {
-
     fun invoke() = module(ModuleGroupData.Assembler) {
         factoryOf(::JsonObjectMerger)
         singleOf(::MaterialAssembler)

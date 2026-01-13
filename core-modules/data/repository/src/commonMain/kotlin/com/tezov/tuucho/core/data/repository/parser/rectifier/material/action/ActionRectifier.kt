@@ -23,7 +23,6 @@ import org.koin.core.scope.Scope
 class ActionRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-
     sealed class Association {
         object Matcher : Association()
 

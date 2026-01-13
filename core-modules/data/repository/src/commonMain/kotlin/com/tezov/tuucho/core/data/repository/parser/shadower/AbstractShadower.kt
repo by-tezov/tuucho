@@ -2,7 +2,8 @@ package com.tezov.tuucho.core.data.repository.parser.shadower
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol
-import com.tezov.tuucho.core.data.repository.parser.shadower._system.MatcherShadowerProtocol
+import com.tezov.tuucho.core.data.repository.parser.shadower._system.ShadowerMatcherProtocol
+import com.tezov.tuucho.core.data.repository.parser.shadower._system.ShadowerProtocol
 import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
@@ -13,17 +14,17 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
 abstract class AbstractShadower :
-    MatcherShadowerProtocol,
+    ShadowerProtocol,
     TuuchoKoinComponent {
-    protected open val matchers: List<MatcherShadowerProtocol> = emptyList()
-    protected open val childProcessors: List<AbstractShadower> = emptyList()
+    protected open val matchers: List<ShadowerMatcherProtocol> = emptyList()
+    protected open val childProcessors: List<ShadowerProtocol> = emptyList()
 
     override fun accept(
         path: JsonElementPath,
         element: JsonElement,
     ) = matchers.any { it.accept(path, element) }
 
-    suspend fun process(
+    override suspend fun process(
         path: JsonElementPath,
         element: JsonElement,
         jsonObjectConsumer: JsonObjectConsumerProtocol,

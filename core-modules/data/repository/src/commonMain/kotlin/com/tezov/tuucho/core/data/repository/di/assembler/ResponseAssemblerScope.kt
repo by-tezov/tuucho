@@ -13,7 +13,6 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 
 object ResponseAssemblerScope {
-
     fun invoke() = scope(ScopeContext.Response) {
         factory<Scope> { this }
         factoryOf(::FormAssembler)
@@ -38,5 +37,4 @@ object ResponseAssemblerScope {
             factoryOf(::FormActionAssemblerMatcher) associate ActionAssembler.Association.Matcher::class
         }
     }
-
 }

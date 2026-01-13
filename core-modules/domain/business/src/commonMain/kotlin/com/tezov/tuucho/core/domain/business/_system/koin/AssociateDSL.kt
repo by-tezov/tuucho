@@ -2,6 +2,7 @@
 
 package com.tezov.tuucho.core.domain.business._system.koin
 
+import org.koin.core.Koin
 import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.definition.KoinDefinition
 import org.koin.core.definition.indexKey
@@ -59,12 +60,12 @@ object AssociateDSL {
 
     @OptIn(KoinInternalApi::class)
     @KoinDslMarker
-    inline fun <reified T : Any> Scope.getAllAssociated(
+    inline fun <reified T : Any> Koin.getAllAssociated(
         clazz: KClass<*>
-    ): List<T> = with(getKoin()) {
-        val instanceContext = ResolutionContext(logger, this@getAllAssociated, clazz)
-        instanceContext.scopeArchetype = this@getAllAssociated.scopeArchetype
-        val factories = instanceRegistry.instances.values
+    ): List<T> {
+        val instanceContext = ResolutionContext(logger, scopeRegistry.rootScope, clazz)
+        instanceContext.scopeArchetype = scopeRegistry.rootScope.scopeArchetype
+        return instanceRegistry.instances.values
             .filter { factory ->
                 // TODO linked scope
                 (factory.beanDefinition.scopeQualifier == instanceContext.scope.scopeQualifier ||
@@ -73,7 +74,26 @@ object AssociateDSL {
                     (factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))
             }.distinct()
             .sortedWith(compareBy { it.beanDefinition.toString() })
-        return factories.mapNotNull { it.get(instanceContext) as? T }
+            .mapNotNull { it.get(instanceContext) as? T }
+    }
+
+    @OptIn(KoinInternalApi::class)
+    @KoinDslMarker
+    inline fun <reified T : Any> Scope.getAllAssociated(
+        clazz: KClass<*>
+    ): List<T> = with(getKoin()) {
+        val instanceContext = ResolutionContext(logger, this@getAllAssociated, clazz)
+        instanceContext.scopeArchetype = this@getAllAssociated.scopeArchetype
+        instanceRegistry.instances.values
+            .filter { factory ->
+                // TODO linked scope
+                (factory.beanDefinition.scopeQualifier == instanceContext.scope.scopeQualifier ||
+                    factory.beanDefinition.scopeQualifier == instanceContext.scope.scopeArchetype
+                ) &&
+                    (factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))
+            }.distinct()
+            .sortedWith(compareBy { it.beanDefinition.toString() })
+            .mapNotNull { it.get(instanceContext) as? T }
     }
 
     @KoinDslMarker

@@ -42,7 +42,7 @@ object BindOrdered {
         clazz: KClass<T>
     ): List<T> = with(getKoin()) {
         val typeName = clazz.qualifiedName ?: error("class qualifier name is null")
-        val orderedInstances = instanceRegistry.instances.entries
+        instanceRegistry.instances.entries
             .filter { (key, _) ->
                 // TODO scope protection and linked scope
                 key.contains("$typeName#ordered#")
@@ -65,6 +65,5 @@ object BindOrdered {
                 @Suppress("UNCHECKED_CAST")
                 factory.get(context) as T
             }.toList()
-        return orderedInstances
     }
 }

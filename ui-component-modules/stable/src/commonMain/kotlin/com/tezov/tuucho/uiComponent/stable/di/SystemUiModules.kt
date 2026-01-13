@@ -6,6 +6,7 @@ object SystemUiModules {
     fun invoke(): List<Koin> = listOf(
         MaterialRectifierModule.invoke(),
         MaterialAssemblerModule.invoke(),
+        MaterialShadowerModule.invoke(),
         ViewModule.invoke(),
     )
 }

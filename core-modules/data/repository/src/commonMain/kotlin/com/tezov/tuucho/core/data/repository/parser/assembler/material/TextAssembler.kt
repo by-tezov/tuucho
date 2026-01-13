@@ -12,7 +12,6 @@ import org.koin.core.scope.Scope
 class TextAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
-
     sealed class Association {
         object Matcher : Association()
     }

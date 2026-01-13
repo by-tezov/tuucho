@@ -19,7 +19,6 @@ import org.koin.core.scope.Scope
 class ContentAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
-
     sealed class Association {
         object Processor : Association()
     }

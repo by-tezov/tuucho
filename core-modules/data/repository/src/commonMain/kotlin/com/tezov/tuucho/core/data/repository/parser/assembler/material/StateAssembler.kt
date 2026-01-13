@@ -19,7 +19,6 @@ import org.koin.core.scope.Scope
 class StateAssembler(
     scope: Scope
 ) : AbstractAssembler(scope) {
-
     sealed class Association {
         object Processor : Association()
     }

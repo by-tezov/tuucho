@@ -13,7 +13,6 @@ import org.koin.core.scope.Scope
 
 @OpenForTest
 internal class ResponseRectifier : TuuchoKoinScopeComponent {
-
     sealed class Association {
         object Processor : Association()
     }

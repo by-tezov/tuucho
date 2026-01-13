@@ -21,9 +21,9 @@ import org.koin.core.scope.Scope
 class ColorRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-
     sealed class Association {
         object Matcher : Association()
+
         object Processor : Association()
     }
 

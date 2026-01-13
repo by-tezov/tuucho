@@ -22,7 +22,6 @@ import org.koin.core.scope.Scope
 class FormValidatorRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-
     sealed class Association {
         object Matcher : Association()
     }

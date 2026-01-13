@@ -21,12 +21,11 @@ import org.koin.core.scope.Scope
 class TextRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-
     sealed class Association {
         object Matcher : Association()
+
         object Processor : Association()
     }
-
 
     override val key = TextSchema.root
     override val matchers: List<RectifierMatcherProtocol> by lazy {

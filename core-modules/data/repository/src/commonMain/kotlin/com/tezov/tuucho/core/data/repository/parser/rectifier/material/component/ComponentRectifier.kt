@@ -21,7 +21,6 @@ import org.koin.core.scope.Scope
 class ComponentRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-
     sealed class Association {
         object Processor : Association()
     }

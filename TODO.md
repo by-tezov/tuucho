@@ -1,5 +1,9 @@
 ## In progress
 
+- preview
+
+clean and close PR
+
 ### Need to fix: 
 - Miss option and style in shadower, so contextual won't work
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?

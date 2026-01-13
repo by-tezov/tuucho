@@ -18,7 +18,6 @@ class IdRectifier(
     scope: Scope,
     private val idGenerator: RectifierIdGenerator
 ) : AbstractRectifier(scope) {
-
     sealed class Association {
         object Matcher : Association()
     }

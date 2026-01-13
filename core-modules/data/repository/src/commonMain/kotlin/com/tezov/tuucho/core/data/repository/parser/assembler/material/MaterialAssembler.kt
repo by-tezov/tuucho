@@ -17,7 +17,6 @@ import org.koin.core.scope.Scope
 
 @OpenForTest
 class MaterialAssembler : TuuchoKoinScopeComponent {
-
     sealed class Association {
         object Processor : Association()
     }

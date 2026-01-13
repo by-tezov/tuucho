@@ -8,7 +8,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import org.koin.core.scope.Scope
 
 class FormAssembler : AbstractAssembler() {
-
     sealed class Association {
         object Processor : Association()
     }
@@ -26,7 +25,4 @@ class FormAssembler : AbstractAssembler() {
     override val childProcessors: List<AbstractAssembler> by lazy {
         scope.getAllAssociated(Association.Processor::class)
     }
-
-
-
 }

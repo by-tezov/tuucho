@@ -23,7 +23,6 @@ import org.koin.core.scope.Scope
 class ContentRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
-
     sealed class Association {
         object Processor : Association()
     }

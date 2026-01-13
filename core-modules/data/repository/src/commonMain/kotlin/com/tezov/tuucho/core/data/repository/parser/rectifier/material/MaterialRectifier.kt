@@ -17,7 +17,6 @@ import org.koin.core.scope.Scope
 
 @OpenForTest
 internal class MaterialRectifier : TuuchoKoinScopeComponent {
-
     sealed class Association {
         object Processor : Association()
     }
