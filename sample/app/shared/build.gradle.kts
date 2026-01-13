@@ -1,3 +1,4 @@
+import com.tezov.tuucho.convention.isMacOs
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
 import java.util.Properties
@@ -55,7 +56,6 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.okhttp)
         }
-        val isMacOs = System.getProperty("os.name").startsWith("Mac", ignoreCase = true)
         if (isMacOs) {
             iosMain.dependencies {
                 implementation(libs.ktor.darwin)
@@ -64,11 +64,11 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kermit)
             implementation(libs.tuucho)
-            implementation("com.tezov:tuucho.ui_component.stable:0.0.1-alpha24_2.3.0")
+            implementation(libs.tuucho.ui)
 
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.ui)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.ui)
 
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)

@@ -1,7 +1,7 @@
 ## In progress
 
-- bom
 - Miss option and style in shadower, so contextual won't work
+- update doc
 
 ### Need to fix: 
 
