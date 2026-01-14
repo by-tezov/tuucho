@@ -1,9 +1,8 @@
 package com.tezov.tuucho.shared.sample.di
 
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
-import com.tezov.tuucho.core.domain.business.di.Koin
+import com.tezov.tuucho.core.domain.business.di.KoinMass
 
-internal actual fun SystemSharedModules.platformInvoke(): List<Koin> = listOf(
+internal actual fun SystemSharedModules.platformInvoke(): List<KoinMass> = listOf(
     NetworkModuleAndroid.invoke(),
     ConfigModuleAndroid.invoke(),
 )

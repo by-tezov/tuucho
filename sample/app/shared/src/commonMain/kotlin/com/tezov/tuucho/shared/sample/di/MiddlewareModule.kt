@@ -1,12 +1,11 @@
 package com.tezov.tuucho.shared.sample.di
 
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
-import com.tezov.tuucho.core.domain.business.di.ModuleGroupDomain
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business.di.ModuleContextDomain
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
-import com.tezov.tuucho.core.domain.business.di.Koin
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateBack.LoggerBeforeNavigateBackMiddleware
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.BeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.shared.sample.middleware.beforeNavigateToUrl.CatcherBeforeNavigateToUrlMiddleware
@@ -19,7 +18,7 @@ import org.koin.core.module.dsl.factoryOf
 
 object MiddlewareModule {
 
-    fun invoke() = module(ModuleGroupDomain.Middleware) {
+    fun invoke() = module(ModuleContextDomain.Middleware) {
         beforeNavigateToUrl()
         beforeNavigateBack()
         sendData()
