@@ -20,18 +20,21 @@ class ProcessActionUseCase(
     sealed class Input {
         abstract val route: NavigationRoute?
         abstract val lockable: InteractionLockable?
+        abstract val jsonElement: kotlinx.serialization.json.JsonElement?
 
-        data class JsonElement(
+        data class Action(
             override val route: NavigationRoute?,
             val action: ActionModelDomain,
+            val actionObjectOriginal: JsonObject? = null,
             override val lockable: InteractionLockable? = null,
-            val jsonElement: kotlinx.serialization.json.JsonElement? = null,
+            override val jsonElement: kotlinx.serialization.json.JsonElement? = null,
         ) : Input()
 
         data class ActionObject(
             override val route: NavigationRoute?,
             val actionObject: JsonObject,
             override val lockable: InteractionLockable? = null,
+            override val jsonElement: kotlinx.serialization.json.JsonElement? = null,
         ) : Input()
     }
 

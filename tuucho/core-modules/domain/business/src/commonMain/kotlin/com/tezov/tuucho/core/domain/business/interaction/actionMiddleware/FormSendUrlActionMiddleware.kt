@@ -42,7 +42,7 @@ internal class FormSendUrlActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = (action.command == FormAction.Send.command && action.authority == FormAction.Send.authority && action.target != null)
+    ) = action.command == FormAction.Send.command && action.authority == FormAction.Send.authority && action.target != null
 
     override suspend fun process(
         context: ActionMiddleware.Context,
@@ -63,9 +63,9 @@ internal class FormSendUrlActionMiddleware(
                 ?.takeIf { it.subset == FormSendSchema.Value.subset }
                 ?.run {
                     if (allSucceed.isTrue) {
-                        processValidRemoteForm(route, context.lockable, jsonElement)
+                        processValidRemoteForm(route, context.lockable, actionObjectOriginal)
                     } else {
-                        processInvalidRemoteForm(route, context.lockable, jsonElement)
+                        processInvalidRemoteForm(route, context.lockable, actionObjectOriginal)
                     }
                 }
         } else {
@@ -114,7 +114,7 @@ internal class FormSendUrlActionMiddleware(
     private suspend fun FormSendSchema.Scope.processInvalidRemoteForm(
         route: NavigationRoute.Url,
         lockable: InteractionLockable,
-        jsonElement: JsonElement?,
+        actionObject: JsonElement?,
     ) {
         val responseCollect = collect()
         val responseActionScope = action?.withScope(FormSendSchema.Action::Scope)
@@ -122,7 +122,7 @@ internal class FormSendUrlActionMiddleware(
             it.string.dispatchAction(route, lockable, responseCollect)
         }
         dispatchActionCommandError(route, toFailureResult())
-        jsonElement
+        actionObject
             ?.withScope(ActionFormSchema.Send::Scope)
             ?.denied
             ?.forEach {
@@ -136,14 +136,14 @@ internal class FormSendUrlActionMiddleware(
     private suspend fun FormSendSchema.Scope.processValidRemoteForm(
         route: NavigationRoute.Url,
         lockable: InteractionLockable,
-        jsonElement: JsonElement?,
+        actionObject: JsonElement?,
     ) {
         val responseCollect = collect()
         val responseActionScope = action?.withScope(FormSendSchema.Action::Scope)
         responseActionScope?.before?.forEach {
             it.string.dispatchAction(route, lockable, responseCollect)
         }
-        jsonElement
+        actionObject
             ?.withScope(ActionFormSchema.Send::Scope)
             ?.validated
             ?.forEach {
@@ -182,7 +182,7 @@ internal class FormSendUrlActionMiddleware(
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = route,
                 action = ActionModelDomain.from(
                     command = FormAction.Update.command,
@@ -197,14 +197,14 @@ internal class FormSendUrlActionMiddleware(
     private suspend fun String.dispatchAction(
         route: NavigationRoute.Url,
         lockable: InteractionLockable,
-        jsonElement: JsonElement?
+        response: JsonElement?
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = route,
                 action = ActionModelDomain.from(this),
-                jsonElement = jsonElement,
+                jsonElement = response,
                 lockable = lockable
             ),
         )

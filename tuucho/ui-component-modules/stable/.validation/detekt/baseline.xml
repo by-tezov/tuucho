@@ -2,9 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: (() -&gt; Unit)? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: ActionTypeAlias? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
-    <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: (() -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: ((JsonElement?) -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>FunctionNaming:FieldPreview.kt$@Composable fun FieldPreviewComponent( fieldValue: String? = "value", showError: Boolean = false, titleValue: String? = "title", placeholderValue: String? = "placeholder", supportingTexts: List&lt;String&gt;? = listOf("error message 1"), messageErrorExtra: String? = null, )</ID>
     <ID>FunctionNaming:FieldPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun FieldPreviewComponentFromSequence( @PreviewParameter(FieldPreviewDataProvider::class) data: FieldPreviewData )</ID>

@@ -18,7 +18,7 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProces
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-private typealias ActionTypeAlias = () -> Unit
+typealias ActionTypeAlias = (jsonElement: JsonElement?) -> Unit
 
 private typealias ActionProjectionTypeAlias = ProjectionProtocols<ActionTypeAlias>
 
@@ -58,7 +58,7 @@ private class ActionProjection(
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
             val processAction = koin.get<ProcessActionUseCase>()
             val interactionLockResolver = koin.get<InteractionLockProtocol.Resolver>()
-            val action: () -> Unit = {
+            val action: ActionTypeAlias = { jsonElement ->
                 coroutineScopes.action.async(
                     throwOnFailure = true
                 ) {
@@ -76,7 +76,8 @@ private class ActionProjection(
                         input = ProcessActionUseCase.Input.ActionObject(
                             route = route,
                             actionObject = actionObject,
-                            lockable = screenLock.freeze()
+                            lockable = screenLock.freeze(),
+                            jsonElement = jsonElement
                         )
                     )
                     interactionLockResolver.release(

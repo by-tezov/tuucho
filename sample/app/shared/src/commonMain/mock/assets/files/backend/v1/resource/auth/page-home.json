@@ -66,6 +66,32 @@
         "*body",
         "*item-spacer",
         {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              {
+                "subset": "label-custom",
+                "style": {
+                  "font-color-light": "#276CF5",
+                  "font-color-dark": "#F54927",
+                  "font-size": "18"
+                },
+                "content": {
+                  "value": "My Custom Clickable Label",
+                  "action": "echo-message-custom-action://"
+                }
+              },
+              "*item-spacer"
+            ]
+          }
+        },
+        "*item-spacer",
+        {
           "subset": "label",
           "style": "*title-section",
           "content": {

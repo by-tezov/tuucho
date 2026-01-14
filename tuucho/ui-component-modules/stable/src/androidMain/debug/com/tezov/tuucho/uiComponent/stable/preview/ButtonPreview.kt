@@ -7,8 +7,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
-import com.tezov.tuucho.uiComponent.stable.presentation.view.createButtonView
+import com.tezov.tuucho.core.presentation.ui.preview.DummyScreenContext
+import com.tezov.tuucho.core.presentation.ui.render.projection.ActionTypeAlias
+import com.tezov.tuucho.uiComponent.stable.presentation.view.ButtonViewFactory.Companion.createButtonView
 
 private object ButtonPreviewSampleView {
     val labelSmall: @Composable RowScope.() -> Unit = {
@@ -35,7 +36,7 @@ private object ButtonPreviewSampleView {
 }
 
 private data class ButtonPreviewData(
-    val onClick: (() -> Unit)? = null,
+    val onClick: ActionTypeAlias? = null,
     val content: @Composable RowScope.() -> Unit,
 )
 
@@ -77,10 +78,10 @@ private fun ButtonPreviewComponentFromSequence(
 
 @Composable
 fun ButtonPreviewComponent(
-    onClick: (() -> Unit)? = null,
+    onClick: ActionTypeAlias? = null,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val view = createButtonView(screenContext = dummyScreenContext())
+    val view = createButtonView(screenContext = DummyScreenContext())
     view.ComposeComponent(
         onClick = onClick,
         content = content

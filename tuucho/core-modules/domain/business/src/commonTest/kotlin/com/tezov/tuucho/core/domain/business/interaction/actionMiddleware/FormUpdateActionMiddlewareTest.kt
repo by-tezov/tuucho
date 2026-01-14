@@ -80,7 +80,7 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = null,
                 action = action,
                 lockable = InteractionLockable.Empty,
@@ -111,7 +111,7 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = route,
                 action = action,
                 lockable = InteractionLockable.Empty,
@@ -153,7 +153,7 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = route,
                 action = action,
                 lockable = InteractionLockable.Empty,
@@ -188,7 +188,7 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = route,
                 action = action,
                 lockable = InteractionLockable.Empty,
@@ -213,7 +213,7 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = route,
                 action = action,
                 lockable = InteractionLockable.Empty,
@@ -232,7 +232,7 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = null,
                 action = action,
                 lockable = InteractionLockable.Empty,

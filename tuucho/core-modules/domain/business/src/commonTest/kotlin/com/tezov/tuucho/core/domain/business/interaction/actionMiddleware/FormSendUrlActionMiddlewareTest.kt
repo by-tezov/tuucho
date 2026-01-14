@@ -27,6 +27,7 @@ import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
@@ -107,8 +108,7 @@ class FormSendUrlActionMiddlewareTest {
 
         val context = createContext(
             route = routeBack,
-            action = action,
-            jsonElement = null
+            action = action
         )
 
         val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
@@ -128,8 +128,7 @@ class FormSendUrlActionMiddlewareTest {
 
         val context = createContext(
             route = routeUrl,
-            action = action,
-            jsonElement = null
+            action = action
         )
 
         val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
@@ -158,8 +157,7 @@ class FormSendUrlActionMiddlewareTest {
 
         val context = createContext(
             route = routeUrl,
-            action = action,
-            jsonElement = null
+            action = action
         )
 
         sut.process(context, null)
@@ -207,8 +205,7 @@ class FormSendUrlActionMiddlewareTest {
         // ---------- middleware context ----------
         val context = createContext(
             route = routeUrl,
-            action = action,
-            jsonElement = null
+            action = action
         )
 
         // ---------- Test ----------
@@ -259,8 +256,7 @@ class FormSendUrlActionMiddlewareTest {
         // ---------- middleware context ----------
         val context = createContext(
             route = routeUrl,
-            action = action,
-            jsonElement = null
+            action = action
         )
 
         // ---------- Test ----------
@@ -315,8 +311,7 @@ class FormSendUrlActionMiddlewareTest {
         // ---------- middleware context ----------
         val context = createContext(
             route = routeUrl,
-            action = action,
-            jsonElement = null
+            action = action
         )
 
         // ---------- Test ----------
@@ -401,7 +396,7 @@ class FormSendUrlActionMiddlewareTest {
         val context = createContext(
             route = routeUrl,
             action = action,
-            jsonElement = jsonElement
+            actionObjectOriginal = jsonElement
         )
 
         // ---------- Test ----------
@@ -526,11 +521,11 @@ class FormSendUrlActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = lockable,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = routeUrl,
                 action = action,
                 lockable = lockable,
-                jsonElement = jsonElement
+                actionObjectOriginal = jsonElement
             )
         )
 
@@ -594,8 +589,7 @@ class FormSendUrlActionMiddlewareTest {
         // ---------- middleware context ----------
         val context = createContext(
             route = routeUrl,
-            action = action,
-            jsonElement = null
+            action = action
         )
 
         // ---------- Test: expect DomainException from null target in SendData input ----------
@@ -623,14 +617,16 @@ class FormSendUrlActionMiddlewareTest {
     private fun createContext(
         route: NavigationRoute,
         action: ActionModelDomain,
-        jsonElement: JsonElement?,
+        actionObjectOriginal: JsonObject? = null,
+        jsonElement: JsonElement? = null,
         lockable: InteractionLockable = InteractionLockable.Empty
     ) = ActionMiddleware.Context(
         lockable = lockable,
-        input = ProcessActionUseCase.Input.JsonElement(
+        input = ProcessActionUseCase.Input.Action(
             route = route,
             action = action,
             lockable = lockable,
+            actionObjectOriginal = actionObjectOriginal,
             jsonElement = jsonElement
         )
     )

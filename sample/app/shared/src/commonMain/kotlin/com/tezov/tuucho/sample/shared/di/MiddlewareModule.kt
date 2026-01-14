@@ -1,0 +1,55 @@
+package com.tezov.tuucho.sample.shared.di
+
+import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business.di.ModuleContextDomain
+import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
+import com.tezov.tuucho.sample.shared.middleware.beforeNavigateBack.LoggerBeforeNavigateBackMiddleware
+import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.BeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.CatcherBeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.LoggerBeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.OnShadowerException
+import com.tezov.tuucho.sample.shared.middleware.sendData.LoggerSendDataMiddleware
+import com.tezov.tuucho.sample.shared.middleware.updateView.LoggerUpdateViewMiddleware
+import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
+
+object MiddlewareModule {
+
+    fun invoke() = module(ModuleContextDomain.Middleware) {
+        beforeNavigateToUrl()
+        beforeNavigateBack()
+        sendData()
+        updateView()
+    }
+
+    private fun Module.beforeNavigateToUrl() {
+        factoryOf(::CatcherBeforeNavigateToUrlMiddleware) bindOrdered NavigationMiddleware.ToUrl::class
+
+        factory<BeforeNavigateToUrlMiddleware> {
+            BeforeNavigateToUrlMiddleware(
+                useCaseExecutor = get(),
+                serverHealthCheck = get(),
+                refreshMaterialCache = get(),
+                getValueOrNullFromStore = get(),
+                onShadowerException = OnShadowerException(),
+            )
+        } bindOrdered NavigationMiddleware.ToUrl::class
+
+        factoryOf(::LoggerBeforeNavigateToUrlMiddleware) bindOrdered NavigationMiddleware.ToUrl::class
+    }
+
+    private fun Module.beforeNavigateBack() {
+        factoryOf(::LoggerBeforeNavigateBackMiddleware) bindOrdered NavigationMiddleware.Back::class
+    }
+
+    private fun Module.sendData() {
+        factoryOf(::LoggerSendDataMiddleware) bindOrdered SendDataMiddleware::class
+    }
+
+    private fun Module.updateView() {
+        factoryOf(::LoggerUpdateViewMiddleware) bindOrdered UpdateViewMiddleware::class
+    }
+}

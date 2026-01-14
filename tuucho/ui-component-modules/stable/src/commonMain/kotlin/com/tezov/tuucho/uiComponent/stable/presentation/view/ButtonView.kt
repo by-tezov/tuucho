@@ -19,12 +19,13 @@ import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ButtonSchema.Component
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ButtonSchema.Content
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 interface ButtonViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
-        onClick: (() -> Unit)?,
+        onClick: ((JsonElement?) -> Unit)?,
         content: @Composable RowScope.() -> Unit,
     )
 
@@ -32,13 +33,15 @@ interface ButtonViewProtocol : ViewProtocol {
     fun ComposePlaceHolder()
 }
 
-fun createButtonView(
-    screenContext: ScreenContextProtocol,
-): ButtonViewProtocol = ButtonView(
-    screenContext = screenContext
-)
-
 class ButtonViewFactory : ViewFactoryProtocol {
+    companion object {
+        fun createButtonView(
+            screenContext: ScreenContextProtocol,
+        ): ButtonViewProtocol = ButtonView(
+            screenContext = screenContext
+        )
+    }
+
     override fun accept(
         componentObject: JsonObject,
     ) = componentObject.subset == Component.Value.subset
@@ -84,11 +87,11 @@ private class ButtonView(
 
     @Composable
     override fun ComposeComponent(
-        onClick: (() -> Unit)?,
+        onClick: ((JsonElement?) -> Unit)?,
         content: @Composable RowScope.() -> Unit,
     ) {
         Button(
-            onClick = onClick ?: {},
+            onClick = { onClick?.invoke(null) },
             content = content
         )
     }

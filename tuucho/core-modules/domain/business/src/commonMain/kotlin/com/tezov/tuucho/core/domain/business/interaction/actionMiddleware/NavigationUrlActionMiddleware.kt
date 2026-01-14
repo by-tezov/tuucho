@@ -19,7 +19,7 @@ internal class NavigationUrlActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModelDomain,
-    ): Boolean = action.command == NavigateAction.Url.command && action.authority == NavigateAction.Url.authority
+    ) = action.command == NavigateAction.Url.command && action.authority == NavigateAction.Url.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,

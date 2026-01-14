@@ -7,8 +7,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
-import com.tezov.tuucho.uiComponent.stable.presentation.view.createLabelView
+import com.tezov.tuucho.core.presentation.ui.preview.DummyScreenContext
+import com.tezov.tuucho.uiComponent.stable.presentation.view.LabelViewFactory.Companion.createLabelView
 
 private data class LabelPreviewData(
     val text: String? = null,
@@ -59,7 +59,7 @@ fun LabelPreviewComponent(
     fontColor: Color? = Color.Black,
     fontSize: TextUnit? = 16.sp,
 ) {
-    val view = createLabelView(screenContext = dummyScreenContext())
+    val view = createLabelView(screenContext = DummyScreenContext())
     view.ComposeComponent(
         textValue = textValue,
         fontColor = fontColor,

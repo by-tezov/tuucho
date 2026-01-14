@@ -23,7 +23,7 @@ import kotlinx.serialization.json.JsonPrimitive
 
 private typealias SpTypeAlias = TextUnit
 
-private typealias SpProjectionTypeAlias = ProjectionProtocols<TextUnit>
+private typealias SpProjectionTypeAlias = ProjectionProtocols<SpTypeAlias>
 
 interface SpProjectionProtocol :
     IdProcessorProtocol,

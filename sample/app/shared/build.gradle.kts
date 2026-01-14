@@ -1,6 +1,6 @@
-import com.tezov.tuucho.convention.isMacOs
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
+import com.tezov.tuucho.convention.isMacOs
 import java.util.Properties
 
 plugins {
@@ -65,6 +65,7 @@ kotlin {
             implementation(libs.kermit)
             implementation(libs.tuucho)
             implementation(libs.tuucho.ui)
+            implementation(project(":app:uiExtension"))
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

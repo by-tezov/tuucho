@@ -108,7 +108,7 @@
     <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
-    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$action.command == StoreAction.KeyValue.command &amp;&amp; action.authority == StoreAction.KeyValue.authority &amp;&amp; action.query != null</ID>
+    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$)</ID>
     <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) @KoinDslMarker infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
     <ID>NestedBlockDepth:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output&gt;? )</ID>
     <ID>PackageNaming:AssociateDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
@@ -160,8 +160,6 @@
     <ID>UseCheckOrError:AbstractAnimationCompound.kt$AbstractAnimationCompound.AnimatorIdle$throw IllegalStateException("Should never be called!")</ID>
     <!-- ************ Project: :core.presentation.ui ************ -->
     <ID>ForbiddenComment:ReadyStatusInvalidateProtocol.kt$// TODO: not scalable, check the TODO to do something better. Will do the job for now</ID>
-    <ID>InvalidPackageDeclaration:ScreenContext.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
-    <ID>InvalidPackageDeclaration:ValueStorageProjection.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
     <ID>MagicNumber:ColorExtension.kt$16</ID>
     <ID>MagicNumber:ColorExtension.kt$6</ID>
     <ID>MagicNumber:ColorExtension.kt$8</ID>
@@ -176,20 +174,21 @@
     <ID>MatchingDeclarationName:TypeProjector.kt$TypeProjectorProtocols : IdProcessorProtocolTypeProcessorProjectorProtocolHasContextualUpdaterProtocolReadyStatusInvalidateProtocols</ID>
     <ID>MatchingDeclarationName:ViewsProjection.kt$ViewsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
     <ID>MaxLineLength:FormStateProjection.kt$FormStateProjection$?:</ID>
+    <ID>MaxLineLength:IntProjection.kt$IntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;IntTypeAlias&gt;)</ID>
+    <ID>MaxLineLength:IntProjection.kt$private typealias IntProjectionTypeAlias = com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols&lt;IntTypeAlias&gt;</ID>
+    <ID>MaxLineLength:MessageIntProjection.kt$MessageIntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;MessageIntTextTypeAlias&gt;)</ID>
     <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>
     <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
     <ID>PackageNaming:DirectionNavigation.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>PackageNaming:DirectionScreen.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>PackageNaming:SchemaExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
-    <ID>PackageNaming:ScreenContext.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
     <ID>PackageNaming:TransitionModifier.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
-    <ID>PackageNaming:ValueStorageProjection.kt$package com.tezov.tuucho.presentation.ui.preview._system</ID>
     <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
     <!-- ************ Project: :ui-component.stable ************ -->
-    <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: (() -&gt; Unit)? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: ActionTypeAlias? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
-    <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: (() -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: ((JsonElement?) -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>FunctionNaming:FieldPreview.kt$@Composable fun FieldPreviewComponent( fieldValue: String? = "value", showError: Boolean = false, titleValue: String? = "title", placeholderValue: String? = "placeholder", supportingTexts: List&lt;String&gt;? = listOf("error message 1"), messageErrorExtra: String? = null, )</ID>
     <ID>FunctionNaming:FieldPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun FieldPreviewComponentFromSequence( @PreviewParameter(FieldPreviewDataProvider::class) data: FieldPreviewData )</ID>
