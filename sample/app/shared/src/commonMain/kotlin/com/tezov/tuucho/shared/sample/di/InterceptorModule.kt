@@ -1,10 +1,9 @@
 package com.tezov.tuucho.shared.sample.di
 
-import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
+import com.tezov.tuucho.core.data.repository.di.ModuleContextData
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
-import com.tezov.tuucho.core.domain.business.di.Koin
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.shared.sample.interceptor.FailSafePageHttpInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeaderHttpAuthorizationInterceptor
 import com.tezov.tuucho.shared.sample.interceptor.HeadersHttpInterceptor
@@ -18,7 +17,7 @@ object InterceptorModule {
         val headerPlatform: String
     }
 
-    fun invoke() = module(ModuleGroupData.Interceptor) {
+    fun invoke() = module(ModuleContextData.Interceptor) {
         http()
     }
 

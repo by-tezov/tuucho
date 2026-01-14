@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
-import com.tezov.tuucho.core.domain.business.di.KoinContext
+import com.tezov.tuucho.core.domain.business.di.KoinIsolatedContext
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
@@ -57,7 +57,7 @@ class FormSendUrlActionMiddlewareTest {
         processActionUseCase = mock()
 
         @OptIn(TuuchoInternalApi::class)
-        KoinContext.koinApplication = koinApplication {
+        KoinIsolatedContext.koinApplication = koinApplication {
             modules(
                 module {
                     single<ProcessActionUseCase> { processActionUseCase }

@@ -24,18 +24,18 @@ public final class com/tezov/tuucho/core/presentation/ui/composable/SkimmerCompo
 	public static final fun shimmerComposable (Landroidx/compose/ui/Modifier;FILandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
 }
 
-public abstract class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
 	public static final field $stable I
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$Main : com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation {
+public final class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$Main : com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$Main;
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$Main;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$View : com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation {
+public final class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$View : com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$View;
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$View;
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/di/SystemCoreUiModules {

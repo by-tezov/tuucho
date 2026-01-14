@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.assembler.response
 
-import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Assembler.ScopeContext
+import com.tezov.tuucho.core.data.repository.di.ModuleContextData.Assembler.ScopeContext
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.FindAllRefOrNullFetcherProtocol

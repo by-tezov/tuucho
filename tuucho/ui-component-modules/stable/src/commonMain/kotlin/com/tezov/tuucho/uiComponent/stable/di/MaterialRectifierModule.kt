@@ -1,6 +1,6 @@
 package com.tezov.tuucho.uiComponent.stable.di
 
-import com.tezov.tuucho.core.data.repository.di.ModuleGroupData
+import com.tezov.tuucho.core.data.repository.di.ModuleContextData
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.action.ActionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.color.ColorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.content.ContentRectifier
@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.form.FormValidatorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.scope
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.scope
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.action.ActionButtonRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.label.ContentButtonLabelRectifier
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.content.ContentFormFieldTextErrorRectifier
@@ -24,7 +24,7 @@ import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.spacer
 import org.koin.dsl.ScopeDSL
 
 internal object MaterialRectifierModule {
-    fun invoke() = scope(ModuleGroupData.Rectifier.ScopeContext.Material) {
+    fun invoke() = scope(ModuleContextData.Rectifier.ScopeContext.Material) {
         contentAssociation()
         textAssociation()
         colorAssociation()

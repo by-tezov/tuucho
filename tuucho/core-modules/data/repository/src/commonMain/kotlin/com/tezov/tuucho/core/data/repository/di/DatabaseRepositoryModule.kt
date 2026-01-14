@@ -12,7 +12,7 @@ import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAda
 import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 
@@ -25,7 +25,7 @@ object DatabaseRepositoryModule {
         val DATABASE_REPOSITORY_CONFIG get() = named("DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG")
     }
 
-    internal fun invoke() = module(ModuleGroupData.Main) {
+    internal fun invoke() = module(ModuleContextData.Main) {
         factory<Config>(DATABASE_REPOSITORY_CONFIG) {
             getOrNull() ?: object : Config {
                 override val fileName = "tuucho-database"

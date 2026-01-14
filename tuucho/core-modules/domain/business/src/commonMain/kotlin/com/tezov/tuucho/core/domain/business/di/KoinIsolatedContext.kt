@@ -6,7 +6,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.KoinScopeComponent
 
-object KoinContext {
+object KoinIsolatedContext {
     @TuuchoInternalApi
     lateinit var koinApplication: KoinApplication
 
@@ -15,7 +15,7 @@ object KoinContext {
 }
 
 interface TuuchoKoinComponent : KoinComponent {
-    override fun getKoin(): Koin = KoinContext.koin
+    override fun getKoin(): Koin = KoinIsolatedContext.koin
 }
 
 interface TuuchoKoinScopeComponent :

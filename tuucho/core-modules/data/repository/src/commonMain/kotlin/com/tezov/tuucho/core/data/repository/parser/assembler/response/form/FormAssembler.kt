@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.assembler.response.form
 
-import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Assembler.ScopeContext
+import com.tezov.tuucho.core.data.repository.di.ModuleContextData.Assembler.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AbstractAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseAssembler
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated

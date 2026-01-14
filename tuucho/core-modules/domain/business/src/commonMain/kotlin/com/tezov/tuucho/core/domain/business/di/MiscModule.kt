@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.IdGenerator
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRegistry
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
@@ -23,7 +23,7 @@ import org.koin.dsl.bind
 import kotlin.time.Instant
 
 internal object MiscModule {
-    fun invoke() = module(ModuleGroupDomain.Main) {
+    fun invoke() = module(ModuleContextDomain.Main) {
         single<Json> {
             Json {
                 ignoreUnknownKeys = true
