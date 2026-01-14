@@ -14,7 +14,7 @@ detektRules = "1.23.8"
 #plugin
 android-plugin = "8.13.2"
 kotlin-plugin = "2.3.0"
-compose-plugin = "1.9.3"
+compose-plugin = "1.10.0"
 kotlin-serialization-plugin = "2.3.0"
 maven-plugin = "0.35.0"
 ktlint = "14.0.1"
@@ -29,12 +29,14 @@ ktor = "3.3.3"
 koin = "4.2.0-beta2"
 kotlin-datetime = "0.7.1"
 okio = "3.16.4"
+compose = "1.10.0"
+compose-material3 = "1.10.0-alpha05"
 
 #lib - android
 compose-activity = "1.12.2"
-compose-backhandler= "1.9.3"
-datastore-preferences = "1.2.0"
+compose-backhandler= "1.10.0"
 compose-ui-tooling = "1.10.0"
+datastore-preferences = "1.2.0"
 
 #test
 jacoco = "0.8.13"
@@ -62,6 +64,11 @@ ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-jso
 kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-collections-immutable" }
 kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlin-datetime" }
 okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", version.ref = "compose" }
+compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose" }
+compose-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "compose-material3" }
+
 #lib - android
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }

@@ -13,7 +13,7 @@ compileSdk = "36"
 #plugin
 android-plugin = "8.13.2"
 kotlin-plugin = "2.3.0"
-compose-plugin = "1.9.3"
+compose-plugin = "1.10.0"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
@@ -33,9 +33,13 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 #tuucho
 tuucho = { group = "com.tezov", name = "tuucho.core", version.ref = "versionName" }
 tuucho-android = { group = "com.tezov", name = "tuucho.core-android", version.ref = "versionName" }
+tuucho-ui = { group = "com.tezov", name = "tuucho.ui-component.stable", version.ref = "versionName" }
+compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", version.ref = "compose" }
+compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose" }
 #compose - android
-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-ui-android = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-foundation-android = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - platform
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
