@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.di.assembler
 
-import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Assembler.ScopeContext
+import com.tezov.tuucho.core.data.repository.di.ModuleContextData.Assembler.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ActionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ColorAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssembler
@@ -13,7 +13,7 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material.StyleAsse
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssembler
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.scope
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.scope
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL

@@ -2,6 +2,7 @@
 
 package com.tezov.tuucho.core.domain.business._system.koin
 
+import com.tezov.tuucho.core.domain.business.exception.DomainException
 import org.koin.core.Koin
 import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.definition.KoinDefinition
@@ -17,6 +18,13 @@ import org.koin.ext.getFullName
 import kotlin.reflect.KClass
 
 object AssociateDSL {
+    @KoinDslMarker
+    infix fun <T : Any> InstanceFactory<T>.associate(
+        clazz: KClass<*>
+    ) {
+        beanDefinition.secondaryTypes += clazz
+    }
+
     @OptIn(KoinInternalApi::class)
     @KoinDslMarker
     infix fun <S : Any> KoinDefinition<out S>.associate(
@@ -29,13 +37,6 @@ object AssociateDSL {
         return this
     }
 
-    @KoinDslMarker
-    infix fun <T : Any> InstanceFactory<T>.associate(
-        clazz: KClass<*>
-    ) {
-        beanDefinition.secondaryTypes += clazz
-    }
-
     @OptIn(KoinInternalApi::class)
     @KoinDslMarker
     inline fun <reified T : Any> Module.declaration(
@@ -43,8 +44,8 @@ object AssociateDSL {
     ): InstanceFactory<T> {
         val mapping = indexKey(T::class, qualifier, Constant.koinRootScopeQualifier)
         @Suppress("UNCHECKED_CAST")
-        return (this.mappings[mapping] as? InstanceFactory<T>)
-            ?: throw NullPointerException("${T::class.getFullName()} not found in module")
+        return (mappings[mapping] as? InstanceFactory<T>)
+            ?: throw DomainException.Default("${T::class.getFullName()} not found in module")
     }
 
     @OptIn(KoinInternalApi::class)
@@ -55,7 +56,7 @@ object AssociateDSL {
         val mapping = indexKey(T::class, qualifier, scopeQualifier)
         @Suppress("UNCHECKED_CAST")
         return (module.mappings[mapping] as? InstanceFactory<T>)
-            ?: throw NullPointerException("${T::class.getFullName()} not found in scope")
+            ?: throw DomainException.Default("${T::class.getFullName()} not found in scope")
     }
 
     @OptIn(KoinInternalApi::class)
@@ -67,14 +68,13 @@ object AssociateDSL {
         instanceContext.scopeArchetype = scopeRegistry.rootScope.scopeArchetype
         return instanceRegistry.instances.values
             .filter { factory ->
-                // TODO linked scope
                 (factory.beanDefinition.scopeQualifier == instanceContext.scope.scopeQualifier ||
                     factory.beanDefinition.scopeQualifier == instanceContext.scope.scopeArchetype
                 ) &&
                     (factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))
             }.distinct()
             .sortedWith(compareBy { it.beanDefinition.toString() })
-            .mapNotNull { it.get(instanceContext) as? T }
+            .mapNotNull { it.get(instanceContext) as? T } // TODO linked scope, can't do because it is internal
     }
 
     @OptIn(KoinInternalApi::class)

@@ -1131,65 +1131,65 @@ open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSch
     }
 }
 
-sealed class com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin|null[0]
-    abstract val group // com.tezov.tuucho.core.domain.business.di/Koin.group|{}group[0]
-        abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.group.<get-group>|<get-group>(){}[0]
+sealed class com.tezov.tuucho.core.domain.business.di/KoinMass { // com.tezov.tuucho.core.domain.business.di/KoinMass|null[0]
+    abstract val group // com.tezov.tuucho.core.domain.business.di/KoinMass.group|{}group[0]
+        abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.group.<get-group>|<get-group>(){}[0]
 
-    abstract interface ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup|null[0]
+    abstract interface ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext|null[0]
 
-    abstract interface ScopeContext : org.koin.core.qualifier/Qualifier { // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext|null[0]
-        abstract val group // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.group|{}group[0]
-            abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.group.<get-group>|<get-group>(){}[0]
-        open val value // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.value|{}value[0]
-            open fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.value.<get-value>|<get-value>(){}[0]
+    abstract interface ScopeContext : org.koin.core.qualifier/Qualifier { // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext|null[0]
+        abstract val group // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.group|{}group[0]
+            abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.group.<get-group>|<get-group>(){}[0]
+        open val value // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.value|{}value[0]
+            open fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.value.<get-value>|<get-value>(){}[0]
     }
 
-    final class Module : com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin.Module|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/Koin.Module.<init>|<init>(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+    final class Module : com.tezov.tuucho.core.domain.business.di/KoinMass { // com.tezov.tuucho.core.domain.business.di/KoinMass.Module|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.<init>|<init>(com.tezov.tuucho.core.domain.business.di.KoinMass.ModuleContext;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
 
-        final val declaration // com.tezov.tuucho.core.domain.business.di/Koin.Module.declaration|{}declaration[0]
-            final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Module.declaration.<get-declaration>|<get-declaration>(){}[0]
-        final val group // com.tezov.tuucho.core.domain.business.di/Koin.Module.group|{}group[0]
-            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Module.group.<get-group>|<get-group>(){}[0]
+        final val declaration // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.declaration|{}declaration[0]
+            final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.declaration.<get-declaration>|<get-declaration>(){}[0]
+        final val group // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.group|{}group[0]
+            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.group.<get-group>|<get-group>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Module.component1|component1(){}[0]
-        final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Module.component2|component2(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/Koin.Module // com.tezov.tuucho.core.domain.business.di/Koin.Module.copy|copy(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/Koin.Module.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/Koin.Module.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.Module.toString|toString(){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.component1|component1(){}[0]
+        final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/KoinMass.Module // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.copy|copy(com.tezov.tuucho.core.domain.business.di.KoinMass.ModuleContext;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.toString|toString(){}[0]
     }
 
-    final class Scope : com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin.Scope|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/Koin.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+    final class Scope : com.tezov.tuucho.core.domain.business.di/KoinMass { // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.di.KoinMass.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
 
-        final val declaration // com.tezov.tuucho.core.domain.business.di/Koin.Scope.declaration|{}declaration[0]
-            final fun <get-declaration>(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Scope.declaration.<get-declaration>|<get-declaration>(){}[0]
-        final val group // com.tezov.tuucho.core.domain.business.di/Koin.Scope.group|{}group[0]
-            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Scope.group.<get-group>|<get-group>(){}[0]
-        final val scopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.scopeContext|{}scopeContext[0]
-            final fun <get-scopeContext>(): com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.scopeContext.<get-scopeContext>|<get-scopeContext>(){}[0]
+        final val declaration // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.declaration|{}declaration[0]
+            final fun <get-declaration>(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.declaration.<get-declaration>|<get-declaration>(){}[0]
+        final val group // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.group|{}group[0]
+            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.group.<get-group>|<get-group>(){}[0]
+        final val scopeContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.scopeContext|{}scopeContext[0]
+            final fun <get-scopeContext>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.scopeContext.<get-scopeContext>|<get-scopeContext>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.component1|component1(){}[0]
-        final fun component2(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Scope.component2|component2(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext = ..., kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.domain.business.di/Koin.Scope.copy|copy(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/Koin.Scope.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/Koin.Scope.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.Scope.toString|toString(){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.component1|component1(){}[0]
+        final fun component2(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext = ..., kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.copy|copy(com.tezov.tuucho.core.domain.business.di.KoinMass.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.toString|toString(){}[0]
     }
 
-    final object Companion { // com.tezov.tuucho.core.domain.business.di/Koin.Companion|null[0]
-        final fun module(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/Koin.Module // com.tezov.tuucho.core.domain.business.di/Koin.Companion.module|module(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
-        final fun scope(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.domain.business.di/Koin.Companion.scope|scope(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+    final object Companion { // com.tezov.tuucho.core.domain.business.di/KoinMass.Companion|null[0]
+        final fun module(com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/KoinMass.Module // com.tezov.tuucho.core.domain.business.di/KoinMass.Companion.module|module(com.tezov.tuucho.core.domain.business.di.KoinMass.ModuleContext;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+        final fun scope(com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.domain.business.di/KoinMass.Companion.scope|scope(com.tezov.tuucho.core.domain.business.di.KoinMass.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
     }
 }
 
-sealed class com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain|null[0]
-    final object Main : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Main|null[0]
+sealed class com.tezov.tuucho.core.domain.business.di/ModuleContextDomain : com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext { // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain|null[0]
+    final object Main : com.tezov.tuucho.core.domain.business.di/ModuleContextDomain // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain.Main|null[0]
 
-    final object Middleware : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Middleware|null[0]
+    final object Middleware : com.tezov.tuucho.core.domain.business.di/ModuleContextDomain // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain.Middleware|null[0]
 
-    final object UseCase : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.UseCase|null[0]
+    final object UseCase : com.tezov.tuucho.core.domain.business.di/ModuleContextDomain // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain.UseCase|null[0]
 }
 
 sealed class com.tezov.tuucho.core.domain.business.exception/DomainException : kotlin/Exception { // com.tezov.tuucho.core.domain.business.exception/DomainException|null[0]
@@ -1328,17 +1328,17 @@ final object com.tezov.tuucho.core.domain.business._system.koin/Constant { // co
         final fun <get-koinRootScopeQualifier>(): org.koin.core.qualifier/StringQualifier // com.tezov.tuucho.core.domain.business._system.koin/Constant.koinRootScopeQualifier.<get-koinRootScopeQualifier>|<get-koinRootScopeQualifier>(){}[0]
 }
 
-final object com.tezov.tuucho.core.domain.business.di/KoinContext { // com.tezov.tuucho.core.domain.business.di/KoinContext|null[0]
-    final val koin // com.tezov.tuucho.core.domain.business.di/KoinContext.koin|{}koin[0]
-        final fun <get-koin>(): org.koin.core/Koin // com.tezov.tuucho.core.domain.business.di/KoinContext.koin.<get-koin>|<get-koin>(){}[0]
+final object com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext { // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext|null[0]
+    final val koin // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koin|{}koin[0]
+        final fun <get-koin>(): org.koin.core/Koin // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koin.<get-koin>|<get-koin>(){}[0]
 
-    final var koinApplication // com.tezov.tuucho.core.domain.business.di/KoinContext.koinApplication|{}koinApplication[0]
-        final fun <get-koinApplication>(): org.koin.core/KoinApplication // com.tezov.tuucho.core.domain.business.di/KoinContext.koinApplication.<get-koinApplication>|<get-koinApplication>(){}[0]
-        final fun <set-koinApplication>(org.koin.core/KoinApplication) // com.tezov.tuucho.core.domain.business.di/KoinContext.koinApplication.<set-koinApplication>|<set-koinApplication>(org.koin.core.KoinApplication){}[0]
+    final var koinApplication // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koinApplication|{}koinApplication[0]
+        final fun <get-koinApplication>(): org.koin.core/KoinApplication // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koinApplication.<get-koinApplication>|<get-koinApplication>(){}[0]
+        final fun <set-koinApplication>(org.koin.core/KoinApplication) // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koinApplication.<set-koinApplication>|<set-koinApplication>(org.koin.core.KoinApplication){}[0]
 }
 
 final object com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules { // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin> // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass> // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema|null[0]

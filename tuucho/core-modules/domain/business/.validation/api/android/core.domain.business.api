@@ -29,76 +29,76 @@ public final class com/tezov/tuucho/core/domain/business/_system/koin/Constant {
 	public final fun getKoinRootScopeQualifier ()Lorg/koin/core/qualifier/StringQualifier;
 }
 
-public abstract class com/tezov/tuucho/core/domain/business/di/Koin {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/di/Koin$Companion;
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$Companion {
-	public final fun module (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
-	public final fun scope (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$Module : com/tezov/tuucho/core/domain/business/di/Koin {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public final fun component2 ()Lkotlin/jvm/functions/Function1;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
-	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$Scope : com/tezov/tuucho/core/domain/business/di/Koin {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;
-	public final fun component2 ()Lkotlin/jvm/functions/Function1;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
-	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public final fun getScopeContext ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext : org/koin/core/qualifier/Qualifier {
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public fun getValue ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext$DefaultImpls {
-	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;)Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
+public final class com/tezov/tuucho/core/domain/business/di/KoinIsolatedContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinIsolatedContext;
 	public static field koinApplication Lorg/koin/core/KoinApplication;
 	public final fun getKoin ()Lorg/koin/core/Koin;
 	public final fun getKoinApplication ()Lorg/koin/core/KoinApplication;
 	public final fun setKoinApplication (Lorg/koin/core/KoinApplication;)V
 }
 
-public abstract class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/domain/business/di/KoinMass {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Companion;
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main;
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Companion {
+	public final fun module (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
+	public final fun scope (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware;
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Module : com/tezov/tuucho/core/domain/business/di/KoinMass {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase;
+public abstract interface class com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Scope : com/tezov/tuucho/core/domain/business/di/KoinMass {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public final fun getScopeContext ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext : org/koin/core/qualifier/Qualifier {
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public fun getValue ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext$DefaultImpls {
+	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;)Ljava/lang/String;
+}
+
+public abstract class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Main : com/tezov/tuucho/core/domain/business/di/ModuleContextDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Main;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Middleware : com/tezov/tuucho/core/domain/business/di/ModuleContextDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Middleware;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$UseCase : com/tezov/tuucho/core/domain/business/di/ModuleContextDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleContextDomain$UseCase;
 }
 
 public final class com/tezov/tuucho/core/domain/business/di/SystemCoreDomainModules {

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.ActionExecutor
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormSendUrlActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormUpdateActionMiddleware
@@ -13,7 +13,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
 internal object ActionProcessorModule {
-    fun invoke() = module(ModuleGroupDomain.Middleware) {
+    fun invoke() = module(ModuleContextDomain.Middleware) {
         factory<ActionExecutorProtocol> {
             ActionExecutor(
                 coroutineScopes = get(),

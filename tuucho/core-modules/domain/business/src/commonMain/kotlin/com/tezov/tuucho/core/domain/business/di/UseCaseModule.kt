@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
@@ -29,7 +29,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 
 internal object UseCaseModule {
-    fun invoke() = module(ModuleGroupDomain.UseCase) {
+    fun invoke() = module(ModuleContextDomain.UseCase) {
         singleOf(::UseCaseExecutor) bind UseCaseExecutorProtocol::class
         withNetworkModule()
         withoutNetworkModule()

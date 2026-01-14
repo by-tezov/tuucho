@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackRouteRepository
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackScreenRepository
@@ -11,7 +11,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 
 internal object NavigationModule {
-    fun invoke() = module(ModuleGroupDomain.Main) {
+    fun invoke() = module(ModuleContextDomain.Main) {
         factoryOf(::NavigationRouteIdGenerator)
         singleOf(::NavigationStackRouteRepository) bind NavigationRepositoryProtocol.StackRoute::class
         singleOf(::NavigationStackScreenRepository) bind NavigationRepositoryProtocol.StackScreen::class

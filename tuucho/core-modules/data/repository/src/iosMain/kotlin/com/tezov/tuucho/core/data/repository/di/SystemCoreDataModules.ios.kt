@@ -3,15 +3,15 @@ package com.tezov.tuucho.core.data.repository.di
 import com.tezov.tuucho.core.data.repository._system.SystemInformationIos
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryIos
 import com.tezov.tuucho.core.data.repository.repository.SystemInformation
-import com.tezov.tuucho.core.domain.business.di.Koin
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import org.koin.dsl.bind
 
 @OptIn(TuuchoInternalApi::class)
-internal actual fun SystemCoreDataModules.platformInvoke(): List<Koin> = listOf(
-    module(ModuleGroupData.Main) {
+internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = listOf(
+    module(ModuleContextData.Main) {
         factory<SystemInformation.PlatformProtocol> {
             SystemInformationIos()
         }

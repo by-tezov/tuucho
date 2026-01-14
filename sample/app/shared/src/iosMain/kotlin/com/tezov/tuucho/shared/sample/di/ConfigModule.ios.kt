@@ -1,15 +1,15 @@
 package com.tezov.tuucho.shared.sample.di
 
-import com.tezov.tuucho.core.barrel.di.ModuleGroupCore
+import com.tezov.tuucho.core.barrel.di.ModuleContextCore
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.sample.app.shared.BuildKonfig
 
 internal object ConfigModuleIos {
 
-    fun invoke() = module(ModuleGroupCore.Main) {
+    fun invoke() = module(ModuleContextCore.Main) {
 
         factory<StoreRepositoryModule.Config> {
             object : StoreRepositoryModule.Config {
