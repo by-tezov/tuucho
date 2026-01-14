@@ -188,6 +188,10 @@ public final class com/tezov/tuucho/core/domain/tool/json/JsonElementExtensionKt
 	public static final fun findOrNull (Lkotlinx/serialization/json/JsonElement;Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;)Lkotlinx/serialization/json/JsonElement;
 	public static final fun getBoolean (Lkotlinx/serialization/json/JsonElement;)Z
 	public static final fun getBooleanOrNull (Lkotlinx/serialization/json/JsonElement;)Ljava/lang/Boolean;
+	public static final fun getFloat (Lkotlinx/serialization/json/JsonElement;)F
+	public static final fun getFloatOrNull (Lkotlinx/serialization/json/JsonElement;)Ljava/lang/Float;
+	public static final fun getInt (Lkotlinx/serialization/json/JsonElement;)I
+	public static final fun getIntOrNull (Lkotlinx/serialization/json/JsonElement;)Ljava/lang/Integer;
 	public static final fun getString (Lkotlinx/serialization/json/JsonElement;)Ljava/lang/String;
 	public static final fun getStringOrNull (Lkotlinx/serialization/json/JsonElement;)Ljava/lang/String;
 	public static final fun replaceOrInsert (Lkotlinx/serialization/json/JsonElement;Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;

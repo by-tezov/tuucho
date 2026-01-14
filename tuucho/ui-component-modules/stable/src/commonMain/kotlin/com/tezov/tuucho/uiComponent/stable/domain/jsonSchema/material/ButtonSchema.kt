@@ -17,12 +17,5 @@ object ButtonSchema {
             const val label = LabelSchema.Component.Value.subset
             const val action = ActionSchema.root
         }
-
-        class Scope(
-            argument: SchemaScopeArgument
-        ) : ContentSchema.OpenScope<Scope>(argument) {
-            var label by delegate<JsonObject?>(Key.label)
-            var action by delegate<JsonObject?>(Key.action)
-        }
     }
 }

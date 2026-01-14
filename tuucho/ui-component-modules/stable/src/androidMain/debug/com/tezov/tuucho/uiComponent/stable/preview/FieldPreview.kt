@@ -6,9 +6,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
-import com.tezov.tuucho.presentation.ui.preview._system.storageOf
-import com.tezov.tuucho.uiComponent.stable.presentation.view.createFieldView
+import com.tezov.tuucho.core.presentation.ui.preview.DummyScreenContext
+import com.tezov.tuucho.core.presentation.ui.preview.StorageOf
+import com.tezov.tuucho.uiComponent.stable.presentation.view.FieldViewFactory.Companion.createFieldView
 
 private data class FieldPreviewData(
     val fieldValue: String? = null,
@@ -87,9 +87,9 @@ fun FieldPreviewComponent(
     supportingTexts: List<String>? = listOf("error message 1"),
     messageErrorExtra: String? = null,
 ) {
-    val view = createFieldView(screenContext = dummyScreenContext())
+    val view = createFieldView(screenContext = DummyScreenContext())
     view.ComposeComponent(
-        fieldValue = storageOf(fieldValue),
+        fieldValue = StorageOf(fieldValue),
         showError = remember { mutableStateOf(showError) },
         titleValue = titleValue,
         placeholderValue = placeholderValue,

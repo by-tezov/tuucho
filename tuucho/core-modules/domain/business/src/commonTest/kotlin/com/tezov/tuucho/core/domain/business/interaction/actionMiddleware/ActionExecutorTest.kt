@@ -84,7 +84,7 @@ class ActionExecutorTest {
         every { middlewareSecond.accept(null, actionModel) } returns false
         every { middlewareThird.accept(null, actionModel) } returns false
 
-        val input = ProcessActionUseCase.Input.JsonElement(
+        val input = ProcessActionUseCase.Input.Action(
             route = null,
             action = actionModel,
             lockable = null,
@@ -123,7 +123,7 @@ class ActionExecutorTest {
         everySuspend { interactionLockResolver.acquire(any(), any()) } returns acquiredLockable
         everySuspend { interactionLockResolver.release(any(), any()) } returns Unit
 
-        val input = ProcessActionUseCase.Input.JsonElement(
+        val input = ProcessActionUseCase.Input.Action(
             route = null,
             action = actionModel,
             lockable = inputLockable,
@@ -180,7 +180,7 @@ class ActionExecutorTest {
             middlewareExecutor.process<Context, ProcessActionUseCase.Output>(any(), any())
         } returns output
 
-        val input = ProcessActionUseCase.Input.JsonElement(
+        val input = ProcessActionUseCase.Input.Action(
             route = null,
             action = actionModel,
             lockable = null,

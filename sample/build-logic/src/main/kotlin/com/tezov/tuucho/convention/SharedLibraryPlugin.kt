@@ -1,121 +1,32 @@
 package com.tezov.tuucho.convention
 
-import com.android.build.api.dsl.CommonExtension
-import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-class SharedLibraryPlugin : AbstractConventionPlugin() {
+class SharedLibraryPlugin : AbstractLibraryPlugin() {
 
-    companion object {
-        private fun optIn() = listOf<String>(
+    override fun optIn() = listOf<String>(
 
-        ).asIterable()
+    ).asIterable()
 
-        private fun compilerOption() = listOf(
-            "-Xexpect-actual-classes", // Needed by BuildKonfig
-        )
-    }
+    override fun compilerOption() = listOf(
+        "-Xexpect-actual-classes", // Needed by BuildKonfig
+    )
 
-    override fun applyPlugins(project: Project) {
-        super.applyPlugins(project)
-        with(project) {
-            pluginManager.apply(plugin(PluginId.androidLibrary))
-            pluginManager.apply(plugin(PluginId.koltinMultiplatform))
-            pluginManager.apply(plugin(PluginId.compose))
-            pluginManager.apply(plugin(PluginId.composeCompiler))
-        }
-    }
+    override val hasAssets = true
 
     override fun configure(
         project: Project,
     ) {
-        project.extra["hasAssets"] = true
         super.configure(project)
         with(project) {
-            configureProguard()
-            configureMultiplatform()
-            configureSourceSets()
+            configureBuildKonfig()
         }
     }
 
-
-    private fun Project.configureProguard() {
-        extensions.configure(LibraryExtension::class.java) {
-            buildTypes {
-                getByName("prod") {
-                    consumerProguardFiles(
-                        "proguard-rules.pro"
-                    )
-                }
-            }
-        }
-    }
-
-    private fun Project.configureMultiplatform() {
-        extensions.configure(LibraryExtension::class.java) {
-            namespace = namespace()
-        }
+    private fun Project.configureBuildKonfig() {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            jvmToolchain(this@configureMultiplatform.javaVersionInt())
-            compilerOptions {
-                optIn.addAll(optIn())
-                freeCompilerArgs.addAll(compilerOption())
-                allWarningsAsErrors.set(false)
-            }
-            // Android
-            val androidTargets = listOf(androidTarget())
-            androidTargets.forEach {
-                it.compilerOptions {
-                    jvmTarget.set(this@configureMultiplatform.jvmTarget())
-                }
-            }
-            // iOS
-            if (isMacOs) {
-                val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
-                project.afterEvaluate {
-                    val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace!!
-                    val frameworkName = project.path.split(":")
-                        .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
-                    iosTargets.forEach { iosTarget ->
-                        iosTarget.binaries.framework {
-                            isStatic = true
-                            baseName = frameworkName
-                            freeCompilerArgs += listOf(
-                                "-Xbinary=bundleId=$namespace",
-                            )
-                        }
-                    }
-                }
-            }
-            applyDefaultHierarchyTemplate() //Needed by BuildKonfig
-        }
-    }
-
-    private fun Project.configureSourceSets() {
-        val buildType = buildType()
-        extensions.configure(KotlinMultiplatformExtension::class.java) {
-            sourceSets {
-                androidMain {
-                    kotlin.srcDirs(
-                        "${project.projectDir.path}/src/androidMain/$buildType"
-                    )
-                }
-                if (isMacOs) {
-                    iosMain {
-                        kotlin.srcDirs(
-                            "${project.projectDir.path}/src/iosMain/$buildType"
-                        )
-                    }
-                }
-                commonMain {
-                    kotlin.srcDirs(
-                        "${project.projectDir.path}/src/commonMain/$buildType"
-                    )
-                }
-            }
+            applyDefaultHierarchyTemplate()
         }
     }
 }

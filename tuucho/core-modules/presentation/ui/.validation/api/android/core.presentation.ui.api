@@ -58,6 +58,18 @@ public final class com/tezov/tuucho/core/presentation/ui/exception/UiException$D
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
+public final class com/tezov/tuucho/core/presentation/ui/preview/DummyScreenContext {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/DummyScreenContext;
+	public final fun invoke ()Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/preview/StorageOf {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/StorageOf;
+	public final fun invoke (Ljava/lang/Object;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ValueStorageProjectionProtocol;
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/render/TuuchoEngine : com/tezov/tuucho/core/presentation/ui/render/TuuchoEngineProtocol {
 	public static final field $stable I
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/RegisterToScreenTransitionEventUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NotifyNavigationTransitionCompletedUseCase;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/GetScreensFromRoutesUseCase;)V
@@ -208,6 +220,16 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimen
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol {
 }
 
+public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionKt {
+	public static final fun createIntProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
+	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
+	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
+	public static final fun int (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol {
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionKt {
 	public static final fun createSpProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;
 	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;
@@ -254,6 +276,15 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 	public abstract fun getValidators ()Ljava/util/List;
 	public abstract fun isValid ()Ljava/lang/Boolean;
 	public abstract fun updateValidity (Ljava/lang/String;)V
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/render/projection/message/MessageIntProjectionKt {
+	public static final fun createMessageIntProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageIntProjectionProtocol;
+	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageIntProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageIntProjectionProtocol;
+	public static final fun int (Lcom/tezov/tuucho/core/presentation/ui/render/projector/MessageProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/message/MessageIntProjectionProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/message/MessageIntProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol {
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/message/MessageTextProjectionKt {
@@ -451,6 +482,7 @@ public abstract class com/tezov/tuucho/core/presentation/ui/view/AbstractView : 
 	public abstract fun getResolvedStatus ()Z
 	protected final fun getScreenContext ()Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;
 	public fun initialize (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun initialized (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setComponentProjector (Lcom/tezov/tuucho/core/presentation/ui/render/projector/ComponentProjectorProtocols;)V
 	protected final fun setScreenContext (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)V
 	public fun updateIfNeeded ()V

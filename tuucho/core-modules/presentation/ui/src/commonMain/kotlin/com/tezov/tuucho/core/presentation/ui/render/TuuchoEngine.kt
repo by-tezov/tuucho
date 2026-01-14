@@ -88,7 +88,7 @@ class TuuchoEngine(
         )
         useCaseExecutor.async(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = null,
                 action = ActionModelDomain.from(
                     command = NavigateAction.Url.command,

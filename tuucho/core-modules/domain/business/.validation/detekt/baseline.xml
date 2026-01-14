@@ -23,7 +23,7 @@
     <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
-    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$action.command == StoreAction.KeyValue.command &amp;&amp; action.authority == StoreAction.KeyValue.authority &amp;&amp; action.query != null</ID>
+    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$)</ID>
     <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) @KoinDslMarker infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
     <ID>NestedBlockDepth:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output&gt;? )</ID>
     <ID>PackageNaming:AssociateDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>

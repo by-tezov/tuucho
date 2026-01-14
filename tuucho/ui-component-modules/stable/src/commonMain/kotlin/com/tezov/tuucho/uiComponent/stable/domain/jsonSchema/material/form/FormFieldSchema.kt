@@ -20,29 +20,11 @@ object FormFieldSchema {
             const val placeholder = "placeholder"
             const val messageErrors = "message-errors"
         }
-
-        class Scope(
-            argument: SchemaScopeArgument
-        ) : ContentSchema.OpenScope<Scope>(argument) {
-            var title by delegate<JsonObject?>(Key.title)
-            var placeholder by delegate<JsonObject?>(Key.placeholder)
-            var messageErrors by delegate<JsonArray?>(Key.messageErrors)
-        }
     }
 
     object State {
         object Key {
             const val initialValue = "initial-value"
-        }
-
-        class Scope(
-            argument: SchemaScopeArgument
-        ) : OpenScope<Scope>(argument)
-
-        open class OpenScope<T : OpenScope<T>>(
-            argument: SchemaScopeArgument
-        ) : StateSchema.OpenScope<T>(argument) {
-            var initialValue by delegate<JsonObject?>(Key.initialValue)
         }
     }
 }

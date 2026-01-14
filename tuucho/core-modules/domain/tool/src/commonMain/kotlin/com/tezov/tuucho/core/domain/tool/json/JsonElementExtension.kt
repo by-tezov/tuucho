@@ -6,6 +6,8 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.float
+import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonPrimitive
 
 val JsonElement?.stringOrNull get() = (this as? JsonPrimitive)?.contentOrNull
@@ -20,6 +22,20 @@ val JsonElement?.boolean
     get(): Boolean {
         require(this != null) { "element is null" }
         return jsonPrimitive.boolean
+    }
+
+val JsonElement?.intOrNull: Int? get() = (this as? JsonPrimitive)?.int
+val JsonElement?.int
+    get(): Int {
+        require(this != null) { "element is null" }
+        return jsonPrimitive.int
+    }
+
+val JsonElement?.floatOrNull: Float? get() = (this as? JsonPrimitive)?.float
+val JsonElement?.float
+    get(): Float {
+        require(this != null) { "element is null" }
+        return jsonPrimitive.float
     }
 
 fun JsonElement.findOrNull(

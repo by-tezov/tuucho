@@ -29,6 +29,10 @@ gradlePlugin {
             id = "${packageName}.shared-library"
             implementationClass = "${packageName}.${name}"
         }
+        register("UiExtensionLibraryPlugin") {
+            id = "${packageName}.ui-extension-library"
+            implementationClass = "${packageName}.${name}"
+        }
     }
 }
 

@@ -13,7 +13,7 @@ import kotlinx.serialization.json.JsonElement
 
 private typealias MessageTextTypeAlias = String
 
-private typealias MessageTextProjectionTypeAlias = ProjectionProtocols<String>
+private typealias MessageTextProjectionTypeAlias = ProjectionProtocols<MessageTextTypeAlias>
 
 interface MessageTextProjectionProtocol :
     ResolveStatusProcessorProtocol,
