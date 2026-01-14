@@ -1044,38 +1044,38 @@ sealed class com.tezov.tuucho.core.data.repository.database.type/Visibility { //
     }
 }
 
-sealed class com.tezov.tuucho.core.data.repository.di/ModuleGroupData : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData|null[0]
-    final object Assembler : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler|null[0]
-        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext|null[0]
-            open val group // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.group|{}group[0]
-                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.group.<get-group>|<get-group>(){}[0]
+sealed class com.tezov.tuucho.core.data.repository.di/ModuleContextData : com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData|null[0]
+    final object Assembler : com.tezov.tuucho.core.data.repository.di/ModuleContextData { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler|null[0]
+        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext|null[0]
+            open val group // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.group|{}group[0]
+                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.group.<get-group>|<get-group>(){}[0]
 
-            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.Material|null[0]
+            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.Material|null[0]
 
-            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.Response|null[0]
-                final object Form : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.Response.Form|null[0]
+            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.Response|null[0]
+                final object Form : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.Response.Form|null[0]
             }
         }
     }
 
-    final object Breaker : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Breaker|null[0]
+    final object Breaker : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Breaker|null[0]
 
-    final object Interceptor : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Interceptor|null[0]
+    final object Interceptor : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Interceptor|null[0]
 
-    final object Main : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Main|null[0]
+    final object Main : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Main|null[0]
 
-    final object Rectifier : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier|null[0]
-        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext|null[0]
-            open val group // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.group|{}group[0]
-                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.group.<get-group>|<get-group>(){}[0]
+    final object Rectifier : com.tezov.tuucho.core.data.repository.di/ModuleContextData { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier|null[0]
+        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext|null[0]
+            open val group // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.group|{}group[0]
+                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.group.<get-group>|<get-group>(){}[0]
 
-            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.Material|null[0]
+            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.Material|null[0]
 
-            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.Response|null[0]
+            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.Response|null[0]
         }
     }
 
-    final object Shadower : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Shadower|null[0]
+    final object Shadower : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Shadower|null[0]
 }
 
 sealed class com.tezov.tuucho.core.data.repository.exception/DataException : kotlin/Exception { // com.tezov.tuucho.core.data.repository.exception/DataException|null[0]
@@ -1091,14 +1091,14 @@ sealed class com.tezov.tuucho.core.data.repository.parser.assembler.material/Opt
 }
 
 final object com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope { // com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope|null[0]
-    final fun invoke(): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope.invoke|invoke(){}[0]
+    final fun invoke(): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope { // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope|null[0]
-    final fun invoke(): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.invoke|invoke(){}[0]
+    final fun invoke(): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.invoke|invoke(){}[0]
 
     final object Form { // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form|null[0]
-        final fun invoke(): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form.invoke|invoke(){}[0]
+        final fun invoke(): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form.invoke|invoke(){}[0]
     }
 }
 
@@ -1144,7 +1144,7 @@ final object com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule { //
 }
 
 final object com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules { // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin> // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass> // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierHelper { // com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierHelper|null[0]

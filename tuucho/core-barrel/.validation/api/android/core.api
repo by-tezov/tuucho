@@ -2,13 +2,13 @@ public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
 	public static final fun TuuchoEngineStart (Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 }
 
-public abstract class com/tezov/tuucho/core/barrel/di/ModuleGroupCore : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/barrel/di/ModuleContextCore : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
 	public static final field $stable I
 }
 
-public final class com/tezov/tuucho/core/barrel/di/ModuleGroupCore$Main : com/tezov/tuucho/core/barrel/di/ModuleGroupCore {
+public final class com/tezov/tuucho/core/barrel/di/ModuleContextCore$Main : com/tezov/tuucho/core/barrel/di/ModuleContextCore {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/tezov/tuucho/core/barrel/di/ModuleGroupCore$Main;
+	public static final field INSTANCE Lcom/tezov/tuucho/core/barrel/di/ModuleContextCore$Main;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

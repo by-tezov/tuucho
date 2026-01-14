@@ -3,13 +3,13 @@ public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
 	public static final fun TuuchoEngineStart (Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 }
 
-public abstract class com/tezov/tuucho/core/barrel/di/ModuleGroupCore : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/barrel/di/ModuleContextCore : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
 	public static final field $stable I
 }
 
-public final class com/tezov/tuucho/core/barrel/di/ModuleGroupCore$Main : com/tezov/tuucho/core/barrel/di/ModuleGroupCore {
+public final class com/tezov/tuucho/core/barrel/di/ModuleContextCore$Main : com/tezov/tuucho/core/barrel/di/ModuleContextCore {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/tezov/tuucho/core/barrel/di/ModuleGroupCore$Main;
+	public static final field INSTANCE Lcom/tezov/tuucho/core/barrel/di/ModuleContextCore$Main;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -23,20 +23,20 @@ public final class com/tezov/tuucho/core/barrel/di/ModuleGroupCore$Main : com/te
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core>
-sealed class com.tezov.tuucho.core.barrel.di/ModuleGroupCore : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.barrel.di/ModuleGroupCore|null[0]
-    final object Main : com.tezov.tuucho.core.barrel.di/ModuleGroupCore { // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.toString|toString(){}[0]
+sealed class com.tezov.tuucho.core.barrel.di/ModuleContextCore : com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext { // com.tezov.tuucho.core.barrel.di/ModuleContextCore|null[0]
+    final object Main : com.tezov.tuucho.core.barrel.di/ModuleContextCore { // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main.toString|toString(){}[0]
     }
 }
 
-final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop[0]
-final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop[0]
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop[0]
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop[0]
 
-final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin>, kotlin/Function1<org.koin.core/KoinApplication, kotlin/Unit>?, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.di.Koin>;kotlin.Function1<org.koin.core.KoinApplication,kotlin.Unit>?;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass>, kotlin/Function1<org.koin.core/KoinApplication, kotlin/Unit>?, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.di.KoinMass>;kotlin.Function1<org.koin.core.KoinApplication,kotlin.Unit>?;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 
 
 ************ Project: :core.data.repository ************
@@ -427,63 +427,63 @@ public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryMo
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid;
 }
 
-public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/data/repository/di/ModuleContextData : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler;
 }
 
-public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext : com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext {
-	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler;
-	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+public abstract class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext : com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext {
+	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler;
+	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
 	public fun getValue ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Material;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Material;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response$Form : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response$Form;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response$Form : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response$Form;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Breaker : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Breaker;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Breaker : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Breaker;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Interceptor : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Interceptor;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Main : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Main;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier;
 }
 
-public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext : com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext {
-	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier;
-	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+public abstract class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext : com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext {
+	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier;
+	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
 	public fun getValue ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Material;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Material;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Response;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Response;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Shadower : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Shadower;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Shadower : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Shadower;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/NetworkRepositoryModule {
@@ -528,17 +528,17 @@ public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModule
 
 public final class com/tezov/tuucho/core/data/repository/di/assembler/MaterialAssemblerScope {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/assembler/MaterialAssemblerScope;
-	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope;
-	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope$Form {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope$Form;
-	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
 public abstract class com/tezov/tuucho/core/data/repository/exception/DataException : java/lang/Exception {
@@ -2278,38 +2278,38 @@ sealed class com.tezov.tuucho.core.data.repository.database.type/Visibility { //
     }
 }
 
-sealed class com.tezov.tuucho.core.data.repository.di/ModuleGroupData : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData|null[0]
-    final object Assembler : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler|null[0]
-        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext|null[0]
-            open val group // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.group|{}group[0]
-                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.group.<get-group>|<get-group>(){}[0]
+sealed class com.tezov.tuucho.core.data.repository.di/ModuleContextData : com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData|null[0]
+    final object Assembler : com.tezov.tuucho.core.data.repository.di/ModuleContextData { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler|null[0]
+        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext|null[0]
+            open val group // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.group|{}group[0]
+                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.group.<get-group>|<get-group>(){}[0]
 
-            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.Material|null[0]
+            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.Material|null[0]
 
-            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.Response|null[0]
-                final object Form : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Assembler.ScopeContext.Response.Form|null[0]
+            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.Response|null[0]
+                final object Form : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Assembler.ScopeContext.Response.Form|null[0]
             }
         }
     }
 
-    final object Breaker : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Breaker|null[0]
+    final object Breaker : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Breaker|null[0]
 
-    final object Interceptor : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Interceptor|null[0]
+    final object Interceptor : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Interceptor|null[0]
 
-    final object Main : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Main|null[0]
+    final object Main : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Main|null[0]
 
-    final object Rectifier : com.tezov.tuucho.core.data.repository.di/ModuleGroupData { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier|null[0]
-        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext|null[0]
-            open val group // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.group|{}group[0]
-                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.group.<get-group>|<get-group>(){}[0]
+    final object Rectifier : com.tezov.tuucho.core.data.repository.di/ModuleContextData { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier|null[0]
+        sealed class ScopeContext : com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext { // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext|null[0]
+            open val group // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.group|{}group[0]
+                open fun <get-group>(): com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.group.<get-group>|<get-group>(){}[0]
 
-            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.Material|null[0]
+            final object Material : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.Material|null[0]
 
-            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Rectifier.ScopeContext.Response|null[0]
+            final object Response : com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Rectifier.ScopeContext.Response|null[0]
         }
     }
 
-    final object Shadower : com.tezov.tuucho.core.data.repository.di/ModuleGroupData // com.tezov.tuucho.core.data.repository.di/ModuleGroupData.Shadower|null[0]
+    final object Shadower : com.tezov.tuucho.core.data.repository.di/ModuleContextData // com.tezov.tuucho.core.data.repository.di/ModuleContextData.Shadower|null[0]
 }
 
 sealed class com.tezov.tuucho.core.data.repository.exception/DataException : kotlin/Exception { // com.tezov.tuucho.core.data.repository.exception/DataException|null[0]
@@ -2325,14 +2325,14 @@ sealed class com.tezov.tuucho.core.data.repository.parser.assembler.material/Opt
 }
 
 final object com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope { // com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope|null[0]
-    final fun invoke(): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope.invoke|invoke(){}[0]
+    final fun invoke(): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.assembler/MaterialAssemblerScope.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope { // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope|null[0]
-    final fun invoke(): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.invoke|invoke(){}[0]
+    final fun invoke(): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.invoke|invoke(){}[0]
 
     final object Form { // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form|null[0]
-        final fun invoke(): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form.invoke|invoke(){}[0]
+        final fun invoke(): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form.invoke|invoke(){}[0]
     }
 }
 
@@ -2378,7 +2378,7 @@ final object com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule { //
 }
 
 final object com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules { // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin> // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass> // com.tezov.tuucho.core.data.repository.di/SystemCoreDataModules.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierHelper { // com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierHelper|null[0]
@@ -3538,65 +3538,65 @@ open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSch
     }
 }
 
-sealed class com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin|null[0]
-    abstract val group // com.tezov.tuucho.core.domain.business.di/Koin.group|{}group[0]
-        abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.group.<get-group>|<get-group>(){}[0]
+sealed class com.tezov.tuucho.core.domain.business.di/KoinMass { // com.tezov.tuucho.core.domain.business.di/KoinMass|null[0]
+    abstract val group // com.tezov.tuucho.core.domain.business.di/KoinMass.group|{}group[0]
+        abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.group.<get-group>|<get-group>(){}[0]
 
-    abstract interface ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup|null[0]
+    abstract interface ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext|null[0]
 
-    abstract interface ScopeContext : org.koin.core.qualifier/Qualifier { // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext|null[0]
-        abstract val group // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.group|{}group[0]
-            abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.group.<get-group>|<get-group>(){}[0]
-        open val value // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.value|{}value[0]
-            open fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext.value.<get-value>|<get-value>(){}[0]
+    abstract interface ScopeContext : org.koin.core.qualifier/Qualifier { // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext|null[0]
+        abstract val group // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.group|{}group[0]
+            abstract fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.group.<get-group>|<get-group>(){}[0]
+        open val value // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.value|{}value[0]
+            open fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext.value.<get-value>|<get-value>(){}[0]
     }
 
-    final class Module : com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin.Module|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/Koin.Module.<init>|<init>(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+    final class Module : com.tezov.tuucho.core.domain.business.di/KoinMass { // com.tezov.tuucho.core.domain.business.di/KoinMass.Module|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.<init>|<init>(com.tezov.tuucho.core.domain.business.di.KoinMass.ModuleContext;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
 
-        final val declaration // com.tezov.tuucho.core.domain.business.di/Koin.Module.declaration|{}declaration[0]
-            final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Module.declaration.<get-declaration>|<get-declaration>(){}[0]
-        final val group // com.tezov.tuucho.core.domain.business.di/Koin.Module.group|{}group[0]
-            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Module.group.<get-group>|<get-group>(){}[0]
+        final val declaration // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.declaration|{}declaration[0]
+            final fun <get-declaration>(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.declaration.<get-declaration>|<get-declaration>(){}[0]
+        final val group // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.group|{}group[0]
+            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.group.<get-group>|<get-group>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Module.component1|component1(){}[0]
-        final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Module.component2|component2(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/Koin.Module // com.tezov.tuucho.core.domain.business.di/Koin.Module.copy|copy(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/Koin.Module.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/Koin.Module.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.Module.toString|toString(){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.component1|component1(){}[0]
+        final fun component2(): kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext = ..., kotlin/Function1<org.koin.core.module/Module, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/KoinMass.Module // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.copy|copy(com.tezov.tuucho.core.domain.business.di.KoinMass.ModuleContext;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/KoinMass.Module.toString|toString(){}[0]
     }
 
-    final class Scope : com.tezov.tuucho.core.domain.business.di/Koin { // com.tezov.tuucho.core.domain.business.di/Koin.Scope|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/Koin.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+    final class Scope : com.tezov.tuucho.core.domain.business.di/KoinMass { // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.di.KoinMass.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
 
-        final val declaration // com.tezov.tuucho.core.domain.business.di/Koin.Scope.declaration|{}declaration[0]
-            final fun <get-declaration>(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Scope.declaration.<get-declaration>|<get-declaration>(){}[0]
-        final val group // com.tezov.tuucho.core.domain.business.di/Koin.Scope.group|{}group[0]
-            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup // com.tezov.tuucho.core.domain.business.di/Koin.Scope.group.<get-group>|<get-group>(){}[0]
-        final val scopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.scopeContext|{}scopeContext[0]
-            final fun <get-scopeContext>(): com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.scopeContext.<get-scopeContext>|<get-scopeContext>(){}[0]
+        final val declaration // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.declaration|{}declaration[0]
+            final fun <get-declaration>(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.declaration.<get-declaration>|<get-declaration>(){}[0]
+        final val group // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.group|{}group[0]
+            final fun <get-group>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.group.<get-group>|<get-group>(){}[0]
+        final val scopeContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.scopeContext|{}scopeContext[0]
+            final fun <get-scopeContext>(): com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.scopeContext.<get-scopeContext>|<get-scopeContext>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext // com.tezov.tuucho.core.domain.business.di/Koin.Scope.component1|component1(){}[0]
-        final fun component2(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/Koin.Scope.component2|component2(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext = ..., kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.domain.business.di/Koin.Scope.copy|copy(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/Koin.Scope.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/Koin.Scope.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/Koin.Scope.toString|toString(){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.component1|component1(){}[0]
+        final fun component2(): kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.component2|component2(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext = ..., kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit> = ...): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.copy|copy(com.tezov.tuucho.core.domain.business.di.KoinMass.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.di/KoinMass.Scope.toString|toString(){}[0]
     }
 
-    final object Companion { // com.tezov.tuucho.core.domain.business.di/Koin.Companion|null[0]
-        final fun module(com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/Koin.Module // com.tezov.tuucho.core.domain.business.di/Koin.Companion.module|module(com.tezov.tuucho.core.domain.business.di.Koin.ModuleGroup;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
-        final fun scope(com.tezov.tuucho.core.domain.business.di/Koin.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/Koin.Scope // com.tezov.tuucho.core.domain.business.di/Koin.Companion.scope|scope(com.tezov.tuucho.core.domain.business.di.Koin.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
+    final object Companion { // com.tezov.tuucho.core.domain.business.di/KoinMass.Companion|null[0]
+        final fun module(com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext, kotlin/Function1<org.koin.core.module/Module, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/KoinMass.Module // com.tezov.tuucho.core.domain.business.di/KoinMass.Companion.module|module(com.tezov.tuucho.core.domain.business.di.KoinMass.ModuleContext;kotlin.Function1<org.koin.core.module.Module,kotlin.Unit>){}[0]
+        final fun scope(com.tezov.tuucho.core.domain.business.di/KoinMass.ScopeContext, kotlin/Function1<org.koin.dsl/ScopeDSL, kotlin/Unit>): com.tezov.tuucho.core.domain.business.di/KoinMass.Scope // com.tezov.tuucho.core.domain.business.di/KoinMass.Companion.scope|scope(com.tezov.tuucho.core.domain.business.di.KoinMass.ScopeContext;kotlin.Function1<org.koin.dsl.ScopeDSL,kotlin.Unit>){}[0]
     }
 }
 
-sealed class com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain|null[0]
-    final object Main : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Main|null[0]
+sealed class com.tezov.tuucho.core.domain.business.di/ModuleContextDomain : com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext { // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain|null[0]
+    final object Main : com.tezov.tuucho.core.domain.business.di/ModuleContextDomain // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain.Main|null[0]
 
-    final object Middleware : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.Middleware|null[0]
+    final object Middleware : com.tezov.tuucho.core.domain.business.di/ModuleContextDomain // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain.Middleware|null[0]
 
-    final object UseCase : com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain // com.tezov.tuucho.core.domain.business.di/ModuleGroupDomain.UseCase|null[0]
+    final object UseCase : com.tezov.tuucho.core.domain.business.di/ModuleContextDomain // com.tezov.tuucho.core.domain.business.di/ModuleContextDomain.UseCase|null[0]
 }
 
 sealed class com.tezov.tuucho.core.domain.business.exception/DomainException : kotlin/Exception { // com.tezov.tuucho.core.domain.business.exception/DomainException|null[0]
@@ -3745,7 +3745,7 @@ final object com.tezov.tuucho.core.domain.business.di/KoinContext { // com.tezov
 }
 
 final object com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules { // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin> // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass> // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema { // com.tezov.tuucho.core.domain.business.jsonSchema._element.form/FormSchema|null[0]
@@ -5535,55 +5535,6 @@ public final class com/tezov/tuucho/core/domain/business/_system/koin/Constant {
 	public final fun getKoinRootScopeQualifier ()Lorg/koin/core/qualifier/StringQualifier;
 }
 
-public abstract class com/tezov/tuucho/core/domain/business/di/Koin {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/di/Koin$Companion;
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$Companion {
-	public final fun module (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
-	public final fun scope (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$Module : com/tezov/tuucho/core/domain/business/di/Koin {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public final fun component2 ()Lkotlin/jvm/functions/Function1;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Module;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
-	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$Scope : com/tezov/tuucho/core/domain/business/di/Koin {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;
-	public final fun component2 ()Lkotlin/jvm/functions/Function1;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
-	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public final fun getScopeContext ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext : org/koin/core/qualifier/Qualifier {
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
-	public fun getValue ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext$DefaultImpls {
-	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/di/Koin$ScopeContext;)Ljava/lang/String;
-}
-
 public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
 	public static field koinApplication Lorg/koin/core/KoinApplication;
@@ -5592,19 +5543,68 @@ public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
 	public final fun setKoinApplication (Lorg/koin/core/KoinApplication;)V
 }
 
-public abstract class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/domain/business/di/KoinMass {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Companion;
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Main;
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Companion {
+	public final fun module (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
+	public final fun scope (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$Middleware;
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Module : com/tezov/tuucho/core/domain/business/di/KoinMass {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase : com/tezov/tuucho/core/domain/business/di/ModuleGroupDomain {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleGroupDomain$UseCase;
+public abstract interface class com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Scope : com/tezov/tuucho/core/domain/business/di/KoinMass {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public final fun getScopeContext ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext : org/koin/core/qualifier/Qualifier {
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public fun getValue ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext$DefaultImpls {
+	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;)Ljava/lang/String;
+}
+
+public abstract class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Main : com/tezov/tuucho/core/domain/business/di/ModuleContextDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Main;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Middleware : com/tezov/tuucho/core/domain/business/di/ModuleContextDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Middleware;
+}
+
+public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$UseCase : com/tezov/tuucho/core/domain/business/di/ModuleContextDomain {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/ModuleContextDomain$UseCase;
 }
 
 public final class com/tezov/tuucho/core/domain/business/di/SystemCoreDomainModules {
@@ -8983,18 +8983,18 @@ public final class com/tezov/tuucho/core/presentation/ui/composable/SkimmerCompo
 	public static final fun shimmerComposable (Landroidx/compose/ui/Modifier;FILandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
 }
 
-public abstract class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
 	public static final field $stable I
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$Main : com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation {
+public final class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$Main : com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$Main;
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$Main;
 }
 
-public final class com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$View : com/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation {
+public final class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$View : com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleGroupPresentation$View;
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation$View;
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/di/SystemCoreUiModules {
@@ -9777,10 +9777,10 @@ final class com.tezov.tuucho.core.presentation.ui.render/TuuchoEngine : com.tezo
     final suspend fun start(kotlin/String) // com.tezov.tuucho.core.presentation.ui.render/TuuchoEngine.start|start(kotlin.String){}[0]
 }
 
-sealed class com.tezov.tuucho.core.presentation.ui.di/ModuleGroupPresentation : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.presentation.ui.di/ModuleGroupPresentation|null[0]
-    final object Main : com.tezov.tuucho.core.presentation.ui.di/ModuleGroupPresentation // com.tezov.tuucho.core.presentation.ui.di/ModuleGroupPresentation.Main|null[0]
+sealed class com.tezov.tuucho.core.presentation.ui.di/ModuleContextPresentation : com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext { // com.tezov.tuucho.core.presentation.ui.di/ModuleContextPresentation|null[0]
+    final object Main : com.tezov.tuucho.core.presentation.ui.di/ModuleContextPresentation // com.tezov.tuucho.core.presentation.ui.di/ModuleContextPresentation.Main|null[0]
 
-    final object View : com.tezov.tuucho.core.presentation.ui.di/ModuleGroupPresentation // com.tezov.tuucho.core.presentation.ui.di/ModuleGroupPresentation.View|null[0]
+    final object View : com.tezov.tuucho.core.presentation.ui.di/ModuleContextPresentation // com.tezov.tuucho.core.presentation.ui.di/ModuleContextPresentation.View|null[0]
 }
 
 sealed class com.tezov.tuucho.core.presentation.ui.exception/UiException : kotlin/Exception { // com.tezov.tuucho.core.presentation.ui.exception/UiException|null[0]
@@ -9792,7 +9792,7 @@ sealed class com.tezov.tuucho.core.presentation.ui.exception/UiException : kotli
 }
 
 final object com.tezov.tuucho.core.presentation.ui.di/SystemCoreUiModules { // com.tezov.tuucho.core.presentation.ui.di/SystemCoreUiModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin> // com.tezov.tuucho.core.presentation.ui.di/SystemCoreUiModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass> // com.tezov.tuucho.core.presentation.ui.di/SystemCoreUiModules.invoke|invoke(){}[0]
 }
 
 final val com.tezov.tuucho.core.presentation.ui._system/contentOrNull // com.tezov.tuucho.core.presentation.ui._system/contentOrNull|@kotlinx.serialization.json.JsonObject{}contentOrNull[0]
@@ -9817,9 +9817,9 @@ final val com.tezov.tuucho.core.presentation.ui._system/subsetOrNull // com.tezo
     final fun (kotlinx.serialization.json/JsonObject).<get-subsetOrNull>(): kotlin/String? // com.tezov.tuucho.core.presentation.ui._system/subsetOrNull.<get-subsetOrNull>|<get-subsetOrNull>@kotlinx.serialization.json.JsonObject(){}[0]
 final val com.tezov.tuucho.core.presentation.ui._system/type // com.tezov.tuucho.core.presentation.ui._system/type|@kotlinx.serialization.json.JsonObject{}type[0]
     final fun (kotlinx.serialization.json/JsonObject).<get-type>(): kotlin/String // com.tezov.tuucho.core.presentation.ui._system/type.<get-type>|<get-type>@kotlinx.serialization.json.JsonObject(){}[0]
-final val com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation$stableprop // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation$stableprop[0]
-final val com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_Main$stableprop // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_Main$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_Main$stableprop[0]
-final val com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_View$stableprop // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_View$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_View$stableprop[0]
+final val com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation$stableprop // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation$stableprop[0]
+final val com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_Main$stableprop // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_Main$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_Main$stableprop[0]
+final val com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_View$stableprop // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_View$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_View$stableprop[0]
 final val com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_SystemCoreUiModules$stableprop // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_SystemCoreUiModules$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_di_SystemCoreUiModules$stableprop[0]
 final val com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException$stableprop // com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_exception_UiException$stableprop[0]
 final val com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException_Default$stableprop // com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException_Default$stableprop|#static{}com_tezov_tuucho_core_presentation_ui_exception_UiException_Default$stableprop[0]
@@ -9901,9 +9901,9 @@ final fun (com.tezov.tuucho.core.presentation.ui.render.projector/TypeProjectorP
 final fun (com.tezov.tuucho.core.presentation.ui.render.projector/TypeProjectorProtocols).com.tezov.tuucho.core.presentation.ui.render.projection/texts(kotlin/String): com.tezov.tuucho.core.presentation.ui.render.projection/TextsProjectionProtocol // com.tezov.tuucho.core.presentation.ui.render.projection/texts|texts@com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols(kotlin.String){}[0]
 final fun (kotlin/String).com.tezov.tuucho.core.presentation.ui._system/toColor(): androidx.compose.ui.graphics/Color // com.tezov.tuucho.core.presentation.ui._system/toColor|toColor@kotlin.String(){}[0]
 final fun (kotlin/String).com.tezov.tuucho.core.presentation.ui._system/toColorOrNull(): androidx.compose.ui.graphics/Color? // com.tezov.tuucho.core.presentation.ui._system/toColorOrNull|toColorOrNull@kotlin.String(){}[0]
-final fun com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation$stableprop_getter|com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_Main$stableprop_getter|com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_Main$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_View$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_View$stableprop_getter|com_tezov_tuucho_core_presentation_ui_di_ModuleGroupPresentation_View$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation$stableprop_getter|com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_Main$stableprop_getter|com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_Main$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_View$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_View$stableprop_getter|com_tezov_tuucho_core_presentation_ui_di_ModuleContextPresentation_View$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_SystemCoreUiModules$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.di/com_tezov_tuucho_core_presentation_ui_di_SystemCoreUiModules$stableprop_getter|com_tezov_tuucho_core_presentation_ui_di_SystemCoreUiModules$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException$stableprop_getter|com_tezov_tuucho_core_presentation_ui_exception_UiException$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException_Default$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.exception/com_tezov_tuucho_core_presentation_ui_exception_UiException_Default$stableprop_getter|com_tezov_tuucho_core_presentation_ui_exception_UiException_Default$stableprop_getter(){}[0]
@@ -10585,7 +10585,7 @@ final class com.tezov.tuucho.uiComponent.stable.presentation.view/SpacerViewFact
 }
 
 final object com.tezov.tuucho.uiComponent.stable.di/SystemUiModules { // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin> // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass> // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/FormFieldSchema { // com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/FormFieldSchema|null[0]

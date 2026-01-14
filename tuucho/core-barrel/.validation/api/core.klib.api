@@ -6,17 +6,17 @@
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core>
-sealed class com.tezov.tuucho.core.barrel.di/ModuleGroupCore : com.tezov.tuucho.core.domain.business.di/Koin.ModuleGroup { // com.tezov.tuucho.core.barrel.di/ModuleGroupCore|null[0]
-    final object Main : com.tezov.tuucho.core.barrel.di/ModuleGroupCore { // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.barrel.di/ModuleGroupCore.Main.toString|toString(){}[0]
+sealed class com.tezov.tuucho.core.barrel.di/ModuleContextCore : com.tezov.tuucho.core.domain.business.di/KoinMass.ModuleContext { // com.tezov.tuucho.core.barrel.di/ModuleContextCore|null[0]
+    final object Main : com.tezov.tuucho.core.barrel.di/ModuleContextCore { // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.barrel.di/ModuleContextCore.Main.toString|toString(){}[0]
     }
 }
 
-final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop[0]
-final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop[0]
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop[0]
+final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop[0]
 
-final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleGroupCore_Main$stableprop_getter(){}[0]
-final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/Koin>, kotlin/Function1<org.koin.core/KoinApplication, kotlin/Unit>?, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.di.Koin>;kotlin.Function1<org.koin.core.KoinApplication,kotlin.Unit>?;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.barrel/TuuchoEngineStart(kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass>, kotlin/Function1<org.koin.core/KoinApplication, kotlin/Unit>?, kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.barrel/TuuchoEngineStart|TuuchoEngineStart(kotlin.collections.List<com.tezov.tuucho.core.domain.business.di.KoinMass>;kotlin.Function1<org.koin.core.KoinApplication,kotlin.Unit>?;kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]

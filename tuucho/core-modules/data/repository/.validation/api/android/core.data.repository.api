@@ -385,63 +385,63 @@ public final class com/tezov/tuucho/core/data/repository/di/DatabaseRepositoryMo
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/DatabaseRepositoryModuleAndroid;
 }
 
-public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData : com/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup {
+public abstract class com/tezov/tuucho/core/data/repository/di/ModuleContextData : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler;
 }
 
-public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext : com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext {
-	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler;
-	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+public abstract class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext : com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext {
+	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler;
+	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
 	public fun getValue ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Material;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Material;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response$Form : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Assembler$ScopeContext$Response$Form;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response$Form : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Assembler$ScopeContext$Response$Form;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Breaker : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Breaker;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Breaker : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Breaker;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Interceptor;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Interceptor : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Interceptor;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Main;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Main : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Main;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier;
 }
 
-public abstract class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext : com/tezov/tuucho/core/domain/business/di/Koin$ScopeContext {
-	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier;
-	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/Koin$ModuleGroup;
+public abstract class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext : com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext {
+	public fun getGroup ()Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier;
+	public synthetic fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
 	public fun getValue ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Material;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Material : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Material;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Rectifier$ScopeContext$Response;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Response : com/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Rectifier$ScopeContext$Response;
 }
 
-public final class com/tezov/tuucho/core/data/repository/di/ModuleGroupData$Shadower : com/tezov/tuucho/core/data/repository/di/ModuleGroupData {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleGroupData$Shadower;
+public final class com/tezov/tuucho/core/data/repository/di/ModuleContextData$Shadower : com/tezov/tuucho/core/data/repository/di/ModuleContextData {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/ModuleContextData$Shadower;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/NetworkRepositoryModule {
@@ -486,17 +486,17 @@ public final class com/tezov/tuucho/core/data/repository/di/SystemCoreDataModule
 
 public final class com/tezov/tuucho/core/data/repository/di/assembler/MaterialAssemblerScope {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/assembler/MaterialAssemblerScope;
-	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope;
-	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope$Form {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/assembler/ResponseAssemblerScope$Form;
-	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/Koin$Scope;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
 }
 
 public abstract class com/tezov/tuucho/core/data/repository/exception/DataException : java/lang/Exception {
