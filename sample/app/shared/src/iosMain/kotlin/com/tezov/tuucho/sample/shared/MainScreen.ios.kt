@@ -1,4 +1,4 @@
-package com.tezov.tuucho.shared.sample
+package com.tezov.tuucho.sample.shared
 
 import androidx.compose.ui.window.ComposeUIViewController
 

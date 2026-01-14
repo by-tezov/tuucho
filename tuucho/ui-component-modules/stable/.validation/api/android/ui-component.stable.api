@@ -131,15 +131,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field label Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ButtonSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getAction ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getLabel ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setAction (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setLabel (Lkotlinx/serialization/json/JsonObject;)V
-}
-
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema;
@@ -167,13 +158,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field value Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getValue ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setValue (Lkotlinx/serialization/json/JsonObject;)V
-}
-
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema$Style {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema$Style;
@@ -184,15 +168,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema$Style$Key;
 	public static final field fontColor Ljava/lang/String;
 	public static final field fontSize Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema$Style$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StyleSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getFontColor ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getFontSize ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setFontColor (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setFontSize (Lkotlinx/serialization/json/JsonObject;)V
 }
 
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SpacerSchema {
@@ -220,13 +195,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SpacerSchema$Style$Key;
 	public static final field weight Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SpacerSchema$Style$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StyleSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getWeight ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setWeight (Lkotlinx/serialization/json/JsonObject;)V
 }
 
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SubsetSchema {
@@ -273,17 +241,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field title Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/form/FormFieldSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getMessageErrors ()Lkotlinx/serialization/json/JsonArray;
-	public final fun getPlaceholder ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getTitle ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setMessageErrors (Lkotlinx/serialization/json/JsonArray;)V
-	public final fun setPlaceholder (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setTitle (Lkotlinx/serialization/json/JsonObject;)V
-}
-
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/form/FormFieldSchema$State {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/form/FormFieldSchema$State;
@@ -293,18 +250,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/form/FormFieldSchema$State$Key;
 	public static final field initialValue Ljava/lang/String;
-}
-
-public class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/form/FormFieldSchema$State$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StateSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getInitialValue ()Lkotlinx/serialization/json/JsonObject;
-	public final fun setInitialValue (Lkotlinx/serialization/json/JsonObject;)V
-}
-
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/form/FormFieldSchema$State$Scope : com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/form/FormFieldSchema$State$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 }
 
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/layout/LayoutLinearSchema {
@@ -334,13 +279,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field items Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/layout/LayoutLinearSchema$Content$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/ContentSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getItems ()Lkotlinx/serialization/json/JsonArray;
-	public final fun setItems (Lkotlinx/serialization/json/JsonArray;)V
-}
-
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/layout/LayoutLinearSchema$Style {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/layout/LayoutLinearSchema$Style;
@@ -353,19 +291,6 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field fillMaxSize Ljava/lang/String;
 	public static final field fillMaxWidth Ljava/lang/String;
 	public static final field orientation Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/layout/LayoutLinearSchema$Style$Scope : com/tezov/tuucho/core/domain/business/jsonSchema/material/StyleSchema$OpenScope {
-	public static final field $stable I
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getBackgroundColor ()Lkotlinx/serialization/json/JsonObject;
-	public final fun getFillMaxSize ()Ljava/lang/Boolean;
-	public final fun getFillMaxWidth ()Ljava/lang/Boolean;
-	public final fun getOrientation ()Ljava/lang/String;
-	public final fun setBackgroundColor (Lkotlinx/serialization/json/JsonObject;)V
-	public final fun setFillMaxSize (Ljava/lang/Boolean;)V
-	public final fun setFillMaxWidth (Ljava/lang/Boolean;)V
-	public final fun setOrientation (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/layout/LayoutLinearSchema$Style$Value {
@@ -382,29 +307,31 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 
 public final class com/tezov/tuucho/uiComponent/stable/presentation/view/ButtonViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
+	public static final field Companion Lcom/tezov/tuucho/uiComponent/stable/presentation/view/ButtonViewFactory$Companion;
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
 	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/presentation/view/ButtonViewKt {
-	public static final fun createButtonView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/ButtonViewProtocol;
+public final class com/tezov/tuucho/uiComponent/stable/presentation/view/ButtonViewFactory$Companion {
+	public final fun createButtonView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/ButtonViewProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/ButtonViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
-	public abstract fun ComposeComponent (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposeComponent (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
 }
 
 public final class com/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
+	public static final field Companion Lcom/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewFactory$Companion;
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
 	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewKt {
-	public static final fun createFieldView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewProtocol;
+public final class com/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewFactory$Companion {
+	public final fun createFieldView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
@@ -414,13 +341,14 @@ public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation
 
 public final class com/tezov/tuucho/uiComponent/stable/presentation/view/LabelViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
+	public static final field Companion Lcom/tezov/tuucho/uiComponent/stable/presentation/view/LabelViewFactory$Companion;
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
 	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/presentation/view/LabelViewKt {
-	public static final fun createLabelView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/LabelViewProtocol;
+public final class com/tezov/tuucho/uiComponent/stable/presentation/view/LabelViewFactory$Companion {
+	public final fun createLabelView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/LabelViewProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/LabelViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
@@ -430,13 +358,14 @@ public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation
 
 public final class com/tezov/tuucho/uiComponent/stable/presentation/view/LayoutLinearViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
+	public static final field Companion Lcom/tezov/tuucho/uiComponent/stable/presentation/view/LayoutLinearViewFactory$Companion;
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
 	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/presentation/view/LayoutLinearViewKt {
-	public static final fun createLayoutLinearView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/LayoutLinearViewProtocol;
+public final class com/tezov/tuucho/uiComponent/stable/presentation/view/LayoutLinearViewFactory$Companion {
+	public final fun createLayoutLinearView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/LayoutLinearViewProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/LayoutLinearViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
@@ -446,13 +375,14 @@ public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation
 
 public final class com/tezov/tuucho/uiComponent/stable/presentation/view/SpacerViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
 	public static final field $stable I
+	public static final field Companion Lcom/tezov/tuucho/uiComponent/stable/presentation/view/SpacerViewFactory$Companion;
 	public fun <init> ()V
 	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
 	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/presentation/view/SpacerViewKt {
-	public static final fun createSpacerView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/SpacerViewProtocol;
+public final class com/tezov/tuucho/uiComponent/stable/presentation/view/SpacerViewFactory$Companion {
+	public final fun createSpacerView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/SpacerViewProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/SpacerViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
