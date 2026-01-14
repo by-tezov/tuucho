@@ -29,8 +29,8 @@ public final class com/tezov/tuucho/core/domain/business/_system/koin/Constant {
 	public final fun getKoinRootScopeQualifier ()Lorg/koin/core/qualifier/StringQualifier;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/KoinContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinContext;
+public final class com/tezov/tuucho/core/domain/business/di/KoinIsolatedContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinIsolatedContext;
 	public static field koinApplication Lorg/koin/core/KoinApplication;
 	public final fun getKoin ()Lorg/koin/core/Koin;
 	public final fun getKoinApplication ()Lorg/koin/core/KoinApplication;

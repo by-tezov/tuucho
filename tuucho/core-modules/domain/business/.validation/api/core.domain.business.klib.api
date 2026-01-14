@@ -1328,13 +1328,13 @@ final object com.tezov.tuucho.core.domain.business._system.koin/Constant { // co
         final fun <get-koinRootScopeQualifier>(): org.koin.core.qualifier/StringQualifier // com.tezov.tuucho.core.domain.business._system.koin/Constant.koinRootScopeQualifier.<get-koinRootScopeQualifier>|<get-koinRootScopeQualifier>(){}[0]
 }
 
-final object com.tezov.tuucho.core.domain.business.di/KoinContext { // com.tezov.tuucho.core.domain.business.di/KoinContext|null[0]
-    final val koin // com.tezov.tuucho.core.domain.business.di/KoinContext.koin|{}koin[0]
-        final fun <get-koin>(): org.koin.core/Koin // com.tezov.tuucho.core.domain.business.di/KoinContext.koin.<get-koin>|<get-koin>(){}[0]
+final object com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext { // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext|null[0]
+    final val koin // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koin|{}koin[0]
+        final fun <get-koin>(): org.koin.core/Koin // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koin.<get-koin>|<get-koin>(){}[0]
 
-    final var koinApplication // com.tezov.tuucho.core.domain.business.di/KoinContext.koinApplication|{}koinApplication[0]
-        final fun <get-koinApplication>(): org.koin.core/KoinApplication // com.tezov.tuucho.core.domain.business.di/KoinContext.koinApplication.<get-koinApplication>|<get-koinApplication>(){}[0]
-        final fun <set-koinApplication>(org.koin.core/KoinApplication) // com.tezov.tuucho.core.domain.business.di/KoinContext.koinApplication.<set-koinApplication>|<set-koinApplication>(org.koin.core.KoinApplication){}[0]
+    final var koinApplication // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koinApplication|{}koinApplication[0]
+        final fun <get-koinApplication>(): org.koin.core/KoinApplication // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koinApplication.<get-koinApplication>|<get-koinApplication>(){}[0]
+        final fun <set-koinApplication>(org.koin.core/KoinApplication) // com.tezov.tuucho.core.domain.business.di/KoinIsolatedContext.koinApplication.<set-koinApplication>|<set-koinApplication>(org.koin.core.KoinApplication){}[0]
 }
 
 final object com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules { // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules|null[0]
