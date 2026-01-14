@@ -5,8 +5,8 @@ plugins {
 dependencies {
     implementation(project(":app:shared"))
     implementation(libs.tuucho.android)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.foundation)
+    implementation(libs.compose.ui.android)
+    implementation(libs.compose.foundation.android)
     implementation(libs.compose.activity)
     implementation(libs.koin.core)
 }

@@ -32,6 +32,14 @@ internal fun Project.name() = version("name")
 internal fun Project.namespaceBase() = "${version("domain")}.${version("name")}"
 
 internal fun Project.namespace() = "${namespaceBase()}${path
+    .replace(":", ".")
+    .split("-")
+    .mapIndexed { index, part ->
+        if (index == 0) part
+        else part.replaceFirstChar { it.uppercaseChar() }
+    }.joinToString("")}"
+
+internal fun Project.artifactId() = "${version("name")}${path
     .replace(":", ".")}"
 
 internal fun Project.buildType() = BuildConfig.BUILD_TYPE

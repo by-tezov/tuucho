@@ -5,7 +5,7 @@
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <com.tezov:ui_component.stable>
+// Library unique name: <com.tezov:ui-component.stable>
 abstract interface com.tezov.tuucho.uiComponent.stable.presentation.view/ButtonViewProtocol : com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProtocol { // com.tezov.tuucho.uiComponent.stable.presentation.view/ButtonViewProtocol|null[0]
     abstract fun ComposeComponent(kotlin/Function0<kotlin/Unit>?, kotlin/Function3<androidx.compose.foundation.layout/RowScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.uiComponent.stable.presentation.view/ButtonViewProtocol.ComposeComponent|ComposeComponent(kotlin.Function0<kotlin.Unit>?;kotlin.Function3<androidx.compose.foundation.layout.RowScope,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     abstract fun ComposePlaceHolder(androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.uiComponent.stable.presentation.view/ButtonViewProtocol.ComposePlaceHolder|ComposePlaceHolder(androidx.compose.runtime.Composer?;kotlin.Int){}[0]

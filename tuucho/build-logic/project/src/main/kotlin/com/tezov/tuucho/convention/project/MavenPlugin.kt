@@ -28,7 +28,7 @@ class MavenPlugin : Plugin<Project> {
 
     private fun Project.configureMaven() {
         val versionName = "${versionName()}${if (isSnapshot()) "-SNAPSHOT" else ""}"
-        val artifactId = namespace().removePrefix("${domain()}.")
+        val artifactId = artifactId()
 
         group = domain()
         version = versionName

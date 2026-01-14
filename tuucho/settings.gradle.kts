@@ -30,7 +30,8 @@ listOf(
     "core-modules/data",
     "core-modules/domain",
     "core-modules/presentation",
-    "ui-component-modules/stable"
+    "ui-component-modules/stable",
+    "core-modules/umbrella",
 ).forEach { basePath ->
     file(basePath).listFiles()
         ?.filter {
@@ -48,7 +49,7 @@ listOf(
                 else -> segments[0]
             }
             val id = if (segments.size > 1) "$firstSegment/${segments[1]}" else firstSegment
-            val name = id.replace('/', '.').replace('-', '_')
+            val name = id.replace('/', '.')
             include(":$name")
             project(":$name").apply {
                 this.name = name
