@@ -1,5 +1,6 @@
 ## In progress
 
+- root function inside ui-component + do a sample module to add one ui special Label
 - Miss option and style in shadower, so contextual won't work
 - Backhandler deprecated TODO
 - update doc

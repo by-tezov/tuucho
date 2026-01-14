@@ -2,12 +2,12 @@ package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema.Key
 import org.koin.core.module.dsl.singleOf
 
 internal object MaterialBreakerModule {
-    fun invoke() = module(ModuleGroupData.Breaker) {
+    fun invoke() = module(ModuleContextData.Breaker) {
         singleOf(::MaterialBreaker)
 
         associate<MaterialBreaker.Association.Breakable> {

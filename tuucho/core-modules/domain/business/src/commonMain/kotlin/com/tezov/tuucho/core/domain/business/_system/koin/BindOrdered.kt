@@ -23,7 +23,8 @@ object BindOrdered {
             .distinctBy { it.beanDefinition }
             .count { it.beanDefinition.secondaryTypes.contains(clazz) }
         bind(clazz)
-        val orderedQualifier = named("${clazz.qualifiedName}#ordered#$index")
+        val typeName = clazz.qualifiedName ?: error("class qualified name is null")
+        val orderedQualifier = named("$typeName#ordered#$index")
         val mapping = indexKey(clazz, orderedQualifier, factory.beanDefinition.scopeQualifier)
         module.mappings[mapping] = factory
         return this
@@ -41,29 +42,29 @@ object BindOrdered {
     fun <T : Any> Scope.getAllOrdered(
         clazz: KClass<T>
     ): List<T> = with(getKoin()) {
-        val typeName = clazz.qualifiedName ?: error("class qualifier name is null")
+        val typeName = clazz.qualifiedName ?: error("class qualified name is null")
+        val instanceContext = ResolutionContext(logger, scopeRegistry.rootScope, clazz)
+        instanceContext.scopeArchetype = scopeRegistry.rootScope.scopeArchetype
         instanceRegistry.instances.entries
-            .filter { (key, _) ->
-                // TODO scope protection and linked scope
-                key.contains("$typeName#ordered#")
-            }.mapNotNull { (key, factory) ->
+            .filter { (key, factory) ->
+                key.contains("$typeName#ordered#") &&
+                    (
+                        (factory.beanDefinition.scopeQualifier == instanceContext.scope.scopeQualifier ||
+                            factory.beanDefinition.scopeQualifier == instanceContext.scope.scopeArchetype
+                        ) &&
+                            (factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))
+                    )
+            }.distinct()
+            .mapNotNull { (key, factory) ->
                 val index = key
                     .substringAfter("#ordered#", "")
                     .substringBefore(':')
                     .toIntOrNull() ?: return@mapNotNull null
                 index to factory
             }.sortedBy { it.first }
-            .map { (_, factory) ->
-                val beanDefinition = factory.beanDefinition
-                val context = ResolutionContext(
-                    logger = logger,
-                    scope = this@getAllOrdered,
-                    clazz = beanDefinition.primaryType,
-                    qualifier = beanDefinition.qualifier,
-                    parameters = null
-                )
+            .mapNotNull {
                 @Suppress("UNCHECKED_CAST")
-                factory.get(context) as T
-            }.toList()
+                it.second.get(instanceContext) as? T
+            } // TODO linked scope, can't do because it is internal
     }
 }

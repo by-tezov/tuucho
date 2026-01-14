@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngine
 import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngineProtocol
@@ -11,7 +11,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 
 internal object TuuchoEngineModule {
-    fun invoke() = module(ModuleGroupPresentation.Main) {
+    fun invoke() = module(ModuleContextPresentation.Main) {
         factoryOf(::RendererIdGenerator)
         factoryOf(::ScreenFactory) bind ScreenFactoryProtocol::class
         singleOf(::TuuchoEngine) bind TuuchoEngineProtocol::class

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.uiComponent.stable.di
 
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
-import com.tezov.tuucho.core.presentation.ui.di.ModuleGroupPresentation
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.presentation.ui.di.ModuleContextPresentation
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.uiComponent.stable.presentation.view.ButtonViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.FieldViewFactory
@@ -12,7 +12,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
 internal object ViewModule {
-    fun invoke() = module(ModuleGroupPresentation.View) {
+    fun invoke() = module(ModuleContextPresentation.View) {
         factoryOf(::SpacerViewFactory) bind ViewFactoryProtocol::class
         factoryOf(::LayoutLinearViewFactory) bind ViewFactoryProtocol::class
         factoryOf(::LabelViewFactory) bind ViewFactoryProtocol::class

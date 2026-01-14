@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material
 
-import com.tezov.tuucho.core.data.repository.di.ModuleGroupData.Rectifier.ScopeContext
+import com.tezov.tuucho.core.data.repository.di.ModuleContextData.Rectifier.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated

@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRem
 import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ContextualShadowerMaterialSource
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ShadowerMaterialSourceProtocol
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
@@ -22,7 +22,7 @@ internal object MaterialRepositoryModule {
         val SHADOWER_SOURCE get() = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
     }
 
-    fun invoke() = module(ModuleGroupData.Main) {
+    fun invoke() = module(ModuleContextData.Main) {
         localSource()
         remoteSource()
         compositeSource()

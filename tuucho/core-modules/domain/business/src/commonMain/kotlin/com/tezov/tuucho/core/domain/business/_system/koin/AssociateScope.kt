@@ -31,6 +31,7 @@ class AssociateScopeDSL(
         }
     }
 
+    // Single
     @KoinDslMarker
     inline fun <reified T> scoped(
         qualifier: Qualifier? = null,
@@ -67,6 +68,7 @@ class AssociateScopeDSL(
         }
     }
 
+    // Factory
     @KoinDslMarker
     inline fun <reified T> factory(
         qualifier: Qualifier? = null,
@@ -103,6 +105,7 @@ class AssociateScopeDSL(
         }
     }
 
+    // Misc.
     @KoinDslMarker
     fun factory(
         value: String

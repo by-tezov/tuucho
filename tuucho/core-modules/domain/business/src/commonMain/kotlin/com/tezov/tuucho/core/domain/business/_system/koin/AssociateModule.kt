@@ -31,6 +31,7 @@ class AssociateModule(
         }
     }
 
+    // Single
     @KoinDslMarker
     inline fun <reified T> single(
         qualifier: Qualifier? = null,
@@ -68,6 +69,7 @@ class AssociateModule(
         }
     }
 
+    // Factory
     @KoinDslMarker
     inline fun <reified T> factory(
         qualifier: Qualifier? = null,
@@ -104,6 +106,7 @@ class AssociateModule(
         }
     }
 
+    // Misc.
     @KoinDslMarker
     fun factory(
         value: String

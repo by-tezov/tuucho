@@ -7,20 +7,20 @@ import com.tezov.tuucho.core.data.repository.di.rectifier.MaterialRectifierScope
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.di.rectifier.ResponseRectifierScope
 import com.tezov.tuucho.core.data.repository.repository.SystemInformation
-import com.tezov.tuucho.core.domain.business.di.Koin
-import com.tezov.tuucho.core.domain.business.di.Koin.Companion.module
+import com.tezov.tuucho.core.domain.business.di.KoinMass
+import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
 @OptIn(TuuchoInternalApi::class)
-internal expect fun SystemCoreDataModules.platformInvoke(): List<Koin>
+internal expect fun SystemCoreDataModules.platformInvoke(): List<KoinMass>
 
 @TuuchoInternalApi
 object SystemCoreDataModules {
-    fun invoke(): List<Koin> = listOf(
-        module(ModuleGroupData.Main) {
+    fun invoke(): List<KoinMass> = listOf(
+        module(ModuleContextData.Main) {
             factoryOf(::SystemInformation) bind SystemInformationProtocol::class
         },
         MiscModule.invoke(),

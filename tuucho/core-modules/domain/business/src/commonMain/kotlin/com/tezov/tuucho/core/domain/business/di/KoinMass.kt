@@ -10,33 +10,33 @@ import org.koin.dsl.ScopeDSL
 typealias ModuleDeclaration = Module.() -> Unit
 typealias ScopeDeclaration = ScopeDSL.() -> Unit
 
-sealed class Koin {
-    interface ModuleGroup
+sealed class KoinMass {
+    interface ModuleContext
 
     interface ScopeContext : Qualifier {
-        val group: ModuleGroup
+        val group: ModuleContext
         override val value: QualifierValue
             get() = TypeQualifier(this::class).value
     }
 
-    abstract val group: ModuleGroup
+    abstract val group: ModuleContext
 
     data class Module(
-        override val group: ModuleGroup,
+        override val group: ModuleContext,
         val declaration: ModuleDeclaration
-    ) : Koin()
+    ) : KoinMass()
 
     data class Scope(
         val scopeContext: ScopeContext,
         val declaration: ScopeDeclaration
-    ) : Koin() {
+    ) : KoinMass() {
         override val group get() = scopeContext.group
     }
 
     companion object {
         @KoinDslMarker
         fun module(
-            group: ModuleGroup,
+            group: ModuleContext,
             declaration: ModuleDeclaration
         ) = Module(group, declaration)
 

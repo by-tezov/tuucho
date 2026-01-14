@@ -12,7 +12,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-class ExtensionKoinTest {
+class BindOrderedTest {
     interface SimpleProtocol
 
     class SimpleA : SimpleProtocol
@@ -28,113 +28,36 @@ class ExtensionKoinTest {
     class Another : AnotherProtocol
 
     @Test
-    fun `resolve all - single module`() {
+    fun `getAllOrdered - no ordered bindings returns empty list`() {
         val koin = koinApplication {
             modules(
                 module {
                     single { SimpleA() } bind SimpleProtocol::class
-                    single { SimpleB() } bind SimpleProtocol::class
-                    single { SimpleC() } bind SimpleProtocol::class
                 }
             )
         }.koin
 
-        val result = koin.getAll<SimpleProtocol>()
-        val names = result.map { it::class.simpleName }
-
-        assertEquals(3, result.size)
-        assertEquals(setOf("SimpleA", "SimpleB", "SimpleC"), names.toSet())
+        val result = koin.getAllOrdered<SimpleProtocol>()
+        assertEquals(emptyList(), result)
     }
 
     @Test
-    fun `resolve all - multiple modules`() {
+    fun `getAllOrdered - only one ordered bindings`() {
         val koin = koinApplication {
             modules(
                 module {
-                    single { SimpleA() } bind SimpleProtocol::class
-                },
-                module {
-                    single { SimpleB() } bind SimpleProtocol::class
-                },
-                module {
-                    single { SimpleC() } bind SimpleProtocol::class
+                    single { SimpleA() } bindOrdered SimpleProtocol::class
                 }
             )
         }.koin
 
-        val result = koin.getAll<SimpleProtocol>()
-        val names = result.map { it::class.simpleName }
+        val result = koin.getAllOrdered<SimpleProtocol>()
 
-        assertEquals(3, result.size)
-        assertEquals(setOf("SimpleA", "SimpleB", "SimpleC"), names.toSet())
+        assertEquals(listOf("SimpleA"), result.map { it::class.simpleName })
     }
 
     @Test
-    fun `resolve all - mix of single and factory`() {
-        val koin = koinApplication {
-            modules(
-                module {
-                    single { SimpleA() } bind SimpleProtocol::class
-                    factory { SimpleB() } bind SimpleProtocol::class
-                    single { SimpleC() } bind SimpleProtocol::class
-                }
-            )
-        }.koin
-        val result1 = koin.getAll<SimpleProtocol>()
-        val names1 = result1.map { it::class.simpleName }
-        val result2 = koin.getAll<SimpleProtocol>()
-
-        assertEquals(3, result1.size)
-        assertEquals(setOf("SimpleA", "SimpleB", "SimpleC"), names1.toSet())
-
-        val factoryInstancesDiffer = result1.zip(result2).any { (a, b) -> a !== b }
-        assertEquals(true, factoryInstancesDiffer)
-    }
-
-    @Test
-    fun `resolve all - multiple types`() {
-        val koin = koinApplication {
-            modules(
-                module {
-                    single { SimpleA() } bind SimpleProtocol::class
-                    single { SimpleB() } bind SimpleProtocol::class
-                    single { Another() } bind AnotherProtocol::class
-                }
-            )
-        }.koin
-
-        val resultSimple = koin.getAll<SimpleProtocol>()
-        val resultAnother = koin.getAll<AnotherProtocol>()
-
-        assertEquals(2, resultSimple.size)
-        assertEquals(1, resultAnother.size)
-    }
-
-    @Test
-    fun `getAll is not ordered`() {
-        val koin = koinApplication {
-            modules(
-                module {
-                    single { SimpleC() } bind SimpleProtocol::class
-                    single { SimpleD() } bind SimpleProtocol::class
-                    single { SimpleA() } bind SimpleProtocol::class
-                    single { SimpleB() } bind SimpleProtocol::class
-                }
-            )
-        }.koin
-
-        val result = koin.getAll<SimpleProtocol>()
-        val names = result.map { it::class.simpleName }
-
-        assertEquals(setOf("SimpleA", "SimpleB", "SimpleC", "SimpleD"), names.toSet())
-
-        // this is not guaranteed to pass since order is not documented but I keep it to warn me if it fail.
-        assertNotEquals(listOf("SimpleC", "SimpleD", "SimpleA", "SimpleB"), names)
-        assertEquals(listOf("SimpleA", "SimpleB", "SimpleC", "SimpleD"), names)
-    }
-
-    @Test
-    fun `ordered - resolve all - single module - registration order`() {
+    fun `getAllOrdered - single module - registration order`() {
         fun <T> List<T>.permutations(): Sequence<List<T>> = sequence {
             if (size <= 1) {
                 yield(this@permutations)
@@ -174,7 +97,7 @@ class ExtensionKoinTest {
     }
 
     @Test
-    fun `ordered - multiple modules - overwrite previous`() {
+    fun `getAllOrdered - multiple modules - overwrite previous`() {
         val koin = koinApplication {
             modules(
                 module {
@@ -183,8 +106,8 @@ class ExtensionKoinTest {
                 },
                 // Second module will overwrite first ordered declaration, not an issue for me.
                 module {
-                    single { SimpleC() } bindOrdered SimpleProtocol::class
                     single { SimpleD() } bindOrdered SimpleProtocol::class
+                    single { SimpleB() } bindOrdered SimpleProtocol::class
                 }
             )
         }.koin
@@ -193,11 +116,43 @@ class ExtensionKoinTest {
         val names = result.map { it::class.simpleName }
 
         assertEquals(2, result.size)
-        assertEquals(setOf("SimpleC", "SimpleD"), names.toSet())
+        assertEquals(setOf("SimpleD", "SimpleB"), names.toSet())
     }
 
     @Test
-    fun `ordered - mix with normal bind`() {
+    fun `getAllOrdered - multiple modules - overwrite previous - side effect`() {
+        val koin = koinApplication {
+            modules(
+                module {
+                    single { SimpleA() } bindOrdered SimpleProtocol::class
+                    single { SimpleB() } bindOrdered SimpleProtocol::class
+                    single { SimpleC() } bindOrdered SimpleProtocol::class
+                },
+                // Second module will overwrite first ordered declaration, not an issue for me.
+                // but if first module had more then as side effect, all index above from previous module are present
+                module {
+                    single { SimpleD() } bindOrdered SimpleProtocol::class
+                    single { SimpleB() } bindOrdered SimpleProtocol::class
+                }
+            )
+        }.koin
+
+        val result = koin.getAllOrdered<SimpleProtocol>()
+        val names = result.map { it::class.simpleName }
+
+        assertEquals(3, result.size)
+        assertEquals(
+            setOf(
+                "SimpleD",
+                "SimpleB",
+                "SimpleC" // side effect from first module
+            ),
+            names.toSet()
+        )
+    }
+
+    @Test
+    fun `getAllOrdered - mix with normal bind`() {
         val koin = koinApplication {
             modules(
                 module {
@@ -218,7 +173,7 @@ class ExtensionKoinTest {
     }
 
     @Test
-    fun `ordered - multiple types are isolated`() {
+    fun `getAllOrdered - multiple types are isolated`() {
         val koin = koinApplication {
             modules(
                 module {
@@ -237,7 +192,7 @@ class ExtensionKoinTest {
     }
 
     @Test
-    fun `ordered - supports factory definitions`() {
+    fun `getAllOrdered - supports factory definitions`() {
         val koin = koinApplication {
             modules(
                 module {
