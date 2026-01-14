@@ -8,9 +8,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tezov.tuucho.presentation.ui.preview._system.dummyScreenContext
+import com.tezov.tuucho.core.presentation.ui.preview.DummyScreenContext
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.layout.LayoutLinearSchema.Style.Value.Orientation
-import com.tezov.tuucho.uiComponent.stable.presentation.view.createLayoutLinearView
+import com.tezov.tuucho.uiComponent.stable.presentation.view.LayoutLinearViewFactory.Companion.createLayoutLinearView
 
 private data class LayoutLinearPreviewData(
     val backgroundColor: Color? = null,
@@ -168,7 +168,7 @@ fun LayoutLinearPreviewComponent(
     fillMaxWidth: Boolean? = null,
     contents: List<@Composable Any.() -> Unit>,
 ) {
-    val view = createLayoutLinearView(screenContext = dummyScreenContext())
+    val view = createLayoutLinearView(screenContext = DummyScreenContext())
     view.ComposeComponent(
         backgroundColor = backgroundColor,
         orientation = orientation,

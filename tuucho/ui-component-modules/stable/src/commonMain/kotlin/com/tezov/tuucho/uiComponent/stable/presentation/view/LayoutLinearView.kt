@@ -49,20 +49,22 @@ interface LayoutLinearViewProtocol : ViewProtocol {
     fun ComposePlaceHolder()
 }
 
-fun createLayoutLinearView(
-    screenContext: ScreenContextProtocol,
-): LayoutLinearViewProtocol = LayoutLinearView(
-    screenContext = screenContext
-)
-
 class LayoutLinearViewFactory : ViewFactoryProtocol {
+    companion object {
+        fun createLayoutLinearView(
+            screenContext: ScreenContextProtocol,
+        ): LayoutLinearViewProtocol = LayoutLinearView(
+            screenContext = screenContext
+        )
+    }
+
     override fun accept(
         componentObject: JsonObject
     ) = componentObject.subset == LayoutLinearSchema.Component.Value.subset
 
     override suspend fun process(
         screenContext: ScreenContextProtocol,
-    ): LayoutLinearViewProtocol = LayoutLinearView(
+    ): LayoutLinearViewProtocol = createLayoutLinearView(
         screenContext = screenContext,
     )
 }

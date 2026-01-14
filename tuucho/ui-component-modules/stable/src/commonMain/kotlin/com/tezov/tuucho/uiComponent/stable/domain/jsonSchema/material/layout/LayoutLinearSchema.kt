@@ -18,12 +18,6 @@ object LayoutLinearSchema {
         object Key {
             const val items = "items"
         }
-
-        class Scope(
-            argument: SchemaScopeArgument
-        ) : ContentSchema.OpenScope<Scope>(argument) {
-            var items by delegate<JsonArray?>(Key.items)
-        }
     }
 
     object Style {
@@ -39,15 +33,6 @@ object LayoutLinearSchema {
                 const val vertical = "vertical"
                 const val horizontal = "horizontal"
             }
-        }
-
-        class Scope(
-            argument: SchemaScopeArgument
-        ) : StyleSchema.OpenScope<Scope>(argument) {
-            var orientation by delegate<String?>(Key.orientation)
-            var backgroundColor by delegate<JsonObject?>(Key.backgroundColor)
-            var fillMaxSize by delegate<Boolean?>(Key.fillMaxSize)
-            var fillMaxWidth by delegate<Boolean?>(Key.fillMaxWidth)
         }
     }
 }

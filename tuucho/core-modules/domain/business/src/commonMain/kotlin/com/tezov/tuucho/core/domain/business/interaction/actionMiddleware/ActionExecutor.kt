@@ -30,13 +30,14 @@ internal class ActionExecutor(
                     actionObject
                         .withScope(ActionSchema::Scope)
                         .primaries
-                        ?.forEach { jsonElement ->
+                        ?.forEach { primary ->
                             val output = process(
-                                Input.JsonElement(
+                                Input.Action(
                                     route = route,
-                                    action = ActionModelDomain.from(jsonElement.string),
+                                    action = ActionModelDomain.from(primary.string),
                                     lockable = lockable,
-                                    jsonElement = actionObject
+                                    actionObjectOriginal = actionObject,
+                                    jsonElement = jsonElement
                                 )
                             )
                             output?.let { add(it) }
@@ -59,14 +60,14 @@ internal class ActionExecutor(
                 }
             }
 
-            is Input.JsonElement -> {
+            is Input.Action -> {
                 process(this)
             }
         }
     }
 
     private suspend fun process(
-        input: Input.JsonElement
+        input: Input.Action
     ) = with(input) {
         coroutineScopes.action.await {
             val middlewaresToExecute = middlewares

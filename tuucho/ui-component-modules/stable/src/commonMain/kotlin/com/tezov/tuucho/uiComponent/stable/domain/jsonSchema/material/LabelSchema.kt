@@ -16,25 +16,12 @@ object LabelSchema {
         object Key {
             const val value = "value"
         }
-
-        class Scope(
-            argument: SchemaScopeArgument
-        ) : ContentSchema.OpenScope<Scope>(argument) {
-            var value by delegate<JsonObject?>(Key.value)
-        }
     }
 
     object Style {
         object Key {
             const val fontColor = "font-color"
             const val fontSize = "font-size"
-        }
-
-        class Scope(
-            argument: SchemaScopeArgument
-        ) : StyleSchema.OpenScope<Scope>(argument) {
-            var fontColor by delegate<JsonObject?>(Key.fontColor)
-            var fontSize by delegate<JsonObject?>(Key.fontSize)
         }
     }
 }

@@ -42,17 +42,16 @@ class ProcessActionUseCaseTest {
     }
 
     @Test
-    fun `invoke executes executor through useCase scope for JsonElement input`() = coroutineTestScope.run {
+    fun `invoke executes executor through useCase scope for Action input`() = coroutineTestScope.run {
         val routeBack = NavigationRoute.Back
         val lockableEmpty = InteractionLockable.Empty
         val actionModel = ActionModelDomain.from("cmd://auth/target")
-        val jsonElementValue = JsonNull
 
-        val input = ProcessActionUseCase.Input.JsonElement(
+        val input = ProcessActionUseCase.Input.Action(
             route = routeBack,
             action = actionModel,
             lockable = lockableEmpty,
-            jsonElement = jsonElementValue
+            jsonElement = JsonNull
         )
 
         val elementOutput = ProcessActionUseCase.Output.Element(
@@ -80,11 +79,10 @@ class ProcessActionUseCaseTest {
     fun `invoke executes executor through useCase scope for ActionObject input`() = coroutineTestScope.run {
         val routeUrl = NavigationRoute.Url(id = "id", value = "url")
         val lockableEmpty = InteractionLockable.Empty
-        val jsonObjectValue = JsonObject(emptyMap())
 
         val input = ProcessActionUseCase.Input.ActionObject(
             route = routeUrl,
-            actionObject = jsonObjectValue,
+            actionObject = JsonObject(emptyMap()),
             lockable = lockableEmpty
         )
 

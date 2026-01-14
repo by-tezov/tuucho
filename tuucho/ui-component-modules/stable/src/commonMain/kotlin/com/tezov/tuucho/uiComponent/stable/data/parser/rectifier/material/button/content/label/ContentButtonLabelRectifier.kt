@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.A
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
@@ -52,9 +53,9 @@ class ContentButtonLabelRectifier(
         element: JsonElement,
     ): JsonElement? = element
         .find(path)
-        .withScope(ButtonSchema.Content::Scope)
-        .takeIf { it.subset == null }
-        ?.apply { subset = LabelSchema.Component.Value.subset }
+        .withScope(SubsetSchema::Scope)
+        .takeIf { it.self == null }
+        ?.apply { self = LabelSchema.Component.Value.subset }
         ?.collect()
 
     override fun afterAlterObject(

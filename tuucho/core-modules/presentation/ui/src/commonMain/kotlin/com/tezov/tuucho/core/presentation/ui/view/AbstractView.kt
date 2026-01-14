@@ -38,8 +38,11 @@ abstract class AbstractView(
             process(componentObject)
             setReadyStatusInvalidateInvoker(value = { readyStatusInvalidated.store(true) })
         }
+        initialized()
         updateIfNeeded()
     }
+
+    open suspend fun initialized() {}
 
     abstract suspend fun createComponentProjector(): ComponentProjectorProtocols
 

@@ -46,7 +46,7 @@ internal fun TuuchoBackHandler(
                 )
                 useCaseExecutor.await(
                     useCase = actionHandler,
-                    input = ProcessActionUseCase.Input.JsonElement(
+                    input = ProcessActionUseCase.Input.Action(
                         route = NavigationRoute.Current,
                         action = ActionModelDomain.from(
                             command = NavigateAction.LocalDestination.command,

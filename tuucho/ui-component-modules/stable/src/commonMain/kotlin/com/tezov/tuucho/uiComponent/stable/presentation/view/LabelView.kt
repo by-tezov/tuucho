@@ -41,13 +41,15 @@ interface LabelViewProtocol : ViewProtocol {
     fun ComposePlaceHolder()
 }
 
-fun createLabelView(
-    screenContext: ScreenContextProtocol,
-): LabelViewProtocol = LabelView(
-    screenContext = screenContext
-)
-
 class LabelViewFactory : ViewFactoryProtocol {
+    companion object {
+        fun createLabelView(
+            screenContext: ScreenContextProtocol,
+        ): LabelViewProtocol = LabelView(
+            screenContext = screenContext
+        )
+    }
+
     override fun accept(
         componentObject: JsonObject
     ) = componentObject.subset == Component.Value.subset

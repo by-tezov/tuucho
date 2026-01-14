@@ -39,13 +39,15 @@ interface SpacerViewProtocol : ViewProtocol {
     fun ComposePlaceHolder()
 }
 
-fun createSpacerView(
-    screenContext: ScreenContextProtocol,
-): SpacerViewProtocol = SpacerView(
-    screenContext = screenContext
-)
-
 class SpacerViewFactory : ViewFactoryProtocol {
+    companion object {
+        fun createSpacerView(
+            screenContext: ScreenContextProtocol,
+        ): SpacerViewProtocol = SpacerView(
+            screenContext = screenContext
+        )
+    }
+
     override fun accept(
         componentObject: JsonObject
     ) = componentObject.subset == Component.Value.subset

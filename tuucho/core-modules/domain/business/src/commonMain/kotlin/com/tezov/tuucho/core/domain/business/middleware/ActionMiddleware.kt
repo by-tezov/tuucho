@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 interface ActionMiddleware : MiddlewareProtocol<Context, ProcessActionUseCase.Output> {
     data class Context(
         val lockable: InteractionLockable,
-        val input: ProcessActionUseCase.Input.JsonElement
+        val input: ProcessActionUseCase.Input.Action
     )
 
     object Priority {

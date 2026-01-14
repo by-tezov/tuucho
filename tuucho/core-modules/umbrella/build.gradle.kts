@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             api(project(":core.data.repository"))
+            api(project(":core.presentation.ui"))
         }
         if (isMacOs) {
             iosMain.dependencies {

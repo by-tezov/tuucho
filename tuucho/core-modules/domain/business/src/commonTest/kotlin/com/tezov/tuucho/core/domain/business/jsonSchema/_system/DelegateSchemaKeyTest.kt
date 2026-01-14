@@ -172,6 +172,42 @@ class DelegateSchemaKeyTest {
     }
 
     @Test
+    fun `get returns int when type is Int`() {
+        val jsonValue = JsonPrimitive(3)
+        every { mapOperator.read("value") } returns jsonValue
+        val container = TestContainer(mapOperator, Int::class)
+        val resultValue = container.value as Int
+        assertEquals(3, resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `set writes int when type is Int`() {
+        every { mapOperator.write("value", JsonPrimitive(5)) } returns Unit
+        val container = TestContainer(mapOperator, Int::class)
+        container.value = 5
+        verify { mapOperator.write("value", JsonPrimitive(5)) }
+    }
+
+    @Test
+    fun `get returns float when type is Float`() {
+        val jsonValue = JsonPrimitive(3.2f)
+        every { mapOperator.read("value") } returns jsonValue
+        val container = TestContainer(mapOperator, Float::class)
+        val resultValue = container.value as Float
+        assertEquals(3.2f, resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `set writes float when type is Float`() {
+        every { mapOperator.write("value", JsonPrimitive(5.9f)) } returns Unit
+        val container = TestContainer(mapOperator, Float::class)
+        container.value = 5.9f
+        verify { mapOperator.write("value", JsonPrimitive(5.9f)) }
+    }
+
+    @Test
     fun `get returns null when map operator returns null`() {
         every { mapOperator.read("value") } returns null
         val container = TestContainer(mapOperator, String::class)
@@ -192,7 +228,7 @@ class DelegateSchemaKeyTest {
     fun `get throws when type is unknown`() {
         val jsonValue = JsonPrimitive("ignored")
         every { mapOperator.read("value") } returns jsonValue
-        val container = TestContainer(mapOperator, Int::class)
+        val container = TestContainer(mapOperator, Any::class)
         assertFailsWith<DomainException.Default> {
             container.value
         }
@@ -201,7 +237,7 @@ class DelegateSchemaKeyTest {
 
     @Test
     fun `set throws when type is unknown`() {
-        val container = TestContainer(mapOperator, Int::class)
+        val container = TestContainer(mapOperator, Any::class)
         assertFailsWith<DomainException.Default> {
             container.value = 7
         }

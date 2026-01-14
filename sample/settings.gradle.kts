@@ -37,3 +37,4 @@ if (isMacOs) {
     include(":app:ios")
 }
 include(":app:shared")
+include(":app:uiExtension")

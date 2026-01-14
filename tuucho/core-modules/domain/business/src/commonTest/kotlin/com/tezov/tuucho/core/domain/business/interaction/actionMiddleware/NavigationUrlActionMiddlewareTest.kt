@@ -68,7 +68,7 @@ class NavigationUrlActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = NavigationRoute.Back,
                 action = action,
                 lockable = InteractionLockable.Empty
@@ -97,7 +97,7 @@ class NavigationUrlActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = NavigationRoute.Back,
                 action = action,
                 lockable = InteractionLockable.Empty
@@ -121,7 +121,7 @@ class NavigationUrlActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.JsonElement(
+            input = ProcessActionUseCase.Input.Action(
                 route = NavigationRoute.Current,
                 action = action,
                 lockable = InteractionLockable.Empty

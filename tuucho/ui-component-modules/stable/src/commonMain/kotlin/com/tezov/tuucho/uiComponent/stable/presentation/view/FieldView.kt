@@ -57,20 +57,22 @@ interface FieldViewProtocol : ViewProtocol {
     fun ComposePlaceHolder()
 }
 
-fun createFieldView(
-    screenContext: ScreenContextProtocol,
-): FieldViewProtocol = FieldView(
-    screenContext = screenContext
-)
-
 class FieldViewFactory : ViewFactoryProtocol {
+    companion object {
+        fun createFieldView(
+            screenContext: ScreenContextProtocol,
+        ): FieldViewProtocol = FieldView(
+            screenContext = screenContext
+        )
+    }
+
     override fun accept(
         componentObject: JsonObject
     ) = componentObject.subset == Component.Value.subset
 
     override suspend fun process(
         screenContext: ScreenContextProtocol,
-    ): FieldViewProtocol = FieldView(
+    ): FieldViewProtocol = createFieldView(
         screenContext = screenContext,
     )
 }
