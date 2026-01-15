@@ -3,7 +3,7 @@
 domain = "com.tezov"
 name = "tuucho"
 versionCode = "1"
-versionName = "0.0.1-alpha24_2.3.0"
+versionName = "0.0.1-alpha25_2.3.0"
 isSnapshot = "false"
 javaVersion = "17"
 minSdk = "24"
@@ -35,7 +35,7 @@ compose-material3 = "1.10.0-alpha05"
 #lib - android
 compose-activity = "1.12.2"
 compose-backhandler= "1.10.0"
-compose-ui-tooling = "1.10.0"
+compose-ui-tooling = "1.10.1"
 datastore-preferences = "1.2.0"
 
 #test
@@ -49,13 +49,10 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 maven = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "maven-plugin" }
 ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
-#compose - android
-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
 #lib - platform
 kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
 sql-delight-runtime = { group = "app.cash.sqldelight", name = "runtime", version.ref = "sql-delight" }
 sql-delight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sql-delight" }
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
@@ -68,7 +65,6 @@ compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", v
 compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "compose" }
 compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose" }
 compose-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "compose-material3" }
-
 #lib - android
 sql-delight-driver-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sql-delight" }
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
