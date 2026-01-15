@@ -1136,6 +1136,22 @@ public final class com/tezov/tuucho/core/data/repository/parser/shadower/Materia
 	public final fun process (Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/data/repository/parser/shadower/_system/JsonObjectConsumerProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower$Association {
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower$Association$Matcher : com/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower$Association {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower$Association$Matcher;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower$Association$Processor : com/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower$Association {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/shadower/OptionShadower$Association$Processor;
+}
+
 public final class com/tezov/tuucho/core/data/repository/parser/shadower/StateShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
 	public fun <init> ()V
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
@@ -1150,6 +1166,22 @@ public final class com/tezov/tuucho/core/data/repository/parser/shadower/StateSh
 
 public final class com/tezov/tuucho/core/data/repository/parser/shadower/StateShadower$Association$Processor : com/tezov/tuucho/core/data/repository/parser/shadower/StateShadower$Association {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/shadower/StateShadower$Association$Processor;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower$Association {
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower$Association$Matcher : com/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower$Association {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower$Association$Matcher;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower$Association$Processor : com/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower$Association {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/shadower/StyleShadower$Association$Processor;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/shadower/TextShadower : com/tezov/tuucho/core/data/repository/parser/shadower/AbstractShadower {
