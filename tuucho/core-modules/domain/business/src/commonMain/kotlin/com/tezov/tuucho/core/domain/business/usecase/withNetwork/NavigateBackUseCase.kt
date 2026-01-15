@@ -57,6 +57,11 @@ class NavigateBackUseCase(
             navigationStackScreenRepository.backward(
                 routes = navigationStackRouteRepository.routes(),
             )
+            if(navigationStackRouteRepository.currentRoute() == null) {
+
+                throw DomainException.Default("TODO Finish activity or application") //TODO
+
+            }
         }
     }
 

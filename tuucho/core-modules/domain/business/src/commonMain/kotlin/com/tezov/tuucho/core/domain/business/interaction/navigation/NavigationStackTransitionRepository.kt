@@ -150,12 +150,14 @@ internal class NavigationStackTransitionRepository(
                     }
                     StackTransition.Event.Idle(
                         routes = buildList {
-                            val lastItem = stack.last()
-                            add(lastItem.route)
-                            if (!lastItem.isBackgroundSolid()) {
-                                for (item in stack.dropLast(1).asReversed()) {
-                                    add(item.route)
-                                    if (item.isBackgroundSolid()) break
+                            val lastItem = stack.lastOrNull()
+                            lastItem?.let {
+                                add(lastItem.route)
+                                if (!lastItem.isBackgroundSolid()) {
+                                    for (item in stack.dropLast(1).asReversed()) {
+                                        add(item.route)
+                                        if (item.isBackgroundSolid()) break
+                                    }
                                 }
                             }
                         }
