@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.ActionExecutor
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormSendUrlActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormUpdateActionMiddleware

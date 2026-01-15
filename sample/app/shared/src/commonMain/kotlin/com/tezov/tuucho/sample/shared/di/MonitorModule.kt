@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.di
 
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.di.ModuleContextDomain
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor
 import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor

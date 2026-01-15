@@ -3,7 +3,7 @@ package com.tezov.tuucho.sample.shared.di
 import com.tezov.tuucho.core.data.repository.di.ModuleContextData
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.sample.shared.interceptor.FailSafePageHttpInterceptor
 import com.tezov.tuucho.sample.shared.interceptor.HeaderHttpAuthorizationInterceptor
 import com.tezov.tuucho.sample.shared.interceptor.HeadersHttpInterceptor

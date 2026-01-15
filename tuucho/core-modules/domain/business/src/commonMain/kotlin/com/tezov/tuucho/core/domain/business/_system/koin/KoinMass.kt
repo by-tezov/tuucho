@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.di
+package com.tezov.tuucho.core.domain.business._system.koin
 
 import org.koin.core.module.KoinDslMarker
 import org.koin.core.module.Module

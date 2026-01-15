@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
 import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
 import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpCallValidator

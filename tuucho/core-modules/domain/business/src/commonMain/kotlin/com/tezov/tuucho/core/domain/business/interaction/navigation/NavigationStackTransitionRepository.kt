@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema

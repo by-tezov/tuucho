@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.Form
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormFailureReasonTextAssemblerMatcher
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.scope
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 

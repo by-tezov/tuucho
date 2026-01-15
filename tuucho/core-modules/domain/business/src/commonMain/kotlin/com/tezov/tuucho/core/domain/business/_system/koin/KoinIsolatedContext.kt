@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.di
+package com.tezov.tuucho.core.domain.business._system.koin
 
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import org.koin.core.Koin

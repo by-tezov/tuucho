@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.domain.business.di.KoinMass
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 
 sealed class ModuleContextData : KoinMass.ModuleContext {
     object Main : ModuleContextData()

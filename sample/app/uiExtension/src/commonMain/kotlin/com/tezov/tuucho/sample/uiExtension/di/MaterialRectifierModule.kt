@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.color.Col
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.scope
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import com.tezov.tuucho.sample.uiExtension.data.rectifier.material.label.content.ActionCustomLabelRectifierMatcher
 import com.tezov.tuucho.sample.uiExtension.data.rectifier.material.label.content.ContentCustomLabelTextRectifierMatcher
 import com.tezov.tuucho.sample.uiExtension.data.rectifier.material.label.style.StyleCustomLabelColorRectifierMatcher

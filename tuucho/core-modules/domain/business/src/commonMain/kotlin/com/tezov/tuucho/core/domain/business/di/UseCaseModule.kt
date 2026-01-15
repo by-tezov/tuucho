@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase

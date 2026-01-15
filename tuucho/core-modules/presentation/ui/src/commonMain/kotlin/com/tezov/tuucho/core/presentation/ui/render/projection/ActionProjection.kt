@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol

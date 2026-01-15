@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.form.FormValidatorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.scope
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.action.ActionButtonRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.label.ContentButtonLabelRectifier
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.content.ContentFormFieldTextErrorRectifier

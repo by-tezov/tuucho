@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.shadower
 
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
-import com.tezov.tuucho.core.domain.business.di.KoinIsolatedContext
+import com.tezov.tuucho.core.domain.business._system.koin.KoinIsolatedContext
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema

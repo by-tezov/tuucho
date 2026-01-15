@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.id
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsAnyTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath

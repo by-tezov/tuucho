@@ -2,7 +2,7 @@
 
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinScopeComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find

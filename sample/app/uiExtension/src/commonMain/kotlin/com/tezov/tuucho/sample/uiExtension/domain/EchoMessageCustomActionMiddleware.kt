@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.uiExtension.domain
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema

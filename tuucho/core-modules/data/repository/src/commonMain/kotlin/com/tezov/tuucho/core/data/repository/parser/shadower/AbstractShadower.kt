@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.ShadowerMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.ShadowerProtocol
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find

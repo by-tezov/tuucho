@@ -1,6 +1,6 @@
 package com.tezov.tuucho.uiComponent.stable.di
 
-import com.tezov.tuucho.core.domain.business.di.KoinMass
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 
 object SystemUiModules {
     fun invoke(): List<KoinMass> = listOf(
