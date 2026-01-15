@@ -11,15 +11,20 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 @OpenForTest
 class NavigateBackUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
@@ -27,6 +32,7 @@ class NavigateBackUseCase(
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
+    private val navigateFinish: NavigateFinishUseCase,
 ) : UseCaseProtocol.Async<Unit, Unit>,
     TuuchoKoinComponent {
     override suspend fun invoke(
@@ -58,9 +64,10 @@ class NavigateBackUseCase(
                 routes = navigationStackRouteRepository.routes(),
             )
             if(navigationStackRouteRepository.currentRoute() == null) {
-
-                throw DomainException.Default("TODO Finish activity or application") //TODO
-
+                useCaseExecutor.await(
+                    useCase = navigateFinish,
+                    input = Unit
+                )
             }
         }
     }

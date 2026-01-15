@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
 import com.tezov.tuucho.sample.di.ApplicationModule
 import com.tezov.tuucho.sample.shared.AppScreen
+import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigationFinishPublisher
 
 class MainActivity : ComponentActivity() {
 
@@ -22,9 +23,15 @@ class MainActivity : ComponentActivity() {
                     .fillMaxSize()
                     .windowInsetsPadding(WindowInsets.systemBars)
             ) {
-                AppScreen(listOf(ApplicationModule.invoke(applicationContext)))
+                AppScreen(
+                    applicationModules = listOf(ApplicationModule.invoke(applicationContext)),
+                    koinExtension = {
+                        koin.get<NavigationFinishPublisher>().onFinish {
+                            this@MainActivity.finish()
+                        }
+                    }
+                )
             }
         }
     }
-
 }

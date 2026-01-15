@@ -35,4 +35,6 @@ object NavigationMiddleware {
             val onShadowerException: OnShadowerException?
         )
     }
+
+    fun interface Finish : MiddlewareProtocol<Unit, Unit>
 }
