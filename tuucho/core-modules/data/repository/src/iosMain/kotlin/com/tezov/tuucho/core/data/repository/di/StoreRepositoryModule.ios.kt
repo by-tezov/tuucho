@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule.Name.STORE_REPOSITORY_CONFIG
 import com.tezov.tuucho.core.data.repository.repository.KeyValueStoreRepository
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
 import platform.Foundation.NSUserDefaults
 

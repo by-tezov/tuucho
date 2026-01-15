@@ -1,6 +1,7 @@
 ## In progress
 
-- Backhandler deprecated TODO
+- add test of the new use cases
+
 - update doc
 
 ### Need to fix: 

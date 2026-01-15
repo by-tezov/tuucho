@@ -10,7 +10,8 @@ kotlin {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui)
-            implementation(libs.compose.navigationevent)
+            //implementation(libs.compose.navigationevent)
+            implementation(libs.compose.backhandler)
 
             implementation(libs.koin.core)
         }
