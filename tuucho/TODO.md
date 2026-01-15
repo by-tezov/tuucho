@@ -1,6 +1,5 @@
 ## In progress
 
-- Miss option and style in shadower, so contextual won't work
 - Backhandler deprecated TODO
 - update doc
 
