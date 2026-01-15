@@ -796,6 +796,18 @@ final class com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadow
     final suspend fun process(kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower.process|process(kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol){}[0]
 }
 
+final class com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower : com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower { // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower|null[0]
+    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower.<init>|<init>(){}[0]
+
+    final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
+
+    sealed class Association { // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower.Association|null[0]
+        final object Matcher : com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower.Association // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower.Association.Matcher|null[0]
+
+        final object Processor : com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower.Association // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower.Association.Processor|null[0]
+    }
+}
+
 final class com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower : com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower { // com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower.<init>|<init>(){}[0]
 
@@ -805,6 +817,18 @@ final class com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower 
         final object Matcher : com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower.Association // com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower.Association.Matcher|null[0]
 
         final object Processor : com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower.Association // com.tezov.tuucho.core.data.repository.parser.shadower/StateShadower.Association.Processor|null[0]
+    }
+}
+
+final class com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower : com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower { // com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower|null[0]
+    constructor <init>() // com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower.<init>|<init>(){}[0]
+
+    final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
+
+    sealed class Association { // com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower.Association|null[0]
+        final object Matcher : com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower.Association // com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower.Association.Matcher|null[0]
+
+        final object Processor : com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower.Association // com.tezov.tuucho.core.data.repository.parser.shadower/StyleShadower.Association.Processor|null[0]
     }
 }
 
