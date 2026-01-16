@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRem
 import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ContextualShadowerMaterialSource
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ShadowerMaterialSourceProtocol
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf

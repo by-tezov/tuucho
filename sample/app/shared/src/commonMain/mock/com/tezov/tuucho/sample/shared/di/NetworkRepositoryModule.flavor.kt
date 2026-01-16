@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.di.ModuleContextData
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.sample.shared.repository.network.HttpClientMockConfig
 import com.tezov.tuucho.sample.shared.repository.network.HttpClientMockEngineFactory
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer

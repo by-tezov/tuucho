@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.view
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols

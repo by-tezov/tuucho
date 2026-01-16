@@ -77,7 +77,8 @@ class TuuchoEngine(
                             onIdleEvent(event)
                         }
 
-                        is Event.PrepareTransition -> { /* nothing */ }
+                        is Event.PrepareTransition -> { // nothing
+                        }
 
                         else -> {
                             throw UiException.Default("received unmanaged transition event $event")
@@ -188,14 +189,12 @@ class TuuchoEngine(
                     .async(
                         throwOnFailure = true
                     ) {
-                        animationProgress
-                            .events
-                            .once {
-                                useCaseExecutor.async(
-                                    useCase = notifyNavigationTransitionCompleted,
-                                    input = Unit
-                                )
-                            }
+                        animationProgress.events.once {
+                            useCaseExecutor.async(
+                                useCase = notifyNavigationTransitionCompleted,
+                                input = Unit
+                            )
+                        }
                     }
                 animationProgress.start()
             }

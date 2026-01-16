@@ -24,7 +24,7 @@ public final class com/tezov/tuucho/core/presentation/ui/composable/SkimmerCompo
 	public static final fun shimmerComposable (Landroidx/compose/ui/Modifier;FILandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
 }
 
-public abstract class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+public abstract class com/tezov/tuucho/core/presentation/ui/di/ModuleContextPresentation : com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext {
 	public static final field $stable I
 }
 

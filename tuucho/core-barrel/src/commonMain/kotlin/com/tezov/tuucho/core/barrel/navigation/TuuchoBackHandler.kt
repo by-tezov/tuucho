@@ -33,33 +33,58 @@ internal fun TuuchoBackHandler(
         koin.get<ProcessActionUseCase>()
     }
     BackHandler(enabled = true) {
-        // TODO
-        coroutineScopes.action
-            .async(
-                throwOnFailure = true,
-            ) {
-                val screenLock = interactionLockResolver.acquire(
-                    requester = "BackHandler",
-                    lockable = InteractionLockable.Type(
-                        value = listOf(InteractionLockType.Screen)
-                    )
-                )
-                useCaseExecutor.await(
-                    useCase = actionHandler,
-                    input = ProcessActionUseCase.Input.Action(
-                        route = NavigationRoute.Current,
-                        action = ActionModelDomain.from(
-                            command = NavigateAction.LocalDestination.command,
-                            authority = NavigateAction.LocalDestination.authority,
-                            target = NavigateAction.LocalDestination.Target.back,
-                        ),
-                        lockable = screenLock.freeze()
-                    )
-                )
-                interactionLockResolver.release(
-                    requester = "BackHandler",
-                    lockable = screenLock
-                )
-            }
+        onBackCompleted(
+            coroutineScopes = coroutineScopes,
+            useCaseExecutor = useCaseExecutor,
+            interactionLockResolver = interactionLockResolver,
+            actionHandler = actionHandler
+        )
+    }
+
+//    NavigationBackHandler(
+//        state = rememberNavigationEventState(currentInfo = NavigationEventInfo.None),
+//        isBackEnabled = true,
+//        onBackCompleted = {
+//            onBackCompleted(
+//                coroutineScopes = coroutineScopes,
+//                useCaseExecutor = useCaseExecutor,
+//                interactionLockResolver = interactionLockResolver,
+//                actionHandler = actionHandler
+//            )
+//        }
+//    )
+}
+
+private fun onBackCompleted(
+    coroutineScopes: CoroutineScopesProtocol,
+    useCaseExecutor: UseCaseExecutorProtocol,
+    interactionLockResolver: InteractionLockProtocol.Resolver,
+    actionHandler: ProcessActionUseCase,
+) {
+    coroutineScopes.action.async(
+        throwOnFailure = true,
+    ) {
+        val screenLock = interactionLockResolver.acquire(
+            requester = "BackHandler",
+            lockable = InteractionLockable.Type(
+                value = listOf(InteractionLockType.Screen)
+            )
+        )
+        useCaseExecutor.await(
+            useCase = actionHandler,
+            input = ProcessActionUseCase.Input.Action(
+                route = NavigationRoute.Current,
+                action = ActionModelDomain.from(
+                    command = NavigateAction.LocalDestination.command,
+                    authority = NavigateAction.LocalDestination.authority,
+                    target = NavigateAction.LocalDestination.Target.back,
+                ),
+                lockable = screenLock.freeze()
+            )
+        )
+        interactionLockResolver.release(
+            requester = "BackHandler",
+            lockable = screenLock
+        )
     }
 }

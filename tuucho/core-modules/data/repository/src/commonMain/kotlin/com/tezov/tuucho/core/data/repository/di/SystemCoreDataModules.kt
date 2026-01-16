@@ -7,8 +7,8 @@ import com.tezov.tuucho.core.data.repository.di.rectifier.MaterialRectifierScope
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.di.rectifier.ResponseRectifierScope
 import com.tezov.tuucho.core.data.repository.repository.SystemInformation
-import com.tezov.tuucho.core.domain.business.di.KoinMass
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import org.koin.core.module.dsl.factoryOf

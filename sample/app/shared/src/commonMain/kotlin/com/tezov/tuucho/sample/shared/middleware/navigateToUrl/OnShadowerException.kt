@@ -1,4 +1,4 @@
-package com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl
+package com.tezov.tuucho.sample.shared.middleware.navigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.sample.shared._system.Config

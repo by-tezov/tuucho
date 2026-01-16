@@ -63,7 +63,7 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(libs.kermit)
-            implementation(libs.tuucho)
+            api(libs.tuucho)
             implementation(libs.tuucho.ui)
             implementation(project(":app:uiExtension"))
 

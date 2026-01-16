@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator.Input
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol

@@ -1,4 +1,4 @@
-package com.tezov.tuucho.sample.shared.middleware.beforeNavigateBack
+package com.tezov.tuucho.sample.shared.middleware.navigateBack
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol

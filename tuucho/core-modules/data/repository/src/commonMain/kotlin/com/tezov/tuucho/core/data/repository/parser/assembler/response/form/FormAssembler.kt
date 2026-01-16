@@ -14,15 +14,16 @@ class FormAssembler : AbstractAssembler() {
 
     override val schemaType = FormSendSchema.Value.subset
 
-    override val scope: Scope by lazy {
+    override val lazyScope: Lazy<Scope> = lazy {
         with(getKoin()) {
             createScope(ScopeContext.Response.Form.value, ScopeContext.Response.Form).also {
-                it.linkTo(get<ResponseAssembler>().scope)
+                val responseAssembler = get<ResponseAssembler>()
+                it.linkTo(responseAssembler.lazyScope.value)
             }
         }
     }
 
     override val childProcessors: List<AbstractAssembler> by lazy {
-        scope.getAllAssociated(Association.Processor::class)
+        lazyScope.value.getAllAssociated(Association.Processor::class)
     }
 }
