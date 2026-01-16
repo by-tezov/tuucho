@@ -1,7 +1,7 @@
 package com.tezov.tuucho.sample.shared
 
 import androidx.compose.ui.window.ComposeUIViewController
-import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigationFinishPublisher
+import com.tezov.tuucho.core.barrel.di.KoinIos
 import org.koin.core.KoinApplication
 
 fun uiView(
@@ -13,4 +13,5 @@ fun uiView(
     )
 }
 
-fun KoinApplication.getNavigationFinishPublisher(): NavigationFinishPublisher = koin.get()
+val KoinApplication.tuuchoKoinIos get(): KoinIos = koin.get<KoinIos>()
+

@@ -4,15 +4,13 @@ import AppSharedFramework
 
 class ComposeHostController: UIViewController {
 
-    private var publisher: NavigationFinishPublisher!
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        let vc = MainScreen_iosKt.uiView(koinExtension: { [weak self] koinApplication in
-            self?.publisher = koinApplication.getNavigationFinishPublisher()
-            self?.publisher.onFinish(block: {
-                // koin close
-                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+        let vc = KMPKitKt.uiView(koinExtension: { [weak self] koinApplication in
+            let publisher = koinApplication.tuuchoKoinIos.get(clazz: NavigationFinishPublisher.self) as! NavigationFinishPublisher
+            publisher.onFinish(block: {
+                 koinApplication.koinIos.close()
+                 UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
             })
         })
         addChild(vc)

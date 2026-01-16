@@ -35,9 +35,11 @@ internal object SystemCoreModules {
             modules
         koinApplication {
             allowOverride(override = false)
+        }.apply {
             modules(module {
                 singleOf(::KoinIsolatedContextLifeCycle) onClose { lifeCycle -> lifeCycle?.onClose() }
             })
+            koin.get<KoinIsolatedContextLifeCycle>().init(this)
             modules(koins.groupBy { it.group }.map { (_, groups) ->
                 val (modules, scopes) = groups.partition { it is KoinMass.Module }
                 module {
@@ -56,6 +58,6 @@ internal object SystemCoreModules {
                 }
             })
             extension?.invoke(this)
-        }.also { it.koin.get<KoinIsolatedContextLifeCycle>().init(it) }
+        }
     }
 }
