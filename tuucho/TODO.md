@@ -1,9 +1,4 @@
-## In progress
-
-- update doc
-
 ### Need to fix: 
-
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
 - contextual register, when outer receive later, the inner did not succeed to register
   - check message of contextual field, they never request update view after click

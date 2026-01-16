@@ -39,7 +39,7 @@ TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interpr
     - Local validator and remote controls with user feedback (error or information)
     - Custom command on success or failure
 
-### Supported Components
+### Ui Components available with stable-ui dependencies
 
 - **Linear Layout** (vertical or horizontal orientation)
 - **Button** with built-in actions:
@@ -48,6 +48,11 @@ TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interpr
 - **Label**
 - **Input Field** (form element)
 - **Spacer**
+
+!!! Whaou
+    **You can define your own design system, navigation, actions and more**. That's the power of Tuucho.
+    The core is basically an application rendering engine from Json without UI. That's up to you to design your UI components, action, whatever.
+    But to allow you to quick start, you can use the stable-ui dependencies.
 
 ---
 

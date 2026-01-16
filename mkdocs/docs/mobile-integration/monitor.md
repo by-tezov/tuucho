@@ -57,10 +57,10 @@ class LoggerInteractionLockMonitor(
 
 ## Registering Monitors in Koin
 
-Monitors must be supplied to Koin under **ModuleGroupDomain.Main**.
+Monitors must be supplied to Koin under **ModuleContextDomain.Main**.
 
 ```kotlin
-module(ModuleGroupDomain.Main) {
+module(ModuleContextDomain.Main) {
 
         factory<CoroutineExceptionMonitor> {
             LoggerCoroutineExceptionMonitor(

@@ -39,13 +39,8 @@ You can completely intercept an action or alter it before continuing the chain.
 Register it in Koin:
 
 ```kotlin
-module(ModuleGroupDomain.Middleware) {
-    factory<LoggerAction> {
-        LoggerAction(
-            logger = get(),
-            systemInformation = get()
-        )
-    } bind ActionMiddleware::class
+module(ModuleContextDomain.Middleware) {
+    factoryOf(::LoggerAction) bind ActionMiddleware::class
 }
 ```
 
@@ -81,7 +76,7 @@ useCaseExecutor.async(
         action = ActionModelDomain.from(
             command = NavigateAction.command,
             authority = NavigateAction.LocalDestination.authority,
-            target = "back",
+            target = NavigationRoute.Back,
         )
     ),
 )
@@ -125,10 +120,8 @@ class CrashApplicationActionMiddleware() : ActionMiddleware {
 Register the custom action in Koin:
 
 ```kotlin
-module(ModuleGroupDomain.Middleware) {
-    factory<CrashApplicationActionMiddleware> {
-        CrashApplicationActionMiddleware()
-    } bind ActionMiddleware::class
+module(ModuleContextDomain.Middleware) {
+    factoryOf(::CrashApplicationActionMiddleware) bind ActionMiddleware::class
 }
 ```
 

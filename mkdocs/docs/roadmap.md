@@ -13,13 +13,12 @@ comments: true
 
 Work in progress:
 
-- **Component Feature**
-  - Split presentation layer to move component into additional dependencies. Keep only core functionalities
-  - Add a dev documentation to demonstrate how to create a new View from scratch
-  - Add Dokka doc for CI
-
 - **Images / Assets store**  
-  Add a way to cache images and use them (or remote assets)
+    - Add a way to cache images and use them (or remote assets)
+
+- **Component Feature**
+    - Add a dev documentation to demonstrate how to create a new View from scratch
+    - Add Dokka doc for CI
 
 ---
 
@@ -33,7 +32,7 @@ Work in progress:
 - **Validators, Navigation, Settings, other useful solvable by pointer**
   - Minimise and keep only what is useful and start to think about the public dev API
 
-- **Data store**  
+- **Data store advanced use**  
   Allow the use of recorded data from the JSON (still need to think about the use case and how)
 
 - **Unit Tests (Data and Presentation Layer) + E2E Tests**  
@@ -63,12 +62,12 @@ Work in progress:
 - **Parser Efficiency Optimizations**  
   Explore cache indexing, metadata, or other innovative techniques to accelerate JSON parsing and rendering.
 
-- **Documentation**  
-  Add developer documentation for creating user modules and custom components.
-
 ---
 
 ## ✅ Realized
+
+- **Custom UI capabilities** (2026-01)  
+  Allow you to extend and create your own design system.
 
 - **Presentation layer** (2026-01)  
   Add dsl to allow easy view creation + allow use of Compose Preview.
