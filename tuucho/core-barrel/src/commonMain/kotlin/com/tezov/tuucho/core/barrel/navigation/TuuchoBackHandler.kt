@@ -3,7 +3,9 @@ package com.tezov.tuucho.core.barrel.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.backhandler.BackHandler
+import androidx.navigationevent.NavigationEventInfo
+import androidx.navigationevent.compose.NavigationBackHandler
+import androidx.navigationevent.compose.rememberNavigationEventState
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
@@ -32,27 +34,18 @@ internal fun TuuchoBackHandler(
     val actionHandler = remember {
         koin.get<ProcessActionUseCase>()
     }
-    BackHandler(enabled = true) {
-        onBackCompleted(
-            coroutineScopes = coroutineScopes,
-            useCaseExecutor = useCaseExecutor,
-            interactionLockResolver = interactionLockResolver,
-            actionHandler = actionHandler
-        )
-    }
-
-//    NavigationBackHandler(
-//        state = rememberNavigationEventState(currentInfo = NavigationEventInfo.None),
-//        isBackEnabled = true,
-//        onBackCompleted = {
-//            onBackCompleted(
-//                coroutineScopes = coroutineScopes,
-//                useCaseExecutor = useCaseExecutor,
-//                interactionLockResolver = interactionLockResolver,
-//                actionHandler = actionHandler
-//            )
-//        }
-//    )
+    NavigationBackHandler(
+        state = rememberNavigationEventState(currentInfo = NavigationEventInfo.None),
+        isBackEnabled = true,
+        onBackCompleted = {
+            onBackCompleted(
+                coroutineScopes = coroutineScopes,
+                useCaseExecutor = useCaseExecutor,
+                interactionLockResolver = interactionLockResolver,
+                actionHandler = actionHandler
+            )
+        }
+    )
 }
 
 private fun onBackCompleted(
