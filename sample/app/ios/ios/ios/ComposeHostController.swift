@@ -19,11 +19,15 @@ class ComposeHostController: UIViewController {
     }
 
     func recreateComposeView() {
+        cleanup()
+        setupComposeView()
+    }
+
+    private func cleanup() {
         composeViewController?.willMove(toParent: nil)
         composeViewController?.view.removeFromSuperview()
         composeViewController?.removeFromParent()
         composeViewController = nil
-        setupComposeView()
     }
 
     private func setupComposeView() {
@@ -33,7 +37,7 @@ class ComposeHostController: UIViewController {
             let publisher = koinApplication.tuuchoKoinIos.get(clazz: NavigationFinishPublisher.self) as! NavigationFinishPublisher
             publisher.onFinish(block: {
                 self.coordinator?.handleKoinClosed()
-                koinApplication.koinIos.close()
+                koinApplication.tuuchoKoinIos.close()
                 self.isKoinInitialized = false
                 UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
             })
