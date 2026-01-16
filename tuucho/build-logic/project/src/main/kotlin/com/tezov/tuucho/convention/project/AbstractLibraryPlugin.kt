@@ -207,21 +207,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             }
             // iOS
             if (isMacOs) {
-                val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
-                project.afterEvaluate {
-                    val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace!!
-                    val frameworkName = project.path.split(":")
-                        .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
-                    iosTargets.forEach { iosTarget ->
-                        iosTarget.binaries.framework {
-                            isStatic = true
-                            baseName = frameworkName
-                            freeCompilerArgs += listOf(
-                                "-Xbinary=bundleId=$namespace",
-                            )
-                        }
-                    }
-                }
+                iosArm64()
+                iosSimulatorArm64()
+                iosX64()
             } else {
                 println("⚠️ mac os target disable")
             }

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.form
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase

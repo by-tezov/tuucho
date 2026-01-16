@@ -1,6 +1,6 @@
 package com.tezov.tuucho.uiComponent.stable.di
 
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.presentation.ui.di.ModuleContextPresentation
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.uiComponent.stable.presentation.view.ButtonViewFactory

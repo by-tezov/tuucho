@@ -29,64 +29,93 @@ public final class com/tezov/tuucho/core/domain/business/_system/koin/Constant {
 	public final fun getKoinRootScopeQualifier ()Lorg/koin/core/qualifier/StringQualifier;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/KoinIsolatedContext {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/KoinIsolatedContext;
-	public static field koinApplication Lorg/koin/core/KoinApplication;
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinIsolatedContext {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinIsolatedContext;
 	public final fun getKoin ()Lorg/koin/core/Koin;
 	public final fun getKoinApplication ()Lorg/koin/core/KoinApplication;
 	public final fun setKoinApplication (Lorg/koin/core/KoinApplication;)V
 }
 
-public abstract class com/tezov/tuucho/core/domain/business/di/KoinMass {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Companion;
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinIsolatedContextLifeCycle {
+	public fun <init> ()V
+	public final fun init (Lorg/koin/core/KoinApplication;)V
+	public final fun onClose ()V
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Companion {
-	public final fun module (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
-	public final fun scope (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
+public abstract class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Companion;
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Module : com/tezov/tuucho/core/domain/business/di/KoinMass {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Companion {
+	public final fun module (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Module;
+	public final fun scope (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Module : com/tezov/tuucho/core/domain/business/_system/koin/KoinMass {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;
 	public final fun component2 ()Lkotlin/jvm/functions/Function1;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Module;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Module;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Module;Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Module;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
-	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+public abstract interface class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext {
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/KoinMass$Scope : com/tezov/tuucho/core/domain/business/di/KoinMass {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope : com/tezov/tuucho/core/domain/business/_system/koin/KoinMass {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;
 	public final fun component2 ()Lkotlin/jvm/functions/Function1;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/di/KoinMass$Scope;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDeclaration ()Lkotlin/jvm/functions/Function1;
-	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
-	public final fun getScopeContext ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;
+	public fun getGroup ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;
+	public final fun getScopeContext ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext : org/koin/core/qualifier/Qualifier {
-	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext;
+public abstract interface class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext : org/koin/core/qualifier/Qualifier {
+	public abstract fun getGroup ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext;
 	public fun getValue ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext$DefaultImpls {
-	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/di/KoinMass$ScopeContext;)Ljava/lang/String;
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext$DefaultImpls {
+	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;)Ljava/lang/String;
 }
 
-public abstract class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+public abstract interface class com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent : org/koin/core/component/KoinComponent {
+	public fun getKoin ()Lorg/koin/core/Koin;
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent$DefaultImpls {
+	public static fun getKoin (Lcom/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent;)Lorg/koin/core/Koin;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, org/koin/core/component/KoinScopeComponent {
+	public fun closeScope ()V
+	public abstract fun getLazyScope ()Lkotlin/Lazy;
+	public fun getScope ()Lorg/koin/core/scope/Scope;
+	public fun isScopeClosed ()Z
+	public fun isScopeInitialized ()Z
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent$DefaultImpls {
+	public static fun closeScope (Lcom/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent;)V
+	public static fun getKoin (Lcom/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent;)Lorg/koin/core/Koin;
+	public static fun getScope (Lcom/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent;)Lorg/koin/core/scope/Scope;
+	public static fun isScopeClosed (Lcom/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent;)Z
+	public static fun isScopeInitialized (Lcom/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent;)Z
+}
+
+public abstract class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain : com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext {
 }
 
 public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$Main : com/tezov/tuucho/core/domain/business/di/ModuleContextDomain {
@@ -104,23 +133,6 @@ public final class com/tezov/tuucho/core/domain/business/di/ModuleContextDomain$
 public final class com/tezov/tuucho/core/domain/business/di/SystemCoreDomainModules {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/di/SystemCoreDomainModules;
 	public final fun invoke ()Ljava/util/List;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent : org/koin/core/component/KoinComponent {
-	public fun getKoin ()Lorg/koin/core/Koin;
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent$DefaultImpls {
-	public static fun getKoin (Lcom/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent;)Lorg/koin/core/Koin;
-}
-
-public abstract interface class com/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, org/koin/core/component/KoinScopeComponent {
-	public fun close ()V
-}
-
-public final class com/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent$DefaultImpls {
-	public static fun close (Lcom/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent;)V
-	public static fun getKoin (Lcom/tezov/tuucho/core/domain/business/di/TuuchoKoinScopeComponent;)Lorg/koin/core/Koin;
 }
 
 public abstract class com/tezov/tuucho/core/domain/business/exception/DomainException : java/lang/Exception {
@@ -1627,6 +1639,9 @@ public abstract interface class com/tezov/tuucho/core/domain/business/middleware
 	public abstract fun process (Ljava/lang/Throwable;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Back$Context;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$Finish : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+}
+
 public abstract interface class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
 }
 
@@ -2160,14 +2175,14 @@ public final class com/tezov/tuucho/core/domain/business/usecase/UseCaseExecutor
 	public fun await (Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateBackUseCase : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigateFinishUseCase;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (Lkotlin/Unit;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/UseCaseExecutorProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Retrieve;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRouteIdGenerator;Lcom/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackRoute;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackScreen;Lcom/tezov/tuucho/core/domain/business/protocol/repository/NavigationRepositoryProtocol$StackTransition;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$Shadower;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/NavigateToUrlUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -2296,7 +2311,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Sen
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ServerHealthCheckUseCase : com/tezov/tuucho/core/domain/business/di/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/ServerHealthCheckUseCase : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/ServerHealthCheckProtocol;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ServerHealthCheckUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -2480,6 +2495,13 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 	public final fun getResult ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigateFinishUseCase : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
+	public fun getKoin ()Lorg/koin/core/Koin;
+	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun invoke (Lkotlin/Unit;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigationDefinitionSelectorMatcherFactoryUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {

@@ -1,31 +1,36 @@
 package com.tezov.tuucho.sample.shared.di
 
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.di.ModuleContextDomain
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
-import com.tezov.tuucho.sample.shared.middleware.beforeNavigateBack.LoggerBeforeNavigateBackMiddleware
-import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.BeforeNavigateToUrlMiddleware
-import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.CatcherBeforeNavigateToUrlMiddleware
-import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.LoggerBeforeNavigateToUrlMiddleware
-import com.tezov.tuucho.sample.shared.middleware.beforeNavigateToUrl.OnShadowerException
+import com.tezov.tuucho.sample.shared.middleware.navigateBack.LoggerBeforeNavigateBackMiddleware
+import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigateFinishMiddleware
+import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigationFinishPublisher
+import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.BeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.CatcherBeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.LoggerBeforeNavigateToUrlMiddleware
+import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.OnShadowerException
 import com.tezov.tuucho.sample.shared.middleware.sendData.LoggerSendDataMiddleware
 import com.tezov.tuucho.sample.shared.middleware.updateView.LoggerUpdateViewMiddleware
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.onClose
 
 object MiddlewareModule {
 
     fun invoke() = module(ModuleContextDomain.Middleware) {
-        beforeNavigateToUrl()
-        beforeNavigateBack()
+        navigateToUrl()
+        navigateBack()
+        navigateFinish()
         sendData()
         updateView()
     }
 
-    private fun Module.beforeNavigateToUrl() {
+    private fun Module.navigateToUrl() {
         factoryOf(::CatcherBeforeNavigateToUrlMiddleware) bindOrdered NavigationMiddleware.ToUrl::class
 
         factory<BeforeNavigateToUrlMiddleware> {
@@ -41,8 +46,13 @@ object MiddlewareModule {
         factoryOf(::LoggerBeforeNavigateToUrlMiddleware) bindOrdered NavigationMiddleware.ToUrl::class
     }
 
-    private fun Module.beforeNavigateBack() {
+    private fun Module.navigateBack() {
         factoryOf(::LoggerBeforeNavigateBackMiddleware) bindOrdered NavigationMiddleware.Back::class
+    }
+
+    private fun Module.navigateFinish() {
+        singleOf(::NavigationFinishPublisher)
+        factoryOf(::NavigateFinishMiddleware) bindOrdered NavigationMiddleware.Finish::class
     }
 
     private fun Module.sendData() {

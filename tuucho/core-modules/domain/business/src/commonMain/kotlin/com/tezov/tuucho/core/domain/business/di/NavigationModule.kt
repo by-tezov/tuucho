@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.di
 
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRouteIdGenerator
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackRouteRepository
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackScreenRepository

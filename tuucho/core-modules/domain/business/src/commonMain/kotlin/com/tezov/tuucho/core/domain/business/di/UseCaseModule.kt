@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
@@ -16,6 +16,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrN
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.HasKeyInStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
@@ -39,13 +40,15 @@ internal object UseCaseModule {
         factory {
             NavigateBackUseCase(
                 coroutineScopes = get(),
+                useCaseExecutor = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 retrieveMaterialRepository = get(),
                 shadowerMaterialRepository = get(),
                 middlewareExecutor = get(),
-                navigationMiddlewares = getAllOrdered()
+                navigationMiddlewares = getAllOrdered(),
+                navigateFinish = get()
             )
         }
 
@@ -88,6 +91,13 @@ internal object UseCaseModule {
         factoryOf(::GetScreensFromRoutesUseCase)
         factoryOf(::GetValueOrNullFromStoreUseCase)
         factoryOf(::HasKeyInStoreUseCase)
+        factory {
+            NavigateFinishUseCase(
+                coroutineScopes = get(),
+                middlewareExecutor = get(),
+                navigationMiddlewares = getAllOrdered()
+            )
+        }
         factoryOf(::NavigationDefinitionSelectorMatcherFactoryUseCase)
         factoryOf(::NavigationStackTransitionHelperFactoryUseCase)
         factoryOf(::NotifyNavigationTransitionCompletedUseCase)

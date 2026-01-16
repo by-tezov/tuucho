@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.tezov.tuucho.core.barrel.di.SystemCoreModules
 import com.tezov.tuucho.core.barrel.navigation.TuuchoBackHandler
-import com.tezov.tuucho.core.domain.business.di.KoinMass
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngineProtocol
 import org.koin.core.KoinApplication
 

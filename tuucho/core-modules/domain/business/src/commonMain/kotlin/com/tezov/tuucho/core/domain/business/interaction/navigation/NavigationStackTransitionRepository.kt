@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
-import com.tezov.tuucho.core.domain.business.di.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema
@@ -150,12 +150,14 @@ internal class NavigationStackTransitionRepository(
                     }
                     StackTransition.Event.Idle(
                         routes = buildList {
-                            val lastItem = stack.last()
-                            add(lastItem.route)
-                            if (!lastItem.isBackgroundSolid()) {
-                                for (item in stack.dropLast(1).asReversed()) {
-                                    add(item.route)
-                                    if (item.isBackgroundSolid()) break
+                            val lastItem = stack.lastOrNull()
+                            lastItem?.let {
+                                add(lastItem.route)
+                                if (!lastItem.isBackgroundSolid()) {
+                                    for (item in stack.dropLast(1).asReversed()) {
+                                        add(item.route)
+                                        if (item.isBackgroundSolid()) break
+                                    }
                                 }
                             }
                         }

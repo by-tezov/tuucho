@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.data.repository.di
 import com.tezov.tuucho.core.data.repository._system.SystemInformationIos
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryIos
 import com.tezov.tuucho.core.data.repository.repository.SystemInformation
-import com.tezov.tuucho.core.domain.business.di.KoinMass
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import org.koin.dsl.bind

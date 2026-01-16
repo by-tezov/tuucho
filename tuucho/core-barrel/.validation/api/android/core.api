@@ -2,7 +2,7 @@ public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
 	public static final fun TuuchoEngineStart (Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 }
 
-public abstract class com/tezov/tuucho/core/barrel/di/ModuleContextCore : com/tezov/tuucho/core/domain/business/di/KoinMass$ModuleContext {
+public abstract class com/tezov/tuucho/core/barrel/di/ModuleContextCore : com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext {
 	public static final field $stable I
 }
 

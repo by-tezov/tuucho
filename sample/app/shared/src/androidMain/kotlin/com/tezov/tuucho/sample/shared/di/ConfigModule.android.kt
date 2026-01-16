@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.barrel.di.ModuleContextCore
 import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.sample.app.shared.BuildKonfig
 
 internal object ConfigModuleAndroid {

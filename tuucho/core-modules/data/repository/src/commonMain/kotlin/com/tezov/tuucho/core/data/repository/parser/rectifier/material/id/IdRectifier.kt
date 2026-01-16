@@ -12,11 +12,12 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
+import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
 class IdRectifier(
     scope: Scope,
-    private val idGenerator: RectifierIdGenerator
+    private val idGenerator: RectifierIdGenerator,
 ) : AbstractRectifier(scope) {
     sealed class Association {
         object Matcher : Association()

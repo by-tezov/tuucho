@@ -2,14 +2,17 @@ package com.tezov.tuucho.core.barrel.di
 
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
-import com.tezov.tuucho.core.domain.business.di.KoinIsolatedContext
-import com.tezov.tuucho.core.domain.business.di.KoinMass
+import com.tezov.tuucho.core.domain.business._system.koin.KoinIsolatedContext
+import com.tezov.tuucho.core.domain.business._system.koin.KoinIsolatedContextLifeCycle
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
 import org.koin.core.KoinApplication
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
+import org.koin.dsl.onClose
 
 internal expect fun SystemCoreModules.platformInvoke(): List<KoinMass>
 
@@ -32,6 +35,11 @@ internal object SystemCoreModules {
             modules
         koinApplication {
             allowOverride(override = false)
+        }.apply {
+            modules(module {
+                singleOf(::KoinIsolatedContextLifeCycle) onClose { lifeCycle -> lifeCycle?.onClose() }
+            })
+            koin.get<KoinIsolatedContextLifeCycle>().init(this)
             modules(koins.groupBy { it.group }.map { (_, groups) ->
                 val (modules, scopes) = groups.partition { it is KoinMass.Module }
                 module {
@@ -50,6 +58,6 @@ internal object SystemCoreModules {
                 }
             })
             extension?.invoke(this)
-        }.also { KoinIsolatedContext.koinApplication = it }
+        }
     }
 }

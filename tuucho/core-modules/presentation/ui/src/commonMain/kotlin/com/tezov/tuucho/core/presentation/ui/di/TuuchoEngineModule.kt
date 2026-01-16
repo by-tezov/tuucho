@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.di
 
-import com.tezov.tuucho.core.domain.business.di.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngine
 import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngineProtocol
