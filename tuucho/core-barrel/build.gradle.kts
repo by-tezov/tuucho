@@ -11,7 +11,6 @@ kotlin {
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui)
             implementation(libs.compose.navigationevent)
-
             implementation(libs.koin.core)
         }
     }
