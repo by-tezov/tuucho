@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.business._system.koin
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
@@ -20,8 +22,9 @@ interface TuuchoKoinComponent : KoinComponent {
     override fun getKoin(): Koin = KoinIsolatedContext.koin
 }
 
-interface TuuchoKoinScopeComponent : TuuchoKoinComponent, KoinScopeComponent {
-
+interface TuuchoKoinScopeComponent :
+    TuuchoKoinComponent,
+    KoinScopeComponent {
     @TuuchoInternalApi
     override val scope: Scope get() = lazyScope.value
 
@@ -32,7 +35,7 @@ interface TuuchoKoinScopeComponent : TuuchoKoinComponent, KoinScopeComponent {
     fun isScopeClosed() = lazyScope.value.closed
 
     fun closeScope() {
-        if(isScopeInitialized() && !isScopeClosed()) {
+        if (isScopeInitialized() && !isScopeClosed()) {
             lazyScope.value.close()
         }
     }
@@ -40,8 +43,9 @@ interface TuuchoKoinScopeComponent : TuuchoKoinComponent, KoinScopeComponent {
 
 @OptIn(TuuchoInternalApi::class)
 class KoinIsolatedContextLifeCycle {
-
-    fun init(koinApplication: KoinApplication) {
+    fun init(
+        koinApplication: KoinApplication
+    ) {
         KoinIsolatedContext.koinApplication = koinApplication
     }
 

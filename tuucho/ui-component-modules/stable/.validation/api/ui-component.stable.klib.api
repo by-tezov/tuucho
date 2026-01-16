@@ -186,7 +186,7 @@ final class com.tezov.tuucho.uiComponent.stable.presentation.view/SpacerViewFact
 }
 
 final object com.tezov.tuucho.uiComponent.stable.di/SystemUiModules { // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules|null[0]
-    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.di/KoinMass> // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules.invoke|invoke(){}[0]
+    final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business._system.koin/KoinMass> // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/FormFieldSchema { // com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/FormFieldSchema|null[0]

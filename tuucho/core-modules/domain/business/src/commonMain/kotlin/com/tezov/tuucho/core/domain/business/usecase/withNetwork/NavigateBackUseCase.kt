@@ -63,7 +63,7 @@ class NavigateBackUseCase(
             navigationStackScreenRepository.backward(
                 routes = navigationStackRouteRepository.routes(),
             )
-            if(navigationStackRouteRepository.currentRoute() == null) {
+            if (navigationStackRouteRepository.currentRoute() == null) {
                 useCaseExecutor.await(
                     useCase = navigateFinish,
                     input = Unit

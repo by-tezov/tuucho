@@ -8,7 +8,6 @@ import org.koin.dsl.onClose
 import platform.Foundation.NSUserDefaults
 
 internal object StoreRepositoryModuleIos {
-
     private var datastore: NSUserDefaults? = null
 
     fun invoke() = module(ModuleContextData.Main) {

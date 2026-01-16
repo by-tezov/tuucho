@@ -28,10 +28,11 @@ class NavigateFinishUseCase(
 
     private fun terminalMiddleware() = NavigationMiddleware.Finish { _, _ ->
         if (navigationMiddlewares.isEmpty()) {
-            throw DomainException.Default("You need to supply NavigationMiddleware.Finish to finish activity since the navigation stack is empty")
+            throw DomainException.Default(
+                "You need to supply NavigationMiddleware.Finish to finish activity since the navigation stack is empty"
+            )
         } else {
             throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")
         }
     }
-
 }

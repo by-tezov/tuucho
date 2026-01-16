@@ -5,7 +5,6 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
-
 internal actual fun SystemCoreModules.platformInvoke(): List<KoinMass> = listOf(
     module(ModuleContextCore.Main) {
         factoryOf(::KoinIos) bind KoinIos::class

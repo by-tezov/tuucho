@@ -12,11 +12,14 @@ import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.qualifier.Qualifier
 import kotlin.reflect.KClass
 
-class KoinIos() : TuuchoKoinComponent {
+class KoinIos : TuuchoKoinComponent {
+    private fun getKotlinClass(
+        objCClass: ObjCClass
+    ): KClass<*>? = getOriginalKotlinClass(objCClass)
 
-    private fun getKotlinClass(objCClass: ObjCClass): KClass<*>? = getOriginalKotlinClass(objCClass)
-
-    private fun getKotlinClass(objCProtocol: ObjCProtocol): KClass<*>? = getOriginalKotlinClass(objCProtocol)
+    private fun getKotlinClass(
+        objCProtocol: ObjCProtocol
+    ): KClass<*>? = getOriginalKotlinClass(objCProtocol)
 
     fun get(
         clazz: ObjCClass,
@@ -70,7 +73,7 @@ class KoinIos() : TuuchoKoinComponent {
         return getKoin().get(clazz = kclazz, qualifier = qualifier, parameters = parameters)
     }
 
-    fun close() { getKoin().close() }
+    fun close() {
+        getKoin().close()
+    }
 }
-
-

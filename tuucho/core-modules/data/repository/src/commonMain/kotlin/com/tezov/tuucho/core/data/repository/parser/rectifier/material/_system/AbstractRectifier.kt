@@ -20,7 +20,6 @@ abstract class AbstractRectifier(
     private val _scope: Scope? = null
 ) : RectifierProtocol,
     TuuchoKoinScopeComponent {
-
     override val lazyScope: Lazy<Scope> = lazy {
         _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
     }

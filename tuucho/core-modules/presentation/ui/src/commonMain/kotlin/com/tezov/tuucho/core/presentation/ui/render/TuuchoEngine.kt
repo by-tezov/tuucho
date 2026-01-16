@@ -77,7 +77,7 @@ class TuuchoEngine(
                             onIdleEvent(event)
                         }
 
-                        is Event.PrepareTransition -> { /* nothing */
+                        is Event.PrepareTransition -> { // nothing
                         }
 
                         else -> {
