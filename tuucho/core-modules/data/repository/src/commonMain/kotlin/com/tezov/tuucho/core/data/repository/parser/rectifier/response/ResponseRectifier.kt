@@ -17,14 +17,15 @@ internal class ResponseRectifier : TuuchoKoinScopeComponent {
         object Processor : Association()
     }
 
-    override val scope: Scope by lazy {
+    override val lazyScope: Lazy<Scope> = lazy {
         getKoin().createScope(ScopeContext.Response.value, ScopeContext.Response)
     }
 
     private val rectifiers: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(Association.Processor::class)
+        lazyScope.value.getAllAssociated(Association.Processor::class)
     }
 
+    @Suppress("RedundantSuspendModifier")
     suspend fun process(
         responseObject: JsonObject
     ) = responseObject

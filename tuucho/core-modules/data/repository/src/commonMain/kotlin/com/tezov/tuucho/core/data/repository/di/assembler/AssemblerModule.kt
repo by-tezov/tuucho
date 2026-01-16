@@ -7,11 +7,16 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseA
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.onClose
 
 internal object AssemblerModule {
     fun invoke() = module(ModuleContextData.Assembler) {
         factoryOf(::JsonObjectMerger)
-        singleOf(::MaterialAssembler)
-        singleOf(::ResponseAssembler)
+        singleOf(::MaterialAssembler) onClose { assembler ->
+            assembler?.closeScope()
+        }
+        singleOf(::ResponseAssembler) onClose { assembler ->
+            assembler?.closeScope()
+        }
     }
 }

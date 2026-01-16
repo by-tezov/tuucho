@@ -30,8 +30,10 @@ import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.scopedOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
+import org.koin.dsl.onClose
 
 internal object MaterialRectifierScope {
     fun invoke() = scope(ScopeContext.Material) {

@@ -21,14 +21,14 @@ internal class MaterialRectifier : TuuchoKoinScopeComponent {
         object Processor : Association()
     }
 
-    override val scope: Scope by lazy {
+    override val lazyScope: Lazy<Scope> = lazy {
         getKoin().createScope(ScopeContext.Material.value, ScopeContext.Material)
     }
 
     private val componentRectifier: ComponentRectifier by inject()
 
     private val rectifiers: List<RectifierProtocol> by lazy {
-        scope.getAllAssociated(Association.Processor::class)
+        lazyScope.value.getAllAssociated(Association.Processor::class)
     }
 
     @Suppress("RedundantSuspendModifier")

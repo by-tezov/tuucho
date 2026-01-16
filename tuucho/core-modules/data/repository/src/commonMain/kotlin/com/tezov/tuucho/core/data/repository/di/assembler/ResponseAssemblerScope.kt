@@ -10,13 +10,16 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.Form
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.scopedOf
 import org.koin.core.scope.Scope
+import org.koin.dsl.onClose
 
 object ResponseAssemblerScope {
     fun invoke() = scope(ScopeContext.Response) {
         factory<Scope> { this }
-        factoryOf(::FormAssembler)
-
+        scopedOf(::FormAssembler) onClose { assembler ->
+            assembler?.closeScope()
+        }
         associate<ResponseAssembler.Association.Processor> {
             declaration<FormAssembler>()
         }

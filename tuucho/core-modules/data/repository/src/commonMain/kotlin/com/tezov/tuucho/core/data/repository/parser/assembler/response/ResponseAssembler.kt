@@ -21,16 +21,17 @@ class ResponseAssembler : TuuchoKoinScopeComponent {
         object Processor : Association()
     }
 
-    override val scope: Scope by lazy {
+    override val lazyScope: Lazy<Scope> = lazy {
         with(getKoin()) {
             createScope(ScopeContext.Response.value, ScopeContext.Response).also {
-                it.linkTo(get<ResponseRectifier>().scope)
+                val responseRectifier = get<ResponseRectifier>()
+                it.linkTo(responseRectifier.lazyScope.value)
             }
         }
     }
 
     private val assemblers: List<AssemblerProtocol> by lazy {
-        scope.getAllAssociated(Association.Processor::class)
+        lazyScope.value.getAllAssociated(Association.Processor::class)
     }
 
     suspend fun process(

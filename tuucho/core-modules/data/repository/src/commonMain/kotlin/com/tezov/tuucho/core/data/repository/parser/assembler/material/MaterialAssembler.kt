@@ -21,16 +21,17 @@ class MaterialAssembler : TuuchoKoinScopeComponent {
         object Processor : Association()
     }
 
-    override val scope: Scope by lazy {
+    override val lazyScope: Lazy<Scope> = lazy {
         with(getKoin()) {
             createScope(ScopeContext.Material.value, ScopeContext.Material).also {
-                it.linkTo(get<MaterialRectifier>().scope)
+                val materialRectifier = get<MaterialRectifier>()
+                it.linkTo(materialRectifier.lazyScope.value)
             }
         }
     }
 
     private val assemblers: List<AssemblerProtocol> by lazy {
-        scope.getAllAssociated(Association.Processor::class)
+        lazyScope.value.getAllAssociated(Association.Processor::class)
     }
 
     suspend fun process(

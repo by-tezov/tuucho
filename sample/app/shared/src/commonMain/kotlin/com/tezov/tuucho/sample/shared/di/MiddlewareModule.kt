@@ -18,6 +18,7 @@ import com.tezov.tuucho.sample.shared.middleware.updateView.LoggerUpdateViewMidd
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.onClose
 
 object MiddlewareModule {
 

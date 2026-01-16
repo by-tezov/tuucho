@@ -4,11 +4,15 @@ import AppSharedFramework
 
 class ComposeHostController: UIViewController {
 
+    private var publisher: NavigationFinishPublisher!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let vc = MainScreen_iosKt.uiView(koinExtension: { koin in
-            let publisher = koin.get(objCClass: NavigationFinishPublisher.self) as! NavigationFinishPublisher
-            publisher.onFinish { self.finish() }
+        let vc = MainScreen_iosKt.uiView(koinExtension: { koinApplication in
+            self.publisher = koinApplication.getNavigationFinishPublisher()
+            self.publisher.onFinish(block: { [weak self] in
+                self?.finish()
+            })
         })
         addChild(vc)
         view.addSubview(vc.view)
@@ -17,11 +21,7 @@ class ComposeHostController: UIViewController {
     }
 
     private func finish() {
-        if let nav = navigationController {
-            nav.popViewController(animated: true)
-        } else {
-            dismiss(animated: true)
-        }
+        UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
     }
 
 }

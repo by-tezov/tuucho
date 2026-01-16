@@ -20,8 +20,9 @@ abstract class AbstractAssembler(
     private val _scope: Scope? = null
 ) : AssemblerProtocol,
     TuuchoKoinScopeComponent {
-    override val scope: Scope
-        get() = _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
+    override val lazyScope: Lazy<Scope> = lazy {
+        _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
+    }
 
     private val jsonObjectMerger: JsonObjectMerger by inject()
 

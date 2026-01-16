@@ -14,20 +14,29 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.dsl.onClose
 
 internal object StoreRepositoryModuleAndroid {
+
+    private var datastore: DataStore<Preferences>? = null
+
     fun invoke() = module(ModuleContextData.Main) {
+
         @OptIn(TuuchoInternalApi::class)
         single<DataStore<Preferences>> {
-            val context: Context = get(APPLICATION_CONTEXT)
-            PreferenceDataStoreFactory.create(
-                scope = get<CoroutineScopesProtocol>().io.scope,
-                produceFile = {
-                    context.preferencesDataStoreFile(
-                        get<StoreRepositoryModule.Config>(STORE_REPOSITORY_CONFIG).fileName
-                    )
-                }
-            )
+            datastore ?: run {
+                val context: Context = get(APPLICATION_CONTEXT)
+                PreferenceDataStoreFactory.create(
+                    scope = get<CoroutineScopesProtocol>().io.scope,
+                    produceFile = {
+                        context.preferencesDataStoreFile(
+                            get<StoreRepositoryModule.Config>(STORE_REPOSITORY_CONFIG).fileName
+                        )
+                    }
+                ).also { datastore = it }
+            }
+        } onClose {
+            // datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...
         }
 
         factoryOf(::KeyValueStoreRepository) bind KeyValueStoreRepositoryProtocol::class

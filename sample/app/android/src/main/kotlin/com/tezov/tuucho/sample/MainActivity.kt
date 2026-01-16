@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.sample.di.ApplicationModule
 import com.tezov.tuucho.sample.shared.AppScreen
 import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigationFinishPublisher
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), TuuchoKoinComponent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
                     applicationModules = listOf(ApplicationModule.invoke(applicationContext)),
                     koinExtension = {
                         koin.get<NavigationFinishPublisher>().onFinish {
+                            koin.close()
                             this@MainActivity.finish()
                         }
                     }
