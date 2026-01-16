@@ -8,10 +8,11 @@ class ComposeHostController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let vc = MainScreen_iosKt.uiView(koinExtension: { koinApplication in
-            self.publisher = koinApplication.getNavigationFinishPublisher()
-            self.publisher.onFinish(block: { [weak self] in
-                self?.finish()
+        let vc = MainScreen_iosKt.uiView(koinExtension: { [weak self] koinApplication in
+            self?.publisher = koinApplication.getNavigationFinishPublisher()
+            self?.publisher.onFinish(block: {
+                // koin close
+                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
             })
         })
         addChild(vc)
@@ -19,9 +20,4 @@ class ComposeHostController: UIViewController {
         vc.view.frame = view.bounds
         vc.didMove(toParent: self)
     }
-
-    private func finish() {
-        UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
-    }
-
 }
