@@ -1,7 +1,5 @@
 ## In progress
 
-- add test of the new use cases
-
 - update doc
 
 ### Need to fix: 
