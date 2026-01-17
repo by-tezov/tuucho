@@ -34,6 +34,7 @@ buildkonfig {
         field("serverHealthEndpoint", FieldSpec.Type.STRING)
         field("serverResourceEndpoint", FieldSpec.Type.STRING)
         field("serverSendEndpoint", FieldSpec.Type.STRING)
+        field("serverImageEndpoint", FieldSpec.Type.STRING)
     }
 
     targetConfigs {
@@ -63,7 +64,7 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(libs.kermit)
-            api(libs.tuucho)
+            implementation(libs.tuucho)
             implementation(libs.tuucho.ui)
             implementation(project(":app:uiExtension"))
 

@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
-import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.ServerHealthCheckRepositoryProtocol
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -19,7 +19,7 @@ import kotlin.test.assertEquals
 class ServerHealthCheckUseCaseTest {
     private val coroutineTestScope = CoroutineTestScope()
 
-    private lateinit var serverHealthCheck: ServerHealthCheckProtocol
+    private lateinit var serverHealthCheck: ServerHealthCheckRepositoryProtocol
     private lateinit var sut: ServerHealthCheckUseCase
 
     @BeforeTest

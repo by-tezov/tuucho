@@ -1,9 +1,13 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import com.tezov.tuucho.core.data.repository.repository.ImageRepository
 import com.tezov.tuucho.core.data.repository.repository.RefreshMaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.repository.RetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.repository.SendDataAndRetrieveMaterialRepository
+import com.tezov.tuucho.core.data.repository.repository.ServerHealthCheckRepository
 import com.tezov.tuucho.core.data.repository.repository.ShadowerMaterialRepository
+import com.tezov.tuucho.core.data.repository.repository.source.HealthCheckSource
+import com.tezov.tuucho.core.data.repository.repository.source.ImageRemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRemoteSource
@@ -11,13 +15,15 @@ import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrie
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ContextualShadowerMaterialSource
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.ServerHealthCheckRepositoryProtocol
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 
-internal object MaterialRepositoryModule {
+internal object RepositoryModule {
     object Name {
         val SHADOWER_SOURCE get() = named("MaterialRepositoryModule.Name.SHADOWER_SOURCE")
     }
@@ -39,10 +45,11 @@ internal object MaterialRepositoryModule {
             )
         }
 
+        factoryOf(::ImageRepository) bind ImageRepositoryProtocol.Remote::class
         factoryOf(::RefreshMaterialCacheRepository) bind MaterialRepositoryProtocol.RefreshCache::class
         factoryOf(::RetrieveMaterialRepository) bind MaterialRepositoryProtocol.Retrieve::class
         factoryOf(::SendDataAndRetrieveMaterialRepository) bind MaterialRepositoryProtocol.SendDataAndRetrieve::class
-
+        factoryOf(::ServerHealthCheckRepository) bind ServerHealthCheckRepositoryProtocol::class
         single {
             ShadowerMaterialRepository(
                 coroutineScopes = get(),
@@ -57,6 +64,8 @@ internal object MaterialRepositoryModule {
     }
 
     private fun Module.remoteSource() {
+        factoryOf(::HealthCheckSource)
+        factoryOf(::ImageRemoteSource)
         factoryOf(::MaterialRemoteSource)
         factoryOf(::RetrieveObjectRemoteSource)
         factoryOf(::SendDataAndRetrieveMaterialRemoteSource)

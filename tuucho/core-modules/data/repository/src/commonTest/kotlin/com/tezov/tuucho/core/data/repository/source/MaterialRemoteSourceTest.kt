@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.mock.CoroutineTestScope
-import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
+import com.tezov.tuucho.core.data.repository.network.NetworkSourceProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
 import dev.mokkery.answering.returns
@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
 
 class MaterialRemoteSourceTest {
     private val coroutineTestScope = CoroutineTestScope()
-    private lateinit var networkJsonObject: NetworkJsonObjectProtocol
+    private lateinit var networkJsonObject: NetworkSourceProtocol
     private lateinit var materialRectifier: MaterialRectifier
     private lateinit var sut: MaterialRemoteSource
 
@@ -31,7 +31,7 @@ class MaterialRemoteSourceTest {
         coroutineTestScope.setup()
         sut = MaterialRemoteSource(
             coroutineScopes = coroutineTestScope.mock,
-            networkJsonObject = networkJsonObject,
+            networkSource = networkJsonObject,
             materialRectifier = materialRectifier
         )
     }

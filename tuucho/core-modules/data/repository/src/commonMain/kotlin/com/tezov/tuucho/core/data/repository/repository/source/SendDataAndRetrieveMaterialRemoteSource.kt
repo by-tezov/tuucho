@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.repository.source
 
 import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
-import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
+import com.tezov.tuucho.core.data.repository.network.NetworkSourceProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseAssembler
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
@@ -9,7 +9,7 @@ import kotlinx.serialization.json.JsonObject
 
 internal class SendDataAndRetrieveMaterialRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val networkJsonObject: NetworkJsonObjectProtocol,
+    private val networkSource: NetworkSourceProtocol,
     private val responseRectifier: ResponseRectifier,
     private val responseAssembler: ResponseAssembler,
     private val materialDatabaseSource: MaterialDatabaseSource,
@@ -19,7 +19,7 @@ internal class SendDataAndRetrieveMaterialRemoteSource(
         dataObject: JsonObject
     ): JsonObject? {
         val response = coroutineScopes.network.await {
-            networkJsonObject.send(url, dataObject)
+            networkSource.send(url, dataObject)
         }
         return response?.let {
             coroutineScopes.parser.await {

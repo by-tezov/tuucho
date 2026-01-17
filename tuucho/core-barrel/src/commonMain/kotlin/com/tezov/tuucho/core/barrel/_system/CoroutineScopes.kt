@@ -8,7 +8,6 @@ import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
 import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor
 import com.tezov.tuucho.core.domain.tool.async.CoroutineUncaughtExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 internal class CoroutineScopes(
     exceptionMonitor: CoroutineExceptionMonitor?,
@@ -60,6 +59,13 @@ internal class CoroutineScopes(
         CoroutineContext(
             name = "Action",
             context = Dispatchers.Default,
+            exceptionMonitor = exceptionMonitor,
+            uncaughtExceptionHandler = uncaughtExceptionHandler
+        )
+    override val image: CoroutineContextProtocol =
+        CoroutineContext(
+            name = "Image",
+            context = Dispatchers.IO,
             exceptionMonitor = exceptionMonitor,
             uncaughtExceptionHandler = uncaughtExceptionHandler
         )

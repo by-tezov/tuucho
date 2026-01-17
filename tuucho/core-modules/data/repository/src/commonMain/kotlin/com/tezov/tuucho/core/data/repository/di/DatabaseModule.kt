@@ -11,12 +11,12 @@ import com.tezov.tuucho.core.data.repository.database.table.JsonObjectContextual
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
-import com.tezov.tuucho.core.data.repository.di.DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG
+import com.tezov.tuucho.core.data.repository.di.DatabaseModule.Name.DATABASE_REPOSITORY_CONFIG
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 
-object DatabaseRepositoryModule {
+object DatabaseModule {
     interface Config {
         val fileName: String
     }

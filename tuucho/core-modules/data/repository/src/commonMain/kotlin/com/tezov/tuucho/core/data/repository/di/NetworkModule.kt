@@ -1,15 +1,13 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule.Name.HTTP_CLIENT_ENGINE
+import com.tezov.tuucho.core.data.repository.di.NetworkModule.Name.HTTP_CLIENT_ENGINE
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.network.HttpClientEngineFactory
-import com.tezov.tuucho.core.data.repository.network.NetworkHealthCheck
-import com.tezov.tuucho.core.data.repository.network.NetworkJsonObject
-import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
-import com.tezov.tuucho.core.data.repository.network.source.NetworkHttpRequestSource
+import com.tezov.tuucho.core.data.repository.network.NetworkSource
+import com.tezov.tuucho.core.data.repository.network.NetworkSourceProtocol
+import com.tezov.tuucho.core.data.repository.network.source.HttpNetworkSource
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
@@ -17,11 +15,10 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 
-object NetworkRepositoryModule {
+object NetworkModule {
     interface Config {
         val timeoutMillis: Long
         val version: String
@@ -29,6 +26,7 @@ object NetworkRepositoryModule {
         val healthEndpoint: String
         val resourceEndpoint: String
         val sendEndpoint: String
+        val imageEndpoint: String
     }
 
     internal object Name {
@@ -69,10 +67,7 @@ object NetworkRepositoryModule {
             }
         }
 
-        factoryOf(::NetworkHttpRequestSource)
-
-        singleOf(::NetworkJsonObject) bind NetworkJsonObjectProtocol::class
-
-        factoryOf(::NetworkHealthCheck) bind ServerHealthCheckProtocol::class
+        factoryOf(::HttpNetworkSource)
+        factoryOf(::NetworkSource) bind NetworkSourceProtocol::class
     }
 }
