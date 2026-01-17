@@ -67,7 +67,7 @@ The server must return one of the following:
 
 ```json
 {
-  "type": "form",
+  "subset": "form",
   "all-succeed": true,
   "action": {
     "before": ["store://key-value/save?login-authorization=${token}"],
@@ -85,7 +85,7 @@ The server must return one of the following:
 
 ```json
 {
-  "type": "form",
+  "subset": "form",
   "all-succeed": false,
   "failure-results": [
     {

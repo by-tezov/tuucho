@@ -82,7 +82,7 @@ You can provide your own platform-specific Ktor `HttpClientEngineFactory`.
 ### Android Example (OkHttp)
 
 ```kotlin
-module(ModuleGroupCore.Main) {
+module(ModuleContextCore.Main) {
     factory<HttpClientEngineFactory<*>> {
         OkHttp
     }
@@ -92,7 +92,7 @@ module(ModuleGroupCore.Main) {
 ### iOS Example (Darwin)
 
 ```kotlin
-module(ModuleGroupCore.Main) {
+module(ModuleContextCore.Main) {
     factory<HttpClientEngineFactory<*>> {
         Darwin
     }
@@ -105,10 +105,10 @@ If no engine is supplied, Tuucho automatically creates and manages its **own def
 
 ## Registering Configuration in Koin
 
-All configuration modules must be registered under **ModuleGroupCore.Main**.
+All configuration modules must be registered under **ModuleContextCore.Main**.
 
 ```kotlin
-module(ModuleGroupCore.Main) {
+module(ModuleContextCore.Main) {
 
     factory<StoreRepositoryModule.Config> {
         ...

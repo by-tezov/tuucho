@@ -114,6 +114,8 @@ nav:
       - Middlewares: mobile-integration/middleware.md
       - Action Middleware: mobile-integration/action.md
       - Use cases: mobile-integration/usecases.md
+  - Mobile Extension:
+      - Overview: mobile-extension/index.md
   - ChangeLog: changelog.md
   - Contribute: contribute.md
   - Contact: contact.md

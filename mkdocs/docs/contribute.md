@@ -32,16 +32,7 @@ Here’s who we’re looking for (and yes, that includes you):
 
 ---
 
-### 🤡 Why You Might Want to Help
-
-Maybe you were just **fired**, or you’re **about to be**, thanks to “economic reasons.”  
-Or maybe **l’inspection du travail** refused your layoff, and now you’re stuck at your desk with your motivation buried six feet under while all your colleagues are gone.
-
-Come take a breath.  
-Join **TUUCHO** under a cool, anonymous pseudonym — something like _Anonymopus_ (the anonymous octopus 🐙).  
-Find fun again. Build something weird, unexpected, and maybe even meaningful.
-
----
+###  Why You Might Want to Help
 
 Whatever your **level**, **experience**, or **motivation**, you’re welcome.  
 If you’re here to **learn**, **experiment**, or just **have fun**, this is your place — I’m still learning too.

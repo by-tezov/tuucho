@@ -15,13 +15,13 @@ Example:
 ```json
 "option": {
   "id": /* id object */,
-  "validator": /* validator object */
+  "form-validators": /* validator object */
 }
 ```
 
 In this example:
 
-- `validator` follow the [validator](form-validator.md) object rules.
+- `form-validators` follow the [validator](form-validator.md) object rules.
 
 ---
 

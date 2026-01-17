@@ -12,13 +12,14 @@ In your **shared module** (`commonMain`) you need the Tuucho core library plus i
 
 ```kotlin
  commonMain.dependencies {
-    implementation("com.tezov:tuucho.core:0.0.1-alpha23_2.3.0") // for kotlin 2.3.0     
+    implementation("com.tezov:tuucho.core:0.0.1-alpha25_2.3.0") // for kotlin 2.3.0     
+    implementation("com.tezov:tuucho.ui-component.stable:0.0.1-alpha25_2.3.0")
     implementation("io.insert-koin:koin-core:4.2.0-beta2")     
     implementation("io.ktor:ktor-client-core:3.3.2")
 
-    implementation(compose.runtime)
-    implementation(compose.foundation)
-    implementation(compose.ui)
+    implementation("org.jetbrains.compose.runtime:runtime:1.10.0")
+    implementation("org.jetbrains.compose.foundation:foundation:1.10.0")
+    implementation("org.jetbrains.compose.ui:ui:1.10.0")
  }
 ```
 
@@ -29,11 +30,15 @@ Tuucho exposes a composable engine which loads its configuration from the server
 ```kotlin
 @Composable
 fun AppScreen(
-    applicationModules: List<ModuleProtocol>,
-) = TuuchoEngineStart(
-        applicationModules = SystemSharedModules.invoke() + applicationModules,
+    applicationModules: List<KoinMass>,
+    koinExtension: (KoinApplication.() -> Unit)? = null,
+) {
+    TuuchoEngineStart(
+        koinMassModules = SystemSharedModules.invoke() + applicationModules,
+        koinExtension = koinExtension,
         onStartUrl = "lobby/page-login"
     )
+}
 ```
 
 > You can make use of middleware navigation to preload component: 
@@ -49,7 +54,7 @@ Tuucho needs configuration properties, like you server base url, endpoint, datab
 ```kotlin
 object ConfigModule {
 
-    fun invoke() = module(ModuleGroupCore.Main) {
+    fun invoke() = module(ModuleContextCore.Main) {
         factory<NetworkRepositoryModule.Config> {
             object : NetworkRepositoryModule.Config {
                 override val timeoutMillis = 5000
@@ -77,7 +82,7 @@ First you need the to add the dependencies
 ```kotlin
  dependencies {
     implementation(project(":app:shared"))
-    implementation("com.tezov:tuucho.core:0.0.1-alpha23_2.3.0") // for kotlin 2.3.0     
+    implementation("com.tezov:tuucho.core:0.0.1-alpha25_2.3.0") // for kotlin 2.3.0     
     implementation("io.insert-koin:koin-core:4.2.0-beta2")
 
     implementation("androidx.activity:activity-compose:1.12.2")
@@ -91,7 +96,7 @@ object ApplicationModule {
 
     fun invoke(
         applicationContext: Context
-    ) = module(ModuleGroupCore.Main) {
+    ) = module(ModuleContextCore.Main) {
         single<Context>(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT) {
             applicationContext
         }
@@ -106,13 +111,22 @@ Then, in your `Activity`, set the Compose content to `AppScreen` and pass in the
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { 
-            AppScreen(
-                listOf(
-                    ConfigModule.invoke(applicationContext)),
-                    ApplicationModule.invoke(applicationContext)
+        setContent {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.systemBars)
+            ) {
+                AppScreen(
+                    applicationModules = listOf(ApplicationModule.invoke(applicationContext)),
+                    koinExtension = {
+                        koin.get<NavigationFinishPublisher>().onFinish {
+                            koin.close()
+                            this@MainActivity.finish()
+                        }
+                    }
                 )
-            )
+            }
         }
     }
 }
@@ -125,35 +139,140 @@ At runtime Tuucho will start Koin, load the configuration and display the server
 On iOS you need to expose the `AppScreen` composable through a `ComposeUIViewController`, then wrap it in a SwiftUI view.  In your shared module create a simple function returning a `ComposeUIViewController`:
 
 ```kotlin
-fun uiView() = ComposeUIViewController {
+fun uiView(
+    koinExtension: (KoinApplication.() -> Unit)? = null,
+) = ComposeUIViewController {
     AppScreen(
-        applicationModuleDeclaration = listOf(
-            ConfigModule.invoke(applicationContext)
-        )
+        applicationModules = emptyList(),
+        koinExtension = koinExtension
     )
 }
+
+val KoinApplication.tuuchoKoinIos get(): KoinIos = koin.get<KoinIos>()
 ```
 
-Then in your iOS app, bridge the Compose controller into SwiftUI.  The sample uses `ComposeView` and `ContentView` to do this:
+Then in your iOS app, bridge the Compose controller into SwiftUI.  The sample uses `AppCoordinator`, `ComposeView` and `ComposeHostController` to do this:
 
 ```swift
-import AppSharedFramework
+//AppCoordinator.swift
+import SwiftUI
+import Combine
+class AppCoordinator: ObservableObject {
 
-struct ComposeView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> UIViewController {
-        MainScreen_iosKt.uiView()
+    @Published var shouldRecreateController = false
+    private var isKoinClosed = false
+
+    func handleAppAppear() {
+        if isKoinClosed {
+            shouldRecreateController = true
+            isKoinClosed = false
+        }
     }
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+
+    func handleKoinClosed() {
+        isKoinClosed = true
+        shouldRecreateController = true
+    }
 }
 
-struct ContentView: View {
-    var body: some View {
-        ComposeView()
+//ComposeView.swift
+import SwiftUI
+import UIKit
+struct ComposeView: UIViewControllerRepresentable {
+    @ObservedObject var coordinator: AppCoordinator
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let controller = ComposeHostController()
+        controller.coordinator = coordinator
+        return controller
     }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        if coordinator.shouldRecreateController {
+            guard let controller = uiViewController as? ComposeHostController else { return }
+            controller.recreateComposeView()
+            DispatchQueue.main.async {
+                coordinator.shouldRecreateController = false
+            }
+        }
+    }
+}
+
+//ComposeHostController.swift
+import UIKit
+import SwiftUI
+import AppSharedFramework
+
+class ComposeHostController: UIViewController {
+
+    weak var coordinator: AppCoordinator?
+    private var composeViewController: UIViewController?
+    private var isKoinInitialized = false
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupComposeView()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        composeViewController?.view.frame = view.bounds
+    }
+
+    func recreateComposeView() {
+        cleanup()
+        setupComposeView()
+    }
+
+    private func cleanup() {
+        composeViewController?.willMove(toParent: nil)
+        composeViewController?.view.removeFromSuperview()
+        composeViewController?.removeFromParent()
+        composeViewController = nil
+    }
+
+    private func setupComposeView() {
+        guard !isKoinInitialized else { return }
+        let vc = KMPKitKt.uiView(koinExtension: { [weak self] koinApplication in
+            guard let self = self else { return }
+            let publisher = koinApplication.tuuchoKoinIos.get(clazz: NavigationFinishPublisher.self) as! NavigationFinishPublisher
+            publisher.onFinish(block: {
+                self.coordinator?.handleKoinClosed()
+                koinApplication.tuuchoKoinIos.close()
+                self.isKoinInitialized = false
+                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+            })
+        })
+        self.composeViewController = vc
+        self.isKoinInitialized = true
+        addChild(vc)
+        view.addSubview(vc.view)
+        vc.view.frame = view.bounds
+        vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        vc.didMove(toParent: self)
+    }
+}
+
+// iosApp.swift
+import SwiftUI
+
+@main
+struct iosApp: App {
+    @StateObject private var coordinator = AppCoordinator()
+
+    var body: some Scene {
+        WindowGroup {
+            ComposeView(coordinator: coordinator)
+                .onAppear {
+                    coordinator.handleAppAppear()
+                }
+        }
+    }
+
 }
 ```
 
-Present `ContentView` from your root view controller and Tuucho will render the server‑driven UI on iOS.
+Ios require more code mainly to be able to manage the swipe back. you can check all that code inside the [sample app](https://github.com/by-tezov/tuucho)
 
 ## 6 Backend
 

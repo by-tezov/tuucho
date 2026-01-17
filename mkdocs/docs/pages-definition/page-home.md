@@ -42,7 +42,7 @@
           "id": "input-field-custom",
           "subset": "field",
           "option": {
-            "validator": "string-not-null"
+            "form-validators": "string-not-null"
           },
           "content": {
             "title": "any comment?",
@@ -70,10 +70,8 @@
                     "content": { "value": "Send Form" }
                   },
                   "action": {
-                    "value": "form-send://url/form-from-page-home",
-                    "params": {
-                      "action-validated": "navigate://url/page-confirmation"
-                    }
+                    "primaries": "form-send://url/form-from-page-home",
+                    "validated": "navigate://url/auth/page-confirmation"
                   }
                 }
               },
@@ -116,7 +114,7 @@
       "input-field-age": {
         "subset": "field",
         "option": {
-          "validator": [
+          "form-validators": [
             {
               "type": "string-min-value",
               "value": "18",
@@ -155,7 +153,7 @@
       "input-field-email": {
         "subset": "field",
         "option": {
-          "validator": [
+          "form-validators": [
             {
               "type": "string-email",
               "message-error-id": "*validator-1"
