@@ -58,15 +58,11 @@ You can:
 
 ## Registering Interceptors in Koin
 
-All interceptors must be supplied to Koin under the **ModuleGroupData.Interceptor** group.
+All interceptors must be supplied to Koin under the **ModuleContextData.Interceptor** context.
 
 ```kotlin
-module(ModuleGroupData.Interceptor) {
-    factory<HeadersHttpInterceptor> {
-        HeadersHttpInterceptor(
-            config = get()
-        )
-    } bindOrdered HttpInterceptor::class
+module(ModuleContextData.Interceptor) {
+    factoryOf(::HeadersHttpInterceptor) bindOrdered HttpInterceptor::class
 }
 ```
 

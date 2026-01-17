@@ -72,7 +72,6 @@ kotlin {
             implementation(libs.compose.ui)
 
             implementation(libs.kotlin.serialization.json)
-            implementation(libs.koin.core)
             implementation(libs.ktor.core)
         }
     }

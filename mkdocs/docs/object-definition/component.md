@@ -22,10 +22,8 @@ Example:
   "content": {
     "label": "Submit",
     "action": {
-      "value": "form-send://url/form-from-newletter-subscription",
-      "params": {
-        "action-validated": "navigate://url/page-confirmation"
-      }
+      "primaries": "form-send://url/form-from-newletter-subscription",
+      "validated": "navigate://url/auth/page-confirmation"
     }
   },
   "option": {

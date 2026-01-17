@@ -4,6 +4,16 @@
 
 ---
 
+## 0.0.1-alpha25 - 2026-01-17
+
+- allow custom ui
+- presentation layer with dsl
+- use of koin scope to split parser between material and response
+- update deprecated backhandler
+- add koin-iOS
+
+---
+
 ## 0.0.1-alpha21 - 2025-11-15
 
 - fix timeout network crash uncatchable

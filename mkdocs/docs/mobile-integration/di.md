@@ -12,14 +12,14 @@ Thanks to Koin, you can extend Tuucho by providing:
 - Monitors — see: `mobile-integration/monitor.md`
 - Actions — see: `mobile-integration/action.md`
 
-Tuucho organizes modules using **module groups** and its own `ModuleProtocol`. Each feature documents which module group it belongs to.
+Tuucho organizes modules using **module context** and its own `ModuleProtocol`. Each feature documents which module group it belongs to.
 
 ---
 
 ## Supplying Configuration (Network Example)
 
 ```kotlin
-module(ModuleGroupCore.Main) {
+module(ModuleContextCore.Main) {
 
     factory<NetworkRepositoryModule.Config> {
         object : NetworkRepositoryModule.Config {
@@ -42,12 +42,12 @@ A single expect/actual pair handles dependency injection per Gradle module.
 ## commonMain
 
 ```kotlin
-expect fun SystemSharedModules.platformInvoke(): List<ModuleProtocol>
+expect fun SystemSharedModules.platformInvoke(): List<KoinMass>
 
 object SystemSharedModules {
 
-    fun invoke(): List<ModuleProtocol> = listOf(
-        module(ModuleGroupCore.Main) {
+    fun invoke(): List<KoinMass> = listOf(
+        module(ModuleContextCore.Main) {
             single { Logger(exceptionVerbose = false) }
         },
         MonitorModule.invoke(),
@@ -63,7 +63,7 @@ object SystemSharedModules {
 ## Platform Side (Android or iOS)
 
 ```kotlin
-internal actual fun SystemSharedModules.platformInvoke(): List<ModuleProtocol> = listOf(
+internal actual fun SystemSharedModules.platformInvoke(): List<KoinMass> = listOf(
     NetworkModuleAndroid.invoke(),
     ConfigModuleAndroid.invoke()
 )
@@ -76,7 +76,7 @@ internal actual fun SystemSharedModules.platformInvoke(): List<ModuleProtocol> =
 ```kotlin
 internal object NetworkModuleAndroid {
 
-    fun invoke() = module(ModuleGroupCore.Main) {
+    fun invoke() = module(ModuleContextCore.Main) {
         factory<HttpClientEngineFactory<*>> {
             OkHttp
         }

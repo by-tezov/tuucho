@@ -6,7 +6,7 @@ Tuucho provides several middleware hooks that let you intercept and alter differ
 - SendData operations
 - View updates (contextual rendering)
 
-Middleware execute **in the exact order they are declared**, thanks to `bindOrdered`. All middleware must be supplied to **ModuleGroupDomain.Middleware**.
+Middleware execute **in the exact order they are declared**, thanks to `bindOrdered`. All middleware must be supplied to **ModuleContextDomain.Middleware**.
 
 ---
 
@@ -79,10 +79,8 @@ class BeforeNavigateToUrlMiddleware() : NavigationMiddleware.ToUrl {
 Register forward navigation middleware:
 
 ```kotlin
-module(ModuleGroupDomain.Middleware) {
-    factory<BeforeNavigateToUrlMiddleware> {
-        BeforeNavigateToUrlMiddleware()
-    } bindOrdered NavigationMiddleware.ToUrl::class
+module(ModuleContextDomain.Middleware) {
+    factoryOf(::BeforeNavigateToUrlMiddleware) bindOrdered NavigationMiddleware.ToUrl::class
 }
 ```
 
@@ -120,10 +118,8 @@ class BeforeNavigateBackMiddleware() : NavigationMiddleware.Back {
 Register it:
 
 ```kotlin
-module(ModuleGroupDomain.Middleware) {
-    factory<BeforeNavigateBackMiddleware> {
-        BeforeNavigateBackMiddleware()
-    } bindOrdered NavigationMiddleware.Back::class
+module(ModuleContextDomain.Middleware) {
+    factoryOf(::BeforeNavigateBackMiddleware) bindOrdered NavigationMiddleware.Back::class
 }
 ```
 
@@ -193,10 +189,8 @@ class SendDataMiddleware() : SendDataMiddleware {
 Register it:
 
 ```kotlin
-module(ModuleGroupDomain.Middleware) {
-    factory<SendDataMiddleware> {
-        SendDataMiddleware()
-    } bindOrdered SendDataMiddleware::class
+module(ModuleContextDomain.Middleware) {
+    factoryOf(::SendDataMiddleware) bindOrdered SendDataMiddleware::class
 }
 ```
 
@@ -245,9 +239,7 @@ Register it:
 
 ```kotlin
 module(ModuleGroupDomain.Middleware) {
-    factory<UpdateViewMiddleware> {
-        UpdateViewMiddleware()
-    } bindOrdered UpdateViewMiddleware::class
+    factoryOf(::UpdateViewMiddleware) bindOrdered UpdateViewMiddleware::class
 }
 ```
 
