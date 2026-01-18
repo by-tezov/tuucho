@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUse
 
 interface ImageMiddleware : MiddlewareProtocol<ImageMiddleware.Context, ProcessImageUseCase.Output> {
     data class Context(
-        val input: ProcessImageUseCase.Input
+        val input: ProcessImageUseCase.Input.Image
     )
 
     object Priority {

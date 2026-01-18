@@ -24,9 +24,9 @@ kotlin {
         val isMacOs = isMacOs
         if (isMacOs) {
             iosMain.dependencies {
+                implementation(libs.kotlin.couroutine)
                 implementation(libs.ktor.darwin)
                 implementation(libs.sql.delight.driver.ios)
-                implementation(libs.kotlin.couroutine)
             }
         }
         commonMain.dependencies {
@@ -35,19 +35,14 @@ kotlin {
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.kotlin.datetime)
-
+            implementation(libs.okio)
             implementation(libs.koin.core)
-
+            implementation(libs.coil.core)
             implementation(libs.ktor.core)
             implementation(libs.ktor.cio)
             implementation(libs.ktor.serialization)
-
             implementation(libs.sql.delight.runtime)
             implementation(libs.sql.delight.coroutines)
-
-            implementation(libs.okio)
-
-            implementation("io.coil-kt.coil3:coil-core:3.3.0")
         }
     }
 }

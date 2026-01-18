@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepository
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
 class ProcessImageUseCase(
@@ -15,9 +16,17 @@ class ProcessImageUseCase(
     private val imageExecutor: ImageExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
 
-    data class Input(
-        val image: ImageModelDomain,
-    )
+    sealed class Input {
+
+        data class Image(
+            val image: ImageModelDomain,
+            val imageObjectOriginal: JsonObject? = null,
+        ) : Input()
+
+        data class ImageObject(
+            val imageObject: JsonObject,
+        ) : Input()
+    }
 
     sealed class Output {
         class Element(
@@ -25,7 +34,7 @@ class ProcessImageUseCase(
         ) : Output()
 
         class ElementArray(
-            val values: List<ImageRepositoryProtocol.Image<*, *>>,
+            val values: List<Output>,
         ) : Output()
     }
 
