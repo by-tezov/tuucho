@@ -13,10 +13,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
-import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.scope.Scope
 
 class ImageRectifier(
@@ -61,18 +59,6 @@ class ImageRectifier(
         .apply {
             type = TypeSchema.Value.image
             id ?: run { id = JsonNull }
-            val ignoreKeys = listOf(IdSchema.root, TypeSchema.root)
-            keys()
-                .asSequence()
-                .filter { !ignoreKeys.contains(it) }
-                .forEach { key ->
-                    get(key)
-                        ?.takeIf {
-                            it is JsonPrimitive
-                        }?.let {
-                            set(key, listOf(it).let(::JsonArray))
-                        }
-                }
         }.collect()
 
     override fun afterAlterObject(

@@ -33,9 +33,6 @@ object ImageModule {
                     add(get<HttpRemoteFetcher.Factory>())
                 }
                 .build()
-                .also {
-                    println("ImageLoader built: $it")
-                }
         }
 
         factoryOf(HttpRemoteFetcher::Factory)

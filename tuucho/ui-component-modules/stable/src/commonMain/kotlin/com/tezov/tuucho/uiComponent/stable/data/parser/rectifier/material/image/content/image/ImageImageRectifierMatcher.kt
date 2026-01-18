@@ -16,9 +16,9 @@ class ImageImageRectifierMatcher : RectifierMatcherProtocol {
         path: JsonElementPath,
         element: JsonElement
     ): Boolean {
-        if (!path.lastSegmentIs(ImageSchema.Content.Key.image)) return false
+        if (!path.lastSegmentIs(ImageSchema.Content.Key.value)) return false
         val parent = element.find(path.parent()) as? JsonObject
         return parent.isSubsetOf(ImageSchema.Component.Value.subset) &&
-            parent.isTypeOf(TypeSchema.Value.image)
+            parent.isTypeOf(TypeSchema.Value.content)
     }
 }

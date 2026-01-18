@@ -18,7 +18,7 @@ data class ImageModelDomain(
         private val QUERY_SEPARATOR = Regex.escape("?")
 
         @Suppress("ktlint:standard:max-line-length")
-        private val ACTION_REGEX = Regex(
+        private val IMAGE_REGEX = Regex(
             pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR([^$QUERY_SEPARATOR]+)(?:$QUERY_SEPARATOR(.+))?$"""
         )
 
@@ -53,7 +53,7 @@ data class ImageModelDomain(
         fun from(
             value: String
         ): ImageModelDomain {
-            val match = ACTION_REGEX.matchEntire(value)
+            val match = IMAGE_REGEX.matchEntire(value)
                 ?: throw DomainException.Default("invalid image")
             return ImageModelDomain(
                 command = match.groups[1]?.value

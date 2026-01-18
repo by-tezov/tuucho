@@ -1,7 +1,20 @@
 package com.tezov.tuucho.uiComponent.stable.presentation.view
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.dp
+import coil3.Canvas
+import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projection.ImageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.image
@@ -19,7 +32,7 @@ import kotlinx.serialization.json.JsonObject
 interface ImageViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
-
+        image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>?
     )
 
     @Composable
@@ -56,7 +69,7 @@ private class ImageView(
     override suspend fun createComponentProjector() = componentProjector {
         +content {
             image = +image(
-                key = Content.Key.image,
+                key = Content.Key.value,
             )
         }.contextual
     }.contextual
@@ -68,19 +81,45 @@ private class ImageView(
         scope: Any?
     ) {
         ComposeComponent(
-
+            image = image.value
         )
     }
 
     @Composable
     override fun ComposeComponent(
-
+        image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>?
     ) {
-        Text("Soon will be an Image")
+        image?.let {
+            Image(
+                painter = CoilImagePainter(image),
+                contentDescription = "Image",
+                modifier = Modifier
+                    .size(72.dp)
+                    .background(Color.Red)
+                    .padding(6.dp),
+//            colorFilter = ColorFilter.tint(Color.Blue)
+            )
+        } ?: run {
+            Text("Image coming soon")
+        }
+
     }
 
     @Composable
     override fun ComposePlaceHolder() {
         displayPlaceholder(null)
+    }
+}
+
+class CoilImagePainter(private val image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>) : Painter() {
+    override val intrinsicSize = androidx.compose.ui.geometry.Size(
+        image.width.toFloat(),
+        image.height.toFloat()
+    )
+
+    override fun DrawScope.onDraw() {
+        drawIntoCanvas { canvas ->
+            image.draw(canvas.nativeCanvas)
+        }
     }
 }

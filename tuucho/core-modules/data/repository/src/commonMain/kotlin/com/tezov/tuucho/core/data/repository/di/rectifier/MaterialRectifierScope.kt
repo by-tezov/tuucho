@@ -118,6 +118,7 @@ internal object MaterialRectifierScope {
         associate<ContentRectifier.Association.Processor> {
             declaration<IdRectifier>()
             declaration<ActionRectifier>()
+            declaration<ImageRectifier>()
             declaration<TextRectifier>()
         }
     }
