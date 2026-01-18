@@ -1,8 +1,5 @@
 ### Todo:
 
-- TODO process image should return an object or a list
-- do the parser Image
-
 - then do the ui-component Image
 
 

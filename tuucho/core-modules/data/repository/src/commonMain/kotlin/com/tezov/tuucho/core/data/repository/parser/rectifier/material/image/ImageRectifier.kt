@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension
+package com.tezov.tuucho.core.data.repository.parser.rectifier.material.image
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
@@ -7,27 +7,27 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.R
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.scope.Scope
 
-class DimensionRectifier(
+class ImageRectifier(
     scope: Scope
 ) : AbstractRectifier(scope) {
     sealed class Association {
         object Matcher : Association()
-
         object Processor : Association()
     }
 
-    override val key = DimensionSchema.root
-
+    override val key = ImageSchema.root
     override val matchers: List<RectifierMatcherProtocol> by lazy {
         scope.getAllAssociated(Association.Matcher::class)
     }
@@ -40,15 +40,15 @@ class DimensionRectifier(
         element: JsonElement,
     ) = element
         .find(path)
-        .withScope(DimensionSchema::Scope)
+        .withScope(ImageSchema::Scope)
         .apply {
-            type = TypeSchema.Value.dimension
+            type = TypeSchema.Value.image
             val value = this.element.string
             if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
                 id = this.element
             } else {
                 id = JsonNull
-                default = value
+                source = value
             }
         }.collect()
 
@@ -57,10 +57,22 @@ class DimensionRectifier(
         element: JsonElement,
     ) = element
         .find(path)
-        .withScope(DimensionSchema::Scope)
+        .withScope(ImageSchema::Scope)
         .apply {
-            type = TypeSchema.Value.dimension
+            type = TypeSchema.Value.image
             id ?: run { id = JsonNull }
+            val ignoreKeys = listOf(IdSchema.root, TypeSchema.root)
+            keys()
+                .asSequence()
+                .filter { !ignoreKeys.contains(it) }
+                .forEach { key ->
+                    get(key)
+                        ?.takeIf {
+                            it is JsonPrimitive
+                        }?.let {
+                            set(key, listOf(it).let(::JsonArray))
+                        }
+                }
         }.collect()
 
     override fun afterAlterObject(
@@ -71,10 +83,10 @@ class DimensionRectifier(
         var sourceRectified: String?
         return element
             .find(path)
-            .withScope(DimensionSchema::Scope)
+            .withScope(ImageSchema::Scope)
             .takeIf {
                 it
-                    .rectifyIds(DimensionSchema.Value.Group.common)
+                    .rectifyIds(ImageSchema.Value.Group.common)
                     .also { (value, source) ->
                         valueRectified = value
                         sourceRectified = source

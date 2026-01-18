@@ -21,6 +21,7 @@ object MaterialSchema {
         const val colors = "colors"
         const val dimensions = "dimensions"
         const val actions = "actions"
+        const val images = "images"
     }
 
     class Scope(
