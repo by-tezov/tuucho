@@ -10,7 +10,6 @@ import java.net.URLConnection
 internal class AssetsAndroid(
     private val context: Context
 ) : AssetsProtocol {
-
     companion object {
         private val imageContentTypes = mapOf(
             "svg" to "image/svg+xml",
@@ -24,58 +23,57 @@ internal class AssetsAndroid(
 
     override fun readFile(
         request: AssetsProtocol.Request
-    ): AssetsProtocol.Response =
-        openAsset(
-            assetPath = "files/${request.path}",
-            contentType = guessContentType(request.path)
-        )
+    ): AssetsProtocol.Response = openAsset(
+        assetPath = "files/${request.path}",
+        contentType = guessContentType(request.path)
+    )
 
     override fun readImage(
         request: AssetsProtocol.Request
-    ): AssetsProtocol.Response =
-        try {
-            val assetPath = resolveImageAssetPath("files/${request.path}")
-            openAsset(
-                assetPath = assetPath,
-                contentType = imageContentTypes.entries
-                    .firstOrNull { assetPath.endsWith(".${it.key}") }
-                    ?.value
-                    ?: "application/octet-stream"
-            )
-        } catch (t: Throwable) {
-            AssetsProtocol.Response.Failure(
-                error = t
-            )
-        }
+    ): AssetsProtocol.Response = try {
+        val assetPath = resolveImageAssetPath("files/${request.path}")
+        openAsset(
+            assetPath = assetPath,
+            contentType = imageContentTypes.entries
+                .firstOrNull { assetPath.endsWith(".${it.key}") }
+                ?.value
+                ?: "application/octet-stream"
+        )
+    } catch (t: Throwable) {
+        AssetsProtocol.Response.Failure(
+            error = t
+        )
+    }
 
     private fun openAsset(
         assetPath: String,
         contentType: String
-    ): AssetsProtocol.Response =
-        try {
-            val inputStream = context.assets.open(assetPath)
-            val source = inputStream.source()
+    ): AssetsProtocol.Response = try {
+        val inputStream = context.assets.open(assetPath)
+        val source = inputStream.source()
 
-            val contentLength = runCatching {
-                context.assets.openFd(assetPath).length
-            }.getOrElse {
-                inputStream.available().toLong()
-            }
-
-            AssetsProtocol.Response.Success(
-                source = source,
-                headers = Headers.build {
-                    this["Content-Type"] = contentType
-                    this["Content-Length"] = contentLength.toString()
-                }
-            )
-        } catch (t: Throwable) {
-            AssetsProtocol.Response.Failure(
-                error = t
-            )
+        val contentLength = runCatching {
+            context.assets.openFd(assetPath).length
+        }.getOrElse {
+            inputStream.available().toLong()
         }
 
-    private fun resolveImageAssetPath(basePath: String): String {
+        AssetsProtocol.Response.Success(
+            source = source,
+            headers = Headers.build {
+                this["Content-Type"] = contentType
+                this["Content-Length"] = contentLength.toString()
+            }
+        )
+    } catch (t: Throwable) {
+        AssetsProtocol.Response.Failure(
+            error = t
+        )
+    }
+
+    private fun resolveImageAssetPath(
+        basePath: String
+    ): String {
         val hasExtension = basePath.substringAfterLast('/', "").contains('.')
 
         if (hasExtension && assetExists(basePath)) {
@@ -102,20 +100,23 @@ internal class AssetsAndroid(
         throw DataException.Default("resource not found")
     }
 
-    private fun assetExists(path: String): Boolean =
-        try {
-            context.assets.open(path).close()
-            true
-        } catch (_: Throwable) {
-            false
-        }
+    private fun assetExists(
+        path: String
+    ): Boolean = try {
+        context.assets.open(path).close()
+        true
+    } catch (_: Throwable) {
+        false
+    }
 
-    private fun guessContentType(path: String): String {
+    private fun guessContentType(
+        path: String
+    ): String {
         val extension = path.substringAfterLast('.', "").lowercase()
-        return MimeTypeMap.getSingleton()
+        return MimeTypeMap
+            .getSingleton()
             .getMimeTypeFromExtension(extension)
             ?: URLConnection.guessContentTypeFromName(path)
             ?: "application/octet-stream"
     }
-
 }

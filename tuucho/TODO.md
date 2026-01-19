@@ -2,6 +2,9 @@
 
 - Do all MVP Image.
 - TTL + placeholder
+- add mock service for image
+- ios
+- Alternative image (fallback) query fallback local/remote ? 
 
 - asset factorise commonMain + config root folder assets
 

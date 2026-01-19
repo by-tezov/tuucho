@@ -3,14 +3,14 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveRemoteImageUseCase.Input
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveRemoteImageUseCase.Output
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveLocalImageUseCase.Input
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveLocalImageUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
 @OpenForTest
-class RetrieveRemoteImageUseCase(
+class RetrieveLocalImageUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val imagesRepository: ImageRepositoryProtocol.Remote,
+    private val imagesRepository: ImageRepositoryProtocol.Local,
 ) : UseCaseProtocol.Async<Input, Output> {
     data class Input(
         val url: String,

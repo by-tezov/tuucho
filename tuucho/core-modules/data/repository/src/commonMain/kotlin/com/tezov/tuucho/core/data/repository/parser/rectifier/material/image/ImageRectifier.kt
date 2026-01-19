@@ -22,6 +22,7 @@ class ImageRectifier(
 ) : AbstractRectifier(scope) {
     sealed class Association {
         object Matcher : Association()
+
         object Processor : Association()
     }
 

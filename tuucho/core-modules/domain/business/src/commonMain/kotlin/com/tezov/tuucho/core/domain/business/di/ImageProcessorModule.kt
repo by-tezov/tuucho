@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.interaction.imageProcessor.ImageExecutor
+import com.tezov.tuucho.core.domain.business.interaction.imageProcessor.LocalImageMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.imageProcessor.RemoteImageMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.ImageMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ImageExecutorProtocol
@@ -18,5 +19,6 @@ internal object ImageProcessorModule {
             )
         }
         factoryOf(::RemoteImageMiddleware) bind ImageMiddleware::class
+        factoryOf(::LocalImageMiddleware) bind ImageMiddleware::class
     }
 }

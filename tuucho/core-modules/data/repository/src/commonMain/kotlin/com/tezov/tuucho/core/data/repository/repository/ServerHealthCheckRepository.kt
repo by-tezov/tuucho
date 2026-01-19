@@ -1,11 +1,12 @@
 package com.tezov.tuucho.core.data.repository.repository
 
-import com.tezov.tuucho.core.data.repository.repository.source.HealthCheckSource
+import com.tezov.tuucho.core.data.repository.repository.source.RemoteSource
 import com.tezov.tuucho.core.domain.business.protocol.repository.ServerHealthCheckRepositoryProtocol
 
 internal class ServerHealthCheckRepository(
-    private val healthCheckSource: HealthCheckSource
+    private val remoteSource: RemoteSource,
 ) : ServerHealthCheckRepositoryProtocol {
-
-    override suspend fun process(url: String) = healthCheckSource.process(url)
+    override suspend fun process(
+        url: String
+    ) = remoteSource.healthCheck(url)
 }

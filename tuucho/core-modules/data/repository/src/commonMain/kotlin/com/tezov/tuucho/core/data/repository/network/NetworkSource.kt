@@ -23,7 +23,6 @@ interface NetworkSourceProtocol {
 internal class NetworkSource(
     private val httpNetworkSource: HttpNetworkSource
 ) : NetworkSourceProtocol {
-
     override suspend fun resource(
         url: String
     ): JsonObject {

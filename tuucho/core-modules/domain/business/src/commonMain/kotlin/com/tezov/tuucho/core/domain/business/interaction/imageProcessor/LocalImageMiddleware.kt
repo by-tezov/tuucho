@@ -2,22 +2,22 @@ package com.tezov.tuucho.core.domain.business.interaction.imageProcessor
 
 import com.tezov.tuucho.core.domain.business.middleware.ImageMiddleware
 import com.tezov.tuucho.core.domain.business.model.ImageModelDomain
-import com.tezov.tuucho.core.domain.business.model.image.RemoteImage
+import com.tezov.tuucho.core.domain.business.model.image.LocalImage
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveRemoteImageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveLocalImageUseCase
 
-internal class RemoteImageMiddleware(
+internal class LocalImageMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
-    private val retrieveRemoteImage: RetrieveRemoteImageUseCase
+    private val retrieveLocalImage: RetrieveLocalImageUseCase
 ) : ImageMiddleware {
     override val priority: Int
         get() = ImageMiddleware.Priority.DEFAULT
 
     override fun accept(
         image: ImageModelDomain,
-    ) = image.command == RemoteImage.command
+    ) = image.command == LocalImage.command
 
     override suspend fun process(
         context: ImageMiddleware.Context,
@@ -25,8 +25,8 @@ internal class RemoteImageMiddleware(
     ) = with(context.input) {
         useCaseExecutor
             .await(
-                useCase = retrieveRemoteImage,
-                input = RetrieveRemoteImageUseCase.Input(
+                useCase = retrieveLocalImage,
+                input = RetrieveLocalImageUseCase.Input(
                     url = context.input.image.target
                 )
             )?.let {

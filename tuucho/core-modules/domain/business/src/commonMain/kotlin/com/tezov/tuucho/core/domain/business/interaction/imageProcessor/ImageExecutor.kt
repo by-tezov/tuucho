@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.model.ImageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ImageExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase.Output
 
@@ -16,7 +15,6 @@ internal class ImageExecutor(
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val middlewares: List<ImageMiddleware>
 ) : ImageExecutorProtocol {
-
     override suspend fun process(
         input: Input
     ) = with(input) {

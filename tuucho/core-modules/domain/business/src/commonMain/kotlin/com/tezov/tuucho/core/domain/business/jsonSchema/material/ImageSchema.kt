@@ -36,5 +36,4 @@ object ImageSchema {
         var source by delegate<String?>(Key.source)
         var timeToLive by delegate<JsonObject?>(Key.timeToLive)
     }
-
 }

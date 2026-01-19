@@ -63,7 +63,6 @@ private class ImageView(
     screenContext: ScreenContextProtocol,
 ) : AbstractView(screenContext),
     ImageViewProtocol {
-
     private lateinit var image: ImageProjectionProtocol
 
     override suspend fun createComponentProjector() = componentProjector {
@@ -102,7 +101,6 @@ private class ImageView(
         } ?: run {
             Text("Image coming soon")
         }
-
     }
 
     @Composable
@@ -111,7 +109,9 @@ private class ImageView(
     }
 }
 
-class CoilImagePainter(private val image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>) : Painter() {
+class CoilImagePainter(
+    private val image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>
+) : Painter() {
     override val intrinsicSize = androidx.compose.ui.geometry.Size(
         image.width.toFloat(),
         image.height.toFloat()

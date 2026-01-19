@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.mock.CoroutineTestScope
-import com.tezov.tuucho.core.data.repository.network.NetworkSourceProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.RemoteSource
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -20,18 +20,18 @@ import kotlin.test.assertEquals
 
 class MaterialRemoteSourceTest {
     private val coroutineTestScope = CoroutineTestScope()
-    private lateinit var networkJsonObject: NetworkSourceProtocol
+    private lateinit var remoteSource: RemoteSource
     private lateinit var materialRectifier: MaterialRectifier
     private lateinit var sut: MaterialRemoteSource
 
     @BeforeTest
     fun setup() {
-        networkJsonObject = mock()
+        remoteSource = mock()
         materialRectifier = mock()
         coroutineTestScope.setup()
         sut = MaterialRemoteSource(
             coroutineScopes = coroutineTestScope.mock,
-            networkSource = networkJsonObject,
+            remoteSource = remoteSource,
             materialRectifier = materialRectifier
         )
     }
@@ -40,7 +40,7 @@ class MaterialRemoteSourceTest {
     fun tearDown() {
         coroutineTestScope.verifyNoMoreCalls()
         verifyNoMoreCalls(
-            networkJsonObject,
+            remoteSource,
         )
     }
 
@@ -50,7 +50,7 @@ class MaterialRemoteSourceTest {
         val networkResponse = buildJsonObject { put("files", "data") }
         val expected = buildJsonObject { put("rectified", "ok") }
 
-        everySuspend { networkJsonObject.resource(url) } returns networkResponse
+        everySuspend { remoteSource.resource(url) } returns networkResponse
         everySuspend { materialRectifier.process(networkResponse) } returns expected
 
         val result = sut.process(url)
@@ -58,8 +58,7 @@ class MaterialRemoteSourceTest {
         assertEquals(expected, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.network.await<Any>(any())
-            networkJsonObject.resource(url)
+            remoteSource.resource(url)
             coroutineTestScope.mock.parser.await<Any>(any())
             materialRectifier.process(networkResponse)
         }

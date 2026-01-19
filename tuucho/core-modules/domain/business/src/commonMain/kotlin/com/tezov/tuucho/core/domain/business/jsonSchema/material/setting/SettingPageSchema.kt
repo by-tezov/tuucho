@@ -22,5 +22,4 @@ object PageSettingSchema {
         var type by delegate<String?>(Key.type)
         var timeToLive by delegate<JsonObject?>(Key.timeToLive)
     }
-
 }

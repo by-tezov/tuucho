@@ -62,13 +62,16 @@ private class ImageProjection(
                         imageObject = imageObject
                     )
                 )
+
                 @Suppress("UNCHECKED_CAST")
                 val image = (when (result) {
                     is ProcessImageUseCase.Output.Element -> {
                         result.image
                     }
 
-                    else -> null
+                    else -> {
+                        null
+                    }
                 }) as? ImageRepositoryProtocol.Image<Image, Canvas>
                 this@ImageProjection.value = image
             }

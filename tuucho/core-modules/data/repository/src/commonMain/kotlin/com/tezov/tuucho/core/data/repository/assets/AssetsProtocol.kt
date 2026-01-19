@@ -4,7 +4,6 @@ import io.ktor.http.Headers
 import okio.Source
 
 interface AssetsProtocol {
-
     data class Request(
         val path: String,
         val headers: Headers = Headers.Empty,
@@ -28,5 +27,4 @@ interface AssetsProtocol {
     fun readImage(
         request: Request
     ): Response
-
 }

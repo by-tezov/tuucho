@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUs
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveLocalImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveRemoteImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
@@ -73,6 +74,7 @@ internal object UseCaseModule {
         factoryOf(::ProcessActionUseCase)
         factoryOf(::ProcessImageUseCase)
         factoryOf(::RefreshMaterialCacheUseCase)
+        factoryOf(::RetrieveLocalImageUseCase)
         factoryOf(::RetrieveRemoteImageUseCase)
         factoryOf(::ServerHealthCheckUseCase)
 

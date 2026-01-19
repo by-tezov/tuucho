@@ -11,7 +11,6 @@ import platform.Foundation.length
 import platform.UniformTypeIdentifiers.UTType
 
 class AssetsIos : AssetsProtocol {
-
     companion object {
         private val imageContentTypes = mapOf(
             "svg" to "image/svg+xml",
@@ -25,63 +24,63 @@ class AssetsIos : AssetsProtocol {
 
     override fun readFile(
         request: AssetsProtocol.Request
-    ): AssetsProtocol.Response =
-        openAsset(
-            resourcePath = "assets/files/${request.path}",
-            contentType = guessContentType(request.path)
-        )
+    ): AssetsProtocol.Response = openAsset(
+        resourcePath = "assets/files/${request.path}",
+        contentType = guessContentType(request.path)
+    )
 
     override fun readImage(
         request: AssetsProtocol.Request
-    ): AssetsProtocol.Response =
-        try {
-            val resourcePath = resolveImageResourcePath("assets/files/${request.path}")
-            openAsset(
-                resourcePath = resourcePath,
-                contentType = imageContentTypes.entries
-                    .firstOrNull { resourcePath.endsWith(".${it.key}") }
-                    ?.value
-                    ?: "application/octet-stream"
-            )
-        } catch (t: Throwable) {
-            AssetsProtocol.Response.Failure(
-                source = null,
-                headers = Headers.Empty,
-                error = t
-            )
-        }
+    ): AssetsProtocol.Response = try {
+        val resourcePath = resolveImageResourcePath("assets/files/${request.path}")
+        openAsset(
+            resourcePath = resourcePath,
+            contentType = imageContentTypes.entries
+                .firstOrNull { resourcePath.endsWith(".${it.key}") }
+                ?.value
+                ?: "application/octet-stream"
+        )
+    } catch (t: Throwable) {
+        AssetsProtocol.Response.Failure(
+            source = null,
+            headers = Headers.Empty,
+            error = t
+        )
+    }
 
     private fun openAsset(
         resourcePath: String,
         contentType: String
-    ): AssetsProtocol.Response =
-        try {
-            val (name, ext, subdir) = splitResourcePath(resourcePath)
-            val filePath = NSBundle.mainBundle
-                .pathForResource(name, ext, subdir)
-                ?: error("resource not found")
-            val source: Source = FileSystem.SYSTEM.source(filePath.toPath())
-            val contentLength = NSData.dataWithContentsOfFile(filePath)
-                ?.length
-                ?.toLong()
-                ?: 0L
-            AssetsProtocol.Response.Success(
-                source = source,
-                headers = Headers.build {
-                    this["Content-Type"] = contentType
-                    this["Content-Length"] = contentLength.toString()
-                },
-                error = null
-            )
-        } catch (t: Throwable) {
-            AssetsProtocol.Response.Failure(
-                source = null,
-                headers = Headers.Empty,
-                error = t
-            )
-        }
+    ): AssetsProtocol.Response = try {
+        val (name, ext, subdir) = splitResourcePath(resourcePath)
+        val filePath = NSBundle.mainBundle
+            .pathForResource(name, ext, subdir)
+            ?: error("resource not found")
+        val source: Source = FileSystem.SYSTEM.source(filePath.toPath())
+        val contentLength = NSData
+            .dataWithContentsOfFile(filePath)
+            ?.length
+            ?.toLong()
+            ?: 0L
+        AssetsProtocol.Response.Success(
+            source = source,
+            headers = Headers.build {
+                this["Content-Type"] = contentType
+                this["Content-Length"] = contentLength.toString()
+            },
+            error = null
+        )
+    } catch (t: Throwable) {
+        AssetsProtocol.Response.Failure(
+            source = null,
+            headers = Headers.Empty,
+            error = t
+        )
+    }
 
-    private fun resolveImageResourcePath(basePath: String): String {
+    private fun resolveImageResourcePath(
+        basePath: String
+    ): String {
         val hasExtension = basePath.substringAfterLast('/', "").contains('.')
         if (hasExtension && resourceExists(basePath)) {
             return basePath
@@ -104,12 +103,16 @@ class AssetsIos : AssetsProtocol {
         throw DataException.Default("resource not found")
     }
 
-    private fun resourceExists(resourcePath: String): Boolean {
+    private fun resourceExists(
+        resourcePath: String
+    ): Boolean {
         val (name, ext, subdir) = splitResourcePath(resourcePath)
         return NSBundle.mainBundle.pathForResource(name, ext, subdir) != null
     }
 
-    private fun splitResourcePath(path: String): Triple<String, String, String?> {
+    private fun splitResourcePath(
+        path: String
+    ): Triple<String, String, String?> {
         val parts = path.split("/")
         val filename = parts.last()
         val name = filename.substringBeforeLast(".")
@@ -118,7 +121,9 @@ class AssetsIos : AssetsProtocol {
         return Triple(name, ext, subdir)
     }
 
-    private fun guessContentType(path: String): String {
+    private fun guessContentType(
+        path: String
+    ): String {
         val extension = path.substringAfterLast('.', "").lowercase()
         if (extension.isNotEmpty()) {
             val utType = UTType.typeWithFilenameExtension(extension)

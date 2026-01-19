@@ -17,7 +17,6 @@ internal class HttpRemoteFetcher(
     private val options: Options,
     private val httpClient: HttpClient
 ) : Fetcher {
-
     override suspend fun fetch(): SourceFetchResult {
         val response = httpClient.get(url)
         return SourceFetchResult(
@@ -34,12 +33,14 @@ internal class HttpRemoteFetcher(
         private val httpClient: HttpClient,
         private val config: NetworkModule.Config,
     ) : Fetcher.Factory<ImageRequest.Remote> {
-        override fun create(data: ImageRequest.Remote, options: Options, imageLoader: ImageLoader): Fetcher {
-            return HttpRemoteFetcher(
-                url = "${config.baseUrl}/${config.version}/${config.imageEndpoint}/${data.url}",
-                options = options,
-                httpClient = httpClient
-            )
-        }
+        override fun create(
+            data: ImageRequest.Remote,
+            options: Options,
+            imageLoader: ImageLoader
+        ): Fetcher = HttpRemoteFetcher(
+            url = "${config.baseUrl}/${config.version}/${config.imageEndpoint}/${data.url}",
+            options = options,
+            httpClient = httpClient
+        )
     }
 }

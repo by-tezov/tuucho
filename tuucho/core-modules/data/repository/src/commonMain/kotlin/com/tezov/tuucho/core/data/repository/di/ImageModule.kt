@@ -4,6 +4,7 @@ import coil3.ImageLoader
 import coil3.PlatformContext
 import com.tezov.tuucho.core.data.repository.image.ImageSource
 import com.tezov.tuucho.core.data.repository.image.ImageSourceProtocol
+import com.tezov.tuucho.core.data.repository.image.source.HttpLocalFetcher
 import com.tezov.tuucho.core.data.repository.image.source.HttpRemoteFetcher
 import com.tezov.tuucho.core.data.repository.image.source.ImageLoaderSource
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
@@ -11,9 +12,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
 object ImageModule {
-
     internal fun invoke() = module(ModuleContextData.Main) {
-
         single<ImageLoader> {
             val platformContext = get<PlatformContext>()
             ImageLoader
@@ -31,12 +30,13 @@ object ImageModule {
 //                }
                 .components {
                     add(get<HttpRemoteFetcher.Factory>())
-                }
-                .build()
+                    add(get<HttpLocalFetcher.Factory>())
+                }.build()
         }
 
         factoryOf(HttpRemoteFetcher::Factory)
+        factoryOf(HttpLocalFetcher::Factory)
         factoryOf(::ImageLoaderSource)
-        factoryOf(::ImageSource) bind ImageSourceProtocol ::class
+        factoryOf(::ImageSource) bind ImageSourceProtocol::class
     }
 }

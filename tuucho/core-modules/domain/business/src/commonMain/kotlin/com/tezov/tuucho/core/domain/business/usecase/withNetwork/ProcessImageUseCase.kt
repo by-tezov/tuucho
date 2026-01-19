@@ -15,9 +15,7 @@ class ProcessImageUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val imageExecutor: ImageExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
-
     sealed class Input {
-
         data class Image(
             val image: ImageModelDomain,
             val imageObjectOriginal: JsonObject? = null,

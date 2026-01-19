@@ -12,7 +12,6 @@ import kotlinx.serialization.json.JsonElement
 class IdMatcher :
     RectifierMatcherProtocol,
     TuuchoKoinComponent {
-
     private val types = listOf(
         TypeSchema.Value.component,
         TypeSchema.Value.content,

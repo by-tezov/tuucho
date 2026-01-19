@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.mock.CoroutineTestScope
 import com.tezov.tuucho.core.data.repository.network.NetworkSourceProtocol
-import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.RemoteSource
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -17,16 +17,16 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class RetrieveObjectRemoteSourceTest {
+class RemoteSourceTest {
     private val coroutineTestScope = CoroutineTestScope()
     private lateinit var networkJsonObject: NetworkSourceProtocol
-    private lateinit var sut: RetrieveObjectRemoteSource
+    private lateinit var sut: RemoteSource
 
     @BeforeTest
     fun setup() {
         networkJsonObject = mock()
         coroutineTestScope.setup()
-        sut = RetrieveObjectRemoteSource(
+        sut = RemoteSource(
             coroutineScopes = coroutineTestScope.mock,
             networkSource = networkJsonObject
         )
@@ -47,7 +47,7 @@ class RetrieveObjectRemoteSourceTest {
 
         everySuspend { networkJsonObject.resource(url) } returns expected
 
-        val result = sut.process(url)
+        val result = sut.resource(url)
 
         assertEquals(expected, result)
 
