@@ -16,7 +16,8 @@ import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.f
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.content.ContentFormFieldTextRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.option.OptionFormFieldValidatorRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.state.StateFormFieldTextRectifierMatcher
-import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.image.ImageImageRectifierMatcher
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.ContentImageTextRectifierMatcher
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.ImageImageRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.style.StyleImageColorRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.style.StyleImageDimensionRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.label.content.ContentLabelTextRectifierMatcher
@@ -49,6 +50,7 @@ internal object MaterialRectifierModule {
     private fun ScopeDSL.textAssociation() {
         associate<TextRectifier.Association.Matcher> {
             factoryOf(::ContentLabelTextRectifierMatcher)
+            factoryOf(::ContentImageTextRectifierMatcher)
             factoryOf(::ContentFormFieldTextRectifierMatcher)
             factoryOf(::StateFormFieldTextRectifierMatcher)
         }

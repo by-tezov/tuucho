@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
@@ -29,14 +30,18 @@ import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ImageProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.color
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.DpProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.FloatProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.StringProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.dp
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.float
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.mutable
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.string
 import com.tezov.tuucho.core.presentation.ui.render.projection.image
 import com.tezov.tuucho.core.presentation.ui.render.projection.mutable
+import com.tezov.tuucho.core.presentation.ui.render.projection.text
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
@@ -57,9 +62,11 @@ interface ImageViewProtocol : ViewProtocol {
         height: Dp?,
         shape: String?,
         padding: Dp?,
+        alpha: Float?,
         backgroundColor: Color?,
         tintColor: Color?,
-        image: ImageRepositoryProtocol.Image<Image>?
+        image: ImageRepositoryProtocol.Image<Image>?,
+        description: String?
     )
 
     @Composable
@@ -95,8 +102,10 @@ private class ImageView(
     private lateinit var shape: StringProjectionProtocol
     private lateinit var padding: DpProjectionProtocol
     private lateinit var backgroundColor: ColorProjectionProtocol
+    private lateinit var alpha: FloatProjectionProtocol
     private lateinit var tintColor: ColorProjectionProtocol
     private lateinit var image: ImageProjectionProtocol
+    private lateinit var description: TextProjectionProtocol
 
     override suspend fun createComponentProjector() = componentProjector {
         +style {
@@ -104,13 +113,13 @@ private class ImageView(
             height = +dp(Style.Key.height).mutable
             shape = +string(Style.Key.shape).mutable
             padding = +dp(Style.Key.padding).mutable
+            alpha = +float(Style.Key.alpha).mutable
             backgroundColor = +color(Style.Key.backgroundColor).mutable
             tintColor = +color(Style.Key.tintColor).mutable
         }
         +content {
-            image = +image(
-                key = Content.Key.value,
-            )
+            image = +image(Content.Key.value)
+            description = +text(Content.Key.description)
         }.contextual
     }.contextual
 
@@ -125,9 +134,11 @@ private class ImageView(
             height = height.value,
             shape = shape.value,
             padding = padding.value,
+            alpha = alpha.value,
             backgroundColor = backgroundColor.value,
             tintColor = tintColor.value,
             image = image.value,
+            description = description.value,
         )
     }
 
@@ -137,9 +148,11 @@ private class ImageView(
         height: Dp?,
         shape: String?,
         padding: Dp?,
+        alpha: Float?,
         backgroundColor: Color?,
         tintColor: Color?,
-        image: ImageRepositoryProtocol.Image<Image>?
+        image: ImageRepositoryProtocol.Image<Image>?,
+        description: String?
     ) {
         val density = LocalDensity.current
         val _width = remember(image?.width) {
@@ -184,11 +197,12 @@ private class ImageView(
                 Image(
                     painter = BitmapPainter(image.source.toBitmap().asImageBitmap()),
                     contentScale = ContentScale.FillBounds,
-                    contentDescription = "Image",
+                    contentDescription = description,
                     modifier = Modifier
                         .fillMaxSize()
                         .thenIfNotNull(shape) { resolvedShape(it) },
-                    colorFilter = tintColor?.let { _tintColor }
+                    colorFilter = tintColor?.let { _tintColor },
+                    alpha = alpha ?: DefaultAlpha
                 )
             }
         }

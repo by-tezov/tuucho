@@ -15,7 +15,8 @@ class StyleImageDimensionRectifierMatcher : RectifierMatcherProtocol {
     private val segments = listOf(
         Key.width,
         Key.height,
-        Key.padding
+        Key.padding,
+        Key.alpha,
     )
 
     override fun accept(

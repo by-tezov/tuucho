@@ -14,6 +14,7 @@ object ImageSchema {
             const val width = "width"
             const val padding = "padding"
             const val tintColor = "tint-color"
+            const val alpha = "alpha"
             const val backgroundColor = "background-color"
         }
 
@@ -28,6 +29,7 @@ object ImageSchema {
     object Content {
         object Key {
             const val value = "value"
+            const val description = "shape"
         }
     }
 }

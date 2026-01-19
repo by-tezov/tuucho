@@ -1,7 +1,7 @@
 ### Todo:
 
-- add description in json for image, add alpha -> fix IOS and close PR
 - Add test on the new use case, executor, etc related to image
+- Add preview Image
 - seem to have issue with tll single shot, because login page is not redownloaded each time
 - add mock service for image
 - TTL + placeholder

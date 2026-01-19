@@ -128,10 +128,12 @@
         "shape" : "rounded-square",
         "padding" : "6",
         "tint-color": "*background@gray-light",
+        "alpha": "0.85",
         "background-color": "*background@funny-color"
       },
       "content": {
-        "value" : "*main-logo"
+        "value" : "*main-logo",
+        "description" : "Main-Logo"
       }
     }
   ],
