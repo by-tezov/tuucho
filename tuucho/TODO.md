@@ -3,6 +3,8 @@
 - Do all MVP Image.
 - TTL + placeholder
 
+- asset factorise commonMain + config root folder assets
+
 - seem to have issue with tll single shot, because login page is not redownloaded each time
 - make sure I can catch a network error on image fail retrieval side application
 - Need to update the config.properties on Jenkins because image endpoint
