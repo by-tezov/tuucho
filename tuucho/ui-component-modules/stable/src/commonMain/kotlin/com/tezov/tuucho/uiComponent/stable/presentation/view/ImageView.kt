@@ -2,37 +2,64 @@ package com.tezov.tuucho.uiComponent.stable.presentation.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil3.Canvas
+import coil3.Image
+import coil3.toBitmap
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
+import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
 import com.tezov.tuucho.core.presentation.ui._system.subset
+import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ImageProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.color
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.DpProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.StringProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.dp
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.mutable
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.string
 import com.tezov.tuucho.core.presentation.ui.render.projection.image
+import com.tezov.tuucho.core.presentation.ui.render.projection.mutable
 import com.tezov.tuucho.core.presentation.ui.render.projector.componentProjector
 import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
+import com.tezov.tuucho.core.presentation.ui.render.projector.style
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.AbstractView
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ImageSchema.Component
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ImageSchema.Content
+import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ImageSchema.Style
 import kotlinx.serialization.json.JsonObject
 
 interface ImageViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
-        image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>?
+        width: Dp?,
+        height: Dp?,
+        shape: String?,
+        padding: Dp?,
+        backgroundColor: Color?,
+        tintColor: Color?,
+        image: ImageRepositoryProtocol.Image<Image>?
     )
 
     @Composable
@@ -63,9 +90,23 @@ private class ImageView(
     screenContext: ScreenContextProtocol,
 ) : AbstractView(screenContext),
     ImageViewProtocol {
+    private lateinit var width: DpProjectionProtocol
+    private lateinit var height: DpProjectionProtocol
+    private lateinit var shape: StringProjectionProtocol
+    private lateinit var padding: DpProjectionProtocol
+    private lateinit var backgroundColor: ColorProjectionProtocol
+    private lateinit var tintColor: ColorProjectionProtocol
     private lateinit var image: ImageProjectionProtocol
 
     override suspend fun createComponentProjector() = componentProjector {
+        +style {
+            width = +dp(Style.Key.width).mutable
+            height = +dp(Style.Key.height).mutable
+            shape = +string(Style.Key.shape).mutable
+            padding = +dp(Style.Key.padding).mutable
+            backgroundColor = +color(Style.Key.backgroundColor).mutable
+            tintColor = +color(Style.Key.tintColor).mutable
+        }
         +content {
             image = +image(
                 key = Content.Key.value,
@@ -80,46 +121,81 @@ private class ImageView(
         scope: Any?
     ) {
         ComposeComponent(
-            image = image.value
+            width = width.value,
+            height = height.value,
+            shape = shape.value,
+            padding = padding.value,
+            backgroundColor = backgroundColor.value,
+            tintColor = tintColor.value,
+            image = image.value,
         )
     }
 
     @Composable
     override fun ComposeComponent(
-        image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>?
+        width: Dp?,
+        height: Dp?,
+        shape: String?,
+        padding: Dp?,
+        backgroundColor: Color?,
+        tintColor: Color?,
+        image: ImageRepositoryProtocol.Image<Image>?
     ) {
-        image?.let {
-            Image(
-                painter = CoilImagePainter(image),
-                contentDescription = "Image",
-                modifier = Modifier
-                    .size(72.dp)
-                    .background(Color.Red)
-                    .padding(6.dp),
-//            colorFilter = ColorFilter.tint(Color.Blue)
+        val density = LocalDensity.current
+        val _width = remember(image?.width) {
+            width ?: with(density) { image?.width?.toDp() }
+        }
+        val _height = remember(image?.height) {
+            height ?: with(density) { image?.height?.toDp() }
+        }
+        val resolvedShape: Modifier.(shape: String?) -> Modifier = remember(shape) {
+            {
+                when (shape) {
+                    Style.Value.Shape.rounded -> {
+                        clip(CircleShape)
+                    }
+
+                    Style.Value.Shape.roundedSquare -> {
+                        clip(RoundedCornerShape(size = 12.dp))
+                    }
+
+                    else -> {
+                        this
+                    }
+                }
+            }
+        }
+        val _tintColor = tintColor?.let {
+            ColorFilter.colorMatrix(
+                ColorMatrix().apply {
+                    setToScale(tintColor.red, tintColor.green, tintColor.blue, 1f)
+                }
             )
-        } ?: run {
-            Text("Image coming soon")
+        }
+        Box(
+            modifier = Modifier
+                .thenIfNotNull(_width) { width(it) }
+                .thenIfNotNull(_height) { height(it) }
+                .thenIfNotNull(shape) { resolvedShape(it) }
+                .thenIfNotNull(backgroundColor) { background(it) }
+                .thenIfNotNull(padding) { padding(it) }
+        ) {
+            image?.let {
+                Image(
+                    painter = BitmapPainter(image.source.toBitmap().asImageBitmap()),
+                    contentScale = ContentScale.FillBounds,
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .thenIfNotNull(shape) { resolvedShape(it) },
+                    colorFilter = tintColor?.let { _tintColor }
+                )
+            }
         }
     }
 
     @Composable
     override fun ComposePlaceHolder() {
         displayPlaceholder(null)
-    }
-}
-
-class CoilImagePainter(
-    private val image: ImageRepositoryProtocol.Image<coil3.Image, Canvas>
-) : Painter() {
-    override val intrinsicSize = androidx.compose.ui.geometry.Size(
-        image.width.toFloat(),
-        image.height.toFloat()
-    )
-
-    override fun DrawScope.onDraw() {
-        drawIntoCanvas { canvas ->
-            image.draw(canvas.nativeCanvas)
-        }
     }
 }

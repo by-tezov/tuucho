@@ -7,7 +7,7 @@ internal class ImageRemoteRepository(
     private val imageSource: ImageSource
 ) : ImageRepositoryProtocol.Remote,
     ImageRepositoryProtocol.Local {
-    override suspend fun <T : Any, C : Any> process(
+    override suspend fun <S : Any> process(
         target: String
-    ): ImageRepositoryProtocol.Image<T, C> = imageSource.processRemote(target)
+    ): ImageRepositoryProtocol.Image<S> = imageSource.processRemote(target)
 }

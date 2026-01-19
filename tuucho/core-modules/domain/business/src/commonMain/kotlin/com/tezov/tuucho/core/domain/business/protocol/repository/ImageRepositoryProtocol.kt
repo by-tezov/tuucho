@@ -1,26 +1,22 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
 object ImageRepositoryProtocol {
-    interface Image<T : Any, C : Any> {
-        val source: T
+    interface Image<S : Any> {
+        val source: S
         val size: Long
         val width: Int
         val height: Int
-
-        fun draw(
-            canvas: C
-        )
     }
 
     interface Remote {
-        suspend fun <T : Any, C : Any> process(
+        suspend fun <S : Any> process(
             target: String
-        ): Image<T, C>
+        ): Image<S>
     }
 
     interface Local {
-        suspend fun <T : Any, C : Any> process(
+        suspend fun <S : Any> process(
             target: String
-        ): Image<T, C>
+        ): Image<S>
     }
 }

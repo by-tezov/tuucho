@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
-import coil3.Canvas
 import coil3.Image
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
@@ -15,7 +14,7 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProces
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-typealias ImageTypeAlias = ImageRepositoryProtocol.Image<Image, Canvas>
+typealias ImageTypeAlias = ImageRepositoryProtocol.Image<Image>
 
 private typealias ImageProjectionTypeAlias = ProjectionProtocols<ImageTypeAlias>
 
@@ -72,7 +71,7 @@ private class ImageProjection(
                     else -> {
                         null
                     }
-                }) as? ImageRepositoryProtocol.Image<Image, Canvas>
+                }) as? ImageRepositoryProtocol.Image<Image>
                 this@ImageProjection.value = image
             }
             null

@@ -28,7 +28,7 @@ class ProcessImageUseCase(
 
     sealed class Output {
         class Element(
-            val image: ImageRepositoryProtocol.Image<*, *>
+            val image: ImageRepositoryProtocol.Image<*>
         ) : Output()
 
         class ElementArray(

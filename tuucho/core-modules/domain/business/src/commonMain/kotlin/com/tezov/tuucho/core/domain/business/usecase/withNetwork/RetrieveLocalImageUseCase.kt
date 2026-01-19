@@ -17,7 +17,7 @@ class RetrieveLocalImageUseCase(
     )
 
     data class Output(
-        val image: ImageRepositoryProtocol.Image<*, *>,
+        val image: ImageRepositoryProtocol.Image<*>,
     )
 
     override suspend fun invoke(
@@ -25,7 +25,7 @@ class RetrieveLocalImageUseCase(
     ) = with(input) {
         coroutineScopes.useCase.await {
             Output(
-                image = imagesRepository.process<Any, Any>(url)
+                image = imagesRepository.process<Any>(url)
             )
         }
     }

@@ -8,23 +8,23 @@ internal class ImageSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val imageSource: ImageSourceProtocol
 ) {
-    suspend fun <T : Any, C : Any> processRemote(
+    suspend fun <S : Any> processRemote(
         target: String
-    ): ImageRepositoryProtocol.Image<T, C> {
+    ): ImageRepositoryProtocol.Image<S> {
         val response = coroutineScopes.image.await {
             imageSource.retrieveRemote(target)
         }
         @Suppress("UNCHECKED_CAST")
-        return response as ImageRepositoryProtocol.Image<T, C>
+        return response as ImageRepositoryProtocol.Image<S>
     }
 
-    suspend fun <T : Any, C : Any> processLocal(
+    suspend fun <S : Any> processLocal(
         target: String
-    ): ImageRepositoryProtocol.Image<T, C> {
+    ): ImageRepositoryProtocol.Image<S> {
         val response = coroutineScopes.image.await {
             imageSource.retrieveLocal(target)
         }
         @Suppress("UNCHECKED_CAST")
-        return response as ImageRepositoryProtocol.Image<T, C>
+        return response as ImageRepositoryProtocol.Image<S>
     }
 }

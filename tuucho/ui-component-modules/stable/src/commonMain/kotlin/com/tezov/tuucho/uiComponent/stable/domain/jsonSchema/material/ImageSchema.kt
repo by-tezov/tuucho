@@ -14,7 +14,14 @@ object ImageSchema {
             const val width = "width"
             const val padding = "padding"
             const val tintColor = "tint-color"
-            const val backgroundColor = "backgound-color"
+            const val backgroundColor = "background-color"
+        }
+
+        object Value {
+            object Shape {
+                const val rounded = "rounded"
+                const val roundedSquare = "rounded-square"
+            }
         }
     }
 
