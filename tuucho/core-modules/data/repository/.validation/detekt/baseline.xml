@@ -4,21 +4,24 @@
   <CurrentIssues>
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
+    <ID>EmptyFunctionBlock:ImageLoaderSource.kt$ImageLoaderSource.&lt;no name provided&gt;${ }</ID>
     <ID>MatchingDeclarationName:Assets.android.kt$AssetsAndroid : AssetsProtocol</ID>
     <ID>MatchingDeclarationName:Assets.ios.kt$AssetsIos : AssetsProtocol</ID>
     <ID>MatchingDeclarationName:AssetsModule.android.kt$AssetsModuleAndroid</ID>
     <ID>MatchingDeclarationName:AssetsModule.ios.kt$AssetsModuleIos</ID>
     <ID>MatchingDeclarationName:CoroutineTestScopes.kt$CoroutineTestScope</ID>
-    <ID>MatchingDeclarationName:DatabaseRepositoryModule.android.kt$DatabaseRepositoryModuleAndroid</ID>
-    <ID>MatchingDeclarationName:DatabaseRepositoryModule.ios.kt$DatabaseRepositoryModuleIos</ID>
+    <ID>MatchingDeclarationName:DatabaseModule.android.kt$DatabaseModuleAndroid</ID>
+    <ID>MatchingDeclarationName:DatabaseModule.ios.kt$DatabaseModuleIos</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
+    <ID>MatchingDeclarationName:ImageModule.android.kt$ImageModuleAndroid</ID>
+    <ID>MatchingDeclarationName:ImageModule.ios.kt$ImageModuleIos</ID>
     <ID>MatchingDeclarationName:JsonEntityDao.kt$JsonObjectQueries</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.android.dev.kt$NetworkRepositoryModuleAndroidFlavor</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.android.kt$NetworkRepositoryModuleAndroid</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.android.prod.kt$NetworkRepositoryModuleAndroidFlavor</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.dev.kt$NetworkRepositoryModuleIosFlavor</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.kt$NetworkRepositoryModuleIos</ID>
-    <ID>MatchingDeclarationName:NetworkRepositoryModule.ios.prod.kt$NetworkRepositoryModuleIosFlavor</ID>
+    <ID>MatchingDeclarationName:NetworkModule.android.dev.kt$NetworkModuleAndroidFlavor</ID>
+    <ID>MatchingDeclarationName:NetworkModule.android.kt$NetworkModuleAndroid</ID>
+    <ID>MatchingDeclarationName:NetworkModule.android.prod.kt$NetworkModuleAndroidFlavor</ID>
+    <ID>MatchingDeclarationName:NetworkModule.ios.dev.kt$NetworkModuleIosFlavor</ID>
+    <ID>MatchingDeclarationName:NetworkModule.ios.kt$NetworkModuleIos</ID>
+    <ID>MatchingDeclarationName:NetworkModule.ios.prod.kt$NetworkModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.android.kt$ReferenceFactoryAndroid : Factory</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.ios.kt$ReferenceFactoryIos : Factory</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid</ID>
@@ -40,6 +43,7 @@
     <ID>NestedBlockDepth:ComponentsRectifier.kt$ComponentsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:ContentsRectifier.kt$ContentsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:DimensionsRectifier.kt$DimensionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
+    <ID>NestedBlockDepth:ImagesRectifier.kt$ImagesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:JsonObjectMerger.kt$JsonObjectMerger$private fun SchemaScope.merge( next: JsonObject )</ID>
     <ID>NestedBlockDepth:OptionsRectifier.kt$OptionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:RefreshMaterialCacheRepository.kt$RefreshMaterialCacheRepository$private suspend fun JsonObject.refreshContextualCache()</ID>
@@ -71,9 +75,13 @@
     <ID>PackageNaming:SystemInformation.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:WeakReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:WeakReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>ReturnCount:Assets.android.kt$AssetsAndroid$private fun resolveImageAssetPath( basePath: String ): String</ID>
+    <ID>ReturnCount:Assets.ios.kt$AssetsIos$private fun resolveImageResourcePath( basePath: String ): String</ID>
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
     <ID>ReturnCount:MaterialDatabaseSource.kt$MaterialDatabaseSource$@Suppress("RedundantSuspendModifier") suspend fun getRootJsonObjectEntityOrNull( url: String ): JsonObjectEntity?</ID>
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
+    <ID>TooGenericExceptionCaught:Assets.android.kt$AssetsAndroid$throwable: Throwable</ID>
+    <ID>TooGenericExceptionCaught:Assets.ios.kt$AssetsIos$throwable: Throwable</ID>
     <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : RectifierProtocolTuuchoKoinScopeComponent</ID>
     <ID>TooManyFunctions:MaterialRectifierScope.kt$MaterialRectifierScope</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>

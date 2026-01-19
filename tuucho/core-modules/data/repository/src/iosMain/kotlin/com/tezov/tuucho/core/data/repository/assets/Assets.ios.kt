@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository.assets
 
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import io.ktor.http.Headers
 import okio.FileSystem
 import okio.Path.Companion.toPath
@@ -40,11 +41,9 @@ class AssetsIos : AssetsProtocol {
                 ?.value
                 ?: "application/octet-stream"
         )
-    } catch (t: Throwable) {
+    } catch (throwable: Throwable) {
         AssetsProtocol.Response.Failure(
-            source = null,
-            headers = Headers.Empty,
-            error = t
+            error = throwable
         )
     }
 
@@ -67,14 +66,11 @@ class AssetsIos : AssetsProtocol {
             headers = Headers.build {
                 this["Content-Type"] = contentType
                 this["Content-Length"] = contentLength.toString()
-            },
-            error = null
+            }
         )
-    } catch (t: Throwable) {
+    } catch (throwable: Throwable) {
         AssetsProtocol.Response.Failure(
-            source = null,
-            headers = Headers.Empty,
-            error = t
+            error = throwable
         )
     }
 

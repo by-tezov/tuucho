@@ -17,14 +17,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.DefaultAlpha
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.Image
-import coil3.toBitmap
+import coil3.compose.asPainter
+import com.tezov.tuucho.core.domain.business._system.koin.KoinIsolatedContext
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
 import com.tezov.tuucho.core.presentation.ui._system.subset
@@ -195,7 +194,9 @@ private class ImageView(
         ) {
             image?.let {
                 Image(
-                    painter = BitmapPainter(image.source.toBitmap().asImageBitmap()),
+                    painter = image.source.asPainter(
+                        context = KoinIsolatedContext.koin.get() // TODO
+                    ),
                     contentScale = ContentScale.FillBounds,
                     contentDescription = description,
                     modifier = Modifier

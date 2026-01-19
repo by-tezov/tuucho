@@ -39,9 +39,9 @@ internal class AssetsAndroid(
                 ?.value
                 ?: "application/octet-stream"
         )
-    } catch (t: Throwable) {
+    } catch (throwable: Throwable) {
         AssetsProtocol.Response.Failure(
-            error = t
+            error = throwable
         )
     }
 
@@ -65,9 +65,9 @@ internal class AssetsAndroid(
                 this["Content-Length"] = contentLength.toString()
             }
         )
-    } catch (t: Throwable) {
+    } catch (throwable: Throwable) {
         AssetsProtocol.Response.Failure(
-            error = t
+            error = throwable
         )
     }
 

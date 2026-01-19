@@ -45,6 +45,30 @@ public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/mat
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
+public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/image/content/ContentImageTextRectifierMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierMatcherProtocol {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/image/content/ImageImageRectifierMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierMatcherProtocol {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/image/style/StyleImageColorRectifierMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierMatcherProtocol {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/image/style/StyleImageDimensionRectifierMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierMatcherProtocol {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
 public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/label/content/ContentLabelTextRectifierMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierMatcherProtocol {
 	public static final field $stable I
 	public fun <init> ()V
@@ -131,6 +155,63 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field label Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Component {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Component;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Component$Value {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Component$Value;
+	public static final field subset Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Content {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Content;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Content$Key {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Content$Key;
+	public static final field description Ljava/lang/String;
+	public static final field value Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style$Key {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style$Key;
+	public static final field alpha Ljava/lang/String;
+	public static final field backgroundColor Ljava/lang/String;
+	public static final field height Ljava/lang/String;
+	public static final field padding Ljava/lang/String;
+	public static final field shape Ljava/lang/String;
+	public static final field tintColor Ljava/lang/String;
+	public static final field width Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style$Value {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style$Value;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style$Value$Shape {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style$Value$Shape;
+	public static final field rounded Ljava/lang/String;
+	public static final field roundedSquare Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/LabelSchema;
@@ -194,7 +275,9 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SpacerSchema$Style$Key {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SpacerSchema$Style$Key;
+	public static final field height Ljava/lang/String;
 	public static final field weight Ljava/lang/String;
+	public static final field width Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SubsetSchema {
@@ -207,6 +290,7 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/SubsetSchema$Value;
 	public static final field button Ljava/lang/String;
 	public static final field field Ljava/lang/String;
+	public static final field image Ljava/lang/String;
 	public static final field label Ljava/lang/String;
 	public static final field layoutLinear Ljava/lang/String;
 	public static final field spacer Ljava/lang/String;
@@ -336,6 +420,23 @@ public final class com/tezov/tuucho/uiComponent/stable/presentation/view/FieldVi
 
 public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/FieldViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
 	public abstract fun ComposeComponent (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ValueStorageProjectionProtocol;Landroidx/compose/runtime/MutableState;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/presentation/view/ImageViewFactory : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewFactoryProtocol {
+	public static final field $stable I
+	public static final field Companion Lcom/tezov/tuucho/uiComponent/stable/presentation/view/ImageViewFactory$Companion;
+	public fun <init> ()V
+	public fun accept (Lkotlinx/serialization/json/JsonObject;)Z
+	public fun process (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/presentation/view/ImageViewFactory$Companion {
+	public final fun createImageView (Lcom/tezov/tuucho/core/presentation/ui/screen/protocol/ScreenContextProtocol;)Lcom/tezov/tuucho/uiComponent/stable/presentation/view/ImageViewProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/ImageViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
+	public abstract fun ComposeComponent-KSzgSzw (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/unit/Dp;Ljava/lang/String;Landroidx/compose/ui/unit/Dp;Ljava/lang/Float;Landroidx/compose/ui/graphics/Color;Landroidx/compose/ui/graphics/Color;Lcom/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol$Image;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
 }
 
