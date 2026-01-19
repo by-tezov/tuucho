@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.scope.Scope
 
 class TextRectifier(
@@ -46,7 +45,7 @@ class TextRectifier(
             // TODO add escaper on "ID_REF_INDICATOR" to allow string user content to start with it
             val stringValue = this.element.string
             if (stringValue.startsWith(SymbolData.ID_REF_INDICATOR)) {
-                id = JsonPrimitive(stringValue)
+                id = this.element
             } else {
                 id = JsonNull
                 default = stringValue

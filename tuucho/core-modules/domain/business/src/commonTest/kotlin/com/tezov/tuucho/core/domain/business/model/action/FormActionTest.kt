@@ -25,12 +25,6 @@ class FormActionTest {
     }
 
     @Test
-    fun `send action labels are correct`() {
-        assertEquals("validated", FormAction.Send.ActionLabel.validated)
-        assertEquals("denied", FormAction.Send.ActionLabel.denied)
-    }
-
-    @Test
     fun `update command is form`() {
         assertEquals("form", FormAction.Update.command)
     }

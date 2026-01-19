@@ -17,6 +17,7 @@ class ProcessActionUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val actionExecutor: ActionExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
+
     sealed class Input {
         abstract val route: NavigationRoute?
         abstract val lockable: InteractionLockable?

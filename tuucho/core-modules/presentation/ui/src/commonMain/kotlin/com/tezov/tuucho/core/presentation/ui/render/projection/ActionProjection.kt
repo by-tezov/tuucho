@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
@@ -12,7 +11,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -99,22 +97,10 @@ private class MutableActionProjection(
     }
 }
 
-private class ContextualActionProjection(
-    private val delegate: ActionProjectionProtocol,
-    override val type: String
-) : ActionProjectionProtocol by delegate,
-    ContextualUpdaterProcessorProtocol
-
 val ActionProjectionProtocol.mutable
     get(): ActionProjectionProtocol = MutableActionProjection(
         delegate = this,
         storage = MutableStorageProjection()
-    )
-
-val ActionProjectionProtocol.contextual
-    get(): ActionProjectionProtocol = ContextualActionProjection(
-        delegate = this,
-        type = TypeSchema.Value.action
     )
 
 fun createActionProjection(

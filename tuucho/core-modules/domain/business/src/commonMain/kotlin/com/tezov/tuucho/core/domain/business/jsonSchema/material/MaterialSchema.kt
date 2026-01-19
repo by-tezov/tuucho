@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page.PageSettingSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.PageSettingSchema
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -21,6 +21,7 @@ object MaterialSchema {
         const val colors = "colors"
         const val dimensions = "dimensions"
         const val actions = "actions"
+        const val images = "images"
     }
 
     class Scope(

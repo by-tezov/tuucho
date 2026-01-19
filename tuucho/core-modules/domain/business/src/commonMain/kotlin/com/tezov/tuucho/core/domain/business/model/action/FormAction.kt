@@ -12,11 +12,6 @@ object FormAction {
         override val command get() = FormAction.command
 
         override val authority = "send-url"
-
-        object ActionLabel {
-            const val validated = "validated"
-            const val denied = "denied"
-        }
     }
 
     object Update : ActionProtocol {

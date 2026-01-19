@@ -33,10 +33,11 @@ object SystemCoreDataModules {
         ResponseAssemblerScope.invoke(),
         ResponseAssemblerScope.Form.invoke(),
         MaterialShadowerModule.invoke(),
-        MaterialRepositoryModule.invoke(),
-        DatabaseRepositoryModule.invoke(),
+        RepositoryModule.invoke(),
+        NetworkModule.invoke(),
+        DatabaseModule.invoke(),
+        ImageModule.invoke(),
         StoreRepositoryModule.invoke(),
-        NetworkRepositoryModule.invoke(),
     ) +
         platformInvoke()
 }

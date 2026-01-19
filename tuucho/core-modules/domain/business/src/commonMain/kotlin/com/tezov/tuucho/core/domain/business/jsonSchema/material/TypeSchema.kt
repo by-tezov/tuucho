@@ -24,6 +24,7 @@ object TypeSchema {
         const val color = "color"
 
         const val action = "action"
+        const val image = "image"
 
         const val state = "state"
         const val message = "message"

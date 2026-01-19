@@ -1,7 +1,7 @@
 package com.tezov.tuucho.sample.shared.di
 
 import com.tezov.tuucho.core.data.repository.di.ModuleContextData
-import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
+import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
@@ -30,7 +30,7 @@ internal object NetworkRepositoryModuleFlavor {
 
         single {
             BackendServer(
-                serverUrl = get<NetworkRepositoryModule.Config>().baseUrl,
+                serverUrl = get<NetworkModule.Config>().baseUrl,
                 services = getAllOrdered<ServiceProtocol>()
             )
         }
