@@ -1,19 +1,20 @@
 ### Todo:
 
-- add all crop type
 - Add test on the new use case, executor, etc related to image
 - Add preview Image
+ 
 - seem to have issue with tll single shot, because login page is not redownloaded each time
 - add mock service for image
+ 
 - TTL + placeholder
 - Alternative image (fallback) query fallback local/remote ? 
+ 
 - asset factorise commonMain + config root folder assets
 - make sure I can catch a network error on image fail retrieval side application
-- time to live same as actions, colors, texts reusable
-- do a smart padding object - can do also for size)?
-- NavigationLocalDestinationActionMiddleware do finish too, and check if value can have single source with Navigation.Back / Finish
 
-- Need to update the config.properties on Jenkins because image endpoint
+- do a smart padding object - can do also for size)?
+- time to live same as actions, colors, texts reusable
+- NavigationLocalDestinationActionMiddleware do finish too, and check if value can have single source with Navigation.Back / Finish
 
 -> close alpha 25
 

@@ -100,55 +100,63 @@ class TuuchoEngine(
         )
     }
 
-    private suspend fun onRequestTransitionEvent(
+    private fun onRequestTransitionEvent(
         event: Event.RequestTransition
     ) {
-        @Suppress("UNCHECKED_CAST")
-        foregroundGroup = Group(
-            screens = useCaseExecutor
-                .await(
-                    useCase = getScreensFromRoutes,
-                    input = GetScreensFromRoutesUseCase.Input(
-                        routes = event.foregroundGroup.routes
-                    )
-                )?.screens as List<ScreenProtocol>,
-            transitionSpecObject = event.foregroundGroup.transitionSpecObject
-        )
-        @Suppress("UNCHECKED_CAST")
-        backgroundGroup = Group(
-            screens = useCaseExecutor
-                .await(
-                    useCase = getScreensFromRoutes,
-                    input = GetScreensFromRoutesUseCase.Input(
-                        routes = event.backgroundGroup.routes
-                    )
-                )?.screens as List<ScreenProtocol>,
-            transitionSpecObject = event.backgroundGroup.transitionSpecObject
-        )
-        transitionRequested = true
-        redrawTrigger.intValue += 1
+        coroutineScopes.renderer.async(
+            throwOnFailure = true
+        ) {
+            @Suppress("UNCHECKED_CAST")
+            foregroundGroup = Group(
+                screens = useCaseExecutor
+                    .await(
+                        useCase = getScreensFromRoutes,
+                        input = GetScreensFromRoutesUseCase.Input(
+                            routes = event.foregroundGroup.routes
+                        )
+                    )?.screens as List<ScreenProtocol>,
+                transitionSpecObject = event.foregroundGroup.transitionSpecObject
+            )
+            @Suppress("UNCHECKED_CAST")
+            backgroundGroup = Group(
+                screens = useCaseExecutor
+                    .await(
+                        useCase = getScreensFromRoutes,
+                        input = GetScreensFromRoutesUseCase.Input(
+                            routes = event.backgroundGroup.routes
+                        )
+                    )?.screens as List<ScreenProtocol>,
+                transitionSpecObject = event.backgroundGroup.transitionSpecObject
+            )
+            transitionRequested = true
+            redrawTrigger.intValue += 1
+        }
     }
 
-    private suspend fun onIdleEvent(
+    private fun onIdleEvent(
         event: Event.Idle
     ) {
-        @Suppress("UNCHECKED_CAST")
-        foregroundGroup = Group(
-            screens = useCaseExecutor
-                .await(
-                    useCase = getScreensFromRoutes,
-                    input = GetScreensFromRoutesUseCase.Input(
-                        routes = event.routes
-                    )
-                )?.screens as List<ScreenProtocol>,
-            transitionSpecObject = JsonNull
-                .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
-                .apply { type = Type.none }
-                .collect()
-        )
-        backgroundGroup = null
-        transitionRequested = false
-        redrawTrigger.intValue += 1
+        coroutineScopes.renderer.async(
+            throwOnFailure = true
+        ) {
+            @Suppress("UNCHECKED_CAST")
+            foregroundGroup = Group(
+                screens = useCaseExecutor
+                    .await(
+                        useCase = getScreensFromRoutes,
+                        input = GetScreensFromRoutesUseCase.Input(
+                            routes = event.routes
+                        )
+                    )?.screens as List<ScreenProtocol>,
+                transitionSpecObject = JsonNull
+                    .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
+                    .apply { type = Type.none }
+                    .collect()
+            )
+            backgroundGroup = null
+            transitionRequested = false
+            redrawTrigger.intValue += 1
+        }
     }
 
     @Composable

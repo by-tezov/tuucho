@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.HasKeyInStoreUseCase.Input
@@ -9,7 +8,6 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
 @OpenForTest
 class HasKeyInStoreUseCase(
-    private val coroutineScopes: CoroutineScopesProtocol,
     private val keyValueRepository: KeyValueStoreRepositoryProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
     data class Input(
@@ -23,10 +21,8 @@ class HasKeyInStoreUseCase(
     override suspend fun invoke(
         input: Input
     ) = with(input) {
-        coroutineScopes.io.await {
-            Output(
-                result = keyValueRepository.hasKey(key)
-            )
-        }
+        Output(
+            result = keyValueRepository.hasKey(key)
+        )
     }
 }
