@@ -191,6 +191,7 @@
     <ID>MaxLineLength:MessageIntProjection.kt$MessageIntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;MessageIntTextTypeAlias&gt;)</ID>
     <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>
     <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
+    <ID>PackageNaming:CompositionLocalTuuchoKoin.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
     <ID>PackageNaming:DirectionNavigation.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>PackageNaming:DirectionScreen.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>PackageNaming:SchemaExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
@@ -206,7 +207,7 @@
     <ID>FunctionNaming:FieldPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun FieldPreviewComponentFromSequence( @PreviewParameter(FieldPreviewDataProvider::class) data: FieldPreviewData )</ID>
     <ID>FunctionNaming:FieldView.kt$FieldViewProtocol$@Composable fun ComposeComponent( fieldValue: ValueStorageProjectionProtocol&lt;String&gt;, showError: MutableState&lt;Boolean&gt;, titleValue: String?, placeholderValue: String?, supportingTexts: List&lt;String&gt;?, messageErrorExtra: String?, )</ID>
     <ID>FunctionNaming:FieldView.kt$FieldViewProtocol$@Composable fun ComposePlaceHolder()</ID>
-    <ID>FunctionNaming:ImageView.kt$ImageViewProtocol$@Composable fun ComposeComponent( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: ImageRepositoryProtocol.Image&lt;Image&gt;?, description: String? )</ID>
+    <ID>FunctionNaming:ImageView.kt$ImageViewProtocol$@Composable fun ComposeComponent( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: Image?, description: String? )</ID>
     <ID>FunctionNaming:ImageView.kt$ImageViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>FunctionNaming:LabelPreview.kt$@Composable fun LabelPreviewComponent( textValue: String? = "Label", fontColor: Color? = Color.Black, fontSize: TextUnit? = 16.sp, )</ID>
     <ID>FunctionNaming:LabelPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun LabelPreviewComponentFromSequence( @PreviewParameter(LabelPreviewDataProvider::class) data: LabelPreviewData )</ID>
@@ -223,7 +224,7 @@
     <ID>FunctionNaming:SpacerView.kt$SpacerViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>LongParameterList:FieldPreview.kt$( fieldValue: String? = "value", showError: Boolean = false, titleValue: String? = "title", placeholderValue: String? = "placeholder", supportingTexts: List&lt;String&gt;? = listOf("error message 1"), messageErrorExtra: String? = null, )</ID>
     <ID>LongParameterList:FieldView.kt$FieldViewProtocol$( fieldValue: ValueStorageProjectionProtocol&lt;String&gt;, showError: MutableState&lt;Boolean&gt;, titleValue: String?, placeholderValue: String?, supportingTexts: List&lt;String&gt;?, messageErrorExtra: String?, )</ID>
-    <ID>LongParameterList:ImageView.kt$ImageViewProtocol$( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: ImageRepositoryProtocol.Image&lt;Image&gt;?, description: String? )</ID>
+    <ID>LongParameterList:ImageView.kt$ImageViewProtocol$( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: Image?, description: String? )</ID>
     <ID>MagicNumber:LayoutLinearPreview.kt$LayoutLinearPreviewDataProvider$0.5f</ID>
     <ID>UnusedPrivateMember:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
     <ID>UnusedPrivateMember:FieldPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun FieldPreviewComponentFromSequence( @PreviewParameter(FieldPreviewDataProvider::class) data: FieldPreviewData )</ID>

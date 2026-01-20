@@ -3,6 +3,10 @@ public final class com/tezov/tuucho/core/presentation/ui/_system/ColorExtensionK
 	public static final fun toColorOrNull (Ljava/lang/String;)Landroidx/compose/ui/graphics/Color;
 }
 
+public final class com/tezov/tuucho/core/presentation/ui/_system/CompositionLocalTuuchoKoinKt {
+	public static final fun getLocalTuuchoKoin ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/_system/SchemaExtensionKt {
 	public static final fun getContentOrNull (Lkotlinx/serialization/json/JsonObject;)Lkotlinx/serialization/json/JsonObject;
 	public static final fun getIdSourceOrNull (Lkotlinx/serialization/json/JsonElement;)Ljava/lang/String;
@@ -127,6 +131,18 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol {
 	public abstract fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol;)V
 	public abstract fun extract (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/render/projection/Image : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol$Image {
+	public static final field $stable I
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol$Image;)V
+	public final fun asPainter (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/painter/Painter;
+	public fun getHeight ()I
+	public fun getKoin ()Lorg/koin/core/Koin;
+	public fun getSize ()J
+	public fun getSource ()Lcoil3/Image;
+	public synthetic fun getSource ()Ljava/lang/Object;
+	public fun getWidth ()I
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/ImageProjectionKt {

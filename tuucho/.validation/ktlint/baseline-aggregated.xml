@@ -2,8 +2,6 @@
 <baseline>
   <!-- ************ Project: :ui-component.stable ************ -->
   <file name="build.gradle.kts">
-          <error line="17" column="1" source="standard:no-consecutive-blank-lines" />
-          <error line="19" column="1" source="standard:no-blank-line-before-rbrace" />
-          <error line="20" column="1" source="standard:no-consecutive-blank-lines" />
+          <error line="16" column="1" source="standard:no-blank-line-before-rbrace" />
       </file>
 </baseline>

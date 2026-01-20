@@ -20,7 +20,8 @@ import coil3.Image as CoilImage
 
 class Image(
     private val coilImage: ImageRepositoryProtocol.Image<CoilImage>
-) : TuuchoKoinComponent, ImageRepositoryProtocol.Image<CoilImage> by coilImage {
+) : TuuchoKoinComponent,
+    ImageRepositoryProtocol.Image<CoilImage> by coilImage {
     @Composable
     fun asPainter() = remember {
         source.asPainter(context = getKoin().get<PlatformContext>())

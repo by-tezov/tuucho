@@ -436,7 +436,7 @@ public final class com/tezov/tuucho/uiComponent/stable/presentation/view/ImageVi
 }
 
 public abstract interface class com/tezov/tuucho/uiComponent/stable/presentation/view/ImageViewProtocol : com/tezov/tuucho/core/presentation/ui/view/protocol/ViewProtocol {
-	public abstract fun ComposeComponent-KSzgSzw (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/unit/Dp;Ljava/lang/String;Landroidx/compose/ui/unit/Dp;Ljava/lang/Float;Landroidx/compose/ui/graphics/Color;Landroidx/compose/ui/graphics/Color;Lcom/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol$Image;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
+	public abstract fun ComposeComponent-KSzgSzw (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/unit/Dp;Ljava/lang/String;Landroidx/compose/ui/unit/Dp;Ljava/lang/Float;Landroidx/compose/ui/graphics/Color;Landroidx/compose/ui/graphics/Color;Lcom/tezov/tuucho/core/presentation/ui/render/projection/Image;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 	public abstract fun ComposePlaceHolder (Landroidx/compose/runtime/Composer;I)V
 }
 
