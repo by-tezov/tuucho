@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.presentation.ui.di.ModuleContextPresentation
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.uiComponent.stable.presentation.view.ButtonViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.FieldViewFactory
+import com.tezov.tuucho.uiComponent.stable.presentation.view.ImageViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.LabelViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.LayoutLinearViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.SpacerViewFactory
@@ -18,5 +19,6 @@ internal object ViewModule {
         factoryOf(::LabelViewFactory) bind ViewFactoryProtocol::class
         factoryOf(::FieldViewFactory) bind ViewFactoryProtocol::class
         factoryOf(::ButtonViewFactory) bind ViewFactoryProtocol::class
+        factoryOf(::ImageViewFactory) bind ViewFactoryProtocol::class
     }
 }

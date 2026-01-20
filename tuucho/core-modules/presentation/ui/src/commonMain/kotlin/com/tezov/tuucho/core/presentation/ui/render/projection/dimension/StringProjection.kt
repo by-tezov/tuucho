@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.presentation.ui.render.projection.dimension
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
@@ -12,7 +11,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -76,22 +74,10 @@ private class MutableStringProjection(
     }
 }
 
-private class ContextualStringProjection(
-    private val delegate: StringProjectionProtocol,
-    override val type: String
-) : StringProjectionProtocol by delegate,
-    ContextualUpdaterProcessorProtocol
-
 val StringProjectionProtocol.mutable
     get(): StringProjectionProtocol = MutableStringProjection(
         delegate = this,
         storage = MutableStorageProjection()
-    )
-
-val StringProjectionProtocol.contextual
-    get(): StringProjectionProtocol = ContextualStringProjection(
-        delegate = this,
-        type = TypeSchema.Value.dimension
     )
 
 fun createStringProjection(

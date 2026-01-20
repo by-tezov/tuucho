@@ -3,13 +3,11 @@ package com.tezov.tuucho.core.presentation.ui.render.projection
 import androidx.compose.ui.graphics.Color
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui._system.toColorOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -74,22 +72,10 @@ private class MutableColorProjection(
     }
 }
 
-private class ContextualColorProjection(
-    private val delegate: ColorProjectionProtocol,
-    override val type: String
-) : ColorProjectionProtocol by delegate,
-    ContextualUpdaterProcessorProtocol
-
 val ColorProjectionProtocol.mutable
     get(): ColorProjectionProtocol = MutableColorProjection(
         delegate = this,
         storage = MutableStorageProjection()
-    )
-
-val ColorProjectionProtocol.contextual
-    get(): ColorProjectionProtocol = ContextualColorProjection(
-        delegate = this,
-        type = TypeSchema.Value.color
     )
 
 fun createColorProjection(

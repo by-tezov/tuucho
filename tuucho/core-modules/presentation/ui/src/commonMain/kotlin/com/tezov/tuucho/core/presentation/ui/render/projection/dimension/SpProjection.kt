@@ -4,7 +4,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
@@ -14,7 +13,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -80,22 +78,10 @@ private class MutableSpProjection(
     }
 }
 
-private class ContextualSpProjection(
-    private val delegate: SpProjectionProtocol,
-    override val type: String
-) : SpProjectionProtocol by delegate,
-    ContextualUpdaterProcessorProtocol
-
 val SpProjectionProtocol.mutable
     get(): SpProjectionProtocol = MutableSpProjection(
         delegate = this,
         storage = MutableStorageProjection()
-    )
-
-val SpProjectionProtocol.contextual
-    get(): SpProjectionProtocol = ContextualSpProjection(
-        delegate = this,
-        type = TypeSchema.Value.dimension
     )
 
 fun createSpProjection(

@@ -26,7 +26,55 @@ abstract fun interface com.tezov.tuucho.core.data.repository.parser.assembler.ma
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.assets/AssetsProtocol { // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol|null[0]
-    abstract fun readFile(kotlin/String): okio/Source // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.readFile|readFile(kotlin.String){}[0]
+    abstract fun readFile(com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request): com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.readFile|readFile(com.tezov.tuucho.core.data.repository.assets.AssetsProtocol.Request){}[0]
+    abstract fun readImage(com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request): com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.readImage|readImage(com.tezov.tuucho.core.data.repository.assets.AssetsProtocol.Request){}[0]
+
+    final class Request { // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request|null[0]
+        constructor <init>(kotlin/String, io.ktor.http/Headers = ...) // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.<init>|<init>(kotlin.String;io.ktor.http.Headers){}[0]
+
+        final val headers // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.headers|{}headers[0]
+            final fun <get-headers>(): io.ktor.http/Headers // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.headers.<get-headers>|<get-headers>(){}[0]
+        final val path // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.path|{}path[0]
+            final fun <get-path>(): kotlin/String // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.path.<get-path>|<get-path>(){}[0]
+
+        final fun component1(): kotlin/String // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.component1|component1(){}[0]
+        final fun component2(): io.ktor.http/Headers // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., io.ktor.http/Headers = ...): com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.copy|copy(kotlin.String;io.ktor.http.Headers){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request.toString|toString(){}[0]
+    }
+
+    sealed class Response { // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response|null[0]
+        final class Failure : com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response { // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure|null[0]
+            constructor <init>(kotlin/Throwable) // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.<init>|<init>(kotlin.Throwable){}[0]
+
+            final val error // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.error|{}error[0]
+                final fun <get-error>(): kotlin/Throwable // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.error.<get-error>|<get-error>(){}[0]
+
+            final fun component1(): kotlin/Throwable // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.component1|component1(){}[0]
+            final fun copy(kotlin/Throwable = ...): com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.copy|copy(kotlin.Throwable){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Failure.toString|toString(){}[0]
+        }
+
+        final class Success : com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response { // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success|null[0]
+            constructor <init>(okio/Source, io.ktor.http/Headers) // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.<init>|<init>(okio.Source;io.ktor.http.Headers){}[0]
+
+            final val headers // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.headers|{}headers[0]
+                final fun <get-headers>(): io.ktor.http/Headers // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.headers.<get-headers>|<get-headers>(){}[0]
+            final val source // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.source|{}source[0]
+                final fun <get-source>(): okio/Source // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.source.<get-source>|<get-source>(){}[0]
+
+            final fun component1(): okio/Source // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.component1|component1(){}[0]
+            final fun component2(): io.ktor.http/Headers // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.component2|component2(){}[0]
+            final fun copy(okio/Source = ..., io.ktor.http/Headers = ...): com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.copy|copy(okio.Source;io.ktor.http.Headers){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response.Success.toString|toString(){}[0]
+        }
+    }
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.database/Database : app.cash.sqldelight/Transacter { // com.tezov.tuucho.core.data.repository.database/Database|null[0]
@@ -47,9 +95,15 @@ abstract interface com.tezov.tuucho.core.data.repository.database/Database : app
     }
 }
 
-abstract interface com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol { // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol|null[0]
-    abstract suspend fun resource(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol.resource|resource(kotlin.String){}[0]
-    abstract suspend fun send(kotlin/String, kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.data.repository.network/NetworkJsonObjectProtocol.send|send(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+abstract interface com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol { // com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol|null[0]
+    abstract suspend fun retrieveLocal(kotlin/String): com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<coil3/Image> // com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol.retrieveLocal|retrieveLocal(kotlin.String){}[0]
+    abstract suspend fun retrieveRemote(kotlin/String): com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<coil3/Image> // com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol.retrieveRemote|retrieveRemote(kotlin.String){}[0]
+}
+
+abstract interface com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol { // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol|null[0]
+    abstract suspend fun healthCheck(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol.healthCheck|healthCheck(kotlin.String){}[0]
+    abstract suspend fun resource(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol.resource|resource(kotlin.String){}[0]
+    abstract suspend fun send(kotlin/String, kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol.send|send(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol|null[0]
@@ -174,7 +228,10 @@ final class com.tezov.tuucho.core.data.repository._system/SystemInformationIos :
 final class com.tezov.tuucho.core.data.repository.assets/AssetsIos : com.tezov.tuucho.core.data.repository.assets/AssetsProtocol { // com.tezov.tuucho.core.data.repository.assets/AssetsIos|null[0]
     constructor <init>() // com.tezov.tuucho.core.data.repository.assets/AssetsIos.<init>|<init>(){}[0]
 
-    final fun readFile(kotlin/String): okio/Source // com.tezov.tuucho.core.data.repository.assets/AssetsIos.readFile|readFile(kotlin.String){}[0]
+    final fun readFile(com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request): com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response // com.tezov.tuucho.core.data.repository.assets/AssetsIos.readFile|readFile(com.tezov.tuucho.core.data.repository.assets.AssetsProtocol.Request){}[0]
+    final fun readImage(com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Request): com.tezov.tuucho.core.data.repository.assets/AssetsProtocol.Response // com.tezov.tuucho.core.data.repository.assets/AssetsIos.readImage|readImage(com.tezov.tuucho.core.data.repository.assets.AssetsProtocol.Request){}[0]
+
+    final object Companion // com.tezov.tuucho.core.data.repository.assets/AssetsIos.Companion|null[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.database.statement/HookStatementQueries : app.cash.sqldelight/TransacterImpl { // com.tezov.tuucho.core.data.repository.database.statement/HookStatementQueries|null[0]
@@ -401,6 +458,19 @@ final class com.tezov.tuucho.core.data.repository.parser.assembler.material/Dime
 
     sealed class Association { // com.tezov.tuucho.core.data.repository.parser.assembler.material/DimensionAssembler.Association|null[0]
         final object Matcher : com.tezov.tuucho.core.data.repository.parser.assembler.material/DimensionAssembler.Association // com.tezov.tuucho.core.data.repository.parser.assembler.material/DimensionAssembler.Association.Matcher|null[0]
+    }
+}
+
+final class com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler : com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AbstractAssembler { // com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler|null[0]
+    constructor <init>(org.koin.core.scope/Scope) // com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler.<init>|<init>(org.koin.core.scope.Scope){}[0]
+
+    final val schemaType // com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler.schemaType|{}schemaType[0]
+        final fun <get-schemaType>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler.schemaType.<get-schemaType>|<get-schemaType>(){}[0]
+
+    final fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
+
+    sealed class Association { // com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler.Association|null[0]
+        final object Matcher : com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler.Association // com.tezov.tuucho.core.data.repository.parser.assembler.material/ImageAssembler.Association.Matcher|null[0]
     }
 }
 
@@ -632,6 +702,26 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.id/I
     sealed class Association { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.id/IdRectifier.Association|null[0]
         final object Matcher : com.tezov.tuucho.core.data.repository.parser.rectifier.material.id/IdRectifier.Association // com.tezov.tuucho.core.data.repository.parser.rectifier.material.id/IdRectifier.Association.Matcher|null[0]
     }
+}
+
+final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier|null[0]
+    constructor <init>(org.koin.core.scope/Scope) // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.<init>|<init>(org.koin.core.scope.Scope){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.key.<get-key>|<get-key>(){}[0]
+
+    sealed class Association { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.Association|null[0]
+        final object Matcher : com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.Association // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.Association.Matcher|null[0]
+
+        final object Processor : com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.Association // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImageRectifier.Association.Processor|null[0]
+    }
+}
+
+final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImagesRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImagesRectifier|null[0]
+    constructor <init>(org.koin.core.scope/Scope) // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImagesRectifier.<init>|<init>(org.koin.core.scope.Scope){}[0]
+
+    final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImagesRectifier.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.material.image/ImagesRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.option/OptionRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.option/OptionRectifier|null[0]
@@ -1126,32 +1216,36 @@ final object com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemble
     }
 }
 
-final object com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule { // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule|null[0]
-    abstract interface Config { // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Config|null[0]
-        abstract val fileName // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Config.fileName|{}fileName[0]
-            abstract fun <get-fileName>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Config.fileName.<get-fileName>|<get-fileName>(){}[0]
+final object com.tezov.tuucho.core.data.repository.di/DatabaseModule { // com.tezov.tuucho.core.data.repository.di/DatabaseModule|null[0]
+    abstract interface Config { // com.tezov.tuucho.core.data.repository.di/DatabaseModule.Config|null[0]
+        abstract val fileName // com.tezov.tuucho.core.data.repository.di/DatabaseModule.Config.fileName|{}fileName[0]
+            abstract fun <get-fileName>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/DatabaseModule.Config.fileName.<get-fileName>|<get-fileName>(){}[0]
     }
 
-    final object Name { // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Name|null[0]
-        final val DATABASE_REPOSITORY_CONFIG // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG|{}DATABASE_REPOSITORY_CONFIG[0]
-            final fun <get-DATABASE_REPOSITORY_CONFIG>(): org.koin.core.qualifier/StringQualifier // com.tezov.tuucho.core.data.repository.di/DatabaseRepositoryModule.Name.DATABASE_REPOSITORY_CONFIG.<get-DATABASE_REPOSITORY_CONFIG>|<get-DATABASE_REPOSITORY_CONFIG>(){}[0]
+    final object Name { // com.tezov.tuucho.core.data.repository.di/DatabaseModule.Name|null[0]
+        final val DATABASE_REPOSITORY_CONFIG // com.tezov.tuucho.core.data.repository.di/DatabaseModule.Name.DATABASE_REPOSITORY_CONFIG|{}DATABASE_REPOSITORY_CONFIG[0]
+            final fun <get-DATABASE_REPOSITORY_CONFIG>(): org.koin.core.qualifier/StringQualifier // com.tezov.tuucho.core.data.repository.di/DatabaseModule.Name.DATABASE_REPOSITORY_CONFIG.<get-DATABASE_REPOSITORY_CONFIG>|<get-DATABASE_REPOSITORY_CONFIG>(){}[0]
     }
 }
 
-final object com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule { // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule|null[0]
-    abstract interface Config { // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config|null[0]
-        abstract val baseUrl // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.baseUrl|{}baseUrl[0]
-            abstract fun <get-baseUrl>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.baseUrl.<get-baseUrl>|<get-baseUrl>(){}[0]
-        abstract val healthEndpoint // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.healthEndpoint|{}healthEndpoint[0]
-            abstract fun <get-healthEndpoint>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.healthEndpoint.<get-healthEndpoint>|<get-healthEndpoint>(){}[0]
-        abstract val resourceEndpoint // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.resourceEndpoint|{}resourceEndpoint[0]
-            abstract fun <get-resourceEndpoint>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.resourceEndpoint.<get-resourceEndpoint>|<get-resourceEndpoint>(){}[0]
-        abstract val sendEndpoint // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.sendEndpoint|{}sendEndpoint[0]
-            abstract fun <get-sendEndpoint>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.sendEndpoint.<get-sendEndpoint>|<get-sendEndpoint>(){}[0]
-        abstract val timeoutMillis // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.timeoutMillis|{}timeoutMillis[0]
-            abstract fun <get-timeoutMillis>(): kotlin/Long // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.timeoutMillis.<get-timeoutMillis>|<get-timeoutMillis>(){}[0]
-        abstract val version // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.version|{}version[0]
-            abstract fun <get-version>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkRepositoryModule.Config.version.<get-version>|<get-version>(){}[0]
+final object com.tezov.tuucho.core.data.repository.di/ImageModule // com.tezov.tuucho.core.data.repository.di/ImageModule|null[0]
+
+final object com.tezov.tuucho.core.data.repository.di/NetworkModule { // com.tezov.tuucho.core.data.repository.di/NetworkModule|null[0]
+    abstract interface Config { // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config|null[0]
+        abstract val baseUrl // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.baseUrl|{}baseUrl[0]
+            abstract fun <get-baseUrl>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.baseUrl.<get-baseUrl>|<get-baseUrl>(){}[0]
+        abstract val healthEndpoint // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.healthEndpoint|{}healthEndpoint[0]
+            abstract fun <get-healthEndpoint>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.healthEndpoint.<get-healthEndpoint>|<get-healthEndpoint>(){}[0]
+        abstract val imageEndpoint // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.imageEndpoint|{}imageEndpoint[0]
+            abstract fun <get-imageEndpoint>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.imageEndpoint.<get-imageEndpoint>|<get-imageEndpoint>(){}[0]
+        abstract val resourceEndpoint // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.resourceEndpoint|{}resourceEndpoint[0]
+            abstract fun <get-resourceEndpoint>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.resourceEndpoint.<get-resourceEndpoint>|<get-resourceEndpoint>(){}[0]
+        abstract val sendEndpoint // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.sendEndpoint|{}sendEndpoint[0]
+            abstract fun <get-sendEndpoint>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.sendEndpoint.<get-sendEndpoint>|<get-sendEndpoint>(){}[0]
+        abstract val timeoutMillis // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.timeoutMillis|{}timeoutMillis[0]
+            abstract fun <get-timeoutMillis>(): kotlin/Long // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.timeoutMillis.<get-timeoutMillis>|<get-timeoutMillis>(){}[0]
+        abstract val version // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.version|{}version[0]
+            abstract fun <get-version>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/NetworkModule.Config.version.<get-version>|<get-version>(){}[0]
     }
 }
 

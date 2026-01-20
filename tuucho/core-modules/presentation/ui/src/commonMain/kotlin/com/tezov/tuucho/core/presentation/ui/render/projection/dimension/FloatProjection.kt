@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.presentation.ui.render.projection.dimension
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
@@ -12,7 +11,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -77,22 +75,10 @@ private class MutableFloatProjection(
     }
 }
 
-private class ContextualFloatProjection(
-    private val delegate: FloatProjectionProtocol,
-    override val type: String
-) : FloatProjectionProtocol by delegate,
-    ContextualUpdaterProcessorProtocol
-
 val FloatProjectionProtocol.mutable
     get(): FloatProjectionProtocol = MutableFloatProjection(
         delegate = this,
         storage = MutableStorageProjection()
-    )
-
-val FloatProjectionProtocol.contextual
-    get(): FloatProjectionProtocol = ContextualFloatProjection(
-        delegate = this,
-        type = TypeSchema.Value.dimension
     )
 
 fun createFloatProjection(

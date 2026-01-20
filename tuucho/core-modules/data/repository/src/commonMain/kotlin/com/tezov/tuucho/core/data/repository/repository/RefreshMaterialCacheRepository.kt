@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
-import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.RemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.config.ConfigSchema
@@ -20,14 +20,14 @@ import kotlinx.serialization.json.jsonArray
 
 internal class RefreshMaterialCacheRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val retrieveObjectRemoteSource: RetrieveObjectRemoteSource,
+    private val remoteSource: RemoteSource,
     private val materialRemoteSource: MaterialRemoteSource,
     private val materialCacheLocalSource: MaterialCacheLocalSource,
 ) : MaterialRepositoryProtocol.RefreshCache {
     override suspend fun process(
         url: String
     ) {
-        val configModelDomain = retrieveObjectRemoteSource.process(url)
+        val configModelDomain = remoteSource.resource(url)
         coroutineScopes.parser.await {
             configModelDomain
                 .onScope(ConfigSchema.MaterialResource::Scope)

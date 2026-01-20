@@ -9,6 +9,7 @@ object SystemCoreDomainModules {
         MiscModule.invoke(),
         NavigationModule.invoke(),
         ActionProcessorModule.invoke(),
+        ImageProcessorModule.invoke(),
         UseCaseModule.invoke()
     )
 }

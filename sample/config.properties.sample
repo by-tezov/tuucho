@@ -6,6 +6,7 @@ serverVersion=v1
 serverHealthEndpoint=health
 serverResourceEndpoint=resource
 serverSendEndpoint=send
+serverImageEndpoint=image
 #android
 headerPlatformAndroid=android
 serverBaseUrlAndroid=http://10.0.2.2:3000
