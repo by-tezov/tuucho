@@ -5,13 +5,14 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core.domain.tool"))
-            implementation(project(":core.domain.business"))
-            implementation(project(":core.presentation.tool"))
+            api(project(":core.domain.business"))
+            api(project(":core.presentation.tool"))
 
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
+            implementation(libs.coil.core)
+            implementation(libs.coil.compose.core)
             implementation(libs.compose.ui)
             implementation(libs.compose.material3)
             implementation(libs.kotlin.collections.immutable)

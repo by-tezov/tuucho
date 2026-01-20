@@ -59,7 +59,7 @@ data class ActionModelDomain(
                 ?: throw DomainException.Default("invalid action")
             return ActionModelDomain(
                 command = match.groups[1]?.value
-                    ?: throw DomainException.Default("command can't be null"),
+                    ?: throw DomainException.Default("action command can't be null"),
                 authority = match.groups[2]?.value,
                 target = match.groups[3]?.value,
                 query = match.groups[4]?.value?.toQueryToMap(),

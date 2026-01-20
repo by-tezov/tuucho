@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material.ColorAsse
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ComponentAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.ContentAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.DimensionAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material.ImageAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.OptionAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.StateAssembler
@@ -38,12 +39,15 @@ object MaterialAssemblerScope {
         factoryOf(::ColorAssembler)
         factoryOf(::DimensionAssembler)
         factoryOf(::ActionAssembler)
+        factoryOf(::ImageAssembler)
 
         associate<MaterialAssembler.Association.Processor> {
             declaration<ComponentAssembler>()
             declaration<ContentAssembler>()
-            declaration<TextAssembler>()
+            declaration<StyleAssembler>()
+            declaration<OptionAssembler>()
             declaration<StateAssembler>()
+            declaration<TextAssembler>()
         }
     }
 
@@ -61,6 +65,7 @@ object MaterialAssemblerScope {
         associate<ContentAssembler.Association.Processor> {
             declaration<TextAssembler>()
             declaration<ActionAssembler>()
+            declaration<ImageAssembler>()
             declaration<ComponentAssembler>()
         }
     }

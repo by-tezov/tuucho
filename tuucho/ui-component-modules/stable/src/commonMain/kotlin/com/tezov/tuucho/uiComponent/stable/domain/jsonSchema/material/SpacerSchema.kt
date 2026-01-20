@@ -10,6 +10,8 @@ object SpacerSchema {
     object Style {
         object Key {
             const val weight = "weight"
+            const val height = "height"
+            const val width = "width"
         }
     }
 }

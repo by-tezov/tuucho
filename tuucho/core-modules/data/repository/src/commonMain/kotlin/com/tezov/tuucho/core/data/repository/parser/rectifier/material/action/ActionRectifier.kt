@@ -47,7 +47,7 @@ class ActionRectifier(
             type = TypeSchema.Value.action
             val value = this.element.string
             if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
-                id = JsonPrimitive(value)
+                id = this.element
             } else {
                 id = JsonNull
                 primaries = listOf(this.element).let(::JsonArray)

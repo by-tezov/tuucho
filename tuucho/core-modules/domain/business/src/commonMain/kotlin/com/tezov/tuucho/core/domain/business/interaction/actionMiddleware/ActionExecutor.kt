@@ -72,27 +72,27 @@ internal class ActionExecutor(
         coroutineScopes.action.await {
             val middlewaresToExecute = middlewares
                 .filter { it.accept(route, action) }
-                .sortedBy { it.priority }
-            if (middlewaresToExecute.isNotEmpty()) {
-                val locks = input.lockable.acquireLocks(
-                    route = route,
-                    action = action
-                )
-                val result = middlewareExecutor.process(
-                    middlewaresToExecute,
-                    ActionMiddleware.Context(
-                        lockable = locks.freeze(),
-                        input = input,
+                .sortedByDescending { it.priority }
+            middlewaresToExecute
+                .takeIf { it.isNotEmpty() }
+                ?.let {
+                    val locks = input.lockable.acquireLocks(
+                        route = route,
+                        action = action
                     )
-                )
-                locks.releaseLocks(
-                    route = route,
-                    action = action
-                )
-                result
-            } else {
-                null
-            }
+                    val result = middlewareExecutor.process(
+                        middlewares = it,
+                        context = ActionMiddleware.Context(
+                            lockable = locks.freeze(),
+                            input = input,
+                        )
+                    )
+                    locks.releaseLocks(
+                        route = route,
+                        action = action
+                    )
+                    result
+                }
         }
     }
 

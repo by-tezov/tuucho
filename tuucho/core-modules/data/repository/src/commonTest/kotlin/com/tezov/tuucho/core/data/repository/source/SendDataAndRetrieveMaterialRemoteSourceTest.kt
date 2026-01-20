@@ -2,10 +2,10 @@ package com.tezov.tuucho.core.data.repository.source
 
 import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.repository.mock.CoroutineTestScope
-import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.FindAllRefOrNullFetcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseAssembler
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
+import com.tezov.tuucho.core.data.repository.repository.source.RemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
@@ -25,7 +25,7 @@ import kotlin.test.assertNull
 
 class SendDataAndRetrieveMaterialRemoteSourceTest {
     private val coroutineTestScope = CoroutineTestScope()
-    private lateinit var networkJsonObject: NetworkJsonObjectProtocol
+    private lateinit var remoteSource: RemoteSource
     private lateinit var responseRectifier: ResponseRectifier
     private lateinit var responseAssembler: ResponseAssembler
     private lateinit var materialDatabaseSource: MaterialDatabaseSource
@@ -34,14 +34,14 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
 
     @BeforeTest
     fun setup() {
-        networkJsonObject = mock()
+        remoteSource = mock()
         responseRectifier = mock()
         responseAssembler = mock()
         materialDatabaseSource = mock()
         coroutineTestScope.setup()
         sut = SendDataAndRetrieveMaterialRemoteSource(
             coroutineScopes = coroutineTestScope.mock,
-            networkJsonObject = networkJsonObject,
+            remoteSource = remoteSource,
             responseRectifier = responseRectifier,
             responseAssembler = responseAssembler,
             materialDatabaseSource = materialDatabaseSource
@@ -52,7 +52,7 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
     fun tearDown() {
         coroutineTestScope.verifyNoMoreCalls()
         verifyNoMoreCalls(
-            networkJsonObject,
+            remoteSource,
             responseRectifier,
             responseAssembler,
             materialDatabaseSource
@@ -70,7 +70,7 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
         val rectified = buildJsonObject { put("rectified", "ok") }
         val assembled = buildJsonObject { put("assembled", "final") }
 
-        everySuspend { networkJsonObject.send(url, input) } returns networkResponse
+        everySuspend { remoteSource.send(url, input) } returns networkResponse
         everySuspend { responseRectifier.process(networkResponse) } returns rectified
         everySuspend { materialDatabaseSource.getAllCommonRefOrNull(any(), any(), any()) } returns null
         everySuspend {
@@ -88,8 +88,7 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
         assertEquals(assembled, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.network.await<Any>(any())
-            networkJsonObject.send(url, input)
+            remoteSource.send(url, input)
             coroutineTestScope.mock.parser.await<Any>(any())
             responseRectifier.process(networkResponse)
             responseAssembler.process(rectified, any())
@@ -103,14 +102,13 @@ class SendDataAndRetrieveMaterialRemoteSourceTest {
         val url = "http://server.com/api"
         val input = buildJsonObject { put("key", "value") }
 
-        everySuspend { networkJsonObject.send(url, input) } returns null
+        everySuspend { remoteSource.send(url, input) } returns null
 
         val result = sut.process(url, input)
         assertNull(result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.network.await<Any>(any())
-            networkJsonObject.send(url, input)
+            remoteSource.send(url, input)
         }
     }
 }

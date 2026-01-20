@@ -205,9 +205,9 @@ class ActionExecutorTest {
             middlewareExecutor.process<Context, ProcessActionUseCase.Output>(
                 matches { list ->
                     list.size == 3 &&
-                        list[0] == middlewareThird &&
+                        list[2] == middlewareThird &&
                         list[1] == middlewareFirst &&
-                        list[2] == middlewareSecond
+                        list[0] == middlewareSecond
                 },
                 matches { context ->
                     context.input == input &&

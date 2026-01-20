@@ -16,6 +16,8 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.form.FormValidatorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.id.IdRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material.image.ImageRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material.image.ImagesRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.option.OptionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.option.OptionsRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.setting.component.SettingComponentNavigationRectifier
@@ -30,10 +32,8 @@ import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.scopedOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
-import org.koin.dsl.onClose
 
 internal object MaterialRectifierScope {
     fun invoke() = scope(ScopeContext.Material) {
@@ -51,6 +51,7 @@ internal object MaterialRectifierScope {
         colorAssociation()
         dimensionAssociation()
         actionAssociation()
+        imageAssociation()
     }
 
     private fun ScopeDSL.rectifiers() {
@@ -75,6 +76,8 @@ internal object MaterialRectifierScope {
         factoryOf(::DimensionRectifier)
         factoryOf(::ActionsRectifier)
         factoryOf(::ActionRectifier)
+        factoryOf(::ImagesRectifier)
+        factoryOf(::ImageRectifier)
         factoryOf(::FormValidatorRectifier)
 
         associate<MaterialRectifier.Association.Processor> {
@@ -87,6 +90,7 @@ internal object MaterialRectifierScope {
             declaration<ColorsRectifier>()
             declaration<DimensionsRectifier>()
             declaration<ActionsRectifier>()
+            declaration<ImagesRectifier>()
         }
     }
 
@@ -114,6 +118,7 @@ internal object MaterialRectifierScope {
         associate<ContentRectifier.Association.Processor> {
             declaration<IdRectifier>()
             declaration<ActionRectifier>()
+            declaration<ImageRectifier>()
             declaration<TextRectifier>()
         }
     }
@@ -154,5 +159,9 @@ internal object MaterialRectifierScope {
 
     private fun ScopeDSL.actionAssociation() {
         declaration<IdRectifier>() associate ActionRectifier.Association.Processor::class
+    }
+
+    private fun ScopeDSL.imageAssociation() {
+        declaration<IdRectifier>() associate ImageRectifier.Association.Processor::class
     }
 }
