@@ -1,6 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
-import coil3.Image
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import coil3.PlatformContext
+import coil3.compose.asPainter
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -13,8 +16,18 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import coil3.Image as CoilImage
 
-typealias ImageTypeAlias = ImageRepositoryProtocol.Image<Image>
+class Image(
+    private val coilImage: ImageRepositoryProtocol.Image<CoilImage>
+) : TuuchoKoinComponent, ImageRepositoryProtocol.Image<CoilImage> by coilImage {
+    @Composable
+    fun asPainter() = remember {
+        source.asPainter(context = getKoin().get<PlatformContext>())
+    }
+}
+
+typealias ImageTypeAlias = Image
 
 private typealias ImageProjectionTypeAlias = ProjectionProtocols<ImageTypeAlias>
 
@@ -71,7 +84,9 @@ private class ImageProjection(
                     else -> {
                         null
                     }
-                }) as? ImageRepositoryProtocol.Image<Image>
+                }).let {
+                    Image(coilImage = it as ImageRepositoryProtocol.Image<CoilImage>)
+                }
                 this@ImageProjection.value = image
             }
             null

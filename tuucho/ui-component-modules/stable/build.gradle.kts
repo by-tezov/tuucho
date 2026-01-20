@@ -14,10 +14,6 @@ kotlin {
             implementation(libs.coil.core)
             implementation(libs.kotlin.collections.immutable)
 
-
-            implementation("io.coil-kt.coil3:coil-compose:3.3.0")
-
-
         }
     }
 }

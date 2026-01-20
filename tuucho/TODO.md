@@ -1,5 +1,6 @@
 ### Todo:
 
+- add all crop type
 - Add test on the new use case, executor, etc related to image
 - Add preview Image
 - seem to have issue with tll single shot, because login page is not redownloaded each time

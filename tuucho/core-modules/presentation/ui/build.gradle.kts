@@ -12,6 +12,7 @@ kotlin {
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.coil.core)
+            implementation(libs.coil.compose.core)
             implementation(libs.compose.ui)
             implementation(libs.compose.material3)
             implementation(libs.kotlin.collections.immutable)

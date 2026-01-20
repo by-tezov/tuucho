@@ -19,7 +19,6 @@ kotlin {
             api(project(":core.domain.business"))
             api(project(":core.data.repository"))
             api(project(":core.presentation.ui"))
-
             implementation(libs.compose.runtime)
         }
     }
