@@ -1,7 +1,5 @@
 ### Todo:
 
-- seem to have issue with tll single shot, because login page is not redownloaded each time
- 
 - add mock service for image
 - asset factorise commonMain + config root folder assets
  
@@ -17,6 +15,7 @@
 -> close alpha 25
 
 ### Need to fix: 
+- "credentials-title": { "id": "*credentials-request" } ok, but "credentials-title": "*credentials-request" failed. Look why and fix it. (Aka login page)
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
 - contextual register, when outer receive later, the inner did not succeed to register
   - check message of contextual field, they never request update view after click

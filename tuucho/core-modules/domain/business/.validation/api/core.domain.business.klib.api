@@ -268,7 +268,7 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol.screen/ScreenP
     abstract val route // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.route|{}route[0]
         abstract fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.route.<get-route>|<get-route>(){}[0]
 
-    abstract fun <#A1: com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol> views(kotlin.reflect/KClass<#A1>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.views|views(kotlin.reflect.KClass<0:0>){0§<com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol>}[0]
+    abstract suspend fun <#A1: com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol> views(kotlin.reflect/KClass<#A1>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.views|views(kotlin.reflect.KClass<0:0>){0§<com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol>}[0]
     abstract suspend fun update(kotlin.collections/List<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlin.collections.List<kotlinx.serialization.json.JsonObject>){}[0]
     abstract suspend fun update(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlinx.serialization.json.JsonObject){}[0]
 }
@@ -629,7 +629,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateTo
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
 
@@ -712,7 +712,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessAct
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/ImageExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.ImageExecutorProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ImageExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ImageExecutorProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase.Output? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessImageUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase.Input){}[0]
 
@@ -784,7 +784,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/RefreshMat
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Local) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Local){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Local) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Local){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLocalImageUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveLocalImageUseCase.Input){}[0]
 
@@ -816,7 +816,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveLo
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Remote) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Remote){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Remote) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Remote){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRemoteImageUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveRemoteImageUseCase.Input){}[0]
 
@@ -848,7 +848,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveRe
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.SendDataAndRetrieve, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/SendDataMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.SendDataAndRetrieve;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.SendDataAndRetrieve, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/SendDataMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.SendDataAndRetrieve;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware>){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Output? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase.Input){}[0]
 
@@ -1030,7 +1030,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScre
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase.Input){}[0]
 
@@ -1062,7 +1062,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValu
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.HasKeyInStoreUseCase.Input){}[0]
 
@@ -1094,7 +1094,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyI
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigateFinishUseCase : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<kotlin/Unit, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigateFinishUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Finish>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigateFinishUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Finish>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/NavigationMiddleware.Finish>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigateFinishUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware.Finish>){}[0]
 
     final suspend fun invoke(kotlin/Unit) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/NavigateFinishUseCase.invoke|invoke(kotlin.Unit){}[0]
 }
@@ -1189,7 +1189,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/Registe
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase.Input){}[0]
 
@@ -1208,7 +1208,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveK
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase.Input){}[0]
 
@@ -1230,7 +1230,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKey
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/UpdateViewMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/UpdateViewMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware>){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input){}[0]
 

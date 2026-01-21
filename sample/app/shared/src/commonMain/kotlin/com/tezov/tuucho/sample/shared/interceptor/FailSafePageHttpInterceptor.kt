@@ -1,5 +1,6 @@
 package com.tezov.tuucho.sample.shared.interceptor
 
+import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
@@ -11,9 +12,12 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.util.date.GMTDate
 import io.ktor.utils.io.ByteReadChannel
+import okio.buffer
+import okio.use
 
 class FailSafePageHttpInterceptor(
     private val config: NetworkModule.Config,
+    private val assets: AssetsProtocol,
 ) : HttpInterceptor {
     override suspend fun process(
         context: HttpInterceptor.Context,
@@ -37,51 +41,14 @@ class FailSafePageHttpInterceptor(
     }
 
     private val failSafeResponse
-        get() = """
-{
-  "setting": {
-    "ttl": { "strategy": "single-use" }
-  },
-  "root": {
-    "setting": {
-      "navigation": {
-        "definition": {
-          "option": {
-            "single": true,
-            "clear-stack": true
-          },
-          "transition": "fade"
+        get():String {
+            val response = assets.readFile(
+                AssetsProtocol.Request(path = "json/fail-safe-page-http-interceptor.json")
+            )
+            if (response is AssetsProtocol.Response.Failure) {
+                throw response.error
+            }
+            val source = (response as AssetsProtocol.Response.Success).source
+            return source.buffer().use { it.readUtf8() }
         }
-      }
-    },
-    "subset": "layout-linear",
-    "style": {
-      "orientation": "vertical",
-      "fill-max-size": true
-    },
-    "content": {
-      "items": [
-        {
-          "subset": "spacer",
-          "style": {
-            "weight": "0.5"
-          }
-        },
-        {
-          "subset": "label",
-          "content": {
-            "value": "Sorry your app in not available, check your internet connection"
-          }
-        },
-        {
-          "subset": "spacer",
-          "style": {
-            "weight": "1.0"
-          }
-        }
-      ]
-    }
-  }
-}
-        """.trimIndent()
 }
