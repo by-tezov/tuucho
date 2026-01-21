@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
@@ -151,10 +150,10 @@ private class ImageView(
         description: String?
     ) {
         val density = LocalDensity.current
-        val _width = remember(image?.width) {
+        val _width = remember(width, image?.width) {
             width ?: with(density) { image?.width?.toDp() }
         }
-        val _height = remember(image?.height) {
+        val _height = remember(height, image?.height) {
             height ?: with(density) { image?.height?.toDp() }
         }
         val resolvedShape: Modifier.(shape: String?) -> Modifier = remember(shape) {
@@ -174,12 +173,8 @@ private class ImageView(
                 }
             }
         }
-        val _tintColor = tintColor?.let {
-            ColorFilter.colorMatrix(
-                ColorMatrix().apply {
-                    setToScale(tintColor.red, tintColor.green, tintColor.blue, 1f)
-                }
-            )
+        val _tintColor = remember(tintColor) {
+            tintColor?.let { ColorFilter.tint(it) }
         }
         Box(
             modifier = Modifier

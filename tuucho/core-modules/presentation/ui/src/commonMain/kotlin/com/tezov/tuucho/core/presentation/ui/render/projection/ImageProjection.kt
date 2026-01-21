@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.painter.Painter
 import coil3.PlatformContext
 import coil3.compose.asPainter
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
@@ -9,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
+import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
@@ -23,8 +25,11 @@ class Image(
 ) : TuuchoKoinComponent,
     ImageRepositoryProtocol.Image<CoilImage> by coilImage {
     @Composable
-    fun asPainter() = remember {
-        source.asPainter(context = getKoin().get<PlatformContext>())
+    fun asPainter(): Painter {
+        val koin = LocalTuuchoKoin.current
+        return remember {
+            source.asPainter(context = koin.get<PlatformContext>())
+        }
     }
 }
 
