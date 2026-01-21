@@ -1,15 +1,13 @@
 ### Todo:
 
-- Add test on the new use case, executor, etc related to image
-- Add preview Image
- 
 - seem to have issue with tll single shot, because login page is not redownloaded each time
+ 
 - add mock service for image
+- asset factorise commonMain + config root folder assets
  
 - TTL + placeholder
 - Alternative image (fallback) query fallback local/remote ? 
  
-- asset factorise commonMain + config root folder assets
 - make sure I can catch a network error on image fail retrieval side application
 
 - do a smart padding object - can do also for size)?
