@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.model.ImageModelDomain
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ImageExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
@@ -12,7 +11,6 @@ import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
 class ProcessImageUseCase(
-    private val coroutineScopes: CoroutineScopesProtocol,
     private val imageExecutor: ImageExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
     sealed class Input {
@@ -38,7 +36,5 @@ class ProcessImageUseCase(
 
     override suspend fun invoke(
         input: Input
-    ) = coroutineScopes.useCase.await {
-        imageExecutor.process(input = input)
-    }
+    ) = imageExecutor.process(input = input)
 }

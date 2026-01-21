@@ -1,6 +1,5 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveLocalImageUseCase.Input
@@ -9,7 +8,6 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
 @OpenForTest
 class RetrieveLocalImageUseCase(
-    private val coroutineScopes: CoroutineScopesProtocol,
     private val imagesRepository: ImageRepositoryProtocol.Local,
 ) : UseCaseProtocol.Async<Input, Output> {
     data class Input(
@@ -23,10 +21,8 @@ class RetrieveLocalImageUseCase(
     override suspend fun invoke(
         input: Input
     ) = with(input) {
-        coroutineScopes.useCase.await {
-            Output(
-                image = imagesRepository.process<Any>(url)
-            )
-        }
+        Output(
+            image = imagesRepository.process<Any>(url)
+        )
     }
 }

@@ -72,6 +72,7 @@ class CoroutineTestScope {
             every { event } returns createMockContext(defaultScope)
             every { useCase } returns createMockContext(defaultScope)
             every { action } returns createMockContext(defaultScope)
+            every { image } returns createMockContext(defaultScope)
 
             every { default } returns createMockContext(defaultScope)
             every { main } returns createMockContext(mainScope)
@@ -95,6 +96,7 @@ class CoroutineTestScope {
             mock.navigation,
             mock.useCase,
             mock.action,
+            mock.image,
             mock.event,
             mock.default,
             mock.main,
@@ -111,6 +113,7 @@ class CoroutineTestScope {
             mock.navigation,
             mock.useCase,
             mock.action,
+            mock.image,
             mock.event,
             mock.default,
             mock.main,

@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
@@ -14,7 +13,6 @@ import kotlin.reflect.KClass
 
 @OpenForTest
 class ProcessActionUseCase(
-    private val coroutineScopes: CoroutineScopesProtocol,
     private val actionExecutor: ActionExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
     sealed class Input {
@@ -57,7 +55,5 @@ class ProcessActionUseCase(
 
     override suspend fun invoke(
         input: Input
-    ) = coroutineScopes.useCase.await {
-        actionExecutor.process(input = input)
-    }
+    ) = actionExecutor.process(input = input)
 }
