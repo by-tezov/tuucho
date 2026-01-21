@@ -1,4 +1,9 @@
 {
+  "setting": {
+    "time-to-live": {
+      "strategy": "single-use"
+    }
+  },
   "root": {
     "setting": {
       "navigation": {
