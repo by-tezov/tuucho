@@ -1,8 +1,8 @@
 {
   "texts": {
     "common": {
-      "server-failure": {
-        "default": "Check your internet connection"
+      "credentials-request": {
+        "default": "Please enter your credentials"
       }
     }
   }
