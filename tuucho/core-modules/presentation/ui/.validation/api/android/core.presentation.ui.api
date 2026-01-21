@@ -62,6 +62,19 @@ public final class com/tezov/tuucho/core/presentation/ui/exception/UiException$D
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
+public final class com/tezov/tuucho/core/presentation/ui/preview/DummyImage {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/DummyImage;
+	public final fun invoke-Iv8Zu3U (JIIJ)Lcom/tezov/tuucho/core/presentation/ui/render/projection/Image;
+	public static synthetic fun invoke-Iv8Zu3U$default (Lcom/tezov/tuucho/core/presentation/ui/preview/DummyImage;JIIJILjava/lang/Object;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/Image;
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/preview/DummyKoin {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/DummyKoin;
+	public final fun invoke (Lorg/koin/core/module/Module;)Lorg/koin/core/Koin;
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/preview/DummyScreenContext {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/DummyScreenContext;

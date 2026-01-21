@@ -1,4 +1,9 @@
 {
+  "setting": {
+    "time-to-live": {
+      "strategy": "single-use"
+    }
+  },
   "root": {
     "setting": {
       "navigation": {
@@ -39,7 +44,7 @@
           "subset": "label",
           "style": "*title-section",
           "content": {
-            "value": "Please enter your credentials"
+            "value": "*credentials-title"
           }
         },
         "*item-spacer-24-v",
@@ -187,7 +192,7 @@
   },
   "texts": {
     "common": {
-      "login-init": "from here"
+      "credentials-title": { "id": "*credentials-request" }
     }
   }
 }
