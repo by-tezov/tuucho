@@ -5,10 +5,10 @@
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>EmptyFunctionBlock:ImageLoaderSource.kt$ImageLoaderSource.&lt;no name provided&gt;${ }</ID>
-    <ID>MatchingDeclarationName:Assets.android.kt$AssetsAndroid : AssetsProtocol</ID>
-    <ID>MatchingDeclarationName:Assets.ios.kt$AssetsIos : AssetsProtocol</ID>
-    <ID>MatchingDeclarationName:AssetsModule.android.kt$AssetsModuleAndroid</ID>
-    <ID>MatchingDeclarationName:AssetsModule.ios.kt$AssetsModuleIos</ID>
+    <ID>MatchingDeclarationName:AssetModule.android.kt$AssetModuleAndroid</ID>
+    <ID>MatchingDeclarationName:AssetModule.ios.kt$AssetModuleIos</ID>
+    <ID>MatchingDeclarationName:AssetReader.android.kt$AssetReaderAndroid : AssetReaderProtocol</ID>
+    <ID>MatchingDeclarationName:AssetReader.ios.kt$AssetReaderIos : AssetReaderProtocol</ID>
     <ID>MatchingDeclarationName:CoroutineTestScopes.kt$CoroutineTestScope</ID>
     <ID>MatchingDeclarationName:DatabaseModule.android.kt$DatabaseModuleAndroid</ID>
     <ID>MatchingDeclarationName:DatabaseModule.ios.kt$DatabaseModuleIos</ID>
@@ -75,13 +75,10 @@
     <ID>PackageNaming:SystemInformation.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:WeakReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:WeakReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>ReturnCount:Assets.android.kt$AssetsAndroid$private fun resolveImageAssetPath( basePath: String ): String</ID>
-    <ID>ReturnCount:Assets.ios.kt$AssetsIos$private fun resolveImageResourcePath( basePath: String ): String</ID>
+    <ID>ReturnCount:AssetSource.kt$AssetSource$private fun resolveImageAssetPath( path: String ): String</ID>
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
     <ID>ReturnCount:MaterialDatabaseSource.kt$MaterialDatabaseSource$@Suppress("RedundantSuspendModifier") suspend fun getRootJsonObjectEntityOrNull( url: String ): JsonObjectEntity?</ID>
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
-    <ID>TooGenericExceptionCaught:Assets.android.kt$AssetsAndroid$throwable: Throwable</ID>
-    <ID>TooGenericExceptionCaught:Assets.ios.kt$AssetsIos$throwable: Throwable</ID>
     <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : RectifierProtocolTuuchoKoinScopeComponent</ID>
     <ID>TooManyFunctions:MaterialRectifierScope.kt$MaterialRectifierScope</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>

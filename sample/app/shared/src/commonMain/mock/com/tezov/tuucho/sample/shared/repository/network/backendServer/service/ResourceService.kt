@@ -1,17 +1,13 @@
 package com.tezov.tuucho.sample.shared.repository.network.backendServer.service
 
-import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
+import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Type
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.GuardProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.headersOf
-import io.ktor.http.withCharset
-import io.ktor.utils.io.charsets.Charsets
+import io.ktor.http.headers
 import kotlinx.coroutines.delay
 import okio.buffer
 import okio.use
@@ -19,7 +15,7 @@ import kotlin.random.Random
 
 internal class ResourceService(
     private val config: NetworkModule.Config,
-    private val assets: AssetsProtocol,
+    private val assetSource: AssetSourceProtocol,
     private val guards: List<GuardProtocol>,
 ) : ServiceProtocol {
 
@@ -50,26 +46,21 @@ internal class ResourceService(
         request: BackendServer.Request,
     ) = when (version) {
         "v1" -> {
-            val response = assets.readFile(
-                AssetsProtocol.Request(path = "backend/$version/${request.url}.json")
-            )
-            if (response is AssetsProtocol.Response.Failure) {
-                throw response.error
+            val (jsonBytes, contentType, contentSize) = assetSource.readFile(
+                path = "backend/$version/${request.url}.json"
+            ) { content ->
+                val bytes = content.source.buffer().readByteArray()
+                Triple(bytes, content.contentType, content.size)
             }
-            val source = (response as AssetsProtocol.Response.Success).source
-            val jsonBytes = source.buffer().use { it.readByteArray() }
             if (request.url.endsWith("-${Type.contextual}") || request.url.contains("-${Type.contextual}-")) {
                 delay(Random.nextLong(500, 3000))
             }
-
             BackendServer.Response(
                 statusCode = HttpStatusCode.fromValue(200),
-                headers = headersOf(
-                    name = HttpHeaders.ContentType,
-                    value = ContentType.Application.Json
-                        .withCharset(Charsets.UTF_8)
-                        .toString()
-                ),
+                headers = headers {
+                    this["Content-Type"] = contentType
+                    this["Content-Length"] = contentSize.toString()
+                },
                 body = jsonBytes
             )
         }

@@ -6,34 +6,28 @@ import coil3.decode.ImageSource
 import coil3.fetch.Fetcher
 import coil3.fetch.SourceFetchResult
 import coil3.request.Options
-import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
-import okio.buffer
+import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
 
 internal class HttpLocalFetcher(
     private val path: String,
     private val options: Options,
-    private val assets: AssetsProtocol
+    private val assetSource: AssetSourceProtocol
 ) : Fetcher {
-    override suspend fun fetch(): SourceFetchResult {
-        val response = assets.readImage(
-            AssetsProtocol.Request(path = path)
-        )
-        if (response is AssetsProtocol.Response.Failure) {
-            throw response.error
-        }
-        val source = (response as AssetsProtocol.Response.Success).source
-        return SourceFetchResult(
+    override suspend fun fetch(): SourceFetchResult = assetSource.readImage(path) { content ->
+        SourceFetchResult(
             source = ImageSource(
-                source = source.buffer(),
+                source = okio.Buffer().apply {
+                    writeAll(content.source)
+                },
                 fileSystem = options.fileSystem
             ),
-            mimeType = response.headers["Content-Type"],
+            mimeType = content.contentType,
             dataSource = DataSource.NETWORK
         )
     }
 
     class Factory(
-        private val assets: AssetsProtocol,
+        private val assetSource: AssetSourceProtocol,
     ) : Fetcher.Factory<ImageRequest.Local> {
         override fun create(
             data: ImageRequest.Local,
@@ -42,7 +36,7 @@ internal class HttpLocalFetcher(
         ): Fetcher = HttpLocalFetcher(
             path = data.path,
             options = options,
-            assets = assets
+            assetSource = assetSource
         )
     }
 }

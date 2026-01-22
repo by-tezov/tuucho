@@ -1,11 +1,12 @@
 package com.tezov.tuucho.sample.shared.repository.network.backendServer.service
 
-import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
+import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.GuardProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.headers
 import kotlinx.coroutines.delay
 import okio.buffer
 import okio.use
@@ -13,7 +14,7 @@ import kotlin.random.Random
 
 internal class ImageService(
     private val config: NetworkModule.Config,
-    private val assets: AssetsProtocol,
+    private val assetSource: AssetSourceProtocol,
     private val guards: List<GuardProtocol>,
 ) : ServiceProtocol {
 
@@ -44,18 +45,19 @@ internal class ImageService(
         request: BackendServer.Request,
     ) = when (version) {
         "v1" -> {
-            val response = assets.readImage(
-                AssetsProtocol.Request(path = "backend/$version/${request.url}")
-            )
-            if (response is AssetsProtocol.Response.Failure) {
-                throw response.error
+            val (bytes, contentType, contentSize) = assetSource.readImage(
+                path = "backend/$version/${request.url}"
+            ) { content ->
+                val data = content.source.buffer().readByteArray()
+                Triple(data, content.contentType, content.size)
             }
-            val success = response as AssetsProtocol.Response.Success
-            val bytes = success.source.buffer().use { it.readByteArray() }
             delay(Random.nextLong(150, 1500))
             BackendServer.Response(
                 statusCode = HttpStatusCode.OK,
-                headers = success.headers,
+                headers = headers {
+                    this["Content-Type"] = contentType
+                    this["Content-Length"] = contentSize.toString()
+                },
                 body = bytes
             )
         }
