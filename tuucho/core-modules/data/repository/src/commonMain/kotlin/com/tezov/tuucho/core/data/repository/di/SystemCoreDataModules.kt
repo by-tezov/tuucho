@@ -36,6 +36,7 @@ object SystemCoreDataModules {
         RepositoryModule.invoke(),
         NetworkModule.invoke(),
         DatabaseModule.invoke(),
+        AssetModule.invoke(),
         ImageModule.invoke(),
         StoreRepositoryModule.invoke(),
     ) +

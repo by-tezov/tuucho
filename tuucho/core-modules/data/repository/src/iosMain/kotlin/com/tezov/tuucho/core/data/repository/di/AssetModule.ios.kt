@@ -6,8 +6,8 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 
 internal object AssetsModuleIos {
     fun invoke() = module(ModuleContextData.Main) {
-        factory<AssetsProtocol> {
-            AssetsIos()
+        factory<AssetReaderProtocol> {
+            AssetReaderIos()
         }
     }
 }

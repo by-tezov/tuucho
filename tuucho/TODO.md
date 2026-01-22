@@ -1,7 +1,5 @@
 ### Todo:
 
-- asset factorise commonMain + config root folder assets
- 
 - TTL + placeholder
 - Alternative image (fallback) query fallback local/remote ? 
  

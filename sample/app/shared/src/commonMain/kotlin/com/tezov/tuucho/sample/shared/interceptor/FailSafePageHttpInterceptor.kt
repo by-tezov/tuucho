@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.interceptor
 
-import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
+import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
@@ -17,7 +17,7 @@ import okio.use
 
 class FailSafePageHttpInterceptor(
     private val config: NetworkModule.Config,
-    private val assets: AssetsProtocol,
+    private val assetSource: AssetSourceProtocol,
 ) : HttpInterceptor {
     override suspend fun process(
         context: HttpInterceptor.Context,
@@ -42,13 +42,9 @@ class FailSafePageHttpInterceptor(
 
     private val failSafeResponse
         get():String {
-            val response = assets.readFile(
-                AssetsProtocol.Request(path = "json/fail-safe-page-http-interceptor.json")
+            val content = assetSource.readFile(
+                path = "json/fail-safe-page-http-interceptor.json"
             )
-            if (response is AssetsProtocol.Response.Failure) {
-                throw response.error
-            }
-            val source = (response as AssetsProtocol.Response.Success).source
-            return source.buffer().use { it.readUtf8() }
+            return content.source.buffer().use { it.readUtf8() }
         }
 }
