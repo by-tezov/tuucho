@@ -12,6 +12,7 @@ import com.tezov.tuucho.sample.shared.repository.network.backendServer.guard.Aut
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.guard.AuthGuardOptional
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.service.HealthService
+import com.tezov.tuucho.sample.shared.repository.network.backendServer.service.ImageService
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.service.ResourceService
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.service.SendFormLoginService
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.service.SendService
@@ -49,26 +50,36 @@ internal object NetworkRepositoryModuleFlavor {
     }
 
     private fun Module.services() {
-        factoryOf(::SendFormLoginService) bindOrdered ServiceProtocol::class
-
         factory {
-            SendService(
-                guards = listOf(get<AuthGuard>())
+            HealthService(
+                config = get(),
+                guards = listOf(get<AuthGuardOptional>())
             )
         } bindOrdered ServiceProtocol::class
 
         factory {
-            ResourceService(
+            ImageService(
+                config = get(),
                 assets = get(),
                 guards = listOf(get<AuthGuard>())
             )
         } bindOrdered ServiceProtocol::class
 
         factory {
-            HealthService(
-                guards = listOf(get<AuthGuardOptional>())
+            ResourceService(
+                config = get(),
+                assets = get(),
+                guards = listOf(get<AuthGuard>())
             )
         } bindOrdered ServiceProtocol::class
 
+        factoryOf(::SendFormLoginService) bindOrdered ServiceProtocol::class
+
+        factory {
+            SendService(
+                config = get(),
+                guards = listOf(get<AuthGuard>())
+            )
+        } bindOrdered ServiceProtocol::class
     }
 }

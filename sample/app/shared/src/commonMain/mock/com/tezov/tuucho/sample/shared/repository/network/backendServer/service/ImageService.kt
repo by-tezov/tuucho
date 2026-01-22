@@ -2,28 +2,22 @@ package com.tezov.tuucho.sample.shared.repository.network.backendServer.service
 
 import com.tezov.tuucho.core.data.repository.assets.AssetsProtocol
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Type
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.GuardProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.headersOf
-import io.ktor.http.withCharset
-import io.ktor.utils.io.charsets.Charsets
 import kotlinx.coroutines.delay
 import okio.buffer
 import okio.use
 import kotlin.random.Random
 
-internal class ResourceService(
+internal class ImageService(
     private val config: NetworkModule.Config,
     private val assets: AssetsProtocol,
     private val guards: List<GuardProtocol>,
 ) : ServiceProtocol {
 
-    private val pattern = Regex("^${config.resourceEndpoint}(/.*)?$")
+    private val pattern = Regex("^${config.imageEndpoint}(/.*)?$")
 
     override fun matches(url: String) = pattern.matches(url)
 
@@ -31,7 +25,7 @@ internal class ResourceService(
         version: String,
         request: BackendServer.Request
     ): Boolean {
-        val url = request.url.removePrefix("${config.resourceEndpoint}/")
+        val url = request.url.removePrefix("${config.imageEndpoint}/")
         return when {
             url.startsWith("auth") -> {
                 guards.all { it.allowed(version, request) }
@@ -50,27 +44,19 @@ internal class ResourceService(
         request: BackendServer.Request,
     ) = when (version) {
         "v1" -> {
-            val response = assets.readFile(
-                AssetsProtocol.Request(path = "backend/$version/${request.url}.json")
+            val response = assets.readImage(
+                AssetsProtocol.Request(path = "backend/$version/${request.url}")
             )
             if (response is AssetsProtocol.Response.Failure) {
                 throw response.error
             }
-            val source = (response as AssetsProtocol.Response.Success).source
-            val jsonBytes = source.buffer().use { it.readByteArray() }
-            if (request.url.endsWith("-${Type.contextual}") || request.url.contains("-${Type.contextual}-")) {
-                delay(Random.nextLong(500, 3000))
-            }
-
+            val success = response as AssetsProtocol.Response.Success
+            val bytes = success.source.buffer().use { it.readByteArray() }
+            delay(Random.nextLong(150, 1500))
             BackendServer.Response(
-                statusCode = HttpStatusCode.fromValue(200),
-                headers = headersOf(
-                    name = HttpHeaders.ContentType,
-                    value = ContentType.Application.Json
-                        .withCharset(Charsets.UTF_8)
-                        .toString()
-                ),
-                body = jsonBytes
+                statusCode = HttpStatusCode.OK,
+                headers = success.headers,
+                body = bytes
             )
         }
 
