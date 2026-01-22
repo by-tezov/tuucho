@@ -1,5 +1,6 @@
 package com.tezov.tuucho.sample.shared.repository.network.backendServer.service
 
+import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.store.LoginTokenStore
@@ -12,10 +13,11 @@ import io.ktor.utils.io.charsets.Charsets
 import kotlin.random.Random
 
 internal class SendFormLoginService(
+    config: NetworkModule.Config,
     private val loginTokenStore: LoginTokenStore
 ) : ServiceProtocol {
 
-    private val pattern = Regex("^send/form-from-page-login(/.*)?$")
+    private val pattern = Regex("^${config.sendEndpoint}/form-from-page-login(/.*)?$")
 
     override fun matches(url: String) = pattern.matches(url)
 
@@ -52,7 +54,7 @@ internal class SendFormLoginService(
                   "action": {
                     "before": "store://key-value/save?login-authorization=${token}"
                   }
-                }"""
+                }""".toByteArray(Charsets.UTF_8)
             )
         }
 

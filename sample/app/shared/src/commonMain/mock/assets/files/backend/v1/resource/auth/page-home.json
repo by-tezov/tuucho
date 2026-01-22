@@ -1,4 +1,9 @@
 {
+  "setting": {
+    "time-to-live": {
+      "strategy": "single-use"
+    }
+  },
   "root": {
     "setting": {
       "shadower": {
@@ -31,6 +36,20 @@
     },
     "content": {
       "items": [
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*small-logo"
+            ]
+          }
+        },
         {
           "subset": "layout-linear",
           "style": {
@@ -219,6 +238,21 @@
       }
     },
     {
+      "id": "small-logo",
+      "subset": "image",
+      "style": {
+        "width": "48",
+        "height": "48",
+        "shape": "rounded",
+        "padding": "3",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "value": "*small-logo",
+        "description": "Small-Logo"
+      }
+    },
+    {
       "id": "input-field-age",
       "subset": "form-field",
       "option": {
@@ -315,6 +349,13 @@
       "text-form-email-placeholder": "my.email@gmail.com",
       "text-form-age-title": "age*",
       "text-form-age-placeholder": "27"
+    }
+  },
+  "images": {
+    "common": {
+      "small-logo": {
+        "source": "remote://auth/logo-koin"
+      }
     }
   }
 }

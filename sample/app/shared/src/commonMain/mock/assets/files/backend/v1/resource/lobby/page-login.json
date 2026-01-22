@@ -24,6 +24,20 @@
     },
     "content": {
       "items": [
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*small-logo"
+            ]
+          }
+        },
         "*item-spacer",
         {
           "subset": "layout-linear",
@@ -132,13 +146,27 @@
         "height" : "196",
         "shape" : "rounded-square",
         "padding" : "6",
-        "tint-color": "*background@gray-light",
         "alpha": "0.85",
         "background-color": "*background@funny-color"
       },
       "content": {
         "value" : "*main-logo",
         "description" : "Main-Logo"
+      }
+    },
+    {
+      "id": "small-logo",
+      "subset": "image",
+      "style": {
+        "width": "48",
+        "height": "48",
+        "shape": "rounded",
+        "padding": "3",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "value": "*small-logo",
+        "description": "Small-Logo"
       }
     }
   ],
@@ -185,8 +213,10 @@
   "images": {
     "common": {
       "main-logo": {
-        "source": "local://img/logo-koin",
-        "source2": "remote://lobby/logo-compose"
+        "source": "remote://lobby/logo-compose"
+      },
+      "small-logo": {
+        "source": "local://img/logo-koin"
       }
     }
   },

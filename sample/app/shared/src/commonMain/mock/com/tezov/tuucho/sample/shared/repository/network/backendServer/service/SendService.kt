@@ -1,5 +1,6 @@
 package com.tezov.tuucho.sample.shared.repository.network.backendServer.service
 
+import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.GuardProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
@@ -11,10 +12,11 @@ import io.ktor.http.withCharset
 import io.ktor.utils.io.charsets.Charsets
 
 internal class SendService(
+    config: NetworkModule.Config,
     private val guards: List<GuardProtocol>,
 ) : ServiceProtocol {
 
-    private val pattern = Regex("^send/auth(/.*)?$")
+    private val pattern = Regex("^${config.sendEndpoint}/auth(/.*)?$")
 
     override fun matches(url: String) = pattern.matches(url)
 
@@ -35,7 +37,7 @@ internal class SendService(
                     .withCharset(Charsets.UTF_8)
                     .toString()
             ),
-            body = """{ "subset" : "form", "all-succeed": true }"""
+            body = """{ "subset" : "form", "all-succeed": true }""".toByteArray(Charsets.UTF_8)
         )
 
         else -> throw Exception("unknown version $version")

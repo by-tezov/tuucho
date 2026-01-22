@@ -1,5 +1,6 @@
 package com.tezov.tuucho.sample.shared.repository.network.backendServer.service
 
+import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.GuardProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
@@ -11,10 +12,11 @@ import io.ktor.http.withCharset
 import io.ktor.utils.io.charsets.Charsets
 
 internal class HealthService(
+    private val config: NetworkModule.Config,
     private val guards: List<GuardProtocol>,
 ) : ServiceProtocol {
 
-    private val pattern = Regex("^health(/.*)?$")
+    private val pattern = Regex("^${config.healthEndpoint}(/.*)?$")
 
     override fun matches(url: String) = pattern.matches(url)
 
@@ -22,7 +24,7 @@ internal class HealthService(
         version: String,
         request: BackendServer.Request
     ): Boolean {
-        val url = request.url.removePrefix("health/")
+        val url = request.url.removePrefix("${config.healthEndpoint}/")
         return guards.all { it.allowed(version, request.copy(url = url)) }
     }
 
@@ -38,7 +40,7 @@ internal class HealthService(
                     .withCharset(Charsets.UTF_8)
                     .toString()
             ),
-            body = """{ "health": "100%" }"""
+            body = """{ "health": "100%" }""".toByteArray(Charsets.UTF_8)
         )
 
         else -> throw Exception("unknown version $version")

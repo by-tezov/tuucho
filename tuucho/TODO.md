@@ -1,6 +1,5 @@
 ### Todo:
 
-- add mock service for image
 - asset factorise commonMain + config root folder assets
  
 - TTL + placeholder

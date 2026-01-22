@@ -28,6 +28,7 @@ class HeaderHttpAuthorizationInterceptor(
                     it.startsWith(config.healthEndpoint) -> it.removePrefix(config.healthEndpoint)
                     it.startsWith(config.resourceEndpoint) -> it.removePrefix(config.resourceEndpoint)
                     it.startsWith(config.sendEndpoint) -> it.removePrefix(config.sendEndpoint)
+                    it.startsWith(config.imageEndpoint) -> it.removePrefix(config.imageEndpoint)
                     else -> it
                 }
             }
