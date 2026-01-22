@@ -8,11 +8,12 @@ kotlin {
             implementation(project(":core.umbrella"))
 
             implementation(libs.kotlin.serialization.json)
-            implementation(libs.koin.core)
             implementation(libs.compose.ui)
             implementation(libs.compose.material3)
             implementation(libs.koin.core)
+            implementation(libs.coil.core)
             implementation(libs.kotlin.collections.immutable)
+
         }
     }
 }

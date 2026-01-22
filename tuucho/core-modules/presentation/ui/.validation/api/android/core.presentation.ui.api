@@ -3,6 +3,10 @@ public final class com/tezov/tuucho/core/presentation/ui/_system/ColorExtensionK
 	public static final fun toColorOrNull (Ljava/lang/String;)Landroidx/compose/ui/graphics/Color;
 }
 
+public final class com/tezov/tuucho/core/presentation/ui/_system/CompositionLocalTuuchoKoinKt {
+	public static final fun getLocalTuuchoKoin ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/_system/SchemaExtensionKt {
 	public static final fun getContentOrNull (Lkotlinx/serialization/json/JsonObject;)Lkotlinx/serialization/json/JsonObject;
 	public static final fun getIdSourceOrNull (Lkotlinx/serialization/json/JsonElement;)Ljava/lang/String;
@@ -58,6 +62,19 @@ public final class com/tezov/tuucho/core/presentation/ui/exception/UiException$D
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
+public final class com/tezov/tuucho/core/presentation/ui/preview/DummyImage {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/DummyImage;
+	public final fun invoke-Iv8Zu3U (JIIJ)Lcom/tezov/tuucho/core/presentation/ui/render/projection/Image;
+	public static synthetic fun invoke-Iv8Zu3U$default (Lcom/tezov/tuucho/core/presentation/ui/preview/DummyImage;JIIJILjava/lang/Object;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/Image;
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/preview/DummyKoin {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/DummyKoin;
+	public final fun invoke (Lorg/koin/core/module/Module;)Lorg/koin/core/Koin;
+}
+
 public final class com/tezov/tuucho/core/presentation/ui/preview/DummyScreenContext {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/core/presentation/ui/preview/DummyScreenContext;
@@ -109,7 +126,6 @@ public final class com/tezov/tuucho/core/presentation/ui/render/misc/ResolveStat
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/ActionProjectionKt {
 	public static final fun action (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ActionProjectionProtocol;
 	public static final fun createActionProjection (Ljava/lang/String;Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ActionProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ActionProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ActionProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ActionProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ActionProjectionProtocol;
 }
 
@@ -119,7 +135,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionKt {
 	public static final fun color (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionProtocol;
 	public static final fun createColorProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ColorProjectionProtocol;
 }
 
@@ -129,6 +144,26 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol {
 	public abstract fun attach (Lcom/tezov/tuucho/core/presentation/ui/render/projection/ExtractorProjectionProtocol;)V
 	public abstract fun extract (Lkotlinx/serialization/json/JsonElement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/render/projection/Image : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol$Image {
+	public static final field $stable I
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol$Image;)V
+	public final fun asPainter (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/painter/Painter;
+	public fun getHeight ()I
+	public fun getKoin ()Lorg/koin/core/Koin;
+	public fun getSize ()J
+	public fun getSource ()Lcoil3/Image;
+	public synthetic fun getSource ()Ljava/lang/Object;
+	public fun getWidth ()I
+}
+
+public final class com/tezov/tuucho/core/presentation/ui/render/projection/ImageProjectionKt {
+	public static final fun createImageProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ImageProjectionProtocol;
+	public static final fun image (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/ImageProjectionProtocol;
+}
+
+public abstract interface class com/tezov/tuucho/core/presentation/ui/render/projection/ImageProjectionProtocol : com/tezov/tuucho/core/presentation/ui/render/projection/ProjectionProtocols, com/tezov/tuucho/core/presentation/ui/render/protocol/IdProcessorProtocol, com/tezov/tuucho/core/presentation/ui/render/protocol/ResolveStatusProcessorProtocol {
 }
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/MutableStorageProjection : com/tezov/tuucho/core/presentation/ui/render/projection/StorageProjectionProtocol {
@@ -193,7 +228,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionKt {
 	public static final fun boolean (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionProtocol;
 	public static final fun createBooleanProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/BooleanProjectionProtocol;
 }
 
@@ -203,7 +237,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/DpProjectionKt {
 	public static final fun createDpProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/DpProjectionProtocol;
 	public static final fun dp (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/DpProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/DpProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/DpProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/DpProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/DpProjectionProtocol;
 }
 
@@ -213,7 +246,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionKt {
 	public static final fun createFloatProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionProtocol;
 	public static final fun float (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/FloatProjectionProtocol;
 }
 
@@ -222,7 +254,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionKt {
 	public static final fun createIntProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
 	public static final fun int (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/IntProjectionProtocol;
 }
@@ -232,7 +263,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionKt {
 	public static final fun createSpProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;
 	public static final fun sp (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/SpProjectionProtocol;
 }
@@ -242,7 +272,6 @@ public abstract interface class com/tezov/tuucho/core/presentation/ui/render/pro
 
 public final class com/tezov/tuucho/core/presentation/ui/render/projection/dimension/StringProjectionKt {
 	public static final fun createStringProjection (Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/StringProjectionProtocol;
-	public static final fun getContextual (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/StringProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/StringProjectionProtocol;
 	public static final fun getMutable (Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/StringProjectionProtocol;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/StringProjectionProtocol;
 	public static final fun string (Lcom/tezov/tuucho/core/presentation/ui/render/projector/TypeProjectorProtocols;Ljava/lang/String;)Lcom/tezov/tuucho/core/presentation/ui/render/projection/dimension/StringProjectionProtocol;
 }

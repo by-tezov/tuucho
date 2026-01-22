@@ -1,4 +1,9 @@
 {
+  "setting": {
+    "time-to-live": {
+      "strategy": "single-use"
+    }
+  },
   "root": {
     "setting": {
       "navigation": {
@@ -21,10 +26,25 @@
       "items": [
         "*item-spacer",
         {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*main-logo",
+              "*item-spacer"
+            ]
+          }
+        },
+        "*item-spacer",
+        {
           "subset": "label",
           "style": "*title-section",
           "content": {
-            "value": "Please enter your credentials"
+            "value": "*credentials-title"
           }
         },
         "*item-spacer-24-v",
@@ -103,6 +123,23 @@
       "style": {
         "weight": "0.2"
       }
+    },
+    {
+      "id": "main-logo",
+      "subset": "image",
+      "style": {
+        "width" : "196",
+        "height" : "196",
+        "shape" : "rounded-square",
+        "padding" : "6",
+        "tint-color": "*background@gray-light",
+        "alpha": "0.85",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "value" : "*main-logo",
+        "description" : "Main-Logo"
+      }
     }
   ],
   "styles": {
@@ -145,9 +182,17 @@
       }
     }
   },
+  "images": {
+    "common": {
+      "main-logo": {
+        "source": "local://img/logo-koin",
+        "source2": "remote://lobby/logo-compose"
+      }
+    }
+  },
   "texts": {
     "common": {
-      "login-init": "from here"
+      "credentials-title": { "id": "*credentials-request" }
     }
   }
 }

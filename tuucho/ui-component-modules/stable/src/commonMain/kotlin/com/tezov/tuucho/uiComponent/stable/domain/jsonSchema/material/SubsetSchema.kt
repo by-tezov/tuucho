@@ -9,5 +9,6 @@ object SubsetSchema {
         const val button = "button"
         const val layoutLinear = "layout-linear"
         const val spacer = "spacer"
+        const val image = "image"
     }
 }

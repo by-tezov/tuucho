@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.scope.Scope
 
 class ColorRectifier(
@@ -46,7 +45,7 @@ class ColorRectifier(
             type = TypeSchema.Value.color
             val value = this.element.string
             if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
-                id = JsonPrimitive(value)
+                id = this.element
             } else {
                 id = JsonNull
                 default = value

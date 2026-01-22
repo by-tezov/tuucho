@@ -15,9 +15,7 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
@@ -38,37 +36,33 @@ class NavigateBackUseCase(
     override suspend fun invoke(
         input: Unit
     ) {
-        coroutineScopes.useCase.await {
-            middlewareExecutor.process(
-                middlewares = navigationMiddlewares + terminalMiddleware(),
-                context = NavigationMiddleware.Back.Context(
-                    currentUrl = navigationStackRouteRepository.currentRoute()?.value
-                        ?: throw DomainException.Default("Shouldn't be possible"),
-                    nextUrl = navigationStackRouteRepository.priorRoute()?.value,
-                    onShadowerException = null
-                )
+        middlewareExecutor.process(
+            middlewares = navigationMiddlewares + terminalMiddleware(),
+            context = NavigationMiddleware.Back.Context(
+                currentUrl = navigationStackRouteRepository.currentRoute()?.value
+                    ?: throw DomainException.Default("Shouldn't be possible"),
+                nextUrl = navigationStackRouteRepository.priorRoute()?.value,
+                onShadowerException = null
             )
-        }
+        )
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
-        coroutineScopes.navigation.await {
-            val restoredRoute = navigationStackRouteRepository.backward(
-                route = NavigationRoute.Back
+        val restoredRoute = navigationStackRouteRepository.backward(
+            route = NavigationRoute.Back
+        )
+        restoredRoute?.let { runShadower(restoredRoute, context) }
+        navigationStackTransitionRepository.backward(
+            routes = navigationStackRouteRepository.routes(),
+        )
+        navigationStackScreenRepository.backward(
+            routes = navigationStackRouteRepository.routes(),
+        )
+        if (navigationStackRouteRepository.currentRoute() == null) {
+            useCaseExecutor.await(
+                useCase = navigateFinish,
+                input = Unit
             )
-            restoredRoute?.let { runShadower(restoredRoute, context) }
-            navigationStackTransitionRepository.backward(
-                routes = navigationStackRouteRepository.routes(),
-            )
-            navigationStackScreenRepository.backward(
-                routes = navigationStackRouteRepository.routes(),
-            )
-            if (navigationStackRouteRepository.currentRoute() == null) {
-                useCaseExecutor.await(
-                    useCase = navigateFinish,
-                    input = Unit
-                )
-            }
         }
     }
 

@@ -21,6 +21,7 @@ internal object MaterialBreakerModule {
                 factory(colors)
                 factory(dimensions)
                 factory(actions)
+                factory(images)
             }
         }
     }

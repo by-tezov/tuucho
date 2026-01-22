@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
@@ -27,6 +28,7 @@ private data class Updatable(
 )
 
 internal class Screen(
+    private val coroutineScopes: CoroutineScopesProtocol,
     override val route: NavigationRoute.Url
 ) : ScreenProtocol,
     TuuchoKoinComponent {
@@ -47,24 +49,26 @@ internal class Screen(
     suspend fun initialize(
         componentObject: JsonObject
     ) {
-        val type = componentObject.withScope(TypeSchema::Scope).self
-        if (type != TypeSchema.Value.component) {
-            throw UiException.Default("object is not a component $componentObject")
+        coroutineScopes.renderer.await {
+            val type = componentObject.withScope(TypeSchema::Scope).self
+            if (type != TypeSchema.Value.component) {
+                throw UiException.Default("object is not a component $componentObject")
+            }
+            val id = componentObject.onScope(IdSchema::Scope).value
+            val subset = componentObject.withScope(SubsetSchema::Scope).self
+            val factory = viewFactories
+                .filter { it.accept(componentObject) }
+                .singleOrThrow(id, subset)
+                ?: throw UiException.Default("No renderer found for $componentObject")
+            val screenContext = ScreenContext(
+                route = route,
+                addViewBlock = ::addView
+            )
+            rootView = factory
+                .process(screenContext = screenContext)
+                .apply { initialize(componentObject) }
+            screenContext.addView(rootView)
         }
-        val id = componentObject.onScope(IdSchema::Scope).value
-        val subset = componentObject.withScope(SubsetSchema::Scope).self
-        val factory = viewFactories
-            .filter { it.accept(componentObject) }
-            .singleOrThrow(id, subset)
-            ?: throw UiException.Default("No renderer found for $componentObject")
-        val screenContext = ScreenContext(
-            route = route,
-            addViewBlock = ::addView
-        )
-        rootView = factory
-            .process(screenContext = screenContext)
-            .apply { initialize(componentObject) }
-        screenContext.addView(rootView)
     }
 
     private fun addView(
@@ -87,15 +91,45 @@ internal class Screen(
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <V : DomainViewProtocol> views(
+    override suspend fun <V : DomainViewProtocol> views(
         klass: KClass<V>
-    ) = views.filter { klass.isInstance(it) } as List<V>
+    ) = coroutineScopes.renderer.await {
+        views.filter { klass.isInstance(it) } as List<V>
+    }
 
     @Composable
     override fun display(
         scope: Any?
     ) {
         rootView.display(scope)
+    }
+
+    override suspend fun update(
+        jsonObject: JsonObject
+    ) {
+        coroutineScopes.renderer.await {
+            updateMutex.withLock {
+                val updatedIndexView = updateAndReturnViewIndex(jsonObject)
+                updatedIndexView?.let { views[it].updateIfNeeded() }
+            }
+        }
+    }
+
+    override suspend fun update(
+        jsonObjects: List<JsonObject>
+    ) {
+        coroutineScopes.renderer.await {
+            updateMutex.withLock {
+                val updatedIndexViews = buildList {
+                    jsonObjects.forEach {
+                        updateAndReturnViewIndex(it)?.let(::add)
+                    }
+                }
+                updatedIndexViews.forEach {
+                    views[it].updateIfNeeded()
+                }
+            }
+        }
     }
 
     private suspend fun updateAndReturnViewIndex(
@@ -106,30 +140,6 @@ internal class Screen(
         return updatables[keyTypeId(type, id)]?.let {
             it.updaterProcessor.process(jsonObject)
             it.viewIndex
-        }
-    }
-
-    override suspend fun update(
-        jsonObject: JsonObject
-    ) {
-        updateMutex.withLock {
-            val updatedIndexView = updateAndReturnViewIndex(jsonObject)
-            updatedIndexView?.let { views[it].updateIfNeeded() }
-        }
-    }
-
-    override suspend fun update(
-        jsonObjects: List<JsonObject>
-    ) {
-        updateMutex.withLock {
-            val updatedIndexViews = buildList {
-                jsonObjects.forEach {
-                    updateAndReturnViewIndex(it)?.let(::add)
-                }
-            }
-            updatedIndexViews.forEach {
-                views[it].updateIfNeeded()
-            }
         }
     }
 

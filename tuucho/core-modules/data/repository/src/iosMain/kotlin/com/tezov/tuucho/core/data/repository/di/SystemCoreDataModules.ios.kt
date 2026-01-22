@@ -19,8 +19,9 @@ internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = lis
             ReferenceFactoryIos()
         } bind ReferenceProtocol.Factory::class
     },
-    DatabaseRepositoryModuleIos.invoke(),
-    NetworkRepositoryModuleIos.invoke(),
+    DatabaseModuleIos.invoke(),
+    NetworkModuleIos.invoke(),
+    ImageModuleIos.invoke(),
     AssetsModuleIos.invoke(),
     StoreRepositoryModuleIos.invoke()
 )

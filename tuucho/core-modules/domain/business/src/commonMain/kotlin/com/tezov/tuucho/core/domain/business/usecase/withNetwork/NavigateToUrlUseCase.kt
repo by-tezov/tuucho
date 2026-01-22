@@ -49,52 +49,48 @@ class NavigateToUrlUseCase(
     override suspend fun invoke(
         input: Input
     ) {
-        coroutineScopes.useCase.await {
-            middlewareExecutor.process(
-                middlewares = navigationMiddlewares + terminalMiddleware(),
-                context = NavigationMiddleware.ToUrl.Context(
-                    currentUrl = navigationStackRouteRepository.currentRoute()?.value,
-                    input = input,
-                    onShadowerException = null
-                )
+        middlewareExecutor.process(
+            middlewares = navigationMiddlewares + terminalMiddleware(),
+            context = NavigationMiddleware.ToUrl.Context(
+                currentUrl = navigationStackRouteRepository.currentRoute()?.value,
+                input = input,
+                onShadowerException = null
             )
-        }
+        )
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
-        coroutineScopes.navigation.await {
-            with(context.input) {
-                val componentObject = retrieveMaterialRepository.process(url)
-                val navigationSettingObject = componentObject
-                    .onScope(ComponentSettingSchema.Root::Scope)
-                    .navigation
-                val navigationDefinitionObject = navigationSettingObject
-                    ?.withScope(ComponentSettingNavigationSchema::Scope)
-                    ?.definitions
-                    ?.navigationResolver()
-                val newRoute = navigationStackRouteRepository.forward(
-                    route = NavigationRoute.Url(navigationRouteIdGenerator.generate(), url),
-                    navigationOptionObject = navigationDefinitionObject
-                        ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
-                        ?.option
+        with(context.input) {
+            val componentObject = retrieveMaterialRepository.process(url)
+            val navigationSettingObject = componentObject
+                .onScope(ComponentSettingSchema.Root::Scope)
+                .navigation
+            val navigationDefinitionObject = navigationSettingObject
+                ?.withScope(ComponentSettingNavigationSchema::Scope)
+                ?.definitions
+                ?.navigationResolver()
+            val newRoute = navigationStackRouteRepository.forward(
+                route = NavigationRoute.Url(navigationRouteIdGenerator.generate(), url),
+                navigationOptionObject = navigationDefinitionObject
+                    ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
+                    ?.option
+            )
+            newRoute?.let {
+                navigationStackScreenRepository.forward(
+                    route = newRoute,
+                    componentObject = componentObject
                 )
-                newRoute?.let {
-                    navigationStackScreenRepository.forward(
-                        route = newRoute,
-                        componentObject = componentObject
-                    )
-                    runShadower(newRoute, componentObject, context)
-                }
-                navigationStackTransitionRepository.forward(
-                    routes = navigationStackRouteRepository.routes(),
-                    navigationExtraObject = navigationSettingObject
-                        ?.withScope(ComponentSettingNavigationSchema::Scope)
-                        ?.extra,
-                    navigationTransitionObject = navigationDefinitionObject
-                        ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
-                        ?.transition,
-                )
+                runShadower(newRoute, componentObject, context)
             }
+            navigationStackTransitionRepository.forward(
+                routes = navigationStackRouteRepository.routes(),
+                navigationExtraObject = navigationSettingObject
+                    ?.withScope(ComponentSettingNavigationSchema::Scope)
+                    ?.extra,
+                navigationTransitionObject = navigationDefinitionObject
+                    ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
+                    ?.transition,
+            )
         }
     }
 

@@ -51,6 +51,7 @@
     <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SymbolDataTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>ReturnCount:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
+    <ID>ThrowsCount:ImageModelDomain.kt$ImageModelDomain.Companion$fun from( value: String ): ImageModelDomain</ID>
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
     <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:InteractionLockStack.kt$InteractionLockStack : Stack</ID>

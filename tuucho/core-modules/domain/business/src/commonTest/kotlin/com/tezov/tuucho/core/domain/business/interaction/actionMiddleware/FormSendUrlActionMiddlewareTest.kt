@@ -640,7 +640,7 @@ class FormSendUrlActionMiddlewareTest {
             every { ext.extensionFormState } returns formView
             ext
         }
-        every { screen.views(FormStateProtocol.Extension::class) } returns extensions
+        everySuspend { screen.views(FormStateProtocol.Extension::class) } returns extensions
         return screen
     }
 

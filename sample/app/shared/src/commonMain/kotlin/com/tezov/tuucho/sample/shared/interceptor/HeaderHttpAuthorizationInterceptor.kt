@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.interceptor
 
-import com.tezov.tuucho.core.data.repository.di.NetworkRepositoryModule
+import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -10,7 +10,7 @@ import io.ktor.client.request.HttpResponseData
 
 class HeaderHttpAuthorizationInterceptor(
     private val useCaseExecutor: UseCaseExecutorProtocol,
-    private val config: NetworkRepositoryModule.Config,
+    private val config: NetworkModule.Config,
     private val getValueOrNullFromStore: GetValueOrNullFromStoreUseCase
 ) : HttpInterceptor {
 

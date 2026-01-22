@@ -6,6 +6,7 @@
     <ID>MagicNumber:ColorExtension.kt$16</ID>
     <ID>MagicNumber:ColorExtension.kt$6</ID>
     <ID>MagicNumber:ColorExtension.kt$8</ID>
+    <ID>MagicNumber:DummyImage.kt$DummyImage$128</ID>
     <ID>MagicNumber:TransitionSlideVertical.kt$TransitionSlideVertical.LayerSlideModifier$4</ID>
     <ID>MatchingDeclarationName:ComponentProjector.kt$ComponentProjectorProtocols : IdProcessorProtocolResolveStatusProcessorProtocolComponentProcessorProjectorProtocolReadyStatusInvalidateProtocols</ID>
     <ID>MatchingDeclarationName:FormStateProjection.kt$FormStateProjectionProtocol : FormStateProtocol</ID>
@@ -22,6 +23,7 @@
     <ID>MaxLineLength:MessageIntProjection.kt$MessageIntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;MessageIntTextTypeAlias&gt;)</ID>
     <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>
     <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
+    <ID>PackageNaming:CompositionLocalTuuchoKoin.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
     <ID>PackageNaming:DirectionNavigation.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>PackageNaming:DirectionScreen.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>PackageNaming:SchemaExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
