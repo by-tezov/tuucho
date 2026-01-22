@@ -60,7 +60,7 @@ internal object NetworkRepositoryModuleFlavor {
         factory {
             ImageService(
                 config = get(),
-                assets = get(),
+                assetSource = get(),
                 guards = listOf(get<AuthGuard>())
             )
         } bindOrdered ServiceProtocol::class
@@ -68,7 +68,7 @@ internal object NetworkRepositoryModuleFlavor {
         factory {
             ResourceService(
                 config = get(),
-                assets = get(),
+                assetSource = get(),
                 guards = listOf(get<AuthGuard>())
             )
         } bindOrdered ServiceProtocol::class

@@ -22,6 +22,6 @@ internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = lis
     DatabaseModuleIos.invoke(),
     NetworkModuleIos.invoke(),
     ImageModuleIos.invoke(),
-    AssetsModuleIos.invoke(),
+    AssetModuleIos.invoke(),
     StoreRepositoryModuleIos.invoke()
 )

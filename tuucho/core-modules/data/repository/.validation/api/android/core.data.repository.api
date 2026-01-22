@@ -32,50 +32,29 @@ public final class com/tezov/tuucho/core/data/repository/_system/reference/WeakR
 	public fun set (Ljava/lang/Object;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/data/repository/assets/AssetsProtocol {
-	public abstract fun readFile (Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Request;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response;
-	public abstract fun readImage (Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Request;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response;
-}
-
-public final class com/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Request {
-	public fun <init> (Ljava/lang/String;Lio/ktor/http/Headers;)V
-	public synthetic fun <init> (Ljava/lang/String;Lio/ktor/http/Headers;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Lio/ktor/http/Headers;
-	public final fun copy (Ljava/lang/String;Lio/ktor/http/Headers;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Request;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Request;Ljava/lang/String;Lio/ktor/http/Headers;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Request;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getHeaders ()Lio/ktor/http/Headers;
-	public final fun getPath ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class com/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response {
-}
-
-public final class com/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Failure : com/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response {
-	public fun <init> (Ljava/lang/Throwable;)V
-	public final fun component1 ()Ljava/lang/Throwable;
-	public final fun copy (Ljava/lang/Throwable;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Failure;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Failure;Ljava/lang/Throwable;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Failure;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getError ()Ljava/lang/Throwable;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Success : com/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response {
-	public fun <init> (Lokio/Source;Lio/ktor/http/Headers;)V
+public final class com/tezov/tuucho/core/data/repository/assets/AssetContent {
+	public fun <init> (Lokio/Source;Ljava/lang/String;J)V
 	public final fun component1 ()Lokio/Source;
-	public final fun component2 ()Lio/ktor/http/Headers;
-	public final fun copy (Lokio/Source;Lio/ktor/http/Headers;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Success;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Success;Lokio/Source;Lio/ktor/http/Headers;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/assets/AssetsProtocol$Response$Success;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()J
+	public final fun copy (Lokio/Source;Ljava/lang/String;J)Lcom/tezov/tuucho/core/data/repository/assets/AssetContent;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/assets/AssetContent;Lokio/Source;Ljava/lang/String;JILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/assets/AssetContent;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getHeaders ()Lio/ktor/http/Headers;
+	public final fun getContentType ()Ljava/lang/String;
+	public final fun getSize ()J
 	public final fun getSource ()Lokio/Source;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/assets/AssetReaderProtocol {
+	public abstract fun isExist (Ljava/lang/String;)Z
+	public abstract fun read (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/assets/AssetSourceProtocol {
+	public abstract fun readFile (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public abstract fun readImage (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/database/Database : app/cash/sqldelight/Transacter {
@@ -408,6 +387,10 @@ public final class com/tezov/tuucho/core/data/repository/database/type/Visibilit
 
 public final class com/tezov/tuucho/core/data/repository/database/type/Visibility$Type {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/tezov/tuucho/core/data/repository/di/AssetModule {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/AssetModule;
 }
 
 public final class com/tezov/tuucho/core/data/repository/di/DatabaseModule {
