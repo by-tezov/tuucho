@@ -7,8 +7,8 @@ import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
@@ -65,12 +65,12 @@ private fun onBackCompleted(
         )
         useCaseExecutor.await(
             useCase = actionHandler,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = NavigationRoute.Current,
-                action = ActionModelDomain.from(
-                    command = NavigateAction.LocalDestination.command,
-                    authority = NavigateAction.LocalDestination.authority,
-                    target = NavigateAction.LocalDestination.Target.back,
+                actionModel = ActionModel.from(
+                    command = NavigateActionDefinition.LocalDestination.command,
+                    authority = NavigateActionDefinition.LocalDestination.authority,
+                    target = NavigateActionDefinition.LocalDestination.Target.back,
                 ),
                 lockable = screenLock.freeze()
             )

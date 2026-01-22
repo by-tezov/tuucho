@@ -16,9 +16,7 @@ import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtoc
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlin.concurrent.atomics.AtomicBoolean
-import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
-@OptIn(ExperimentalAtomicApi::class)
 abstract class AbstractView(
     protected var screenContext: ScreenContextProtocol
 ) : ViewProtocol {

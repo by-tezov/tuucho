@@ -1,13 +1,11 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business._system.koin.KoinIsolatedContext
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.FormAction
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
@@ -38,7 +36,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -90,10 +87,10 @@ class FormSendUrlActionMiddlewareTest {
 
     @Test
     fun `accept matches only form send url with non null target`() {
-        val valid = ActionModelDomain.from("form://send-url/target")
-        val wrongCommand = ActionModelDomain.from("x://send-url/target")
-        val wrongAuthority = ActionModelDomain.from("form://other/target")
-        val missingTarget = ActionModelDomain.from("form://send-url")
+        val valid = ActionModel.from("form://send-url/target")
+        val wrongCommand = ActionModel.from("x://send-url/target")
+        val wrongAuthority = ActionModel.from("form://other/target")
+        val missingTarget = ActionModel.from("form://send-url")
 
         assertTrue(sut.accept(null, valid))
         assertFalse(sut.accept(null, wrongCommand))
@@ -111,7 +108,7 @@ class FormSendUrlActionMiddlewareTest {
             action = action
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
         sut.process(context, next)
@@ -131,7 +128,7 @@ class FormSendUrlActionMiddlewareTest {
             action = action
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
 
         stubGetScreen(screen = null)
 
@@ -199,7 +196,7 @@ class FormSendUrlActionMiddlewareTest {
         stubProcessActionAny()
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
         // ---------- middleware context ----------
@@ -250,7 +247,7 @@ class FormSendUrlActionMiddlewareTest {
         } returns null
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
         // ---------- middleware context ----------
@@ -305,7 +302,7 @@ class FormSendUrlActionMiddlewareTest {
         } returns SendDataUseCase.Output(jsonObject = responseObject)
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
         // ---------- middleware context ----------
@@ -389,7 +386,7 @@ class FormSendUrlActionMiddlewareTest {
         }
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
         // ---------- middleware context ----------
@@ -513,7 +510,7 @@ class FormSendUrlActionMiddlewareTest {
         }
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
         // ---------- middleware context ----------
@@ -521,9 +518,9 @@ class FormSendUrlActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = lockable,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = routeUrl,
-                action = action,
+                actionModel = action,
                 lockable = lockable,
                 actionObjectOriginal = jsonElement
             )
@@ -562,69 +559,25 @@ class FormSendUrlActionMiddlewareTest {
         }
     }
 
-    @Test
-    fun `process throws when action target is null while sending data`() = runTest {
-        // ---------- action with null target ----------
-        val action = ActionModelDomain.from(
-            command = FormAction.Send.command,
-            authority = FormAction.Send.authority,
-            target = null,
-            query = null as JsonElement?
-        )
-        val routeUrl = defaultRoute()
-
-        // ---------- form and screen setup ----------
-        val formViewValid = mock<FormStateProtocol>()
-        val screen = mockScreenWithFormViews(formViewValid)
-
-        // ---------- valid form so we actually reach the sendData branch ----------
-        stubValidFormView(formViewValid)
-
-        // ---------- use case stubbing: GetScreenOrNull only ----------
-        stubGetScreen(screen = screen)
-
-        // ---------- next middleware (never reached after exception) ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-
-        // ---------- middleware context ----------
-        val context = createContext(
-            route = routeUrl,
-            action = action
-        )
-
-        // ---------- Test: expect DomainException from null target in SendData input ----------
-        assertFailsWith<DomainException> {
-            sut.process(context, next)
-        }
-
-        // ---------- Verify the single await call so tearDown's verifyNoMoreCalls passes ----------
-        verifySuspend {
-            useCaseExecutor.await(
-                useCase = getScreenOrNullUseCase,
-                input = GetScreenOrNullUseCase.Input(route = routeUrl)
-            )
-        }
-    }
-
     // -------------------------------------------------------
     // Helpers
     // -------------------------------------------------------
 
-    private fun defaultAction() = ActionModelDomain.from("form://send-url/target")
+    private fun defaultAction() = ActionModel.from("form://send-url/target")
 
     private fun defaultRoute() = NavigationRoute.Url(id = "id", value = "url")
 
     private fun createContext(
         route: NavigationRoute,
-        action: ActionModelDomain,
+        action: ActionModel,
         actionObjectOriginal: JsonObject? = null,
         jsonElement: JsonElement? = null,
         lockable: InteractionLockable = InteractionLockable.Empty
     ) = ActionMiddleware.Context(
         lockable = lockable,
-        input = ProcessActionUseCase.Input.Action(
+        input = ProcessActionUseCase.Input.ActionModel(
             route = route,
-            action = action,
+            actionModel = action,
             lockable = lockable,
             actionObjectOriginal = actionObjectOriginal,
             jsonElement = jsonElement

@@ -2,7 +2,7 @@ package com.tezov.tuucho.sample.shared.action
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
@@ -16,15 +16,15 @@ class LoggerAction(
 
     override fun accept(
         route: NavigationRoute?,
-        action: ActionModelDomain,
+        action: ActionModel,
     ) = true
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
     ) = with(context.input) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
-        logger.debug("ACTION") { "from ${route}: $action" }
+        logger.debug("ACTION") { "from ${route}: $actionModel" }
         next?.invoke(context)
     }
 }

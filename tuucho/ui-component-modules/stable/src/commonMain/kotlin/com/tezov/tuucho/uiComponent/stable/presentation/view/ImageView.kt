@@ -113,8 +113,8 @@ private class ImageView(
             tintColor = +color(Style.Key.tintColor).mutable
         }
         +content {
-            image = +image(Content.Key.value)
-            description = +text(Content.Key.description)
+            image = +image(Content.Key.values)
+            description = +text(Content.Key.description).mutable
         }.contextual
     }.contextual
 

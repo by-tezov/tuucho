@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
@@ -53,9 +53,9 @@ class NavigationUrlActionMiddlewareTest {
 
     @Test
     fun `accept matches only NavigateAction Url`() {
-        val valid = ActionModelDomain.from("navigate://url/whatever")
-        val invalidCmd = ActionModelDomain.from("x://url/t")
-        val invalidAuth = ActionModelDomain.from("navigate://xxx/t")
+        val valid = ActionModel.from("navigate://url/whatever")
+        val invalidCmd = ActionModel.from("x://url/t")
+        val invalidAuth = ActionModel.from("navigate://xxx/t")
 
         assertTrue(sut.accept(null, valid))
         assertFalse(sut.accept(null, invalidCmd))
@@ -64,18 +64,18 @@ class NavigationUrlActionMiddlewareTest {
 
     @Test
     fun `process calls NavigateToUrlUseCase then next`() = runTest {
-        val action = ActionModelDomain.from("navigate://url/final")
+        val action = ActionModel.from("navigate://url/final")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = NavigationRoute.Back,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
 
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
@@ -93,18 +93,18 @@ class NavigationUrlActionMiddlewareTest {
 
     @Test
     fun `process skips NavigateToUrlUseCase when no target but still calls next`() = runTest {
-        val action = ActionModelDomain.from("navigate://url")
+        val action = ActionModel.from("navigate://url")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = NavigationRoute.Back,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
 
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
@@ -117,13 +117,13 @@ class NavigationUrlActionMiddlewareTest {
 
     @Test
     fun `process invokes NavigateToUrlUseCase and completes when next is null`() = runTest {
-        val action = ActionModelDomain.from("navigate://url/final")
+        val action = ActionModel.from("navigate://url/final")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = NavigationRoute.Current,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty
             )
         )

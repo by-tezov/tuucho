@@ -2,8 +2,8 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
@@ -18,14 +18,14 @@ internal class NavigationUrlActionMiddleware(
 
     override fun accept(
         route: NavigationRoute?,
-        action: ActionModelDomain,
-    ) = action.command == NavigateAction.Url.command && action.authority == NavigateAction.Url.authority
+        action: ActionModel,
+    ) = action.command == NavigateActionDefinition.Url.command && action.authority == NavigateActionDefinition.Url.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
     ) = with(context.input) {
-        action.target?.let { url ->
+        actionModel.target?.let { url ->
             useCaseExecutor.await(
                 useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(

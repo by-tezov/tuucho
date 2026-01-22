@@ -4,6 +4,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 
 interface ActionExecutorProtocol {
     suspend fun process(
-        input: ProcessActionUseCase.Input
+        input: ProcessActionUseCase.Input.ActionModel
     ): ProcessActionUseCase.Output?
 }

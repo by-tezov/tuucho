@@ -13,7 +13,7 @@ object DummyImage {
         height: Int = 128,
         size: Long = 128 * 128,
     ): Image = Image(
-        object : ImageRepositoryProtocol.Image<coil3.Image> {
+        coilImage = object : ImageRepositoryProtocol.Image<coil3.Image> {
             override val source: coil3.Image = ColorImage(
                 color = color.toArgb(),
                 width = width,
@@ -26,6 +26,7 @@ object DummyImage {
                 get() = source.width
             override val height: Int
                 get() = source.width
-        }
+        },
+        tag = null
     )
 }

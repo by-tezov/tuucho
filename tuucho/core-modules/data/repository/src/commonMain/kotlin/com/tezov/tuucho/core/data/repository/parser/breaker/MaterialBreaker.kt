@@ -45,7 +45,7 @@ internal class MaterialBreaker : TuuchoKoinComponent {
         }
         return map { entry ->
             if (entry !is JsonObject) {
-                throw DataException.Default("By design it must be an object nut $entry")
+                throw DataException.Default("By design it must be an object but $entry")
             }
             entry
         }

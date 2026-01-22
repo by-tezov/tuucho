@@ -9,25 +9,26 @@ import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 import coil3.Image as CoilImage
 
 class Image(
-    private val coilImage: ImageRepositoryProtocol.Image<CoilImage>
+    private val coilImage: ImageRepositoryProtocol.Image<CoilImage>,
+    val tag: String?
 ) : TuuchoKoinComponent,
     ImageRepositoryProtocol.Image<CoilImage> by coilImage {
     @Composable
     fun asPainter(): Painter {
         val koin = LocalTuuchoKoin.current
-        return remember {
+        return remember(source) {
             source.asPainter(context = koin.get<PlatformContext>())
         }
     }
@@ -65,24 +66,25 @@ private class ImageProjection(
 
     override suspend fun extract(
         jsonElement: JsonElement?
-    ) = (jsonElement as? JsonObject)
-        ?.let { imageObject ->
+    ) = (jsonElement as? JsonArray)
+        ?.let { imageArray ->
             val koin = getKoin()
             val coroutineScopes = koin.get<CoroutineScopesProtocol>()
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
-            val processImage = koin.get<ProcessImageUseCase>()
-            coroutineScopes.action.async(
+            val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
+            coroutineScopes.image.async(
                 throwOnFailure = true
             ) {
                 val result = useCaseExecutor.await(
-                    useCase = processImage,
-                    input = ProcessImageUseCase.Input.ImageObject(
-                        imageObject = imageObject
+                    useCase = retrieveImage,
+                    input = RetrieveImageUseCase.Input.ImageArray(
+                        imageArray = imageArray
                     )
                 )
                 result?.collect {
-                    @Suppress("UNCHECKED_CAST")
-                    this@ImageProjection.value = Image(coilImage = it as ImageRepositoryProtocol.Image<CoilImage>)
+                    coroutineScopes.image.await {
+                        this@ImageProjection.value = Image(coilImage = it.image, tag = it.tag)
+                    }
                 }
             }
             null

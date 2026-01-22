@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.model
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -12,11 +13,11 @@ import kotlin.test.assertIs
 import kotlin.test.assertNull
 
 class ActionModelDomainTest {
-    private fun String.toQuery() = ActionModelDomain.run { toQueryToMap() }
+    private fun String.toQuery() = ActionModel.run { toJsonElement() }
 
     @Test
     fun `from parses command authority target`() {
-        val model = ActionModelDomain.from("open://system/settings")
+        val model = ActionModel.from("open://system/settings")
         assertEquals("open", model.command)
         assertEquals("system", model.authority)
         assertEquals("settings", model.target)
@@ -25,7 +26,7 @@ class ActionModelDomainTest {
 
     @Test
     fun `from parses command and authority`() {
-        val model = ActionModelDomain.from("open://system")
+        val model = ActionModel.from("open://system")
         assertEquals("open", model.command)
         assertEquals("system", model.authority)
         assertNull(model.target)
@@ -34,7 +35,7 @@ class ActionModelDomainTest {
 
     @Test
     fun `from parses command only`() {
-        val model = ActionModelDomain.from("open://")
+        val model = ActionModel.from("open://")
         assertEquals("open", model.command)
         assertNull(model.authority)
         assertNull(model.target)
@@ -43,7 +44,7 @@ class ActionModelDomainTest {
 
     @Test
     fun `from parses nested target`() {
-        val model = ActionModelDomain.from("open://a/b/c")
+        val model = ActionModel.from("open://a/b/c")
         assertEquals("a", model.authority)
         assertEquals("b/c", model.target)
     }
@@ -51,14 +52,14 @@ class ActionModelDomainTest {
     @Test
     fun `from rejects invalid string`() {
         assertFailsWith<DomainException.Default> {
-            ActionModelDomain.from("invalid")
+            ActionModel.from("invalid")
         }
     }
 
     @Test
     fun `from rejects missing command`() {
         assertFailsWith<DomainException.Default> {
-            ActionModelDomain.from("://a/b")
+            ActionModel.from("://a/b")
         }
     }
 
@@ -110,22 +111,15 @@ class ActionModelDomainTest {
 
     @Test
     fun `from factory parses string query`() {
-        val model = ActionModelDomain.from("edit", "file", "doc", "x=1&y=2")
+        val model = ActionModel.from("edit", "file", "doc", "x=1&y=2")
         assertIs<JsonObject>(model.query)
         assertEquals(JsonPrimitive("1"), model.query["x"])
         assertEquals(JsonPrimitive("2"), model.query["y"])
     }
 
     @Test
-    fun `from factory preserves json query`() {
-        val json = JsonObject(mapOf("k" to JsonPrimitive("v")))
-        val model = ActionModelDomain.from("edit", "file", "doc", json)
-        assertEquals(json, model.query)
-    }
-
-    @Test
     fun `from factory with null string query keeps query null`() {
-        val model = ActionModelDomain.from(
+        val model = ActionModel.from(
             command = "edit",
             authority = "file",
             target = "doc"
@@ -135,37 +129,37 @@ class ActionModelDomainTest {
 
     @Test
     fun `toString prints command only`() {
-        assertEquals("cmd://", ActionModelDomain("cmd", null, null, null).toString())
+        assertEquals("cmd://", ActionModel("cmd", null, null, null).toString())
     }
 
     @Test
     fun `toString prints authority`() {
-        assertEquals("cmd://auth", ActionModelDomain("cmd", "auth", null, null).toString())
+        assertEquals("cmd://auth", ActionModel("cmd", "auth", null, null).toString())
     }
 
     @Test
     fun `toString prints authority and target`() {
-        assertEquals("cmd://auth/tgt", ActionModelDomain("cmd", "auth", "tgt", null).toString())
+        assertEquals("cmd://auth/tgt", ActionModel("cmd", "auth", "tgt", null).toString())
     }
 
     @Test
     fun `toString prints primitive query`() {
         val query = JsonPrimitive("x")
-        val model = ActionModelDomain("cmd", "auth", "tgt", query)
+        val model = ActionModel("cmd", "auth", "tgt", query)
         assertEquals("cmd://auth/tgt?x", model.toString())
     }
 
     @Test
     fun `toString prints object query`() {
         val query = JsonObject(mapOf("a" to JsonPrimitive("1"), "b" to JsonPrimitive("2")))
-        val model = ActionModelDomain("cmd", "auth", "tgt", query)
+        val model = ActionModel("cmd", "auth", "tgt", query)
         assertEquals("cmd://auth/tgt?a=1&b=2", model.toString())
     }
 
     @Test
     fun `toString prints array query`() {
         val query = JsonArray(listOf(JsonPrimitive("a"), JsonPrimitive("b")))
-        val model = ActionModelDomain("cmd", "auth", "tgt", query)
+        val model = ActionModel("cmd", "auth", "tgt", query)
         assertEquals("cmd://auth/tgt?a,b", model.toString())
     }
 }

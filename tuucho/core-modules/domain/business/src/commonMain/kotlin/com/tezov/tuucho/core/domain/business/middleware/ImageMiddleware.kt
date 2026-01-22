@@ -1,14 +1,14 @@
 package com.tezov.tuucho.core.domain.business.middleware
 
-import com.tezov.tuucho.core.domain.business.model.ImageModelDomain
+import com.tezov.tuucho.core.domain.business.model.image.ImageModel
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import kotlinx.coroutines.flow.Flow
 
 interface ImageMiddleware : MiddlewareProtocol<ImageMiddleware.Context, Flow<ImageRepositoryProtocol.Image<*>>> {
     data class Context(
-        val input: ProcessImageUseCase.Input.Image
+        val input: RetrieveImageUseCase.Input.ImageModels
     )
 
     object Priority {
@@ -20,6 +20,6 @@ interface ImageMiddleware : MiddlewareProtocol<ImageMiddleware.Context, Flow<Ima
     val priority: Int
 
     fun accept(
-        image: ImageModelDomain
+        image: ImageModel
     ): Boolean
 }

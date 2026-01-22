@@ -1,8 +1,10 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase.Input
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase.Output
 import kotlinx.coroutines.flow.Flow
 
-object ImageRepositoryProtocol {
+interface ImageRepositoryProtocol {
     interface Image<S : Any> {
         val source: S
         val size: Long
@@ -10,15 +12,7 @@ object ImageRepositoryProtocol {
         val height: Int
     }
 
-    interface Remote {
-        fun <S : Any> process(
-            target: String
-        ): Flow<Image<S>>
-    }
-
-    interface Local {
-        fun <S : Any> process(
-            target: String
-        ): Flow<Image<S>>
-    }
+    fun <S : Any> process(
+        images: Input.ImageModels
+    ): Flow<Output<S>>
 }

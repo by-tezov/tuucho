@@ -3,9 +3,7 @@ package com.tezov.tuucho.core.data.repository.di
 import com.tezov.tuucho.core.data.repository.di.NetworkModule.Name.HTTP_CLIENT_ENGINE
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.network.HttpClientEngineFactory
-import com.tezov.tuucho.core.data.repository.network.NetworkSource
-import com.tezov.tuucho.core.data.repository.network.NetworkSourceProtocol
-import com.tezov.tuucho.core.data.repository.network.source.HttpNetworkSource
+import com.tezov.tuucho.core.data.repository.network.HttpNetworkSource
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import io.ktor.client.HttpClient
@@ -16,7 +14,6 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
-import org.koin.dsl.bind
 
 object NetworkModule {
     interface Config {
@@ -68,6 +65,5 @@ object NetworkModule {
         }
 
         factoryOf(::HttpNetworkSource)
-        factoryOf(::NetworkSource) bind NetworkSourceProtocol::class
     }
 }

@@ -9,8 +9,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.FormAction
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
@@ -41,12 +41,14 @@ internal class FormSendUrlActionMiddleware(
 
     override fun accept(
         route: NavigationRoute?,
-        action: ActionModelDomain,
-    ) = action.command == FormAction.Send.command && action.authority == FormAction.Send.authority && action.target != null
+        action: ActionModel,
+    ) = action.command == FormActionDefinition.Send.command &&
+        action.authority == FormActionDefinition.Send.authority &&
+        action.target != null
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
     ) = with(context.input) {
         val formView = (route as? NavigationRoute.Url)?.getAllFormView() ?: return@with next?.invoke(context)
         if (formView.isAllFormValid()) {
@@ -54,7 +56,7 @@ internal class FormSendUrlActionMiddleware(
                 .await(
                     useCase = sendData,
                     input = SendDataUseCase.Input(
-                        url = action.target ?: throw DomainException.Default("should no be possible"),
+                        url = actionModel.target ?: throw DomainException.Default("should no be possible"),
                         jsonObject = formView.data()
                     )
                 )?.jsonObject
@@ -182,12 +184,12 @@ internal class FormSendUrlActionMiddleware(
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = route,
-                action = ActionModelDomain.from(
-                    command = FormAction.Update.command,
-                    authority = FormAction.Update.authority,
-                    target = FormAction.Update.Target.error,
+                actionModel = ActionModel.from(
+                    command = FormActionDefinition.Update.command,
+                    authority = FormActionDefinition.Update.authority,
+                    target = FormActionDefinition.Update.Target.error,
                 ),
                 jsonElement = results
             ),
@@ -201,9 +203,9 @@ internal class FormSendUrlActionMiddleware(
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = route,
-                action = ActionModelDomain.from(this),
+                actionModel = ActionModel.from(this),
                 jsonElement = response,
                 lockable = lockable
             ),

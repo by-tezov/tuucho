@@ -44,6 +44,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             "kotlin.uuid.ExperimentalUuidApi",
             "kotlin.ExperimentalUnsignedTypes",
             "kotlin.time.ExperimentalTime",
+            "kotlin.concurrent.atomics.ExperimentalAtomicApi",
 //            "kotlin.ExperimentalMultiplatform",
         ).asIterable()
 

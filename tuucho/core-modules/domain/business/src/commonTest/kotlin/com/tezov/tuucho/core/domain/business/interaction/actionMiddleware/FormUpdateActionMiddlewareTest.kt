@@ -5,7 +5,7 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
@@ -64,9 +64,9 @@ class FormUpdateActionMiddlewareTest {
 
     @Test
     fun `accept matches only form update`() {
-        val valid = ActionModelDomain.from("form://update/error")
-        val wrongCommand = ActionModelDomain.from("x://update/error")
-        val wrongAuthority = ActionModelDomain.from("form://other/error")
+        val valid = ActionModel.from("form://update/error")
+        val wrongCommand = ActionModel.from("x://update/error")
+        val wrongAuthority = ActionModel.from("form://other/error")
 
         assertTrue(sut.accept(null, valid))
         assertFalse(sut.accept(null, wrongCommand))
@@ -75,20 +75,20 @@ class FormUpdateActionMiddlewareTest {
 
     @Test
     fun `process returns when route is null and calls next only`() = runTest {
-        val action = ActionModelDomain.from("form://update/error")
+        val action = ActionModel.from("form://update/error")
         val jsonArray = JsonArray(listOf(JsonPrimitive("fieldId")))
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = null,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = jsonArray
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
 
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
@@ -101,7 +101,7 @@ class FormUpdateActionMiddlewareTest {
 
     @Test
     fun `process error target updates view for each param and calls next`() = runTest {
-        val action = ActionModelDomain.from("form://update/error")
+        val action = ActionModel.from("form://update/error")
         val jsonArray = buildJsonArray {
             add(JsonPrimitive("fieldA"))
             add(JsonPrimitive("fieldB"))
@@ -111,15 +111,15 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = route,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = jsonArray
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
 
         everySuspend { useCaseExecutor.await<UpdateViewUseCase.Input, Unit>(any(), any()) } returns Unit
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
@@ -137,7 +137,7 @@ class FormUpdateActionMiddlewareTest {
 
     @Test
     fun `process error target with reason sets messageErrorExtra and works when next is null`() = runTest {
-        val action = ActionModelDomain.from("form://update/error")
+        val action = ActionModel.from("form://update/error")
         val failureParam = JsonNull
             .withScope(FormSendSchema.FailureResult::Scope)
             .apply {
@@ -153,9 +153,9 @@ class FormUpdateActionMiddlewareTest {
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = route,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = jsonArray
             )
@@ -183,20 +183,20 @@ class FormUpdateActionMiddlewareTest {
 
     @Test
     fun `process error target with null jsonElement skips update and calls next`() = runTest {
-        val action = ActionModelDomain.from("form://update/error")
+        val action = ActionModel.from("form://update/error")
         val route = NavigationRoute.Url(id = "id", value = "url")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = route,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = null
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
         sut.process(context, next)
@@ -208,14 +208,14 @@ class FormUpdateActionMiddlewareTest {
 
     @Test
     fun `process throws for unknown target`() = runTest {
-        val action = ActionModelDomain.from("form://update/unknown")
+        val action = ActionModel.from("form://update/unknown")
         val route = NavigationRoute.Url(id = "id", value = "url")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = route,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = JsonNull
             )
@@ -228,19 +228,19 @@ class FormUpdateActionMiddlewareTest {
 
     @Test
     fun `process returns early when route is null and invokes next`() = runTest {
-        val action = ActionModelDomain.from("form://update/error")
+        val action = ActionModel.from("form://update/error")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.ActionModel(
                 route = null,
-                action = action,
+                actionModel = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = null
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>>()
 
         everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
