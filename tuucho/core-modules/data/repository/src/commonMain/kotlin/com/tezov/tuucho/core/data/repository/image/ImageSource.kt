@@ -21,7 +21,6 @@ interface ImageSourceProtocol {
 internal class ImageSource(
     private val imageLoaderSource: ImageLoaderSource
 ) : ImageSourceProtocol {
-
     private fun ImageResponse.toDomainImage() = object : DomainImage<Image> {
         override val source: Image = this@toDomainImage.image
         override val size: Long

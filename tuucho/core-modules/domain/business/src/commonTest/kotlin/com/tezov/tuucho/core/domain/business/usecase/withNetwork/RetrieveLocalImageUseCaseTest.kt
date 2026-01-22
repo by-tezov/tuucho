@@ -2,10 +2,12 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import dev.mokkery.answering.returns
-import dev.mokkery.everySuspend
+import dev.mokkery.every
 import dev.mokkery.mock
+import dev.mokkery.verify
 import dev.mokkery.verifyNoMoreCalls
-import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -31,21 +33,24 @@ class RetrieveLocalImageUseCaseTest {
     }
 
     @Test
-    fun `invoke retrieves image from local repository and wraps it into Output`() = runTest {
+    fun `invoke retrieves image flow from local repository`() = runTest {
         val url = "file://image.png"
         val repositoryImage = mock<ImageRepositoryProtocol.Image<Any>>()
+        val repositoryFlow = flowOf(repositoryImage)
 
-        everySuspend {
+        every {
             imagesRepository.process<Any>(url)
-        } returns repositoryImage
+        } returns repositoryFlow
 
-        val result = sut.invoke(
-            RetrieveLocalImageUseCase.Input(url = url)
-        )
+        val result = sut
+            .invoke(
+                RetrieveLocalImageUseCase.Input(url = url)
+            ).first()
 
-        assertSame(repositoryImage, result.image)
+        assertSame(repositoryImage, result)
 
-        verifySuspend {
+        verify {
+            @Suppress("UnusedFlow")
             imagesRepository.process<Any>(url)
         }
     }

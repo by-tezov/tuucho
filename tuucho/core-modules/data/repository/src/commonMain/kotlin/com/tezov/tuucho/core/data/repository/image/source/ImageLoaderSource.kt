@@ -15,23 +15,27 @@ internal class ImageLoaderSource(
     private val imageLoader: ImageLoader,
     private val platformContext: PlatformContext
 ) {
-
     private fun ProducerScope<ImageResponse>.targetFlow(
         target: String,
         errorMessage: () -> String,
     ) = object : Target {
-
-        override fun onStart(placeholder: Image?) {
+        override fun onStart(
+            placeholder: Image?
+        ) {
             placeholder?.let {
                 launch { send(ImageResponse.Placeholder(target = target, image = it)) }
             }
         }
 
-        override fun onError(error: Image?) {
+        override fun onError(
+            error: Image?
+        ) {
             close(DataException.Default(errorMessage()))
         }
 
-        override fun onSuccess(result: Image) {
+        override fun onSuccess(
+            result: Image
+        ) {
             launch {
                 send(ImageResponse.Success(target = target, image = result))
                 close()

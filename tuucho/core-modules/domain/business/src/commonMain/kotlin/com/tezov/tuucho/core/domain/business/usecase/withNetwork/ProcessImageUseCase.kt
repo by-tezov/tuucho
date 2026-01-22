@@ -13,7 +13,6 @@ import kotlinx.serialization.json.JsonObject
 class ProcessImageUseCase(
     private val imageExecutor: ImageExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Flow<ImageRepositoryProtocol.Image<*>>> {
-
     sealed class Input {
         data class Image(
             val image: ImageModelDomain,

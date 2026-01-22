@@ -7,9 +7,10 @@ import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
-import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonObject
 import kotlin.test.AfterTest
@@ -47,15 +48,18 @@ class ProcessImageUseCaseTest {
         )
 
         val repositoryImage = mock<ImageRepositoryProtocol.Image<*>>()
-        val expectedOutput = ProcessImageUseCase.Output.Element(repositoryImage)
+        val repositoryFlow = flowOf(repositoryImage)
 
-        everySuspend { imageExecutor.process(any()) } returns expectedOutput
+        everySuspend {
+            imageExecutor.process(any())
+        } returns repositoryFlow
 
-        val result = sut.invoke(input)
+        val result = sut.invoke(input)?.first()
 
-        assertSame(expectedOutput, result)
+        assertSame(repositoryImage, result)
 
-        verifySuspend(VerifyMode.exhaustiveOrder) {
+        verifySuspend {
+            @Suppress("UnusedFlow")
             imageExecutor.process(input = input)
         }
     }
@@ -67,15 +71,18 @@ class ProcessImageUseCaseTest {
         )
 
         val repositoryImage = mock<ImageRepositoryProtocol.Image<*>>()
-        val expectedOutput = ProcessImageUseCase.Output.Element(repositoryImage)
+        val repositoryFlow = flowOf(repositoryImage)
 
-        everySuspend { imageExecutor.process(any()) } returns expectedOutput
+        everySuspend {
+            imageExecutor.process(any())
+        } returns repositoryFlow
 
-        val result = sut.invoke(input)
+        val result = sut.invoke(input)?.first()
 
-        assertSame(expectedOutput, result)
+        assertSame(repositoryImage, result)
 
-        verifySuspend(VerifyMode.exhaustiveOrder) {
+        verifySuspend {
+            @Suppress("UnusedFlow")
             imageExecutor.process(input = input)
         }
     }

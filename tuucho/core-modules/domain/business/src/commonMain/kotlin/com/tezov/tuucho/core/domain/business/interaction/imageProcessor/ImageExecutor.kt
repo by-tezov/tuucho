@@ -14,7 +14,6 @@ internal class ImageExecutor(
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val middlewares: List<ImageMiddleware>
 ) : ImageExecutorProtocol {
-
     override suspend fun process(
         input: Input
     ) = with(input) {

@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.middleware.ImageMiddleware.Context
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.model.ImageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
 import dev.mokkery.answering.returns
 import dev.mokkery.every
@@ -18,6 +19,8 @@ import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verify.VerifyMode.Companion.atLeast
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlin.test.AfterTest
@@ -88,7 +91,7 @@ class ImageExecutorTest {
     }
 
     @Test
-    fun `process Image with one accepting middleware returns its output`() = coroutineTestScope.run {
+    fun `process Image with one accepting middleware returns its flow`() = coroutineTestScope.run {
         val image = ImageModelDomain.from("image://test")
 
         every { middlewareFirst.accept(image) } returns true
@@ -97,26 +100,24 @@ class ImageExecutorTest {
 
         every { middlewareFirst.priority } returns ImageMiddleware.Priority.DEFAULT
 
-        val expectedOutput = ProcessImageUseCase.Output.Element(mock())
+        val repositoryImage = mock<ImageRepositoryProtocol.Image<*>>()
+        val flow = flowOf(repositoryImage)
 
         everySuspend {
-            middlewareExecutor.process<Context, ProcessImageUseCase.Output>(
-                any(),
-                any()
-            )
-        } returns expectedOutput
+            middlewareExecutor.process<Context, Any>(any(), any())
+        } returns flow
 
         val input = ProcessImageUseCase.Input.Image(image)
 
         val result = sut.process(input)
-        assertSame(expectedOutput, result)
+        assertSame(flow, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.image.await<Any>(any())
             middlewareFirst.accept(image)
             middlewareSecond.accept(image)
             middlewareThird.accept(image)
-            middlewareExecutor.process<Context, ProcessImageUseCase.Output>(
+            middlewareExecutor.process<Context, Flow<ImageRepositoryProtocol.Image<*>>>(
                 matches { it.size == 1 && it.first() == middlewareFirst },
                 matches { it.input == input }
             )
@@ -135,17 +136,15 @@ class ImageExecutorTest {
         every { middlewareSecond.accept(image) } returns true
         every { middlewareThird.accept(image) } returns true
 
-        val output = ProcessImageUseCase.Output.Element(mock())
+        val flow = flowOf(mock<ImageRepositoryProtocol.Image<*>>())
 
         everySuspend {
-            middlewareExecutor.process<Context, ProcessImageUseCase.Output>(
-                any(),
-                any()
-            )
-        } returns output
+            middlewareExecutor.process<Context, Any>(any(), any())
+        } returns flow
 
         val input = ProcessImageUseCase.Input.Image(image)
 
+        @Suppress("UnusedFlow")
         sut.process(input)
 
         verify(atLeast(2)) {
@@ -159,7 +158,7 @@ class ImageExecutorTest {
             middlewareFirst.accept(image)
             middlewareSecond.accept(image)
             middlewareThird.accept(image)
-            middlewareExecutor.process<Context, ProcessImageUseCase.Output>(
+            middlewareExecutor.process<Context, Flow<ImageRepositoryProtocol.Image<*>>>(
                 matches {
                     it.size == 3 &&
                         it[0] == middlewareSecond &&
@@ -184,7 +183,7 @@ class ImageExecutorTest {
     }
 
     @Test
-    fun `process ImageObject with source returns Element`() = coroutineTestScope.run {
+    fun `process ImageObject with source delegates to Image processing`() = coroutineTestScope.run {
         val imageSource = "image://source"
         val image = ImageModelDomain.from(imageSource)
 
@@ -198,26 +197,26 @@ class ImageExecutorTest {
 
         every { middlewareFirst.priority } returns ImageMiddleware.Priority.DEFAULT
 
-        val expectedOutput = ProcessImageUseCase.Output.Element(mock())
+        val flow = flowOf(mock<ImageRepositoryProtocol.Image<*>>())
 
         everySuspend {
-            middlewareExecutor.process<Context, ProcessImageUseCase.Output>(
+            middlewareExecutor.process<Context, Any>(
                 any(),
                 any()
             )
-        } returns expectedOutput
+        } returns flow
 
         val input = ProcessImageUseCase.Input.ImageObject(imageObject)
 
         val result = sut.process(input)
-        assertSame(expectedOutput, result)
+        assertSame(flow, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.image.await<Any>(any())
             middlewareFirst.accept(image)
             middlewareSecond.accept(image)
             middlewareThird.accept(image)
-            middlewareExecutor.process<Context, ProcessImageUseCase.Output>(
+            middlewareExecutor.process<Context, Flow<ImageRepositoryProtocol.Image<*>>>(
                 matches { it.size == 1 && it.first() == middlewareFirst },
                 any()
             )

@@ -15,6 +15,8 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -56,159 +58,126 @@ class LocalImageMiddlewareTest {
 
     @Test
     fun `accept matches only local image command`() {
-        val accepted = ImageModelDomain.from(
-            command = LocalImage.command,
-            target = "file.png"
-        )
-
-        val rejected = ImageModelDomain.from(
-            command = "remote",
-            target = "file.png"
-        )
-
+        val accepted = ImageModelDomain.from(command = LocalImage.command, target = "file.png")
+        val rejected = ImageModelDomain.from(command = "remote", target = "file.png")
         assertTrue(sut.accept(accepted))
         assertFalse(sut.accept(rejected))
     }
 
     @Test
-    fun `process returns Element when local image is found`() = runTest {
-        val imageModel = ImageModelDomain.from(
-            command = LocalImage.command,
-            target = "file.png"
-        )
-
-        val repositoryImage = mock<ImageRepositoryProtocol.Image<*>>()
+    fun `process returns current flow when next is null`() = runTest {
+        val image = ImageModelDomain.from(command = LocalImage.command, target = "file.png")
+        val flow = flowOf(mock<ImageRepositoryProtocol.Image<*>>())
 
         everySuspend {
-            useCaseExecutor.await<RetrieveLocalImageUseCase.Input, RetrieveLocalImageUseCase.Output>(
-                any(),
-                any()
+            useCaseExecutor.await(
+                useCase = retrieveLocalImage,
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
             )
-        } returns RetrieveLocalImageUseCase.Output(
-            image = repositoryImage
-        )
+        } returns flow
 
-        val context = ImageMiddleware.Context(
-            input = ProcessImageUseCase.Input.Image(imageModel)
-        )
-
-        val result = sut.process(context, null)
-
-        val element = result as ProcessImageUseCase.Output.Element
-        assertSame(repositoryImage, element.image)
+        val context = ImageMiddleware.Context(input = ProcessImageUseCase.Input.Image(image))
+        val result = sut.process(context, next = null)
+        assertSame(flow, result)
 
         verifySuspend {
             useCaseExecutor.await(
                 useCase = retrieveLocalImage,
-                input = RetrieveLocalImageUseCase.Input(
-                    url = imageModel.target
-                )
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
             )
         }
     }
 
     @Test
-    fun `process calls next when local image is not found`() = runTest {
-        val imageModel = ImageModelDomain.from(
-            command = LocalImage.command,
-            target = "missing.png"
-        )
+    fun `process returns next flow when current is null`() = runTest {
+        val image = ImageModelDomain.from(command = LocalImage.command, target = "file.png")
+        val nextFlow = flowOf(mock<ImageRepositoryProtocol.Image<*>>())
 
         everySuspend {
-            useCaseExecutor.await<RetrieveLocalImageUseCase.Input, RetrieveLocalImageUseCase.Output>(
-                any(),
-                any()
+            useCaseExecutor.await(
+                useCase = retrieveLocalImage,
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
             )
         } returns null
 
-        val context = ImageMiddleware.Context(
-            input = ProcessImageUseCase.Input.Image(imageModel)
-        )
+        val next = mock<MiddlewareProtocol.Next<ImageMiddleware.Context, Flow<ImageRepositoryProtocol.Image<*>>>>()
 
-        val next = mock<MiddlewareProtocol.Next<ImageMiddleware.Context, ProcessImageUseCase.Output>>()
+        everySuspend {
+            next.invoke(any())
+        } returns nextFlow
 
-        val expected = ProcessImageUseCase.Output.ElementArray(emptyList())
-
-        everySuspend { next.invoke(any()) } returns expected
-
+        val context = ImageMiddleware.Context(input = ProcessImageUseCase.Input.Image(image))
         val result = sut.process(context, next)
-
-        assertSame(expected, result)
+        assertSame(nextFlow, result)
 
         verifySuspend {
             useCaseExecutor.await(
                 useCase = retrieveLocalImage,
-                input = RetrieveLocalImageUseCase.Input(
-                    url = imageModel.target
-                )
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
             )
             next.invoke(context)
         }
     }
 
     @Test
-    fun `process returns null when local image not found and next is null`() = runTest {
-        val imageModel = ImageModelDomain.from(
-            command = LocalImage.command,
-            target = "missing.png"
-        )
+    fun `process merges current and next when both exist`() = runTest {
+        val image = ImageModelDomain.from(command = LocalImage.command, target = "file.png")
+        val currentFlow = flowOf(mock<ImageRepositoryProtocol.Image<*>>())
+        val nextFlow = flowOf(mock<ImageRepositoryProtocol.Image<*>>())
 
         everySuspend {
-            useCaseExecutor.await<RetrieveLocalImageUseCase.Input, RetrieveLocalImageUseCase.Output>(
-                any(),
-                any()
+            useCaseExecutor.await(
+                useCase = retrieveLocalImage,
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
+            )
+        } returns currentFlow
+
+        val next = mock<MiddlewareProtocol.Next<ImageMiddleware.Context, Flow<ImageRepositoryProtocol.Image<*>>>>()
+
+        everySuspend {
+            next.invoke(any())
+        } returns nextFlow
+
+        val context = ImageMiddleware.Context(input = ProcessImageUseCase.Input.Image(image))
+        val result = sut.process(context, next)
+        assert(result is Flow<*>)
+
+        verifySuspend {
+            useCaseExecutor.await(
+                useCase = retrieveLocalImage,
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
+            )
+            next.invoke(context)
+        }
+    }
+
+    @Test
+    fun `process returns null when both current and next are null`() = runTest {
+        val image = ImageModelDomain.from(command = LocalImage.command, target = "file.png")
+
+        everySuspend {
+            useCaseExecutor.await(
+                useCase = retrieveLocalImage,
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
             )
         } returns null
 
-        val context = ImageMiddleware.Context(
-            input = ProcessImageUseCase.Input.Image(imageModel)
-        )
+        val next = mock<MiddlewareProtocol.Next<ImageMiddleware.Context, Flow<ImageRepositoryProtocol.Image<*>>>>()
 
-        val result = sut.process(context, null)
+        everySuspend {
+            next.invoke(any())
+        } returns null
 
+        val context = ImageMiddleware.Context(input = ProcessImageUseCase.Input.Image(image))
+        val result = sut.process(context, next)
         assertNull(result)
 
         verifySuspend {
             useCaseExecutor.await(
                 useCase = retrieveLocalImage,
-                input = RetrieveLocalImageUseCase.Input(
-                    url = imageModel.target
-                )
+                input = RetrieveLocalImageUseCase.Input(url = image.target)
             )
-        }
-    }
-
-    @Test
-    fun `process does not call next when local image is found`() = runTest {
-        val imageModel = ImageModelDomain.from(
-            command = LocalImage.command,
-            target = "file.png"
-        )
-
-        val repositoryImage = mock<ImageRepositoryProtocol.Image<*>>()
-
-        everySuspend {
-            useCaseExecutor.await<RetrieveLocalImageUseCase.Input, RetrieveLocalImageUseCase.Output>(
-                any(),
-                any()
-            )
-        } returns RetrieveLocalImageUseCase.Output(repositoryImage)
-
-        val next = mock<MiddlewareProtocol.Next<ImageMiddleware.Context, ProcessImageUseCase.Output>>()
-
-        val context = ImageMiddleware.Context(
-            input = ProcessImageUseCase.Input.Image(imageModel)
-        )
-
-        sut.process(context, next)
-
-        verifySuspend {
-            useCaseExecutor.await(
-                useCase = retrieveLocalImage,
-                input = RetrieveLocalImageUseCase.Input(
-                    url = imageModel.target
-                )
-            )
+            next.invoke(context)
         }
     }
 }
