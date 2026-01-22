@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
+import kotlinx.coroutines.flow.Flow
+
 object ImageRepositoryProtocol {
     interface Image<S : Any> {
         val source: S
@@ -9,14 +11,14 @@ object ImageRepositoryProtocol {
     }
 
     interface Remote {
-        suspend fun <S : Any> process(
+        fun <S : Any> process(
             target: String
-        ): Image<S>
+        ): Flow<Image<S>>
     }
 
     interface Local {
-        suspend fun <S : Any> process(
+        fun <S : Any> process(
             target: String
-        ): Image<S>
+        ): Flow<Image<S>>
     }
 }

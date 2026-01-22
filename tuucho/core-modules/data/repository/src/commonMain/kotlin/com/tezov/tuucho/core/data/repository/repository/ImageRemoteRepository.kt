@@ -2,12 +2,13 @@ package com.tezov.tuucho.core.data.repository.repository
 
 import com.tezov.tuucho.core.data.repository.repository.source.ImageSource
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
+import kotlinx.coroutines.flow.Flow
+import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Image as DomainImage
 
 internal class ImageRemoteRepository(
     private val imageSource: ImageSource
-) : ImageRepositoryProtocol.Remote,
-    ImageRepositoryProtocol.Local {
-    override suspend fun <S : Any> process(
+) : ImageRepositoryProtocol.Remote {
+    override fun <S : Any> process(
         target: String
-    ): ImageRepositoryProtocol.Image<S> = imageSource.processRemote(target)
+    ): Flow<DomainImage<S>> = imageSource.processRemote(target)
 }

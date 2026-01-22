@@ -80,20 +80,10 @@ private class ImageProjection(
                         imageObject = imageObject
                     )
                 )
-
-                @Suppress("UNCHECKED_CAST")
-                val image = (when (result) {
-                    is ProcessImageUseCase.Output.Element -> {
-                        result.image
-                    }
-
-                    else -> {
-                        null
-                    }
-                }).let {
-                    Image(coilImage = it as ImageRepositoryProtocol.Image<CoilImage>)
+                result?.collect {
+                    @Suppress("UNCHECKED_CAST")
+                    this@ImageProjection.value = Image(coilImage = it as ImageRepositoryProtocol.Image<CoilImage>)
                 }
-                this@ImageProjection.value = image
             }
             null
         }

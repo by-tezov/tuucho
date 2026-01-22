@@ -1,10 +1,11 @@
 ### Todo:
-
-- Placeholder
 - TTL 
 
 - Alternative image (fallback) query fallback local/remote ? 
 - make sure I can catch a network error on image fail retrieval side application
+
+- process action with flow output ?
+- shadower with flow ?
 
 - do a smart padding object - can do also for size)?
 - time to live same as actions, colors, texts reusable

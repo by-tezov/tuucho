@@ -2,29 +2,27 @@ package com.tezov.tuucho.core.data.repository.repository.source
 
 import com.tezov.tuucho.core.data.repository.image.ImageSourceProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Image as DomainImage
 
 internal class ImageSource(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val imageSource: ImageSourceProtocol
 ) {
-    suspend fun <S : Any> processRemote(
+    fun <S : Any> processRemote(
         target: String
-    ): ImageRepositoryProtocol.Image<S> {
-        val response = coroutineScopes.image.await {
-            imageSource.retrieveRemote(target)
-        }
+    ): Flow<DomainImage<S>> {
         @Suppress("UNCHECKED_CAST")
-        return response as ImageRepositoryProtocol.Image<S>
+        return (imageSource.retrieveRemote(target) as Flow<DomainImage<S>>)
+            .flowOn(coroutineScopes.image.context)
     }
 
-    suspend fun <S : Any> processLocal(
+    fun <S : Any> processLocal(
         target: String
-    ): ImageRepositoryProtocol.Image<S> {
-        val response = coroutineScopes.image.await {
-            imageSource.retrieveLocal(target)
-        }
+    ): Flow<DomainImage<S>> {
         @Suppress("UNCHECKED_CAST")
-        return response as ImageRepositoryProtocol.Image<S>
+        return (imageSource.retrieveLocal(target) as Flow<DomainImage<S>>)
+            .flowOn(coroutineScopes.image.context)
     }
 }

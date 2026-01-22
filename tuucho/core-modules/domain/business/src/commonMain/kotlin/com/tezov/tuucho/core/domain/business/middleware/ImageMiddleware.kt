@@ -2,9 +2,11 @@ package com.tezov.tuucho.core.domain.business.middleware
 
 import com.tezov.tuucho.core.domain.business.model.ImageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
+import kotlinx.coroutines.flow.Flow
 
-interface ImageMiddleware : MiddlewareProtocol<ImageMiddleware.Context, ProcessImageUseCase.Output> {
+interface ImageMiddleware : MiddlewareProtocol<ImageMiddleware.Context, Flow<ImageRepositoryProtocol.Image<*>>> {
     data class Context(
         val input: ProcessImageUseCase.Input.Image
     )
