@@ -10,6 +10,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.http.withCharset
 import io.ktor.utils.io.charsets.Charsets
+import io.ktor.utils.io.core.toByteArray
 
 internal class HealthService(
     private val config: NetworkModule.Config,

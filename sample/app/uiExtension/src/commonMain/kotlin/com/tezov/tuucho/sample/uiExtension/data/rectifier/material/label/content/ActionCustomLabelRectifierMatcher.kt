@@ -10,7 +10,6 @@ import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.sample.uiExtension.domain.CustomLabelSchema.Component
 import com.tezov.tuucho.sample.uiExtension.domain.CustomLabelSchema.Content
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 
 class ActionCustomLabelRectifierMatcher : RectifierMatcherProtocol {
 
@@ -19,7 +18,7 @@ class ActionCustomLabelRectifierMatcher : RectifierMatcherProtocol {
         element: JsonElement
     ): Boolean {
         if (!path.lastSegmentIs(Content.Key.action)) return false
-        val parent = element.find(path.parent()) as? JsonObject
+        val parent = element.find(path.parent())
         return parent.isSubsetOf(Component.Value.subset) &&
                 parent.isTypeOf(TypeSchema.Value.content)
     }
