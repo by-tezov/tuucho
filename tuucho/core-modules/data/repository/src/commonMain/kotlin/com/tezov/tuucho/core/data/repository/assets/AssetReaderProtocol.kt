@@ -5,8 +5,9 @@ interface AssetReaderProtocol {
         path: String
     ): Boolean
 
-    fun read(
+    fun <T> read(
         path: String,
-        contentType: String?
-    ): AssetContent
+        contentType: String?,
+        block: (AssetContent) -> T
+    ): T
 }

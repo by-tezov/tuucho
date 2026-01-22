@@ -7,28 +7,40 @@ import java.net.URLConnection
 internal class AssetReaderAndroid(
     private val context: Context
 ) : AssetReaderProtocol {
+    private fun openStream(
+        path: String
+    ) = context.assets.open("files/$path")
 
-    override fun isExist(path: String): Boolean = runCatching {
-        context.assets.open(path).close()
+    private fun openDescriptor(
+        path: String
+    ) = context.assets.openFd("files/$path")
+
+    override fun isExist(
+        path: String
+    ): Boolean = runCatching {
+        openStream(path).close()
         true
     }.getOrElse { false }
 
-    override fun read(
+    override fun <T> read(
         path: String,
-        contentType: String?
-    ): AssetContent {
-        val inputStream = context.assets.open(path)
+        contentType: String?,
+        block: (AssetContent) -> T
+    ): T {
+        val inputStream = openStream(path)
         val source = inputStream.source()
-        val contentLength = runCatching {
-            context.assets.openFd(path).length
-        }.getOrElse {
-            inputStream.available().toLong()
+        val size = runCatching {
+            openDescriptor(path).use { it.length }
+        }.getOrElse { -1L }
+        return source.use {
+            block(
+                AssetContent(
+                    source = it,
+                    contentType = contentType ?: resolveContentType(path),
+                    size = size
+                )
+            )
         }
-        return AssetContent(
-            source = source,
-            contentType = contentType ?: resolveContentType(path),
-            size = contentLength,
-        )
     }
 
     private fun resolveContentType(

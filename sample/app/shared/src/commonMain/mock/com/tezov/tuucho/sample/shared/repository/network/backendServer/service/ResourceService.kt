@@ -46,18 +46,20 @@ internal class ResourceService(
         request: BackendServer.Request,
     ) = when (version) {
         "v1" -> {
-            val content = assetSource.readFile(
+            val (jsonBytes, contentType, contentSize) = assetSource.readFile(
                 path = "backend/$version/${request.url}.json"
-            )
-            val jsonBytes = content.source.buffer().use { it.readByteArray() }
+            ) { content ->
+                val bytes = content.source.buffer().readByteArray()
+                Triple(bytes, content.contentType, content.size)
+            }
             if (request.url.endsWith("-${Type.contextual}") || request.url.contains("-${Type.contextual}-")) {
                 delay(Random.nextLong(500, 3000))
             }
             BackendServer.Response(
                 statusCode = HttpStatusCode.fromValue(200),
                 headers = headers {
-                    this["Content-Type"] = content.contentType
-                    this["Content-Length"] = content.size.toString()
+                    this["Content-Type"] = contentType
+                    this["Content-Length"] = contentSize.toString()
                 },
                 body = jsonBytes
             )

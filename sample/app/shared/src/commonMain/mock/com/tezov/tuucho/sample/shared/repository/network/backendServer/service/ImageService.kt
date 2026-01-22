@@ -45,16 +45,18 @@ internal class ImageService(
         request: BackendServer.Request,
     ) = when (version) {
         "v1" -> {
-            val content = assetSource.readImage(
+            val (bytes, contentType, contentSize) = assetSource.readImage(
                 path = "backend/$version/${request.url}"
-            )
-            val bytes = content.source.buffer().use { it.readByteArray() }
+            ) { content ->
+                val data = content.source.buffer().readByteArray()
+                Triple(data, content.contentType, content.size)
+            }
             delay(Random.nextLong(150, 1500))
             BackendServer.Response(
                 statusCode = HttpStatusCode.OK,
                 headers = headers {
-                    this["Content-Type"] = content.contentType
-                    this["Content-Length"] = content.size.toString()
+                    this["Content-Type"] = contentType
+                    this["Content-Length"] = contentSize.toString()
                 },
                 body = bytes
             )

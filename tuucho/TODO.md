@@ -1,8 +1,9 @@
 ### Todo:
 
-- TTL + placeholder
+- Placeholder
+- TTL 
+
 - Alternative image (fallback) query fallback local/remote ? 
- 
 - make sure I can catch a network error on image fail retrieval side application
 
 - do a smart padding object - can do also for size)?

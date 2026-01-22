@@ -20,7 +20,7 @@ internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = lis
     DatabaseModuleAndroid.invoke(),
     NetworkModuleAndroid.invoke(),
     ImageModuleAndroid.invoke(),
-    AssetsModuleAndroid.invoke(),
+    AssetModuleAndroid.invoke(),
     StoreRepositoryModuleAndroid.invoke()
 )
 

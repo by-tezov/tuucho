@@ -7,20 +7,18 @@ import coil3.fetch.Fetcher
 import coil3.fetch.SourceFetchResult
 import coil3.request.Options
 import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
-import okio.buffer
 
 internal class HttpLocalFetcher(
     private val path: String,
     private val options: Options,
     private val assetSource: AssetSourceProtocol
 ) : Fetcher {
-    override suspend fun fetch(): SourceFetchResult {
-        val content = assetSource.readImage(
-            path = path
-        )
-        return SourceFetchResult(
+    override suspend fun fetch(): SourceFetchResult = assetSource.readImage(path) { content ->
+        SourceFetchResult(
             source = ImageSource(
-                source = content.source.buffer(),
+                source = okio.Buffer().apply {
+                    writeAll(content.source)
+                },
                 fileSystem = options.fileSystem
             ),
             mimeType = content.contentType,

@@ -40,11 +40,10 @@ class FailSafePageHttpInterceptor(
         )
     }
 
-    private val failSafeResponse
-        get():String {
-            val content = assetSource.readFile(
-                path = "json/fail-safe-page-http-interceptor.json"
-            )
-            return content.source.buffer().use { it.readUtf8() }
+    private val failSafeResponse: String
+        get() = assetSource.readFile(
+            path = "json/fail-safe-page-http-interceptor.json"
+        ) { content ->
+            content.source.buffer().readUtf8()
         }
 }
