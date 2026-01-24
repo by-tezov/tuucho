@@ -3,15 +3,18 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -33,9 +36,9 @@ internal class StoreActionMiddleware(
         action.authority == StoreActionDefinition.KeyValue.authority &&
         action.query != null
 
-    override suspend fun process(
-        context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    override suspend fun FlowCollector<Output>.process(
+        context: Context,
+        next: MiddlewareProtocol.Next<Context, Output>?
     ) {
         val query = context.actionModel.query ?: throw DomainException.Default("should no be possible")
         when (val target = context.actionModel.target) {

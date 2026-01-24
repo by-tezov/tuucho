@@ -6,11 +6,9 @@ import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import kotlinx.coroutines.channels.ProducerScope
 
-interface ActionMiddleware : MiddlewareProtocol<Context, Unit> {
+interface ActionMiddleware : MiddlewareProtocol<Context, ProcessActionUseCase.Output> {
     data class Context(
-        val flowProducer: ProducerScope<ProcessActionUseCase.Output>,
         val lockable: InteractionLockable,
         val actionModel: ActionModel,
         val input: ProcessActionUseCase.Input

@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
@@ -16,10 +17,12 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -46,9 +49,9 @@ internal class FormSendUrlActionMiddleware(
         action.authority == FormActionDefinition.Send.authority &&
         action.target != null
 
-    override suspend fun process(
-        context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    override suspend fun FlowCollector<Output>.process(
+        context: Context,
+        next: MiddlewareProtocol.Next<Context, Output>?
     ) {
         val formView = (context.input.route as? NavigationRoute.Url)?.getAllFormView() ?: run {
             next?.invoke(context)

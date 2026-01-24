@@ -1,14 +1,16 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+import kotlinx.coroutines.flow.FlowCollector
+
 fun interface MiddlewareProtocol<C, R> {
     fun interface Next<C, R> {
         suspend fun invoke(
             context: C
-        ): R?
+        )
     }
 
-    suspend fun process(
+    suspend fun FlowCollector<R>.process(
         context: C,
         next: Next<C, R>?
-    ): R?
+    )
 }

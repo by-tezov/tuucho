@@ -11,6 +11,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asFlow
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
@@ -36,7 +38,7 @@ class NavigateBackUseCase(
     override suspend fun invoke(
         input: Unit
     ) {
-        middlewareExecutor.process(
+        middlewareExecutor.asFlow(
             middlewares = navigationMiddlewares + terminalMiddleware(),
             context = NavigationMiddleware.Back.Context(
                 currentUrl = navigationStackRouteRepository.currentRoute()?.value
@@ -44,7 +46,7 @@ class NavigateBackUseCase(
                 nextUrl = navigationStackRouteRepository.priorRoute()?.value,
                 onShadowerException = null
             )
-        )
+        ).asHotFlow(coroutineScopes.useCase)
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->

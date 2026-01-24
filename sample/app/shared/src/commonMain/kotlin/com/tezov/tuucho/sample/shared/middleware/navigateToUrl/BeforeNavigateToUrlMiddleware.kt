@@ -4,10 +4,12 @@ import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
 import com.tezov.tuucho.sample.shared._system.Page
+import kotlinx.coroutines.flow.FlowCollector
 
 class BeforeNavigateToUrlMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -24,7 +26,7 @@ class BeforeNavigateToUrlMiddleware(
         const val AUTH_CONFIG = "auth/_config"
     }
 
-    override suspend fun process(
+    override suspend fun FlowCollector<Unit>.process(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {

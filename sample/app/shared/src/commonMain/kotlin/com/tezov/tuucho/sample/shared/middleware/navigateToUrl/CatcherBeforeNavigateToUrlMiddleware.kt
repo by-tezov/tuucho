@@ -2,13 +2,15 @@ package com.tezov.tuucho.sample.shared.middleware.navigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.sample.shared._system.Config
 import com.tezov.tuucho.sample.shared._system.Page
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.FlowCollector
 
 class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
-    override suspend fun process(
+    override suspend fun FlowCollector<Unit>.process(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {

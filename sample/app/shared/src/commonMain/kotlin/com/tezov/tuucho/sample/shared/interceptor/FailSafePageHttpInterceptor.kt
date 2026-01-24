@@ -12,32 +12,37 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.util.date.GMTDate
 import io.ktor.utils.io.ByteReadChannel
+import kotlinx.coroutines.flow.FlowCollector
 import okio.buffer
-import okio.use
 
 class FailSafePageHttpInterceptor(
     private val config: NetworkModule.Config,
     private val assetSource: AssetSourceProtocol,
 ) : HttpInterceptor {
-    override suspend fun process(
+    override suspend fun FlowCollector<HttpResponseData>.process(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
-    ) = with(context.builder) {
-        val route = url.toString()
-            .removePrefix("${config.baseUrl}/")
-            .removePrefix("${config.version}/")
-            .removePrefix(config.resourceEndpoint)
-
-        if (route != "/${Page.failSafe}") return@with next?.invoke(context)
-
-        HttpResponseData(
-            statusCode = HttpStatusCode.OK,
-            requestTime = GMTDate(),
-            headers = headersOf(HttpHeaders.ContentType, "application/json"),
-            version = HttpProtocolVersion.HTTP_1_1,
-            body = ByteReadChannel(failSafeResponse),
-            callContext = executionContext
-        )
+    ) {
+        with(context.builder) {
+            val route = url.toString()
+                .removePrefix("${config.baseUrl}/")
+                .removePrefix("${config.version}/")
+                .removePrefix(config.resourceEndpoint)
+            if (route != "/${Page.failSafe}") {
+                next?.invoke(context)
+                return
+            }
+            emit(
+                HttpResponseData(
+                    statusCode = HttpStatusCode.OK,
+                    requestTime = GMTDate(),
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                    version = HttpProtocolVersion.HTTP_1_1,
+                    body = ByteReadChannel(failSafeResponse),
+                    callContext = executionContext
+                )
+            )
+        }
     }
 
     private val failSafeResponse: String

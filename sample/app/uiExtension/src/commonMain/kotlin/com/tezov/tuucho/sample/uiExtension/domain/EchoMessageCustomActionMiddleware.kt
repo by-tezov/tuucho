@@ -9,8 +9,10 @@ import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import com.tezov.tuucho.sample.uiExtension.domain.CustomLabelSchema.Message
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonNull
 
 internal class EchoMessageCustomActionMiddleware(
@@ -27,9 +29,9 @@ internal class EchoMessageCustomActionMiddleware(
         action: ActionModel,
     ): Boolean = action.command == EchoMessageCustomActionDefinition.command
 
-    override suspend fun process(
+    override suspend fun FlowCollector<Output>.process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Output>?
     ) {
         val route = context.input.route ?: run {
             next?.invoke(context)

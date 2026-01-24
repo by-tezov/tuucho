@@ -3,11 +3,14 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
+import kotlinx.coroutines.flow.FlowCollector
 
 internal class NavigationLocalDestinationActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -22,9 +25,9 @@ internal class NavigationLocalDestinationActionMiddleware(
     ) = action.command == NavigateActionDefinition.LocalDestination.command &&
         action.authority == NavigateActionDefinition.LocalDestination.authority
 
-    override suspend fun process(
-        context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    override suspend fun FlowCollector<Output>.process(
+        context: Context,
+        next: MiddlewareProtocol.Next<Context, Output>?
     ) {
         when (context.actionModel.target) {
             NavigateActionDefinition.LocalDestination.Target.back -> {

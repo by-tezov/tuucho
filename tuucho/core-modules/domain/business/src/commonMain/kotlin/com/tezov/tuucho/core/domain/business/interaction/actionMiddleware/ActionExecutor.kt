@@ -11,7 +11,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.toList
@@ -27,7 +26,7 @@ internal class ActionExecutor(
     override suspend fun process(
         input: Input
     ): Flow<Output>? {
-        val result = callbackFlow {
+        val result = flow {
             input.models.forEach { actionModel ->
                 val middlewaresToExecute = middlewares
                     .filter { it.accept(input.route, actionModel) }
@@ -39,22 +38,22 @@ internal class ActionExecutor(
                             route = input.route,
                             action = actionModel
                         )
-                        middlewareExecutor.process(
-                            middlewares = it,
-                            context = ActionMiddleware.Context(
-                                flowProducer = this,
-                                lockable = locks.freeze(),
-                                actionModel = actionModel,
-                                input = input,
+                        middlewareExecutor.run {
+                            process(
+                                middlewares = it,
+                                context = ActionMiddleware.Context(
+                                    lockable = locks.freeze(),
+                                    actionModel = actionModel,
+                                    input = input,
+                                )
                             )
-                        )
+                        }
                         locks.releaseLocks(
                             route = input.route,
                             action = actionModel
                         )
                     }
             }
-            close()
         }.flowOn(coroutineScopes.action.context).toList()
         return result
             .takeIf { it.isNotEmpty() }
