@@ -13,6 +13,6 @@ interface ImageRepositoryProtocol {
     }
 
     fun <S : Any> process(
-        images: Input.ImageModels
+        input: Input
     ): Flow<Output<S>>
 }

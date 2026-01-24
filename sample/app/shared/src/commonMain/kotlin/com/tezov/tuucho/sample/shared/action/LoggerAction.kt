@@ -21,10 +21,10 @@ class LoggerAction(
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
-    ) = with(context.input) {
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    ) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
-        logger.debug("ACTION") { "from ${route}: $actionModel" }
+        logger.debug("ACTION") { "from ${context.input.route}: ${context.actionModel}" }
         next?.invoke(context)
     }
 }

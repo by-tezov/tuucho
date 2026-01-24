@@ -89,9 +89,9 @@ class TuuchoEngine(
         )
         useCaseExecutor.async(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.ActionModel(
+            input = ProcessActionUseCase.Input.create(
                 route = null,
-                actionModel = ActionModel.from(
+                model = ActionModel.from(
                     command = NavigateActionDefinition.Url.command,
                     authority = NavigateActionDefinition.Url.authority,
                     target = url,

@@ -8,7 +8,6 @@ import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefiniti
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
 internal class NavigationLocalDestinationActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -25,9 +24,9 @@ internal class NavigationLocalDestinationActionMiddleware(
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
-    ) = with(context.input) {
-        when (actionModel.target) {
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    ) {
+        when (context.actionModel.target) {
             NavigateActionDefinition.LocalDestination.Target.back -> {
                 useCaseExecutor.await(
                     useCase = navigateBack,
@@ -36,7 +35,7 @@ internal class NavigationLocalDestinationActionMiddleware(
             }
 
             else -> {
-                throw DomainException.Default("Unknown target ${actionModel.target}")
+                throw DomainException.Default("Unknown target ${context.actionModel.target}")
             }
         }
         next?.invoke(context)

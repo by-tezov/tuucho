@@ -48,15 +48,19 @@ internal class FormSendUrlActionMiddleware(
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
-    ) = with(context.input) {
-        val formView = (route as? NavigationRoute.Url)?.getAllFormView() ?: return@with next?.invoke(context)
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    ) {
+        val formView = (context.input.route as? NavigationRoute.Url)?.getAllFormView() ?: run {
+            next?.invoke(context)
+            return
+        }
+        val route = context.input.route
         if (formView.isAllFormValid()) {
             val response = useCaseExecutor
                 .await(
                     useCase = sendData,
                     input = SendDataUseCase.Input(
-                        url = actionModel.target ?: throw DomainException.Default("should no be possible"),
+                        url = context.actionModel.target ?: throw DomainException.Default("should no be possible"),
                         jsonObject = formView.data()
                     )
                 )?.jsonObject
@@ -65,9 +69,9 @@ internal class FormSendUrlActionMiddleware(
                 ?.takeIf { it.subset == FormSendSchema.Value.subset }
                 ?.run {
                     if (allSucceed.isTrue) {
-                        processValidRemoteForm(route, context.lockable, actionObjectOriginal)
+                        processValidRemoteForm(route, context.lockable, context.input.modelObjectOriginal)
                     } else {
-                        processInvalidRemoteForm(route, context.lockable, actionObjectOriginal)
+                        processInvalidRemoteForm(route, context.lockable, context.input.modelObjectOriginal)
                     }
                 }
         } else {
@@ -184,15 +188,15 @@ internal class FormSendUrlActionMiddleware(
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.ActionModel(
+            input = ProcessActionUseCase.Input.create(
                 route = route,
-                actionModel = ActionModel.from(
+                model = ActionModel.from(
                     command = FormActionDefinition.Update.command,
                     authority = FormActionDefinition.Update.authority,
                     target = FormActionDefinition.Update.Target.error,
                 ),
                 jsonElement = results
-            ),
+            )
         )
     }
 
@@ -203,12 +207,12 @@ internal class FormSendUrlActionMiddleware(
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.ActionModel(
+            input = ProcessActionUseCase.Input.create(
                 route = route,
-                actionModel = ActionModel.from(this),
+                model = ActionModel.from(this),
                 jsonElement = response,
                 lockable = lockable
-            ),
+            )
         )
     }
 }

@@ -65,9 +65,9 @@ private fun onBackCompleted(
         )
         useCaseExecutor.await(
             useCase = actionHandler,
-            input = ProcessActionUseCase.Input.ActionModel(
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Current,
-                actionModel = ActionModel.from(
+                model = ActionModel.from(
                     command = NavigateActionDefinition.LocalDestination.command,
                     authority = NavigateActionDefinition.LocalDestination.authority,
                     target = NavigateActionDefinition.LocalDestination.Target.back,

@@ -10,6 +10,11 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.toList
 
 internal class ActionExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -18,34 +23,42 @@ internal class ActionExecutor(
     private val interactionLockResolver: InteractionLockProtocol.Resolver,
     private val interactionLockRegistry: InteractionLockProtocol.Registry
 ) : ActionExecutorProtocol {
+
     override suspend fun process(
-        input: Input.ActionModel
-    ) = with(input) {
-        coroutineScopes.action.await {
-            val middlewaresToExecute = middlewares
-                .filter { it.accept(route, actionModel) }
-                .sortedByDescending { it.priority }
-            middlewaresToExecute
-                .takeIf { it.isNotEmpty() }
-                ?.let {
-                    val locks = input.lockable.acquireLocks(
-                        route = route,
-                        action = actionModel
-                    )
-                    val result: Output.ElementArray? = middlewareExecutor.process(
-                        middlewares = it,
-                        context = ActionMiddleware.Context(
-                            lockable = locks.freeze(),
-                            input = input,
+        input: Input
+    ): Flow<Output>? {
+        val result = callbackFlow {
+            input.models.forEach { actionModel ->
+                val middlewaresToExecute = middlewares
+                    .filter { it.accept(input.route, actionModel) }
+                    .sortedByDescending { it.priority }
+                middlewaresToExecute
+                    .takeIf { it.isNotEmpty() }
+                    ?.let {
+                        val locks = input.lockable.acquireLocks(
+                            route = input.route,
+                            action = actionModel
                         )
-                    )
-                    locks.releaseLocks(
-                        route = route,
-                        action = actionModel
-                    )
-                    result
-                }
-        }
+                        middlewareExecutor.process(
+                            middlewares = it,
+                            context = ActionMiddleware.Context(
+                                flowProducer = this,
+                                lockable = locks.freeze(),
+                                actionModel = actionModel,
+                                input = input,
+                            )
+                        )
+                        locks.releaseLocks(
+                            route = input.route,
+                            action = actionModel
+                        )
+                    }
+            }
+            close()
+        }.flowOn(coroutineScopes.action.context).toList()
+        return result
+            .takeIf { it.isNotEmpty() }
+            ?.let { flow { result.forEach { emit(it) } } }
     }
 
     private suspend fun InteractionLockable?.acquireLocks(

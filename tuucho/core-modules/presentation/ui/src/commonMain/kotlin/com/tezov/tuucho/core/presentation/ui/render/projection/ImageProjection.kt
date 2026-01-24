@@ -77,7 +77,7 @@ private class ImageProjection(
             ) {
                 val result = useCaseExecutor.await(
                     useCase = retrieveImage,
-                    input = RetrieveImageUseCase.Input.ImageArray(
+                    input = RetrieveImageUseCase.Input.create(
                         imageArray = imageArray
                     )
                 )

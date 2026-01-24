@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefiniti
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
 internal class NavigationUrlActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -19,13 +18,14 @@ internal class NavigationUrlActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModel,
-    ) = action.command == NavigateActionDefinition.Url.command && action.authority == NavigateActionDefinition.Url.authority
+    ) = action.command == NavigateActionDefinition.Url.command &&
+        action.authority == NavigateActionDefinition.Url.authority
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
-    ) = with(context.input) {
-        actionModel.target?.let { url ->
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    ) {
+        context.actionModel.target?.let { url ->
             useCaseExecutor.await(
                 useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(

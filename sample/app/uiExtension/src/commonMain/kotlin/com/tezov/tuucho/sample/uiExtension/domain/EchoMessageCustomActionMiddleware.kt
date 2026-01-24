@@ -29,10 +29,16 @@ internal class EchoMessageCustomActionMiddleware(
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
-    ) = with(context.input) {
-        val route = route ?: return@with next?.invoke(context)
-        val jsonElement = jsonElement ?: return@with next?.invoke(context)
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    ) {
+        val route = context.input.route ?: run {
+            next?.invoke(context)
+            return
+        }
+        val jsonElement = context.input.jsonElement ?: run {
+            next?.invoke(context)
+            return
+        }
         val messageScope = jsonElement.withScope(Message::Scope)
         val messages = JsonNull
             .withScope(Message::Scope)

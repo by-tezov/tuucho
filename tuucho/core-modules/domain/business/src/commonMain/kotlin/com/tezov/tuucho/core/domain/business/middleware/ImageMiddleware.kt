@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ImageMiddleware : MiddlewareProtocol<ImageMiddleware.Context, Flow<ImageRepositoryProtocol.Image<*>>> {
     data class Context(
-        val input: RetrieveImageUseCase.Input.ImageModels
+        val input: RetrieveImageUseCase.Input
     )
 
     object Priority {

@@ -11,97 +11,92 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 
 @OpenForTest
 class ProcessActionUseCase(
     private val actionExecutor: ActionExecutorProtocol,
-) : UseCaseProtocol.Async<Input, Output> {
-    sealed class Input {
-        abstract val route: NavigationRoute?
-        abstract val lockable: InteractionLockable?
-        abstract val jsonElement: kotlinx.serialization.json.JsonElement?
+) : UseCaseProtocol.Async<Input, Flow<Output>> {
+    data class Input(
+        val route: NavigationRoute?,
+        val models: List<ActionModel>,
+        val modelObjectOriginal: JsonElement? = null,
+        val lockable: InteractionLockable? = null,
+        val jsonElement: JsonElement? = null,
+    ) {
+        companion object {
+            fun create(
+                route: NavigationRoute?,
+                modelObject: JsonObject,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = buildList {
+                modelObject
+                    .withScope(ActionSchema::Scope)
+                    .primaries
+                    ?.map { ActionModel.from(it.string) }
+                    ?.let(::addAll)
 
-        data class ActionModel(
-            override val route: NavigationRoute?,
-            val actionModel: com.tezov.tuucho.core.domain.business.model.action.ActionModel,
-            val actionObjectOriginal: JsonObject? = null,
-            override val lockable: InteractionLockable? = null,
-            override val jsonElement: kotlinx.serialization.json.JsonElement? = null,
-        ) : Input()
+            }.let {
+                Input(
+                    route = route,
+                    models = it,
+                    modelObjectOriginal = modelObject,
+                    lockable = lockable,
+                    jsonElement = jsonElement
+                )
+            }
 
-        data class ActionObject(
-            override val route: NavigationRoute?,
-            val actionObject: JsonObject,
-            override val lockable: InteractionLockable? = null,
-            override val jsonElement: kotlinx.serialization.json.JsonElement? = null,
-        ) : Input()
+            fun create(
+                route: NavigationRoute?,
+                models: List<ActionModel>,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = Input(
+                route = route,
+                models = models,
+                lockable = lockable,
+                jsonElement = jsonElement
+            )
+
+            fun create(
+                route: NavigationRoute?,
+                model: ActionModel,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = Input(
+                route = route,
+                models = listOf(model),
+                lockable = lockable,
+                jsonElement = jsonElement
+            )
+        }
     }
 
-    sealed class Output {
-        class Element(
-            val type: KClass<out Any>,
-            val rawValue: Any,
-        ) : Output() {
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> value(): T = rawValue as T
+    data class Output(
+        val rawValue: Any,
+        val type: KClass<out Any>,
+    ) {
+        @Suppress("UNCHECKED_CAST")
+        inline fun <reified T> value(): T = rawValue as T
 
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> valueOrNull(): T? = rawValue as? T
+        @Suppress("UNCHECKED_CAST")
+        inline fun <reified T> valueOrNull(): T? = rawValue as? T
+
+        companion object {
+            fun create(
+                rawValue: Any,
+                type: KClass<out Any>? = null,
+            ): Output {
+                return Output(rawValue, type ?: rawValue::class)
+            }
         }
-
-        class ElementArray(
-            val values: List<Output>,
-        ) : Output()
     }
 
     override suspend fun invoke(
         input: Input
-    ): Output? {
-        val processorInputs = with(input) {
-            when (this) {
-                is Input.ActionObject -> {
-                    buildList {
-                        actionObject
-                            .withScope(ActionSchema::Scope)
-                            .primaries
-                            ?.forEach { primary ->
-                                add(
-                                    Input.ActionModel(
-                                        route = route,
-                                        actionModel = ActionModel.from(primary.string),
-                                        lockable = lockable,
-                                        actionObjectOriginal = actionObject,
-                                        jsonElement = jsonElement
-                                    )
-                                )
-                            }
-                    }
-                }
-
-                is Input.ActionModel -> {
-                    listOf(this)
-                }
-            }
-        }
-        val outputs = processorInputs.mapNotNull {
-            actionExecutor.process(input = it)
-        }
-        return when {
-            outputs.isEmpty() -> {
-                null
-            }
-
-            outputs.size == 1 -> {
-                outputs.first()
-            }
-
-            else -> {
-                Output.ElementArray(
-                    values = outputs
-                )
-            }
-        }
-    }
+    ) = actionExecutor.process(input = input)
 }

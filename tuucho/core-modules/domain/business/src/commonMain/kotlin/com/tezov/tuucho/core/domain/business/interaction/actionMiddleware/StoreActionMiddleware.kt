@@ -9,7 +9,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -36,10 +35,10 @@ internal class StoreActionMiddleware(
 
     override suspend fun process(
         context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output.ElementArray>?
-    ) = with(context.input) {
-        val query = actionModel.query ?: throw DomainException.Default("should no be possible")
-        when (val target = actionModel.target) {
+        next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
+    ) {
+        val query = context.actionModel.query ?: throw DomainException.Default("should no be possible")
+        when (val target = context.actionModel.target) {
             StoreActionDefinition.KeyValue.Target.save -> saveValues(query)
             StoreActionDefinition.KeyValue.Target.remove -> removeKeys(query)
             else -> throw DomainException.Default("Unknown target $target")

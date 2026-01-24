@@ -16,9 +16,9 @@ internal class ImageSource(
     private val imageLoaderSource: ImageLoaderSource
 ) {
     fun <S : Any> process(
-        images: Input.ImageModels
+        input: Input
     ): Flow<Output<S>> {
-        val requests = images.imageModels.map {
+        val requests = input.models.map {
             ImageRequest(
                 command = it.command,
                 target = it.target,
