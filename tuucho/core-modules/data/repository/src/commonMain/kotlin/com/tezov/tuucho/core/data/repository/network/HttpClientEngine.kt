@@ -2,8 +2,8 @@ package com.tezov.tuucho.core.data.repository.network
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asFlow
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import io.ktor.client.engine.HttpClientEngineBase
 import io.ktor.client.engine.HttpClientEngineConfig
 import io.ktor.client.request.HttpRequestBuilder
@@ -38,12 +38,13 @@ internal class HttpClientEngine(
             emit(engine.execute(context.builder.build()))
         }
         val builder = HttpRequestBuilder().takeFrom(data)
-        val response = middlewareExecutor.asFlow(
-            middlewares = interceptors + terminal,
-            context = HttpInterceptor.Context(
-                builder = builder
-            )
-        ).asHotFlow(coroutineScopes.network)
+        val response = middlewareExecutor
+            .process(
+                middlewares = interceptors + terminal,
+                context = HttpInterceptor.Context(
+                    builder = builder
+                )
+            ).asHotFlow(coroutineScopes.network)
         return response.firstOrNull() ?: HttpResponseData(
             statusCode = HttpStatusCode.NoContent,
             requestTime = GMTDate(),

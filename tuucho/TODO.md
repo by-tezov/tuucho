@@ -1,7 +1,7 @@
 ### Todo:
 
 - Comment gérer l'animation et placeholder qui arrive aprés, et ajout custom ?
-- redo action executor test, data layer...
+- redo all broken test
 
 - Alternative image (fallback) query fallback local/remote ?
 - TTL 
@@ -9,7 +9,7 @@
 - registry, add custom fetcher ?
 
 - InteractionLockProtocol.Registry -> how the user can add its own ? example EchoMessageCustomActionDefinition, lock not added to registry
-- process action with flow output ?
+-
 - shadower with flow ?
 
 - do a smart padding object - can do also for size)?

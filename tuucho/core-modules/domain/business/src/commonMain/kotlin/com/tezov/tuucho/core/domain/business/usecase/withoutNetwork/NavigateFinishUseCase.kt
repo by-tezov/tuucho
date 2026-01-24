@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asFlow
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
@@ -20,10 +20,11 @@ class NavigateFinishUseCase(
     override suspend fun invoke(
         input: Unit
     ) {
-        middlewareExecutor.asFlow(
-            middlewares = navigationMiddlewares + terminalMiddleware(),
-            context = Unit
-        ).asHotFlow(coroutineScopes.useCase)
+        middlewareExecutor
+            .process(
+                middlewares = navigationMiddlewares + terminalMiddleware(),
+                context = Unit
+            ).asHotFlow(coroutineScopes.useCase)
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Finish { _, _ ->

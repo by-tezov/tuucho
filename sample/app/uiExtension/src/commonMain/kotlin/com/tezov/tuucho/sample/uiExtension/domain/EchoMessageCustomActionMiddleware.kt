@@ -34,11 +34,11 @@ internal class EchoMessageCustomActionMiddleware(
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, Output>?
     ) {
         val route = context.input.route ?: run {
-            next?.invoke(context)
+            next?.run { invoke(context) }
             return
         }
         val jsonElement = context.input.jsonElement ?: run {
-            next?.invoke(context)
+            next?.run { invoke(context) }
             return
         }
         val messageScope = jsonElement.withScope(Message::Scope)
@@ -57,6 +57,6 @@ internal class EchoMessageCustomActionMiddleware(
                 jsonObjects = listOf(messages)
             )
         )
-        next?.invoke(context)
+        next?.run { invoke(context) }
     }
 }

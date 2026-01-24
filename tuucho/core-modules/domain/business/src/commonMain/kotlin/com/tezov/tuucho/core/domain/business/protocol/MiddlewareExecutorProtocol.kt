@@ -14,17 +14,10 @@ interface MiddlewareExecutorProtocol {
     )
 
     companion object {
-
-        fun <C, R> MiddlewareExecutorProtocol.asFlow(
+        fun <C, R> MiddlewareExecutorProtocol.process(
             middlewares: List<MiddlewareProtocol<C, R>>,
             context: C
-        ): Flow<R> {
-            return run {
-                flow {
-                    process(middlewares, context)
-                }
-            }
-        }
+        ): Flow<R> = flow { process(middlewares, context) }
 
         fun <T> Flow<T>.asHotFlow(
             coroutineContext: CoroutineContextProtocol
@@ -33,6 +26,5 @@ interface MiddlewareExecutorProtocol {
             started = SharingStarted.Eagerly,
             replay = 1
         )
-
     }
 }

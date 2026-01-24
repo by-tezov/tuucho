@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.middleware
 
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import kotlinx.coroutines.flow.FlowCollector
 
 class MiddlewareExecutor : MiddlewareExecutorProtocol {
@@ -16,6 +17,6 @@ class MiddlewareExecutor : MiddlewareExecutorProtocol {
                 middleware.run { process(context, prev) }
             }
         }
-        next?.invoke(context)
+        next.invoke(context)
     }
 }

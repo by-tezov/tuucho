@@ -6,14 +6,15 @@ import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
+import com.tezov.tuucho.core.domain.tool.async.FlowMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.toList
 
 internal class ActionExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -22,11 +23,10 @@ internal class ActionExecutor(
     private val interactionLockResolver: InteractionLockProtocol.Resolver,
     private val interactionLockRegistry: InteractionLockProtocol.Registry
 ) : ActionExecutorProtocol {
-
     override suspend fun process(
         input: Input
     ): Flow<Output>? {
-        val result = flow {
+        val flow = flow {
             input.models.forEach { actionModel ->
                 val middlewaresToExecute = middlewares
                     .filter { it.accept(input.route, actionModel) }
@@ -54,10 +54,11 @@ internal class ActionExecutor(
                         )
                     }
             }
-        }.flowOn(coroutineScopes.action.context).toList()
-        return result
-            .takeIf { it.isNotEmpty() }
-            ?.let { flow { result.forEach { emit(it) } } }
+        }.flowOn(coroutineScopes.action.context)
+        return when (input.flowMode) {
+            FlowMode.Hot -> flow.asHotFlow(coroutineScopes.action)
+            FlowMode.Cold -> flow
+        }
     }
 
     private suspend fun InteractionLockable?.acquireLocks(

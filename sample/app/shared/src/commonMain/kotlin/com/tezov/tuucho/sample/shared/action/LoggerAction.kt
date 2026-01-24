@@ -27,6 +27,6 @@ class LoggerAction(
     ) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
         logger.debug("ACTION") { "from ${context.input.route}: ${context.actionModel}" }
-        next?.invoke(context)
+        next?.run { invoke(context) }
     }
 }

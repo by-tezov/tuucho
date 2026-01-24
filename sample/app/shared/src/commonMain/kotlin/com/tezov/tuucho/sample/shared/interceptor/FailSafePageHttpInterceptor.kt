@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.sample.shared._system.Page
 import io.ktor.client.request.HttpResponseData
 import io.ktor.http.HttpHeaders
@@ -29,7 +30,7 @@ class FailSafePageHttpInterceptor(
                 .removePrefix("${config.version}/")
                 .removePrefix(config.resourceEndpoint)
             if (route != "/${Page.failSafe}") {
-                next?.invoke(context)
+                next.invoke(context)
                 return
             }
             emit(

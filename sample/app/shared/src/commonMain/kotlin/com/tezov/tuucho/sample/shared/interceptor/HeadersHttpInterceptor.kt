@@ -2,6 +2,7 @@ package com.tezov.tuucho.sample.shared.interceptor
 
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.sample.shared.di.InterceptorModule
 import io.ktor.client.request.HttpResponseData
@@ -16,7 +17,7 @@ class HeadersHttpInterceptor(
     ) {
         with(context.builder) {
             headers.append("platform", config.headerPlatform)
-            next?.invoke(context)
+            next.invoke(context)
         }
     }
 }

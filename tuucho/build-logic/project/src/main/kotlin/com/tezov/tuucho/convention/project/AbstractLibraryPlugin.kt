@@ -49,8 +49,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         ).asIterable()
 
         private fun compilerOption() = listOf<String>(
-//            "-XXLanguage:+ContextParameters"
-//            "-Xnested-type-aliases"
+            "-Xcontext-parameters"
+//            "-Xnested-type-aliases",
+//            "-Xexpect-actual-classes",
         )
     }
 

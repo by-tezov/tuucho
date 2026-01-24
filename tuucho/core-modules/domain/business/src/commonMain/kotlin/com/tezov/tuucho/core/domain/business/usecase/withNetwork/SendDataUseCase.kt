@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asFlow
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase.Input
@@ -31,12 +31,13 @@ class SendDataUseCase(
 
     override suspend fun invoke(
         input: Input
-    ) = middlewareExecutor.asFlow(
-        middlewares = sendDataMiddlewares + terminalMiddleware(),
-        context = SendDataMiddleware.Context(
-            input = input,
-        )
-    ).asHotFlow(coroutineScopes.useCase)
+    ) = middlewareExecutor
+        .process(
+            middlewares = sendDataMiddlewares + terminalMiddleware(),
+            context = SendDataMiddleware.Context(
+                input = input,
+            )
+        ).asHotFlow(coroutineScopes.useCase)
         .firstOrNull()
 
     private fun terminalMiddleware(): SendDataMiddleware = SendDataMiddleware { context, _ ->

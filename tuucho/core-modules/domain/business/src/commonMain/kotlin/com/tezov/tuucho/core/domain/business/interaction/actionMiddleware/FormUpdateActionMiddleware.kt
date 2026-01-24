@@ -13,6 +13,7 @@ import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
@@ -40,14 +41,14 @@ internal class FormUpdateActionMiddleware(
         next: MiddlewareProtocol.Next<Context, Output>?
     ) {
         val route = context.input.route ?: run {
-            next?.invoke(context)
+            next.invoke(context)
             return
         }
         when (val target = context.actionModel.target) {
             FormActionDefinition.Update.Target.error -> updateErrorState(route, context.input.jsonElement)
             else -> throw DomainException.Default("Unknown target $target")
         }
-        next?.invoke(context)
+        next.invoke(context)
     }
 
     private suspend fun updateErrorState(

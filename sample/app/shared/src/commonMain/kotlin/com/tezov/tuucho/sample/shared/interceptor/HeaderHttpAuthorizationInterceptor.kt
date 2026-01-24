@@ -3,6 +3,7 @@ package com.tezov.tuucho.sample.shared.interceptor
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
@@ -45,7 +46,7 @@ class HeaderHttpAuthorizationInterceptor(
                     headers.append("authorization", "Bearer $authorizationKey")
                 }
             }
-            next?.invoke(context)
+            next.invoke(context)
         }
     }
 }

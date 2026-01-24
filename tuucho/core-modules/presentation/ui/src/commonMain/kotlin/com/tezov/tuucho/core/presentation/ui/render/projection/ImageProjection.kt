@@ -21,8 +21,7 @@ import kotlinx.serialization.json.JsonElement
 import coil3.Image as CoilImage
 
 class Image(
-    private val coilImage: ImageRepositoryProtocol.Image<CoilImage>,
-    val tag: String?
+    private val coilImage: ImageRepositoryProtocol.Image<CoilImage>
 ) : TuuchoKoinComponent,
     ImageRepositoryProtocol.Image<CoilImage> by coilImage {
     @Composable
@@ -83,7 +82,7 @@ private class ImageProjection(
                 )
                 result?.collect {
                     coroutineScopes.image.await {
-                        this@ImageProjection.value = Image(coilImage = it.image, tag = it.tag)
+                        this@ImageProjection.value = Image(coilImage = it.image)
                     }
                 }
             }

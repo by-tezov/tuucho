@@ -14,8 +14,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asFlow
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
@@ -51,14 +51,15 @@ class NavigateToUrlUseCase(
     override suspend fun invoke(
         input: Input
     ) {
-        middlewareExecutor.asFlow(
-            middlewares = navigationMiddlewares + terminalMiddleware(),
-            context = NavigationMiddleware.ToUrl.Context(
-                currentUrl = navigationStackRouteRepository.currentRoute()?.value,
-                input = input,
-                onShadowerException = null
-            )
-        ).asHotFlow(coroutineScopes.useCase)
+        middlewareExecutor
+            .process(
+                middlewares = navigationMiddlewares + terminalMiddleware(),
+                context = NavigationMiddleware.ToUrl.Context(
+                    currentUrl = navigationStackRouteRepository.currentRoute()?.value,
+                    input = input,
+                    onShadowerException = null
+                )
+            ).asHotFlow(coroutineScopes.useCase)
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->

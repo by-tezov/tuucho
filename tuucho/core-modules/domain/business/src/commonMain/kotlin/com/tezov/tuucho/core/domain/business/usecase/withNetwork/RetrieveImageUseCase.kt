@@ -10,13 +10,13 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUs
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonArray
 
 @OpenForTest
 class RetrieveImageUseCase<S : Any>(
     private val imageRepository: ImageRepositoryProtocol,
 ) : UseCaseProtocol.Sync<Input, Flow<Output<S>>> {
-
     data class Input(
         val models: List<ImageModel>,
     ) {
@@ -41,9 +41,12 @@ class RetrieveImageUseCase<S : Any>(
     }
 
     data class Output<S : Any>(
-        val tag: String?,
         val image: Image<S>
     )
 
-    override fun invoke(input: Input) = imageRepository.process<S>(input = input)
+    override fun invoke(
+        input: Input
+    ) = imageRepository
+        .process<S>(models = input.models)
+        .map { Output(image = it) }
 }

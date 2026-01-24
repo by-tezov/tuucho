@@ -4,8 +4,8 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asFlow
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input
@@ -27,12 +27,13 @@ class UpdateViewUseCase(
     override suspend fun invoke(
         input: Input
     ) {
-        middlewareExecutor.asFlow(
-            middlewares = updateViewMiddlewares + terminalMiddleware(),
-            context = UpdateViewMiddleware.Context(
-                input = input,
-            )
-        ).asHotFlow(coroutineScopes.useCase)
+        middlewareExecutor
+            .process(
+                middlewares = updateViewMiddlewares + terminalMiddleware(),
+                context = UpdateViewMiddleware.Context(
+                    input = input,
+                )
+            ).asHotFlow(coroutineScopes.useCase)
     }
 
     private fun terminalMiddleware(): UpdateViewMiddleware = UpdateViewMiddleware { context, _ ->

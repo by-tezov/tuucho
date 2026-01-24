@@ -2,9 +2,9 @@ package com.tezov.tuucho.sample.shared.middleware.navigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
@@ -33,10 +33,8 @@ class BeforeNavigateToUrlMiddleware(
         if (ensureAuthorizationOrRedirectToLoginPage(context, next)) return
         if (autoLoginOnStart(context, next)) return
         loadLobbyConfigOnStart(context) || loadAuthConfigAfterSuccessfulLogin(context)
-        next?.invoke(
-            context.copy(
-                onShadowerException = onShadowerException
-            )
+        next.invoke(
+            context.copy(onShadowerException = onShadowerException)
         )
     }
 
@@ -74,13 +72,13 @@ class BeforeNavigateToUrlMiddleware(
         )
     }
 
-    private suspend fun ensureAuthorizationOrRedirectToLoginPage(
+    private suspend fun FlowCollector<Unit>.ensureAuthorizationOrRedirectToLoginPage(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ): Boolean {
         if (context.input.url.startsWith("$AUTH_PREFIX/")) {
             if (!isAuthorizationExist()) {
-                next?.invoke(
+                next.invoke(
                     context.copy(
                         onShadowerException = onShadowerException,
                         input = context.input.copy(url = Page.login)
@@ -92,13 +90,13 @@ class BeforeNavigateToUrlMiddleware(
         return false
     }
 
-    private suspend fun autoLoginOnStart(
+    private suspend fun FlowCollector<Unit>.autoLoginOnStart(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ): Boolean {
         if (context.currentUrl == null && context.input.url == Page.login && isAuthorizationExist() && isAuthorizationValid()) {
             loadAuthConfig()
-            next?.invoke(
+            next.invoke(
                 context.copy(
                     onShadowerException = onShadowerException,
                     input = context.input.copy(url = Page.home)

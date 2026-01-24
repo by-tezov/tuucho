@@ -1,10 +1,11 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.text
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.isEscapedRef
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.isRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema.Key
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
@@ -51,17 +52,22 @@ class TextsRectifier(
     ) = jsonPrimitive
         .withScope(TextSchema::Scope)
         .apply {
-            // TODO add escaper on "ID_REF_INDICATOR" to allow string user content to start with it
-            val stringValue = this.element.string
-            if (stringValue.startsWith(SymbolData.ID_REF_INDICATOR)) {
+            val stringValue = element.string
+            val isEscapedRef = stringValue.isEscapedRef
+            val isRef = stringValue.isRef && !stringValue.isEscapedRef
+            if (isRef) {
                 id = onScope(IdSchema::Scope)
                     .apply {
                         value = key.addGroup(group)
-                        source = value
+                        source = stringValue
                     }.collect()
             } else {
                 id = key.addGroup(group).let(::JsonPrimitive)
-                default = stringValue
+                default = if (isEscapedRef) {
+                    stringValue.drop(1)
+                } else {
+                    stringValue
+                }
             }
         }.collect()
 

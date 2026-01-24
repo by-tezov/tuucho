@@ -50,7 +50,7 @@ class StatesRectifier(
     ) = jsonPrimitive
         .withScope(StateSchema::Scope)
         .apply {
-            val stringValue = this.element.string.requireIsRef()
+            val stringValue = element.string.requireIsRef()
             id = onScope(IdSchema::Scope)
                 .apply {
                     value = key.addGroup(group)
