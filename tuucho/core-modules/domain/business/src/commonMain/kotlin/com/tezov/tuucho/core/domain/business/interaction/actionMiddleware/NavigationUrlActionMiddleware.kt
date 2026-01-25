@@ -9,7 +9,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import kotlinx.coroutines.flow.FlowCollector
 
 internal class NavigationUrlActionMiddleware(
@@ -25,9 +24,9 @@ internal class NavigationUrlActionMiddleware(
     ) = action.command == NavigateActionDefinition.Url.command &&
         action.authority == NavigateActionDefinition.Url.authority
 
-    override suspend fun FlowCollector<Output>.process(
+    override suspend fun FlowCollector<Unit>.process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Output>?
+        next: MiddlewareProtocol.Next<Context, Unit>?
     ) {
         context.actionModel.target?.let { url ->
             useCaseExecutor.await(

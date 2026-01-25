@@ -1,15 +1,13 @@
 ### Todo:
 
-- Comment gérer l'animation et placeholder qui arrive aprés, et ajout custom ?
-- redo all broken test
-
-- Alternative image (fallback) query fallback local/remote ?
-- TTL 
-- make sure I can catch a network error on image fail retrieval side application
+- TTL
+- error when loading image
 - registry, add custom fetcher ?
 
+- Animation placeholder / final image ?
+- Alternative image (fallback) query fallback local/remote ?
+
 - InteractionLockProtocol.Registry -> how the user can add its own ? example EchoMessageCustomActionDefinition, lock not added to registry
--
 - shadower with flow ?
 
 - do a smart padding object - can do also for size)?

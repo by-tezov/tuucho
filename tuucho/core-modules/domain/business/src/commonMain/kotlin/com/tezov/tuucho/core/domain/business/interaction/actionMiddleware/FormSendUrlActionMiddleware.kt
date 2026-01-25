@@ -18,7 +18,6 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
@@ -50,9 +49,9 @@ internal class FormSendUrlActionMiddleware(
         action.authority == FormActionDefinition.Send.authority &&
         action.target != null
 
-    override suspend fun FlowCollector<Output>.process(
+    override suspend fun FlowCollector<Unit>.process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Output>?
+        next: MiddlewareProtocol.Next<Context, Unit>?
     ) {
         val formView = (context.input.route as? NavigationRoute.Url)?.getAllFormView() ?: run {
             next.invoke(context)

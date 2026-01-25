@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.data.repository.network
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import io.ktor.client.engine.HttpClientEngineBase
 import io.ktor.client.engine.HttpClientEngineConfig
@@ -44,7 +43,7 @@ internal class HttpClientEngine(
                 context = HttpInterceptor.Context(
                     builder = builder
                 )
-            ).asHotFlow(coroutineScopes.network)
+            )
         return response.firstOrNull() ?: HttpResponseData(
             statusCode = HttpStatusCode.NoContent,
             requestTime = GMTDate(),

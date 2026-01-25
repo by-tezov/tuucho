@@ -1,9 +1,7 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.asHotFlow
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
@@ -15,7 +13,6 @@ import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
 class SendDataUseCase(
-    private val coroutineScopes: CoroutineScopesProtocol,
     private val sendDataAndRetrieveMaterialRepository: MaterialRepositoryProtocol.SendDataAndRetrieve,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val sendDataMiddlewares: List<SendDataMiddleware>
@@ -37,8 +34,7 @@ class SendDataUseCase(
             context = SendDataMiddleware.Context(
                 input = input,
             )
-        ).asHotFlow(coroutineScopes.useCase)
-        .firstOrNull()
+        ).firstOrNull()
 
     private fun terminalMiddleware(): SendDataMiddleware = SendDataMiddleware { context, _ ->
         with(context.input) {

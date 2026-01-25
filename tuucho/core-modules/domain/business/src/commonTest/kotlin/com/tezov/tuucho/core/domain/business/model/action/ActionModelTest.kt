@@ -1,7 +1,6 @@
-package com.tezov.tuucho.core.domain.business.model
+package com.tezov.tuucho.core.domain.business.model.action
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -12,7 +11,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNull
 
-class ActionModelDomainTest {
+class ActionModelTest {
     private fun String.toQuery() = ActionModel.run { toJsonElement() }
 
     @Test

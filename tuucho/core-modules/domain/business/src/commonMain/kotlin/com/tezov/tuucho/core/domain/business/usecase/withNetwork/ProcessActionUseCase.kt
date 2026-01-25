@@ -8,26 +8,21 @@ import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import com.tezov.tuucho.core.domain.tool.async.FlowMode
 import com.tezov.tuucho.core.domain.tool.json.string
-import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import kotlin.reflect.KClass
 
 @OpenForTest
 class ProcessActionUseCase(
     private val actionExecutor: ActionExecutorProtocol,
-) : UseCaseProtocol.Async<Input, Flow<Output>> {
+) : UseCaseProtocol.Async<Input, Unit> {
     data class Input(
         val route: NavigationRoute?,
         val models: List<ActionModel>,
         val modelObjectOriginal: JsonElement? = null,
         val lockable: InteractionLockable? = null,
-        val jsonElement: JsonElement? = null,
-        val flowMode: FlowMode = FlowMode.Hot,
+        val jsonElement: JsonElement? = null
     ) {
         companion object {
             fun create(
@@ -35,7 +30,6 @@ class ProcessActionUseCase(
                 modelObject: JsonObject,
                 lockable: InteractionLockable? = null,
                 jsonElement: JsonElement? = null,
-                flowMode: FlowMode = FlowMode.Hot,
             ) = buildList {
                 modelObject
                     .withScope(ActionSchema::Scope)
@@ -49,7 +43,6 @@ class ProcessActionUseCase(
                     modelObjectOriginal = modelObject,
                     lockable = lockable,
                     jsonElement = jsonElement,
-                    flowMode = flowMode
                 )
             }
 
@@ -58,13 +51,11 @@ class ProcessActionUseCase(
                 models: List<ActionModel>,
                 lockable: InteractionLockable? = null,
                 jsonElement: JsonElement? = null,
-                flowMode: FlowMode = FlowMode.Hot,
             ) = Input(
                 route = route,
                 models = models,
                 lockable = lockable,
                 jsonElement = jsonElement,
-                flowMode = flowMode
             )
 
             fun create(
@@ -72,36 +63,18 @@ class ProcessActionUseCase(
                 model: ActionModel,
                 lockable: InteractionLockable? = null,
                 jsonElement: JsonElement? = null,
-                flowMode: FlowMode = FlowMode.Hot,
             ) = Input(
                 route = route,
                 models = listOf(model),
                 lockable = lockable,
                 jsonElement = jsonElement,
-                flowMode = flowMode
             )
-        }
-    }
-
-    data class Output(
-        val rawValue: Any,
-        val type: KClass<out Any>,
-    ) {
-        @Suppress("UNCHECKED_CAST")
-        inline fun <reified T> value(): T = rawValue as T
-
-        @Suppress("UNCHECKED_CAST")
-        inline fun <reified T> valueOrNull(): T? = rawValue as? T
-
-        companion object {
-            fun create(
-                rawValue: Any,
-                type: KClass<out Any>? = null,
-            ): Output = Output(rawValue, type ?: rawValue::class)
         }
     }
 
     override suspend fun invoke(
         input: Input
-    ) = actionExecutor.process(input = input)
+    ) {
+        actionExecutor.process(input = input)
+    }
 }

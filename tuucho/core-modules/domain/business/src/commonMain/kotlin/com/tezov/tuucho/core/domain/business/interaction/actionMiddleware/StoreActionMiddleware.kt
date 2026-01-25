@@ -11,7 +11,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Co
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
@@ -37,9 +36,9 @@ internal class StoreActionMiddleware(
         action.authority == StoreActionDefinition.KeyValue.authority &&
         action.query != null
 
-    override suspend fun FlowCollector<Output>.process(
+    override suspend fun FlowCollector<Unit>.process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Output>?
+        next: MiddlewareProtocol.Next<Context, Unit>?
     ) {
         val query = context.actionModel.query ?: throw DomainException.Default("should no be possible")
         when (val target = context.actionModel.target) {

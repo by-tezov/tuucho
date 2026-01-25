@@ -15,7 +15,6 @@ import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonElement
@@ -36,9 +35,9 @@ internal class FormUpdateActionMiddleware(
     ): Boolean = action.command == FormActionDefinition.Update.command &&
         action.authority == FormActionDefinition.Update.authority
 
-    override suspend fun FlowCollector<Output>.process(
+    override suspend fun FlowCollector<Unit>.process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Output>?
+        next: MiddlewareProtocol.Next<Context, Unit>?
     ) {
         val route = context.input.route ?: run {
             next.invoke(context)

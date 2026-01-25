@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Co
 import kotlinx.coroutines.flow.FlowCollector
 
 class MiddlewareExecutor : MiddlewareExecutorProtocol {
-    override suspend fun <C, R> FlowCollector<R>.process(
+    override suspend fun <C, R : Any> FlowCollector<R>.process(
         middlewares: List<MiddlewareProtocol<C, R>>,
         context: C
     ) {
