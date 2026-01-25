@@ -3,7 +3,6 @@ package com.tezov.tuucho.sample.shared.interceptor
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.intercept
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
 import io.ktor.client.request.HttpResponseData

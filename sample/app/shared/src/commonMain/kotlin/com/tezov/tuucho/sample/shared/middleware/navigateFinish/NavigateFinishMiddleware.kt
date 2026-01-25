@@ -2,7 +2,6 @@ package com.tezov.tuucho.sample.shared.middleware.navigateFinish
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import kotlinx.coroutines.flow.FlowCollector
 
 class NavigateFinishMiddleware(
