@@ -40,6 +40,7 @@ internal class ImageLoaderSource(
             .decoderCoroutineContext(coroutineScopes.image.context)
             .fetcherFactory(imageFetchers.get(request.command))
             .data(request)
+            .diskCacheKey(request.cacheKey)
             .target(
                 onSuccess = { image ->
                     send(

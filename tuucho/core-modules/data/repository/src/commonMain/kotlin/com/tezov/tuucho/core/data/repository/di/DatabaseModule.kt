@@ -27,8 +27,8 @@ object DatabaseModule {
 
     internal fun invoke() = module(ModuleContextData.Main) {
         factory<Config>(DATABASE_REPOSITORY_CONFIG) {
-            getOrNull() ?: object : Config {
-                override val fileName = "tuucho-database"
+            getOrNull<Config>() ?: object : Config {
+                override val fileName = "tuucho.database"
             }
         }
 

@@ -1,7 +1,10 @@
 #common
 localDatabaseFileName=tuucho.database
 localDatastoreFileName=tuucho.datastore
-serverTimeoutMillis=5000
+imageDiskCacheSizeMo=150
+imageDiskCacheDirectory=tuucho.cache_images
+serverImageTimeoutMillis=10000
+serverHttpTimeoutMillis=5000
 serverVersion=v1
 serverHealthEndpoint=health
 serverResourceEndpoint=resource

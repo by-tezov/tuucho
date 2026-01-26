@@ -215,7 +215,10 @@
       "main-logo": "remote://lobby/logo-compose",
       "main-logo-placeholder": {
         "source": "local://img/logo-compose-placeholder",
-        "tag": "placeholder"
+        "tag": "placeholder",
+        "time-to-live": {
+          "strategy": "single-use"
+        }
       },
       "small-logo": "local://img/logo-koin"
     }

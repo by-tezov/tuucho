@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.image
 
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
@@ -35,6 +36,7 @@ class ImageRectifier(
     }
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -52,6 +54,7 @@ class ImageRectifier(
         }.collect()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -63,28 +66,30 @@ class ImageRectifier(
         }.collect()
 
     override fun afterAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
-    ): JsonElement? {
-        var valueRectified: String?
-        var sourceRectified: String?
+    ): JsonElement {
         return element
             .find(path)
             .withScope(ImageSchema::Scope)
-            .takeIf {
-                it
-                    .rectifyIds(ImageSchema.Value.Group.common)
-                    .also { (value, source) ->
-                        valueRectified = value
-                        sourceRectified = source
+            .apply {
+                rectifyIds(ImageSchema.Value.Group.common)
+                    .let { (valueRectified, sourceRectified) ->
+                        if (valueRectified != null || sourceRectified != null) {
+                            id = onScope(IdSchema::Scope)
+                                .apply {
+                                    valueRectified?.let { value = it }
+                                    sourceRectified?.let { source = it }
+                                }.collect()
+                        }
                     }
-                valueRectified != null || sourceRectified != null
-            }?.apply {
-                id = onScope(IdSchema::Scope)
-                    .apply {
-                        valueRectified?.let { value = it }
-                        sourceRectified?.let { source = it }
-                    }.collect()
-            }?.collect()
+                if(source != null) {
+                    cacheKey = ImageSchema.cacheKey(
+                        url = context.url,
+                        id = onScope(IdSchema::Scope).value ?: throw DataException.Default("id can't be null, rectifier id not applied.")
+                    )
+                }
+            }.collect()
     }
 }

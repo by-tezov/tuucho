@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
@@ -108,17 +109,20 @@ internal class ContextualShadowerMaterialSource(
         url: String
     ) = mapNotNull { jsonObject ->
         materialAssembler.process(
-            materialObject = jsonObject,
-            findAllRefOrNullFetcher = { from, type ->
-                coroutineScopes.database.await {
-                    materialDatabaseSource.getAllRefOrNull(
-                        from = from,
-                        url = url,
-                        type = type,
-                        visibility = Visibility.Contextual(urlOrigin = urlOrigin)
-                    )
+            context = AssemblerProtocol.Context(
+                url = url,
+                findAllRefOrNullFetcher = { from, type ->
+                    coroutineScopes.database.await {
+                        materialDatabaseSource.getAllRefOrNull(
+                            from = from,
+                            url = url,
+                            type = type,
+                            visibility = Visibility.Contextual(urlOrigin = urlOrigin)
+                        )
+                    }
                 }
-            }
+            ),
+            materialObject = jsonObject
         )
     }
 }

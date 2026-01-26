@@ -22,16 +22,17 @@ import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol as DomainViewProtocol
 
-private data class Updatable(
-    val viewIndex: Int,
-    val updaterProcessor: ContextualUpdaterProcessorProtocol
-)
-
 internal class Screen(
     private val coroutineScopes: CoroutineScopesProtocol,
     override val route: NavigationRoute.Url
 ) : ScreenProtocol,
     TuuchoKoinComponent {
+
+    private data class Updatable(
+        val viewIndex: Int,
+        val updaterProcessor: ContextualUpdaterProcessorProtocol
+    )
+
     private val viewFactories: List<ViewFactoryProtocol> by lazy {
         getKoin().getAll()
     }

@@ -1,5 +1,7 @@
 ### Todo:
 
+- test image Model
+
 - TTL
 - error when loading image
 - registry, add custom fetcher ?

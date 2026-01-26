@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
+import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
@@ -27,8 +28,11 @@ class RetrieveImageUseCase<S : Any>(
                 val list = imageArray.mapNotNull { imageObject ->
                     val scope = imageObject.withScope(ImageSchema::Scope)
                     scope.source?.let {
-                        ImageModel
-                            .from(it, scope.tag)
+                        ImageModel.from(
+                            value = it,
+                            cacheKey = scope.cacheKey ?: throw DomainException.Default("should not be possible"),
+                            tag = scope.tag
+                        )
                     }
                 }
                 return Input(models = list)

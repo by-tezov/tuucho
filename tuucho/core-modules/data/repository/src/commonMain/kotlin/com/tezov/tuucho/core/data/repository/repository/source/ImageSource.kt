@@ -23,6 +23,7 @@ internal class ImageSource(
             ImageRequest(
                 command = it.command,
                 target = it.target,
+                cacheKey = it.cacheKey,
                 tag = it.tag
             )
         }

@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.form
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormValidatorSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
@@ -33,9 +34,11 @@ class FormValidatorRectifier(
     }
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = beforeAlterObject(
+        context,
         path = ROOT_PATH,
         element = element
             .find(path)
@@ -46,6 +49,7 @@ class FormValidatorRectifier(
     )
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
@@ -53,6 +57,7 @@ class FormValidatorRectifier(
     }.let(::JsonArray)
 
     override fun beforeAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ): JsonElement? {
@@ -72,6 +77,7 @@ class FormValidatorRectifier(
     }
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = JsonArray(element.find(path).jsonArray.map { jsonObject ->

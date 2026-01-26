@@ -3,7 +3,6 @@ package com.tezov.tuucho.core.data.repository.parser.assembler.response
 import com.tezov.tuucho.core.data.repository.di.ModuleContextData.Assembler.ScopeContext
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
-import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.FindAllRefOrNullFetcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
@@ -35,16 +34,16 @@ class ResponseAssembler : TuuchoKoinScopeComponent {
     }
 
     suspend fun process(
+        context: AssemblerProtocol.Context,
         responseObject: JsonObject,
-        findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol,
     ): JsonObject {
         val subset = responseObject.withScope(SubsetSchema::Scope).self
             ?: throw DataException.Default("Missing subset in response $responseObject")
         return assemblers.firstOrNull { it.schemaType == subset }?.let {
             val jsonObjectAssembled = it.process(
+                context = context,
                 path = ROOT_PATH,
                 element = responseObject,
-                findAllRefOrNullFetcher = findAllRefOrNullFetcher
             )
             jsonObjectAssembled.jsonObject
         } ?: throw DataException.Default("Missing assembler for subset $subset")

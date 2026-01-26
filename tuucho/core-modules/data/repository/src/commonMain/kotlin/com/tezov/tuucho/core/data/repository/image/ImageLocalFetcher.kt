@@ -17,13 +17,11 @@ internal class ImageLocalFetcher(
     override suspend fun fetch(): SourceFetchResult = assetSource.readImage(path) { content ->
         SourceFetchResult(
             source = ImageSource(
-                source = Buffer().apply {
-                    writeAll(content.source)
-                },
+                source = Buffer().apply { writeAll(content.source) },
                 fileSystem = options.fileSystem
             ),
             mimeType = content.contentType,
-            dataSource = DataSource.NETWORK
+            dataSource = DataSource.DISK
         )
     }
 

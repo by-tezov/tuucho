@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
+import okio.FileSystem
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
@@ -22,6 +23,7 @@ object SystemCoreDataModules {
     fun invoke(): List<KoinMass> = listOf(
         module(ModuleContextData.Main) {
             factoryOf(::SystemInformation) bind SystemInformationProtocol::class
+            factory { FileSystem.SYSTEM }
         },
         MiscModule.invoke(),
         RectifierModule.invoke(),

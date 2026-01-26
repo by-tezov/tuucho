@@ -2,6 +2,7 @@ package com.tezov.tuucho.sample.shared.di
 
 import com.tezov.tuucho.core.barrel.di.ModuleContextCore
 import com.tezov.tuucho.core.data.repository.di.DatabaseModule
+import com.tezov.tuucho.core.data.repository.di.ImageModule
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
@@ -20,6 +21,14 @@ internal object ConfigModuleIos {
         factory<DatabaseModule.Config> {
             object : DatabaseModule.Config {
                 override val fileName = BuildKonfig.localDatabaseFileName
+            }
+        }
+
+        factory<ImageModule.Config> {
+            object : ImageModule.Config {
+                override val timeoutMillis = BuildKonfig.serverImageTimeoutMillis
+                override val memoryCacheSizeMo = BuildKonfig.imageMemoryCacheSizeMo
+                override val diskCacheSizeMo = BuildKonfig.imageDiskCacheSizeMo
             }
         }
 

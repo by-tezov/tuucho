@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.data.repository.database.type.Lifetime
 import com.tezov.tuucho.core.data.repository.database.type.Visibility
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
@@ -135,12 +136,15 @@ internal class MaterialCacheLocalSource(
         } ?: return null
         return coroutineScopes.parser.await {
             materialAssembler.process(
-                materialObject = entity.jsonObject,
-                findAllRefOrNullFetcher = { from, type ->
-                    coroutineScopes.database.await {
-                        materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
+                context = AssemblerProtocol.Context(
+                    url = url,
+                    findAllRefOrNullFetcher = { from, type ->
+                        coroutineScopes.database.await {
+                            materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
+                        }
                     }
-                }
+                ),
+                materialObject = entity.jsonObject
             )
         }
     }

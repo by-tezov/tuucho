@@ -42,44 +42,44 @@ abstract class AbstractAssembler(
     ) = matchers.any { it.accept(path, element) }
 
     override suspend fun process(
+        context: AssemblerProtocol.Context,
         path: JsonElementPath,
-        element: JsonElement,
-        findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol
+        element: JsonElement
     ): JsonElement = with(element.find(path)) {
         when (this) {
-            is JsonArray -> processArray(path, element, findAllRefOrNullFetcher)
-            is JsonObject -> processObject(path, element, findAllRefOrNullFetcher)
+            is JsonArray -> processArray(context, path, element)
+            is JsonObject -> processObject(context, path, element)
             is JsonPrimitive -> throw DataException.Default("by design can't assemble primitive")
         }
     }
 
     private suspend fun JsonArray.processArray(
+        context: AssemblerProtocol.Context,
         path: JsonElementPath,
-        element: JsonElement,
-        findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol
+        element: JsonElement
     ) = element.replaceOrInsert(
         path,
         map {
             (it as? JsonObject)
                 ?: throw DataException.Default("by design element inside array must be an object")
-            it.processObject(ROOT_PATH, it, findAllRefOrNullFetcher)
+            it.processObject(context, ROOT_PATH, it)
         }.let(::JsonArray)
     )
 
     private suspend fun JsonObject.processObject(
+        context: AssemblerProtocol.Context,
         path: JsonElementPath,
-        element: JsonElement,
-        findAllRefOrNullFetcher: FindAllRefOrNullFetcherProtocol
+        element: JsonElement
     ): JsonElement {
         var _element = element
-        val current: JsonObject = findAllRefOrNullFetcher
+        val current: JsonObject = context.findAllRefOrNullFetcher
             .invoke(this, schemaType)
-            ?.let { it.rectify(path, element) ?: it }
+            ?.let { it.rectify(context, path, element) ?: it }
             ?.let { jsonObjectMerger.merge(it) }
             ?.also { _element = element.replaceOrInsert(path, it) }
             ?: run {
                 // fallback, nothing to resolved
-                rectify(path, element)
+                rectify(context, path, element)
                     ?.also { _element = element.replaceOrInsert(path, it) }
             } ?: run {
             // fallback, nothing to rectify
@@ -92,7 +92,7 @@ abstract class AbstractAssembler(
                 childProcessors
                     .filter { it.accept(childPath, _element) }
                     .singleOrThrow(path)
-                    ?.process(childPath, _element, findAllRefOrNullFetcher)
+                    ?.process(context, childPath, _element)
                     ?.also { _element = it }
             }
         }
@@ -100,11 +100,13 @@ abstract class AbstractAssembler(
     }
 
     protected open fun List<JsonObject>.rectify(
+        context: AssemblerProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): List<JsonObject>? = null
 
     protected open fun JsonObject.rectify(
+        context: AssemblerProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonObject? = null

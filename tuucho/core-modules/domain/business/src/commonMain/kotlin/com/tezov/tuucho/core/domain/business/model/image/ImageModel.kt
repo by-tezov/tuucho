@@ -12,6 +12,7 @@ data class ImageModel(
     val command: String,
     val target: String,
     val query: JsonElement?,
+    val cacheKey: String,
     val tag: String?,
 ) {
     companion object {
@@ -53,6 +54,7 @@ data class ImageModel(
 
         fun from(
             value: String,
+            cacheKey: String,
             tag: String?
         ): ImageModel {
             val match = IMAGE_REGEX.matchEntire(value)
@@ -63,6 +65,7 @@ data class ImageModel(
                 target = match.groups[2]?.value
                     ?: throw DomainException.Default("image target can't be null"),
                 query = match.groups[3]?.value?.toJsonElement(),
+                cacheKey = cacheKey,
                 tag = tag
             )
         }
@@ -71,11 +74,13 @@ data class ImageModel(
             command: String,
             target: String,
             query: String? = null,
+            cacheKey: String,
             tag: String?
         ) = ImageModel(
             command = command,
             target = target,
             query = query?.toJsonElement(),
+            cacheKey = cacheKey,
             tag = tag,
         )
     }
