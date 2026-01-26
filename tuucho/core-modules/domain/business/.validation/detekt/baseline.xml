@@ -2,6 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>ConstructorParameterNaming:MockActionMiddleware.kt$MockActionMiddleware$var _accept: Boolean? = null</ID>
+    <ID>ConstructorParameterNaming:MockActionMiddleware.kt$MockActionMiddleware$var _priority: Int? = null</ID>
     <ID>CyclomaticComplexMethod:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
     <ID>EmptyFunctionBlock:MiddlewareExecutorTest.kt$MiddlewareExecutorTest${ }</ID>
     <ID>EmptyFunctionBlock:SchemaScopeMapOperatorTest.kt$SchemaScopeMapOperatorTest${ }</ID>
@@ -16,18 +18,15 @@
     <ID>MatchingDeclarationName:SettingPageSchema.kt$PageSettingSchema</ID>
     <ID>MatchingDeclarationName:ShadowerDefinition.kt$Shadower</ID>
     <ID>MaxLineLength:ActionExecutorTest.kt$ActionExecutorTest$every { interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority) } returns lockTypesForAction</ID>
-    <ID>MaxLineLength:ActionModelDomain.kt$ActionModelDomain.Companion$pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""</ID>
+    <ID>MaxLineLength:ActionModel.kt$ActionModel.Companion$pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""</ID>
     <ID>MaxLineLength:AssociateDSL.kt$AssociateDSL$(factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))</ID>
     <ID>MaxLineLength:BindOrdered.kt$BindOrdered$(factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))</ID>
     <ID>MaxLineLength:DelegateSchemaKey.kt$DelegateSchemaKey$JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -&gt; value</ID>
-    <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
+    <ID>MaxLineLength:FormActionDefinition.kt$FormActionDefinition.Send$override val lockable get() = NavigateActionDefinition.Url.lockable + NavigateActionDefinition.LocalDestination.lockable</ID>
     <ID>MaxLineLength:KoinIsolatedContext.kt$KoinIsolatedContext$val</ID>
     <ID>MaxLineLength:NavigateFinishUseCase.kt$NavigateFinishUseCase$throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")</ID>
-    <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
-    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$)</ID>
     <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) @KoinDslMarker infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
-    <ID>NestedBlockDepth:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output&gt;? )</ID>
     <ID>PackageNaming:AssociateDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateDSLTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateModule.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
@@ -51,10 +50,11 @@
     <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SymbolDataTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>ReturnCount:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
-    <ID>ThrowsCount:ImageModelDomain.kt$ImageModelDomain.Companion$fun from( value: String ): ImageModelDomain</ID>
+    <ID>ThrowsCount:ImageModel.kt$ImageModel.Companion$fun from( value: String, tag: String? ): ImageModel</ID>
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
     <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:InteractionLockStack.kt$InteractionLockStack : Stack</ID>
     <ID>TooManyFunctions:SchemaScope.kt$OpenSchemaScope&lt;T : OpenSchemaScope&lt;T&gt;&gt;</ID>
+    <ID>UnusedPrivateProperty:NavigateFinishUseCase.kt$NavigateFinishUseCase$private val coroutineScopes: CoroutineScopesProtocol</ID>
   </CurrentIssues>
 </SmellBaseline>

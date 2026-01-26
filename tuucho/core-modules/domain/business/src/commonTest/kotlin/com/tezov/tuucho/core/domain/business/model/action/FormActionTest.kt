@@ -9,38 +9,38 @@ import kotlin.test.assertTrue
 class FormActionTest {
     @Test
     fun `send command is form`() {
-        assertEquals("form", FormAction.Send.command)
+        assertEquals("form", FormActionDefinition.Send.command)
     }
 
     @Test
     fun `send authority is send-url`() {
-        assertEquals("send-url", FormAction.Send.authority)
+        assertEquals("send-url", FormActionDefinition.Send.authority)
     }
 
     @Test
     fun `send lockable combines navigate url and local destination`() {
-        val combined = FormAction.Send.lockable
-        assertTrue(combined.getTypes().containsAll(NavigateAction.Url.lockable.getTypes()))
-        assertTrue(combined.getTypes().containsAll(NavigateAction.LocalDestination.lockable.getTypes()))
+        val combined = FormActionDefinition.Send.lockable
+        assertTrue(combined.getTypes().containsAll(NavigateActionDefinition.Url.lockable.getTypes()))
+        assertTrue(combined.getTypes().containsAll(NavigateActionDefinition.LocalDestination.lockable.getTypes()))
     }
 
     @Test
     fun `update command is form`() {
-        assertEquals("form", FormAction.Update.command)
+        assertEquals("form", FormActionDefinition.Update.command)
     }
 
     @Test
     fun `update authority is update`() {
-        assertEquals("update", FormAction.Update.authority)
+        assertEquals("update", FormActionDefinition.Update.authority)
     }
 
     @Test
     fun `update lockable is empty`() {
-        assertSame(InteractionLockable.Empty, FormAction.Update.lockable)
+        assertSame(InteractionLockable.Empty, FormActionDefinition.Update.lockable)
     }
 
     @Test
     fun `update target error is correct`() {
-        assertEquals("error", FormAction.Update.Target.error)
+        assertEquals("error", FormActionDefinition.Update.Target.error)
     }
 }

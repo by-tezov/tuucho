@@ -7,7 +7,7 @@ class UiExtensionLibraryPlugin : AbstractLibraryPlugin() {
     ).asIterable()
 
     override fun compilerOption() = listOf<String>(
-
+        "-Xcontext-parameters", // Needed by Tuucho
     )
 
     override val hasAssets = false

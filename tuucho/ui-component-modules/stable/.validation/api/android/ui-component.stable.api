@@ -1,3 +1,9 @@
+public final class com/tezov/tuucho/uiComponent/stable/data/parser/assembler/material/image/ContentImageValuesAssemblerMatcher : com/tezov/tuucho/core/data/repository/parser/assembler/material/_system/AssemblerMatcherProtocol {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+}
+
 public final class com/tezov/tuucho/uiComponent/stable/data/parser/assembler/material/layout/linear/ContentLayoutLinearItemsAssemblerMatcher : com/tezov/tuucho/core/data/repository/parser/assembler/material/_system/AssemblerMatcherProtocol {
 	public static final field $stable I
 	public fun <init> ()V
@@ -51,7 +57,17 @@ public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/mat
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
-public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/image/content/ImageImageRectifierMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierMatcherProtocol {
+public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/image/content/ContentImageValuesRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/AbstractRectifier {
+	public static final field $stable I
+	public fun <init> (Lorg/koin/core/scope/Scope;)V
+	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
+	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public synthetic fun beforeAlterPrimitive (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/uiComponent/stable/data/parser/rectifier/material/image/content/ContentImageValuesRectifierMatcher : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierMatcherProtocol {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
@@ -180,7 +196,7 @@ public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/materia
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Content$Key;
 	public static final field description Ljava/lang/String;
-	public static final field value Ljava/lang/String;
+	public static final field values Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/uiComponent/stable/domain/jsonSchema/material/ImageSchema$Style {

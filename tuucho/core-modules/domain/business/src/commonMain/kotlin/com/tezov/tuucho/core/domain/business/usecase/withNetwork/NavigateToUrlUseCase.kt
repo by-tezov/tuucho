@@ -14,6 +14,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
@@ -23,6 +24,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
+import kotlinx.coroutines.flow.collect
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -49,14 +51,15 @@ class NavigateToUrlUseCase(
     override suspend fun invoke(
         input: Input
     ) {
-        middlewareExecutor.process(
-            middlewares = navigationMiddlewares + terminalMiddleware(),
-            context = NavigationMiddleware.ToUrl.Context(
-                currentUrl = navigationStackRouteRepository.currentRoute()?.value,
-                input = input,
-                onShadowerException = null
-            )
-        )
+        middlewareExecutor
+            .process(
+                middlewares = navigationMiddlewares + terminalMiddleware(),
+                context = NavigationMiddleware.ToUrl.Context(
+                    currentUrl = navigationStackRouteRepository.currentRoute()?.value,
+                    input = input,
+                    onShadowerException = null
+                )
+            ).collect()
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->

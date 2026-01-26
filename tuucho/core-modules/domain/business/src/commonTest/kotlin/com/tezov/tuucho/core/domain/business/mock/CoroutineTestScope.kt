@@ -16,6 +16,8 @@ import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestScope
 
 class CoroutineTestScope {
+    lateinit var scheduler: TestCoroutineScheduler
+        private set
     lateinit var mock: CoroutineScopesProtocol
         private set
 
@@ -49,11 +51,15 @@ class CoroutineTestScope {
             }
             deferred
         }
+
+        every { scope } returns currentScope
+        every { context } returns currentScope.coroutineContext
     }
 
     private fun attach(
         scheduler: TestCoroutineScheduler
     ) {
+        this.scheduler = scheduler
         val ioDispatcher = StandardTestDispatcher(scheduler)
         val ioScope = CoroutineScope(ioDispatcher)
 
@@ -119,5 +125,9 @@ class CoroutineTestScope {
             mock.main,
             mock.io,
         )
+    }
+
+    fun advanceUntilIdle() {
+        scheduler.advanceUntilIdle()
     }
 }

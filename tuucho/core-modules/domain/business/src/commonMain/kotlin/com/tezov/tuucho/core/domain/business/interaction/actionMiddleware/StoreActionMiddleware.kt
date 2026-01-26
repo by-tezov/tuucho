@@ -3,16 +3,18 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.StoreAction
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -29,20 +31,22 @@ internal class StoreActionMiddleware(
 
     override fun accept(
         route: NavigationRoute?,
-        action: ActionModelDomain,
-    ) = action.command == StoreAction.KeyValue.command && action.authority == StoreAction.KeyValue.authority && action.query != null
+        action: ActionModel,
+    ) = action.command == StoreActionDefinition.KeyValue.command &&
+        action.authority == StoreActionDefinition.KeyValue.authority &&
+        action.query != null
 
-    override suspend fun process(
-        context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
-    ) = with(context.input) {
-        val query = action.query ?: throw DomainException.Default("should no be possible")
-        when (val target = action.target) {
-            StoreAction.KeyValue.Target.save -> saveValues(query)
-            StoreAction.KeyValue.Target.remove -> removeKeys(query)
+    override suspend fun FlowCollector<Unit>.process(
+        context: Context,
+        next: MiddlewareProtocol.Next<Context, Unit>?
+    ) {
+        val query = context.actionModel.query ?: throw DomainException.Default("should no be possible")
+        when (val target = context.actionModel.target) {
+            StoreActionDefinition.KeyValue.Target.save -> saveValues(query)
+            StoreActionDefinition.KeyValue.Target.remove -> removeKeys(query)
             else -> throw DomainException.Default("Unknown target $target")
         }
-        next?.invoke(context)
+        next.invoke(context)
     }
 
     private suspend fun saveValues(

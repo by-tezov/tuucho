@@ -1,9 +1,8 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -12,12 +11,13 @@ import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.add
+import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.json.buildJsonObject
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertSame
+import kotlin.test.assertEquals
 
 class ProcessActionUseCaseTest {
     private lateinit var actionExecutor: ActionExecutorProtocol
@@ -37,32 +37,17 @@ class ProcessActionUseCaseTest {
     }
 
     @Test
-    fun `invoke executes executor through useCase scope for Action input`() = runTest {
+    fun `invoke executes executor with actionModel`() = runTest {
         val routeBack = NavigationRoute.Back
-        val lockableEmpty = InteractionLockable.Empty
-        val actionModel = ActionModelDomain.from("cmd://auth/target")
+        val actionModel = ActionModel.from("cmd://auth/target")
 
-        val input = ProcessActionUseCase.Input.Action(
+        val input = ProcessActionUseCase.Input.create(
             route = routeBack,
-            action = actionModel,
-            lockable = lockableEmpty,
-            jsonElement = JsonNull
+            models = listOf(actionModel)
         )
 
-        val elementOutput = ProcessActionUseCase.Output.Element(
-            type = String::class,
-            rawValue = "value"
-        )
-
-        val expectedOutput = ProcessActionUseCase.Output.ElementArray(
-            listOf(elementOutput)
-        )
-
-        everySuspend { actionExecutor.process(any()) } returns expectedOutput
-
-        val result = sut.invoke(input)
-
-        assertSame(expectedOutput, result)
+        everySuspend { actionExecutor.process(any()) } returns Unit
+        sut.invoke(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             actionExecutor.process(input = input)
@@ -70,26 +55,21 @@ class ProcessActionUseCaseTest {
     }
 
     @Test
-    fun `invoke executes executor through useCase scope for ActionObject input`() = runTest {
-        val routeUrl = NavigationRoute.Url(id = "id", value = "url")
-        val lockableEmpty = InteractionLockable.Empty
+    fun `invoke executes executor with modelObject`() = runTest {
+        val routeBack = NavigationRoute.Finish
 
-        val input = ProcessActionUseCase.Input.ActionObject(
-            route = routeUrl,
-            actionObject = JsonObject(emptyMap()),
-            lockable = lockableEmpty
+        val input = ProcessActionUseCase.Input.create(
+            route = routeBack,
+            modelObject = buildJsonObject {
+                put("primaries", buildJsonArray {
+                    add("cmd://auth/target")
+                })
+            }
         )
+        assertEquals(listOf("cmd://auth/target"), input.models.map { it.toString() })
 
-        val expectedOutput = ProcessActionUseCase.Output.Element(
-            type = Int::class,
-            rawValue = 3
-        )
-
-        everySuspend { actionExecutor.process(any()) } returns expectedOutput
-
-        val result = sut.invoke(input)
-
-        assertSame(expectedOutput, result)
+        everySuspend { actionExecutor.process(any()) } returns Unit
+        sut.invoke(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             actionExecutor.process(input = input)

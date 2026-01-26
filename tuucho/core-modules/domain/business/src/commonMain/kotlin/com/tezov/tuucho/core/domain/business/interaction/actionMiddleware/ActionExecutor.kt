@@ -1,18 +1,16 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
-import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 internal class ActionExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -23,82 +21,43 @@ internal class ActionExecutor(
 ) : ActionExecutorProtocol {
     override suspend fun process(
         input: Input
-    ) = with(input) {
-        when (this) {
-            is Input.ActionObject -> {
-                val outputs: List<Output> = buildList {
-                    actionObject
-                        .withScope(ActionSchema::Scope)
-                        .primaries
-                        ?.forEach { primary ->
-                            val output = process(
-                                Input.Action(
-                                    route = route,
-                                    action = ActionModelDomain.from(primary.string),
-                                    lockable = lockable,
-                                    actionObjectOriginal = actionObject,
-                                    jsonElement = jsonElement
-                                )
+    ) {
+        coroutineScopes.action.await {
+            flow {
+                input.models.forEach { actionModel ->
+                    val middlewaresToExecute = middlewares
+                        .filter { it.accept(input.route, actionModel) }
+                        .sortedByDescending { it.priority }
+                    middlewaresToExecute
+                        .takeIf { it.isNotEmpty() }
+                        ?.let {
+                            val locks = input.lockable.acquireLocks(
+                                route = input.route,
+                                action = actionModel
                             )
-                            output?.let { add(it) }
+                            middlewareExecutor.run {
+                                process(
+                                    middlewares = it,
+                                    context = ActionMiddleware.Context(
+                                        lockable = locks.freeze(),
+                                        actionModel = actionModel,
+                                        input = input,
+                                    )
+                                )
+                            }
+                            locks.releaseLocks(
+                                route = input.route,
+                                action = actionModel
+                            )
                         }
                 }
-                when {
-                    outputs.isEmpty() -> {
-                        null
-                    }
-
-                    outputs.size == 1 -> {
-                        outputs.first()
-                    }
-
-                    else -> {
-                        Output.ElementArray(
-                            values = outputs
-                        )
-                    }
-                }
-            }
-
-            is Input.Action -> {
-                process(this)
-            }
-        }
-    }
-
-    private suspend fun process(
-        input: Input.Action
-    ) = with(input) {
-        coroutineScopes.action.await {
-            val middlewaresToExecute = middlewares
-                .filter { it.accept(route, action) }
-                .sortedByDescending { it.priority }
-            middlewaresToExecute
-                .takeIf { it.isNotEmpty() }
-                ?.let {
-                    val locks = input.lockable.acquireLocks(
-                        route = route,
-                        action = action
-                    )
-                    val result = middlewareExecutor.process(
-                        middlewares = it,
-                        context = ActionMiddleware.Context(
-                            lockable = locks.freeze(),
-                            input = input,
-                        )
-                    )
-                    locks.releaseLocks(
-                        route = route,
-                        action = action
-                    )
-                    result
-                }
+            }.collect()
         }
     }
 
     private suspend fun InteractionLockable?.acquireLocks(
         route: NavigationRoute?,
-        action: ActionModelDomain,
+        action: ActionModel,
     ): InteractionLockable {
         val lockTypesForCommand = interactionLockRegistry.lockTypeFor(
             command = action.command,
@@ -114,7 +73,7 @@ internal class ActionExecutor(
 
     private suspend fun InteractionLockable.releaseLocks(
         route: NavigationRoute?,
-        action: ActionModelDomain,
+        action: ActionModel,
     ) {
         interactionLockResolver.release(
             requester = "$route::$action",

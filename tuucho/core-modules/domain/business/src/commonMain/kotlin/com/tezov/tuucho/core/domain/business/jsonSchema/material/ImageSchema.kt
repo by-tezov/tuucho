@@ -12,13 +12,18 @@ object ImageSchema {
         const val id = IdSchema.root
         const val type = TypeSchema.root
         const val source = "source"
-        const val placeholder = "placeholder"
+        const val tag = "tag"
         const val timeToLive = "time-to-live"
     }
 
     object Value {
         object Group {
             const val common = "common"
+        }
+
+        object Tag {
+            const val primary = "primary"
+            const val placeholder = "placeholder"
         }
     }
 
@@ -34,6 +39,7 @@ object ImageSchema {
         var id by delegate<JsonElement>(Key.id)
         var type by delegate<String?>(Key.type)
         var source by delegate<String?>(Key.source)
+        var tag by delegate<String?>(Key.tag)
         var timeToLive by delegate<JsonObject?>(Key.timeToLive)
     }
 }

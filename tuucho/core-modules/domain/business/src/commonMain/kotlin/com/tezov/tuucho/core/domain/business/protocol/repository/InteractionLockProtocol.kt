@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
-import com.tezov.tuucho.core.domain.business.protocol.ActionProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 
 abstract class InteractionLockType(
     val name: String
@@ -105,7 +105,7 @@ sealed class InteractionLockable {
     }
 }
 
-interface InteractionLockProtocol {
+object InteractionLockProtocol {
     interface Stack {
         suspend fun isValid(
             lock: InteractionLock
@@ -165,7 +165,7 @@ interface InteractionLockProtocol {
 
     interface Registry {
         fun register(
-            action: ActionProtocol
+            action: ActionDefinitionProtocol
         )
 
         fun lockTypeFor(

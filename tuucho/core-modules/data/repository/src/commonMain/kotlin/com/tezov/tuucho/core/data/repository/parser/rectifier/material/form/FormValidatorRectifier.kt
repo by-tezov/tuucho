@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.isRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
@@ -77,7 +78,7 @@ class FormValidatorRectifier(
         val scope = jsonObject.withScope(FormValidatorSchema::Scope)
         var idMessageErrorRectified: String? = null
         with(scope) {
-            if (messageErrorId?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
+            if (messageErrorId?.isRef == true) {
                 idMessageErrorRectified = messageErrorId
                     ?.removePrefix(SymbolData.ID_REF_INDICATOR)
             }
