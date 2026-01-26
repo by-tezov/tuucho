@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
@@ -18,6 +19,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
+import kotlinx.coroutines.flow.collect
 
 @OpenForTest
 class NavigateBackUseCase(
@@ -36,15 +38,16 @@ class NavigateBackUseCase(
     override suspend fun invoke(
         input: Unit
     ) {
-        middlewareExecutor.process(
-            middlewares = navigationMiddlewares + terminalMiddleware(),
-            context = NavigationMiddleware.Back.Context(
-                currentUrl = navigationStackRouteRepository.currentRoute()?.value
-                    ?: throw DomainException.Default("Shouldn't be possible"),
-                nextUrl = navigationStackRouteRepository.priorRoute()?.value,
-                onShadowerException = null
-            )
-        )
+        middlewareExecutor
+            .process(
+                middlewares = navigationMiddlewares + terminalMiddleware(),
+                context = NavigationMiddleware.Back.Context(
+                    currentUrl = navigationStackRouteRepository.currentRoute()?.value
+                        ?: throw DomainException.Default("Shouldn't be possible"),
+                    nextUrl = navigationStackRouteRepository.priorRoute()?.value,
+                    onShadowerException = null
+                )
+            ).collect()
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->

@@ -28,8 +28,8 @@ object ImageSchema {
 
     object Content {
         object Key {
-            const val value = "value"
-            const val description = "shape"
+            const val values = "values"
+            const val description = "description"
         }
     }
 }

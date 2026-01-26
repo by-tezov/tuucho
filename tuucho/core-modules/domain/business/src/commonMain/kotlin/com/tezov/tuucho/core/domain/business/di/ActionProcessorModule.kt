@@ -14,7 +14,7 @@ import org.koin.dsl.bind
 
 internal object ActionProcessorModule {
     fun invoke() = module(ModuleContextDomain.Middleware) {
-        factory<ActionExecutorProtocol> {
+        single<ActionExecutorProtocol> {
             ActionExecutor(
                 coroutineScopes = get(),
                 middlewareExecutor = get(),

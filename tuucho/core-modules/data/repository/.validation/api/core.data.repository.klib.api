@@ -53,15 +53,9 @@ abstract interface com.tezov.tuucho.core.data.repository.database/Database : app
     }
 }
 
-abstract interface com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol { // com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol|null[0]
-    abstract suspend fun retrieveLocal(kotlin/String): com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<coil3/Image> // com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol.retrieveLocal|retrieveLocal(kotlin.String){}[0]
-    abstract suspend fun retrieveRemote(kotlin/String): com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<coil3/Image> // com.tezov.tuucho.core.data.repository.image/ImageSourceProtocol.retrieveRemote|retrieveRemote(kotlin.String){}[0]
-}
-
-abstract interface com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol { // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol|null[0]
-    abstract suspend fun healthCheck(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol.healthCheck|healthCheck(kotlin.String){}[0]
-    abstract suspend fun resource(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol.resource|resource(kotlin.String){}[0]
-    abstract suspend fun send(kotlin/String, kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.data.repository.network/NetworkSourceProtocol.send|send(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+abstract interface com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol { // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol|null[0]
+    abstract fun get(kotlin/String): coil3.fetch/Fetcher.Factory<com.tezov.tuucho.core.data.repository.image/ImageRequest> // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol.get|get(kotlin.String){}[0]
+    abstract fun register(kotlin/String) // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol.register|register(kotlin.String){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol|null[0]
@@ -367,6 +361,44 @@ final class com.tezov.tuucho.core.data.repository.database.table/JsonObjectConte
         final val jsonObjectAdapter // com.tezov.tuucho.core.data.repository.database.table/JsonObjectContextualEntry.Adapter.jsonObjectAdapter|{}jsonObjectAdapter[0]
             final fun <get-jsonObjectAdapter>(): app.cash.sqldelight/ColumnAdapter<kotlinx.serialization.json/JsonObject, kotlin/String> // com.tezov.tuucho.core.data.repository.database.table/JsonObjectContextualEntry.Adapter.jsonObjectAdapter.<get-jsonObjectAdapter>|<get-jsonObjectAdapter>(){}[0]
     }
+}
+
+final class com.tezov.tuucho.core.data.repository.image/ImageRequest { // com.tezov.tuucho.core.data.repository.image/ImageRequest|null[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlin/String?) // com.tezov.tuucho.core.data.repository.image/ImageRequest.<init>|<init>(kotlin.String;kotlin.String;kotlin.String?){}[0]
+
+    final val command // com.tezov.tuucho.core.data.repository.image/ImageRequest.command|{}command[0]
+        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageRequest.command.<get-command>|<get-command>(){}[0]
+    final val tag // com.tezov.tuucho.core.data.repository.image/ImageRequest.tag|{}tag[0]
+        final fun <get-tag>(): kotlin/String? // com.tezov.tuucho.core.data.repository.image/ImageRequest.tag.<get-tag>|<get-tag>(){}[0]
+    final val target // com.tezov.tuucho.core.data.repository.image/ImageRequest.target|{}target[0]
+        final fun <get-target>(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageRequest.target.<get-target>|<get-target>(){}[0]
+
+    final fun component1(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageRequest.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageRequest.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // com.tezov.tuucho.core.data.repository.image/ImageRequest.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/String? = ...): com.tezov.tuucho.core.data.repository.image/ImageRequest // com.tezov.tuucho.core.data.repository.image/ImageRequest.copy|copy(kotlin.String;kotlin.String;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.image/ImageRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.image/ImageRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageRequest.toString|toString(){}[0]
+}
+
+final class com.tezov.tuucho.core.data.repository.image/ImageResponse { // com.tezov.tuucho.core.data.repository.image/ImageResponse|null[0]
+    constructor <init>(kotlin/String, kotlin/String?, coil3/Image) // com.tezov.tuucho.core.data.repository.image/ImageResponse.<init>|<init>(kotlin.String;kotlin.String?;coil3.Image){}[0]
+
+    final val image // com.tezov.tuucho.core.data.repository.image/ImageResponse.image|{}image[0]
+        final fun <get-image>(): coil3/Image // com.tezov.tuucho.core.data.repository.image/ImageResponse.image.<get-image>|<get-image>(){}[0]
+    final val tag // com.tezov.tuucho.core.data.repository.image/ImageResponse.tag|{}tag[0]
+        final fun <get-tag>(): kotlin/String? // com.tezov.tuucho.core.data.repository.image/ImageResponse.tag.<get-tag>|<get-tag>(){}[0]
+    final val target // com.tezov.tuucho.core.data.repository.image/ImageResponse.target|{}target[0]
+        final fun <get-target>(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageResponse.target.<get-target>|<get-target>(){}[0]
+
+    final fun component1(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageResponse.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // com.tezov.tuucho.core.data.repository.image/ImageResponse.component2|component2(){}[0]
+    final fun component3(): coil3/Image // com.tezov.tuucho.core.data.repository.image/ImageResponse.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String? = ..., coil3/Image = ...): com.tezov.tuucho.core.data.repository.image/ImageResponse // com.tezov.tuucho.core.data.repository.image/ImageResponse.copy|copy(kotlin.String;kotlin.String?;coil3.Image){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.image/ImageResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.image/ImageResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageResponse.toString|toString(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.assembler.material/ActionAssembler : com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AbstractAssembler { // com.tezov.tuucho.core.data.repository.parser.assembler.material/ActionAssembler|null[0]

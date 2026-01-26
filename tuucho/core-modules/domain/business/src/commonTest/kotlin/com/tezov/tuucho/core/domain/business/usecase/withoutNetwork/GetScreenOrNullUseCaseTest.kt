@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase.Input
@@ -13,21 +12,19 @@ import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetScreenOrNullUseCaseTest {
-    private val coroutineTestScope = CoroutineTestScope()
-
     private lateinit var navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen
 
     private lateinit var sut: GetScreenOrNullUseCase
 
     @BeforeTest
     fun setup() {
-        coroutineTestScope.setup()
         navigationStackScreenRepository = mock()
         sut = GetScreenOrNullUseCase(
             navigationStackScreenRepository = navigationStackScreenRepository
@@ -36,12 +33,11 @@ class GetScreenOrNullUseCaseTest {
 
     @AfterTest
     fun tearDown() {
-        coroutineTestScope.verifyNoMoreCalls()
         verifyNoMoreCalls(navigationStackScreenRepository)
     }
 
     @Test
-    fun `invoke returns screen when repository provides one`() = coroutineTestScope.run {
+    fun `invoke returns screen when repository provides one`() = runTest {
         val routeValue = NavigationRoute.Url(id = "id1", value = "value1")
         val screenMock = mock<ScreenProtocol>()
 
@@ -59,7 +55,7 @@ class GetScreenOrNullUseCaseTest {
     }
 
     @Test
-    fun `invoke returns null when repository returns null`() = coroutineTestScope.run {
+    fun `invoke returns null when repository returns null`() = runTest {
         val routeValue = NavigationRoute.Finish
         val input = Input(route = routeValue)
 

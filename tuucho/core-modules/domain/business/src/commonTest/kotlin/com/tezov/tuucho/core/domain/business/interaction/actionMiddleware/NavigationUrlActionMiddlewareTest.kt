@@ -2,8 +2,9 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
@@ -12,9 +13,12 @@ import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
+import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -53,9 +57,9 @@ class NavigationUrlActionMiddlewareTest {
 
     @Test
     fun `accept matches only NavigateAction Url`() {
-        val valid = ActionModelDomain.from("navigate://url/whatever")
-        val invalidCmd = ActionModelDomain.from("x://url/t")
-        val invalidAuth = ActionModelDomain.from("navigate://xxx/t")
+        val valid = ActionModel.from("navigate://url/whatever")
+        val invalidCmd = ActionModel.from("x://url/t")
+        val invalidAuth = ActionModel.from("navigate://xxx/t")
 
         assertTrue(sut.accept(null, valid))
         assertFalse(sut.accept(null, invalidCmd))
@@ -64,73 +68,76 @@ class NavigationUrlActionMiddlewareTest {
 
     @Test
     fun `process calls NavigateToUrlUseCase then next`() = runTest {
-        val action = ActionModelDomain.from("navigate://url/final")
+        val action = ActionModel.from("navigate://url/final")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
-                action = action,
+                model = action,
                 lockable = InteractionLockable.Empty
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
                 useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(url = "final")
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
     fun `process skips NavigateToUrlUseCase when no target but still calls next`() = runTest {
-        val action = ActionModelDomain.from("navigate://url")
+        val action = ActionModel.from("navigate://url")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
-                action = action,
+                model = action,
                 lockable = InteractionLockable.Empty
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        flow { sut.run { process(context, next) } }.collect()
 
-        sut.process(context, next)
-
-        verifySuspend(VerifyMode.exhaustiveOrder) {
-            next.invoke(context)
+        verify(VerifyMode.exhaustiveOrder) {
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
     fun `process invokes NavigateToUrlUseCase and completes when next is null`() = runTest {
-        val action = ActionModelDomain.from("navigate://url/final")
+        val action = ActionModel.from("navigate://url/final")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Current,
-                action = action,
+                model = action,
                 lockable = InteractionLockable.Empty
             )
         )
 
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.process(context, null)
+        flow { sut.run { process(context, null) } }.collect()
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(

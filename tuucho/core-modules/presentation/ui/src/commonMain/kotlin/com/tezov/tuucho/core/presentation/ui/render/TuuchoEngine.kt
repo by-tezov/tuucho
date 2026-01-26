@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
@@ -89,11 +89,11 @@ class TuuchoEngine(
         )
         useCaseExecutor.async(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.create(
                 route = null,
-                action = ActionModelDomain.from(
-                    command = NavigateAction.Url.command,
-                    authority = NavigateAction.Url.authority,
+                model = ActionModel.from(
+                    command = NavigateActionDefinition.Url.command,
+                    authority = NavigateActionDefinition.Url.authority,
                     target = url,
                 )
             ),

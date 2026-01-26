@@ -1,22 +1,18 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
-object ImageRepositoryProtocol {
+import com.tezov.tuucho.core.domain.business.model.image.ImageModel
+import kotlinx.coroutines.flow.Flow
+
+interface ImageRepositoryProtocol {
     interface Image<S : Any> {
         val source: S
+        val tag: String?
         val size: Long
         val width: Int
         val height: Int
     }
 
-    interface Remote {
-        suspend fun <S : Any> process(
-            target: String
-        ): Image<S>
-    }
-
-    interface Local {
-        suspend fun <S : Any> process(
-            target: String
-        ): Image<S>
-    }
+    fun <S : Any> process(
+        models: List<ImageModel>
+    ): Flow<Image<S>>
 }

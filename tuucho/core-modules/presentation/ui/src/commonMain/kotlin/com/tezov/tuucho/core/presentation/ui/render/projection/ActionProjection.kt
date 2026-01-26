@@ -71,9 +71,9 @@ private class ActionProjection(
                     }
                     useCaseExecutor.await(
                         useCase = processAction,
-                        input = ProcessActionUseCase.Input.ActionObject(
+                        input = ProcessActionUseCase.Input.create(
                             route = route,
-                            actionObject = actionObject,
+                            modelObject = actionObject,
                             lockable = screenLock.freeze(),
                             jsonElement = jsonElement
                         )

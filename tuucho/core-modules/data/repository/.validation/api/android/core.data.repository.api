@@ -541,9 +541,39 @@ public final class com/tezov/tuucho/core/data/repository/exception/DataException
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/data/repository/image/ImageSourceProtocol {
-	public abstract fun retrieveLocal (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun retrieveRemote (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/data/repository/image/ImageFetcherRegistryProtocol {
+	public abstract fun get (Ljava/lang/String;)Lcoil3/fetch/Fetcher$Factory;
+	public abstract fun register (Ljava/lang/String;)V
+}
+
+public final class com/tezov/tuucho/core/data/repository/image/ImageRequest {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/image/ImageRequest;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/image/ImageRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/image/ImageRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCommand ()Ljava/lang/String;
+	public final fun getTag ()Ljava/lang/String;
+	public final fun getTarget ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/image/ImageResponse {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcoil3/Image;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lcoil3/Image;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcoil3/Image;)Lcom/tezov/tuucho/core/data/repository/image/ImageResponse;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/image/ImageResponse;Ljava/lang/String;Ljava/lang/String;Lcoil3/Image;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/image/ImageResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getImage ()Lcoil3/Image;
+	public final fun getTag ()Ljava/lang/String;
+	public final fun getTarget ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
@@ -558,12 +588,6 @@ public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor
 	public final fun getBuilder ()Lio/ktor/client/request/HttpRequestBuilder;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class com/tezov/tuucho/core/data/repository/network/NetworkSourceProtocol {
-	public abstract fun healthCheck (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun resource (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun send (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/_system/MatcherHelperExtensionKt {

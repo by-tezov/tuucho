@@ -32,9 +32,6 @@ internal class SendFormLoginService(
         request: BackendServer.Request,
     ) = when (version) {
         "v1" -> {
-
-            println("|> ${request.body}")
-
             val login = extractLogin(request.body)
                 ?: throw IllegalArgumentException("missing login field")
             val token = generateAuthorizationToken()
@@ -51,7 +48,6 @@ internal class SendFormLoginService(
                 body = """{
                   "subset" : "form",
                   "all-succeed": true,
-                  "failure-results": "*server-failure",
                   "action": {
                     "before": "store://key-value/save?login-authorization=${token}"
                   }

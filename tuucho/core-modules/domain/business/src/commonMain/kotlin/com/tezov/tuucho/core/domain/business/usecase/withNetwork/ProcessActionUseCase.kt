@@ -1,59 +1,80 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import kotlin.reflect.KClass
 
 @OpenForTest
 class ProcessActionUseCase(
     private val actionExecutor: ActionExecutorProtocol,
-) : UseCaseProtocol.Async<Input, Output> {
-    sealed class Input {
-        abstract val route: NavigationRoute?
-        abstract val lockable: InteractionLockable?
-        abstract val jsonElement: kotlinx.serialization.json.JsonElement?
+) : UseCaseProtocol.Async<Input, Unit> {
+    data class Input(
+        val route: NavigationRoute?,
+        val models: List<ActionModel>,
+        val modelObjectOriginal: JsonElement? = null,
+        val lockable: InteractionLockable? = null,
+        val jsonElement: JsonElement? = null
+    ) {
+        companion object {
+            fun create(
+                route: NavigationRoute?,
+                modelObject: JsonObject,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = buildList {
+                modelObject
+                    .withScope(ActionSchema::Scope)
+                    .primaries
+                    ?.map { ActionModel.from(it.string) }
+                    ?.let(::addAll)
+            }.let {
+                Input(
+                    route = route,
+                    models = it,
+                    modelObjectOriginal = modelObject,
+                    lockable = lockable,
+                    jsonElement = jsonElement,
+                )
+            }
 
-        data class Action(
-            override val route: NavigationRoute?,
-            val action: ActionModelDomain,
-            val actionObjectOriginal: JsonObject? = null,
-            override val lockable: InteractionLockable? = null,
-            override val jsonElement: kotlinx.serialization.json.JsonElement? = null,
-        ) : Input()
+            fun create(
+                route: NavigationRoute?,
+                models: List<ActionModel>,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = Input(
+                route = route,
+                models = models,
+                lockable = lockable,
+                jsonElement = jsonElement,
+            )
 
-        data class ActionObject(
-            override val route: NavigationRoute?,
-            val actionObject: JsonObject,
-            override val lockable: InteractionLockable? = null,
-            override val jsonElement: kotlinx.serialization.json.JsonElement? = null,
-        ) : Input()
-    }
-
-    sealed class Output {
-        class Element(
-            val type: KClass<out Any>,
-            val rawValue: Any,
-        ) : Output() {
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> value(): T = rawValue as T
-
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> valueOrNull(): T? = rawValue as? T
+            fun create(
+                route: NavigationRoute?,
+                model: ActionModel,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = Input(
+                route = route,
+                models = listOf(model),
+                lockable = lockable,
+                jsonElement = jsonElement,
+            )
         }
-
-        class ElementArray(
-            val values: List<Output>,
-        ) : Output()
     }
 
     override suspend fun invoke(
         input: Input
-    ) = actionExecutor.process(input = input)
+    ) {
+        actionExecutor.process(input = input)
+    }
 }

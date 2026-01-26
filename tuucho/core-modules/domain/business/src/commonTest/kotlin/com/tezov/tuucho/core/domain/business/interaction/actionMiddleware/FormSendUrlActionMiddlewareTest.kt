@@ -6,9 +6,10 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.FormAction
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
@@ -22,9 +23,12 @@ import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
+import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -90,10 +94,10 @@ class FormSendUrlActionMiddlewareTest {
 
     @Test
     fun `accept matches only form send url with non null target`() {
-        val valid = ActionModelDomain.from("form://send-url/target")
-        val wrongCommand = ActionModelDomain.from("x://send-url/target")
-        val wrongAuthority = ActionModelDomain.from("form://other/target")
-        val missingTarget = ActionModelDomain.from("form://send-url")
+        val valid = ActionModel.from("form://send-url/target")
+        val wrongCommand = ActionModel.from("x://send-url/target")
+        val wrongAuthority = ActionModel.from("form://other/target")
+        val missingTarget = ActionModel.from("form://send-url")
 
         assertTrue(sut.accept(null, valid))
         assertFalse(sut.accept(null, wrongCommand))
@@ -111,14 +115,15 @@ class FormSendUrlActionMiddlewareTest {
             action = action
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
-        verifySuspend {
-            next.invoke(context)
+        verify(VerifyMode.exhaustiveOrder) {
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
@@ -131,21 +136,20 @@ class FormSendUrlActionMiddlewareTest {
             action = action
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        mockGetScreen(screen = null)
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
-        stubGetScreen(screen = null)
-
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
-
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
                 useCase = getScreenOrNullUseCase,
                 input = GetScreenOrNullUseCase.Input(route = routeUrl)
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
@@ -153,16 +157,16 @@ class FormSendUrlActionMiddlewareTest {
         val action = defaultAction()
         val routeUrl = defaultRoute()
 
-        stubGetScreen(screen = null)
+        mockGetScreen(screen = null)
 
         val context = createContext(
             route = routeUrl,
             action = action
         )
 
-        sut.process(context, null)
+        flow { sut.run { process(context, null) } }.collect()
 
-        verifySuspend {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
                 useCase = getScreenOrNullUseCase,
                 input = GetScreenOrNullUseCase.Input(route = routeUrl)
@@ -183,24 +187,24 @@ class FormSendUrlActionMiddlewareTest {
         val screen = mockScreenWithFormViews(formViewInvalid, formViewValid)
 
         // ---------- validity results ----------
-        stubInvalidFormView(
+        mockInvalidFormView(
             formView = formViewInvalid,
             id = "field-invalid"
         )
-        stubValidFormView(
+        mockValidFormView(
             formView = formViewValid,
             id = "field-valid",
             value = "valid"
         )
 
         // ---------- use case stubbing ----------
-        stubGetScreen(screen = screen)
+        mockGetScreen(screen = screen)
 
-        stubProcessActionAny()
+        mockProcessActionAny()
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -209,7 +213,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -221,8 +225,9 @@ class FormSendUrlActionMiddlewareTest {
                 useCase = processActionUseCase,
                 input = any()
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
@@ -237,10 +242,10 @@ class FormSendUrlActionMiddlewareTest {
         val screen = mockScreenWithFormViews(formViewValid)
 
         // ---------- validity results ----------
-        stubValidFormView(formViewValid)
+        mockValidFormView(formViewValid)
 
         // ---------- use case stubbing ----------
-        stubGetScreen(screen = screen)
+        mockGetScreen(screen = screen)
 
         everySuspend {
             useCaseExecutor.await(
@@ -250,8 +255,8 @@ class FormSendUrlActionMiddlewareTest {
         } returns null
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -260,7 +265,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -272,8 +277,9 @@ class FormSendUrlActionMiddlewareTest {
                 useCase = sendDataUseCase,
                 input = any()
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
@@ -288,10 +294,10 @@ class FormSendUrlActionMiddlewareTest {
         val screen = mockScreenWithFormViews(formViewValid)
 
         // ---------- validity results ----------
-        stubValidFormView(formViewValid)
+        mockValidFormView(formViewValid)
 
         // ---------- use case stubbing ----------
-        stubGetScreen(screen = screen)
+        mockGetScreen(screen = screen)
 
         val responseObject = buildJsonObject {
             put(FormSendSchema.Key.type, "other")
@@ -305,8 +311,8 @@ class FormSendUrlActionMiddlewareTest {
         } returns SendDataUseCase.Output(jsonObject = responseObject)
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -315,7 +321,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -327,8 +333,9 @@ class FormSendUrlActionMiddlewareTest {
                 useCase = sendDataUseCase,
                 input = any()
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
@@ -343,10 +350,10 @@ class FormSendUrlActionMiddlewareTest {
         val screen = mockScreenWithFormViews(formViewValid)
 
         // ---------- validity ----------
-        stubValidFormView(formViewValid)
+        mockValidFormView(formViewValid)
 
         // ---------- GetScreenOrNull stubbing ----------
-        stubGetScreen(screen = screen)
+        mockGetScreen(screen = screen)
 
         // ---------- remote response with before/validated/after ----------
         val responseObject = buildJsonObject {
@@ -376,7 +383,7 @@ class FormSendUrlActionMiddlewareTest {
         } returns SendDataUseCase.Output(jsonObject = responseObject)
 
         // ---------- ProcessAction stubbing (before, validated, after) ----------
-        stubProcessActionAny()
+        mockProcessActionAny()
 
         // ---------- validated actions in jsonElement ----------
         val jsonElement = buildJsonObject {
@@ -389,8 +396,8 @@ class FormSendUrlActionMiddlewareTest {
         }
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -400,7 +407,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -435,8 +442,9 @@ class FormSendUrlActionMiddlewareTest {
             )
 
             // 6. next middleware
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
@@ -450,10 +458,10 @@ class FormSendUrlActionMiddlewareTest {
         // ---------- map form views from extensions ----------
         val screen = mockScreenWithFormViews(formViewValid)
 
-        stubValidFormView(formViewValid)
+        mockValidFormView(formViewValid)
 
         // ---------- use case stubbing: GetScreenOrNull ----------
-        stubGetScreen(screen = screen)
+        mockGetScreen(screen = screen)
 
         // ---------- remote failure response ----------
         val failureResultArray = buildJsonArray {
@@ -500,10 +508,10 @@ class FormSendUrlActionMiddlewareTest {
         } returns SendDataUseCase.Output(jsonObject = responseObject)
 
         // ---------- use case stubbing: ProcessAction (before, error, denied, after) ----------
-        stubProcessActionAny()
+        mockProcessActionAny()
 
         // ---------- jsonElement with denied actions (correct shape) ----------
-        val jsonElement = buildJsonObject {
+        val modelObjectOriginal = buildJsonObject {
             put(
                 ActionFormSchema.Send.Key.denied,
                 buildJsonArray {
@@ -513,24 +521,26 @@ class FormSendUrlActionMiddlewareTest {
         }
 
         // ---------- next middleware ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val lockable = InteractionLockable.Empty
 
         val context = ActionMiddleware.Context(
             lockable = lockable,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input(
                 route = routeUrl,
-                action = action,
+                models = listOf(action),
+                modelObjectOriginal = modelObjectOriginal,
                 lockable = lockable,
-                actionObjectOriginal = jsonElement
+                jsonElement = null
             )
         )
 
         // ---------- Test ----------
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -558,18 +568,19 @@ class FormSendUrlActionMiddlewareTest {
                 useCase = processActionUseCase,
                 input = any() // after
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
     fun `process throws when action target is null while sending data`() = runTest {
         // ---------- action with null target ----------
-        val action = ActionModelDomain.from(
-            command = FormAction.Send.command,
-            authority = FormAction.Send.authority,
+        val action = ActionModel.from(
+            command = FormActionDefinition.Send.command,
+            authority = FormActionDefinition.Send.authority,
             target = null,
-            query = null as JsonElement?
+            query = null
         )
         val routeUrl = defaultRoute()
 
@@ -578,13 +589,10 @@ class FormSendUrlActionMiddlewareTest {
         val screen = mockScreenWithFormViews(formViewValid)
 
         // ---------- valid form so we actually reach the sendData branch ----------
-        stubValidFormView(formViewValid)
+        mockValidFormView(formViewValid)
 
         // ---------- use case stubbing: GetScreenOrNull only ----------
-        stubGetScreen(screen = screen)
-
-        // ---------- next middleware (never reached after exception) ----------
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
+        mockGetScreen(screen = screen)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -594,7 +602,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- Test: expect DomainException from null target in SendData input ----------
         assertFailsWith<DomainException> {
-            sut.process(context, next)
+            flow { sut.run { process(context, null) } }.collect()
         }
 
         // ---------- Verify the single await call so tearDown's verifyNoMoreCalls passes ----------
@@ -610,23 +618,24 @@ class FormSendUrlActionMiddlewareTest {
     // Helpers
     // -------------------------------------------------------
 
-    private fun defaultAction() = ActionModelDomain.from("form://send-url/target")
+    private fun defaultAction() = ActionModel.from("form://send-url/target")
 
     private fun defaultRoute() = NavigationRoute.Url(id = "id", value = "url")
 
     private fun createContext(
         route: NavigationRoute,
-        action: ActionModelDomain,
+        action: ActionModel,
         actionObjectOriginal: JsonObject? = null,
         jsonElement: JsonElement? = null,
         lockable: InteractionLockable = InteractionLockable.Empty
     ) = ActionMiddleware.Context(
         lockable = lockable,
-        input = ProcessActionUseCase.Input.Action(
+        actionModel = action,
+        input = ProcessActionUseCase.Input(
             route = route,
-            action = action,
+            models = listOf(action),
             lockable = lockable,
-            actionObjectOriginal = actionObjectOriginal,
+            modelObjectOriginal = actionObjectOriginal,
             jsonElement = jsonElement
         )
     )
@@ -644,7 +653,7 @@ class FormSendUrlActionMiddlewareTest {
         return screen
     }
 
-    private fun stubValidFormView(
+    private fun mockValidFormView(
         formView: FormStateProtocol,
         id: String = "field",
         value: String = "value"
@@ -655,7 +664,7 @@ class FormSendUrlActionMiddlewareTest {
         every { formView.getValue() } returns value
     }
 
-    private fun stubInvalidFormView(
+    private fun mockInvalidFormView(
         formView: FormStateProtocol,
         id: String
     ) {
@@ -664,7 +673,7 @@ class FormSendUrlActionMiddlewareTest {
         every { formView.getId() } returns id
     }
 
-    private fun stubGetScreen(
+    private fun mockGetScreen(
         screen: ScreenProtocol?
     ) {
         everySuspend {
@@ -675,12 +684,12 @@ class FormSendUrlActionMiddlewareTest {
         } returns GetScreenOrNullUseCase.Output(screen = screen)
     }
 
-    private fun stubProcessActionAny() {
+    private fun mockProcessActionAny() {
         everySuspend {
             useCaseExecutor.await(
                 useCase = processActionUseCase,
                 input = any()
             )
-        } returns ProcessActionUseCase.Output.ElementArray(emptyList())
+        } returns Unit
     }
 }

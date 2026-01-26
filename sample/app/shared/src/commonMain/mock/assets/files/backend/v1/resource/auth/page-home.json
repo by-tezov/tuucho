@@ -248,7 +248,7 @@
         "background-color": "*background@funny-color"
       },
       "content": {
-        "value": "*small-logo",
+        "values": "*small-logo",
         "description": "Small-Logo"
       }
     },

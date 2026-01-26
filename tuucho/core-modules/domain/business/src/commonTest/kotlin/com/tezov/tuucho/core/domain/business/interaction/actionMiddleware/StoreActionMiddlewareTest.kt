@@ -3,8 +3,9 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
@@ -19,6 +20,8 @@ import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -62,10 +65,10 @@ class StoreActionMiddlewareTest {
 
     @Test
     fun `accept matches only store key value with query`() {
-        val valid = ActionModelDomain.from("store://key-value/save?a=1")
-        val missingQuery = ActionModelDomain.from("store://key-value/save")
-        val wrongCmd = ActionModelDomain.from("x://key-value/t?a=1")
-        val wrongAuth = ActionModelDomain.from("store://xxx/t?a=1")
+        val valid = ActionModel.from("store://key-value/save?a=1")
+        val missingQuery = ActionModel.from("store://key-value/save")
+        val wrongCmd = ActionModel.from("x://key-value/t?a=1")
+        val wrongAuth = ActionModel.from("store://xxx/t?a=1")
 
         assertTrue(sut.accept(null, valid))
         assertFalse(sut.accept(null, missingQuery))
@@ -75,24 +78,24 @@ class StoreActionMiddlewareTest {
 
     @Test
     fun `process save calls SaveKeyValueToStoreUseCase for each entry then next`() = runTest {
-        val action = ActionModelDomain.from("store://key-value/save?a=1&b=2")
+        val action = ActionModel.from("store://key-value/save?a=1&b=2")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
-                action = action,
+                model = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = null
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
         everySuspend { useCaseExecutor.await<SaveKeyValueToStoreUseCase.Input, Unit>(any(), any()) } returns Unit
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -103,30 +106,31 @@ class StoreActionMiddlewareTest {
                 useCase = saveUseCase,
                 input = SaveKeyValueToStoreUseCase.Input("b".toKey(), "2".toValue())
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
     fun `process remove handles array of keys`() = runTest {
-        val action = ActionModelDomain.from("store://key-value/remove?x,y")
+        val action = ActionModel.from("store://key-value/remove?x,y")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
-                action = action,
+                model = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = null
             )
         )
 
-        val next = mock<MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>>()
-
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
         everySuspend { useCaseExecutor.await<RemoveKeyValueFromStoreUseCase.Input, Unit>(any(), any()) } returns Unit
-        everySuspend { next.invoke(any()) } returns ProcessActionUseCase.Output.ElementArray(emptyList())
 
-        sut.process(context, next)
+        flow { sut.run { process(context, next) } }.collect()
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -137,71 +141,79 @@ class StoreActionMiddlewareTest {
                 useCase = removeUseCase,
                 input = RemoveKeyValueFromStoreUseCase.Input("y".toKey())
             )
-            next.invoke(context)
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
     fun `process remove handles primitive key`() = runTest {
-        val action = ActionModelDomain.from("store://key-value/remove?z")
+        val action = ActionModel.from("store://key-value/remove?z")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
-                action = action,
+                models = listOf(action),
                 lockable = InteractionLockable.Empty,
                 jsonElement = null
             )
         )
 
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
         everySuspend { useCaseExecutor.await<RemoveKeyValueFromStoreUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.process(context, null)
+        flow { sut.run { process(context, next) } }.collect()
 
-        verifySuspend {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
                 useCase = removeUseCase,
                 input = RemoveKeyValueFromStoreUseCase.Input("z".toKey())
             )
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 
     @Test
     fun `process throws for unknown target`() = runTest {
-        val action = ActionModelDomain.from("store://key-value/xxx?a=1")
+        val action = ActionModel.from("store://key-value/xxx?a=1")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
-                action = action,
+                model = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = null
             )
         )
 
         assertFailsWith<DomainException> {
-            sut.process(context, null)
+            flow { sut.run { process(context, null) } }.collect()
         }
     }
 
     @Test
     fun `process throws when query is null`() = runTest {
-        val action = ActionModelDomain.from("store://key-value/save")
+        val action = ActionModel.from("store://key-value/save")
 
         val context = ActionMiddleware.Context(
             lockable = InteractionLockable.Empty,
-            input = ProcessActionUseCase.Input.Action(
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
-                action = action,
+                model = action,
                 lockable = InteractionLockable.Empty,
                 jsonElement = null
             )
         )
 
         assertFailsWith<DomainException> {
-            sut.process(context, null)
+            flow { sut.run { process(context, null) } }.collect()
         }
     }
 }

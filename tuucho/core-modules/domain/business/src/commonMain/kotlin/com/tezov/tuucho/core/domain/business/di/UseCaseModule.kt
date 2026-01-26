@@ -7,10 +7,8 @@ import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveLocalImageUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveRemoteImageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
@@ -72,10 +70,12 @@ internal object UseCaseModule {
         }
 
         factoryOf(::ProcessActionUseCase)
-        factoryOf(::ProcessImageUseCase)
         factoryOf(::RefreshMaterialCacheUseCase)
-        factoryOf(::RetrieveLocalImageUseCase)
-        factoryOf(::RetrieveRemoteImageUseCase)
+        factory {
+            RetrieveImageUseCase<Any>(
+                imageRepository = get()
+            )
+        }
         factoryOf(::ServerHealthCheckUseCase)
 
         factory<SendDataUseCase> {
@@ -96,6 +96,7 @@ internal object UseCaseModule {
         factoryOf(::HasKeyInStoreUseCase)
         factory {
             NavigateFinishUseCase(
+                coroutineScopes = get(),
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()
             )

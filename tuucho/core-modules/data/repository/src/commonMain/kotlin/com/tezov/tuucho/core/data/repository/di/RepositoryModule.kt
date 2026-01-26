@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.data.repository.di
 
-import com.tezov.tuucho.core.data.repository.repository.ImageLocalRepository
-import com.tezov.tuucho.core.data.repository.repository.ImageRemoteRepository
+import com.tezov.tuucho.core.data.repository.repository.ImageRepository
 import com.tezov.tuucho.core.data.repository.repository.RefreshMaterialCacheRepository
 import com.tezov.tuucho.core.data.repository.repository.RetrieveMaterialRepository
 import com.tezov.tuucho.core.data.repository.repository.SendDataAndRetrieveMaterialRepository
@@ -29,9 +28,7 @@ internal object RepositoryModule {
     }
 
     fun invoke() = module(ModuleContextData.Main) {
-        localSource()
-        remoteSource()
-        compositeSource()
+        source()
         repository()
     }
 
@@ -45,8 +42,7 @@ internal object RepositoryModule {
             )
         }
 
-        factoryOf(::ImageRemoteRepository) bind ImageRepositoryProtocol.Remote::class
-        factoryOf(::ImageLocalRepository) bind ImageRepositoryProtocol.Local::class
+        factoryOf(::ImageRepository) bind ImageRepositoryProtocol::class
         factoryOf(::RefreshMaterialCacheRepository) bind MaterialRepositoryProtocol.RefreshCache::class
         factoryOf(::RetrieveMaterialRepository) bind MaterialRepositoryProtocol.Retrieve::class
         factoryOf(::SendDataAndRetrieveMaterialRepository) bind MaterialRepositoryProtocol.SendDataAndRetrieve::class
@@ -60,18 +56,13 @@ internal object RepositoryModule {
         } bind MaterialRepositoryProtocol.Shadower::class
     }
 
-    private fun Module.localSource() {
+    private fun Module.source() {
         factoryOf(::MaterialCacheLocalSource)
-    }
-
-    private fun Module.remoteSource() {
-        factoryOf(::ImageSource)
         factoryOf(::MaterialRemoteSource)
         factoryOf(::RemoteSource)
         factoryOf(::SendDataAndRetrieveMaterialRemoteSource)
-    }
+        factoryOf(::ImageSource)
 
-    private fun Module.compositeSource() {
         factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
             listOf(
                 ContextualShadowerMaterialSource(

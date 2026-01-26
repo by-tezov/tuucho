@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.protocol.ActionProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 
@@ -9,7 +9,7 @@ class InteractionLockRegistry : InteractionLockProtocol.Registry {
     private val storage = mutableMapOf<Pair<String, String?>, InteractionLockable.Type>()
 
     override fun register(
-        action: ActionProtocol,
+        action: ActionDefinitionProtocol,
     ) {
         when (val lockable = action.lockable) {
             is InteractionLockable.Type -> {

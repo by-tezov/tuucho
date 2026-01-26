@@ -2,11 +2,10 @@ package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware.Context
+import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
-import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -21,16 +20,17 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class UpdateViewUseCaseTest {
-    private lateinit var navigationScreenStackRepository: NavigationRepositoryProtocol.StackScreen
     private lateinit var middlewareExecutor: MiddlewareExecutorProtocol
+
+    private lateinit var navigationScreenStackRepository: NavigationRepositoryProtocol.StackScreen
     private lateinit var updateViewMiddlewares: List<UpdateViewMiddleware>
 
     private lateinit var sut: UpdateViewUseCase
 
     @BeforeTest
     fun setup() {
+        middlewareExecutor = MockMiddlewareExecutor()
         navigationScreenStackRepository = mock()
-        middlewareExecutor = mock()
         updateViewMiddlewares = listOf()
         sut = UpdateViewUseCase(
             navigationScreenStackRepository = navigationScreenStackRepository,
@@ -43,7 +43,6 @@ class UpdateViewUseCaseTest {
     fun tearDown() {
         verifyNoMoreCalls(
             navigationScreenStackRepository,
-            middlewareExecutor
         )
     }
 
@@ -62,18 +61,8 @@ class UpdateViewUseCaseTest {
         everySuspend { navigationScreenStackRepository.getScreenOrNull(routeValue) } returns screen
         everySuspend { screen.update(any<List<JsonObject>>()) } returns Unit
 
-        everySuspend {
-            middlewareExecutor.process<Context, Unit>(any(), any())
-        } calls { args ->
-            val list = args.arg<List<UpdateViewMiddleware>>(0)
-            val context = args.arg<Context>(1)
-            list[0].process(context, null)
-        }
-
         sut.invoke(input)
-
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            middlewareExecutor.process<Context, Unit>(any(), any())
             navigationScreenStackRepository.getScreenOrNull(routeValue)
             screen.update(jsonObjects)
         }
@@ -91,18 +80,9 @@ class UpdateViewUseCaseTest {
 
         everySuspend { navigationScreenStackRepository.getScreenOrNull(routeValue) } returns null
 
-        everySuspend {
-            middlewareExecutor.process<Context, Unit>(any(), any())
-        } calls { args ->
-            val list = args.arg<List<UpdateViewMiddleware>>(0)
-            val context = args.arg<Context>(1)
-            list[0].process(context, null)
-        }
-
         sut.invoke(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            middlewareExecutor.process<Context, Unit>(any(), any())
             navigationScreenStackRepository.getScreenOrNull(routeValue)
         }
     }

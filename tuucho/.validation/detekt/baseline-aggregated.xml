@@ -10,12 +10,10 @@
     <!-- ************ Project: :core.data.repository ************ -->
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
-    <ID>EmptyFunctionBlock:ImageLoaderSource.kt$ImageLoaderSource.&lt;no name provided&gt;${ }</ID>
     <ID>MatchingDeclarationName:AssetModule.android.kt$AssetModuleAndroid</ID>
     <ID>MatchingDeclarationName:AssetModule.ios.kt$AssetModuleIos</ID>
     <ID>MatchingDeclarationName:AssetReader.android.kt$AssetReaderAndroid : AssetReaderProtocol</ID>
     <ID>MatchingDeclarationName:AssetReader.ios.kt$AssetReaderIos : AssetReaderProtocol</ID>
-    <ID>MatchingDeclarationName:CoroutineTestScopes.kt$CoroutineTestScope</ID>
     <ID>MatchingDeclarationName:DatabaseModule.android.kt$DatabaseModuleAndroid</ID>
     <ID>MatchingDeclarationName:DatabaseModule.ios.kt$DatabaseModuleIos</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
@@ -39,6 +37,7 @@
     <ID>MatchingDeclarationName:WeakReference.android.kt$WeakReferenceAndroid&lt;T : Any&gt; : Weak</ID>
     <ID>MatchingDeclarationName:WeakReference.ios.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
+    <ID>MaxLineLength:ImageFetcherRegistry.kt$ImageFetcherRegistry$)</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
     <ID>MaxLineLength:MaterialRectifierScope.kt$MaterialRectifierScope$factoryOf(::SettingComponentNavigationRectifier) associate SettingComponentRectifier.Association.Processor::class</ID>
@@ -85,12 +84,16 @@
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
     <ID>ReturnCount:MaterialDatabaseSource.kt$MaterialDatabaseSource$@Suppress("RedundantSuspendModifier") suspend fun getRootJsonObjectEntityOrNull( url: String ): JsonObjectEntity?</ID>
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
+    <ID>TooGenericExceptionThrown:RemoteSource.kt$RemoteSource$throw Exception("failed to check health at url $url")</ID>
+    <ID>TooGenericExceptionThrown:RemoteSource.kt$RemoteSource$throw Exception("failed to retrieve resource at url $url")</ID>
     <ID>TooManyFunctions:AbstractRectifier.kt$AbstractRectifier : RectifierProtocolTuuchoKoinScopeComponent</ID>
     <ID>TooManyFunctions:MaterialRectifierScope.kt$MaterialRectifierScope</ID>
     <ID>VariableNaming:AbstractAssembler.kt$AbstractAssembler$var _element = element</ID>
     <ID>VariableNaming:AbstractRectifier.kt$AbstractRectifier$var _element = element</ID>
     <ID>VariableNaming:ResponseRectifier.kt$ResponseRectifier$var _element = element</ID>
     <!-- ************ Project: :core.domain.business ************ -->
+    <ID>ConstructorParameterNaming:MockActionMiddleware.kt$MockActionMiddleware$var _accept: Boolean? = null</ID>
+    <ID>ConstructorParameterNaming:MockActionMiddleware.kt$MockActionMiddleware$var _priority: Int? = null</ID>
     <ID>CyclomaticComplexMethod:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
     <ID>EmptyFunctionBlock:MiddlewareExecutorTest.kt$MiddlewareExecutorTest${ }</ID>
     <ID>EmptyFunctionBlock:SchemaScopeMapOperatorTest.kt$SchemaScopeMapOperatorTest${ }</ID>
@@ -105,18 +108,15 @@
     <ID>MatchingDeclarationName:SettingPageSchema.kt$PageSettingSchema</ID>
     <ID>MatchingDeclarationName:ShadowerDefinition.kt$Shadower</ID>
     <ID>MaxLineLength:ActionExecutorTest.kt$ActionExecutorTest$every { interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority) } returns lockTypesForAction</ID>
-    <ID>MaxLineLength:ActionModelDomain.kt$ActionModelDomain.Companion$pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""</ID>
+    <ID>MaxLineLength:ActionModel.kt$ActionModel.Companion$pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""</ID>
     <ID>MaxLineLength:AssociateDSL.kt$AssociateDSL$(factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))</ID>
     <ID>MaxLineLength:BindOrdered.kt$BindOrdered$(factory.beanDefinition.primaryType == clazz || factory.beanDefinition.secondaryTypes.contains(clazz))</ID>
     <ID>MaxLineLength:DelegateSchemaKey.kt$DelegateSchemaKey$JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -&gt; value</ID>
-    <ID>MaxLineLength:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$)</ID>
+    <ID>MaxLineLength:FormActionDefinition.kt$FormActionDefinition.Send$override val lockable get() = NavigateActionDefinition.Url.lockable + NavigateActionDefinition.LocalDestination.lockable</ID>
     <ID>MaxLineLength:KoinIsolatedContext.kt$KoinIsolatedContext$val</ID>
     <ID>MaxLineLength:NavigateFinishUseCase.kt$NavigateFinishUseCase$throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")</ID>
-    <ID>MaxLineLength:NavigationLocalDestinationActionMiddleware.kt$NavigationLocalDestinationActionMiddleware$)</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
-    <ID>MaxLineLength:StoreActionMiddleware.kt$StoreActionMiddleware$)</ID>
     <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) @KoinDslMarker infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
-    <ID>NestedBlockDepth:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware$override suspend fun process( context: ActionMiddleware.Context, next: MiddlewareProtocol.Next&lt;ActionMiddleware.Context, ProcessActionUseCase.Output&gt;? )</ID>
     <ID>PackageNaming:AssociateDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateDSLTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateModule.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
@@ -140,11 +140,12 @@
     <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SymbolDataTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>ReturnCount:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
-    <ID>ThrowsCount:ImageModelDomain.kt$ImageModelDomain.Companion$fun from( value: String ): ImageModelDomain</ID>
+    <ID>ThrowsCount:ImageModel.kt$ImageModel.Companion$fun from( value: String, tag: String? ): ImageModel</ID>
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
     <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:InteractionLockStack.kt$InteractionLockStack : Stack</ID>
     <ID>TooManyFunctions:SchemaScope.kt$OpenSchemaScope&lt;T : OpenSchemaScope&lt;T&gt;&gt;</ID>
+    <ID>UnusedPrivateProperty:NavigateFinishUseCase.kt$NavigateFinishUseCase$private val coroutineScopes: CoroutineScopesProtocol</ID>
     <!-- ************ Project: :core.domain.test ************ -->
     <ID>PackageNaming:OpenForTest.kt$package com.tezov.tuucho.core.domain.test._system</ID>
     <!-- ************ Project: :core.domain.tool ************ -->

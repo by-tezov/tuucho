@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
-import com.tezov.tuucho.core.domain.business.protocol.ActionProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import kotlin.test.BeforeTest
@@ -21,7 +21,7 @@ class InteractionLockRegistryTest {
         command: String,
         authority: String,
         lockable: InteractionLockable
-    ): ActionProtocol = object : ActionProtocol {
+    ): ActionDefinitionProtocol = object : ActionDefinitionProtocol {
         override val command = command
         override val authority = authority
         override val lockable = lockable

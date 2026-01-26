@@ -13,13 +13,14 @@ object DummyImage {
         height: Int = 128,
         size: Long = 128 * 128,
     ): Image = Image(
-        object : ImageRepositoryProtocol.Image<coil3.Image> {
+        coilImage = object : ImageRepositoryProtocol.Image<coil3.Image> {
             override val source: coil3.Image = ColorImage(
                 color = color.toArgb(),
                 width = width,
                 height = height,
                 size = size,
             )
+            override val tag = null
             override val size: Long
                 get() = source.size
             override val width: Int

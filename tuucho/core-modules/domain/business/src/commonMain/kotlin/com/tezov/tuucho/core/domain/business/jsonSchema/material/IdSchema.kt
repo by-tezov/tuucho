@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData.ESCAPER
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData.ID_GROUP_SEPARATOR
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData.ID_REF_INDICATOR
 import kotlinx.serialization.json.JsonElement
@@ -33,6 +34,10 @@ object IdSchema {
     }
 
     val String.isRef get() = startsWith(ID_REF_INDICATOR)
+
+    val String.isEscaped get() = startsWith(ESCAPER)
+
+    val String.isEscapedRef get() = startsWith("$ESCAPER$ESCAPER")
 
     fun String.requireIsRef(): String {
         if (!isRef) {

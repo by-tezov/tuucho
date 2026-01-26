@@ -351,6 +351,8 @@ final class com.tezov.tuucho.core.presentation.ui.render.projection/Image : com.
         final fun <get-size>(): kotlin/Long // com.tezov.tuucho.core.presentation.ui.render.projection/Image.size.<get-size>|<get-size>(){}[0]
     final val source // com.tezov.tuucho.core.presentation.ui.render.projection/Image.source|{}source[0]
         final fun <get-source>(): coil3/Image // com.tezov.tuucho.core.presentation.ui.render.projection/Image.source.<get-source>|<get-source>(){}[0]
+    final val tag // com.tezov.tuucho.core.presentation.ui.render.projection/Image.tag|{}tag[0]
+        final fun <get-tag>(): kotlin/String? // com.tezov.tuucho.core.presentation.ui.render.projection/Image.tag.<get-tag>|<get-tag>(){}[0]
     final val width // com.tezov.tuucho.core.presentation.ui.render.projection/Image.width|{}width[0]
         final fun <get-width>(): kotlin/Int // com.tezov.tuucho.core.presentation.ui.render.projection/Image.width.<get-width>|<get-width>(){}[0]
 

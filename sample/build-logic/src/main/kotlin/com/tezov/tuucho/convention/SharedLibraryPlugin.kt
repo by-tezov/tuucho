@@ -10,6 +10,7 @@ class SharedLibraryPlugin : AbstractLibraryPlugin() {
     ).asIterable()
 
     override fun compilerOption() = listOf(
+        "-Xcontext-parameters", // Needed by Tuucho
         "-Xexpect-actual-classes", // Needed by BuildKonfig
     )
 
