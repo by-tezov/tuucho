@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUse
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
@@ -69,14 +70,16 @@ internal object UseCaseModule {
         }
 
         factoryOf(::ProcessActionUseCase)
-
         factoryOf(::RefreshMaterialCacheUseCase)
-
+        factory {
+            RetrieveImageUseCase<Any>(
+                imageRepository = get()
+            )
+        }
         factoryOf(::ServerHealthCheckUseCase)
 
         factory<SendDataUseCase> {
             SendDataUseCase(
-                coroutineScopes = get(),
                 sendDataAndRetrieveMaterialRepository = get(),
                 middlewareExecutor = get(),
                 sendDataMiddlewares = getAllOrdered()
@@ -107,7 +110,6 @@ internal object UseCaseModule {
 
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(
-                coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
                 middlewareExecutor = get(),
                 updateViewMiddlewares = getAllOrdered()

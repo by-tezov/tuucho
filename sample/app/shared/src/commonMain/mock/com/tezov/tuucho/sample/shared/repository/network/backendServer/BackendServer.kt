@@ -19,7 +19,7 @@ internal class BackendServer(
     data class Response(
         val statusCode: HttpStatusCode,
         val headers: Headers,
-        val body: String?,
+        val body: ByteArray?,
     )
 
     suspend fun process(

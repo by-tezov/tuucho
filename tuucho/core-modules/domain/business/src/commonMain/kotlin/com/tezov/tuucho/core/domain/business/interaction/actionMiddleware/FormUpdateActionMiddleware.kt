@@ -9,12 +9,14 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.FormAction
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
@@ -29,19 +31,23 @@ internal class FormUpdateActionMiddleware(
 
     override fun accept(
         route: NavigationRoute?,
-        action: ActionModelDomain,
-    ): Boolean = action.command == FormAction.Update.command && action.authority == FormAction.Update.authority
+        action: ActionModel,
+    ): Boolean = action.command == FormActionDefinition.Update.command &&
+        action.authority == FormActionDefinition.Update.authority
 
-    override suspend fun process(
-        context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
-    ) = with(context.input) {
-        val route = route ?: return@with next?.invoke(context)
-        when (val target = action.target) {
-            FormAction.Update.Target.error -> updateErrorState(route, jsonElement)
+    override suspend fun FlowCollector<Unit>.process(
+        context: Context,
+        next: MiddlewareProtocol.Next<Context, Unit>?
+    ) {
+        val route = context.input.route ?: run {
+            next.invoke(context)
+            return
+        }
+        when (val target = context.actionModel.target) {
+            FormActionDefinition.Update.Target.error -> updateErrorState(route, context.input.jsonElement)
             else -> throw DomainException.Default("Unknown target $target")
         }
-        next?.invoke(context)
+        next.invoke(context)
     }
 
     private suspend fun updateErrorState(

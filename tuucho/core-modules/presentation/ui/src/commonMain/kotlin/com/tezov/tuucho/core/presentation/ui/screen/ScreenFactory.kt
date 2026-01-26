@@ -14,6 +14,9 @@ internal class ScreenFactory(
         route: NavigationRoute.Url,
         componentObject: JsonObject
     ) = coroutineScopes.renderer.await {
-        Screen(route = route).apply { initialize(componentObject) }
+        Screen(
+            coroutineScopes = coroutineScopes,
+            route = route
+        ).apply { initialize(componentObject) }
     }
 }

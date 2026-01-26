@@ -9,7 +9,6 @@ import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ButtonSchema
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 
 class ActionButtonRectifierMatcher : RectifierMatcherProtocol {
     override fun accept(
@@ -17,7 +16,7 @@ class ActionButtonRectifierMatcher : RectifierMatcherProtocol {
         element: JsonElement
     ): Boolean {
         if (!path.lastSegmentIs(ButtonSchema.Content.Key.action)) return false
-        val parent = element.find(path.parent()) as? JsonObject
+        val parent = element.find(path.parent())
         return parent.isSubsetOf(ButtonSchema.Component.Value.subset) &&
             parent.isTypeOf(TypeSchema.Value.content)
     }

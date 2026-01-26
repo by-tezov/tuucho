@@ -61,7 +61,7 @@ abstract class AbstractAssembler(
         path,
         map {
             (it as? JsonObject)
-                ?: throw DataException.Default("by design element inside array must be object")
+                ?: throw DataException.Default("by design element inside array must be an object")
             it.processObject(ROOT_PATH, it, findAllRefOrNullFetcher)
         }.let(::JsonArray)
     )

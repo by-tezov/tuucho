@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.StyleSchema
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui._system.subset
@@ -69,8 +68,8 @@ private class SpacerView(
 
     override suspend fun createComponentProjector() = componentProjector {
         +style {
-            width = +dp(StyleSchema.Key.width)
-            height = +dp(StyleSchema.Key.height)
+            width = +dp(Style.Key.width)
+            height = +dp(Style.Key.height)
             weight = +float(Style.Key.weight)
         }
     }

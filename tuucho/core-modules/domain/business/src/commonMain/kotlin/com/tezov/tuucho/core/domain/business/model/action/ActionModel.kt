@@ -1,0 +1,104 @@
+package com.tezov.tuucho.core.domain.business.model.action
+
+import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.tool.extension.ExtensionNull.isNotNullAndNotEmpty
+import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+
+data class ActionModel(
+    val command: String,
+    val authority: String?,
+    val target: String?,
+    val query: JsonElement?,
+) {
+    companion object {
+        private val COMMAND_SEPARATOR = Regex.escape("://")
+        private val AUTHORITY_SEPARATOR = Regex.escape("/")
+        private val QUERY_SEPARATOR = Regex.escape("?")
+
+        @Suppress("ktlint:standard:max-line-length")
+        private val ACTION_REGEX = Regex(
+            pattern = """^([^$COMMAND_SEPARATOR]+)$COMMAND_SEPARATOR(?:([^$AUTHORITY_SEPARATOR$QUERY_SEPARATOR]+)(?:$AUTHORITY_SEPARATOR([^$QUERY_SEPARATOR]+))?)?(?:$QUERY_SEPARATOR(.+))?$"""
+        )
+
+        fun String.toJsonElement(): JsonElement? {
+            if (isEmpty()) return null
+            return when {
+                contains("=") -> {
+                    val pairs = split("&")
+                        .map {
+                            val parts = it.split("=", limit = 2)
+                            parts[0] to JsonPrimitive(parts[1])
+                        }
+                    JsonObject(pairs.toMap())
+                }
+
+                contains(",") -> {
+                    val items = split(",").mapNotNull { item ->
+                        item
+                            .takeIf { it.isNotNullAndNotEmpty() }
+                            ?.let(::JsonPrimitive)
+                    }
+                    JsonArray(items)
+                }
+
+                else -> {
+                    JsonPrimitive(this)
+                }
+            }
+        }
+
+        fun from(
+            value: String
+        ): ActionModel {
+            val match = ACTION_REGEX.matchEntire(value)
+                ?: throw DomainException.Default("invalid action")
+            return ActionModel(
+                command = match.groups[1]?.value
+                    ?: throw DomainException.Default("action command can't be null"),
+                authority = match.groups[2]?.value,
+                target = match.groups[3]?.value,
+                query = match.groups[4]?.value?.toJsonElement(),
+            )
+        }
+
+        fun from(
+            command: String,
+            authority: String?,
+            target: String?,
+            query: String? = null,
+        ) = ActionModel(
+            command = command,
+            authority = authority,
+            target = target,
+            query = query?.toJsonElement(),
+        )
+    }
+
+    override fun toString(): String {
+        fun JsonElement.toPrettyString(): String = when (this) {
+            is JsonObject -> entries.joinToString("&") { "${it.key}=${it.value.string}" }
+            is JsonArray -> joinToString(",") { it.string }
+            is JsonPrimitive -> this.content
+        }
+        val stringBuilder = StringBuilder().apply {
+            append(command)
+            append("://")
+            authority?.let {
+                append(it)
+                target?.let { target ->
+                    append("/")
+                    append(target)
+                }
+            }
+            query?.let { query ->
+                append("?")
+                append(query.toPrettyString())
+            }
+        }
+        return stringBuilder.toString()
+    }
+}

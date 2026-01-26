@@ -5,17 +5,16 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.R
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ColorSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.isRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.scope.Scope
 
 class ColorRectifier(
@@ -45,8 +44,8 @@ class ColorRectifier(
         .apply {
             type = TypeSchema.Value.color
             val value = this.element.string
-            if (value.startsWith(SymbolData.ID_REF_INDICATOR)) {
-                id = JsonPrimitive(value)
+            if (value.isRef) {
+                id = this.element
             } else {
                 id = JsonNull
                 default = value

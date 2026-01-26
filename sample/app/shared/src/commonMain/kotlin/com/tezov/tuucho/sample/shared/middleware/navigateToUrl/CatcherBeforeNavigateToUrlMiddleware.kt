@@ -2,13 +2,15 @@ package com.tezov.tuucho.sample.shared.middleware.navigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.sample.shared._system.Config
 import com.tezov.tuucho.sample.shared._system.Page
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.FlowCollector
 
 class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
-    override suspend fun process(
+    override suspend fun FlowCollector<Unit>.process(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {
@@ -20,22 +22,23 @@ class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
         )
     }
 
-    private suspend fun processWithRetry(
+    private suspend fun FlowCollector<Unit>.processWithRetry(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
         attempt: Int,
         maxRetries: Int,
     ) {
         try {
-            next?.invoke(context)
+            next.invoke(context)
         } catch (exception: Throwable) {
             //IMPROVE: check exception and design action in accord with exception
             if ((attempt + 1) < maxRetries) {
-                val delayMs = (Config.networkMinRetryDelay * (1 shl attempt)).coerceAtMost(Config.networkMaxRetryDelay)
+                val delayMs =
+                    (Config.networkMinRetryDelay * (1 shl attempt)).coerceAtMost(Config.networkMaxRetryDelay)
                 delay(delayMs)
                 processWithRetry(context, next, attempt + 1, maxRetries)
             } else if (context.input.url != Page.failSafe) {
-                next?.invoke(
+                next.invoke(
                     context.copy(
                         input = context.input.copy(url = Page.failSafe)
                     )

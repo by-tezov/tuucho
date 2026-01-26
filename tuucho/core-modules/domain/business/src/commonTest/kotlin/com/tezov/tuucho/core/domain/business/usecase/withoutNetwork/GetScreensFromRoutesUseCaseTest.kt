@@ -1,7 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase.Input
@@ -13,21 +12,19 @@ import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetScreensFromRoutesUseCaseTest {
-    private val coroutineTestScope = CoroutineTestScope()
-
     private lateinit var navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen
 
     private lateinit var sut: GetScreensFromRoutesUseCase
 
     @BeforeTest
     fun setup() {
-        coroutineTestScope.setup()
         navigationStackScreenRepository = mock()
         sut = GetScreensFromRoutesUseCase(
             navigationStackScreenRepository = navigationStackScreenRepository
@@ -36,12 +33,11 @@ class GetScreensFromRoutesUseCaseTest {
 
     @AfterTest
     fun tearDown() {
-        coroutineTestScope.verifyNoMoreCalls()
         verifyNoMoreCalls(navigationStackScreenRepository)
     }
 
     @Test
-    fun `invoke returns screens from repository`() = coroutineTestScope.run {
+    fun `invoke returns screens from repository`() = runTest {
         val route1 = NavigationRoute.Url(id = "id1", value = "v1")
         val route2 = NavigationRoute.Url(id = "id2", value = "v2")
         val routes = listOf(route1, route2)

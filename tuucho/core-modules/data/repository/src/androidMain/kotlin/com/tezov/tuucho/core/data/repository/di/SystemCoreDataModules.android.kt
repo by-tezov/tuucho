@@ -17,9 +17,10 @@ internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = lis
         factoryOf(::SystemInformationAndroid) bind SystemInformation.PlatformProtocol::class
         factoryOf(::ReferenceFactoryAndroid) bind ReferenceProtocol.Factory::class
     },
-    DatabaseRepositoryModuleAndroid.invoke(),
-    NetworkRepositoryModuleAndroid.invoke(),
-    AssetsModuleAndroid.invoke(),
+    DatabaseModuleAndroid.invoke(),
+    NetworkModuleAndroid.invoke(),
+    ImageModuleAndroid.invoke(),
+    AssetModuleAndroid.invoke(),
     StoreRepositoryModuleAndroid.invoke()
 )
 

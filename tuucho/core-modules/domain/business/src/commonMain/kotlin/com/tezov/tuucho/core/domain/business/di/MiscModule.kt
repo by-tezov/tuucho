@@ -7,9 +7,9 @@ import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockReg
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockStack
 import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutor
-import com.tezov.tuucho.core.domain.business.model.action.FormAction
-import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
-import com.tezov.tuucho.core.domain.business.model.action.StoreAction
+import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
+import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
@@ -43,13 +43,13 @@ internal object MiscModule {
         singleOf(::InteractionLockStack) bind InteractionLockProtocol.Stack::class
         factoryOf(::InteractionLockResolver) bind InteractionLockProtocol.Resolver::class
 
-        factory<InteractionLockProtocol.Registry> {
+        single<InteractionLockProtocol.Registry> {
             InteractionLockRegistry().apply {
-                register(NavigateAction.Url)
-                register(NavigateAction.LocalDestination)
-                register(FormAction.Send)
-                register(FormAction.Update)
-                register(StoreAction.KeyValue)
+                register(NavigateActionDefinition.Url)
+                register(NavigateActionDefinition.LocalDestination)
+                register(FormActionDefinition.Send)
+                register(FormActionDefinition.Update)
+                register(StoreActionDefinition.KeyValue)
             }
         }
     }

@@ -63,6 +63,13 @@ internal class CoroutineScopes(
             exceptionMonitor = exceptionMonitor,
             uncaughtExceptionHandler = uncaughtExceptionHandler
         )
+    override val image: CoroutineContextProtocol =
+        CoroutineContext(
+            name = "Image",
+            context = Dispatchers.IO,
+            exceptionMonitor = exceptionMonitor,
+            uncaughtExceptionHandler = uncaughtExceptionHandler
+        )
     override val event: CoroutineContextProtocol =
         CoroutineContext(
             name = "Event",

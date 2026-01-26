@@ -1,0 +1,68 @@
+{
+  "setting": {
+    "time-to-live": { "strategy": "single-use" }
+  },
+  "root": {
+    "setting": {
+      "navigation": {
+        "definition": {
+          "option": {
+            "single": true,
+            "clear-stack": true
+          },
+          "transition": "fade"
+        }
+      }
+    },
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        {
+          "subset": "spacer",
+          "style": {
+            "weight": "0.5"
+          }
+        },
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              {
+                "subset": "spacer",
+                "style": {
+                  "weight": "1.0"
+                }
+              },
+              {
+                "subset": "label",
+                "content": {
+                  "value": "Server Connection Failed"
+                }
+              },
+              {
+                "subset": "spacer",
+                "style": {
+                  "weight": "1.0"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "subset": "spacer",
+          "style": {
+            "weight": "1.0"
+          }
+        }
+      ]
+    }
+  }
+}

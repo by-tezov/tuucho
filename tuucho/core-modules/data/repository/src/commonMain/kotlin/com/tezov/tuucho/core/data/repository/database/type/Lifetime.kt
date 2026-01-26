@@ -22,7 +22,7 @@ sealed class Lifetime {
     data class Enrolled(
         override val validityKey: String?,
     ) : Lifetime() {
-        override val name = transient
+        override val name = enrolled
     }
 
     @Serializable

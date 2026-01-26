@@ -22,6 +22,7 @@ class IdMatcher :
         TypeSchema.Value.color,
         TypeSchema.Value.dimension,
         TypeSchema.Value.action,
+        TypeSchema.Value.image,
         TypeSchema.Value.Setting.component,
         TypeSchema.Value.Setting.page,
     )

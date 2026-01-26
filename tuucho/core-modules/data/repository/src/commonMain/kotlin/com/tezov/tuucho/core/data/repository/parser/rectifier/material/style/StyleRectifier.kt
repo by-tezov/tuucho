@@ -35,7 +35,7 @@ class StyleRectifier(
     override fun accept(
         path: JsonElementPath,
         element: JsonElement,
-    ) = (path.lastSegmentIs(key) &&
+    ) = (path.lastSegmentIs(TypeSchema.Value.style) &&
         path.parentIsTypeOf(element, TypeSchema.Value.component)) ||
         super.accept(path, element)
 
@@ -46,7 +46,7 @@ class StyleRectifier(
         .find(path)
         .withScope(StyleSchema::Scope)
         .apply {
-            type = key
+            type = TypeSchema.Value.style
             val value = this.element.string.requireIsRef()
             id = JsonPrimitive(value)
         }.collect()
@@ -58,7 +58,7 @@ class StyleRectifier(
         .find(path)
         .withScope(StyleSchema::Scope)
         .apply {
-            type = key
+            type = TypeSchema.Value.style
             id ?: run { id = JsonNull }
             subset = RectifierHelper.retrieveSubsetOrMarkUnknown(path, element)
         }.collect()

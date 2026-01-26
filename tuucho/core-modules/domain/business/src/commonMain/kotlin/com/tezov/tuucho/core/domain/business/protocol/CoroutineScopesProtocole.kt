@@ -10,6 +10,7 @@ interface CoroutineScopesProtocol {
     val navigation: CoroutineContextProtocol
     val useCase: CoroutineContextProtocol
     val action: CoroutineContextProtocol
+    val image: CoroutineContextProtocol
     val event: CoroutineContextProtocol
 
     val default: CoroutineContextProtocol

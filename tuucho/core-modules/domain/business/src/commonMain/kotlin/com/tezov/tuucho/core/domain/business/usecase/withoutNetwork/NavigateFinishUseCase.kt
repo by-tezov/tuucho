@@ -5,8 +5,10 @@ import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import kotlinx.coroutines.flow.collect
 
 @OpenForTest
 class NavigateFinishUseCase(
@@ -18,12 +20,11 @@ class NavigateFinishUseCase(
     override suspend fun invoke(
         input: Unit
     ) {
-        coroutineScopes.useCase.await {
-            middlewareExecutor.process(
+        middlewareExecutor
+            .process(
                 middlewares = navigationMiddlewares + terminalMiddleware(),
                 context = Unit
-            )
-        }
+            ).collect()
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Finish { _, _ ->

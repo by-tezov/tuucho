@@ -7,12 +7,12 @@ import kotlin.test.assertEquals
 class NavigateActionTest {
     @Test
     fun `url command is navigate`() {
-        assertEquals("navigate", NavigateAction.Url.command)
+        assertEquals("navigate", NavigateActionDefinition.Url.command)
     }
 
     @Test
     fun `url authority is url`() {
-        assertEquals("url", NavigateAction.Url.authority)
+        assertEquals("url", NavigateActionDefinition.Url.authority)
     }
 
     @Test
@@ -22,18 +22,18 @@ class NavigateActionTest {
                 InteractionLockType.Screen,
                 InteractionLockType.Navigation
             ),
-            NavigateAction.Url.lockable.getTypes()
+            NavigateActionDefinition.Url.lockable.getTypes()
         )
     }
 
     @Test
     fun `local command is navigate`() {
-        assertEquals("navigate", NavigateAction.LocalDestination.command)
+        assertEquals("navigate", NavigateActionDefinition.LocalDestination.command)
     }
 
     @Test
     fun `local authority is local-destination`() {
-        assertEquals("local-destination", NavigateAction.LocalDestination.authority)
+        assertEquals("local-destination", NavigateActionDefinition.LocalDestination.authority)
     }
 
     @Test
@@ -43,13 +43,13 @@ class NavigateActionTest {
                 InteractionLockType.Screen,
                 InteractionLockType.Navigation
             ),
-            NavigateAction.Url.lockable.getTypes()
+            NavigateActionDefinition.Url.lockable.getTypes()
         )
     }
 
     @Test
     fun `local target values are correct`() {
-        assertEquals("back", NavigateAction.LocalDestination.Target.back)
-        assertEquals("finish", NavigateAction.LocalDestination.Target.finish)
+        assertEquals("back", NavigateActionDefinition.LocalDestination.Target.back)
+        assertEquals("finish", NavigateActionDefinition.LocalDestination.Target.finish)
     }
 }
