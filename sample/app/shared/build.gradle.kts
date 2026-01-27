@@ -31,7 +31,7 @@ buildkonfig {
         field("imageDiskCacheSizeMo", FieldSpec.Type.INT)
         field("imageDiskCacheDirectory", FieldSpec.Type.STRING)
         field("serverImageTimeoutMillis", FieldSpec.Type.LONG)
-        field("serverHttpTimeoutMillis", FieldSpec.Type.LONG)
+        field("serverJsonTimeoutMillis", FieldSpec.Type.LONG)
         field("serverVersion", FieldSpec.Type.STRING)
         field("serverHealthEndpoint", FieldSpec.Type.STRING)
         field("serverResourceEndpoint", FieldSpec.Type.STRING)

@@ -26,7 +26,6 @@ internal object ConfigModuleAndroid {
 
         factory<ImageModule.Config> {
             object : ImageModule.Config {
-                override val timeoutMillis = BuildKonfig.serverImageTimeoutMillis
                 override val diskCacheSizeMo = BuildKonfig.imageDiskCacheSizeMo
                 override val diskCacheDirectory = BuildKonfig.imageDiskCacheDirectory
             }
@@ -34,7 +33,8 @@ internal object ConfigModuleAndroid {
 
         factory<NetworkModule.Config> {
             object : NetworkModule.Config {
-                override val timeoutMillis = BuildKonfig.serverHttpTimeoutMillis
+                override val jsonRequestTimeoutMillis = BuildKonfig.serverJsonTimeoutMillis
+                override val imageRequestTimeoutMillis = BuildKonfig.serverImageTimeoutMillis
                 override val version = BuildKonfig.serverVersion
                 override val baseUrl = BuildKonfig.serverBaseUrl
                 override val healthEndpoint = BuildKonfig.serverHealthEndpoint

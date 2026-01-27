@@ -16,7 +16,6 @@ import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
-import kotlinx.coroutines.flow.filter
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import coil3.Image as CoilImage
@@ -82,7 +81,6 @@ private class ImageProjection(
                     )
                 )
                 result
-                    ?.filter { it.image.tag != "placeholder" } //TODO
                     ?.collect {
                         coroutineScopes.image.await {
                             this@ImageProjection.value = Image(coilImage = it.image)

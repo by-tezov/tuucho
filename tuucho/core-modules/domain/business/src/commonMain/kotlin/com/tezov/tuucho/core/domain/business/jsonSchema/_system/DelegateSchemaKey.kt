@@ -6,12 +6,14 @@ import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.tool.json.booleanOrNull
 import com.tezov.tuucho.core.domain.tool.json.floatOrNull
 import com.tezov.tuucho.core.domain.tool.json.intOrNull
+import com.tezov.tuucho.core.domain.tool.json.string
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonArray
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
@@ -47,6 +49,11 @@ class DelegateSchemaKey<T : Any?>(
             Boolean::class -> value.booleanOrNull
             Float::class -> value.floatOrNull
             Int::class -> value.intOrNull
+            SetStringDelegate::class -> (value as? JsonArray)
+                ?.let {
+                    SetStringDelegate(value.jsonArray.map { it.string }.toSet())
+                }
+
             else -> throw DomainException.Default("unknown type")
         }) as T
     }
@@ -68,6 +75,7 @@ class DelegateSchemaKey<T : Any?>(
                     Boolean::class -> JsonPrimitive(value as Boolean)
                     Float::class -> JsonPrimitive(value as Float)
                     Int::class -> JsonPrimitive(value as Int)
+                    SetStringDelegate::class -> JsonArray((value as SetStringDelegate).map { JsonPrimitive(it) })
                     else -> throw DomainException.Default("unknown type")
                 } as JsonElement
             )

@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.jsonSchema.material
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
@@ -13,7 +14,8 @@ object ImageSchema {
         const val type = TypeSchema.root
         const val cacheKey = "cache-key"
         const val source = "source"
-        const val tag = "tag"
+        const val tags = "tags"
+        const val tagsExcluder = "tags-excluder"
         const val timeToLive = "time-to-live"
     }
 
@@ -41,7 +43,8 @@ object ImageSchema {
         var type by delegate<String?>(Key.type)
         var cacheKey by delegate<String?>(Key.cacheKey)
         var source by delegate<String?>(Key.source)
-        var tag by delegate<String?>(Key.tag)
+        var tags by delegate<SetStringDelegate?>(Key.tags)
+        var tagsExcluder by delegate<SetStringDelegate?>(Key.tagsExcluder)
         var timeToLive by delegate<JsonObject?>(Key.timeToLive)
     }
 

@@ -10,4 +10,10 @@ interface AssetReaderProtocol {
         contentType: String?,
         block: (AssetContent) -> T
     ): T
+
+    fun read(
+        path: String,
+        contentType: String?
+    ): AssetContent
+
 }

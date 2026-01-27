@@ -12,10 +12,19 @@ interface AssetSourceProtocol {
         block: (AssetContent) -> T
     ): T
 
+    fun readFile(
+        path: String,
+    ): AssetContent
+
+
     fun <T> readImage(
         path: String,
         block: (AssetContent) -> T
     ): T
+
+    fun readImage(
+        path: String,
+    ): AssetContent
 }
 
 internal class AssetSource(
@@ -40,6 +49,23 @@ internal class AssetSource(
         contentType = resolveFileContentType(path),
         block = block
     )
+
+    override fun readFile(
+        path: String,
+    ) = reader.read(
+        path = path,
+        contentType = resolveFileContentType(path),
+    )
+
+    override fun readImage(
+        path: String,
+    ): AssetContent {
+        val assetPath = resolveImageAssetPath(path)
+        return reader.read(
+            path = assetPath,
+            contentType = resolveImageFileContentType(assetPath),
+        )
+    }
 
     override fun <T> readImage(
         path: String,

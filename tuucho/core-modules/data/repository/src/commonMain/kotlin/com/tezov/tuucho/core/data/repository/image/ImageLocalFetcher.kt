@@ -3,21 +3,22 @@ package com.tezov.tuucho.core.data.repository.image
 import coil3.ImageLoader
 import coil3.decode.DataSource
 import coil3.decode.ImageSource
-import coil3.fetch.Fetcher
 import coil3.fetch.SourceFetchResult
 import coil3.request.Options
 import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
-import okio.Buffer
+import okio.buffer
 
 internal class ImageLocalFetcher(
     private val path: String,
     private val options: Options,
     private val assetSource: AssetSourceProtocol
-) : Fetcher {
-    override suspend fun fetch(): SourceFetchResult = assetSource.readImage(path) { content ->
-        SourceFetchResult(
+) : ImageFetcherProtocol {
+
+    override suspend fun fetch(): SourceFetchResult {
+        val content = assetSource.readImage(path)
+        return SourceFetchResult(
             source = ImageSource(
-                source = Buffer().apply { writeAll(content.source) },
+                source = content.source.buffer(),
                 fileSystem = options.fileSystem
             ),
             mimeType = content.contentType,
@@ -27,12 +28,15 @@ internal class ImageLocalFetcher(
 
     class Factory(
         private val assetSource: AssetSourceProtocol,
-    ) : Fetcher.Factory<ImageRequest> {
+    ) : ImageFetcherProtocol.Factory {
+
+        override fun isAvailable(request: ImageRequest) = true
+
         override fun create(
             data: ImageRequest,
             options: Options,
             imageLoader: ImageLoader
-        ): Fetcher = ImageLocalFetcher(
+        ) = ImageLocalFetcher(
             path = data.target,
             options = options,
             assetSource = assetSource

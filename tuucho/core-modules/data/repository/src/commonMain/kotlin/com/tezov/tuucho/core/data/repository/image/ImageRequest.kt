@@ -4,5 +4,6 @@ data class ImageRequest(
     val command: String,
     val target: String,
     val cacheKey: String,
-    val tag: String?
+    val tags: Set<String>?,
+    val tagsExcluder: Set<String>?
 )

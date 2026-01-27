@@ -142,16 +142,19 @@
       "id": "main-logo",
       "subset": "image",
       "style": {
-        "width" : "196",
-        "height" : "196",
-        "shape" : "rounded-square",
-        "padding" : "6",
+        "width": "196",
+        "height": "196",
+        "shape": "rounded-square",
+        "padding": "6",
         "alpha": "0.85",
         "background-color": "*background@funny-color"
       },
       "content": {
-        "values" : ["*main-logo", "*main-logo-placeholder"],
-        "description" : "Main-Logo"
+        "values": [
+          "*main-logo",
+          "*main-logo-placeholder"
+        ],
+        "description": "Main-Logo"
       }
     },
     {
@@ -212,20 +215,24 @@
   },
   "images": {
     "common": {
-      "main-logo": "remote://lobby/logo-compose",
-      "main-logo-placeholder": {
-        "source": "local://img/logo-compose-placeholder",
-        "tag": "placeholder",
+      "main-logo": {
+        "source": "remote://lobby/logo-compose",
         "time-to-live": {
           "strategy": "single-use"
         }
+      },
+      "main-logo-placeholder": {
+        "source": "local://img/logo-compose-placeholder",
+        "tags": "placeholder"
       },
       "small-logo": "local://img/logo-koin"
     }
   },
   "texts": {
     "common": {
-      "credentials-title": { "id": "*credentials-request" }
+      "credentials-title": {
+        "id": "*credentials-request"
+      }
     }
   }
 }

@@ -1,8 +1,8 @@
 ### Todo:
 
-- test image Model
+- TTL -> Now ready to do the TTL image (do a parser tll independant ?)
 
-- TTL
+- test image Model
 - error when loading image
 - registry, add custom fetcher ?
 

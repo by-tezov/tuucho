@@ -23,10 +23,32 @@ internal class ImageLoaderSource(
     fun retrieve(
         requests: List<ImageRequest>
     ): Flow<ImageResponse> = callbackFlow {
+        val requestRemaining: List<ImageRequest> = buildList {
+            requests.forEach { outer ->
+                val excluders = requests.filter { inner ->
+                    if (outer.tags != null && inner.tagsExcluder != null) {
+                        inner.tagsExcluder.intersect(outer.tags).isNotEmpty()
+                    } else {
+                        false
+                    }
+                }
+                val shouldExclude = excluders.any { excluder ->
+                    imageFetchers.get(excluder.command)
+                        .isAvailable(excluder)
+                }
+                if (!shouldExclude) {
+                    add(outer)
+                }
+            }
+        }
+        if (requestRemaining.isEmpty()) {
+            close(DataException.Default("all image request exclude themself"))
+            return@callbackFlow
+        }
         val counter = AtomicInt(0)
-        val counterEnd = requests.size
-        requests.forEach { enqueue(it, counter, counterEnd) }
-        awaitClose { } // TODO timeout
+        val counterEnd = requestRemaining.size
+        requestRemaining.forEach { enqueue(it, counter, counterEnd) }
+        awaitClose { }
     }
 
     private fun ProducerScope<ImageResponse>.enqueue(
@@ -44,7 +66,12 @@ internal class ImageLoaderSource(
             .target(
                 onSuccess = { image ->
                     send(
-                        response = ImageResponse(target = request.target, tag = request.tag, image = image),
+                        response = ImageResponse(
+                            target = request.target,
+                            tags = request.tags,
+                            tagsExcluder = request.tagsExcluder,
+                            image = image
+                        ),
                         counter = counter,
                         counterEnd = counterEnd,
                     )

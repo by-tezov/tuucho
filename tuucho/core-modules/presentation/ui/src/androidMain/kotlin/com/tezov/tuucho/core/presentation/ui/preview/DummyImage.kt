@@ -20,7 +20,8 @@ object DummyImage {
                 height = height,
                 size = size,
             )
-            override val tag = null
+            override val tags = null
+            override val tagsExcluder = null
             override val size: Long
                 get() = source.size
             override val width: Int

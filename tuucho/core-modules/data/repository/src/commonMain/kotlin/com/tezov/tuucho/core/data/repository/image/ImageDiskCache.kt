@@ -16,6 +16,9 @@ import okio.buffer
 import okio.source
 
 interface ImageDiskCacheProtocol {
+
+    fun isAvailable(diskCacheKey: String): Boolean
+
     suspend fun retrieve(
         diskCacheKey: String,
     ): SourceFetchResult?
@@ -24,6 +27,8 @@ interface ImageDiskCacheProtocol {
         diskCacheKey: String,
         response: HttpResponse
     ): SourceFetchResult
+
+
 }
 
 class ImageDiskCache(
@@ -39,6 +44,12 @@ class ImageDiskCache(
             .maxSizeBytes(size * 1024L * 1024L)
             .directory(platform.pathFromCacheFolder(config.diskCacheDirectory ?: "tuucho.cache-images"))
             .build()
+    }
+
+    override fun isAvailable(diskCacheKey: String): Boolean {
+        val snapshot = diskCache?.openSnapshot(diskCacheKey) ?: return false
+        snapshot.close()
+        return true
     }
 
     override suspend fun retrieve(

@@ -2,9 +2,9 @@ package com.tezov.tuucho.core.data.repository.di
 
 import coil3.ImageLoader
 import coil3.PlatformContext
-import coil3.fetch.Fetcher
 import com.tezov.tuucho.core.data.repository.image.ImageDiskCache
 import com.tezov.tuucho.core.data.repository.image.ImageDiskCacheProtocol
+import com.tezov.tuucho.core.data.repository.image.ImageFetcherProtocol
 import com.tezov.tuucho.core.data.repository.image.ImageFetcherRegistry
 import com.tezov.tuucho.core.data.repository.image.ImageFetcherRegistryProtocol
 import com.tezov.tuucho.core.data.repository.image.ImageLoaderSource
@@ -21,7 +21,6 @@ import org.koin.dsl.bind
 object ImageModule {
 
     interface Config {
-        val timeoutMillis: Long
         val diskCacheSizeMo: Int?
         val diskCacheDirectory: String?
     }
@@ -49,11 +48,11 @@ object ImageModule {
                 httpClient = get(),
                 diskCache = get(),
             )
-        } bind Fetcher.Factory::class
+        } bind ImageFetcherProtocol.Factory::class
         factory(named(LocalImageDefinition.command)) {
             ImageLocalFetcher.Factory(
                 assetSource = get(),
             )
-        } bind Fetcher.Factory::class
+        } bind ImageFetcherProtocol.Factory::class
     }
 }

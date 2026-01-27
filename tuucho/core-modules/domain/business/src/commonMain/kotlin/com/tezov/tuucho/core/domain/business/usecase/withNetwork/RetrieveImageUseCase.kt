@@ -31,7 +31,8 @@ class RetrieveImageUseCase<S : Any>(
                         ImageModel.from(
                             value = it,
                             cacheKey = scope.cacheKey ?: throw DomainException.Default("should not be possible"),
-                            tag = scope.tag
+                            tags = scope.tags,
+                            tagsExcluder = scope.tagsExcluder
                         )
                     }
                 }
