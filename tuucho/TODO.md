@@ -1,10 +1,11 @@
 ### Todo:
 
-- TTL -> Now ready to do the TTL image (do a parser tll independant ?)
-
 - test image Model
+- clean
+
 - error when loading image
 - registry, add custom fetcher ?
+- Missing Setting Page rectifier ?
 
 - Animation placeholder / final image ?
 - Alternative image (fallback) query fallback local/remote ?

@@ -13,7 +13,6 @@ internal class ImageLocalFetcher(
     private val options: Options,
     private val assetSource: AssetSourceProtocol
 ) : ImageFetcherProtocol {
-
     override suspend fun fetch(): SourceFetchResult {
         val content = assetSource.readImage(path)
         return SourceFetchResult(
@@ -29,8 +28,9 @@ internal class ImageLocalFetcher(
     class Factory(
         private val assetSource: AssetSourceProtocol,
     ) : ImageFetcherProtocol.Factory {
-
-        override fun isAvailable(request: ImageRequest) = true
+        override suspend fun isAvailable(
+            request: ImageRequest
+        ) = true
 
         override fun create(
             data: ImageRequest,

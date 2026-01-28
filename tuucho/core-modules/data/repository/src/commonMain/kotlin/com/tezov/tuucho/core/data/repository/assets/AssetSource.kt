@@ -16,7 +16,6 @@ interface AssetSourceProtocol {
         path: String,
     ): AssetContent
 
-
     fun <T> readImage(
         path: String,
         block: (AssetContent) -> T

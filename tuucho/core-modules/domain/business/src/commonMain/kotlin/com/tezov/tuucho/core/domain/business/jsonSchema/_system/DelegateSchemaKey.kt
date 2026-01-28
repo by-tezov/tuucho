@@ -45,13 +45,23 @@ class DelegateSchemaKey<T : Any?>(
         @Suppress("UNCHECKED_CAST", "IMPLICIT_CAST_TO_ANY")
         return (when (type) {
             JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -> value
+
             String::class -> value.stringOrNull
+
             Boolean::class -> value.booleanOrNull
+
             Float::class -> value.floatOrNull
+
             Int::class -> value.intOrNull
+
             SetStringDelegate::class -> (value as? JsonArray)
                 ?.let {
                     SetStringDelegate(value.jsonArray.map { it.string }.toSet())
+                }
+
+            ListStringDelegate::class -> (value as? JsonArray)
+                ?.let {
+                    ListStringDelegate(value.jsonArray.map { it.string })
                 }
 
             else -> throw DomainException.Default("unknown type")
@@ -76,6 +86,7 @@ class DelegateSchemaKey<T : Any?>(
                     Float::class -> JsonPrimitive(value as Float)
                     Int::class -> JsonPrimitive(value as Int)
                     SetStringDelegate::class -> JsonArray((value as SetStringDelegate).map { JsonPrimitive(it) })
+                    ListStringDelegate::class -> JsonArray((value as ListStringDelegate).map { JsonPrimitive(it) })
                     else -> throw DomainException.Default("unknown type")
                 } as JsonElement
             )

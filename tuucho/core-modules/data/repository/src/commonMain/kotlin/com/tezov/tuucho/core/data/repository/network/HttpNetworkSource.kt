@@ -17,7 +17,7 @@ internal class HttpNetworkSource(
         request: HttpRequest
     ): HttpResponse {
         val response = with(config) {
-            httpClient.getJson("${baseUrl}/${version}/${healthEndpoint}/${request.url}")
+            httpClient.getJson("$baseUrl/$version/$healthEndpoint/${request.url}")
         }
         return HttpResponse(
             url = response.request.url.toString(),
@@ -33,7 +33,7 @@ internal class HttpNetworkSource(
         request: HttpRequest
     ): HttpResponse {
         val response = with(config) {
-            httpClient.getJson("${baseUrl}/${version}/${resourceEndpoint}/${request.url}")
+            httpClient.getJson("$baseUrl/$version/$resourceEndpoint/${request.url}")
         }
         return HttpResponse(
             url = response.request.url.toString(),

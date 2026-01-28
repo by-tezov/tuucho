@@ -2,8 +2,8 @@
 
 package com.tezov.tuucho.core.domain.business.jsonSchema._system
 
-class SetStringDelegate(
-    private val values: Set<String>
-) : Set<String> by values {
+class ListStringDelegate(
+    private val values: List<String>
+) : List<String> by values {
     override fun toString() = values.toString()
 }

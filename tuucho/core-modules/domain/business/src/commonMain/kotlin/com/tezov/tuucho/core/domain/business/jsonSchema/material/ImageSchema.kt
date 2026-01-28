@@ -4,7 +4,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 
 object ImageSchema {
     const val root = "image"
@@ -45,7 +44,6 @@ object ImageSchema {
         var source by delegate<String?>(Key.source)
         var tags by delegate<SetStringDelegate?>(Key.tags)
         var tagsExcluder by delegate<SetStringDelegate?>(Key.tagsExcluder)
-        var timeToLive by delegate<JsonObject?>(Key.timeToLive)
     }
 
     fun cacheKey(

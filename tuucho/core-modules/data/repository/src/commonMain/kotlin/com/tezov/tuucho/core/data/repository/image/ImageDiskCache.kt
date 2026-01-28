@@ -1,10 +1,13 @@
 package com.tezov.tuucho.core.data.repository.image
 
+import app.cash.sqldelight.TransactionWithoutReturn
 import coil3.decode.DataSource
 import coil3.decode.ImageSource
 import coil3.disk.DiskCache
 import coil3.fetch.SourceFetchResult
 import com.tezov.tuucho.core.data.repository._system.Platform
+import com.tezov.tuucho.core.data.repository.database.ImageDatabaseSource
+import com.tezov.tuucho.core.data.repository.database.entity.ImageEntity
 import com.tezov.tuucho.core.data.repository.di.ImageModule
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
@@ -12,109 +15,133 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import okio.FileSystem
+import okio.Source
 import okio.buffer
 import okio.source
 
 interface ImageDiskCacheProtocol {
-
-    fun isAvailable(diskCacheKey: String): Boolean
+    suspend fun isAvailable(
+        cacheKey: String
+    ): Boolean
 
     suspend fun retrieve(
-        diskCacheKey: String,
+        cacheKey: String,
     ): SourceFetchResult?
 
     suspend fun saveAndRetrieve(
-        diskCacheKey: String,
+        cacheKey: String,
         response: HttpResponse
     ): SourceFetchResult
 
-
+    fun TransactionWithoutReturn.deleteAll(
+        cacheKeyPrefix: String,
+    )
 }
 
-class ImageDiskCache(
+internal class ImageDiskCache(
     coroutineScopes: CoroutineScopesProtocol,
     config: ImageModule.Config,
     platform: Platform,
-    private val fileSystem: FileSystem
+    private val imageDatabase: ImageDatabaseSource,
 ) : ImageDiskCacheProtocol {
-
     private val diskCache = config.diskCacheSizeMo?.let { size ->
-        DiskCache.Builder()
+        DiskCache
+            .Builder()
             .cleanupCoroutineContext(coroutineScopes.image.context)
             .maxSizeBytes(size * 1024L * 1024L)
             .directory(platform.pathFromCacheFolder(config.diskCacheDirectory ?: "tuucho.cache-images"))
             .build()
     }
 
-    override fun isAvailable(diskCacheKey: String): Boolean {
-        val snapshot = diskCache?.openSnapshot(diskCacheKey) ?: return false
-        snapshot.close()
-        return true
-    }
+    private val fileSystem: FileSystem = diskCache?.fileSystem ?: throw DataException.Default("Should not be possible")
+
+    override suspend fun isAvailable(
+        cacheKey: String
+    ) = diskCache?.openSnapshot(cacheKey)?.also { it.close() } != null &&
+        imageDatabase.isExist(cacheKey = cacheKey)
 
     override suspend fun retrieve(
-        diskCacheKey: String,
+        cacheKey: String,
     ): SourceFetchResult? {
-        val snapshot = diskCache?.openSnapshot(diskCacheKey) ?: return null
-        var contentType: String? = null
-        runCatching {
-            fileSystem.read(snapshot.metadata) {
-                contentType = readUtf8LineStrict()
-            }
+        val snapshot = diskCache?.openSnapshot(cacheKey) ?: return null
+        val entity = imageDatabase.getImageEntityOrNull(cacheKey) ?: run {
+            snapshot.close()
+            return null
         }
-        contentType ?: return null
         return SourceFetchResult(
             source = ImageSource(
                 file = snapshot.data,
-                fileSystem = diskCache.fileSystem,
-                diskCacheKey = diskCacheKey,
+                fileSystem = fileSystem,
+                diskCacheKey = cacheKey,
                 closeable = snapshot
             ),
-            mimeType = contentType,
+            mimeType = entity.mimeType,
             dataSource = DataSource.DISK
         )
     }
 
     override suspend fun saveAndRetrieve(
-        diskCacheKey: String,
+        cacheKey: String,
         response: HttpResponse
     ): SourceFetchResult {
-        val contentType = response.headers["Content-Type"] ?: throw DataException.Default("missing header 'Content-Type'")
-        diskCache?.openEditor(diskCacheKey)?.let { editor ->
-            runCatching {
-                fileSystem.write(editor.data) {
-                    response.bodyAsChannel()
-                        .toInputStream()
-                        .source()
-                        .buffer()
-                        .use { writeAll(it) }
-                }
-                fileSystem.write(editor.metadata) {
-                    writeUtf8("$contentType\n")
-                }
-                editor.commitAndOpenSnapshot()?.let { snapshot ->
-                    return SourceFetchResult(
-                        source = ImageSource(
-                            file = snapshot.data,
-                            fileSystem = fileSystem,
-                            diskCacheKey = diskCacheKey,
-                            closeable = snapshot
-                        ),
-                        mimeType = contentType,
-                        dataSource = DataSource.NETWORK
-                    )
-                }
-            }
-        }
-        return SourceFetchResult(
+        val mimeType = response.headers["Content-Type"] ?: throw DataException.Default("missing header 'Content-Type'")
+        return save(
+            cacheKey = cacheKey,
+            mimeType = mimeType,
+            source = response.bodyAsChannel().toInputStream().source()
+        )?.let { snapshot ->
+            SourceFetchResult(
+                source = ImageSource(
+                    file = snapshot.data,
+                    fileSystem = fileSystem,
+                    diskCacheKey = cacheKey,
+                    closeable = snapshot
+                ),
+                mimeType = mimeType,
+                dataSource = DataSource.NETWORK
+            )
+        } ?: SourceFetchResult(
             source = ImageSource(
-                source = response.bodyAsChannel()
-                    .toInputStream().source().buffer(),
+                source = response
+                    .bodyAsChannel()
+                    .toInputStream()
+                    .source()
+                    .buffer(),
                 fileSystem = fileSystem
             ),
-            mimeType = contentType,
+            mimeType = mimeType,
             dataSource = DataSource.NETWORK
         )
     }
 
+    private suspend fun save(
+        cacheKey: String,
+        mimeType: String,
+        source: Source
+    ) = diskCache?.openEditor(cacheKey)?.let { editor ->
+        imageDatabase.insertOrUpdate(
+            ImageEntity(
+                cacheKey = cacheKey,
+                mimeType = mimeType
+            )
+        )
+        runCatching {
+            fileSystem.write(editor.data) {
+                source.use { writeAll(it) }
+            }
+            editor.commitAndOpenSnapshot()
+        }.onFailure { editor.abort() }
+            .getOrNull()
+    }
+
+    override fun TransactionWithoutReturn.deleteAll(
+        cacheKeyPrefix: String
+    ) {
+        val diskCache = diskCache ?: return
+        val entries = imageDatabase.run { selectAll(cacheKeyPrefix) }
+        entries.forEach {
+            diskCache.remove(it.cacheKey)
+        }
+        imageDatabase.run { deleteAll(cacheKeyPrefix) }
+    }
 }

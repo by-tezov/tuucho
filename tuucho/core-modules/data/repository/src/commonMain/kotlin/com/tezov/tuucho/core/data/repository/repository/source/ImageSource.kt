@@ -24,7 +24,7 @@ internal class ImageSource(
                 target = it.target,
                 cacheKey = it.cacheKey,
                 tags = it.tags,
-                tagsExcluder = it.tagsExcluder,
+                tagsExcluder = it.tagsExcluder
             )
         }
         return imageLoaderSource

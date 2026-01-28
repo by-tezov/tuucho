@@ -2,15 +2,17 @@ package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.database.Database
 import com.tezov.tuucho.core.data.repository.database.DatabaseTransactionFactory
+import com.tezov.tuucho.core.data.repository.database.ImageDatabaseSource
 import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.repository.database.dao.HookQueries
+import com.tezov.tuucho.core.data.repository.database.dao.ImageQueries
 import com.tezov.tuucho.core.data.repository.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.repository.database.table.HookEntry
 import com.tezov.tuucho.core.data.repository.database.table.JsonObjectCommonEntry
 import com.tezov.tuucho.core.data.repository.database.table.JsonObjectContextualEntry
+import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonLifetimeAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAdapter
-import com.tezov.tuucho.core.data.repository.database.type.adapter.LifetimeAdapter
-import com.tezov.tuucho.core.data.repository.database.type.adapter.VisibilityAdapter
+import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonVisibilityAdapter
 import com.tezov.tuucho.core.data.repository.di.DatabaseModule.Name.DATABASE_REPOSITORY_CONFIG
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import org.koin.core.module.dsl.factoryOf
@@ -33,8 +35,8 @@ object DatabaseModule {
         }
 
         factoryOf(::JsonObjectAdapter)
-        factoryOf(::VisibilityAdapter)
-        factoryOf(::LifetimeAdapter)
+        factoryOf(::JsonVisibilityAdapter)
+        factoryOf(::JsonLifetimeAdapter)
 
         single {
             Database(
@@ -46,15 +48,17 @@ object DatabaseModule {
                     jsonObjectAdapter = get<JsonObjectAdapter>()
                 ),
                 hookEntryAdapter = HookEntry.Adapter(
-                    visibilityAdapter = get<VisibilityAdapter>(),
-                    lifetimeAdapter = get<LifetimeAdapter>()
-                ),
+                    visibilityAdapter = get<JsonVisibilityAdapter>(),
+                    lifetimeAdapter = get<JsonLifetimeAdapter>()
+                )
             )
         }
 
         factoryOf(::JsonObjectQueries)
         factoryOf(::HookQueries)
+        factoryOf(::ImageQueries)
         factoryOf(::DatabaseTransactionFactory)
         factoryOf(::MaterialDatabaseSource)
+        factoryOf(::ImageDatabaseSource)
     }
 }

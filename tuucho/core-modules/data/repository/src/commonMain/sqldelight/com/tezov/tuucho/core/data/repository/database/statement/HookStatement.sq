@@ -4,9 +4,6 @@ SELECT * FROM hookEntry;
 deleteAll:
 DELETE FROM hookEntry;
 
-deleteByPrimaryKey:
-DELETE FROM hookEntry WHERE primaryKey = ?;
-
 deleteByUrl:
 DELETE FROM hookEntry WHERE url = ?;
 
@@ -14,14 +11,8 @@ insert:
 INSERT INTO hookEntry(url, rootPrimaryKey, visibility, lifetime)
 VALUES ( ?, ?, ?,?);
 
-existWithUrl:
-SELECT EXISTS(SELECT 1 FROM hookEntry WHERE url = ?) AS exist;
-
 getByUrl:
 SELECT * FROM hookEntry WHERE url = ?;
 
 getLifetimeByUrl:
 SELECT lifetime FROM hookEntry WHERE url = ?;
-
-selectByLifetime:
-SELECT * FROM hookEntry WHERE lifetime LIKE ?;

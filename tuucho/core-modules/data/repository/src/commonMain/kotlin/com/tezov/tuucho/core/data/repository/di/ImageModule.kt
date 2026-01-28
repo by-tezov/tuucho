@@ -19,14 +19,12 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 
 object ImageModule {
-
     interface Config {
         val diskCacheSizeMo: Int?
         val diskCacheDirectory: String?
     }
 
     internal operator fun invoke() = module(ModuleContextData.Main) {
-
         singleOf(::ImageDiskCache) bind ImageDiskCacheProtocol::class
 
         single {

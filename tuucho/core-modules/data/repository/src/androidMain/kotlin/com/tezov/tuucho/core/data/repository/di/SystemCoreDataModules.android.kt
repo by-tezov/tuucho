@@ -24,9 +24,10 @@ internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = lis
         factory<Platform> {
             object : Platform {
                 val context = get<Context>(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT)
-                override fun pathFromCacheFolder(relativePath: String): Path {
-                    return File(context.cacheDir.path, relativePath).toOkioPath()
-                }
+
+                override fun pathFromCacheFolder(
+                    relativePath: String
+                ): Path = File(context.cacheDir.path, relativePath).toOkioPath()
             }
         }
     },

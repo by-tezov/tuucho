@@ -15,7 +15,6 @@ class HttpClient(
     private val httpClient: io.ktor.client.HttpClient,
     private val jsonConverter: Json,
 ) {
-
     suspend fun getJson(
         url: String
     ) = with(config) {
@@ -56,5 +55,4 @@ class HttpClient(
             }
         }
     }
-
 }

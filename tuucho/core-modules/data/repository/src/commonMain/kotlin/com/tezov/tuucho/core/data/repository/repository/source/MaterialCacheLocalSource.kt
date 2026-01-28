@@ -1,21 +1,23 @@
 package com.tezov.tuucho.core.data.repository.repository.source
 
+import com.tezov.tuucho.core.data.repository.database.DatabaseTransactionFactory
 import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.repository.database.entity.HookEntity
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
-import com.tezov.tuucho.core.data.repository.database.type.Lifetime
-import com.tezov.tuucho.core.data.repository.database.type.Visibility
+import com.tezov.tuucho.core.data.repository.database.type.JsonLifetime
+import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.data.repository.image.ImageDiskCache
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
-import com.tezov.tuucho.core.data.repository.repository.source._system.LifetimeResolver
+import com.tezov.tuucho.core.data.repository.repository.source._system.JsonLifetimeResolver
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.PageSettingSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -25,10 +27,12 @@ import kotlin.time.Instant
 
 internal class MaterialCacheLocalSource(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val transactionFactory: DatabaseTransactionFactory,
     private val materialDatabaseSource: MaterialDatabaseSource,
+    private val imageDiskCache: ImageDiskCache,
     private val materialBreaker: MaterialBreaker,
     private val materialAssembler: MaterialAssembler,
-    private val lifetimeResolver: LifetimeResolver,
+    private val lifetimeResolver: JsonLifetimeResolver,
 ) {
     suspend fun isCacheValid(
         url: String,
@@ -40,26 +44,30 @@ internal class MaterialCacheLocalSource(
                 return false
             }
             return when (lifetime) {
-                is Lifetime.Unlimited, is Lifetime.SingleUse -> true
-                is Lifetime.Transient -> lifetime.expirationDateTime >= now.invoke()
-                is Lifetime.Enrolled -> false
+                is JsonLifetime.Unlimited, is JsonLifetime.SingleUse -> true
+                is JsonLifetime.Transient -> lifetime.expirationDateTime >= now.invoke()
+                is JsonLifetime.Enrolled -> false
             }
         }
         return false
     }
 
+    @Suppress("RedundantSuspendModifier")
     suspend fun delete(
         url: String,
         table: Table
     ) {
-        materialDatabaseSource.deleteAll(url, table)
+        transactionFactory.transaction {
+            materialDatabaseSource.run { deleteAll(url = url, table = table) }
+            imageDiskCache.run { deleteAll(cacheKeyPrefix = url) }
+        }
     }
 
     suspend fun insert(
         materialObject: JsonObject,
         url: String,
-        visibility: Visibility,
-        weakLifetime: Lifetime,
+        visibility: JsonVisibility,
+        weakLifetime: JsonLifetime,
     ) {
         val nodes = coroutineScopes.parser.await {
             materialBreaker.process(
@@ -68,7 +76,7 @@ internal class MaterialCacheLocalSource(
         }
         coroutineScopes.database.await {
             with(nodes) {
-                val table = if (visibility is Visibility.Contextual) {
+                val table = if (visibility is JsonVisibility.Contextual) {
                     Table.Contextual
                 } else {
                     Table.Common
@@ -81,7 +89,9 @@ internal class MaterialCacheLocalSource(
                     rootPrimaryKey = rootPrimaryKey,
                     visibility = visibility,
                     lifetime = lifetimeResolver.invoke(
-                        pageSetting = materialObject.withScope(MaterialSchema::Scope).pageSetting,
+                        timeToLiveObject = materialObject
+                            .onScope(PageSettingSchema::Scope)
+                            .timeToLive,
                         weakLifetime = weakLifetime,
                     ),
                 ).also { materialDatabaseSource.insert(it) }
@@ -109,7 +119,7 @@ internal class MaterialCacheLocalSource(
     suspend fun enroll(
         url: String,
         validityKey: String,
-        visibility: Visibility,
+        visibility: JsonVisibility,
     ) {
         coroutineScopes.database
             .await {
@@ -117,7 +127,7 @@ internal class MaterialCacheLocalSource(
                     url = url,
                     rootPrimaryKey = null,
                     visibility = visibility,
-                    lifetime = Lifetime.Enrolled(validityKey),
+                    lifetime = JsonLifetime.Enrolled(validityKey),
                 ).also { materialDatabaseSource.insert(it) }
             }
     }

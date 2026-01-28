@@ -27,7 +27,6 @@ internal class Screen(
     override val route: NavigationRoute.Url
 ) : ScreenProtocol,
     TuuchoKoinComponent {
-
     private data class Updatable(
         val viewIndex: Int,
         val updaterProcessor: ContextualUpdaterProcessorProtocol

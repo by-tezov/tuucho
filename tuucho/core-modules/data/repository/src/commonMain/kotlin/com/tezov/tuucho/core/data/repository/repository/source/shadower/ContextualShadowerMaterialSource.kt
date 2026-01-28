@@ -2,8 +2,8 @@ package com.tezov.tuucho.core.data.repository.repository.source.shadower
 
 import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
-import com.tezov.tuucho.core.data.repository.database.type.Lifetime
-import com.tezov.tuucho.core.data.repository.database.type.Visibility
+import com.tezov.tuucho.core.data.repository.database.type.JsonLifetime
+import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
@@ -74,7 +74,7 @@ internal class ContextualShadowerMaterialSource(
                 downloadAndCache(url)
                 jsonObjects.assembleAll(url).also {
                     val lifetime = materialCacheLocalSource.getLifetime(url)
-                    if (lifetime is Lifetime.SingleUse) {
+                    if (lifetime is JsonLifetime.SingleUse) {
                         materialCacheLocalSource.delete(url, Table.Common)
                     }
                 }
@@ -94,14 +94,14 @@ internal class ContextualShadowerMaterialSource(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
-            weakLifetime = if (lifetime == null || lifetime is Lifetime.Enrolled) {
-                Lifetime.SingleUse(
+            weakLifetime = if (lifetime == null || lifetime is JsonLifetime.Enrolled) {
+                JsonLifetime.SingleUse(
                     validityKey = lifetime?.validityKey
                 )
             } else {
                 lifetime
             },
-            visibility = Visibility.Contextual(urlOrigin = urlOrigin)
+            visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
         )
     }
 
@@ -117,7 +117,7 @@ internal class ContextualShadowerMaterialSource(
                             from = from,
                             url = url,
                             type = type,
-                            visibility = Visibility.Contextual(urlOrigin = urlOrigin)
+                            visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
                         )
                     }
                 }

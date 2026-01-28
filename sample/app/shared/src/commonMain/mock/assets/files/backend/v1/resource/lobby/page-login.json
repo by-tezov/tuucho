@@ -1,7 +1,8 @@
 {
   "setting": {
     "time-to-live": {
-      "strategy": "single-use"
+      "strategy": "transient",
+      "transient-value": "10s"
     }
   },
   "root": {
@@ -215,12 +216,7 @@
   },
   "images": {
     "common": {
-      "main-logo": {
-        "source": "remote://lobby/logo-compose",
-        "time-to-live": {
-          "strategy": "single-use"
-        }
-      },
+      "main-logo": "remote://lobby/logo-compose",
       "main-logo-placeholder": {
         "source": "local://img/logo-compose-placeholder",
         "tags": "placeholder"

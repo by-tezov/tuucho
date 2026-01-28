@@ -23,23 +23,8 @@ internal class ImageLoaderSource(
     fun retrieve(
         requests: List<ImageRequest>
     ): Flow<ImageResponse> = callbackFlow {
-        val requestRemaining: List<ImageRequest> = buildList {
-            requests.forEach { outer ->
-                val excluders = requests.filter { inner ->
-                    if (outer.tags != null && inner.tagsExcluder != null) {
-                        inner.tagsExcluder.intersect(outer.tags).isNotEmpty()
-                    } else {
-                        false
-                    }
-                }
-                val shouldExclude = excluders.any { excluder ->
-                    imageFetchers.get(excluder.command)
-                        .isAvailable(excluder)
-                }
-                if (!shouldExclude) {
-                    add(outer)
-                }
-            }
+        val requestRemaining = requests.filterNot {
+            shouldBeExcluded(it, requests)
         }
         if (requestRemaining.isEmpty()) {
             close(DataException.Default("all image request exclude themself"))
@@ -105,4 +90,27 @@ internal class ImageLoaderSource(
     ) {
         close(throwable)
     }
+
+    private suspend fun shouldBeExcluded(
+        request: ImageRequest,
+        allRequests: List<ImageRequest>
+    ) = findExcluders(request, allRequests)
+        .any { imageFetchers.get(it.command).isAvailable(it) }
+
+    private fun findExcluders(
+        request: ImageRequest,
+        allRequests: List<ImageRequest>
+    ) = allRequests.filter { candidate ->
+        hasExcludingTags(
+            sourceTags = request.tags,
+            excluderTags = candidate.tagsExcluder
+        )
+    }
+
+    private fun hasExcludingTags(
+        sourceTags: Set<String>?,
+        excluderTags: Set<String>?
+    ) = sourceTags != null &&
+        excluderTags != null &&
+        excluderTags.intersect(sourceTags).isNotEmpty()
 }

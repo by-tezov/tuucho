@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlin.time.Instant
 
 @Serializable
-sealed class Lifetime {
+sealed class JsonLifetime {
     companion object Type {
         const val enrolled = "enrolled"
         const val unlimited = "unlimited"
@@ -21,7 +21,7 @@ sealed class Lifetime {
     @SerialName(enrolled)
     data class Enrolled(
         override val validityKey: String?,
-    ) : Lifetime() {
+    ) : JsonLifetime() {
         override val name = enrolled
     }
 
@@ -29,7 +29,7 @@ sealed class Lifetime {
     @SerialName(unlimited)
     data class Unlimited(
         override val validityKey: String?
-    ) : Lifetime() {
+    ) : JsonLifetime() {
         override val name = unlimited
     }
 
@@ -38,7 +38,7 @@ sealed class Lifetime {
     data class Transient(
         override val validityKey: String?,
         @Contextual val expirationDateTime: Instant,
-    ) : Lifetime() {
+    ) : JsonLifetime() {
         override val name = transient
     }
 
@@ -46,7 +46,7 @@ sealed class Lifetime {
     @SerialName(singleUse)
     data class SingleUse(
         override val validityKey: String?,
-    ) : Lifetime() {
+    ) : JsonLifetime() {
         override val name = singleUse
     }
 }

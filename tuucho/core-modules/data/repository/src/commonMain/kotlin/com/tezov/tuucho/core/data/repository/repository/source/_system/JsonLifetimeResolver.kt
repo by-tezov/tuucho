@@ -2,26 +2,24 @@
 
 package com.tezov.tuucho.core.data.repository.repository.source._system
 
-import com.tezov.tuucho.core.data.repository.database.type.Lifetime
+import com.tezov.tuucho.core.data.repository.database.type.JsonLifetime
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TimeToLive
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.PageSettingSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import kotlinx.serialization.json.JsonObject
 import kotlin.time.Instant
 
 @OpenForTest
-internal class LifetimeResolver(
+internal class JsonLifetimeResolver(
     private val expirationDateTimeRectifier: ExpirationDateTimeRectifier,
 ) {
     fun invoke(
-        pageSetting: JsonObject?,
-        weakLifetime: Lifetime,
-    ): Lifetime {
-        val settingScope = pageSetting?.withScope(PageSettingSchema::Scope)
-        val ttlScope = settingScope?.timeToLive?.withScope(TimeToLive::Scope)
+        timeToLiveObject: JsonObject?,
+        weakLifetime: JsonLifetime,
+    ): JsonLifetime {
+        val ttlScope = timeToLiveObject?.withScope(TimeToLive::Scope)
         val lifetime = when {
             ttlScope != null -> {
                 when (val strategy = ttlScope.strategy) {
@@ -31,11 +29,11 @@ internal class LifetimeResolver(
                                 ?.let { expirationDateTimeRectifier.process(it) }
                                 ?.let { Instant.parse(it) }
                                 ?: throw DataException.Default("ttl transient, missing property transient-value")
-                        Lifetime.Transient(weakLifetime.validityKey, expirationDateTime)
+                        JsonLifetime.Transient(weakLifetime.validityKey, expirationDateTime)
                     }
 
                     TimeToLive.Value.Strategy.singleUse -> {
-                        Lifetime.SingleUse(weakLifetime.validityKey)
+                        JsonLifetime.SingleUse(weakLifetime.validityKey)
                     }
 
                     else -> {
@@ -44,8 +42,8 @@ internal class LifetimeResolver(
                 }
             }
 
-            weakLifetime is Lifetime.Enrolled -> {
-                Lifetime.Unlimited(weakLifetime.validityKey)
+            weakLifetime is JsonLifetime.Enrolled -> {
+                JsonLifetime.Unlimited(weakLifetime.validityKey)
             }
 
             else -> {

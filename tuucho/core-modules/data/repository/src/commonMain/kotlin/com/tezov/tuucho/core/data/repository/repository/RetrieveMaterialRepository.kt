@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.data.repository.repository
 
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
-import com.tezov.tuucho.core.data.repository.database.type.Lifetime
-import com.tezov.tuucho.core.data.repository.database.type.Visibility
+import com.tezov.tuucho.core.data.repository.database.type.JsonLifetime
+import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
@@ -19,7 +19,7 @@ internal class RetrieveMaterialRepository(
         val lifetime = materialCacheLocalSource.getLifetime(url)
         if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
             materialCacheLocalSource.assemble(url)?.let {
-                if (lifetime is Lifetime.SingleUse) {
+                if (lifetime is JsonLifetime.SingleUse) {
                     materialCacheLocalSource.delete(url, Table.Common)
                 }
                 return it
@@ -30,18 +30,18 @@ internal class RetrieveMaterialRepository(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
-            weakLifetime = if (lifetime == null || lifetime is Lifetime.Enrolled) {
-                Lifetime.Unlimited(
+            weakLifetime = if (lifetime == null || lifetime is JsonLifetime.Enrolled) {
+                JsonLifetime.Unlimited(
                     validityKey = lifetime?.validityKey
                 )
             } else {
                 lifetime
             },
-            visibility = Visibility.Local
+            visibility = JsonVisibility.Local
         )
         return materialCacheLocalSource.assemble(url).also {
             val lifetime = materialCacheLocalSource.getLifetime(url)
-            if (lifetime is Lifetime.SingleUse) {
+            if (lifetime is JsonLifetime.SingleUse) {
                 materialCacheLocalSource.delete(url, Table.Common)
             }
         } ?: throw DataException.Default("Retrieved url $url returned nothing")

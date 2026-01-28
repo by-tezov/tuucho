@@ -15,5 +15,4 @@ interface AssetReaderProtocol {
         path: String,
         contentType: String?
     ): AssetContent
-
 }
