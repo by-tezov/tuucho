@@ -26,15 +26,15 @@ internal object ConfigModuleIos {
 
         factory<ImageModule.Config> {
             object : ImageModule.Config {
-                override val timeoutMillis = BuildKonfig.serverImageTimeoutMillis
-                override val memoryCacheSizeMo = BuildKonfig.imageMemoryCacheSizeMo
                 override val diskCacheSizeMo = BuildKonfig.imageDiskCacheSizeMo
+                override val diskCacheDirectory = BuildKonfig.imageDiskCacheDirectory
             }
         }
 
         factory<NetworkModule.Config> {
             object : NetworkModule.Config {
-                override val timeoutMillis = BuildKonfig.serverTimeoutMillis
+                override val jsonRequestTimeoutMillis = BuildKonfig.serverJsonTimeoutMillis
+                override val imageRequestTimeoutMillis = BuildKonfig.serverImageTimeoutMillis
                 override val version = BuildKonfig.serverVersion
                 override val baseUrl = BuildKonfig.serverBaseUrl
                 override val healthEndpoint = BuildKonfig.serverHealthEndpoint

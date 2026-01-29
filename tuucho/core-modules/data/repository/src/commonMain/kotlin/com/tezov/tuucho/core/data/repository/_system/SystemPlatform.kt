@@ -2,9 +2,12 @@
 
 package com.tezov.tuucho.core.data.repository._system
 
+import okio.FileSystem
 import okio.Path
 
-interface Platform {
+interface SystemPlatform {
+    fun fileSystem(): FileSystem
+
     fun pathFromCacheFolder(
         relativePath: String
     ): Path

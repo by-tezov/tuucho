@@ -5,19 +5,18 @@ import coil3.decode.DataSource
 import coil3.decode.ImageSource
 import coil3.disk.DiskCache
 import coil3.fetch.SourceFetchResult
-import com.tezov.tuucho.core.data.repository._system.Platform
+import com.tezov.tuucho.core.data.repository._system.SystemPlatform
 import com.tezov.tuucho.core.data.repository.database.ImageDatabaseSource
 import com.tezov.tuucho.core.data.repository.database.entity.ImageEntity
 import com.tezov.tuucho.core.data.repository.di.ImageModule
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.data.repository.network.HttpResponseExtension.asSource
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsChannel
-import io.ktor.utils.io.jvm.javaio.toInputStream
 import okio.FileSystem
 import okio.Source
 import okio.buffer
-import okio.source
+import okio.use
 
 interface ImageDiskCacheProtocol {
     suspend fun isAvailable(
@@ -41,7 +40,7 @@ interface ImageDiskCacheProtocol {
 internal class ImageDiskCache(
     coroutineScopes: CoroutineScopesProtocol,
     config: ImageModule.Config,
-    platform: Platform,
+    systemPlatform: SystemPlatform,
     private val imageDatabase: ImageDatabaseSource,
 ) : ImageDiskCacheProtocol {
     private val diskCache = config.diskCacheSizeMo?.let { size ->
@@ -49,7 +48,7 @@ internal class ImageDiskCache(
             .Builder()
             .cleanupCoroutineContext(coroutineScopes.image.context)
             .maxSizeBytes(size * 1024L * 1024L)
-            .directory(platform.pathFromCacheFolder(config.diskCacheDirectory ?: "tuucho.cache-images"))
+            .directory(systemPlatform.pathFromCacheFolder(config.diskCacheDirectory ?: "tuucho.cache-images"))
             .build()
     }
 
@@ -88,7 +87,7 @@ internal class ImageDiskCache(
         return save(
             cacheKey = cacheKey,
             mimeType = mimeType,
-            source = response.bodyAsChannel().toInputStream().source()
+            source = response.asSource()
         )?.let { snapshot ->
             SourceFetchResult(
                 source = ImageSource(
@@ -103,9 +102,7 @@ internal class ImageDiskCache(
         } ?: SourceFetchResult(
             source = ImageSource(
                 source = response
-                    .bodyAsChannel()
-                    .toInputStream()
-                    .source()
+                    .asSource()
                     .buffer(),
                 fileSystem = fileSystem
             ),

@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import coil3.PlatformContext
 import coil3.compose.asPainter
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
@@ -51,6 +52,8 @@ private class ImageProjection(
     ImageProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by status,
     TuuchoKoinComponent {
+    private var imageLoaded = false
+
     init {
         attach(this as ExtractorProjectionProtocol<ImageTypeAlias>)
     }
@@ -71,6 +74,7 @@ private class ImageProjection(
             val coroutineScopes = koin.get<CoroutineScopesProtocol>()
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
             val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
+            imageLoaded = false
             coroutineScopes.image.async(
                 throwOnFailure = true
             ) {
@@ -80,12 +84,14 @@ private class ImageProjection(
                         imageArray = imageArray
                     )
                 )
-                result
-                    ?.collect {
-                        coroutineScopes.image.await {
-                            this@ImageProjection.value = Image(coilImage = it.image)
-                        }
+                result?.collect {
+                    if (it.image.tags?.contains(ImageSchema.Value.Tag.placeholder) != true) {
+                        imageLoaded = true
+                        this@ImageProjection.value = Image(coilImage = it.image)
+                    } else if (!imageLoaded) {
+                        this@ImageProjection.value = Image(coilImage = it.image)
                     }
+                }
             }
             null
         }

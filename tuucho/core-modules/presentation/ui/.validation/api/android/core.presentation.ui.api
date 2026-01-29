@@ -155,7 +155,8 @@ public final class com/tezov/tuucho/core/presentation/ui/render/projection/Image
 	public fun getSize ()J
 	public fun getSource ()Lcoil3/Image;
 	public synthetic fun getSource ()Ljava/lang/Object;
-	public fun getTag ()Ljava/lang/String;
+	public fun getTags ()Ljava/util/Set;
+	public fun getTagsExcluder ()Ljava/util/Set;
 	public fun getWidth ()I
 }
 

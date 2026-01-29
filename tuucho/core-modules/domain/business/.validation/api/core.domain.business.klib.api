@@ -182,8 +182,10 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/Ima
             abstract fun <get-size>(): kotlin/Long // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.size.<get-size>|<get-size>(){}[0]
         abstract val source // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.source|{}source[0]
             abstract fun <get-source>(): #A1 // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.source.<get-source>|<get-source>(){}[0]
-        abstract val tag // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tag|{}tag[0]
-            abstract fun <get-tag>(): kotlin/String? // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tag.<get-tag>|<get-tag>(){}[0]
+        abstract val tags // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tags|{}tags[0]
+            abstract fun <get-tags>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tags.<get-tags>|<get-tags>(){}[0]
+        abstract val tagsExcluder // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tagsExcluder|{}tagsExcluder[0]
+            abstract fun <get-tagsExcluder>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
         abstract val width // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.width|{}width[0]
             abstract fun <get-width>(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.width.<get-width>|<get-width>(){}[0]
     }
@@ -505,6 +507,25 @@ final class com.tezov.tuucho.core.domain.business.interaction.navigation/Navigat
     final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator.generate|generate(){}[0]
 }
 
+final class com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate : kotlin.collections/List<kotlin/String> { // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate|null[0]
+    constructor <init>(kotlin.collections/List<kotlin/String>) // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.<init>|<init>(kotlin.collections.List<kotlin.String>){}[0]
+
+    final val size // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.size.<get-size>|<get-size>(){}[0]
+
+    final fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.contains|contains(kotlin.String){}[0]
+    final fun containsAll(kotlin.collections/Collection<kotlin/String>): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.containsAll|containsAll(kotlin.collections.Collection<kotlin.String>){}[0]
+    final fun get(kotlin/Int): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.get|get(kotlin.Int){}[0]
+    final fun indexOf(kotlin/String): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.indexOf|indexOf(kotlin.String){}[0]
+    final fun isEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.isEmpty|isEmpty(){}[0]
+    final fun iterator(): kotlin.collections/Iterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.iterator|iterator(){}[0]
+    final fun lastIndexOf(kotlin/String): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.lastIndexOf|lastIndexOf(kotlin.String){}[0]
+    final fun listIterator(): kotlin.collections/ListIterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.listIterator|listIterator(){}[0]
+    final fun listIterator(kotlin/Int): kotlin.collections/ListIterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.listIterator|listIterator(kotlin.Int){}[0]
+    final fun subList(kotlin/Int, kotlin/Int): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.subList|subList(kotlin.Int;kotlin.Int){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.toString|toString(){}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope> { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
 }
@@ -526,6 +547,19 @@ final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope
     final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.toString|toString(){}[0]
+}
+
+final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate : kotlin.collections/Set<kotlin/String> { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate|null[0]
+    constructor <init>(kotlin.collections/Set<kotlin/String>) // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.<init>|<init>(kotlin.collections.Set<kotlin.String>){}[0]
+
+    final val size // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.size.<get-size>|<get-size>(){}[0]
+
+    final fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.contains|contains(kotlin.String){}[0]
+    final fun containsAll(kotlin.collections/Collection<kotlin/String>): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.containsAll|containsAll(kotlin.collections.Collection<kotlin.String>){}[0]
+    final fun isEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.isEmpty|isEmpty(){}[0]
+    final fun iterator(): kotlin.collections/Iterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.iterator|iterator(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.toString|toString(){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor : com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol { // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor|null[0]
@@ -563,30 +597,36 @@ final class com.tezov.tuucho.core.domain.business.model.action/ActionModel { // 
 }
 
 final class com.tezov.tuucho.core.domain.business.model.image/ImageModel { // com.tezov.tuucho.core.domain.business.model.image/ImageModel|null[0]
-    constructor <init>(kotlin/String, kotlin/String, kotlinx.serialization.json/JsonElement?, kotlin/String?) // com.tezov.tuucho.core.domain.business.model.image/ImageModel.<init>|<init>(kotlin.String;kotlin.String;kotlinx.serialization.json.JsonElement?;kotlin.String?){}[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlinx.serialization.json/JsonElement?, kotlin/String, kotlin.collections/Set<kotlin/String>?, kotlin.collections/Set<kotlin/String>?) // com.tezov.tuucho.core.domain.business.model.image/ImageModel.<init>|<init>(kotlin.String;kotlin.String;kotlinx.serialization.json.JsonElement?;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
 
+    final val cacheKey // com.tezov.tuucho.core.domain.business.model.image/ImageModel.cacheKey|{}cacheKey[0]
+        final fun <get-cacheKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
     final val command // com.tezov.tuucho.core.domain.business.model.image/ImageModel.command|{}command[0]
         final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.command.<get-command>|<get-command>(){}[0]
     final val query // com.tezov.tuucho.core.domain.business.model.image/ImageModel.query|{}query[0]
         final fun <get-query>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.query.<get-query>|<get-query>(){}[0]
-    final val tag // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tag|{}tag[0]
-        final fun <get-tag>(): kotlin/String? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tag.<get-tag>|<get-tag>(){}[0]
+    final val tags // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tags|{}tags[0]
+        final fun <get-tags>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tags.<get-tags>|<get-tags>(){}[0]
+    final val tagsExcluder // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tagsExcluder|{}tagsExcluder[0]
+        final fun <get-tagsExcluder>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
     final val target // com.tezov.tuucho.core.domain.business.model.image/ImageModel.target|{}target[0]
         final fun <get-target>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.target.<get-target>|<get-target>(){}[0]
 
     final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component1|component1(){}[0]
     final fun component2(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component2|component2(){}[0]
     final fun component3(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component3|component3(){}[0]
-    final fun component4(): kotlin/String? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component4|component4(){}[0]
-    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlinx.serialization.json/JsonElement? = ..., kotlin/String? = ...): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.copy|copy(kotlin.String;kotlin.String;kotlinx.serialization.json.JsonElement?;kotlin.String?){}[0]
+    final fun component4(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component4|component4(){}[0]
+    final fun component5(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component5|component5(){}[0]
+    final fun component6(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component6|component6(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlinx.serialization.json/JsonElement? = ..., kotlin/String = ..., kotlin.collections/Set<kotlin/String>? = ..., kotlin.collections/Set<kotlin/String>? = ...): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.copy|copy(kotlin.String;kotlin.String;kotlinx.serialization.json.JsonElement?;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.model.image/ImageModel.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.model.image/ImageModel.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.toString|toString(){}[0]
 
     final object Companion { // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion|null[0]
         final fun (kotlin/String).toJsonElement(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.toJsonElement|toJsonElement@kotlin.String(){}[0]
-        final fun from(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/String?): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.from|from(kotlin.String;kotlin.String;kotlin.String?;kotlin.String?){}[0]
-        final fun from(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.from|from(kotlin.String;kotlin.String?){}[0]
+        final fun from(kotlin/String, kotlin/String, kotlin.collections/Set<kotlin/String>?, kotlin.collections/Set<kotlin/String>?): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.from|from(kotlin.String;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
+        final fun from(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/String, kotlin.collections/Set<kotlin/String>?, kotlin.collections/Set<kotlin/String>?): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.from|from(kotlin.String;kotlin.String;kotlin.String?;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
     }
 }
 
@@ -2353,8 +2393,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema 
     final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.root|{}root[0]
         final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.root.<get-root>|<get-root>(){}[0]
 
-    final val isEscaped // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isEscaped|@kotlin.String{}isEscaped[0]
-        final fun (kotlin/String).<get-isEscaped>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isEscaped.<get-isEscaped>|<get-isEscaped>@kotlin.String(){}[0]
+    final val hasSource // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.hasSource|@kotlinx.serialization.json.JsonElement{}hasSource[0]
+        final fun (kotlinx.serialization.json/JsonElement).<get-hasSource>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.hasSource.<get-hasSource>|<get-hasSource>@kotlinx.serialization.json.JsonElement(){}[0]
     final val isEscapedRef // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isEscapedRef|@kotlin.String{}isEscapedRef[0]
         final fun (kotlin/String).<get-isEscapedRef>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isEscapedRef.<get-isEscapedRef>|<get-isEscapedRef>@kotlin.String(){}[0]
     final val isRef // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isRef|@kotlin.String{}isRef[0]
@@ -2403,6 +2443,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSche
     final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.root|{}root[0]
         final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.root.<get-root>|<get-root>(){}[0]
 
+    final fun cacheKey(kotlin/String, kotlin/String): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.cacheKey|cacheKey(kotlin.String;kotlin.String){}[0]
+
     final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Scope|null[0]
         constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
     }
@@ -2413,30 +2455,37 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSche
         open val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.root|{}root[0]
             open fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.root.<get-root>|<get-root>(){}[0]
 
+        final var cacheKey // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.cacheKey|{}cacheKey[0]
+            final fun <get-cacheKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
+            final fun <set-cacheKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.cacheKey.<set-cacheKey>|<set-cacheKey>(kotlin.String?){}[0]
         final var id // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id|{}id[0]
             final fun <get-id>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id.<get-id>|<get-id>(){}[0]
             final fun <set-id>(kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id.<set-id>|<set-id>(kotlinx.serialization.json.JsonElement?){}[0]
         final var source // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source|{}source[0]
             final fun <get-source>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source.<get-source>|<get-source>(){}[0]
             final fun <set-source>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source.<set-source>|<set-source>(kotlin.String?){}[0]
-        final var tag // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tag|{}tag[0]
-            final fun <get-tag>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tag.<get-tag>|<get-tag>(){}[0]
-            final fun <set-tag>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tag.<set-tag>|<set-tag>(kotlin.String?){}[0]
-        final var timeToLive // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.timeToLive|{}timeToLive[0]
-            final fun <get-timeToLive>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.timeToLive.<get-timeToLive>|<get-timeToLive>(){}[0]
-            final fun <set-timeToLive>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.timeToLive.<set-timeToLive>|<set-timeToLive>(kotlinx.serialization.json.JsonObject?){}[0]
+        final var tags // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags|{}tags[0]
+            final fun <get-tags>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags.<get-tags>|<get-tags>(){}[0]
+            final fun <set-tags>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags.<set-tags>|<set-tags>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate?){}[0]
+        final var tagsExcluder // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tagsExcluder|{}tagsExcluder[0]
+            final fun <get-tagsExcluder>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
+            final fun <set-tagsExcluder>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tagsExcluder.<set-tagsExcluder>|<set-tagsExcluder>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate?){}[0]
         final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.type|{}type[0]
             final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.type.<get-type>|<get-type>(){}[0]
             final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.type.<set-type>|<set-type>(kotlin.String?){}[0]
     }
 
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key|null[0]
+        final const val cacheKey // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.cacheKey|{}cacheKey[0]
+            final fun <get-cacheKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
         final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.id|{}id[0]
             final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.id.<get-id>|<get-id>(){}[0]
         final const val source // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.source|{}source[0]
             final fun <get-source>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.source.<get-source>|<get-source>(){}[0]
-        final const val tag // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tag|{}tag[0]
-            final fun <get-tag>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tag.<get-tag>|<get-tag>(){}[0]
+        final const val tags // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tags|{}tags[0]
+            final fun <get-tags>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tags.<get-tags>|<get-tags>(){}[0]
+        final const val tagsExcluder // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tagsExcluder|{}tagsExcluder[0]
+            final fun <get-tagsExcluder>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
         final const val timeToLive // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.timeToLive|{}timeToLive[0]
             final fun <get-timeToLive>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.timeToLive.<get-timeToLive>|<get-timeToLive>(){}[0]
         final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.type|{}type[0]

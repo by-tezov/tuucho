@@ -401,6 +401,53 @@ public abstract interface class com/tezov/tuucho/core/domain/business/jsonSchema
 	public abstract fun write (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
 }
 
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/ListStringDelegate : java/util/List, kotlin/jvm/internal/markers/KMappedMarker {
+	public fun <init> (Ljava/util/List;)V
+	public synthetic fun add (ILjava/lang/Object;)V
+	public fun add (ILjava/lang/String;)V
+	public synthetic fun add (Ljava/lang/Object;)Z
+	public fun add (Ljava/lang/String;)Z
+	public fun addAll (ILjava/util/Collection;)Z
+	public fun addAll (Ljava/util/Collection;)Z
+	public synthetic fun addFirst (Ljava/lang/Object;)V
+	public fun addFirst (Ljava/lang/String;)V
+	public synthetic fun addLast (Ljava/lang/Object;)V
+	public fun addLast (Ljava/lang/String;)V
+	public fun clear ()V
+	public final fun contains (Ljava/lang/Object;)Z
+	public fun contains (Ljava/lang/String;)Z
+	public fun containsAll (Ljava/util/Collection;)Z
+	public synthetic fun get (I)Ljava/lang/Object;
+	public fun get (I)Ljava/lang/String;
+	public fun getSize ()I
+	public final fun indexOf (Ljava/lang/Object;)I
+	public fun indexOf (Ljava/lang/String;)I
+	public fun isEmpty ()Z
+	public fun iterator ()Ljava/util/Iterator;
+	public final fun lastIndexOf (Ljava/lang/Object;)I
+	public fun lastIndexOf (Ljava/lang/String;)I
+	public fun listIterator ()Ljava/util/ListIterator;
+	public fun listIterator (I)Ljava/util/ListIterator;
+	public synthetic fun remove (I)Ljava/lang/Object;
+	public fun remove (I)Ljava/lang/String;
+	public fun remove (Ljava/lang/Object;)Z
+	public fun removeAll (Ljava/util/Collection;)Z
+	public synthetic fun removeFirst ()Ljava/lang/Object;
+	public fun removeFirst ()Ljava/lang/String;
+	public synthetic fun removeLast ()Ljava/lang/Object;
+	public fun removeLast ()Ljava/lang/String;
+	public fun replaceAll (Ljava/util/function/UnaryOperator;)V
+	public fun retainAll (Ljava/util/Collection;)Z
+	public synthetic fun set (ILjava/lang/Object;)Ljava/lang/Object;
+	public fun set (ILjava/lang/String;)Ljava/lang/String;
+	public final fun size ()I
+	public fun sort (Ljava/util/Comparator;)V
+	public fun subList (II)Ljava/util/List;
+	public fun toArray ()[Ljava/lang/Object;
+	public fun toArray ([Ljava/lang/Object;)[Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
+}
+
 public class com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
 	public final fun collect ()Lkotlinx/serialization/json/JsonObject;
@@ -450,6 +497,27 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/Sche
 	public static final fun onScope (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
 	public static final fun withScope (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
 	public static synthetic fun withScope$default (Lkotlinx/serialization/json/JsonElement;Lkotlin/jvm/functions/Function1;Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope$MapOperator;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope;
+}
+
+public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate : java/util/Set, kotlin/jvm/internal/markers/KMappedMarker {
+	public fun <init> (Ljava/util/Set;)V
+	public synthetic fun add (Ljava/lang/Object;)Z
+	public fun add (Ljava/lang/String;)Z
+	public fun addAll (Ljava/util/Collection;)Z
+	public fun clear ()V
+	public final fun contains (Ljava/lang/Object;)Z
+	public fun contains (Ljava/lang/String;)Z
+	public fun containsAll (Ljava/util/Collection;)Z
+	public fun getSize ()I
+	public fun isEmpty ()Z
+	public fun iterator ()Ljava/util/Iterator;
+	public fun remove (Ljava/lang/Object;)Z
+	public fun removeAll (Ljava/util/Collection;)Z
+	public fun retainAll (Ljava/util/Collection;)Z
+	public final fun size ()I
+	public fun toArray ()[Ljava/lang/Object;
+	public fun toArray ([Ljava/lang/Object;)[Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/_system/SymbolData {
@@ -678,8 +746,8 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/IdS
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/IdSchema;
 	public static final field root Ljava/lang/String;
 	public final fun addGroup (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+	public final fun getHasSource (Lkotlinx/serialization/json/JsonElement;)Z
 	public final fun hasGroup (Ljava/lang/String;)Z
-	public final fun isEscaped (Ljava/lang/String;)Z
 	public final fun isEscapedRef (Ljava/lang/String;)Z
 	public final fun isRef (Ljava/lang/String;)Z
 	public final fun requireIsRef (Ljava/lang/String;)Ljava/lang/String;
@@ -711,29 +779,34 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/IdS
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema;
 	public static final field root Ljava/lang/String;
+	public final fun cacheKey (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema$Key;
+	public static final field cacheKey Ljava/lang/String;
 	public static final field id Ljava/lang/String;
 	public static final field source Ljava/lang/String;
-	public static final field tag Ljava/lang/String;
+	public static final field tags Ljava/lang/String;
+	public static final field tagsExcluder Ljava/lang/String;
 	public static final field timeToLive Ljava/lang/String;
 	public static final field type Ljava/lang/String;
 }
 
 public class com/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
+	public final fun getCacheKey ()Ljava/lang/String;
 	public final fun getId ()Lkotlinx/serialization/json/JsonElement;
 	public fun getRoot ()Ljava/lang/String;
 	public final fun getSource ()Ljava/lang/String;
-	public final fun getTag ()Ljava/lang/String;
-	public final fun getTimeToLive ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getTags ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate;
+	public final fun getTagsExcluder ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate;
 	public final fun getType ()Ljava/lang/String;
+	public final fun setCacheKey (Ljava/lang/String;)V
 	public final fun setId (Lkotlinx/serialization/json/JsonElement;)V
 	public final fun setSource (Ljava/lang/String;)V
-	public final fun setTag (Ljava/lang/String;)V
-	public final fun setTimeToLive (Lkotlinx/serialization/json/JsonObject;)V
+	public final fun setTags (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate;)V
+	public final fun setTagsExcluder (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate;)V
 	public final fun setType (Ljava/lang/String;)V
 }
 
@@ -1862,26 +1935,30 @@ public final class com/tezov/tuucho/core/domain/business/model/action/StoreActio
 
 public final class com/tezov/tuucho/core/domain/business/model/image/ImageModel {
 	public static final field Companion Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Lkotlinx/serialization/json/JsonElement;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
+	public final fun component5 ()Ljava/util/Set;
+	public final fun component6 ()Ljava/util/Set;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCacheKey ()Ljava/lang/String;
 	public final fun getCommand ()Ljava/lang/String;
 	public final fun getQuery ()Lkotlinx/serialization/json/JsonElement;
-	public final fun getTag ()Ljava/lang/String;
+	public final fun getTags ()Ljava/util/Set;
+	public final fun getTagsExcluder ()Ljava/util/Set;
 	public final fun getTarget ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/model/image/ImageModel$Companion {
-	public final fun from (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
-	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
-	public static synthetic fun from$default (Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
+	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
+	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
+	public static synthetic fun from$default (Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
 	public final fun toJsonElement (Ljava/lang/String;)Lkotlinx/serialization/json/JsonElement;
 }
 
@@ -2001,7 +2078,8 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/r
 	public abstract fun getHeight ()I
 	public abstract fun getSize ()J
 	public abstract fun getSource ()Ljava/lang/Object;
-	public abstract fun getTag ()Ljava/lang/String;
+	public abstract fun getTags ()Ljava/util/Set;
+	public abstract fun getTagsExcluder ()Ljava/util/Set;
 	public abstract fun getWidth ()I
 }
 

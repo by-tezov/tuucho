@@ -1,7 +1,8 @@
 {
   "setting": {
     "time-to-live": {
-      "strategy": "single-use"
+      "strategy": "transient",
+      "transient-value": "30s"
     }
   },
   "root": {
@@ -248,7 +249,7 @@
         "background-color": "*background@funny-color"
       },
       "content": {
-        "values": "*small-logo",
+        "values": ["*small-logo", "*small-logo-placeholder"],
         "description": "Small-Logo"
       }
     },
@@ -355,6 +356,10 @@
     "common": {
       "small-logo": {
         "source": "remote://auth/logo-koin"
+      },
+      "small-logo-placeholder": {
+        "source": "remote://auth/logo-koin-placeholder",
+        "tags": "placeholder"
       }
     }
   }
