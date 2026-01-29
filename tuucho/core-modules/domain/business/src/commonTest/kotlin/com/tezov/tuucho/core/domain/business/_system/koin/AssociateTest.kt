@@ -2,9 +2,9 @@
 
 package com.tezov.tuucho.core.domain.business._system.koin
 
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import org.koin.core.qualifier.named
 import org.koin.dsl.koinApplication
@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotEquals
 
-class AssociateDSLTest {
+class AssociateTest {
     interface Marker
 
     interface MarkerOther

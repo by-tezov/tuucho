@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class NavigateActionTest {
+class NavigateActionDefinitionTest {
     @Test
     fun `url command is navigate`() {
         assertEquals("navigate", NavigateActionDefinition.Url.command)

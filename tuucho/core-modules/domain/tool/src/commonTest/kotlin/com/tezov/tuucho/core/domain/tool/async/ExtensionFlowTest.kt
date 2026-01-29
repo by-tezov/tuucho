@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 class ExtensionFlowTest {
     @Test
@@ -64,4 +65,41 @@ class ExtensionFlowTest {
         collectorJob.cancelAndJoin()
         assertEquals(listOf(1, 2), collectedValues)
     }
+
+    @Test
+    fun `collectForever on empty flow does not call block`() = runTest {
+        var called = false
+        flowOf<Int>().collectForever { called = true }
+        assertFalse(called)
+    }
+
+    @Test
+    fun `collectUntil on empty flow does not call block`() = runTest {
+        var called = false
+        flowOf<Int>().collectUntil { called = true; false }
+        assertFalse(called)
+    }
+
+    @Test
+    fun `collectUntil stops at first true predicate`() = runTest {
+        val values = listOf(1, 2, 3)
+        val collected = mutableListOf<Int>()
+        flowOf(*values.toTypedArray()).collectUntil {
+            collected.add(it)
+            it == 2
+        }
+        assertEquals(listOf(1, 2), collected)
+    }
+
+    @Test
+    fun `collectUntil never true predicate collects all until flow ends`() = runTest {
+        val values = listOf(1, 2, 3)
+        val collected = mutableListOf<Int>()
+        flowOf(*values.toTypedArray()).collectUntil {
+            collected.add(it)
+            false
+        }
+        assertEquals(values, collected)
+    }
+
 }

@@ -54,15 +54,19 @@ class DelegateSchemaKey<T : Any?>(
 
             Int::class -> value.intOrNull
 
-            SetStringDelegate::class -> (value as? JsonArray)
-                ?.let {
-                    SetStringDelegate(value.jsonArray.map { it.string }.toSet())
+            SetStringDelegate::class -> {
+                require(value is JsonArray) {
+                    "expected JsonArray for SetStringDelegate, but was ${value::class.simpleName}"
                 }
+                SetStringDelegate(value.jsonArray.map { it.string }.toSet())
+            }
 
-            ListStringDelegate::class -> (value as? JsonArray)
-                ?.let {
-                    ListStringDelegate(value.jsonArray.map { it.string })
+            ListStringDelegate::class -> {
+                require(value is JsonArray) {
+                    "expected JsonArray for ListStringDelegate, but was ${value::class.simpleName}"
                 }
+                ListStringDelegate(value.jsonArray.map { it.string })
+            }
 
             else -> throw DomainException.Default("unknown type")
         }) as T

@@ -387,6 +387,9 @@ extensions.configure(JacocoPluginExtension::class.java) {
 }
 
 tasks.register<JacocoReport>("rootDebugCoverageReport") {
+    if (System.getenv("IS_CI") != "true") {
+        dependsOn("rootDebugUnitTest")
+    }
     group = "verification"
     description = "Aggregates Html coverage report from all modules into root build folder"
 

@@ -28,8 +28,8 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.style.Sty
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.style.StylesRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextsRectifier
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope

@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
-class FormActionTest {
+class FormActionDefinitionTest {
     @Test
     fun `send command is form`() {
         assertEquals("form", FormActionDefinition.Send.command)
