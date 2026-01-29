@@ -7,6 +7,7 @@
     <ID>CyclomaticComplexMethod:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
     <ID>EmptyFunctionBlock:MiddlewareExecutorTest.kt$MiddlewareExecutorTest${ }</ID>
     <ID>EmptyFunctionBlock:SchemaScopeMapOperatorTest.kt$SchemaScopeMapOperatorTest${ }</ID>
+    <ID>LongParameterList:ImageModel.kt$ImageModel.Companion$( command: String, target: String, query: String? = null, cacheKey: String, tags: Set&lt;String&gt;?, tagsExcluder: Set&lt;String&gt;? )</ID>
     <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, private val navigateFinish: NavigateFinishUseCase, )</ID>
     <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: NavigationRouteIdGenerator, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
     <ID>MatchingDeclarationName:AssociateScope.kt$AssociateScopeDSL</ID>
@@ -43,14 +44,16 @@
     <ID>PackageNaming:KoinCoreTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:KoinIsolatedContext.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:KoinMass.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:ListStringDelegate.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScope.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScopeMapOperator.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScopeMapOperatorTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScopeTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
+    <ID>PackageNaming:SetStringDelegate.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SymbolDataTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>ReturnCount:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
-    <ID>ThrowsCount:ImageModel.kt$ImageModel.Companion$fun from( value: String, tag: String? ): ImageModel</ID>
+    <ID>ThrowsCount:ImageModel.kt$ImageModel.Companion$fun from( value: String, cacheKey: String, tags: Set&lt;String&gt;?, tagsExcluder: Set&lt;String&gt;? ): ImageModel</ID>
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
     <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:InteractionLockStack.kt$InteractionLockStack : Stack</ID>

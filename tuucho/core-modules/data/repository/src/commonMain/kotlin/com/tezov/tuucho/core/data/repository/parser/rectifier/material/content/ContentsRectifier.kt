@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.content
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ContentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
@@ -29,6 +30,7 @@ class ContentsRectifier(
     private val contentRectifier: ContentRectifier by inject()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
@@ -90,12 +92,13 @@ class ContentsRectifier(
         }.collect()
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = element
         .find(path)
         .jsonArray
         .map {
-            contentRectifier.process(ROOT_PATH, it)
+            contentRectifier.process(context, ROOT_PATH, it)
         }.let(::JsonArray)
 }

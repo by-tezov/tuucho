@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
@@ -30,6 +31,7 @@ class DimensionsRectifier(
     private val dimensionRectifier: DimensionRectifier by inject()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
@@ -96,12 +98,13 @@ class DimensionsRectifier(
         }.collect()
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = element
         .find(path)
         .jsonArray
         .map {
-            dimensionRectifier.process(ROOT_PATH, it)
+            dimensionRectifier.process(context, ROOT_PATH, it)
         }.let(::JsonArray)
 }

@@ -2,14 +2,8 @@ package com.tezov.tuucho.core.data.repository.network
 
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.client.statement.request
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
@@ -22,7 +16,9 @@ internal class HttpNetworkSource(
     suspend fun getHealth(
         request: HttpRequest
     ): HttpResponse {
-        val response = httpClient.get("${config.baseUrl}/${config.version}/${config.healthEndpoint}/${request.url}")
+        val response = with(config) {
+            httpClient.getJson("$baseUrl/$version/$healthEndpoint/${request.url}")
+        }
         return HttpResponse(
             url = response.request.url.toString(),
             code = response.status.value,
@@ -36,7 +32,9 @@ internal class HttpNetworkSource(
     suspend fun getResource(
         request: HttpRequest
     ): HttpResponse {
-        val response = httpClient.get("${config.baseUrl}/${config.version}/${config.resourceEndpoint}/${request.url}")
+        val response = with(config) {
+            httpClient.getJson("$baseUrl/$version/$resourceEndpoint/${request.url}")
+        }
         return HttpResponse(
             url = response.request.url.toString(),
             code = response.status.value,
@@ -50,17 +48,10 @@ internal class HttpNetworkSource(
     suspend fun postSend(
         request: HttpRequest
     ): HttpResponse {
-        val response = httpClient.post("${config.baseUrl}/${config.version}/${config.sendEndpoint}/${request.url}") {
-            contentType(ContentType.Application.Json)
-            request.jsonObject?.let {
-                setBody(
-                    jsonConverter.encodeToString(
-                        serializer = JsonObject.serializer(),
-                        value = it
-                    )
-                )
-            }
-        }
+        val response = httpClient.postJson(
+            url = "${config.baseUrl}/${config.version}/${config.sendEndpoint}/${request.url}",
+            jsonObject = request.jsonObject
+        )
         return HttpResponse(
             url = response.request.url.toString(),
             code = response.status.value,

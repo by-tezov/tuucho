@@ -2,13 +2,12 @@ package com.tezov.tuucho.core.data.repository.di
 
 import com.tezov.tuucho.core.data.repository.di.NetworkModule.Name.HTTP_CLIENT_ENGINE
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.data.repository.network.HttpClient
 import com.tezov.tuucho.core.data.repository.network.HttpClientEngineFactory
 import com.tezov.tuucho.core.data.repository.network.HttpNetworkSource
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpCallValidator
-import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -17,7 +16,8 @@ import org.koin.core.qualifier.named
 
 object NetworkModule {
     interface Config {
-        val timeoutMillis: Long
+        val jsonRequestTimeoutMillis: Long
+        val imageRequestTimeoutMillis: Long
         val version: String
         val baseUrl: String
         val healthEndpoint: String
@@ -32,7 +32,7 @@ object NetworkModule {
 
     internal fun invoke() = module(ModuleContextData.Main) {
         single {
-            HttpClient(
+            io.ktor.client.HttpClient(
                 engineFactory = HttpClientEngineFactory(
                     coroutineScopes = get(),
                     engineFactory = get<io.ktor.client.engine.HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE),
@@ -42,13 +42,6 @@ object NetworkModule {
             ) {
                 install(ContentNegotiation) {
                     json(get<Json>())
-                }
-                install(HttpTimeout) {
-                    with(get<Config>()) {
-                        requestTimeoutMillis = timeoutMillis
-                        connectTimeoutMillis = timeoutMillis
-                        socketTimeoutMillis = timeoutMillis
-                    }
                 }
                 install(HttpCallValidator) {
                     validateResponse { response ->
@@ -65,6 +58,7 @@ object NetworkModule {
             }
         }
 
+        factoryOf(::HttpClient)
         factoryOf(::HttpNetworkSource)
     }
 }

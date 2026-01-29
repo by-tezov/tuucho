@@ -3,11 +3,15 @@ package com.tezov.tuucho.core.data.repository.database.dao
 import com.tezov.tuucho.core.data.repository.database.Database
 import com.tezov.tuucho.core.data.repository.database.entity.HookEntity
 import com.tezov.tuucho.core.data.repository.database.entity.toEntity
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
+@OpenForTest
 internal class HookQueries(
     private val database: Database
 ) {
     private val queries get() = database.hookStatementQueries
+
+    fun selectAll() = queries.selectAll().executeAsList()
 
     fun deleteAll() = queries.deleteAll()
 

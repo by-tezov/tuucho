@@ -12,7 +12,9 @@ data class ImageModel(
     val command: String,
     val target: String,
     val query: JsonElement?,
-    val tag: String?,
+    val cacheKey: String,
+    val tags: Set<String>?,
+    val tagsExcluder: Set<String>?
 ) {
     companion object {
         private val COMMAND_SEPARATOR = Regex.escape("://")
@@ -53,7 +55,9 @@ data class ImageModel(
 
         fun from(
             value: String,
-            tag: String?
+            cacheKey: String,
+            tags: Set<String>?,
+            tagsExcluder: Set<String>?
         ): ImageModel {
             val match = IMAGE_REGEX.matchEntire(value)
                 ?: throw DomainException.Default("invalid image")
@@ -63,7 +67,9 @@ data class ImageModel(
                 target = match.groups[2]?.value
                     ?: throw DomainException.Default("image target can't be null"),
                 query = match.groups[3]?.value?.toJsonElement(),
-                tag = tag
+                cacheKey = cacheKey,
+                tags = tags,
+                tagsExcluder = tagsExcluder
             )
         }
 
@@ -71,12 +77,16 @@ data class ImageModel(
             command: String,
             target: String,
             query: String? = null,
-            tag: String?
+            cacheKey: String,
+            tags: Set<String>?,
+            tagsExcluder: Set<String>?
         ) = ImageModel(
             command = command,
             target = target,
             query = query?.toJsonElement(),
-            tag = tag,
+            cacheKey = cacheKey,
+            tags = tags,
+            tagsExcluder = tagsExcluder
         )
     }
 

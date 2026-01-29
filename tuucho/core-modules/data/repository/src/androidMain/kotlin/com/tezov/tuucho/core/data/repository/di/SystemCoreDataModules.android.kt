@@ -1,6 +1,9 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import android.content.Context
 import com.tezov.tuucho.core.data.repository._system.SystemInformationAndroid
+import com.tezov.tuucho.core.data.repository._system.SystemPlatform
+import com.tezov.tuucho.core.data.repository._system.SystemPlatformAndroid
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryAndroid
 import com.tezov.tuucho.core.data.repository.repository.SystemInformation
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
@@ -16,6 +19,11 @@ internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = lis
     module(ModuleContextData.Main) {
         factoryOf(::SystemInformationAndroid) bind SystemInformation.PlatformProtocol::class
         factoryOf(::ReferenceFactoryAndroid) bind ReferenceProtocol.Factory::class
+        factory<SystemPlatform> {
+            SystemPlatformAndroid(
+                context = get<Context>(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT)
+            )
+        }
     },
     DatabaseModuleAndroid.invoke(),
     NetworkModuleAndroid.invoke(),

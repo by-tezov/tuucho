@@ -37,13 +37,12 @@ internal class HttpClientEngine(
             emit(engine.execute(context.builder.build()))
         }
         val builder = HttpRequestBuilder().takeFrom(data)
-        val response = middlewareExecutor
-            .process(
-                middlewares = interceptors + terminal,
-                context = HttpInterceptor.Context(
-                    builder = builder
-                )
+        val response = middlewareExecutor.process(
+            middlewares = interceptors + terminal,
+            context = HttpInterceptor.Context(
+                builder = builder
             )
+        )
         return response.firstOrNull() ?: HttpResponseData(
             statusCode = HttpStatusCode.NoContent,
             requestTime = GMTDate(),

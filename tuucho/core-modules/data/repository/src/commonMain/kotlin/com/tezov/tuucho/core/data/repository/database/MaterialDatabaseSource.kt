@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.data.repository.database
 
+import app.cash.sqldelight.TransactionWithoutReturn
 import com.tezov.tuucho.core.data.repository.database.dao.HookQueries
 import com.tezov.tuucho.core.data.repository.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.repository.database.entity.HookEntity
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
-import com.tezov.tuucho.core.data.repository.database.type.Lifetime
-import com.tezov.tuucho.core.data.repository.database.type.Visibility
+import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
@@ -16,17 +16,14 @@ import kotlinx.serialization.json.JsonObject
 internal class MaterialDatabaseSource(
     private val transactionFactory: DatabaseTransactionFactory,
     private val hookQueries: HookQueries,
-    private val jsonObjectQueries: JsonObjectQueries,
+    private val jsonObjectQueries: JsonObjectQueries
 ) {
-    @Suppress("RedundantSuspendModifier")
-    suspend fun deleteAll(
+    fun TransactionWithoutReturn.deleteAll(
         url: String,
         table: Table
     ) {
-        transactionFactory.transaction {
-            hookQueries.delete(url)
-            jsonObjectQueries.deleteAll(url, table) // since delete cascade is active, this one is not needed
-        }
+        hookQueries.delete(url)
+        jsonObjectQueries.deleteAll(url, table)
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -46,7 +43,7 @@ internal class MaterialDatabaseSource(
     @Suppress("RedundantSuspendModifier")
     suspend fun getLifetimeOrNull(
         url: String
-    ): Lifetime? = hookQueries.getLifetimeOrNull(url)
+    ) = hookQueries.getLifetimeOrNull(url)
 
     @Suppress("RedundantSuspendModifier")
     suspend fun getAllCommonRefOrNull(
@@ -77,7 +74,7 @@ internal class MaterialDatabaseSource(
         from: JsonObject,
         url: String,
         type: String,
-        visibility: Visibility.Contextual,
+        visibility: JsonVisibility.Contextual,
     ): List<JsonObject>? {
         from.onScope(IdSchema::Scope).source ?: return null
         return buildList {

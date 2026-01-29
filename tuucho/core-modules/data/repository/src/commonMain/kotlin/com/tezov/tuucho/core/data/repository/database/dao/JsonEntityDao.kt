@@ -4,8 +4,10 @@ import com.tezov.tuucho.core.data.repository.database.Database
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.repository.database.entity.toEntity
-import com.tezov.tuucho.core.data.repository.database.type.Visibility
+import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
+@OpenForTest
 internal class JsonObjectQueries(
     private val database: Database,
 ) {
@@ -14,6 +16,13 @@ internal class JsonObjectQueries(
     private val queriesContextual get() = database.jsonObjectContextualStatementQueries
 
     private val queriesJoin get() = database.joinStatementQueries
+
+    fun selectAll(
+        table: Table
+    ) = when (table) {
+        Table.Common -> queriesCommon.selectAll()
+        Table.Contextual -> queriesContextual.selectAll()
+    }
 
     fun deleteAll() {
         queriesCommon.deleteAll()
@@ -71,7 +80,7 @@ internal class JsonObjectQueries(
         type: String,
         id: String
     ) = queriesJoin
-        .getCommonByTypeIdVisibility(Visibility.Global, type, id)
+        .getCommonByTypeIdVisibility(JsonVisibility.Global, type, id)
         .executeAsOneOrNull()
         ?.toEntity()
 
@@ -79,7 +88,7 @@ internal class JsonObjectQueries(
         type: String,
         url: String,
         id: String,
-        visibility: Visibility,
+        visibility: JsonVisibility,
     ) = queriesJoin
         .getContextualByTypeUrlIdVisibility(visibility, type, url, id)
         .executeAsOneOrNull()
