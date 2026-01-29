@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface ImageRepositoryProtocol {
     interface Image<S : Any> {
         val source: S
-        val tag: String?
+        val tags: Set<String>?
+        val tagsExcluder: Set<String>?
         val size: Long
         val width: Int
         val height: Int

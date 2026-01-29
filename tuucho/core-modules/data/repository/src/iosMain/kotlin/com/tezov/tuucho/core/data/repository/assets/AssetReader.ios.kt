@@ -1,15 +1,17 @@
 package com.tezov.tuucho.core.data.repository.assets
 
-import okio.FileSystem
+import com.tezov.tuucho.core.data.repository._system.SystemPlatform
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import okio.Path.Companion.toPath
-import okio.use
 import platform.Foundation.NSBundle
 import platform.Foundation.NSData
 import platform.Foundation.dataWithContentsOfFile
 import platform.UniformTypeIdentifiers.UTType
 
-class AssetReaderIos : AssetReaderProtocol {
-    private fun resolveFilePath(
+class AssetReaderIos(
+    private val platform: SystemPlatform
+) : AssetReaderProtocol {
+    private fun assetPath(
         path: String
     ): String? {
         val (name, ext, subdir) = splitResourcePath("assets/files/$path")
@@ -18,30 +20,19 @@ class AssetReaderIos : AssetReaderProtocol {
 
     override fun isExist(
         path: String
-    ) = resolveFilePath(path) != null
+    ) = assetPath(path) != null
 
-    override fun <T> read(
+    override fun read(
         path: String,
-        contentType: String?,
-        block: (AssetContent) -> T
-    ): T {
-        val filePath = resolveFilePath(path) ?: error("resource $path not found")
-        val size = NSData
-            .dataWithContentsOfFile(filePath)
-            ?.length
-            ?.toLong()
-            ?: -1L
-        return FileSystem.SYSTEM
-            .source(filePath.toPath())
-            .use { source ->
-                block(
-                    AssetContent(
-                        source = source,
-                        contentType = contentType ?: resolveContentType(path),
-                        size = size
-                    )
-                )
-            }
+        contentType: String?
+    ): AssetContent {
+        val filePath = assetPath(path) ?: throw DataException.Default("asset resource $path not found")
+        val size = NSData.dataWithContentsOfFile(filePath)?.length?.toLong() ?: -1L
+        return AssetContent(
+            source = platform.fileSystem().source(filePath.toPath()),
+            contentType = contentType ?: resolveContentType(path),
+            size = size
+        )
     }
 
     private fun splitResourcePath(

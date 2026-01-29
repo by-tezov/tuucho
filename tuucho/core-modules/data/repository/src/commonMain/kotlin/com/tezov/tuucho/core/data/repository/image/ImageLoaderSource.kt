@@ -23,10 +23,17 @@ internal class ImageLoaderSource(
     fun retrieve(
         requests: List<ImageRequest>
     ): Flow<ImageResponse> = callbackFlow {
+        val requestRemaining = requests.filterNot {
+            shouldBeExcluded(it, requests)
+        }
+        if (requestRemaining.isEmpty()) {
+            close(DataException.Default("all image request exclude themself"))
+            return@callbackFlow
+        }
         val counter = AtomicInt(0)
-        val counterEnd = requests.size
-        requests.forEach { enqueue(it, counter, counterEnd) }
-        awaitClose { } // TODO timeout
+        val counterEnd = requestRemaining.size
+        requestRemaining.forEach { enqueue(it, counter, counterEnd) }
+        awaitClose { }
     }
 
     private fun ProducerScope<ImageResponse>.enqueue(
@@ -40,10 +47,16 @@ internal class ImageLoaderSource(
             .decoderCoroutineContext(coroutineScopes.image.context)
             .fetcherFactory(imageFetchers.get(request.command))
             .data(request)
+            .diskCacheKey(request.cacheKey)
             .target(
                 onSuccess = { image ->
                     send(
-                        response = ImageResponse(target = request.target, tag = request.tag, image = image),
+                        response = ImageResponse(
+                            target = request.target,
+                            tags = request.tags,
+                            tagsExcluder = request.tagsExcluder,
+                            image = image
+                        ),
                         counter = counter,
                         counterEnd = counterEnd,
                     )
@@ -77,4 +90,27 @@ internal class ImageLoaderSource(
     ) {
         close(throwable)
     }
+
+    private suspend fun shouldBeExcluded(
+        request: ImageRequest,
+        allRequests: List<ImageRequest>
+    ) = findExcluders(request, allRequests)
+        .any { imageFetchers.get(it.command).isAvailable(it) }
+
+    private fun findExcluders(
+        request: ImageRequest,
+        allRequests: List<ImageRequest>
+    ) = allRequests.filter { candidate ->
+        hasExcludingTags(
+            sourceTags = request.tags,
+            excluderTags = candidate.tagsExcluder
+        )
+    }
+
+    private fun hasExcludingTags(
+        sourceTags: Set<String>?,
+        excluderTags: Set<String>?
+    ) = sourceTags != null &&
+        excluderTags != null &&
+        excluderTags.intersect(sourceTags).isNotEmpty()
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Visibility {
+sealed class JsonVisibility {
     companion object Type {
         const val local = "local"
         const val global = "global"
@@ -15,13 +15,13 @@ sealed class Visibility {
 
     @Serializable
     @SerialName(local)
-    data object Local : Visibility() {
+    data object Local : JsonVisibility() {
         override val name = local
     }
 
     @Serializable
     @SerialName(global)
-    data object Global : Visibility() {
+    data object Global : JsonVisibility() {
         override val name = global
     }
 
@@ -29,7 +29,7 @@ sealed class Visibility {
     @SerialName(contextual)
     data class Contextual(
         val urlOrigin: String,
-    ) : Visibility() {
+    ) : JsonVisibility() {
         override val name = contextual
     }
 }

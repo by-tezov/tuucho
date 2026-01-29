@@ -33,15 +33,16 @@ internal class MaterialRectifier : TuuchoKoinScopeComponent {
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
+        context: RectifierProtocol.Context,
         materialObject: JsonObject
     ) = materialObject
         .withScope(MaterialSchema::Scope)
         .apply {
             rootComponent?.let {
-                rootComponent = componentRectifier.process(ROOT_PATH, it).jsonObject
+                rootComponent = componentRectifier.process(context, ROOT_PATH, it).jsonObject
             }
             rectifiers.forEach { rectifier ->
-                this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(ROOT_PATH, it).jsonArray }
+                this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }
             }
         }.collect()
 }

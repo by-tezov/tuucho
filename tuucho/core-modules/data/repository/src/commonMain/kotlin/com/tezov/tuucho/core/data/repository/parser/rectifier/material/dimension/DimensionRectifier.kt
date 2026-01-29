@@ -36,6 +36,7 @@ class DimensionRectifier(
     }
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -53,6 +54,7 @@ class DimensionRectifier(
         }.collect()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -64,6 +66,7 @@ class DimensionRectifier(
         }.collect()
 
     override fun afterAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ): JsonElement? {

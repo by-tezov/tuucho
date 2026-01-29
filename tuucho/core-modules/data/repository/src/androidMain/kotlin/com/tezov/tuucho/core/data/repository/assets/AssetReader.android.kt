@@ -7,13 +7,17 @@ import java.net.URLConnection
 internal class AssetReaderAndroid(
     private val context: Context
 ) : AssetReaderProtocol {
+    private fun assetPath(
+        path: String
+    ) = "files/$path"
+
     private fun openStream(
         path: String
-    ) = context.assets.open("files/$path")
+    ) = context.assets.open(assetPath(path))
 
     private fun openDescriptor(
         path: String
-    ) = context.assets.openFd("files/$path")
+    ) = context.assets.openFd(assetPath(path))
 
     override fun isExist(
         path: String
@@ -22,25 +26,20 @@ internal class AssetReaderAndroid(
         true
     }.getOrElse { false }
 
-    override fun <T> read(
+    override fun read(
         path: String,
-        contentType: String?,
-        block: (AssetContent) -> T
-    ): T {
+        contentType: String?
+    ): AssetContent {
         val inputStream = openStream(path)
         val source = inputStream.source()
         val size = runCatching {
             openDescriptor(path).use { it.length }
         }.getOrElse { -1L }
-        return source.use {
-            block(
-                AssetContent(
-                    source = it,
-                    contentType = contentType ?: resolveContentType(path),
-                    size = size
-                )
-            )
-        }
+        return AssetContent(
+            source = source,
+            contentType = contentType ?: resolveContentType(path),
+            size = size
+        )
     }
 
     private fun resolveContentType(

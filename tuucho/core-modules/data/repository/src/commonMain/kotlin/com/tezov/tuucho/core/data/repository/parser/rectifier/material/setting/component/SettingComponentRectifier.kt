@@ -44,6 +44,7 @@ class SettingComponentRectifier(
         super.accept(path, element)
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -56,6 +57,7 @@ class SettingComponentRectifier(
         }.collect()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -67,9 +69,10 @@ class SettingComponentRectifier(
         }.collect()
 
     override fun beforeAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = with(element.find(path).jsonArray) {
-        JsonArray(map { process(ROOT_PATH, it) })
+        JsonArray(map { process(context, ROOT_PATH, it) })
     }
 }

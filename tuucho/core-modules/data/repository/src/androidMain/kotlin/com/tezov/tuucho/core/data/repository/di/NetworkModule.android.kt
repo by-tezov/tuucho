@@ -9,7 +9,7 @@ internal object NetworkModuleAndroid {
     object FlavorDefault {
         fun invoke() = module(ModuleContextData.Main) {
             factory<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE) {
-                getOrNull() ?: OkHttp
+                getOrNull<HttpClientEngineFactory<*>>() ?: OkHttp
             }
         }
     }

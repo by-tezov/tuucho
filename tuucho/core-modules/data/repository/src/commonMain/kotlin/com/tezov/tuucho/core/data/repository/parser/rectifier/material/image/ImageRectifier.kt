@@ -1,20 +1,25 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.image
 
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasSource
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.isRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
 import org.koin.core.scope.Scope
 
 class ImageRectifier(
@@ -35,6 +40,7 @@ class ImageRectifier(
     }
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -52,6 +58,7 @@ class ImageRectifier(
         }.collect()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -63,28 +70,61 @@ class ImageRectifier(
         }.collect()
 
     override fun afterAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
-    ): JsonElement? {
-        var valueRectified: String?
-        var sourceRectified: String?
-        return element
-            .find(path)
-            .withScope(ImageSchema::Scope)
-            .takeIf {
-                it
-                    .rectifyIds(ImageSchema.Value.Group.common)
-                    .also { (value, source) ->
-                        valueRectified = value
-                        sourceRectified = source
+    ): JsonElement = element
+        .find(path)
+        .withScope(ImageSchema::Scope)
+        .apply {
+            rectifyIds(ImageSchema.Value.Group.common)
+                .let { (valueRectified, sourceRectified) ->
+                    if (valueRectified != null || sourceRectified != null) {
+                        id = onScope(IdSchema::Scope)
+                            .apply {
+                                valueRectified?.let { value = it }
+                                sourceRectified?.let { source = it }
+                            }.collect()
                     }
-                valueRectified != null || sourceRectified != null
-            }?.apply {
-                id = onScope(IdSchema::Scope)
-                    .apply {
-                        valueRectified?.let { value = it }
-                        sourceRectified?.let { source = it }
-                    }.collect()
-            }?.collect()
-    }
+                }
+            if (source != null) {
+                cacheKey = ImageSchema.cacheKey(
+                    url = context.url,
+                    id = onScope(IdSchema::Scope).value ?: throw DataException.Default("id can't be null, rectifier id not applied.")
+                )
+            }
+            when (val tags = this[ImageSchema.Key.tags]) {
+                is JsonPrimitive -> {
+                    this.tags = SetStringDelegate(setOf(tags.string))
+                }
+
+                null, JsonNull, is JsonArray -> { // do nothing
+                }
+
+                else -> {
+                    throw DataException.Default("by design tagsExcluder must be null, a string or an array")
+                }
+            }
+            when (val tagsExcluder = this[ImageSchema.Key.tagsExcluder]) {
+                is JsonPrimitive -> {
+                    this.tagsExcluder = SetStringDelegate(setOf(tagsExcluder.string))
+                }
+
+                is JsonArray -> { // do nothing
+                }
+
+                null, JsonNull -> {
+                    if (
+                        id?.hasSource != true &&
+                        tags?.contains(ImageSchema.Value.Tag.placeholder) != true
+                    ) {
+                        this.tagsExcluder = SetStringDelegate(setOf(ImageSchema.Value.Tag.placeholder))
+                    }
+                }
+
+                else -> {
+                    throw DataException.Default("by design tagsExcluder must be null, a string or an array")
+                }
+            }
+        }.collect()
 }

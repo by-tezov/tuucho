@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.image
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
@@ -30,6 +31,7 @@ class ImagesRectifier(
     private val imageRectifier: ImageRectifier by inject()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
@@ -96,12 +98,13 @@ class ImagesRectifier(
         }.collect()
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = element
         .find(path)
         .jsonArray
         .map {
-            imageRectifier.process(ROOT_PATH, it)
+            imageRectifier.process(context, ROOT_PATH, it)
         }.let(::JsonArray)
 }

@@ -27,6 +27,7 @@ internal class ResponseRectifier : TuuchoKoinScopeComponent {
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
+        context: RectifierProtocol.Context,
         responseObject: JsonObject
     ) = responseObject
         .withScope(::SchemaScope)
@@ -37,7 +38,7 @@ internal class ResponseRectifier : TuuchoKoinScopeComponent {
                     .asSequence()
                     .filter { it.key == key }
                     .forEach {
-                        _element = it.process(ROOT_PATH, element)
+                        _element = it.process(context, ROOT_PATH, element)
                     }
                 this[key] = _element
             }

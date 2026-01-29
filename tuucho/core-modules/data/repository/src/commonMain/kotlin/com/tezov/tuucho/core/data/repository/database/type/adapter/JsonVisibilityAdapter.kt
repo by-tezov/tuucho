@@ -1,24 +1,24 @@
 package com.tezov.tuucho.core.data.repository.database.type.adapter
 
 import app.cash.sqldelight.ColumnAdapter
-import com.tezov.tuucho.core.data.repository.database.type.Lifetime
+import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-internal class LifetimeAdapter(
+internal class JsonVisibilityAdapter(
     private val json: Json,
-) : ColumnAdapter<Lifetime, String> {
+) : ColumnAdapter<JsonVisibility, String> {
     companion object {
         private const val separator = ":"
     }
 
-    private val serializer: KSerializer<Lifetime> = Lifetime.serializer()
+    private val serializer: KSerializer<JsonVisibility> = JsonVisibility.serializer()
 
     override fun decode(
         databaseValue: String
-    ): Lifetime = json.decodeFromString(serializer, databaseValue.substringAfter(separator))
+    ): JsonVisibility = json.decodeFromString(serializer, databaseValue.substringAfter(separator))
 
     override fun encode(
-        value: Lifetime
+        value: JsonVisibility
     ): String = "${value.name}${separator}${json.encodeToString(serializer, value)}"
 }

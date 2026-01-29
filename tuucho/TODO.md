@@ -1,9 +1,10 @@
 ### Todo:
 
-- TTL
-- error when loading image
+- test image Model + clean
 - registry, add custom fetcher ?
+- error when loading image
 
+- Missing Setting Page rectifier ?
 - Animation placeholder / final image ?
 - Alternative image (fallback) query fallback local/remote ?
 
@@ -11,10 +12,11 @@
 - shadower with flow ?
 
 - do a smart padding object - can do also for size)?
-- time to live same as actions, colors, texts reusable
 - NavigationLocalDestinationActionMiddleware do finish too, and check if value can have single source with Navigation.Back / Finish
 
 -> close alpha 25
+
+- Then documentation
 
 ### Need to fix: 
 - "credentials-title": { "id": "*credentials-request" } ok, but "credentials-title": "*credentials-request" failed. Look why and fix it. (Aka login page)

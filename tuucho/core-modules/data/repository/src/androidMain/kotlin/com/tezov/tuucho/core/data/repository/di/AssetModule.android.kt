@@ -10,9 +10,7 @@ internal object AssetModuleAndroid {
         @OptIn(TuuchoInternalApi::class)
         factory<AssetReaderProtocol> {
             AssetReaderAndroid(
-                context = get(
-                    SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT
-                ),
+                context = get(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT),
             )
         }
     }

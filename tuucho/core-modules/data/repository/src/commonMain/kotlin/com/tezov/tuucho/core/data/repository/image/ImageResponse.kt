@@ -4,6 +4,7 @@ import coil3.Image
 
 data class ImageResponse(
     val target: String,
-    val tag: String?,
+    val tags: Set<String>?,
+    val tagsExcluder: Set<String>?,
     val image: Image
 )
