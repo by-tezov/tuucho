@@ -28,12 +28,15 @@ buildkonfig {
 
     defaultConfigs {
         field("localDatabaseFileName", FieldSpec.Type.STRING)
-
-        field("serverTimeoutMillis", FieldSpec.Type.LONG)
+        field("imageDiskCacheSizeMo", FieldSpec.Type.INT)
+        field("imageDiskCacheDirectory", FieldSpec.Type.STRING)
+        field("serverImageTimeoutMillis", FieldSpec.Type.LONG)
+        field("serverJsonTimeoutMillis", FieldSpec.Type.LONG)
         field("serverVersion", FieldSpec.Type.STRING)
         field("serverHealthEndpoint", FieldSpec.Type.STRING)
         field("serverResourceEndpoint", FieldSpec.Type.STRING)
         field("serverSendEndpoint", FieldSpec.Type.STRING)
+        field("serverImageEndpoint", FieldSpec.Type.STRING)
     }
 
     targetConfigs {
@@ -63,7 +66,7 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(libs.kermit)
-            api(libs.tuucho)
+            implementation(libs.tuucho)
             implementation(libs.tuucho.ui)
             implementation(project(":app:uiExtension"))
 

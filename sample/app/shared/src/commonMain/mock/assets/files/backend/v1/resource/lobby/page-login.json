@@ -1,4 +1,10 @@
 {
+  "setting": {
+    "time-to-live": {
+      "strategy": "transient",
+      "transient-value": "10s"
+    }
+  },
   "root": {
     "setting": {
       "navigation": {
@@ -19,12 +25,41 @@
     },
     "content": {
       "items": [
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*small-logo"
+            ]
+          }
+        },
+        "*item-spacer",
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*main-logo",
+              "*item-spacer"
+            ]
+          }
+        },
         "*item-spacer",
         {
           "subset": "label",
           "style": "*title-section",
           "content": {
-            "value": "Please enter your credentials"
+            "value": "*credentials-title"
           }
         },
         "*item-spacer-24-v",
@@ -103,6 +138,40 @@
       "style": {
         "weight": "0.2"
       }
+    },
+    {
+      "id": "main-logo",
+      "subset": "image",
+      "style": {
+        "width": "196",
+        "height": "196",
+        "shape": "rounded-square",
+        "padding": "6",
+        "alpha": "0.85",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "values": [
+          "*main-logo",
+          "*main-logo-placeholder"
+        ],
+        "description": "Main-Logo"
+      }
+    },
+    {
+      "id": "small-logo",
+      "subset": "image",
+      "style": {
+        "width": "48",
+        "height": "48",
+        "shape": "rounded",
+        "padding": "3",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "values": "*small-logo",
+        "description": "Small-Logo"
+      }
     }
   ],
   "styles": {
@@ -145,9 +214,21 @@
       }
     }
   },
+  "images": {
+    "common": {
+      "main-logo": "remote://lobby/logo-compose",
+      "main-logo-placeholder": {
+        "source": "local://img/logo-compose-placeholder",
+        "tags": "placeholder"
+      },
+      "small-logo": "local://img/logo-koin"
+    }
+  },
   "texts": {
     "common": {
-      "login-init": "from here"
+      "credentials-title": {
+        "id": "*credentials-request"
+      }
     }
   }
 }

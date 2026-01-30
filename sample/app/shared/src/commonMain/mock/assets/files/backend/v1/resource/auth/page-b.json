@@ -1,6 +1,6 @@
 {
   "setting": {
-    "ttl": {
+    "time-to-live": {
       "strategy": "single-use"
     }
   },

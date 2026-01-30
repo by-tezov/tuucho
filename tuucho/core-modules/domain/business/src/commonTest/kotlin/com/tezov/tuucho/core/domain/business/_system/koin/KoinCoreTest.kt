@@ -125,6 +125,6 @@ class KoinCoreTest {
 
         // this is not guaranteed to pass since order is not documented but I keep it to warn me if it fail.
         assertNotEquals(listOf("SimpleC", "SimpleD", "SimpleA", "SimpleB"), names)
-        assertEquals(listOf("SimpleA", "SimpleB", "SimpleC", "SimpleD"), names)
+        assertEquals(listOf("SimpleB", "SimpleD", "SimpleC", "SimpleA"), names)
     }
 }

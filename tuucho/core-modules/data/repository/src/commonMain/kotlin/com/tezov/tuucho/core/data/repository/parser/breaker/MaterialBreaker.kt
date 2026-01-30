@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.breaker
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
@@ -45,7 +45,7 @@ internal class MaterialBreaker : TuuchoKoinComponent {
         }
         return map { entry ->
             if (entry !is JsonObject) {
-                throw DataException.Default("By design it must be an object nut $entry")
+                throw DataException.Default("By design it must be an object but $entry")
             }
             entry
         }

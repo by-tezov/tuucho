@@ -2,14 +2,16 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.IdGenerator
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinModuleExtension.factoryObject
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRegistry
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockStack
 import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutor
-import com.tezov.tuucho.core.domain.business.model.action.FormAction
-import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
-import com.tezov.tuucho.core.domain.business.model.action.StoreAction
+import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
+import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
+import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
@@ -43,14 +45,14 @@ internal object MiscModule {
         singleOf(::InteractionLockStack) bind InteractionLockProtocol.Stack::class
         factoryOf(::InteractionLockResolver) bind InteractionLockProtocol.Resolver::class
 
-        factory<InteractionLockProtocol.Registry> {
-            InteractionLockRegistry().apply {
-                register(NavigateAction.Url)
-                register(NavigateAction.LocalDestination)
-                register(FormAction.Send)
-                register(FormAction.Update)
-                register(StoreAction.KeyValue)
-            }
+        single<InteractionLockProtocol.Registry> {
+            InteractionLockRegistry(actionDefinitions = getAll())
         }
+
+        factoryObject(NavigateActionDefinition.Url) bind ActionDefinitionProtocol::class
+        factoryObject(NavigateActionDefinition.LocalDestination) bind ActionDefinitionProtocol::class
+        factoryObject(FormActionDefinition.Send) bind ActionDefinitionProtocol::class
+        factoryObject(FormActionDefinition.Update) bind ActionDefinitionProtocol::class
+        factoryObject(StoreActionDefinition.KeyValue) bind ActionDefinitionProtocol::class
     }
 }

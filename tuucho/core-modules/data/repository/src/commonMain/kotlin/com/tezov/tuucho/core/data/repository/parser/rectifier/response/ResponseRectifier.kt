@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.response
 
 import com.tezov.tuucho.core.data.repository.di.ModuleContextData.Rectifier.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -27,6 +27,7 @@ internal class ResponseRectifier : TuuchoKoinScopeComponent {
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
+        context: RectifierProtocol.Context,
         responseObject: JsonObject
     ) = responseObject
         .withScope(::SchemaScope)
@@ -37,7 +38,7 @@ internal class ResponseRectifier : TuuchoKoinScopeComponent {
                     .asSequence()
                     .filter { it.key == key }
                     .forEach {
-                        _element = it.process(ROOT_PATH, element)
+                        _element = it.process(context, ROOT_PATH, element)
                     }
                 this[key] = _element
             }

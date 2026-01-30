@@ -2,12 +2,14 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.NavigateAction
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import kotlinx.coroutines.flow.FlowCollector
 
 internal class NavigationUrlActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -18,14 +20,15 @@ internal class NavigationUrlActionMiddleware(
 
     override fun accept(
         route: NavigationRoute?,
-        action: ActionModelDomain,
-    ) = action.command == NavigateAction.Url.command && action.authority == NavigateAction.Url.authority
+        action: ActionModel,
+    ) = action.command == NavigateActionDefinition.Url.command &&
+        action.authority == NavigateActionDefinition.Url.authority
 
-    override suspend fun process(
-        context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
-    ) = with(context.input) {
-        action.target?.let { url ->
+    override suspend fun FlowCollector<Unit>.process(
+        context: Context,
+        next: MiddlewareProtocol.Next<Context, Unit>?
+    ) {
+        context.actionModel.target?.let { url ->
             useCaseExecutor.await(
                 useCase = navigateToUrl,
                 input = NavigateToUrlUseCase.Input(
@@ -33,6 +36,6 @@ internal class NavigationUrlActionMiddleware(
                 )
             )
         }
-        next?.invoke(context)
+        next.invoke(context)
     }
 }

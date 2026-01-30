@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.setting.
 
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
@@ -31,6 +32,7 @@ class SettingComponentNavigationDefinitionRectifier(
     ): Boolean = path.lastSegmentIs(ComponentSettingNavigationSchema.Key.definitions)
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
@@ -38,16 +40,18 @@ class SettingComponentNavigationDefinitionRectifier(
     }.let(::JsonArray)
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
         .find(path)
         .jsonArray
         .map {
-            afterAlterObject(ROOT_PATH, it) ?: it
+            afterAlterObject(context, ROOT_PATH, it) ?: it
         }.let(::JsonArray)
 
     override fun afterAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ): JsonElement? {

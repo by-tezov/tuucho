@@ -9,9 +9,11 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
 import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.model.ActionModelDomain
-import com.tezov.tuucho.core.domain.business.model.action.FormAction
+import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
+import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
@@ -20,6 +22,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import com.tezov.tuucho.core.domain.tool.json.string
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -41,20 +44,26 @@ internal class FormSendUrlActionMiddleware(
 
     override fun accept(
         route: NavigationRoute?,
-        action: ActionModelDomain,
-    ) = action.command == FormAction.Send.command && action.authority == FormAction.Send.authority && action.target != null
+        action: ActionModel,
+    ) = action.command == FormActionDefinition.Send.command &&
+        action.authority == FormActionDefinition.Send.authority &&
+        action.target != null
 
-    override suspend fun process(
-        context: ActionMiddleware.Context,
-        next: MiddlewareProtocol.Next<ActionMiddleware.Context, ProcessActionUseCase.Output>?
-    ) = with(context.input) {
-        val formView = (route as? NavigationRoute.Url)?.getAllFormView() ?: return@with next?.invoke(context)
+    override suspend fun FlowCollector<Unit>.process(
+        context: Context,
+        next: MiddlewareProtocol.Next<Context, Unit>?
+    ) {
+        val formView = (context.input.route as? NavigationRoute.Url)?.getAllFormView() ?: run {
+            next.invoke(context)
+            return
+        }
+        val route = context.input.route
         if (formView.isAllFormValid()) {
             val response = useCaseExecutor
                 .await(
                     useCase = sendData,
                     input = SendDataUseCase.Input(
-                        url = action.target ?: throw DomainException.Default("should no be possible"),
+                        url = context.actionModel.target ?: throw DomainException.Default("should no be possible"),
                         jsonObject = formView.data()
                     )
                 )?.jsonObject
@@ -63,15 +72,15 @@ internal class FormSendUrlActionMiddleware(
                 ?.takeIf { it.subset == FormSendSchema.Value.subset }
                 ?.run {
                     if (allSucceed.isTrue) {
-                        processValidRemoteForm(route, context.lockable, actionObjectOriginal)
+                        processValidRemoteForm(route, context.lockable, context.input.modelObjectOriginal)
                     } else {
-                        processInvalidRemoteForm(route, context.lockable, actionObjectOriginal)
+                        processInvalidRemoteForm(route, context.lockable, context.input.modelObjectOriginal)
                     }
                 }
         } else {
             formView.processInvalidLocalForm(route)
         }
-        next?.invoke(context)
+        next.invoke(context)
     }
 
     private suspend fun NavigationRoute.Url.getAllFormView() = useCaseExecutor
@@ -182,15 +191,15 @@ internal class FormSendUrlActionMiddleware(
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.create(
                 route = route,
-                action = ActionModelDomain.from(
-                    command = FormAction.Update.command,
-                    authority = FormAction.Update.authority,
-                    target = FormAction.Update.Target.error,
+                model = ActionModel.from(
+                    command = FormActionDefinition.Update.command,
+                    authority = FormActionDefinition.Update.authority,
+                    target = FormActionDefinition.Update.Target.error,
                 ),
                 jsonElement = results
-            ),
+            )
         )
     }
 
@@ -201,12 +210,12 @@ internal class FormSendUrlActionMiddleware(
     ) {
         useCaseExecutor.await(
             useCase = processAction,
-            input = ProcessActionUseCase.Input.Action(
+            input = ProcessActionUseCase.Input.create(
                 route = route,
-                action = ActionModelDomain.from(this),
+                model = ActionModel.from(this),
                 jsonElement = response,
                 lockable = lockable
-            ),
+            )
         )
     }
 }

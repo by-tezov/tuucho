@@ -33,55 +33,62 @@ abstract class AbstractRectifier(
     ) = matchers.any { it.accept(path, element) }
 
     override fun process(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement {
         var _element = element
-        beforeAlter(path, _element)?.let {
+        beforeAlter(context, path, _element)?.let {
             _element = _element.replaceOrInsert(path, it)
         }
         if (childProcessors.isNotEmpty()) {
-            _element = alter(path, _element)
+            _element = alter(context, path, _element)
         }
-        afterAlter(path, _element)?.let {
+        afterAlter(context, path, _element)?.let {
             _element = _element.replaceOrInsert(path, it)
         }
         return _element
     }
 
     private fun beforeAlter(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = with(element.find(path)) {
         when (this) {
-            is JsonNull -> beforeAlterNull(path, element)
-            is JsonPrimitive -> beforeAlterPrimitive(path, element)
-            is JsonObject -> beforeAlterObject(path, element)
-            is JsonArray -> beforeAlterArray(path, element)
+            is JsonNull -> beforeAlterNull(context, path, element)
+            is JsonPrimitive -> beforeAlterPrimitive(context, path, element)
+            is JsonObject -> beforeAlterObject(context, path, element)
+            is JsonArray -> beforeAlterArray(context, path, element)
         }
     }
 
     protected open fun beforeAlterNull(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null
 
     protected open fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null
 
     protected open fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null
 
     protected open fun beforeAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null
 
     private fun alter(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = with(element.find(path)) {
@@ -91,7 +98,7 @@ abstract class AbstractRectifier(
                 childProcessors
                     .asSequence()
                     .filter { it.accept(path, _element) }
-                    .forEach { _element = it.process(path, _element) }
+                    .forEach { _element = it.process(context, path, _element) }
             }
 
             is JsonObject -> {
@@ -100,7 +107,7 @@ abstract class AbstractRectifier(
                     childProcessors
                         .asSequence()
                         .filter { it.accept(childPath, _element) }
-                        .forEach { _element = it.process(childPath, _element) }
+                        .forEach { _element = it.process(context, childPath, _element) }
                 }
             }
         }
@@ -108,33 +115,38 @@ abstract class AbstractRectifier(
     }
 
     private fun afterAlter(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = with(element.find(path)) {
         when (this) {
-            is JsonNull -> afterAlterNull(path, element)
-            is JsonPrimitive -> afterAlterPrimitive(path, element)
-            is JsonObject -> afterAlterObject(path, element)
-            is JsonArray -> afterAlterArray(path, element)
+            is JsonNull -> afterAlterNull(context, path, element)
+            is JsonPrimitive -> afterAlterPrimitive(context, path, element)
+            is JsonObject -> afterAlterObject(context, path, element)
+            is JsonArray -> afterAlterArray(context, path, element)
         }
     }
 
     protected open fun afterAlterNull(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null
 
     protected open fun afterAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null
 
     protected open fun afterAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null
 
     protected open fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement? = null

@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentStartWith
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
@@ -44,6 +44,7 @@ class SettingComponentRectifier(
         super.accept(path, element)
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -56,6 +57,7 @@ class SettingComponentRectifier(
         }.collect()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -67,9 +69,10 @@ class SettingComponentRectifier(
         }.collect()
 
     override fun beforeAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = with(element.find(path).jsonArray) {
-        JsonArray(map { process(ROOT_PATH, it) })
+        JsonArray(map { process(context, ROOT_PATH, it) })
     }
 }

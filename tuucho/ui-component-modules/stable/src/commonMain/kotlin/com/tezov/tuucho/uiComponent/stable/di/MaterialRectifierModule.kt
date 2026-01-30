@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.content.C
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension.DimensionRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.form.FormValidatorRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.action.ActionButtonRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.label.ContentButtonLabelRectifier
@@ -15,6 +15,10 @@ import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.f
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.content.ContentFormFieldTextRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.option.OptionFormFieldValidatorRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.state.StateFormFieldTextRectifierMatcher
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.ContentImageTextRectifierMatcher
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.ContentImageValuesRectifier
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.style.StyleImageColorRectifierMatcher
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.style.StyleImageDimensionRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.label.content.ContentLabelTextRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.label.style.StyleLabelColorRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.label.style.StyleLabelDimensionRectifierMatcher
@@ -36,6 +40,7 @@ internal object MaterialRectifierModule {
     private fun ScopeDSL.contentAssociation() {
         associate<ContentRectifier.Association.Processor> {
             factoryOf(::ContentLayoutLinearItemsRectifier)
+            factoryOf(::ContentImageValuesRectifier)
             factoryOf(::ContentButtonLabelRectifier)
             factoryOf(::ContentFormFieldTextErrorRectifier)
         }
@@ -44,6 +49,7 @@ internal object MaterialRectifierModule {
     private fun ScopeDSL.textAssociation() {
         associate<TextRectifier.Association.Matcher> {
             factoryOf(::ContentLabelTextRectifierMatcher)
+            factoryOf(::ContentImageTextRectifierMatcher)
             factoryOf(::ContentFormFieldTextRectifierMatcher)
             factoryOf(::StateFormFieldTextRectifierMatcher)
         }
@@ -53,6 +59,7 @@ internal object MaterialRectifierModule {
         associate<ColorRectifier.Association.Matcher> {
             factoryOf(::StyleLabelColorRectifierMatcher)
             factoryOf(::StyleLayoutLinearColorRectifierMatcher)
+            factoryOf(::StyleImageColorRectifierMatcher)
         }
     }
 
@@ -60,6 +67,7 @@ internal object MaterialRectifierModule {
         associate<DimensionRectifier.Association.Matcher> {
             factoryOf(::StyleSpacerDimensionRectifierMatcher)
             factoryOf(::StyleLabelDimensionRectifierMatcher)
+            factoryOf(::StyleImageDimensionRectifierMatcher)
         }
     }
 

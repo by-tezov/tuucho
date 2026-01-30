@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
 import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
 import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
@@ -33,22 +34,25 @@ class ContentFormFieldTextErrorRectifier(
     }
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList { add(element.find(path)) }.let(::JsonArray)
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList { add(element.find(path)) }.let(::JsonArray)
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = element
         .find(path)
         .jsonArray
         .map {
-            textRectifier.process(ROOT_PATH, it)
+            textRectifier.process(context, ROOT_PATH, it)
         }.let(::JsonArray)
 }

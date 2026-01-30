@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.barrel.di
 
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.data.repository.di.SystemCoreDataModules
-import com.tezov.tuucho.core.domain.business._system.koin.KoinIsolatedContext
 import com.tezov.tuucho.core.domain.business._system.koin.KoinIsolatedContextLifeCycle
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules

@@ -5,6 +5,7 @@ package com.tezov.tuucho.core.domain.business.jsonSchema._system
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import dev.mokkery.answering.returns
 import dev.mokkery.every
+import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verifyNoMoreCalls
@@ -45,7 +46,7 @@ class DelegateSchemaKeyTest {
         val jsonValue = JsonPrimitive("e")
         every { mapOperator.read("value") } returns jsonValue
         val container = TestContainer(mapOperator, JsonElement::class)
-        val resultValue = container.value as JsonElement
+        val resultValue = container.value
         assertEquals(jsonValue, resultValue)
         verify { mapOperator.read("value") }
     }
@@ -55,7 +56,7 @@ class DelegateSchemaKeyTest {
         val jsonValue = JsonObject(mapOf("k" to JsonPrimitive("v")))
         every { mapOperator.read("value") } returns jsonValue
         val container = TestContainer(mapOperator, JsonObject::class)
-        val resultValue = container.value as JsonElement
+        val resultValue = container.value
         assertEquals(jsonValue, resultValue)
         verify { mapOperator.read("value") }
     }
@@ -65,7 +66,7 @@ class DelegateSchemaKeyTest {
         val jsonValue = JsonPrimitive("p")
         every { mapOperator.read("value") } returns jsonValue
         val container = TestContainer(mapOperator, JsonPrimitive::class)
-        val resultValue = container.value as JsonElement
+        val resultValue = container.value
         assertEquals(jsonValue, resultValue)
         verify { mapOperator.read("value") }
     }
@@ -75,7 +76,7 @@ class DelegateSchemaKeyTest {
         val jsonValue = JsonArray(listOf(JsonPrimitive(1)))
         every { mapOperator.read("value") } returns jsonValue
         val container = TestContainer(mapOperator, JsonArray::class)
-        val resultValue = container.value as JsonElement
+        val resultValue = container.value
         assertEquals(jsonValue, resultValue)
         verify { mapOperator.read("value") }
     }
@@ -85,8 +86,108 @@ class DelegateSchemaKeyTest {
         val jsonValue = JsonNull
         every { mapOperator.read("value") } returns jsonValue
         val container = TestContainer(mapOperator, JsonNull::class)
-        val resultValue = container.value as JsonElement
+        val resultValue = container.value
         assertEquals(jsonValue, resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get returns string when type is String`() {
+        val jsonValue = JsonPrimitive("str")
+        every { mapOperator.read("value") } returns jsonValue
+        val container = TestContainer(mapOperator, String::class)
+        val resultValue = container.value as String
+        assertEquals("str", resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get returns boolean when type is Boolean`() {
+        val jsonValue = JsonPrimitive(true)
+        every { mapOperator.read("value") } returns jsonValue
+        val container = TestContainer(mapOperator, Boolean::class)
+        val resultValue = container.value as Boolean
+        assertEquals(true, resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get returns int when type is Int`() {
+        val jsonValue = JsonPrimitive(3)
+        every { mapOperator.read("value") } returns jsonValue
+        val container = TestContainer(mapOperator, Int::class)
+        val resultValue = container.value as Int
+        assertEquals(3, resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get returns float when type is Float`() {
+        val jsonValue = JsonPrimitive(3.2f)
+        every { mapOperator.read("value") } returns jsonValue
+        val container = TestContainer(mapOperator, Float::class)
+        val resultValue = container.value as Float
+        assertEquals(3.2f, resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get returns null when map operator returns null`() {
+        every { mapOperator.read("value") } returns null
+        val container = TestContainer(mapOperator, String::class)
+        val resultValue = container.value
+        assertNull(resultValue)
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get throws when type is unknown`() {
+        val jsonValue = JsonPrimitive("ignored")
+        every { mapOperator.read("value") } returns jsonValue
+        val container = TestContainer(mapOperator, Any::class)
+        assertFailsWith<DomainException.Default> {
+            container.value
+        }
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get returns SetStringDelegate from JsonArray`() {
+        val jsonArray = JsonArray(listOf(JsonPrimitive("a"), JsonPrimitive("b")))
+        every { mapOperator.read("value") } returns jsonArray
+        val container = TestContainer(mapOperator, SetStringDelegate::class)
+        val result = container.value as SetStringDelegate
+        assertEquals(setOf("a", "b"), result.toSet())
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get throws when value is not JsonArray for SetStringDelegate`() {
+        every { mapOperator.read("value") } returns JsonPrimitive("oops")
+        val container = TestContainer(mapOperator, SetStringDelegate::class)
+        assertFailsWith<IllegalArgumentException> {
+            container.value
+        }
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get returns ListStringDelegate from JsonArray`() {
+        val jsonArray = JsonArray(listOf(JsonPrimitive("x"), JsonPrimitive("y")))
+        every { mapOperator.read("value") } returns jsonArray
+        val container = TestContainer(mapOperator, ListStringDelegate::class)
+        val result = container.value as ListStringDelegate
+        assertEquals(listOf("x", "y"), result.toList())
+        verify { mapOperator.read("value") }
+    }
+
+    @Test
+    fun `get throws when value is not JsonArray for ListStringDelegate`() {
+        every { mapOperator.read("value") } returns JsonPrimitive("oops")
+        val container = TestContainer(mapOperator, ListStringDelegate::class)
+        assertFailsWith<IllegalArgumentException> {
+            container.value
+        }
         verify { mapOperator.read("value") }
     }
 
@@ -136,31 +237,11 @@ class DelegateSchemaKeyTest {
     }
 
     @Test
-    fun `get returns string when type is String`() {
-        val jsonValue = JsonPrimitive("str")
-        every { mapOperator.read("value") } returns jsonValue
-        val container = TestContainer(mapOperator, String::class)
-        val resultValue = container.value as String
-        assertEquals("str", resultValue)
-        verify { mapOperator.read("value") }
-    }
-
-    @Test
     fun `set writes string when type is String`() {
         every { mapOperator.write("value", JsonPrimitive("str")) } returns Unit
         val container = TestContainer(mapOperator, String::class)
         container.value = "str"
         verify { mapOperator.write("value", JsonPrimitive("str")) }
-    }
-
-    @Test
-    fun `get returns boolean when type is Boolean`() {
-        val jsonValue = JsonPrimitive(true)
-        every { mapOperator.read("value") } returns jsonValue
-        val container = TestContainer(mapOperator, Boolean::class)
-        val resultValue = container.value as Boolean
-        assertEquals(true, resultValue)
-        verify { mapOperator.read("value") }
     }
 
     @Test
@@ -172,31 +253,11 @@ class DelegateSchemaKeyTest {
     }
 
     @Test
-    fun `get returns int when type is Int`() {
-        val jsonValue = JsonPrimitive(3)
-        every { mapOperator.read("value") } returns jsonValue
-        val container = TestContainer(mapOperator, Int::class)
-        val resultValue = container.value as Int
-        assertEquals(3, resultValue)
-        verify { mapOperator.read("value") }
-    }
-
-    @Test
     fun `set writes int when type is Int`() {
         every { mapOperator.write("value", JsonPrimitive(5)) } returns Unit
         val container = TestContainer(mapOperator, Int::class)
         container.value = 5
         verify { mapOperator.write("value", JsonPrimitive(5)) }
-    }
-
-    @Test
-    fun `get returns float when type is Float`() {
-        val jsonValue = JsonPrimitive(3.2f)
-        every { mapOperator.read("value") } returns jsonValue
-        val container = TestContainer(mapOperator, Float::class)
-        val resultValue = container.value as Float
-        assertEquals(3.2f, resultValue)
-        verify { mapOperator.read("value") }
     }
 
     @Test
@@ -208,15 +269,6 @@ class DelegateSchemaKeyTest {
     }
 
     @Test
-    fun `get returns null when map operator returns null`() {
-        every { mapOperator.read("value") } returns null
-        val container = TestContainer(mapOperator, String::class)
-        val resultValue = container.value
-        assertNull(resultValue)
-        verify { mapOperator.read("value") }
-    }
-
-    @Test
     fun `set writes JsonNull when value is null`() {
         every { mapOperator.write("value", JsonNull) } returns Unit
         val container = TestContainer(mapOperator, String::class)
@@ -225,21 +277,36 @@ class DelegateSchemaKeyTest {
     }
 
     @Test
-    fun `get throws when type is unknown`() {
-        val jsonValue = JsonPrimitive("ignored")
-        every { mapOperator.read("value") } returns jsonValue
-        val container = TestContainer(mapOperator, Any::class)
-        assertFailsWith<DomainException.Default> {
-            container.value
-        }
-        verify { mapOperator.read("value") }
-    }
-
-    @Test
     fun `set throws when type is unknown`() {
         val container = TestContainer(mapOperator, Any::class)
         assertFailsWith<DomainException.Default> {
             container.value = 7
+        }
+    }
+
+    @Test
+    fun `set writes SetStringDelegate to JsonArray`() {
+        every { mapOperator.write("value", any()) } returns Unit
+        val container = TestContainer(mapOperator, SetStringDelegate::class)
+        container.value = SetStringDelegate(setOf("a", "b"))
+        verify {
+            mapOperator.write(
+                "value",
+                JsonArray(listOf(JsonPrimitive("a"), JsonPrimitive("b")))
+            )
+        }
+    }
+
+    @Test
+    fun `set writes ListStringDelegate to JsonArray`() {
+        every { mapOperator.write("value", any()) } returns Unit
+        val container = TestContainer(mapOperator, ListStringDelegate::class)
+        container.value = ListStringDelegate(listOf("x", "y"))
+        verify {
+            mapOperator.write(
+                "value",
+                JsonArray(listOf(JsonPrimitive("x"), JsonPrimitive("y")))
+            )
         }
     }
 }

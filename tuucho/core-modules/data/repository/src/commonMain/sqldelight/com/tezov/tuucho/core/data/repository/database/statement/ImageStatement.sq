@@ -1,0 +1,29 @@
+selectAll:
+SELECT * FROM imageEntry;
+
+selectAllLikeCacheKey:
+SELECT * FROM imageEntry WHERE cacheKey LIKE ?;
+
+deleteAll:
+DELETE FROM imageEntry;
+
+deleteByCacheKey:
+DELETE FROM imageEntry WHERE cacheKey = ?;
+
+deleteAllLikeCacheKey:
+DELETE FROM imageEntry WHERE cacheKey LIKE ?;
+
+insert:
+INSERT INTO imageEntry(cacheKey, mimeType)
+VALUES ( ?, ?);
+
+updateImageByCacheKey:
+UPDATE imageEntry
+SET mimeType = ?
+WHERE cacheKey = ?;
+
+existWithCacheKey:
+SELECT EXISTS(SELECT 1 FROM imageEntry WHERE cacheKey = ?) AS exist;
+
+getByCacheKey:
+SELECT * FROM imageEntry WHERE cacheKey = ?;

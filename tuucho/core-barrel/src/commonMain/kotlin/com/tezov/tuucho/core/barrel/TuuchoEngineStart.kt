@@ -1,10 +1,12 @@
 package com.tezov.tuucho.core.barrel
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import com.tezov.tuucho.core.barrel.di.SystemCoreModules
 import com.tezov.tuucho.core.barrel.navigation.TuuchoBackHandler
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
+import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
 import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngineProtocol
 import org.koin.core.KoinApplication
 
@@ -17,12 +19,14 @@ fun TuuchoEngineStart(
     val tuuchoKoin = SystemCoreModules
         .remember(koinMassModules, koinExtension)
         .koin
-
-    TuuchoBackHandler(tuuchoKoin)
-
-    val tuuchoEngine = tuuchoKoin.get<TuuchoEngineProtocol>()
-    LaunchedEffect(Unit) {
-        tuuchoEngine.start(url = onStartUrl)
+    CompositionLocalProvider(
+        LocalTuuchoKoin provides tuuchoKoin
+    ) {
+        TuuchoBackHandler(tuuchoKoin)
+        val tuuchoEngine = tuuchoKoin.get<TuuchoEngineProtocol>()
+        LaunchedEffect(Unit) {
+            tuuchoEngine.start(url = onStartUrl)
+        }
+        tuuchoEngine.display()
     }
-    tuuchoEngine.display()
 }

@@ -1,5 +1,7 @@
 package com.tezov.tuucho.core.domain.business.interaction.navigation
 
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition.LocalDestination
+
 sealed class NavigationRoute(
     open val id: String,
 ) {
@@ -7,7 +9,7 @@ sealed class NavigationRoute(
         other: Any
     ): Boolean
 
-    data object Back : NavigationRoute("back") {
+    data object Back : NavigationRoute(LocalDestination.Target.back) {
         override fun accept(
             other: Any
         ): Boolean = other is Back
@@ -15,7 +17,7 @@ sealed class NavigationRoute(
         override fun toString(): String = id
     }
 
-    data object Finish : NavigationRoute("finish") {
+    data object Finish : NavigationRoute(LocalDestination.Target.finish) {
         override fun accept(
             other: Any
         ): Boolean = other is Finish
@@ -23,7 +25,7 @@ sealed class NavigationRoute(
         override fun toString(): String = id
     }
 
-    data object Current : NavigationRoute("current") {
+    data object Current : NavigationRoute(LocalDestination.Target.current) {
         override fun accept(
             other: Any
         ): Boolean = other is Current

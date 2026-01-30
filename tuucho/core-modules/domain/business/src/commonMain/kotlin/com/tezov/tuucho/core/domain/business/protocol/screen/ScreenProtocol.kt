@@ -16,7 +16,7 @@ interface ScreenProtocol {
         jsonObjects: List<JsonObject>
     )
 
-    fun <V : ViewProtocol> views(
+    suspend fun <V : ViewProtocol> views(
         klass: KClass<V>
     ): List<V>
 }

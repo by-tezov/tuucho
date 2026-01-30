@@ -22,7 +22,9 @@ class SchemaScopeTest {
 
     private class TestScope(
         argument: SchemaScopeArgument
-    ) : OpenSchemaScope<TestScope>(argument)
+    ) : OpenSchemaScope<TestScope>(argument) {
+        var name: String? by delegate("name")
+    }
 
     @BeforeTest
     fun setup() {
@@ -252,5 +254,20 @@ class SchemaScopeTest {
         assertTrue(result.contains("current={\"k\":1}"))
         verify { mapOperator.element }
         verify { mapOperator.collect() }
+    }
+
+    @Test
+    fun `delegate creates DelegateSchemaKey bound to mapOperator`() {
+        every { mapOperator.read("name") } returns JsonPrimitive("Alice")
+        val scope = TestScope(
+            SchemaScopeArgument(
+                element = JsonNull,
+                moveOnRoot = false,
+                mapOperator = mapOperator
+            )
+        )
+        val result = scope.name
+        assertEquals("Alice", result)
+        verify { mapOperator.read("name") }
     }
 }

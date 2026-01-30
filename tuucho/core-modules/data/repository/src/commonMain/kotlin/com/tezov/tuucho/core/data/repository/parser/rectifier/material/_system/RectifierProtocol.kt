@@ -8,7 +8,12 @@ import kotlinx.serialization.json.JsonElement
 interface RectifierProtocol : RectifierMatcherProtocol {
     val key: String
 
+    data class Context(
+        val url: String
+    )
+
     fun process(
+        context: Context,
         path: JsonElementPath,
         element: JsonElement
     ): JsonElement

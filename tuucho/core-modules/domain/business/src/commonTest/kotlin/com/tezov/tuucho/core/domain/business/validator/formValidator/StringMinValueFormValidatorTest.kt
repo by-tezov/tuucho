@@ -20,6 +20,12 @@ class StringMinValueFormValidatorTest {
     }
 
     @Test
+    fun `null string is valid`() {
+        sut.updateValidity(null)
+        assertTrue(sut.isValid)
+    }
+
+    @Test
     fun `number greater than minValue is valid`() {
         sut.updateValidity("11")
         assertTrue(sut.isValid)

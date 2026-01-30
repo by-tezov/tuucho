@@ -2,7 +2,9 @@ package com.tezov.tuucho.core.data.repository.database
 
 import app.cash.sqldelight.TransactionWithReturn
 import app.cash.sqldelight.TransactionWithoutReturn
+import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
+@OpenForTest
 internal class DatabaseTransactionFactory(
     private val database: Database,
 ) {
@@ -13,7 +15,8 @@ internal class DatabaseTransactionFactory(
         database.transaction(noEnclosing, body)
     }
 
-    fun <R> transactionWithResult(
+    @Suppress("RedundantSuspendModifier")
+    suspend fun <R> transactionWithResult(
         noEnclosing: Boolean = false,
         bodyWithReturn: TransactionWithReturn<R>.() -> R,
     ): R = database.transactionWithResult(noEnclosing, bodyWithReturn)

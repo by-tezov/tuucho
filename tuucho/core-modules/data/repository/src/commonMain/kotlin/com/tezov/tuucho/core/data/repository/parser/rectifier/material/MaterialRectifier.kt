@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material
 import com.tezov.tuucho.core.data.repository.di.ModuleContextData.Rectifier.ScopeContext
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.component.ComponentRectifier
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
@@ -33,15 +33,16 @@ internal class MaterialRectifier : TuuchoKoinScopeComponent {
 
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
+        context: RectifierProtocol.Context,
         materialObject: JsonObject
     ) = materialObject
         .withScope(MaterialSchema::Scope)
         .apply {
             rootComponent?.let {
-                rootComponent = componentRectifier.process(ROOT_PATH, it).jsonObject
+                rootComponent = componentRectifier.process(context, ROOT_PATH, it).jsonObject
             }
             rectifiers.forEach { rectifier ->
-                this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(ROOT_PATH, it).jsonArray }
+                this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }
             }
         }.collect()
 }

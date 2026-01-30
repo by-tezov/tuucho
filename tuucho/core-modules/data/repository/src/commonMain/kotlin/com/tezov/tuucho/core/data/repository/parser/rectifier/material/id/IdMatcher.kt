@@ -22,8 +22,9 @@ class IdMatcher :
         TypeSchema.Value.color,
         TypeSchema.Value.dimension,
         TypeSchema.Value.action,
-        TypeSchema.Value.Setting.component,
+        TypeSchema.Value.image,
         TypeSchema.Value.Setting.page,
+        TypeSchema.Value.Setting.component
     )
 
     override fun accept(

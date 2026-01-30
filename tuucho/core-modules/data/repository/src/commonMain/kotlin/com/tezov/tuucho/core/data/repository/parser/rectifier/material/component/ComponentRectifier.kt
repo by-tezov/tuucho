@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.componen
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ContentSchema
@@ -32,6 +32,7 @@ class ComponentRectifier(
     }
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = element
@@ -44,6 +45,7 @@ class ComponentRectifier(
         }.collect()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = element
@@ -55,6 +57,7 @@ class ComponentRectifier(
         }.collect()
 
     override fun afterAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ): JsonElement? {

@@ -9,8 +9,8 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.Text
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormActionRectifierMatcher
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.FormFailureReasonRectifier
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope

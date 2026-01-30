@@ -7,8 +7,8 @@ import com.tezov.tuucho.core.data.repository.parser.shadower.OptionShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.StateShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.StyleShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower.TextShadower
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.associate
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.declaration
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf

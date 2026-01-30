@@ -24,11 +24,16 @@ final enum class com.tezov.tuucho.core.domain.business.model/LanguageModelDomain
     }
 }
 
-abstract fun interface <#A: kotlin/Any?, #B: kotlin/Any?> com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol|null[0]
-    abstract suspend fun process(#A, com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next<#A, #B>?): #B? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.process|process(1:0;com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next<1:0,1:1>?){}[0]
+abstract fun interface <#A: kotlin/Any?, #B: kotlin/Any> com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol|null[0]
+    abstract suspend fun (kotlinx.coroutines.flow/FlowCollector<#B>).process(#A, com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next<#A, #B>?) // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.process|process@kotlinx.coroutines.flow.FlowCollector<1:1>(1:0;com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next<1:0,1:1>?){}[0]
 
-    abstract fun interface <#A1: kotlin/Any?, #B1: kotlin/Any?> Next { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next|null[0]
-        abstract suspend fun invoke(#A1): #B1? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next.invoke|invoke(1:0){}[0]
+    abstract fun interface <#A1: kotlin/Any?, #B1: kotlin/Any> Next { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next|null[0]
+        abstract suspend fun (kotlinx.coroutines.flow/FlowCollector<#B1>).invoke(#A1) // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next.invoke|invoke@kotlinx.coroutines.flow.FlowCollector<1:1>(1:0){}[0]
+
+        final object Companion { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next.Companion|null[0]
+            final fun <#A3: kotlin/Any?, #B3: kotlin/Any> (com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next<#A3, #B3>?).intercept(#A3): kotlinx.coroutines.flow/Flow<#B3>? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next.Companion.intercept|intercept@com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next<0:0,0:1>?(0:0){0§<kotlin.Any?>;1§<kotlin.Any>}[0]
+            final suspend fun <#A3: kotlin/Any?, #B3: kotlin/Any> (context(kotlinx.coroutines.flow/FlowCollector<#B3>), com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next<#A3, #B3>?).invoke(#A3): kotlin/Unit? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol.Next.Companion.invoke|invoke(kotlinx.coroutines.flow.FlowCollector<0:1>)@com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next<0:0,0:1>?(0:0){0§<kotlin.Any?>;1§<kotlin.Any>}[0]
+        }
     }
 }
 
@@ -132,23 +137,26 @@ abstract interface com.tezov.tuucho.core.domain.business.interaction.lock/Intera
     }
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output> { // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware|null[0]
+abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware|null[0]
     abstract val priority // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority|{}priority[0]
         abstract fun <get-priority>(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.priority.<get-priority>|<get-priority>(){}[0]
 
-    abstract fun accept(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.accept|accept(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain){}[0]
+    abstract fun accept(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, com.tezov.tuucho.core.domain.business.model.action/ActionModel): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.accept|accept(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.action.ActionModel){}[0]
 
     final class Context { // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action) // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input.Action){}[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable, com.tezov.tuucho.core.domain.business.model.action/ActionModel, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input) // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable;com.tezov.tuucho.core.domain.business.model.action.ActionModel;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
 
+        final val actionModel // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.actionModel|{}actionModel[0]
+            final fun <get-actionModel>(): com.tezov.tuucho.core.domain.business.model.action/ActionModel // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.actionModel.<get-actionModel>|<get-actionModel>(){}[0]
         final val input // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.input|{}input[0]
-            final fun <get-input>(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.input.<get-input>|<get-input>(){}[0]
+            final fun <get-input>(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.input.<get-input>|<get-input>(){}[0]
         final val lockable // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.lockable|{}lockable[0]
             final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.lockable.<get-lockable>|<get-lockable>(){}[0]
 
         final fun component1(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.component1|component1(){}[0]
-        final fun component2(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.component2|component2(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable = ..., com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action = ...): com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input.Action){}[0]
+        final fun component2(): com.tezov.tuucho.core.domain.business.model.action/ActionModel // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.component2|component2(){}[0]
+        final fun component3(): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.component3|component3(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable = ..., com.tezov.tuucho.core.domain.business.model.action/ActionModel = ..., com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input = ...): com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable;com.tezov.tuucho.core.domain.business.model.action.ActionModel;com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.middleware/ActionMiddleware.Context.toString|toString(){}[0]
@@ -164,27 +172,22 @@ abstract interface com.tezov.tuucho.core.domain.business.middleware/ActionMiddle
     }
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol|null[0]
-    abstract interface Registry { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry|null[0]
-        abstract fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
-        abstract fun register(com.tezov.tuucho.core.domain.business.protocol/ActionProtocol) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionProtocol){}[0]
-    }
+abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol|null[0]
+    abstract fun <#A1: kotlin/Any> process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel>): kotlinx.coroutines.flow/Flow<com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<#A1>> // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.process|process(kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.image.ImageModel>){0§<kotlin.Any>}[0]
 
-    abstract interface Resolver { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver|null[0]
-        abstract suspend fun acquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.acquire|acquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
-        abstract suspend fun release(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.release|release(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
-        abstract suspend fun tryAcquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.tryAcquire|tryAcquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
-    }
-
-    abstract interface Stack { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack|null[0]
-        abstract suspend fun acquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.acquire|acquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType){}[0]
-        abstract suspend fun acquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.acquire|acquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
-        abstract suspend fun isAllValid(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.isAllValid|isAllValid(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
-        abstract suspend fun isValid(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.isValid|isValid(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock){}[0]
-        abstract suspend fun release(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.release|release(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock){}[0]
-        abstract suspend fun release(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.release|release(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
-        abstract suspend fun tryAcquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.tryAcquire|tryAcquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType){}[0]
-        abstract suspend fun tryAcquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.tryAcquire|tryAcquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
+    abstract interface <#A1: kotlin/Any> Image { // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image|null[0]
+        abstract val height // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.height|{}height[0]
+            abstract fun <get-height>(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.height.<get-height>|<get-height>(){}[0]
+        abstract val size // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.size|{}size[0]
+            abstract fun <get-size>(): kotlin/Long // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.size.<get-size>|<get-size>(){}[0]
+        abstract val source // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.source|{}source[0]
+            abstract fun <get-source>(): #A1 // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.source.<get-source>|<get-source>(){}[0]
+        abstract val tags // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tags|{}tags[0]
+            abstract fun <get-tags>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tags.<get-tags>|<get-tags>(){}[0]
+        abstract val tagsExcluder // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tagsExcluder|{}tagsExcluder[0]
+            abstract fun <get-tagsExcluder>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
+        abstract val width // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.width|{}width[0]
+            abstract fun <get-width>(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image.width.<get-width>|<get-width>(){}[0]
     }
 }
 
@@ -213,6 +216,10 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/Key
     }
 }
 
+abstract interface com.tezov.tuucho.core.domain.business.protocol.repository/ServerHealthCheckRepositoryProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/ServerHealthCheckRepositoryProtocol|null[0]
+    abstract suspend fun process(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.protocol.repository/ServerHealthCheckRepositoryProtocol.process|process(kotlin.String){}[0]
+}
+
 abstract interface com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol { // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol|null[0]
     abstract fun getId(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.getId|getId(){}[0]
     abstract fun getValue(): kotlin/String? // com.tezov.tuucho.core.domain.business.protocol.screen.view/FormStateProtocol.getValue|getValue(){}[0]
@@ -235,22 +242,22 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol.screen/ScreenP
     abstract val route // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.route|{}route[0]
         abstract fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.route.<get-route>|<get-route>(){}[0]
 
-    abstract fun <#A1: com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol> views(kotlin.reflect/KClass<#A1>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.views|views(kotlin.reflect.KClass<0:0>){0§<com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol>}[0]
+    abstract suspend fun <#A1: com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol> views(kotlin.reflect/KClass<#A1>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.views|views(kotlin.reflect.KClass<0:0>){0§<com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol>}[0]
     abstract suspend fun update(kotlin.collections/List<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlin.collections.List<kotlinx.serialization.json.JsonObject>){}[0]
     abstract suspend fun update(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlinx.serialization.json.JsonObject){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol|null[0]
-    abstract suspend fun process(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output? // com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol.process|process(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol|null[0]
+    abstract val authority // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol.authority|{}authority[0]
+        abstract fun <get-authority>(): kotlin/String? // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol.authority.<get-authority>|<get-authority>(){}[0]
+    abstract val command // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol.command|{}command[0]
+        abstract fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol.command.<get-command>|<get-command>(){}[0]
+    abstract val lockable // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol.lockable|{}lockable[0]
+        abstract fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol.lockable.<get-lockable>|<get-lockable>(){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol|null[0]
-    abstract val authority // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.authority|{}authority[0]
-        abstract fun <get-authority>(): kotlin/String? // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.authority.<get-authority>|<get-authority>(){}[0]
-    abstract val command // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.command|{}command[0]
-        abstract fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.command.<get-command>|<get-command>(){}[0]
-    abstract val lockable // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.lockable|{}lockable[0]
-        abstract fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol/ActionProtocol.lockable.<get-lockable>|<get-lockable>(){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol|null[0]
+    abstract suspend fun process(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input) // com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol.process|process(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol { // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol|null[0]
@@ -262,6 +269,8 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScope
         abstract fun <get-default>(): com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.default.<get-default>|<get-default>(){}[0]
     abstract val event // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.event|{}event[0]
         abstract fun <get-event>(): com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.event.<get-event>|<get-event>(){}[0]
+    abstract val image // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.image|{}image[0]
+        abstract fun <get-image>(): com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.image.<get-image>|<get-image>(){}[0]
     abstract val io // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.io|{}io[0]
         abstract fun <get-io>(): com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.io.<get-io>|<get-io>(){}[0]
     abstract val main // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.main|{}main[0]
@@ -278,18 +287,23 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScope
         abstract fun <get-useCase>(): com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.useCase.<get-useCase>|<get-useCase>(){}[0]
 }
 
+abstract interface com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol { // com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol|null[0]
+    abstract val command // com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol.command|{}command[0]
+        abstract fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol.command.<get-command>|<get-command>(){}[0]
+}
+
 abstract interface com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol|null[0]
-    abstract suspend fun <#A1: kotlin/Any?, #B1: kotlin/Any?> process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A1, #B1>>, #A1): #B1? // com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol.process|process(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>;0:0){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    abstract suspend fun <#A1: kotlin/Any?, #B1: kotlin/Any> (kotlinx.coroutines.flow/FlowCollector<#B1>).process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A1, #B1>>, #A1) // com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol.process|process@kotlinx.coroutines.flow.FlowCollector<0:1>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>;0:0){0§<kotlin.Any?>;1§<kotlin.Any>}[0]
+
+    final object Companion { // com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol.Companion|null[0]
+        final fun <#A2: kotlin/Any?, #B2: kotlin/Any> (com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol).process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A2, #B2>>, #A2): kotlinx.coroutines.flow/Flow<#B2> // com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol.Companion.process|process@com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>;0:0){0§<kotlin.Any?>;1§<kotlin.Any>}[0]
+    }
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol // com.tezov.tuucho.core.domain.business.protocol/NavigationDefinitionSelectorMatcherProtocol|null[0]
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol { // com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol|null[0]
     abstract fun isForeground(kotlinx.serialization.json/JsonObject): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol.isForeground|isForeground(kotlinx.serialization.json.JsonObject){}[0]
-}
-
-abstract interface com.tezov.tuucho.core.domain.business.protocol/ServerHealthCheckProtocol { // com.tezov.tuucho.core.domain.business.protocol/ServerHealthCheckProtocol|null[0]
-    abstract suspend fun process(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.protocol/ServerHealthCheckProtocol.process|process(kotlin.String){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol|null[0]
@@ -331,6 +345,43 @@ abstract class com.tezov.tuucho.core.domain.business.protocol.repository/Interac
     final object Screen : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType.Screen|null[0]
 }
 
+final class <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Sync<com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input, kotlinx.coroutines.flow/Flow<com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output<#A>>> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol){}[0]
+
+    final fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input): kotlinx.coroutines.flow/Flow<com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output<#A>> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase.Input){}[0]
+
+    final class <#A1: kotlin/Any> Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<#A1>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Image<1:0>){}[0]
+
+        final val image // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.image|{}image[0]
+            final fun <get-image>(): com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<#A1> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.image.<get-image>|<get-image>(){}[0]
+
+        final fun component1(): com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<#A1> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.component1|component1(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.protocol.repository/ImageRepositoryProtocol.Image<#A1> = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output<#A1> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.copy|copy(com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Image<1:0>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Output.toString|toString(){}[0]
+    }
+
+    final class Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input|null[0]
+        constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.image.ImageModel>){}[0]
+
+        final val models // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.models|{}models[0]
+            final fun <get-models>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.models.<get-models>|<get-models>(){}[0]
+
+        final fun component1(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.component1|component1(){}[0]
+        final fun copy(kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel> = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.copy|copy(kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.image.ImageModel>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.toString|toString(){}[0]
+
+        final object Companion { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.Companion|null[0]
+            final fun create(com.tezov.tuucho.core.domain.business.model.image/ImageModel): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.Companion.create|create(com.tezov.tuucho.core.domain.business.model.image.ImageModel){}[0]
+            final fun create(kotlinx.serialization.json/JsonArray): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.Companion.create|create(kotlinx.serialization.json.JsonArray){}[0]
+        }
+    }
+}
+
 final class <#A: kotlin/Any?> com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey { // com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey.MapOperator, kotlin.reflect/KClass<*>, kotlin/String? = ...) // com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.DelegateSchemaKey.MapOperator;kotlin.reflect.KClass<*>;kotlin.String?){}[0]
 
@@ -343,22 +394,22 @@ final class <#A: kotlin/Any?> com.tezov.tuucho.core.domain.business.jsonSchema._
     }
 }
 
-final class com.tezov.tuucho.core.domain.business._system.koin/AssociateModule { // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule|null[0]
-    constructor <init>(kotlin.reflect/KClass<*>, org.koin.core.module/Module) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.<init>|<init>(kotlin.reflect.KClass<*>;org.koin.core.module.Module){}[0]
+final class com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL { // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL|null[0]
+    constructor <init>(kotlin.reflect/KClass<*>, org.koin.core.module/Module) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.<init>|<init>(kotlin.reflect.KClass<*>;org.koin.core.module.Module){}[0]
 
-    final val association // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.association|{}association[0]
-        final fun <get-association>(): kotlin.reflect/KClass<*> // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.association.<get-association>|<get-association>(){}[0]
-    final val module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.module|{}module[0]
-        final fun <get-module>(): org.koin.core.module/Module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.module.<get-module>|<get-module>(){}[0]
+    final val association // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.association|{}association[0]
+        final fun <get-association>(): kotlin.reflect/KClass<*> // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.association.<get-association>|<get-association>(){}[0]
+    final val module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.module|{}module[0]
+        final fun <get-module>(): org.koin.core.module/Module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.module.<get-module>|<get-module>(){}[0]
 
-    final fun factory(kotlin/String) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factory|factory(kotlin.String){}[0]
-    final inline fun <#A1: reified kotlin/Any> declaration(org.koin.core.qualifier/Qualifier? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.declaration|declaration(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factoryOf|factoryOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
-    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> singleOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.singleOf|singleOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
-    final inline fun <#A1: reified kotlin/Any?> factory(org.koin.core.qualifier/Qualifier? = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factory|factory(org.koin.core.qualifier.Qualifier?;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
-    final inline fun <#A1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.factoryOf|factoryOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
-    final inline fun <#A1: reified kotlin/Any?> single(org.koin.core.qualifier/Qualifier? = ..., kotlin/Boolean = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.single|single(org.koin.core.qualifier.Qualifier?;kotlin.Boolean;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
-    final inline fun <#A1: reified kotlin/Any?> singleOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModule.singleOf|singleOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
+    final fun factory(kotlin/String) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.factory|factory(kotlin.String){}[0]
+    final inline fun <#A1: reified kotlin/Any> declaration(org.koin.core.qualifier/Qualifier? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.declaration|declaration(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.factoryOf|factoryOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> singleOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.singleOf|singleOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> factory(org.koin.core.qualifier/Qualifier? = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.factory|factory(org.koin.core.qualifier.Qualifier?;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.factoryOf|factoryOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> single(org.koin.core.qualifier/Qualifier? = ..., kotlin/Boolean = ..., noinline kotlin/Function2<org.koin.core.scope/Scope, org.koin.core.parameter/ParametersHolder, #A1>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.single|single(org.koin.core.qualifier.Qualifier?;kotlin.Boolean;kotlin.Function2<org.koin.core.scope.Scope,org.koin.core.parameter.ParametersHolder,0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: reified kotlin/Any?> singleOf(crossinline kotlin/Function0<#A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.singleOf|singleOf(kotlin.Function0<0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL { // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL|null[0]
@@ -387,10 +438,9 @@ final class com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedConte
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
-    constructor <init>() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(){}[0]
+    constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol>){}[0]
 
     final fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
-    final fun register(com.tezov.tuucho.core.domain.business.protocol/ActionProtocol) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionProtocol){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper : com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol { // com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper|null[0]
@@ -456,6 +506,25 @@ final class com.tezov.tuucho.core.domain.business.interaction.navigation/Navigat
     final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator.generate|generate(){}[0]
 }
 
+final class com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate : kotlin.collections/List<kotlin/String> { // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate|null[0]
+    constructor <init>(kotlin.collections/List<kotlin/String>) // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.<init>|<init>(kotlin.collections.List<kotlin.String>){}[0]
+
+    final val size // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.size.<get-size>|<get-size>(){}[0]
+
+    final fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.contains|contains(kotlin.String){}[0]
+    final fun containsAll(kotlin.collections/Collection<kotlin/String>): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.containsAll|containsAll(kotlin.collections.Collection<kotlin.String>){}[0]
+    final fun get(kotlin/Int): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.get|get(kotlin.Int){}[0]
+    final fun indexOf(kotlin/String): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.indexOf|indexOf(kotlin.String){}[0]
+    final fun isEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.isEmpty|isEmpty(){}[0]
+    final fun iterator(): kotlin.collections/Iterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.iterator|iterator(){}[0]
+    final fun lastIndexOf(kotlin/String): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.lastIndexOf|lastIndexOf(kotlin.String){}[0]
+    final fun listIterator(): kotlin.collections/ListIterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.listIterator|listIterator(){}[0]
+    final fun listIterator(kotlin/Int): kotlin.collections/ListIterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.listIterator|listIterator(kotlin.Int){}[0]
+    final fun subList(kotlin/Int, kotlin/Int): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.subList|subList(kotlin.Int;kotlin.Int){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.toString|toString(){}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope> { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
 }
@@ -479,38 +548,84 @@ final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScope
     final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument.toString|toString(){}[0]
 }
 
+final class com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate : kotlin.collections/Set<kotlin/String> { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate|null[0]
+    constructor <init>(kotlin.collections/Set<kotlin/String>) // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.<init>|<init>(kotlin.collections.Set<kotlin.String>){}[0]
+
+    final val size // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.size.<get-size>|<get-size>(){}[0]
+
+    final fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.contains|contains(kotlin.String){}[0]
+    final fun containsAll(kotlin.collections/Collection<kotlin/String>): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.containsAll|containsAll(kotlin.collections.Collection<kotlin.String>){}[0]
+    final fun isEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.isEmpty|isEmpty(){}[0]
+    final fun iterator(): kotlin.collections/Iterator<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.iterator|iterator(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate.toString|toString(){}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor : com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol { // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor|null[0]
     constructor <init>() // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor.<init>|<init>(){}[0]
 
-    final suspend fun <#A1: kotlin/Any?, #B1: kotlin/Any?> process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A1, #B1>>, #A1): #B1? // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor.process|process(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>;0:0){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+    final suspend fun <#A1: kotlin/Any?, #B1: kotlin/Any> (kotlinx.coroutines.flow/FlowCollector<#B1>).process(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<#A1, #B1>>, #A1) // com.tezov.tuucho.core.domain.business.middleware/MiddlewareExecutor.process|process@kotlinx.coroutines.flow.FlowCollector<0:1>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol<0:0,0:1>>;0:0){0§<kotlin.Any?>;1§<kotlin.Any>}[0]
 }
 
-final class com.tezov.tuucho.core.domain.business.model/ActionModelDomain { // com.tezov.tuucho.core.domain.business.model/ActionModelDomain|null[0]
-    constructor <init>(kotlin/String, kotlin/String?, kotlin/String?, kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.<init>|<init>(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
+final class com.tezov.tuucho.core.domain.business.model.action/ActionModel { // com.tezov.tuucho.core.domain.business.model.action/ActionModel|null[0]
+    constructor <init>(kotlin/String, kotlin/String?, kotlin/String?, kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.model.action/ActionModel.<init>|<init>(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
 
-    final val authority // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.authority|{}authority[0]
-        final fun <get-authority>(): kotlin/String? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.authority.<get-authority>|<get-authority>(){}[0]
-    final val command // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.command|{}command[0]
-        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.command.<get-command>|<get-command>(){}[0]
-    final val query // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.query|{}query[0]
-        final fun <get-query>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.query.<get-query>|<get-query>(){}[0]
-    final val target // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.target|{}target[0]
-        final fun <get-target>(): kotlin/String? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.target.<get-target>|<get-target>(){}[0]
+    final val authority // com.tezov.tuucho.core.domain.business.model.action/ActionModel.authority|{}authority[0]
+        final fun <get-authority>(): kotlin/String? // com.tezov.tuucho.core.domain.business.model.action/ActionModel.authority.<get-authority>|<get-authority>(){}[0]
+    final val command // com.tezov.tuucho.core.domain.business.model.action/ActionModel.command|{}command[0]
+        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/ActionModel.command.<get-command>|<get-command>(){}[0]
+    final val query // com.tezov.tuucho.core.domain.business.model.action/ActionModel.query|{}query[0]
+        final fun <get-query>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.action/ActionModel.query.<get-query>|<get-query>(){}[0]
+    final val target // com.tezov.tuucho.core.domain.business.model.action/ActionModel.target|{}target[0]
+        final fun <get-target>(): kotlin/String? // com.tezov.tuucho.core.domain.business.model.action/ActionModel.target.<get-target>|<get-target>(){}[0]
 
-    final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.component1|component1(){}[0]
-    final fun component2(): kotlin/String? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.component2|component2(){}[0]
-    final fun component3(): kotlin/String? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.component3|component3(){}[0]
-    final fun component4(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.component4|component4(){}[0]
-    final fun copy(kotlin/String = ..., kotlin/String? = ..., kotlin/String? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.copy|copy(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.toString|toString(){}[0]
+    final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/ActionModel.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // com.tezov.tuucho.core.domain.business.model.action/ActionModel.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // com.tezov.tuucho.core.domain.business.model.action/ActionModel.component3|component3(){}[0]
+    final fun component4(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.action/ActionModel.component4|component4(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String? = ..., kotlin/String? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.model.action/ActionModel // com.tezov.tuucho.core.domain.business.model.action/ActionModel.copy|copy(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.model.action/ActionModel.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.model.action/ActionModel.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/ActionModel.toString|toString(){}[0]
 
-    final object Companion { // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion|null[0]
-        final fun (kotlin/String).toQueryToMap(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.toQueryToMap|toQueryToMap@kotlin.String(){}[0]
-        final fun from(kotlin/String): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String){}[0]
-        final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlin/String? = ...): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?){}[0]
-        final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlinx.serialization.json/JsonElement?): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.model/ActionModelDomain.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlinx.serialization.json.JsonElement?){}[0]
+    final object Companion { // com.tezov.tuucho.core.domain.business.model.action/ActionModel.Companion|null[0]
+        final fun (kotlin/String).toJsonElement(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.action/ActionModel.Companion.toJsonElement|toJsonElement@kotlin.String(){}[0]
+        final fun from(kotlin/String): com.tezov.tuucho.core.domain.business.model.action/ActionModel // com.tezov.tuucho.core.domain.business.model.action/ActionModel.Companion.from|from(kotlin.String){}[0]
+        final fun from(kotlin/String, kotlin/String?, kotlin/String?, kotlin/String? = ...): com.tezov.tuucho.core.domain.business.model.action/ActionModel // com.tezov.tuucho.core.domain.business.model.action/ActionModel.Companion.from|from(kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?){}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.domain.business.model.image/ImageModel { // com.tezov.tuucho.core.domain.business.model.image/ImageModel|null[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlinx.serialization.json/JsonElement?, kotlin/String, kotlin.collections/Set<kotlin/String>?, kotlin.collections/Set<kotlin/String>?) // com.tezov.tuucho.core.domain.business.model.image/ImageModel.<init>|<init>(kotlin.String;kotlin.String;kotlinx.serialization.json.JsonElement?;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
+
+    final val cacheKey // com.tezov.tuucho.core.domain.business.model.image/ImageModel.cacheKey|{}cacheKey[0]
+        final fun <get-cacheKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
+    final val command // com.tezov.tuucho.core.domain.business.model.image/ImageModel.command|{}command[0]
+        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.command.<get-command>|<get-command>(){}[0]
+    final val query // com.tezov.tuucho.core.domain.business.model.image/ImageModel.query|{}query[0]
+        final fun <get-query>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.query.<get-query>|<get-query>(){}[0]
+    final val tags // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tags|{}tags[0]
+        final fun <get-tags>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tags.<get-tags>|<get-tags>(){}[0]
+    final val tagsExcluder // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tagsExcluder|{}tagsExcluder[0]
+        final fun <get-tagsExcluder>(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
+    final val target // com.tezov.tuucho.core.domain.business.model.image/ImageModel.target|{}target[0]
+        final fun <get-target>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.target.<get-target>|<get-target>(){}[0]
+
+    final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component2|component2(){}[0]
+    final fun component3(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component3|component3(){}[0]
+    final fun component4(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component4|component4(){}[0]
+    final fun component5(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component5|component5(){}[0]
+    final fun component6(): kotlin.collections/Set<kotlin/String>? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.component6|component6(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlinx.serialization.json/JsonElement? = ..., kotlin/String = ..., kotlin.collections/Set<kotlin/String>? = ..., kotlin.collections/Set<kotlin/String>? = ...): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.copy|copy(kotlin.String;kotlin.String;kotlinx.serialization.json.JsonElement?;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.model.image/ImageModel.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.model.image/ImageModel.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/ImageModel.toString|toString(){}[0]
+
+    final object Companion { // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion|null[0]
+        final fun (kotlin/String).toJsonElement(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.toJsonElement|toJsonElement@kotlin.String(){}[0]
+        final fun from(kotlin/String, kotlin/String, kotlin.collections/Set<kotlin/String>?, kotlin.collections/Set<kotlin/String>?): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.from|from(kotlin.String;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
+        final fun from(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/String, kotlin.collections/Set<kotlin/String>?, kotlin.collections/Set<kotlin/String>?): com.tezov.tuucho.core.domain.business.model.image/ImageModel // com.tezov.tuucho.core.domain.business.model.image/ImageModel.Companion.from|from(kotlin.String;kotlin.String;kotlin.String?;kotlin.String;kotlin.collections.Set<kotlin.String>?;kotlin.collections.Set<kotlin.String>?){}[0]
     }
 }
 
@@ -562,85 +677,39 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateTo
     }
 }
 
-final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol){}[0]
+final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol){}[0]
 
-    final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
+    final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
 
-    sealed class Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input|null[0]
-        abstract val jsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.jsonElement|{}jsonElement[0]
-            abstract fun <get-jsonElement>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.jsonElement.<get-jsonElement>|<get-jsonElement>(){}[0]
-        abstract val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable|{}lockable[0]
-            abstract fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable.<get-lockable>|<get-lockable>(){}[0]
-        abstract val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route|{}route[0]
-            abstract fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route.<get-route>|<get-route>(){}[0]
+    final class Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.action/ActionModel>, kotlinx.serialization.json/JsonElement? = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.action.ActionModel>;kotlinx.serialization.json.JsonElement?;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
 
-        final class Action : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, com.tezov.tuucho.core.domain.business.model/ActionModelDomain, kotlinx.serialization.json/JsonObject? = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;kotlinx.serialization.json.JsonObject?;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
+        final val jsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.jsonElement|{}jsonElement[0]
+            final fun <get-jsonElement>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.jsonElement.<get-jsonElement>|<get-jsonElement>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.lockable.<get-lockable>|<get-lockable>(){}[0]
+        final val modelObjectOriginal // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.modelObjectOriginal|{}modelObjectOriginal[0]
+            final fun <get-modelObjectOriginal>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.modelObjectOriginal.<get-modelObjectOriginal>|<get-modelObjectOriginal>(){}[0]
+        final val models // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.models|{}models[0]
+            final fun <get-models>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.action/ActionModel> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.models.<get-models>|<get-models>(){}[0]
+        final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route|{}route[0]
+            final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.route.<get-route>|<get-route>(){}[0]
 
-            final val action // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.action|{}action[0]
-                final fun <get-action>(): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.action.<get-action>|<get-action>(){}[0]
-            final val actionObjectOriginal // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.actionObjectOriginal|{}actionObjectOriginal[0]
-                final fun <get-actionObjectOriginal>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.actionObjectOriginal.<get-actionObjectOriginal>|<get-actionObjectOriginal>(){}[0]
-            final val jsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.jsonElement|{}jsonElement[0]
-                final fun <get-jsonElement>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.jsonElement.<get-jsonElement>|<get-jsonElement>(){}[0]
-            final val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.lockable|{}lockable[0]
-                final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.lockable.<get-lockable>|<get-lockable>(){}[0]
-            final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.route|{}route[0]
-                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.route.<get-route>|<get-route>(){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.component1|component1(){}[0]
+        final fun component2(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.action/ActionModel> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.component2|component2(){}[0]
+        final fun component3(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.component3|component3(){}[0]
+        final fun component4(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.component4|component4(){}[0]
+        final fun component5(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.component5|component5(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? = ..., kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.action/ActionModel> = ..., kotlinx.serialization.json/JsonElement? = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.action.ActionModel>;kotlinx.serialization.json.JsonElement?;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.toString|toString(){}[0]
 
-            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.component1|component1(){}[0]
-            final fun component2(): com.tezov.tuucho.core.domain.business.model/ActionModelDomain // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.component2|component2(){}[0]
-            final fun component3(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.component3|component3(){}[0]
-            final fun component4(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.component4|component4(){}[0]
-            final fun component5(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.component5|component5(){}[0]
-            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? = ..., com.tezov.tuucho.core.domain.business.model/ActionModelDomain = ..., kotlinx.serialization.json/JsonObject? = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.ActionModelDomain;kotlinx.serialization.json.JsonObject?;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
-            final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.equals|equals(kotlin.Any?){}[0]
-            final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.hashCode|hashCode(){}[0]
-            final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Action.toString|toString(){}[0]
-        }
-
-        final class ActionObject : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
-
-            final val actionObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.actionObject|{}actionObject[0]
-                final fun <get-actionObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.actionObject.<get-actionObject>|<get-actionObject>(){}[0]
-            final val jsonElement // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.jsonElement|{}jsonElement[0]
-                final fun <get-jsonElement>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.jsonElement.<get-jsonElement>|<get-jsonElement>(){}[0]
-            final val lockable // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.lockable|{}lockable[0]
-                final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.lockable.<get-lockable>|<get-lockable>(){}[0]
-            final val route // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.route|{}route[0]
-                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.route.<get-route>|<get-route>(){}[0]
-
-            final fun component1(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component1|component1(){}[0]
-            final fun component2(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component2|component2(){}[0]
-            final fun component3(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component3|component3(){}[0]
-            final fun component4(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.component4|component4(){}[0]
-            final fun copy(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute? = ..., kotlinx.serialization.json/JsonObject = ..., com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.copy|copy(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
-            final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.equals|equals(kotlin.Any?){}[0]
-            final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.hashCode|hashCode(){}[0]
-            final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.ActionObject.toString|toString(){}[0]
-        }
-    }
-
-    sealed class Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output|null[0]
-        final class Element : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element|null[0]
-            constructor <init>(kotlin.reflect/KClass<out kotlin/Any>, kotlin/Any) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.<init>|<init>(kotlin.reflect.KClass<out|kotlin.Any>;kotlin.Any){}[0]
-
-            final val rawValue // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.rawValue|{}rawValue[0]
-                final fun <get-rawValue>(): kotlin/Any // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.rawValue.<get-rawValue>|<get-rawValue>(){}[0]
-            final val type // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.type|{}type[0]
-                final fun <get-type>(): kotlin.reflect/KClass<out kotlin/Any> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.type.<get-type>|<get-type>(){}[0]
-
-            final inline fun <#A3: reified kotlin/Any?> value(): #A3 // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.value|value(){0§<kotlin.Any?>}[0]
-            final inline fun <#A3: reified kotlin/Any?> valueOrNull(): #A3? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.Element.valueOrNull|valueOrNull(){0§<kotlin.Any?>}[0]
-        }
-
-        final class ElementArray : com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray|null[0]
-            constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Output>){}[0]
-
-            final val values // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.values|{}values[0]
-                final fun <get-values>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output> // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Output.ElementArray.values.<get-values>|<get-values>(){}[0]
+        final object Companion { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Companion|null[0]
+            final fun create(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, com.tezov.tuucho.core.domain.business.model.action/ActionModel, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Companion.create|create(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;com.tezov.tuucho.core.domain.business.model.action.ActionModel;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
+            final fun create(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.action/ActionModel>, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Companion.create|create(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.action.ActionModel>;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
+            final fun create(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute?, kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable? = ..., kotlinx.serialization.json/JsonElement? = ...): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input.Companion.create|create(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute?;kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable?;kotlinx.serialization.json.JsonElement?){}[0]
         }
     }
 }
@@ -665,7 +734,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/RefreshMat
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.SendDataAndRetrieve, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/SendDataMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.SendDataAndRetrieve;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.SendDataAndRetrieve, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/SendDataMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.SendDataAndRetrieve;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware>){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.Output? // com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase.Input){}[0]
 
@@ -700,7 +769,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/SendDataUs
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ServerHealthCheckProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ServerHealthCheckProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/ServerHealthCheckRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.ServerHealthCheckRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ServerHealthCheckUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase.Input){}[0]
 
@@ -847,7 +916,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScre
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase.Input){}[0]
 
@@ -879,7 +948,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValu
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/HasKeyInStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.HasKeyInStoreUseCase.Input){}[0]
 
@@ -1006,7 +1075,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/Registe
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveKeyValueFromStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase.Input){}[0]
 
@@ -1025,7 +1094,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveK
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase.Input){}[0]
 
@@ -1047,7 +1116,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKey
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/UpdateViewMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware>){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol/MiddlewareExecutorProtocol, kotlin.collections/List<com.tezov.tuucho.core.domain.business.middleware/UpdateViewMiddleware>) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol;kotlin.collections.List<com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware>){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/UpdateViewUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input){}[0]
 
@@ -1333,15 +1402,15 @@ sealed class com.tezov.tuucho.core.domain.business.protocol.repository/Interacti
     }
 }
 
-final object com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL { // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL|null[0]
-    final fun <#A1: kotlin/Any> (org.koin.core.definition/KoinDefinition<out #A1>).associate(kotlin.reflect/KClass<*>): org.koin.core.definition/KoinDefinition<out #A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.core.definition.KoinDefinition<out|0:0>(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
-    final fun <#A1: kotlin/Any> (org.koin.core.instance/InstanceFactory<#A1>).associate(kotlin.reflect/KClass<*>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.core.instance.InstanceFactory<0:0>(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).associate(kotlin/Function1<com.tezov.tuucho.core.domain.business._system.koin/AssociateModule, kotlin/Unit>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.core.module.Module(kotlin.Function1<com.tezov.tuucho.core.domain.business._system.koin.AssociateModule,kotlin.Unit>){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).declaration(org.koin.core.qualifier/Qualifier? = ...): org.koin.core.instance/InstanceFactory<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.declaration|declaration@org.koin.core.module.Module(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> (org.koin.core.scope/Scope).getAllAssociated(kotlin.reflect/KClass<*>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.getAllAssociated|getAllAssociated@org.koin.core.scope.Scope(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> (org.koin.core/Koin).getAllAssociated(kotlin.reflect/KClass<*>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.getAllAssociated|getAllAssociated@org.koin.core.Koin(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).associate(kotlin/Function1<com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.associate|associate@org.koin.dsl.ScopeDSL(kotlin.Function1<com.tezov.tuucho.core.domain.business._system.koin.AssociateScopeDSL,kotlin.Unit>){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).declaration(org.koin.core.qualifier/Qualifier? = ...): org.koin.core.instance/InstanceFactory<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateDSL.declaration|declaration@org.koin.dsl.ScopeDSL(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
+final object com.tezov.tuucho.core.domain.business._system.koin/Associate { // com.tezov.tuucho.core.domain.business._system.koin/Associate|null[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.definition/KoinDefinition<out #A1>).associate(kotlin.reflect/KClass<*>): org.koin.core.definition/KoinDefinition<out #A1> // com.tezov.tuucho.core.domain.business._system.koin/Associate.associate|associate@org.koin.core.definition.KoinDefinition<out|0:0>(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final fun <#A1: kotlin/Any> (org.koin.core.instance/InstanceFactory<#A1>).associate(kotlin.reflect/KClass<*>) // com.tezov.tuucho.core.domain.business._system.koin/Associate.associate|associate@org.koin.core.instance.InstanceFactory<0:0>(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).associate(kotlin/Function1<com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business._system.koin/Associate.associate|associate@org.koin.core.module.Module(kotlin.Function1<com.tezov.tuucho.core.domain.business._system.koin.AssociateModuleDSL,kotlin.Unit>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).declaration(org.koin.core.qualifier/Qualifier? = ...): org.koin.core.instance/InstanceFactory<#A1> // com.tezov.tuucho.core.domain.business._system.koin/Associate.declaration|declaration@org.koin.core.module.Module(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.scope/Scope).getAllAssociated(kotlin.reflect/KClass<*>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/Associate.getAllAssociated|getAllAssociated@org.koin.core.scope.Scope(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core/Koin).getAllAssociated(kotlin.reflect/KClass<*>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business._system.koin/Associate.getAllAssociated|getAllAssociated@org.koin.core.Koin(kotlin.reflect.KClass<*>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).associate(kotlin/Function1<com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL, kotlin/Unit>) // com.tezov.tuucho.core.domain.business._system.koin/Associate.associate|associate@org.koin.dsl.ScopeDSL(kotlin.Function1<com.tezov.tuucho.core.domain.business._system.koin.AssociateScopeDSL,kotlin.Unit>){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).declaration(org.koin.core.qualifier/Qualifier? = ...): org.koin.core.instance/InstanceFactory<#A1> // com.tezov.tuucho.core.domain.business._system.koin/Associate.declaration|declaration@org.koin.dsl.ScopeDSL(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
 }
 
 final object com.tezov.tuucho.core.domain.business._system.koin/BindOrdered { // com.tezov.tuucho.core.domain.business._system.koin/BindOrdered|null[0]
@@ -1363,6 +1432,11 @@ final object com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedCont
     final var koinApplication // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContext.koinApplication|{}koinApplication[0]
         final fun <get-koinApplication>(): org.koin.core/KoinApplication? // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContext.koinApplication.<get-koinApplication>|<get-koinApplication>(){}[0]
         final fun <set-koinApplication>(org.koin.core/KoinApplication?) // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContext.koinApplication.<set-koinApplication>|<set-koinApplication>(org.koin.core.KoinApplication?){}[0]
+}
+
+final object com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension { // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension|null[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).factoryObject(#A1): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension.factoryObject|factoryObject@org.koin.core.module.Module(0:0){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).factoryObject(#A1): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension.factoryObject|factoryObject@org.koin.dsl.ScopeDSL(0:0){0§<kotlin.Any>}[0]
 }
 
 final object com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules { // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules|null[0]
@@ -1481,6 +1555,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema._element.form/Form
 }
 
 final object com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData { // com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData|null[0]
+    final const val ESCAPER // com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData.ESCAPER|{}ESCAPER[0]
+        final fun <get-ESCAPER>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData.ESCAPER.<get-ESCAPER>|<get-ESCAPER>(){}[0]
     final const val ID_GROUP_SEPARATOR // com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData.ID_GROUP_SEPARATOR|{}ID_GROUP_SEPARATOR[0]
         final fun <get-ID_GROUP_SEPARATOR>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData.ID_GROUP_SEPARATOR.<get-ID_GROUP_SEPARATOR>|<get-ID_GROUP_SEPARATOR>(){}[0]
     final const val ID_REF_INDICATOR // com.tezov.tuucho.core.domain.business.jsonSchema._system/SymbolData.ID_REF_INDICATOR|{}ID_REF_INDICATOR[0]
@@ -2104,64 +2180,29 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.c
     }
 }
 
-final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema|null[0]
-    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.root|{}root[0]
-        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.root.<get-root>|<get-root>(){}[0]
+final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema|null[0]
+    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.root|{}root[0]
+        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.root.<get-root>|<get-root>(){}[0]
 
-    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
 
-        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.root|{}root[0]
-            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.root.<get-root>|<get-root>(){}[0]
+        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.root|{}root[0]
+            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.root.<get-root>|<get-root>(){}[0]
 
-        final var ttl // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.ttl|{}ttl[0]
-            final fun <get-ttl>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.ttl.<get-ttl>|<get-ttl>(){}[0]
-            final fun <set-ttl>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.ttl.<set-ttl>|<set-ttl>(kotlinx.serialization.json.JsonObject?){}[0]
-        final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.type|{}type[0]
-            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.type.<get-type>|<get-type>(){}[0]
-            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
+        final var timeToLive // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.timeToLive|{}timeToLive[0]
+            final fun <get-timeToLive>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.timeToLive.<get-timeToLive>|<get-timeToLive>(){}[0]
+            final fun <set-timeToLive>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.timeToLive.<set-timeToLive>|<set-timeToLive>(kotlinx.serialization.json.JsonObject?){}[0]
+        final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.type|{}type[0]
+            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.type.<get-type>|<get-type>(){}[0]
+            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
     }
 
-    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Key|null[0]
-        final const val ttl // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Key.ttl|{}ttl[0]
-            final fun <get-ttl>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Key.ttl.<get-ttl>|<get-ttl>(){}[0]
-        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Key.type|{}type[0]
-            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Key.type.<get-type>|<get-type>(){}[0]
-    }
-
-    final object Ttl { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl|null[0]
-        final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.root|{}root[0]
-            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.root.<get-root>|<get-root>(){}[0]
-
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.root|{}root[0]
-                final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.root.<get-root>|<get-root>(){}[0]
-
-            final var strategy // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.strategy|{}strategy[0]
-                final fun <get-strategy>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.strategy.<get-strategy>|<get-strategy>(){}[0]
-                final fun <set-strategy>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.strategy.<set-strategy>|<set-strategy>(kotlin.String?){}[0]
-            final var transientValue // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.transientValue|{}transientValue[0]
-                final fun <get-transientValue>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.transientValue.<get-transientValue>|<get-transientValue>(){}[0]
-                final fun <set-transientValue>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Scope.transientValue.<set-transientValue>|<set-transientValue>(kotlin.String?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Key|null[0]
-            final const val strategy // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Key.strategy|{}strategy[0]
-                final fun <get-strategy>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Key.strategy.<get-strategy>|<get-strategy>(){}[0]
-            final const val transientValue // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Key.transientValue|{}transientValue[0]
-                final fun <get-transientValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Key.transientValue.<get-transientValue>|<get-transientValue>(){}[0]
-        }
-
-        final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Value|null[0]
-            final object Strategy { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Value.Strategy|null[0]
-                final const val singleUse // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Value.Strategy.singleUse|{}singleUse[0]
-                    final fun <get-singleUse>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Value.Strategy.singleUse.<get-singleUse>|<get-singleUse>(){}[0]
-                final const val transient // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Value.Strategy.transient|{}transient[0]
-                    final fun <get-transient>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.page/PageSettingSchema.Ttl.Value.Strategy.transient.<get-transient>|<get-transient>(){}[0]
-            }
-        }
+    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Key|null[0]
+        final const val timeToLive // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Key.timeToLive|{}timeToLive[0]
+            final fun <get-timeToLive>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Key.timeToLive.<get-timeToLive>|<get-timeToLive>(){}[0]
+        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Key.type|{}type[0]
+            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting/PageSettingSchema.Key.type.<get-type>|<get-type>(){}[0]
     }
 }
 
@@ -2356,6 +2397,10 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema 
     final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.root|{}root[0]
         final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.root.<get-root>|<get-root>(){}[0]
 
+    final val hasSource // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.hasSource|@kotlinx.serialization.json.JsonElement{}hasSource[0]
+        final fun (kotlinx.serialization.json/JsonElement).<get-hasSource>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.hasSource.<get-hasSource>|<get-hasSource>@kotlinx.serialization.json.JsonElement(){}[0]
+    final val isEscapedRef // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isEscapedRef|@kotlin.String{}isEscapedRef[0]
+        final fun (kotlin/String).<get-isEscapedRef>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isEscapedRef.<get-isEscapedRef>|<get-isEscapedRef>@kotlin.String(){}[0]
     final val isRef // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isRef|@kotlin.String{}isRef[0]
         final fun (kotlin/String).<get-isRef>(): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.isRef.<get-isRef>|<get-isRef>@kotlin.String(){}[0]
 
@@ -2395,6 +2440,74 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema 
             final fun <get-urlSource>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.Key.urlSource.<get-urlSource>|<get-urlSource>(){}[0]
         final const val value // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.Key.value|{}value[0]
             final fun <get-value>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/IdSchema.Key.value.<get-value>|<get-value>(){}[0]
+    }
+}
+
+final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema|null[0]
+    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.root|{}root[0]
+        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.root.<get-root>|<get-root>(){}[0]
+
+    final fun cacheKey(kotlin/String, kotlin/String): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.cacheKey|cacheKey(kotlin.String;kotlin.String){}[0]
+
+    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope<com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+    }
+
+    open class <#A1: com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope<#A1>> OpenScope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A1> { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+        open val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.root|{}root[0]
+            open fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.root.<get-root>|<get-root>(){}[0]
+
+        final var cacheKey // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.cacheKey|{}cacheKey[0]
+            final fun <get-cacheKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
+            final fun <set-cacheKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.cacheKey.<set-cacheKey>|<set-cacheKey>(kotlin.String?){}[0]
+        final var id // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id|{}id[0]
+            final fun <get-id>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id.<get-id>|<get-id>(){}[0]
+            final fun <set-id>(kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id.<set-id>|<set-id>(kotlinx.serialization.json.JsonElement?){}[0]
+        final var source // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source|{}source[0]
+            final fun <get-source>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source.<get-source>|<get-source>(){}[0]
+            final fun <set-source>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source.<set-source>|<set-source>(kotlin.String?){}[0]
+        final var tags // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags|{}tags[0]
+            final fun <get-tags>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags.<get-tags>|<get-tags>(){}[0]
+            final fun <set-tags>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags.<set-tags>|<set-tags>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate?){}[0]
+        final var tagsExcluder // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tagsExcluder|{}tagsExcluder[0]
+            final fun <get-tagsExcluder>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
+            final fun <set-tagsExcluder>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tagsExcluder.<set-tagsExcluder>|<set-tagsExcluder>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate?){}[0]
+        final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.type|{}type[0]
+            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.type.<get-type>|<get-type>(){}[0]
+            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.type.<set-type>|<set-type>(kotlin.String?){}[0]
+    }
+
+    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key|null[0]
+        final const val cacheKey // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.cacheKey|{}cacheKey[0]
+            final fun <get-cacheKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
+        final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.id|{}id[0]
+            final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.id.<get-id>|<get-id>(){}[0]
+        final const val source // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.source|{}source[0]
+            final fun <get-source>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.source.<get-source>|<get-source>(){}[0]
+        final const val tags // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tags|{}tags[0]
+            final fun <get-tags>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tags.<get-tags>|<get-tags>(){}[0]
+        final const val tagsExcluder // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tagsExcluder|{}tagsExcluder[0]
+            final fun <get-tagsExcluder>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
+        final const val timeToLive // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.timeToLive|{}timeToLive[0]
+            final fun <get-timeToLive>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.timeToLive.<get-timeToLive>|<get-timeToLive>(){}[0]
+        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.type|{}type[0]
+            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.type.<get-type>|<get-type>(){}[0]
+    }
+
+    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value|null[0]
+        final object Group { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Group|null[0]
+            final const val common // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Group.common|{}common[0]
+                final fun <get-common>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Group.common.<get-common>|<get-common>(){}[0]
+        }
+
+        final object Tag { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag|null[0]
+            final const val placeholder // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.placeholder|{}placeholder[0]
+                final fun <get-placeholder>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
+            final const val primary // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.primary|{}primary[0]
+                final fun <get-primary>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.primary.<get-primary>|<get-primary>(){}[0]
+        }
     }
 }
 
@@ -2448,6 +2561,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialS
             final fun <get-contents>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.contents.<get-contents>|<get-contents>(){}[0]
         final const val dimensions // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.dimensions|{}dimensions[0]
             final fun <get-dimensions>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.dimensions.<get-dimensions>|<get-dimensions>(){}[0]
+        final const val images // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.images|{}images[0]
+            final fun <get-images>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.images.<get-images>|<get-images>(){}[0]
         final const val options // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.options|{}options[0]
             final fun <get-options>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.options.<get-options>|<get-options>(){}[0]
         final const val pageSetting // com.tezov.tuucho.core.domain.business.jsonSchema.material/MaterialSchema.Key.pageSetting|{}pageSetting[0]
@@ -2608,9 +2723,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSche
         final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.root|{}root[0]
             final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.root.<get-root>|<get-root>(){}[0]
 
-        final var height // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.height|{}height[0]
-            final fun <get-height>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.height.<get-height>|<get-height>(){}[0]
-            final fun <set-height>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.height.<set-height>|<set-height>(kotlinx.serialization.json.JsonObject?){}[0]
         final var id // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.id|{}id[0]
             final fun <get-id>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.id.<get-id>|<get-id>(){}[0]
             final fun <set-id>(kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.id.<set-id>|<set-id>(kotlinx.serialization.json.JsonElement?){}[0]
@@ -2620,22 +2732,15 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSche
         final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.type|{}type[0]
             final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.type.<get-type>|<get-type>(){}[0]
             final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.type.<set-type>|<set-type>(kotlin.String?){}[0]
-        final var width // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.width|{}width[0]
-            final fun <get-width>(): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.width.<get-width>|<get-width>(){}[0]
-            final fun <set-width>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.OpenScope.width.<set-width>|<set-width>(kotlinx.serialization.json.JsonObject?){}[0]
     }
 
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key|null[0]
-        final const val height // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.height|{}height[0]
-            final fun <get-height>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.height.<get-height>|<get-height>(){}[0]
         final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.id|{}id[0]
             final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.id.<get-id>|<get-id>(){}[0]
         final const val subset // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.subset|{}subset[0]
             final fun <get-subset>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.subset.<get-subset>|<get-subset>(){}[0]
         final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.type|{}type[0]
             final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.type.<get-type>|<get-type>(){}[0]
-        final const val width // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.width|{}width[0]
-            final fun <get-width>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Key.width.<get-width>|<get-width>(){}[0]
     }
 
     final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material/StyleSchema.Value|null[0]
@@ -2705,6 +2810,56 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/TextSchem
     }
 }
 
+final object com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive|null[0]
+    final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.root|{}root[0]
+        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.root.<get-root>|<get-root>(){}[0]
+
+    final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+        final val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.root|{}root[0]
+            final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.root.<get-root>|<get-root>(){}[0]
+
+        final var id // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.id|{}id[0]
+            final fun <get-id>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.id.<get-id>|<get-id>(){}[0]
+            final fun <set-id>(kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.id.<set-id>|<set-id>(kotlinx.serialization.json.JsonElement?){}[0]
+        final var strategy // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.strategy|{}strategy[0]
+            final fun <get-strategy>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.strategy.<get-strategy>|<get-strategy>(){}[0]
+            final fun <set-strategy>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.strategy.<set-strategy>|<set-strategy>(kotlin.String?){}[0]
+        final var transientValue // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.transientValue|{}transientValue[0]
+            final fun <get-transientValue>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.transientValue.<get-transientValue>|<get-transientValue>(){}[0]
+            final fun <set-transientValue>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.transientValue.<set-transientValue>|<set-transientValue>(kotlin.String?){}[0]
+        final var type // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.type|{}type[0]
+            final fun <get-type>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.type.<get-type>|<get-type>(){}[0]
+            final fun <set-type>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Scope.type.<set-type>|<set-type>(kotlin.String?){}[0]
+    }
+
+    final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key|null[0]
+        final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.id|{}id[0]
+            final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.id.<get-id>|<get-id>(){}[0]
+        final const val strategy // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.strategy|{}strategy[0]
+            final fun <get-strategy>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.strategy.<get-strategy>|<get-strategy>(){}[0]
+        final const val transientValue // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.transientValue|{}transientValue[0]
+            final fun <get-transientValue>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.transientValue.<get-transientValue>|<get-transientValue>(){}[0]
+        final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.type|{}type[0]
+            final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Key.type.<get-type>|<get-type>(){}[0]
+    }
+
+    final object Value { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value|null[0]
+        final object Group { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Group|null[0]
+            final const val common // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Group.common|{}common[0]
+                final fun <get-common>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Group.common.<get-common>|<get-common>(){}[0]
+        }
+
+        final object Strategy { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Strategy|null[0]
+            final const val singleUse // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Strategy.singleUse|{}singleUse[0]
+                final fun <get-singleUse>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Strategy.singleUse.<get-singleUse>|<get-singleUse>(){}[0]
+            final const val transient // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Strategy.transient|{}transient[0]
+                final fun <get-transient>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TimeToLive.Value.Strategy.transient.<get-transient>|<get-transient>(){}[0]
+        }
+    }
+}
+
 final object com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema { // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema|null[0]
     final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.root|{}root[0]
         final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.root.<get-root>|<get-root>(){}[0]
@@ -2731,6 +2886,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchem
             final fun <get-content>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.content.<get-content>|<get-content>(){}[0]
         final const val dimension // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.dimension|{}dimension[0]
             final fun <get-dimension>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.dimension.<get-dimension>|<get-dimension>(){}[0]
+        final const val image // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.image|{}image[0]
+            final fun <get-image>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.image.<get-image>|<get-image>(){}[0]
         final const val message // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.message|{}message[0]
             final fun <get-message>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.message.<get-message>|<get-message>(){}[0]
         final const val option // com.tezov.tuucho.core.domain.business.jsonSchema.material/TypeSchema.Value.option|{}option[0]
@@ -2922,80 +3079,108 @@ final object com.tezov.tuucho.core.domain.business.middleware/NavigationMiddlewa
     }
 }
 
-final object com.tezov.tuucho.core.domain.business.model.action/FormAction { // com.tezov.tuucho.core.domain.business.model.action/FormAction|null[0]
-    final object Send : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send|null[0]
-        final val authority // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.authority|{}authority[0]
-            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.authority.<get-authority>|<get-authority>(){}[0]
-        final val command // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.command|{}command[0]
-            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.command.<get-command>|<get-command>(){}[0]
-        final val lockable // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.lockable|{}lockable[0]
-            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.lockable.<get-lockable>|<get-lockable>(){}[0]
-
-        final object ActionLabel { // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.ActionLabel|null[0]
-            final const val denied // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.ActionLabel.denied|{}denied[0]
-                final fun <get-denied>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.ActionLabel.denied.<get-denied>|<get-denied>(){}[0]
-            final const val validated // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.ActionLabel.validated|{}validated[0]
-                final fun <get-validated>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Send.ActionLabel.validated.<get-validated>|<get-validated>(){}[0]
-        }
+final object com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition { // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition|null[0]
+    final object Send : com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol { // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Send|null[0]
+        final val authority // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Send.authority|{}authority[0]
+            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Send.authority.<get-authority>|<get-authority>(){}[0]
+        final val command // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Send.command|{}command[0]
+            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Send.command.<get-command>|<get-command>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Send.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Send.lockable.<get-lockable>|<get-lockable>(){}[0]
     }
 
-    final object Update : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update|null[0]
-        final val authority // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.authority|{}authority[0]
-            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.authority.<get-authority>|<get-authority>(){}[0]
-        final val command // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.command|{}command[0]
-            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.command.<get-command>|<get-command>(){}[0]
-        final val lockable // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.lockable|{}lockable[0]
-            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.lockable.<get-lockable>|<get-lockable>(){}[0]
+    final object Update : com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol { // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update|null[0]
+        final val authority // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.authority|{}authority[0]
+            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.authority.<get-authority>|<get-authority>(){}[0]
+        final val command // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.command|{}command[0]
+            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.command.<get-command>|<get-command>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.lockable.<get-lockable>|<get-lockable>(){}[0]
 
-        final object Target { // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.Target|null[0]
-            final const val error // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.Target.error|{}error[0]
-                final fun <get-error>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormAction.Update.Target.error.<get-error>|<get-error>(){}[0]
+        final object Target { // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.Target|null[0]
+            final const val error // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.Target.error|{}error[0]
+                final fun <get-error>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/FormActionDefinition.Update.Target.error.<get-error>|<get-error>(){}[0]
         }
     }
 }
 
-final object com.tezov.tuucho.core.domain.business.model.action/NavigateAction { // com.tezov.tuucho.core.domain.business.model.action/NavigateAction|null[0]
-    final object LocalDestination : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination|null[0]
-        final val authority // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.authority|{}authority[0]
-            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.authority.<get-authority>|<get-authority>(){}[0]
-        final val command // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.command|{}command[0]
-            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.command.<get-command>|<get-command>(){}[0]
-        final val lockable // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.lockable|{}lockable[0]
-            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.lockable.<get-lockable>|<get-lockable>(){}[0]
+final object com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition { // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition|null[0]
+    final object LocalDestination : com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol { // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination|null[0]
+        final val authority // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.authority|{}authority[0]
+            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.authority.<get-authority>|<get-authority>(){}[0]
+        final val command // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.command|{}command[0]
+            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.command.<get-command>|<get-command>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.lockable.<get-lockable>|<get-lockable>(){}[0]
 
-        final object Target { // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.Target|null[0]
-            final const val back // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.Target.back|{}back[0]
-                final fun <get-back>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.Target.back.<get-back>|<get-back>(){}[0]
-            final const val finish // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.Target.finish|{}finish[0]
-                final fun <get-finish>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.LocalDestination.Target.finish.<get-finish>|<get-finish>(){}[0]
+        final object Target { // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target|null[0]
+            final const val back // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.back|{}back[0]
+                final fun <get-back>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.back.<get-back>|<get-back>(){}[0]
+            final const val current // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.current|{}current[0]
+                final fun <get-current>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.current.<get-current>|<get-current>(){}[0]
+            final const val finish // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.finish|{}finish[0]
+                final fun <get-finish>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.finish.<get-finish>|<get-finish>(){}[0]
         }
     }
 
-    final object Url : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url|null[0]
-        final val authority // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.authority|{}authority[0]
-            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.authority.<get-authority>|<get-authority>(){}[0]
-        final val command // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.command|{}command[0]
-            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.command.<get-command>|<get-command>(){}[0]
-        final val lockable // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.lockable|{}lockable[0]
-            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.model.action/NavigateAction.Url.lockable.<get-lockable>|<get-lockable>(){}[0]
+    final object Url : com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol { // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.Url|null[0]
+        final val authority // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.Url.authority|{}authority[0]
+            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.Url.authority.<get-authority>|<get-authority>(){}[0]
+        final val command // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.Url.command|{}command[0]
+            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.Url.command.<get-command>|<get-command>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.Url.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Type // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.Url.lockable.<get-lockable>|<get-lockable>(){}[0]
     }
 }
 
-final object com.tezov.tuucho.core.domain.business.model.action/StoreAction { // com.tezov.tuucho.core.domain.business.model.action/StoreAction|null[0]
-    final object KeyValue : com.tezov.tuucho.core.domain.business.protocol/ActionProtocol { // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue|null[0]
-        final val authority // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.authority|{}authority[0]
-            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.authority.<get-authority>|<get-authority>(){}[0]
-        final val command // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.command|{}command[0]
-            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.command.<get-command>|<get-command>(){}[0]
-        final val lockable // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.lockable|{}lockable[0]
-            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.lockable.<get-lockable>|<get-lockable>(){}[0]
+final object com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition { // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition|null[0]
+    final object KeyValue : com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol { // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue|null[0]
+        final val authority // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.authority|{}authority[0]
+            final fun <get-authority>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.authority.<get-authority>|<get-authority>(){}[0]
+        final val command // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.command|{}command[0]
+            final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.command.<get-command>|<get-command>(){}[0]
+        final val lockable // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.lockable|{}lockable[0]
+            final fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable.Empty // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.lockable.<get-lockable>|<get-lockable>(){}[0]
 
-        final object Target { // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.Target|null[0]
-            final const val remove // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.Target.remove|{}remove[0]
-                final fun <get-remove>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.Target.remove.<get-remove>|<get-remove>(){}[0]
-            final const val save // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.Target.save|{}save[0]
-                final fun <get-save>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreAction.KeyValue.Target.save.<get-save>|<get-save>(){}[0]
+        final object Target { // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.Target|null[0]
+            final const val remove // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.Target.remove|{}remove[0]
+                final fun <get-remove>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.Target.remove.<get-remove>|<get-remove>(){}[0]
+            final const val save // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.Target.save|{}save[0]
+                final fun <get-save>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/StoreActionDefinition.KeyValue.Target.save.<get-save>|<get-save>(){}[0]
         }
+    }
+}
+
+final object com.tezov.tuucho.core.domain.business.model.image/LocalImageDefinition : com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol { // com.tezov.tuucho.core.domain.business.model.image/LocalImageDefinition|null[0]
+    final val command // com.tezov.tuucho.core.domain.business.model.image/LocalImageDefinition.command|{}command[0]
+        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/LocalImageDefinition.command.<get-command>|<get-command>(){}[0]
+}
+
+final object com.tezov.tuucho.core.domain.business.model.image/RemoteImageDefinition : com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol { // com.tezov.tuucho.core.domain.business.model.image/RemoteImageDefinition|null[0]
+    final val command // com.tezov.tuucho.core.domain.business.model.image/RemoteImageDefinition.command|{}command[0]
+        final fun <get-command>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.image/RemoteImageDefinition.command.<get-command>|<get-command>(){}[0]
+}
+
+final object com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol|null[0]
+    abstract interface Registry { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry|null[0]
+        abstract fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
+    }
+
+    abstract interface Resolver { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver|null[0]
+        abstract suspend fun acquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.acquire|acquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
+        abstract suspend fun release(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.release|release(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
+        abstract suspend fun tryAcquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver.tryAcquire|tryAcquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable){}[0]
+    }
+
+    abstract interface Stack { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack|null[0]
+        abstract suspend fun acquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.acquire|acquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType){}[0]
+        abstract suspend fun acquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock> // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.acquire|acquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
+        abstract suspend fun isAllValid(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.isAllValid|isAllValid(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
+        abstract suspend fun isValid(com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.isValid|isValid(com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock){}[0]
+        abstract suspend fun release(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.release|release(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock){}[0]
+        abstract suspend fun release(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.release|release(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock>){}[0]
+        abstract suspend fun tryAcquire(kotlin/String, com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.tryAcquire|tryAcquire(kotlin.String;com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType){}[0]
+        abstract suspend fun tryAcquire(kotlin/String, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLock>? // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Stack.tryAcquire|tryAcquire(kotlin.String;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
     }
 }
 

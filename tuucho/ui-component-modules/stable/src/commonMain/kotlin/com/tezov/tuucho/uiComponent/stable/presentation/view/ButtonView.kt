@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.action
-import com.tezov.tuucho.core.presentation.ui.render.projection.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projection.mutable
 import com.tezov.tuucho.core.presentation.ui.render.projection.view.ViewProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.view.view
@@ -65,7 +64,7 @@ private class ButtonView(
             action = +action(
                 key = Content.Key.action,
                 route = screenContext.route
-            ).mutable.contextual
+            ).mutable
             labelView = +view(
                 key = Content.Key.label,
                 screenContext = screenContext

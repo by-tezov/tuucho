@@ -387,6 +387,9 @@ extensions.configure(JacocoPluginExtension::class.java) {
 }
 
 tasks.register<JacocoReport>("rootDebugCoverageReport") {
+    if (System.getenv("IS_CI") != "true") {
+        dependsOn("rootDebugUnitTest")
+    }
     group = "verification"
     description = "Aggregates Html coverage report from all modules into root build folder"
 
@@ -403,12 +406,118 @@ tasks.register<JacocoReport>("rootDebugCoverageReport") {
     classDirectories.setFrom(reportsList.flatMap { it.classDirectories.files })
     sourceDirectories.setFrom(reportsList.flatMap { it.sourceDirectories.files })
 
+    doFirst {
+        val reportDir = layout.buildDirectory.dir("reports/jacoco/html").get().asFile
+        if (reportDir.exists()) {
+            delete(reportDir)
+        }
+    }
+
     reports {
         xml.required.set(true)
         xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoRootReport.xml"))
         html.required.set(true)
         html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/html"))
     }
+}
+
+tasks.register("rootDebugCoveragePostProcessReport") {
+
+    doFirst {
+        val filterHtml = """
+                <div style="padding:10px;">
+                    <label for="elementsFilter">Filter:</label>
+                    <input type="text" id="elementsFilter" onkeyup="filterElements()" placeholder="enter element name...">
+                </div>
+                <script>
+                    function filterElements() {
+                        var input = document.getElementById("elementsFilter");
+                        var filter = input.value.toLowerCase();
+                        var rows = document.querySelectorAll("table tr");
+                        rows.forEach(function(row) {
+                            var nameCell = row.querySelector("td a.el_package, td a.el_class");
+                            if (nameCell) {
+                                row.style.display = nameCell.textContent.toLowerCase().includes(filter) ? "" : "none";
+                            }
+                        });
+                    }
+                </script>
+            """.trimIndent()
+        val darkThemeCss = """
+                <style>
+                    body {
+                        background-color: #0b0c0d;
+                        color: #d1d5db;
+                        font-family: "Inter", sans-serif;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        background-color: #131416;
+                        color: #d1d5db;
+                    }
+                    th, td {
+                        border: 1px solid #2c2c2c !important;
+                        padding: 6px 8px;
+                    }
+                    thead td {
+                        background-color: #1f1f21 !important; /* dark header background */
+                        color: #d1d5db;
+                    }
+                    tbody tr:nth-child(even) {
+                        background-color: #1a1a1c; /* alternate row */
+                    }
+                    tbody tr:nth-child(odd) {
+                        background-color: #131416;
+                    }
+                    td {
+                        color: #d1d5db;
+                    }
+                    a {
+                        color: #ffffff !important;
+                        text-decoration: none;
+                    }
+                    input, select, textarea {
+                        background-color: #1f1f21;
+                        color: #d1d5db;
+                        border: 1px solid #2c2c2c;
+                    }
+                    label {
+                        color: #d1d5db;
+                    }
+                </style>
+            """.trimIndent()
+        val darkCodeCss = """
+            <style>
+                body {
+                    background-color: #d1d5db !important;
+                    color: #d1d5db !important;
+                }
+            </style>
+        """.trimIndent()
+
+
+        val reportDir = layout.buildDirectory.dir("reports/jacoco/html").get().asFile
+        reportDir.walkTopDown().filter { it.isFile && it.extension == "html" }.forEach { file ->
+            var html = file.readText(Charsets.UTF_8)
+            val bodyTagRegex = Regex("<body.*?>")
+            val bodyTag = bodyTagRegex.find(html)?.value ?: "<body>"
+            val injection = when {
+                file.name.endsWith(".kt.html") -> "$bodyTag\n$darkCodeCss"
+                file.name == "index.html" -> "$bodyTag\n$darkThemeCss\n$filterHtml"
+                else -> "$bodyTag\n$darkThemeCss"
+            }
+
+            html = html.replaceFirst(bodyTagRegex, injection)
+            file.writeText(html, Charsets.UTF_8)
+        }
+    }
+}
+
+tasks.named("rootDebugCoverageReport") {
+    finalizedBy("rootDebugCoveragePostProcessReport")
 }
 
 // Maven Publication
@@ -427,4 +536,33 @@ tasks.register("rootPublishReleaseToMavenLocal") {
         it.dependsOn(cleanMavenLocalFolder)
     }
     dependsOn(publishTasks)
+}
+
+tasks.register("rootAdminUpdate") {
+    doLast {
+        val tasksToRun = listOf(
+            "rootFormatKtLint",
+            "rootUpdateKtLintBaseline",
+            "rootKtLintReport",
+            "rootUpdateDetektBaseline",
+            "rootDetektReport",
+            "rootUpdateReleaseApi",
+            "rootValidateReleaseApi",
+            "rootDebugUnitTest",
+            "rootDebugCoverageReport",
+            "rootPublishReleaseToMavenLocal"
+        )
+
+        tasksToRun.forEach { taskName ->
+            println(taskName)
+            val process = ProcessBuilder("./gradlew", taskName)
+                .directory(rootProject.projectDir)
+                .inheritIO()
+                .start()
+            val exitCode = process.waitFor()
+            if (exitCode != 0) {
+                throw GradleException("$taskName failed with exit code $exitCode")
+            }
+        }
+    }
 }

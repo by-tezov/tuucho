@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.data.repository.repository
 
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
-import com.tezov.tuucho.core.data.repository.database.type.Lifetime
-import com.tezov.tuucho.core.data.repository.database.type.Visibility
+import com.tezov.tuucho.core.data.repository.database.type.JsonLifetime
+import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
-import com.tezov.tuucho.core.data.repository.repository.source.RetrieveObjectRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.RemoteSource
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.config.ConfigSchema
@@ -20,14 +20,14 @@ import kotlinx.serialization.json.jsonArray
 
 internal class RefreshMaterialCacheRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val retrieveObjectRemoteSource: RetrieveObjectRemoteSource,
+    private val remoteSource: RemoteSource,
     private val materialRemoteSource: MaterialRemoteSource,
     private val materialCacheLocalSource: MaterialCacheLocalSource,
 ) : MaterialRepositoryProtocol.RefreshCache {
     override suspend fun process(
         url: String
     ) {
-        val configModelDomain = retrieveObjectRemoteSource.process(url)
+        val configModelDomain = remoteSource.resource(url)
         coroutineScopes.parser.await {
             configModelDomain
                 .onScope(ConfigSchema.MaterialResource::Scope)
@@ -42,13 +42,13 @@ internal class RefreshMaterialCacheRepository(
     private suspend fun downloadAndCache(
         url: String,
         validityKey: String,
-        visibility: Visibility,
+        visibility: JsonVisibility,
     ) {
         materialRemoteSource.process(url).let { material ->
             materialCacheLocalSource.insert(
                 materialObject = material,
                 url = url,
-                weakLifetime = Lifetime.Unlimited(validityKey = validityKey),
+                weakLifetime = JsonLifetime.Unlimited(validityKey = validityKey),
                 visibility = visibility
             )
         }
@@ -57,7 +57,7 @@ internal class RefreshMaterialCacheRepository(
     private suspend fun enroll(
         url: String,
         validityKey: String,
-        visibility: Visibility,
+        visibility: JsonVisibility,
     ) {
         materialCacheLocalSource.enroll(
             url = url,
@@ -77,9 +77,9 @@ internal class RefreshMaterialCacheRepository(
                     if (materialCacheLocalSource.isCacheValid(url, validityKey)) continue
                     materialCacheLocalSource.delete(url, Table.Common)
                     if (configScope.preDownload.isTrueOrNull) {
-                        downloadAndCache(url, validityKey, Visibility.Global)
+                        downloadAndCache(url, validityKey, JsonVisibility.Global)
                     } else {
-                        enroll(url, validityKey, Visibility.Global)
+                        enroll(url, validityKey, JsonVisibility.Global)
                     }
                 }
             }
@@ -97,9 +97,9 @@ internal class RefreshMaterialCacheRepository(
                     if (materialCacheLocalSource.isCacheValid(url, validityKey)) continue
                     materialCacheLocalSource.delete(url, Table.Common)
                     if (configScope.preDownload.isTrueOrNull) {
-                        downloadAndCache(url, validityKey, Visibility.Local)
+                        downloadAndCache(url, validityKey, JsonVisibility.Local)
                     } else {
-                        enroll(url, validityKey, Visibility.Local)
+                        enroll(url, validityKey, JsonVisibility.Local)
                     }
                 }
             }
@@ -118,7 +118,7 @@ internal class RefreshMaterialCacheRepository(
                         ?: throw DataException.Default("missing validity key in contextual material $this")
                     if (materialCacheLocalSource.isCacheValid(url, validityKey)) continue
                     materialCacheLocalSource.delete(url, Table.Contextual)
-                    enroll(url, validityKey, Visibility.Contextual(urlOrigin = urlOrigin))
+                    enroll(url, validityKey, JsonVisibility.Contextual(urlOrigin = urlOrigin))
                 }
             }
         }

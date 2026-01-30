@@ -7,14 +7,14 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSc
 object CustomLabelSchema {
     object Component {
         object Value {
-            const val subset = CustomSubsetSchema.Value.label
+            const val subset = "label-custom"
         }
     }
 
     object Content {
         object Key {
             const val value = "value"
-            const val action = ActionSchema.root
+            const val action = "action"
         }
     }
 

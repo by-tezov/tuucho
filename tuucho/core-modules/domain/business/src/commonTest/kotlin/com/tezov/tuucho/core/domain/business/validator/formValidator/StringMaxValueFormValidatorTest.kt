@@ -20,6 +20,12 @@ class StringMaxValueFormValidatorTest {
     }
 
     @Test
+    fun `null string is valid`() {
+        sut.updateValidity(null)
+        assertTrue(sut.isValid)
+    }
+
+    @Test
     fun `number less than maxValue is valid`() {
         sut.updateValidity("5")
         assertTrue(sut.isValid)

@@ -20,6 +20,12 @@ class StringOnlyDigitsFormValidatorTest {
     }
 
     @Test
+    fun `null string is valid`() {
+        sut.updateValidity(null)
+        assertTrue(sut.isValid)
+    }
+
+    @Test
     fun `string with only digits is valid`() {
         sut.updateValidity("123456")
         assertTrue(sut.isValid)

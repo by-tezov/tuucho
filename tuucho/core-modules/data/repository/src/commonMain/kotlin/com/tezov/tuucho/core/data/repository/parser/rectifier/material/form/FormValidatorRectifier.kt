@@ -2,12 +2,14 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.form
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormValidatorSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.hasGroup
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.isRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
@@ -32,9 +34,11 @@ class FormValidatorRectifier(
     }
 
     override fun beforeAlterPrimitive(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = beforeAlterObject(
+        context,
         path = ROOT_PATH,
         element = element
             .find(path)
@@ -45,6 +49,7 @@ class FormValidatorRectifier(
     )
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
@@ -52,6 +57,7 @@ class FormValidatorRectifier(
     }.let(::JsonArray)
 
     override fun beforeAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ): JsonElement? {
@@ -71,13 +77,14 @@ class FormValidatorRectifier(
     }
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = JsonArray(element.find(path).jsonArray.map { jsonObject ->
         val scope = jsonObject.withScope(FormValidatorSchema::Scope)
         var idMessageErrorRectified: String? = null
         with(scope) {
-            if (messageErrorId?.startsWith(SymbolData.ID_REF_INDICATOR) == true) {
+            if (messageErrorId?.isRef == true) {
                 idMessageErrorRectified = messageErrorId
                     ?.removePrefix(SymbolData.ID_REF_INDICATOR)
             }

@@ -1,0 +1,52 @@
+package com.tezov.tuucho.core.data.repository.database.type
+
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.time.Instant
+
+@Serializable
+sealed class JsonLifetime {
+    companion object Type {
+        const val enrolled = "enrolled"
+        const val unlimited = "unlimited"
+        const val transient = "transient"
+        const val singleUse = "single-use"
+    }
+
+    abstract val name: String
+    abstract val validityKey: String?
+
+    @Serializable
+    @SerialName(enrolled)
+    data class Enrolled(
+        override val validityKey: String?,
+    ) : JsonLifetime() {
+        override val name = enrolled
+    }
+
+    @Serializable
+    @SerialName(unlimited)
+    data class Unlimited(
+        override val validityKey: String?
+    ) : JsonLifetime() {
+        override val name = unlimited
+    }
+
+    @Serializable
+    @SerialName(transient)
+    data class Transient(
+        override val validityKey: String?,
+        @Contextual val expirationDateTime: Instant,
+    ) : JsonLifetime() {
+        override val name = transient
+    }
+
+    @Serializable
+    @SerialName(singleUse)
+    data class SingleUse(
+        override val validityKey: String?,
+    ) : JsonLifetime() {
+        override val name = singleUse
+    }
+}

@@ -1,4 +1,10 @@
 {
+  "setting": {
+    "time-to-live": {
+      "strategy": "transient",
+      "transient-value": "30s"
+    }
+  },
   "root": {
     "setting": {
       "shadower": {
@@ -31,6 +37,20 @@
     },
     "content": {
       "items": [
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*small-logo"
+            ]
+          }
+        },
         {
           "subset": "layout-linear",
           "style": {
@@ -219,6 +239,21 @@
       }
     },
     {
+      "id": "small-logo",
+      "subset": "image",
+      "style": {
+        "width": "48",
+        "height": "48",
+        "shape": "rounded",
+        "padding": "3",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "values": ["*small-logo", "*small-logo-placeholder"],
+        "description": "Small-Logo"
+      }
+    },
+    {
       "id": "input-field-age",
       "subset": "form-field",
       "option": {
@@ -306,7 +341,7 @@
   ],
   "texts": {
     "common": {
-      "text-title": "Home Page - Mock",
+      "text-title": "Home Page - Dev",
       "text-body": "bienvenue sur la page d'accueil"
     },
     "form": {
@@ -315,6 +350,17 @@
       "text-form-email-placeholder": "my.email@gmail.com",
       "text-form-age-title": "age*",
       "text-form-age-placeholder": "27"
+    }
+  },
+  "images": {
+    "common": {
+      "small-logo": {
+        "source": "remote://auth/logo-koin"
+      },
+      "small-logo-placeholder": {
+        "source": "remote://auth/logo-koin-placeholder",
+        "tags": "placeholder"
+      }
     }
   }
 }

@@ -1,15 +1,16 @@
 package com.tezov.tuucho.core.data.repository.repository.source
 
 import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
-import com.tezov.tuucho.core.data.repository.network.NetworkJsonObjectProtocol
+import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.ResponseAssembler
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.serialization.json.JsonObject
 
 internal class SendDataAndRetrieveMaterialRemoteSource(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val networkJsonObject: NetworkJsonObjectProtocol,
+    private val remoteSource: RemoteSource,
     private val responseRectifier: ResponseRectifier,
     private val responseAssembler: ResponseAssembler,
     private val materialDatabaseSource: MaterialDatabaseSource,
@@ -18,20 +19,26 @@ internal class SendDataAndRetrieveMaterialRemoteSource(
         url: String,
         dataObject: JsonObject
     ): JsonObject? {
-        val response = coroutineScopes.network.await {
-            networkJsonObject.send(url, dataObject)
-        }
+        val response = remoteSource.send(url, dataObject)
         return response?.let {
             coroutineScopes.parser.await {
-                val responseRectified = responseRectifier.process(it)
+                val responseRectified = responseRectifier.process(
+                    context = RectifierProtocol.Context(
+                        url = url
+                    ),
+                    responseObject = it
+                )
                 responseAssembler
                     .process(
-                        responseObject = responseRectified,
-                        findAllRefOrNullFetcher = { from, type ->
-                            coroutineScopes.database.await {
-                                materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
+                        context = AssemblerProtocol.Context(
+                            url = url,
+                            findAllRefOrNullFetcher = { from, type ->
+                                coroutineScopes.database.await {
+                                    materialDatabaseSource.getAllCommonRefOrNull(from, url, type)
+                                }
                             }
-                        }
+                        ),
+                        responseObject = responseRectified
                     )
             }
         }

@@ -44,11 +44,14 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             "kotlin.uuid.ExperimentalUuidApi",
             "kotlin.ExperimentalUnsignedTypes",
             "kotlin.time.ExperimentalTime",
+            "kotlin.concurrent.atomics.ExperimentalAtomicApi",
 //            "kotlin.ExperimentalMultiplatform",
         ).asIterable()
 
         private fun compilerOption() = listOf<String>(
-//            "-Xnested-type-aliases"
+            "-Xcontext-parameters"
+//            "-Xnested-type-aliases",
+//            "-Xexpect-actual-classes",
         )
     }
 
@@ -196,7 +199,8 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             compilerOptions {
                 optIn.addAll(optIn())
                 freeCompilerArgs.addAll(compilerOption())
-                allWarningsAsErrors.set(false) //turn of warning error unique name when maven publication, TODO need to dig in to find what is wrong with KLib
+                //turn of warning error unique name when maven publication, TODO need to dig in to find what is wrong with KLib
+                allWarningsAsErrors.set(false)
             }
             // Android
             val androidTargets = listOf(androidTarget())

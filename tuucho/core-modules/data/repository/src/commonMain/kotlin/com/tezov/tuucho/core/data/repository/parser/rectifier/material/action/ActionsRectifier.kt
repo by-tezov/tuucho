@@ -1,10 +1,11 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.action
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.addGroup
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.isRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema.requireIsRef
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema.Key
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
@@ -30,6 +31,7 @@ class ActionsRectifier(
     private val actionRectifier: ActionRectifier by inject()
 
     override fun beforeAlterObject(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
@@ -51,12 +53,12 @@ class ActionsRectifier(
     ) = jsonPrimitive
         .withScope(ActionSchema::Scope)
         .apply {
-            val stringValue = this.element.string
-            if (stringValue.startsWith(SymbolData.ID_REF_INDICATOR)) {
+            val stringValue = element.string
+            if (stringValue.isRef) {
                 id = onScope(IdSchema::Scope)
                     .apply {
                         value = key.addGroup(group)
-                        source = value
+                        source = stringValue
                     }.collect()
             } else {
                 id = key.addGroup(group).let(::JsonPrimitive)
@@ -107,12 +109,13 @@ class ActionsRectifier(
         }.collect()
 
     override fun afterAlterArray(
+        context: RectifierProtocol.Context,
         path: JsonElementPath,
         element: JsonElement
     ) = element
         .find(path)
         .jsonArray
         .map {
-            actionRectifier.process(ROOT_PATH, it)
+            actionRectifier.process(context, ROOT_PATH, it)
         }.let(::JsonArray)
 }

@@ -1,11 +1,15 @@
 #common
 localDatabaseFileName=tuucho.database
 localDatastoreFileName=tuucho.datastore
-serverTimeoutMillis=5000
+imageDiskCacheSizeMo=150
+imageDiskCacheDirectory=tuucho.cache_images
+serverImageTimeoutMillis=10000
+serverJsonTimeoutMillis=5000
 serverVersion=v1
 serverHealthEndpoint=health
 serverResourceEndpoint=resource
 serverSendEndpoint=send
+serverImageEndpoint=image
 #android
 headerPlatformAndroid=android
 serverBaseUrlAndroid=http://10.0.2.2:3000

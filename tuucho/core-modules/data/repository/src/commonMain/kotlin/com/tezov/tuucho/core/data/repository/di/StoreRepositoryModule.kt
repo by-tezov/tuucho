@@ -15,8 +15,8 @@ object StoreRepositoryModule {
 
     internal fun invoke() = module(ModuleContextData.Main) {
         factory<Config>(STORE_REPOSITORY_CONFIG) {
-            getOrNull() ?: object : Config {
-                override val fileName = "tuucho-datastore"
+            getOrNull<Config>() ?: object : Config {
+                override val fileName = "tuucho.datastore"
             }
         }
     }
