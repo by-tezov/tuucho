@@ -1,0 +1,243 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.tezov:core.domain.tool>
+open annotation class com.tezov.tuucho.core.domain.tool.annotation/TuuchoInternalApi : kotlin/Annotation { // com.tezov.tuucho.core.domain.tool.annotation/TuuchoInternalApi|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.tool.annotation/TuuchoInternalApi.<init>|<init>(){}[0]
+}
+
+abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol { // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol|null[0]
+    abstract val context // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.context|{}context[0]
+        abstract fun <get-context>(): kotlin.coroutines/CoroutineContext // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.context.<get-context>|<get-context>(){}[0]
+    abstract val scope // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.scope|{}scope[0]
+        abstract fun <get-scope>(): kotlinx.coroutines/CoroutineScope // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.scope.<get-scope>|<get-scope>(){}[0]
+    abstract val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob|{}supervisorJob[0]
+        abstract fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
+
+    abstract fun <#A1: kotlin/Any?> async(kotlin/Boolean, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.async|async(kotlin.Boolean;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> throwOnFailure(kotlinx.coroutines/Deferred<#A1>) // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.throwOnFailure|throwOnFailure(kotlinx.coroutines.Deferred<0:0>){0§<kotlin.Any?>}[0]
+    open suspend fun <#A1: kotlin/Any?> await(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol.await|await(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+}
+
+abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor { // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor|null[0]
+    abstract fun process(com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context) // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.process|process(com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor.Context){}[0]
+
+    final class Context { // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Throwable) // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.<init>|<init>(kotlin.String;kotlin.String;kotlin.Throwable){}[0]
+
+        final val id // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.id|{}id[0]
+            final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.id.<get-id>|<get-id>(){}[0]
+        final val name // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.name|{}name[0]
+            final fun <get-name>(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.name.<get-name>|<get-name>(){}[0]
+        final val throwable // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.throwable|{}throwable[0]
+            final fun <get-throwable>(): kotlin/Throwable // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.throwable.<get-throwable>|<get-throwable>(){}[0]
+
+        final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.component1|component1(){}[0]
+        final fun component2(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.component2|component2(){}[0]
+        final fun component3(): kotlin/Throwable // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.component3|component3(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Throwable = ...): com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.copy|copy(kotlin.String;kotlin.String;kotlin.Throwable){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor.Context.toString|toString(){}[0]
+    }
+}
+
+abstract interface com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler { // com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler|null[0]
+    abstract fun process(kotlin/Throwable): kotlin/Throwable? // com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler.process|process(kotlin.Throwable){}[0]
+}
+
+abstract interface com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol { // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol|null[0]
+    abstract fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol.currentThreadName|currentThreadName(){}[0]
+}
+
+sealed interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol { // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol|null[0]
+    abstract fun clear() // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.clear|clear(){}[0]
+    abstract fun getOrNull(): #A? // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.getOrNull|getOrNull(){}[0]
+    abstract fun getOrThrow(): #A // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.getOrThrow|getOrThrow(){}[0]
+    abstract fun set(#A) // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.set|set(1:0){}[0]
+
+    abstract interface <#A1: kotlin/Any> Strong : com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A1> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Strong|null[0]
+
+    abstract interface <#A1: kotlin/Any> Weak : com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A1> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Weak|null[0]
+
+    abstract interface Factory { // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Factory|null[0]
+        abstract fun <#A2: kotlin/Any> create(kotlin.reflect/KClass<out com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<*>>, #A2? = ...): com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A2> // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Factory.create|create(kotlin.reflect.KClass<out|com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol<*>>;0:0?){0§<kotlin.Any>}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.domain.tool.async/CoroutineContext : com.tezov.tuucho.core.domain.tool.async/CoroutineContextProtocol { // com.tezov.tuucho.core.domain.tool.async/CoroutineContext|null[0]
+    constructor <init>(kotlin/String, kotlin.coroutines/CoroutineContext, com.tezov.tuucho.core.domain.tool.async/CoroutineExceptionMonitor?, com.tezov.tuucho.core.domain.tool.async/CoroutineUncaughtExceptionHandler?) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.<init>|<init>(kotlin.String;kotlin.coroutines.CoroutineContext;com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor?;com.tezov.tuucho.core.domain.tool.async.CoroutineUncaughtExceptionHandler?){}[0]
+
+    final val context // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.context|{}context[0]
+        final fun <get-context>(): kotlin.coroutines/CoroutineContext // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.context.<get-context>|<get-context>(){}[0]
+    final val scope // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.scope|{}scope[0]
+        final fun <get-scope>(): kotlinx.coroutines/CoroutineScope // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.scope.<get-scope>|<get-scope>(){}[0]
+    final val supervisorJob // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob|{}supervisorJob[0]
+        final fun <get-supervisorJob>(): kotlinx.coroutines/Job // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.supervisorJob.<get-supervisorJob>|<get-supervisorJob>(){}[0]
+
+    final fun <#A1: kotlin/Any?> async(kotlin/Boolean, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.async|async(kotlin.Boolean;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> throwOnFailure(kotlinx.coroutines/Deferred<#A1>) // com.tezov.tuucho.core.domain.tool.async/CoroutineContext.throwOnFailure|throwOnFailure(kotlinx.coroutines.Deferred<0:0>){0§<kotlin.Any?>}[0]
+}
+
+final class com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier { // com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier.<init>|<init>(){}[0]
+
+    final fun process(kotlin/String, kotlin.time/Instant = ...): kotlin/String // com.tezov.tuucho.core.domain.tool.datetime/ExpirationDateTimeRectifier.process|process(kotlin.String;kotlin.time.Instant){}[0]
+}
+
+final class com.tezov.tuucho.core.domain.tool.json/InstantSerializer : kotlinx.serialization/KSerializer<kotlin.time/Instant> { // com.tezov.tuucho.core.domain.tool.json/InstantSerializer|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.tool.json/InstantSerializer.<init>|<init>(){}[0]
+
+    final val descriptor // com.tezov.tuucho.core.domain.tool.json/InstantSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // com.tezov.tuucho.core.domain.tool.json/InstantSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): kotlin.time/Instant // com.tezov.tuucho.core.domain.tool.json/InstantSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, kotlin.time/Instant) // com.tezov.tuucho.core.domain.tool.json/InstantSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;kotlin.time.Instant){}[0]
+}
+
+final class com.tezov.tuucho.core.domain.tool.json/JsonElementPath : kotlin.collections/Iterable<kotlin/String> { // com.tezov.tuucho.core.domain.tool.json/JsonElementPath|null[0]
+    constructor <init>(kotlin/String? = ..., kotlin/Int? = ...) // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.<init>|<init>(kotlin.String?;kotlin.Int?){}[0]
+
+    final fun atIndex(kotlin/Int): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.atIndex|atIndex(kotlin.Int){}[0]
+    final fun child(kotlin/String, kotlin/Int? = ...): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.child|child(kotlin.String;kotlin.Int?){}[0]
+    final fun isEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.isEmpty|isEmpty(){}[0]
+    final fun iterator(): kotlin.collections/Iterator<kotlin/String> // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.iterator|iterator(){}[0]
+    final fun lastSegment(): kotlin/String? // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.lastSegment|lastSegment(){}[0]
+    final fun parent(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.parent|parent(){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.toString|toString(){}[0]
+
+    final object Companion { // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion|null[0]
+        final const val INDEX_SEPARATOR // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.INDEX_SEPARATOR|{}INDEX_SEPARATOR[0]
+            final fun <get-INDEX_SEPARATOR>(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.INDEX_SEPARATOR.<get-INDEX_SEPARATOR>|<get-INDEX_SEPARATOR>(){}[0]
+        final const val SEGMENT_SEPARATOR // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.SEGMENT_SEPARATOR|{}SEGMENT_SEPARATOR[0]
+            final fun <get-SEGMENT_SEPARATOR>(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/JsonElementPath.Companion.SEGMENT_SEPARATOR.<get-SEGMENT_SEPARATOR>|<get-SEGMENT_SEPARATOR>(){}[0]
+    }
+}
+
+final object com.tezov.tuucho.core.domain.tool.async/ExtensionFlow { // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow|null[0]
+    final suspend fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<#A1>).collectForever(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow.collectForever|collectForever@kotlinx.coroutines.flow.Flow<0:0>(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<kotlin.Any>}[0]
+    final suspend fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<#A1>).collectOnce(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow.collectOnce|collectOnce@kotlinx.coroutines.flow.Flow<0:0>(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<kotlin.Any>}[0]
+    final suspend fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<#A1>).collectUntil(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Boolean>) // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow.collectUntil|collectUntil@kotlinx.coroutines.flow.Flow<0:0>(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Boolean>){0§<kotlin.Any>}[0]
+}
+
+final object com.tezov.tuucho.core.domain.tool.async/Notifier { // com.tezov.tuucho.core.domain.tool.async/Notifier|null[0]
+    final class <#A1: kotlin/Any> Emitter { // com.tezov.tuucho.core.domain.tool.async/Notifier.Emitter|null[0]
+        constructor <init>(kotlin/Int = ..., kotlin/Int = ..., kotlinx.coroutines.channels/BufferOverflow = ...) // com.tezov.tuucho.core.domain.tool.async/Notifier.Emitter.<init>|<init>(kotlin.Int;kotlin.Int;kotlinx.coroutines.channels.BufferOverflow){}[0]
+
+        final val createCollector // com.tezov.tuucho.core.domain.tool.async/Notifier.Emitter.createCollector|{}createCollector[0]
+            final fun <get-createCollector>(): com.tezov.tuucho.core.domain.tool.async/Notifier.Collector<#A1> // com.tezov.tuucho.core.domain.tool.async/Notifier.Emitter.createCollector.<get-createCollector>|<get-createCollector>(){}[0]
+
+        final fun tryEmit(#A1): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/Notifier.Emitter.tryEmit|tryEmit(1:0){}[0]
+        final suspend fun emit(#A1) // com.tezov.tuucho.core.domain.tool.async/Notifier.Emitter.emit|emit(1:0){}[0]
+    }
+
+    final value class <#A1: kotlin/Any> Collector { // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector|null[0]
+        constructor <init>(kotlinx.coroutines.flow/Flow<#A1>) // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.<init>|<init>(kotlinx.coroutines.flow.Flow<1:0>){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.equals|equals(kotlin.Any?){}[0]
+        final fun filter(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Boolean>): com.tezov.tuucho.core.domain.tool.async/Notifier.Collector<#A1> // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.filter|filter(kotlin.coroutines.SuspendFunction1<1:0,kotlin.Boolean>){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.toString|toString(){}[0]
+        final suspend fun forever(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.forever|forever(kotlin.coroutines.SuspendFunction1<1:0,kotlin.Unit>){}[0]
+        final suspend fun once(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.once|once(kotlin.coroutines.SuspendFunction1<1:0,kotlin.Unit>){}[0]
+        final suspend fun until(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Boolean>) // com.tezov.tuucho.core.domain.tool.async/Notifier.Collector.until|until(kotlin.coroutines.SuspendFunction1<1:0,kotlin.Boolean>){}[0]
+    }
+}
+
+final object com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean { // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean|null[0]
+    final val isFalse // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isFalse|@kotlin.Boolean?{}isFalse[0]
+        final fun (kotlin/Boolean?).<get-isFalse>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isFalse.<get-isFalse>|<get-isFalse>@kotlin.Boolean?(){}[0]
+    final val isFalseOrNull // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isFalseOrNull|@kotlin.Boolean?{}isFalseOrNull[0]
+        final fun (kotlin/Boolean?).<get-isFalseOrNull>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isFalseOrNull.<get-isFalseOrNull>|<get-isFalseOrNull>@kotlin.Boolean?(){}[0]
+    final val isTrue // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isTrue|@kotlin.Boolean?{}isTrue[0]
+        final fun (kotlin/Boolean?).<get-isTrue>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isTrue.<get-isTrue>|<get-isTrue>@kotlin.Boolean?(){}[0]
+    final val isTrueOrNull // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isTrueOrNull|@kotlin.Boolean?{}isTrueOrNull[0]
+        final fun (kotlin/Boolean?).<get-isTrueOrNull>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.isTrueOrNull.<get-isTrueOrNull>|<get-isTrueOrNull>@kotlin.Boolean?(){}[0]
+
+    final fun (kotlin/Boolean).toInt(): kotlin/Int // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.toInt|toInt@kotlin.Boolean(){}[0]
+    final fun (kotlin/Boolean?).toInt(): kotlin/Int? // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.toInt|toInt@kotlin.Boolean?(){}[0]
+    final inline fun <#A1: kotlin/Any?> (kotlin/Boolean).action(crossinline kotlin/Function0<#A1>, crossinline kotlin/Function0<#A1>): #A1 // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.action|action@kotlin.Boolean(kotlin.Function0<0:0>;kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: kotlin/Any?> (kotlin/Boolean).ifFalse(crossinline kotlin/Function0<#A1>): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.ifFalse|ifFalse@kotlin.Boolean(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+    final inline fun <#A1: kotlin/Any?> (kotlin/Boolean).ifTrue(crossinline kotlin/Function0<#A1>): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionBoolean.ifTrue|ifTrue@kotlin.Boolean(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+}
+
+final object com.tezov.tuucho.core.domain.tool.extension/ExtensionInt { // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt|null[0]
+    final fun (kotlin/Int).isEven(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.isEven|isEven@kotlin.Int(){}[0]
+    final fun (kotlin/Int).isOdd(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.isOdd|isOdd@kotlin.Int(){}[0]
+    final fun <#A1: kotlin/Any?> (kotlin/Int).action(kotlin/Function1<kotlin/Int, #A1>, kotlin/Function1<kotlin/Int, #A1>): #A1 // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.action|action@kotlin.Int(kotlin.Function1<kotlin.Int,0:0>;kotlin.Function1<kotlin.Int,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin/Int).onEven(kotlin/Function1<kotlin/Int, #A1>): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.onEven|onEven@kotlin.Int(kotlin.Function1<kotlin.Int,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin/Int).onOdd(kotlin/Function1<kotlin/Int, #A1>): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionInt.onOdd|onOdd@kotlin.Int(kotlin.Function1<kotlin.Int,0:0>){0§<kotlin.Any?>}[0]
+}
+
+final object com.tezov.tuucho.core.domain.tool.extension/ExtensionList { // com.tezov.tuucho.core.domain.tool.extension/ExtensionList|null[0]
+    final const val NULL_INDEX // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.NULL_INDEX|{}NULL_INDEX[0]
+        final fun <get-NULL_INDEX>(): kotlin/Int // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.NULL_INDEX.<get-NULL_INDEX>|<get-NULL_INDEX>(){}[0]
+
+    final val isNotNullIndex // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.isNotNullIndex|@kotlin.Int{}isNotNullIndex[0]
+        final fun (kotlin/Int).<get-isNotNullIndex>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.isNotNullIndex.<get-isNotNullIndex>|<get-isNotNullIndex>@kotlin.Int(){}[0]
+    final val isNullIndex // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.isNullIndex|@kotlin.Int{}isNullIndex[0]
+        final fun (kotlin/Int).<get-isNullIndex>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.isNullIndex.<get-isNullIndex>|<get-isNullIndex>@kotlin.Int(){}[0]
+
+    final fun <#A1: kotlin/Any?> (kotlin.collections/ArrayDeque<#A1>).pop(): #A1 // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.pop|pop@kotlin.collections.ArrayDeque<0:0>(){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin.collections/ArrayDeque<#A1>).popOrNull(): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.popOrNull|popOrNull@kotlin.collections.ArrayDeque<0:0>(){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin.collections/ArrayDeque<#A1>).push(#A1) // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.push|push@kotlin.collections.ArrayDeque<0:0>(0:0){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin.collections/List<#A1>).priorLast(): #A1 // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.priorLast|priorLast@kotlin.collections.List<0:0>(){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin.collections/List<#A1>).priorLastOrNull(): #A1? // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.priorLastOrNull|priorLastOrNull@kotlin.collections.List<0:0>(){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin.collections/List<#A1>).subListToEnd(kotlin/Int): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.tool.extension/ExtensionList.subListToEnd|subListToEnd@kotlin.collections.List<0:0>(kotlin.Int){0§<kotlin.Any?>}[0]
+}
+
+final object com.tezov.tuucho.core.domain.tool.extension/ExtensionNull { // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull|null[0]
+    final val isNotNull // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNotNull|@kotlin.Any?{}isNotNull[0]
+        final inline fun (kotlin/Any?).<get-isNotNull>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNotNull.<get-isNotNull>|<get-isNotNull>@kotlin.Any?(){}[0]
+    final val isNull // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNull|@kotlin.Any?{}isNull[0]
+        final inline fun (kotlin/Any?).<get-isNull>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNull.<get-isNull>|<get-isNull>@kotlin.Any?(){}[0]
+    final val simpleName // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.simpleName|@kotlin.Any?{}simpleName[0]
+        final inline fun (kotlin/Any?).<get-simpleName>(): kotlin/String? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.simpleName.<get-simpleName>|<get-simpleName>@kotlin.Any?(){}[0]
+
+    final fun (kotlin/ByteArray?).isNotNullAndNotEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNotNullAndNotEmpty|isNotNullAndNotEmpty@kotlin.ByteArray?(){}[0]
+    final fun (kotlin/ByteArray?).isNullOrEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNullOrEmpty|isNullOrEmpty@kotlin.ByteArray?(){}[0]
+    final fun (kotlin/ByteArray?).nullify(): kotlin/Unit? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.nullify|nullify@kotlin.ByteArray?(){}[0]
+    final fun (kotlin/CharArray?).isNotNullAndNotEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNotNullAndNotEmpty|isNotNullAndNotEmpty@kotlin.CharArray?(){}[0]
+    final fun (kotlin/CharArray?).isNullOrEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNullOrEmpty|isNullOrEmpty@kotlin.CharArray?(){}[0]
+    final fun (kotlin/CharArray?).nullify(): kotlin/Unit? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.nullify|nullify@kotlin.CharArray?(){}[0]
+    final fun (kotlin/CharSequence?).isNotNullAndNotEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNotNullAndNotEmpty|isNotNullAndNotEmpty@kotlin.CharSequence?(){}[0]
+    final fun (kotlin/CharSequence?).isNullOrEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNullOrEmpty|isNullOrEmpty@kotlin.CharSequence?(){}[0]
+    final fun (kotlin/String?).isNotNullAndNotEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNotNullAndNotEmpty|isNotNullAndNotEmpty@kotlin.String?(){}[0]
+    final fun (kotlin/String?).isNullOrEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNullOrEmpty|isNullOrEmpty@kotlin.String?(){}[0]
+    final fun (kotlin/String?).nullify(): kotlin/String? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.nullify|nullify@kotlin.String?(){}[0]
+    final fun (kotlin/UByteArray?).isNotNullAndNotEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNotNullAndNotEmpty|isNotNullAndNotEmpty@kotlin.UByteArray?(){}[0]
+    final fun (kotlin/UByteArray?).isNullOrEmpty(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.isNullOrEmpty|isNullOrEmpty@kotlin.UByteArray?(){}[0]
+    final fun (kotlin/UByteArray?).nullify(): kotlin/Unit? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.nullify|nullify@kotlin.UByteArray?(){}[0]
+    final fun <#A1: kotlin/Any?> (kotlin.collections/Collection<#A1>?).nullify(): kotlin.collections/Collection<#A1>? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.nullify|nullify@kotlin.collections.Collection<0:0>?(){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> (kotlin.collections/MutableList<#A1>?).nullify(): kotlin.collections/MutableList<#A1>? // com.tezov.tuucho.core.domain.tool.extension/ExtensionNull.nullify|nullify@kotlin.collections.MutableList<0:0>?(){0§<kotlin.Any?>}[0]
+}
+
+final val com.tezov.tuucho.core.domain.tool.json/ROOT_PATH // com.tezov.tuucho.core.domain.tool.json/ROOT_PATH|{}ROOT_PATH[0]
+    final fun <get-ROOT_PATH>(): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/ROOT_PATH.<get-ROOT_PATH>|<get-ROOT_PATH>(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/boolean // com.tezov.tuucho.core.domain.tool.json/boolean|@kotlinx.serialization.json.JsonElement?{}boolean[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-boolean>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.json/boolean.<get-boolean>|<get-boolean>@kotlinx.serialization.json.JsonElement?(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/booleanOrNull // com.tezov.tuucho.core.domain.tool.json/booleanOrNull|@kotlinx.serialization.json.JsonElement?{}booleanOrNull[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-booleanOrNull>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.tool.json/booleanOrNull.<get-booleanOrNull>|<get-booleanOrNull>@kotlinx.serialization.json.JsonElement?(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/float // com.tezov.tuucho.core.domain.tool.json/float|@kotlinx.serialization.json.JsonElement?{}float[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-float>(): kotlin/Float // com.tezov.tuucho.core.domain.tool.json/float.<get-float>|<get-float>@kotlinx.serialization.json.JsonElement?(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/floatOrNull // com.tezov.tuucho.core.domain.tool.json/floatOrNull|@kotlinx.serialization.json.JsonElement?{}floatOrNull[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-floatOrNull>(): kotlin/Float? // com.tezov.tuucho.core.domain.tool.json/floatOrNull.<get-floatOrNull>|<get-floatOrNull>@kotlinx.serialization.json.JsonElement?(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/int // com.tezov.tuucho.core.domain.tool.json/int|@kotlinx.serialization.json.JsonElement?{}int[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-int>(): kotlin/Int // com.tezov.tuucho.core.domain.tool.json/int.<get-int>|<get-int>@kotlinx.serialization.json.JsonElement?(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/intOrNull // com.tezov.tuucho.core.domain.tool.json/intOrNull|@kotlinx.serialization.json.JsonElement?{}intOrNull[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-intOrNull>(): kotlin/Int? // com.tezov.tuucho.core.domain.tool.json/intOrNull.<get-intOrNull>|<get-intOrNull>@kotlinx.serialization.json.JsonElement?(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/string // com.tezov.tuucho.core.domain.tool.json/string|@kotlinx.serialization.json.JsonElement?{}string[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-string>(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/string.<get-string>|<get-string>@kotlinx.serialization.json.JsonElement?(){}[0]
+final val com.tezov.tuucho.core.domain.tool.json/stringOrNull // com.tezov.tuucho.core.domain.tool.json/stringOrNull|@kotlinx.serialization.json.JsonElement?{}stringOrNull[0]
+    final fun (kotlinx.serialization.json/JsonElement?).<get-stringOrNull>(): kotlin/String? // com.tezov.tuucho.core.domain.tool.json/stringOrNull.<get-stringOrNull>|<get-stringOrNull>@kotlinx.serialization.json.JsonElement?(){}[0]
+
+final fun (kotlin/Int).com.tezov.tuucho.core.domain.tool.json/toIndexPath(): kotlin/String // com.tezov.tuucho.core.domain.tool.json/toIndexPath|toIndexPath@kotlin.Int(){}[0]
+final fun (kotlin/String).com.tezov.tuucho.core.domain.tool.json/toPath(kotlin/Int? = ...): com.tezov.tuucho.core.domain.tool.json/JsonElementPath // com.tezov.tuucho.core.domain.tool.json/toPath|toPath@kotlin.String(kotlin.Int?){}[0]
+final fun (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.tool.json/find(com.tezov.tuucho.core.domain.tool.json/JsonElementPath): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.domain.tool.json/find|find@kotlinx.serialization.json.JsonElement(com.tezov.tuucho.core.domain.tool.json.JsonElementPath){}[0]
+final fun (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.tool.json/findOrNull(com.tezov.tuucho.core.domain.tool.json/JsonElementPath): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.tool.json/findOrNull|findOrNull@kotlinx.serialization.json.JsonElement(com.tezov.tuucho.core.domain.tool.json.JsonElementPath){}[0]
+final fun (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.tool.json/replaceOrInsert(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlinx.serialization.json/JsonElement // com.tezov.tuucho.core.domain.tool.json/replaceOrInsert|replaceOrInsert@kotlinx.serialization.json.JsonElement(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
+final fun com.tezov.tuucho.core.domain.tool._system/logAll(kotlin/Any?) // com.tezov.tuucho.core.domain.tool._system/logAll|logAll(kotlin.Any?){}[0]
