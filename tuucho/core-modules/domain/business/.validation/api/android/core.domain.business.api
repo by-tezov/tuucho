@@ -1,10 +1,10 @@
-public final class com/tezov/tuucho/core/domain/business/_system/koin/AssociateDSL {
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/AssociateDSL;
+public final class com/tezov/tuucho/core/domain/business/_system/koin/Associate {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/Associate;
 	public final fun associate (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
 	public final fun associate (Lorg/koin/core/instance/InstanceFactory;Lkotlin/reflect/KClass;)V
 }
 
-public final class com/tezov/tuucho/core/domain/business/_system/koin/AssociateModule {
+public final class com/tezov/tuucho/core/domain/business/_system/koin/AssociateModuleDSL {
 	public fun <init> (Lkotlin/reflect/KClass;Lorg/koin/core/module/Module;)V
 	public final fun factory (Ljava/lang/String;)V
 	public final fun getAssociation ()Lkotlin/reflect/KClass;

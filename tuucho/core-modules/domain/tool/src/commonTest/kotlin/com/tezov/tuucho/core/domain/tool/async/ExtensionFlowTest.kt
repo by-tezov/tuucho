@@ -76,7 +76,10 @@ class ExtensionFlowTest {
     @Test
     fun `collectUntil on empty flow does not call block`() = runTest {
         var called = false
-        flowOf<Int>().collectUntil { called = true; false }
+        flowOf<Int>().collectUntil {
+            called = true
+            false
+        }
         assertFalse(called)
     }
 
@@ -101,5 +104,4 @@ class ExtensionFlowTest {
         }
         assertEquals(values, collected)
     }
-
 }

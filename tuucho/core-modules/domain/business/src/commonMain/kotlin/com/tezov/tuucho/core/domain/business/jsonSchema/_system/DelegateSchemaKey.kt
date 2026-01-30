@@ -44,15 +44,25 @@ class DelegateSchemaKey<T : Any?>(
         val value = mapOperator.read(resolveKey(property)) ?: return null
         @Suppress("UNCHECKED_CAST", "IMPLICIT_CAST_TO_ANY")
         return (when (type) {
-            JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -> value
+            JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -> {
+                value
+            }
 
-            String::class -> value.stringOrNull
+            String::class -> {
+                value.stringOrNull
+            }
 
-            Boolean::class -> value.booleanOrNull
+            Boolean::class -> {
+                value.booleanOrNull
+            }
 
-            Float::class -> value.floatOrNull
+            Float::class -> {
+                value.floatOrNull
+            }
 
-            Int::class -> value.intOrNull
+            Int::class -> {
+                value.intOrNull
+            }
 
             SetStringDelegate::class -> {
                 require(value is JsonArray) {
@@ -68,7 +78,9 @@ class DelegateSchemaKey<T : Any?>(
                 ListStringDelegate(value.jsonArray.map { it.string })
             }
 
-            else -> throw DomainException.Default("unknown type")
+            else -> {
+                throw DomainException.Default("unknown type")
+            }
         }) as T
     }
 

@@ -537,3 +537,30 @@ tasks.register("rootPublishReleaseToMavenLocal") {
     }
     dependsOn(publishTasks)
 }
+
+tasks.register("rootAdminUpdate") {
+    doLast {
+        val tasksToRun = listOf(
+            "rootFormatKtLint",
+            "rootUpdateKtLintBaseline",
+            "rootUpdateDetektBaseline",
+            "rootUpdateReleaseApi",
+            "rootValidateReleaseApi",
+            "rootDebugUnitTest",
+            "rootDebugCoverageReport",
+            "rootPublishReleaseToMavenLocal"
+        )
+
+        tasksToRun.forEach { taskName ->
+            println(taskName)
+            val process = ProcessBuilder("./gradlew", taskName)
+                .directory(rootProject.projectDir)
+                .inheritIO()
+                .start()
+            val exitCode = process.waitFor()
+            if (exitCode != 0) {
+                throw GradleException("$taskName failed with exit code $exitCode")
+            }
+        }
+    }
+}

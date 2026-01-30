@@ -23,7 +23,6 @@ class SchemaScopeTest {
     private class TestScope(
         argument: SchemaScopeArgument
     ) : OpenSchemaScope<TestScope>(argument) {
-
         var name: String? by delegate("name")
     }
 

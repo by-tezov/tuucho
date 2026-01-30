@@ -162,6 +162,6 @@ class JsonElementPathTest {
     fun `parent removes index from last segment`() {
         val path = JsonElementPath("tags#3")
         val parent = path.parent()
-        assertEquals("tags", parent.toString())  // covers last.contains(INDEX_SEPARATOR)
+        assertEquals("tags", parent.toString()) // covers last.contains(INDEX_SEPARATOR)
     }
 }

@@ -23,7 +23,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class RetrieveImageUseCaseTest {
-
     private lateinit var imageRepository: ImageRepositoryProtocol
     private lateinit var sut: RetrieveImageUseCase<Any>
 
