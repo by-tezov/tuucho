@@ -1,17 +1,20 @@
 ### Todo:
 
 - registry, add custom fetcher ?
+- InteractionLockProtocol.Registry -> how the user can add its own ? example
+  EchoMessageCustomActionDefinition, lock not added to registry
+- Missing Setting Page rectifier ?
+- NavigationLocalDestinationActionMiddleware do finish too, and check if value can have single
+  source with Navigation.Back / Finish
+
 - error when loading image
 
-- Missing Setting Page rectifier ?
 - Animation placeholder / final image ?
 - Alternative image (fallback) query fallback local/remote ?
 
-- InteractionLockProtocol.Registry -> how the user can add its own ? example EchoMessageCustomActionDefinition, lock not added to registry
 - shadower with flow ?
 
 - do a smart padding object - can do also for size)?
-- NavigationLocalDestinationActionMiddleware do finish too, and check if value can have single source with Navigation.Back / Finish
 
 -> close alpha 25
 
