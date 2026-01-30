@@ -17,15 +17,15 @@ compose-plugin = "1.10.0"
 build-konfig-plugin = "0.17.1"
 
 #lib - android
-compose = "1.10.2"
-compose-material3 = "1.10.0-alpha05"
+compose = "1.10.0"
+compose-material3 = "1.9.0"
 compose-activity = "1.12.3"
 compose-ui-tooling = "1.10.2"
 
 #lib - platform
 kermit = "2.0.8"
 ktor = "3.4.0"
-koin = "4.2.0-beta4"
+koin = "4.2.0-RC1"
 kotlin-serialization-json = "1.10.0"
 kotlin-collections-immutable = "0.4.0"
 
