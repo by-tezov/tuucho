@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
+import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
@@ -44,13 +45,12 @@ internal object MiscModule {
         factoryOf(::InteractionLockResolver) bind InteractionLockProtocol.Resolver::class
 
         single<InteractionLockProtocol.Registry> {
-            InteractionLockRegistry().apply {
-                register(NavigateActionDefinition.Url)
-                register(NavigateActionDefinition.LocalDestination)
-                register(FormActionDefinition.Send)
-                register(FormActionDefinition.Update)
-                register(StoreActionDefinition.KeyValue)
-            }
+            InteractionLockRegistry(actionDefinitions = getAll())
         }
+        factory { NavigateActionDefinition.Url } bind ActionDefinitionProtocol::class
+        factory { NavigateActionDefinition.LocalDestination } bind ActionDefinitionProtocol::class
+        factory { FormActionDefinition.Send } bind ActionDefinitionProtocol::class
+        factory { FormActionDefinition.Update } bind ActionDefinitionProtocol::class
+        factory { StoreActionDefinition.KeyValue } bind ActionDefinitionProtocol::class
     }
 }

@@ -6,6 +6,7 @@ import coil3.request.Options
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.network.HttpClient
+import com.tezov.tuucho.core.domain.business.model.image.RemoteImageDefinition
 
 internal class ImageRemoteFetcher(
     private val url: String,
@@ -31,6 +32,9 @@ internal class ImageRemoteFetcher(
         private val httpClient: HttpClient,
         private val diskCache: ImageDiskCacheProtocol
     ) : ImageFetcherProtocol.Factory {
+        override val command: String
+            get() = RemoteImageDefinition.command
+
         override suspend fun isAvailable(
             request: ImageRequest
         ): Boolean {

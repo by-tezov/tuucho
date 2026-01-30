@@ -11,11 +11,8 @@ import com.tezov.tuucho.core.data.repository.image.ImageLoaderSource
 import com.tezov.tuucho.core.data.repository.image.ImageLocalFetcher
 import com.tezov.tuucho.core.data.repository.image.ImageRemoteFetcher
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import com.tezov.tuucho.core.domain.business.model.image.LocalImageDefinition
-import com.tezov.tuucho.core.domain.business.model.image.RemoteImageDefinition
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
-import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 
 object ImageModule {
@@ -34,23 +31,10 @@ object ImageModule {
         factoryOf(::ImageLoaderSource)
 
         single<ImageFetcherRegistryProtocol> {
-            ImageFetcherRegistry().apply {
-                register(RemoteImageDefinition.command)
-                register(LocalImageDefinition.command)
-            }
+            ImageFetcherRegistry(factories = getAll())
         }
 
-        factory(named(RemoteImageDefinition.command)) {
-            ImageRemoteFetcher.Factory(
-                config = get(),
-                httpClient = get(),
-                diskCache = get(),
-            )
-        } bind ImageFetcherProtocol.Factory::class
-        factory(named(LocalImageDefinition.command)) {
-            ImageLocalFetcher.Factory(
-                assetSource = get(),
-            )
-        } bind ImageFetcherProtocol.Factory::class
+        factoryOf(ImageRemoteFetcher::Factory) bind ImageFetcherProtocol.Factory::class
+        factoryOf(ImageLocalFetcher::Factory) bind ImageFetcherProtocol.Factory::class
     }
 }

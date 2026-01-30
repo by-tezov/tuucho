@@ -1,9 +1,7 @@
 ### Todo:
 
-- registry, add custom fetcher ?
-- InteractionLockProtocol.Registry -> how the user can add its own ? example
-  EchoMessageCustomActionDefinition, lock not added to registry
 - Missing Setting Page rectifier ?
+
 - NavigationLocalDestinationActionMiddleware do finish too, and check if value can have single
   source with Navigation.Back / Finish
 

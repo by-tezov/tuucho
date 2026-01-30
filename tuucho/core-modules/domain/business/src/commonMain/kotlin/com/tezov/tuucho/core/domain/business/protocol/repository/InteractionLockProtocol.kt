@@ -1,7 +1,5 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
-import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
-
 abstract class InteractionLockType(
     val name: String
 ) {
@@ -164,10 +162,6 @@ object InteractionLockProtocol {
     }
 
     interface Registry {
-        fun register(
-            action: ActionDefinitionProtocol
-        )
-
         fun lockTypeFor(
             command: String,
             authority: String?

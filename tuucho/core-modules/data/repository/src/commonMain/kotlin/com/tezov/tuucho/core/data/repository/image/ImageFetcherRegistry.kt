@@ -2,30 +2,19 @@ package com.tezov.tuucho.core.data.repository.image
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
-import org.koin.core.qualifier.named
 
 interface ImageFetcherRegistryProtocol {
-    fun register(
-        name: String
-    )
-
     fun get(
         name: String
     ): ImageFetcherProtocol.Factory
 }
 
-internal class ImageFetcherRegistry :
-    ImageFetcherRegistryProtocol,
+internal class ImageFetcherRegistry(
+    factories: List<ImageFetcherProtocol.Factory>
+) : ImageFetcherRegistryProtocol,
     TuuchoKoinComponent {
-    private val registry = mutableMapOf<String, ImageFetcherProtocol.Factory>()
-
-    override fun register(
-        name: String
-    ) {
-        if (registry.containsKey(name)) {
-            throw DataException.Default("Image fetcher with name $name already exists")
-        }
-        registry[name] = getKoin().get(named(name))
+    private val registry = buildMap {
+        factories.forEach { put(it.command, it) }
     }
 
     override fun get(

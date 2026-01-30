@@ -6,6 +6,7 @@ import coil3.decode.ImageSource
 import coil3.fetch.SourceFetchResult
 import coil3.request.Options
 import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
+import com.tezov.tuucho.core.domain.business.model.image.LocalImageDefinition
 import okio.buffer
 
 internal class ImageLocalFetcher(
@@ -28,6 +29,9 @@ internal class ImageLocalFetcher(
     class Factory(
         private val assetSource: AssetSourceProtocol,
     ) : ImageFetcherProtocol.Factory {
+        override val command: String
+            get() = LocalImageDefinition.command
+
         override suspend fun isAvailable(
             request: ImageRequest
         ) = true
