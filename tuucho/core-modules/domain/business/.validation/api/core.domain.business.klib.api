@@ -1434,6 +1434,11 @@ final object com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedCont
         final fun <set-koinApplication>(org.koin.core/KoinApplication?) // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContext.koinApplication.<set-koinApplication>|<set-koinApplication>(org.koin.core.KoinApplication?){}[0]
 }
 
+final object com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension { // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension|null[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).factoryObject(#A1): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension.factoryObject|factoryObject@org.koin.core.module.Module(0:0){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).factoryObject(#A1): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension.factoryObject|factoryObject@org.koin.dsl.ScopeDSL(0:0){0§<kotlin.Any>}[0]
+}
+
 final object com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules { // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules|null[0]
     final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business._system.koin/KoinMass> // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules.invoke|invoke(){}[0]
 }

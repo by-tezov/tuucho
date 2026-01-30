@@ -148,6 +148,7 @@
     <ID>PackageNaming:KoinCoreTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:KoinIsolatedContext.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:KoinMass.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:KoinModuleExtension.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:ListStringDelegate.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScope.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScopeMapOperator.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
