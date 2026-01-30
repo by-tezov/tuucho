@@ -20,6 +20,12 @@ class StringMinLengthFormValidatorTest {
     }
 
     @Test
+    fun `null string is invalid`() {
+        sut.updateValidity(null)
+        assertFalse(sut.isValid)
+    }
+
+    @Test
     fun `string shorter than required length is invalid`() {
         sut.updateValidity("ab")
         assertFalse(sut.isValid)
@@ -34,6 +40,14 @@ class StringMinLengthFormValidatorTest {
     @Test
     fun `string longer than required length is valid`() {
         sut.updateValidity("abcd")
+        assertTrue(sut.isValid)
+    }
+
+    @Test
+    fun `value is null and length is 0 is valid`() {
+        val sut = StringMinLengthFormValidator("error-messages-id", length = 0)
+
+        sut.updateValidity(null)
         assertTrue(sut.isValid)
     }
 }

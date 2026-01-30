@@ -20,6 +20,12 @@ class StringEmailFormValidatorTest {
     }
 
     @Test
+    fun `null string is valid`() {
+        sut.updateValidity(null)
+        assertTrue(sut.isValid)
+    }
+
+    @Test
     fun `valid simple email is valid`() {
         sut.updateValidity("user@example.com")
         assertTrue(sut.isValid)

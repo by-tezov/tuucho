@@ -17,7 +17,7 @@ import org.koin.dsl.ScopeDSL
 import org.koin.ext.getFullName
 import kotlin.reflect.KClass
 
-object AssociateDSL {
+object Associate {
     @KoinDslMarker
     infix fun <T : Any> InstanceFactory<T>.associate(
         clazz: KClass<*>
@@ -98,9 +98,9 @@ object AssociateDSL {
 
     @KoinDslMarker
     inline fun <reified T : Any> Module.associate(
-        associateDSL: AssociateModule.() -> Unit
+        associateDSL: AssociateModuleDSL.() -> Unit
     ) {
-        AssociateModule(T::class, this).associateDSL()
+        AssociateModuleDSL(T::class, this).associateDSL()
     }
 
     @KoinDslMarker

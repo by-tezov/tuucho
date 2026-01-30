@@ -20,6 +20,12 @@ class StringNotNullFormValidatorTest {
     }
 
     @Test
+    fun `null string is invalid`() {
+        sut.updateValidity(null)
+        assertFalse(sut.isValid)
+    }
+
+    @Test
     fun `non empty string is valid`() {
         sut.updateValidity("hello")
         assertTrue(sut.isValid)

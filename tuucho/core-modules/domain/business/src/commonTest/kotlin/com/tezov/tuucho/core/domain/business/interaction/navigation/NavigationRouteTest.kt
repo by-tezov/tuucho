@@ -71,4 +71,10 @@ class NavigationRouteTest {
 
         assertEquals("value-shared", routeUrl.toString())
     }
+
+    @Test
+    fun `Url id property works`() {
+        val route = NavigationRoute.Url("id-123", "value")
+        assertEquals("id-123", route.id)
+    }
 }
