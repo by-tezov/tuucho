@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -31,15 +32,18 @@ import kotlin.test.assertTrue
 class NavigationLocalDestinationActionMiddlewareTest {
     private lateinit var useCaseExecutor: UseCaseExecutorProtocol
     private lateinit var navigateBack: NavigateBackUseCase
+    private lateinit var navigateFinish: NavigateFinishUseCase
     private lateinit var sut: NavigationLocalDestinationActionMiddleware
 
     @BeforeTest
     fun setup() {
         useCaseExecutor = mock()
         navigateBack = mock()
+        navigateFinish = mock()
         sut = NavigationLocalDestinationActionMiddleware(
             useCaseExecutor = useCaseExecutor,
-            navigateBack = navigateBack
+            navigateBack = navigateBack,
+            navigateFinish = navigateFinish
         )
     }
 
@@ -47,7 +51,8 @@ class NavigationLocalDestinationActionMiddlewareTest {
     fun tearDown() {
         verifyNoMoreCalls(
             useCaseExecutor,
-            navigateBack
+            navigateBack,
+            navigateFinish
         )
     }
 
@@ -90,6 +95,36 @@ class NavigationLocalDestinationActionMiddlewareTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
                 useCase = navigateBack,
+                input = Unit
+            )
+            spy.invoke(context)
+        }
+        verifyNoMoreCalls(spy)
+    }
+
+    @Test
+    fun `process triggers NavigateFinishUseCase then next`() = runTest {
+        val action = ActionModel.from("navigate://local-destination/finish")
+
+        val context = ActionMiddleware.Context(
+            lockable = InteractionLockable.Empty,
+            actionModel = action,
+            input = ProcessActionUseCase.Input.create(
+                route = NavigationRoute.Finish,
+                model = action,
+                lockable = InteractionLockable.Empty
+            )
+        )
+
+        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        everySuspend { useCaseExecutor.await<NavigateFinishUseCase, Unit>(any(), any()) } returns Unit
+
+        flow { sut.run { process(context, next) } }.collect()
+
+        verifySuspend(VerifyMode.exhaustiveOrder) {
+            useCaseExecutor.await(
+                useCase = navigateFinish,
                 input = Unit
             )
             spy.invoke(context)

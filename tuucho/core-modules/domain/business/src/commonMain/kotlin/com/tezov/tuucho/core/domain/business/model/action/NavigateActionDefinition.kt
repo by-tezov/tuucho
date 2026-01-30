@@ -29,6 +29,7 @@ object NavigateActionDefinition {
         object Target {
             const val back = "back"
             const val finish = "finish"
+            const val current = "current"
         }
     }
 }
