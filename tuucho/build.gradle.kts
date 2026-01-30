@@ -543,7 +543,9 @@ tasks.register("rootAdminUpdate") {
         val tasksToRun = listOf(
             "rootFormatKtLint",
             "rootUpdateKtLintBaseline",
+            "rootKtLintReport",
             "rootUpdateDetektBaseline",
+            "rootDetektReport",
             "rootUpdateReleaseApi",
             "rootValidateReleaseApi",
             "rootDebugUnitTest",
