@@ -10,11 +10,13 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
 import kotlinx.coroutines.flow.FlowCollector
 
 internal class NavigationLocalDestinationActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigateBack: NavigateBackUseCase,
+    private val navigateFinish: NavigateFinishUseCase,
 ) : ActionMiddleware {
     override val priority: Int
         get() = ActionMiddleware.Priority.DEFAULT
@@ -33,6 +35,13 @@ internal class NavigationLocalDestinationActionMiddleware(
             NavigateActionDefinition.LocalDestination.Target.back -> {
                 useCaseExecutor.await(
                     useCase = navigateBack,
+                    input = Unit
+                )
+            }
+
+            NavigateActionDefinition.LocalDestination.Target.finish -> {
+                useCaseExecutor.await(
+                    useCase = navigateFinish,
                     input = Unit
                 )
             }

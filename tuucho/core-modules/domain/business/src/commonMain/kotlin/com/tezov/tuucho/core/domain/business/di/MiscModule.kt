@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.IdGenerator
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinModuleExtension.factoryObject
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRegistry
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
@@ -10,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
+import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
@@ -44,13 +46,13 @@ internal object MiscModule {
         factoryOf(::InteractionLockResolver) bind InteractionLockProtocol.Resolver::class
 
         single<InteractionLockProtocol.Registry> {
-            InteractionLockRegistry().apply {
-                register(NavigateActionDefinition.Url)
-                register(NavigateActionDefinition.LocalDestination)
-                register(FormActionDefinition.Send)
-                register(FormActionDefinition.Update)
-                register(StoreActionDefinition.KeyValue)
-            }
+            InteractionLockRegistry(actionDefinitions = getAll())
         }
+
+        factoryObject(NavigateActionDefinition.Url) bind ActionDefinitionProtocol::class
+        factoryObject(NavigateActionDefinition.LocalDestination) bind ActionDefinitionProtocol::class
+        factoryObject(FormActionDefinition.Send) bind ActionDefinitionProtocol::class
+        factoryObject(FormActionDefinition.Update) bind ActionDefinitionProtocol::class
+        factoryObject(StoreActionDefinition.KeyValue) bind ActionDefinitionProtocol::class
     }
 }

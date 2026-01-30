@@ -91,6 +91,10 @@ public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$S
 	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;)Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinModuleExtension {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinModuleExtension;
+}
+
 public abstract interface class com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent : org/koin/core/component/KoinComponent {
 	public fun getKoin ()Lorg/koin/core/Koin;
 }
@@ -183,9 +187,8 @@ public final class com/tezov/tuucho/core/domain/business/interaction/lock/Intera
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockRegistry : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {
-	public fun <init> ()V
+	public fun <init> (Ljava/util/List;)V
 	public fun lockTypeFor (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public fun register (Lcom/tezov/tuucho/core/domain/business/protocol/ActionDefinitionProtocol;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationOption {
@@ -1904,6 +1907,7 @@ public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAc
 public final class com/tezov/tuucho/core/domain/business/model/action/NavigateActionDefinition$LocalDestination$Target {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/NavigateActionDefinition$LocalDestination$Target;
 	public static final field back Ljava/lang/String;
+	public static final field current Ljava/lang/String;
 	public static final field finish Ljava/lang/String;
 }
 
@@ -2108,7 +2112,6 @@ public final class com/tezov/tuucho/core/domain/business/protocol/repository/Int
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {
 	public abstract fun lockTypeFor (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public abstract fun register (Lcom/tezov/tuucho/core/domain/business/protocol/ActionDefinitionProtocol;)V
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Resolver {
