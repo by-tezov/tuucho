@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.IdGenerator
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business._system.koin.KoinModuleExtension.factoryObject
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRegistry
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
@@ -47,10 +48,11 @@ internal object MiscModule {
         single<InteractionLockProtocol.Registry> {
             InteractionLockRegistry(actionDefinitions = getAll())
         }
-        factory { NavigateActionDefinition.Url } bind ActionDefinitionProtocol::class
-        factory { NavigateActionDefinition.LocalDestination } bind ActionDefinitionProtocol::class
-        factory { FormActionDefinition.Send } bind ActionDefinitionProtocol::class
-        factory { FormActionDefinition.Update } bind ActionDefinitionProtocol::class
-        factory { StoreActionDefinition.KeyValue } bind ActionDefinitionProtocol::class
+
+        factoryObject(NavigateActionDefinition.Url) bind ActionDefinitionProtocol::class
+        factoryObject(NavigateActionDefinition.LocalDestination) bind ActionDefinitionProtocol::class
+        factoryObject(FormActionDefinition.Send) bind ActionDefinitionProtocol::class
+        factoryObject(FormActionDefinition.Update) bind ActionDefinitionProtocol::class
+        factoryObject(StoreActionDefinition.KeyValue) bind ActionDefinitionProtocol::class
     }
 }

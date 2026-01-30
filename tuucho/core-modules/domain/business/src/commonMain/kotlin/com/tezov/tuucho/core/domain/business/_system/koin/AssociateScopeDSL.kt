@@ -112,4 +112,5 @@ class AssociateScopeDSL(
     ) {
         factory(named(value)) { value }
     }
+
 }
