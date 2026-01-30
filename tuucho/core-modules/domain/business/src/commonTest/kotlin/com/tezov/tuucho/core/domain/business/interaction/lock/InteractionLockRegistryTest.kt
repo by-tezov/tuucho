@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class InteractionLockRegistryTest {
-
     private fun action(
         command: String,
         authority: String,

@@ -438,10 +438,9 @@ final class com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedConte
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
-    constructor <init>() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(){}[0]
+    constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol>){}[0]
 
     final fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
-    final fun register(com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper : com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol { // com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper|null[0]
@@ -3112,6 +3111,8 @@ final object com.tezov.tuucho.core.domain.business.model.action/NavigateActionDe
         final object Target { // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target|null[0]
             final const val back // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.back|{}back[0]
                 final fun <get-back>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.back.<get-back>|<get-back>(){}[0]
+            final const val current // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.current|{}current[0]
+                final fun <get-current>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.current.<get-current>|<get-current>(){}[0]
             final const val finish // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.finish|{}finish[0]
                 final fun <get-finish>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.finish.<get-finish>|<get-finish>(){}[0]
         }
@@ -3158,7 +3159,6 @@ final object com.tezov.tuucho.core.domain.business.model.image/RemoteImageDefini
 final object com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol|null[0]
     abstract interface Registry { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry|null[0]
         abstract fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
-        abstract fun register(com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol){}[0]
     }
 
     abstract interface Resolver { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver|null[0]
