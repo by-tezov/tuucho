@@ -6,6 +6,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.convention.shared.library)
     alias(libs.plugins.build.konfig)
+    alias(libs.plugins.koin)
 }
 
 buildkonfig {

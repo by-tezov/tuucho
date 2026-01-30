@@ -9,5 +9,6 @@ import org.koin.dsl.bind
 internal object CoroutineScopeModules {
     fun invoke() = module(ModuleContextCore.Main) {
         singleOf(::CoroutineScopes) bind CoroutineScopesProtocol::class
+//        single<CoroutineScopesProtocol>()
     }
 }

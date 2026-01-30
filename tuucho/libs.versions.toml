@@ -13,12 +13,13 @@ detektRules = "1.23.8"
 
 #plugin
 android-plugin = "8.13.2"
-kotlin-plugin = "2.3.0"
+kotlin-plugin = "2.3.20-Beta2"
 compose-plugin = "1.10.0"
 kotlin-serialization-plugin = "2.3.0"
 maven-plugin = "0.36.0"
 ktlint = "14.0.1"
 detekt = "1.23.8"
+koin-plugin = "0.3.0"
 
 #lib - platform
 kotlin-couroutine = "1.10.2"
@@ -102,6 +103,7 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
+koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
 #test
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 all-open = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin-plugin" }
