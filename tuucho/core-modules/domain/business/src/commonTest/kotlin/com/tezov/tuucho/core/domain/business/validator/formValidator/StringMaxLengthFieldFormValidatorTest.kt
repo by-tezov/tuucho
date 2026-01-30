@@ -20,6 +20,12 @@ class StringMaxLengthFieldFormValidatorTest {
     }
 
     @Test
+    fun `null string is valid`() {
+        sut.updateValidity(null)
+        assertTrue(sut.isValid)
+    }
+
+    @Test
     fun `string shorter than max length is valid`() {
         sut.updateValidity("ab")
         assertTrue(sut.isValid)
@@ -34,6 +40,22 @@ class StringMaxLengthFieldFormValidatorTest {
     @Test
     fun `string longer than max length is invalid`() {
         sut.updateValidity("abcd")
+        assertFalse(sut.isValid)
+    }
+
+    @Test
+    fun `value is null and length is above 0 is valid`() {
+        val sut = StringMaxLengthFieldFormValidator("error-messages-id", length = 1)
+
+        sut.updateValidity(null)
+        assertTrue(sut.isValid)
+    }
+
+    @Test
+    fun `value is null and length is 0 is invalid`() {
+        val sut = StringMaxLengthFieldFormValidator("error-messages-id", length = 0)
+
+        sut.updateValidity(null)
         assertFalse(sut.isValid)
     }
 }

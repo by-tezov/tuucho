@@ -107,4 +107,61 @@ class JsonElementPathTest {
         val path = JsonElementPath("/a//b/c/")
         assertEquals("a/b/c", path.toString())
     }
+
+    @Test
+    fun `toPath creates path from string`() {
+        val path = "a/b/c".toPath()
+        assertEquals("a/b/c", path.toString())
+    }
+
+    @Test
+    fun `toPath appends index when provided`() {
+        val path = "tags".toPath(index = 1)
+        assertEquals("tags#1", path.toString())
+    }
+
+    @Test
+    fun `toPath with empty string and index creates index-only path`() {
+        val path = "".toPath(index = 2)
+        assertEquals("#2", path.toString())
+    }
+
+    @Test
+    fun `toIndexPath creates index segment`() {
+        val segment = 3.toIndexPath()
+        assertEquals("#3", segment)
+    }
+
+    @Test
+    fun `atIndex appends index to existing path`() {
+        val path = JsonElementPath("tags")
+        val indexed = path.atIndex(2)
+        assertEquals("tags#2", indexed.toString())
+    }
+
+    @Test
+    fun `atIndex with empty base path returns index-only path`() {
+        val path = JsonElementPath("")
+        val indexed = path.atIndex(5)
+        assertEquals("#5", indexed.toString())
+    }
+
+    @Test
+    fun `toPath appends index to empty string`() {
+        val path = "".toPath(3)
+        assertEquals("#3", path.toString())
+    }
+
+    @Test
+    fun `toPath appends index to non-empty string`() {
+        val path = "tags".toPath(1)
+        assertEquals("tags#1", path.toString())
+    }
+
+    @Test
+    fun `parent removes index from last segment`() {
+        val path = JsonElementPath("tags#3")
+        val parent = path.parent()
+        assertEquals("tags", parent.toString()) // covers last.contains(INDEX_SEPARATOR)
+    }
 }

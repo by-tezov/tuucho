@@ -15,11 +15,11 @@ class ActionModelTest {
     private fun String.toQuery() = ActionModel.run { toJsonElement() }
 
     @Test
-    fun `from parses command authority target`() {
-        val model = ActionModel.from("open://system/settings")
+    fun `from parses command only`() {
+        val model = ActionModel.from("open://")
         assertEquals("open", model.command)
-        assertEquals("system", model.authority)
-        assertEquals("settings", model.target)
+        assertNull(model.authority)
+        assertNull(model.target)
         assertNull(model.query)
     }
 
@@ -33,11 +33,11 @@ class ActionModelTest {
     }
 
     @Test
-    fun `from parses command only`() {
-        val model = ActionModel.from("open://")
+    fun `from parses command authority target`() {
+        val model = ActionModel.from("open://system/settings")
         assertEquals("open", model.command)
-        assertNull(model.authority)
-        assertNull(model.target)
+        assertEquals("system", model.authority)
+        assertEquals("settings", model.target)
         assertNull(model.query)
     }
 

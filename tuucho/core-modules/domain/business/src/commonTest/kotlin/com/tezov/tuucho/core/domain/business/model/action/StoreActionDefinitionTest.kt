@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class StoreActionTest {
+class StoreActionDefinitionTest {
     @Test
     fun `keyValue command matches store command`() {
         assertEquals("store", StoreActionDefinition.KeyValue.command)

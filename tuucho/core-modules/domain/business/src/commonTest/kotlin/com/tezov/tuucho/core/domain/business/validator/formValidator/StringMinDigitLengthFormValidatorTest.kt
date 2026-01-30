@@ -20,6 +20,12 @@ class StringMinDigitLengthFormValidatorTest {
     }
 
     @Test
+    fun `null string is invalid`() {
+        sut.updateValidity(null)
+        assertFalse(sut.isValid)
+    }
+
+    @Test
     fun `string with fewer digits than required is invalid`() {
         sut.updateValidity("a1b2")
         assertFalse(sut.isValid) // only 2 digits

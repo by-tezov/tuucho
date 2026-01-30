@@ -1,6 +1,5 @@
 ### Todo:
 
-- test image Model + clean
 - registry, add custom fetcher ?
 - error when loading image
 

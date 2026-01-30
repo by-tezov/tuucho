@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.form
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
-import com.tezov.tuucho.core.domain.business._system.koin.AssociateDSL.getAllAssociated
+import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormValidatorSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SymbolData
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
