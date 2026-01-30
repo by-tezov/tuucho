@@ -660,12 +660,12 @@ public abstract interface class com/tezov/tuucho/core/data/repository/image/Imag
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/image/ImageFetcherProtocol$Factory : coil3/fetch/Fetcher$Factory {
+	public abstract fun getCommand ()Ljava/lang/String;
 	public abstract fun isAvailable (Lcom/tezov/tuucho/core/data/repository/image/ImageRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/image/ImageFetcherRegistryProtocol {
 	public abstract fun get (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/image/ImageFetcherProtocol$Factory;
-	public abstract fun register (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/data/repository/image/ImageRequest {
@@ -1576,13 +1576,15 @@ abstract interface com.tezov.tuucho.core.data.repository.image/ImageDiskCachePro
 
 abstract interface com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol : coil3.fetch/Fetcher { // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol|null[0]
     abstract interface Factory : coil3.fetch/Fetcher.Factory<com.tezov.tuucho.core.data.repository.image/ImageRequest> { // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory|null[0]
+        abstract val command // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory.command|{}command[0]
+            abstract fun <get-command>(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory.command.<get-command>|<get-command>(){}[0]
+
         abstract suspend fun isAvailable(com.tezov.tuucho.core.data.repository.image/ImageRequest): kotlin/Boolean // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory.isAvailable|isAvailable(com.tezov.tuucho.core.data.repository.image.ImageRequest){}[0]
     }
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol { // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol|null[0]
     abstract fun get(kotlin/String): com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol.get|get(kotlin.String){}[0]
-    abstract fun register(kotlin/String) // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol.register|register(kotlin.String){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol|null[0]
@@ -3367,10 +3369,9 @@ final class com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedConte
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
-    constructor <init>() // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(){}[0]
+    constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol>){}[0]
 
     final fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
-    final fun register(com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol){}[0]
 }
 
 final class com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper : com.tezov.tuucho.core.domain.business.protocol/NavigationTransitionStackHelperProtocol { // com.tezov.tuucho.core.domain.business.interaction.navigation.transition/DefaultNavigationTransitionStackHelper|null[0]
@@ -4362,6 +4363,11 @@ final object com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedCont
     final var koinApplication // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContext.koinApplication|{}koinApplication[0]
         final fun <get-koinApplication>(): org.koin.core/KoinApplication? // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContext.koinApplication.<get-koinApplication>|<get-koinApplication>(){}[0]
         final fun <set-koinApplication>(org.koin.core/KoinApplication?) // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContext.koinApplication.<set-koinApplication>|<set-koinApplication>(org.koin.core.KoinApplication?){}[0]
+}
+
+final object com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension { // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension|null[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.core.module/Module).factoryObject(#A1): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension.factoryObject|factoryObject@org.koin.core.module.Module(0:0){0§<kotlin.Any>}[0]
+    final inline fun <#A1: reified kotlin/Any> (org.koin.dsl/ScopeDSL).factoryObject(#A1): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/KoinModuleExtension.factoryObject|factoryObject@org.koin.dsl.ScopeDSL(0:0){0§<kotlin.Any>}[0]
 }
 
 final object com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules { // com.tezov.tuucho.core.domain.business.di/SystemCoreDomainModules|null[0]
@@ -6041,6 +6047,8 @@ final object com.tezov.tuucho.core.domain.business.model.action/NavigateActionDe
         final object Target { // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target|null[0]
             final const val back // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.back|{}back[0]
                 final fun <get-back>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.back.<get-back>|<get-back>(){}[0]
+            final const val current // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.current|{}current[0]
+                final fun <get-current>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.current.<get-current>|<get-current>(){}[0]
             final const val finish // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.finish|{}finish[0]
                 final fun <get-finish>(): kotlin/String // com.tezov.tuucho.core.domain.business.model.action/NavigateActionDefinition.LocalDestination.Target.finish.<get-finish>|<get-finish>(){}[0]
         }
@@ -6087,7 +6095,6 @@ final object com.tezov.tuucho.core.domain.business.model.image/RemoteImageDefini
 final object com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol|null[0]
     abstract interface Registry { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry|null[0]
         abstract fun lockTypeFor(kotlin/String, kotlin/String?): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.lockTypeFor|lockTypeFor(kotlin.String;kotlin.String?){}[0]
-        abstract fun register(com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol) // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry.register|register(com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol){}[0]
     }
 
     abstract interface Resolver { // com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Resolver|null[0]
@@ -6329,6 +6336,10 @@ public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$S
 	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;)Ljava/lang/String;
 }
 
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinModuleExtension {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinModuleExtension;
+}
+
 public abstract interface class com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent : org/koin/core/component/KoinComponent {
 	public fun getKoin ()Lorg/koin/core/Koin;
 }
@@ -6421,9 +6432,8 @@ public final class com/tezov/tuucho/core/domain/business/interaction/lock/Intera
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockRegistry : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {
-	public fun <init> ()V
+	public fun <init> (Ljava/util/List;)V
 	public fun lockTypeFor (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public fun register (Lcom/tezov/tuucho/core/domain/business/protocol/ActionDefinitionProtocol;)V
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/navigation/NavigationOption {
@@ -8142,6 +8152,7 @@ public final class com/tezov/tuucho/core/domain/business/model/action/NavigateAc
 public final class com/tezov/tuucho/core/domain/business/model/action/NavigateActionDefinition$LocalDestination$Target {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/model/action/NavigateActionDefinition$LocalDestination$Target;
 	public static final field back Ljava/lang/String;
+	public static final field current Ljava/lang/String;
 	public static final field finish Ljava/lang/String;
 }
 
@@ -8346,7 +8357,6 @@ public final class com/tezov/tuucho/core/domain/business/protocol/repository/Int
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {
 	public abstract fun lockTypeFor (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public abstract fun register (Lcom/tezov/tuucho/core/domain/business/protocol/ActionDefinitionProtocol;)V
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Resolver {

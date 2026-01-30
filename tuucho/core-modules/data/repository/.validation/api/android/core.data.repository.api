@@ -604,12 +604,12 @@ public abstract interface class com/tezov/tuucho/core/data/repository/image/Imag
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/image/ImageFetcherProtocol$Factory : coil3/fetch/Fetcher$Factory {
+	public abstract fun getCommand ()Ljava/lang/String;
 	public abstract fun isAvailable (Lcom/tezov/tuucho/core/data/repository/image/ImageRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/image/ImageFetcherRegistryProtocol {
 	public abstract fun get (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/image/ImageFetcherProtocol$Factory;
-	public abstract fun register (Ljava/lang/String;)V
 }
 
 public final class com/tezov/tuucho/core/data/repository/image/ImageRequest {

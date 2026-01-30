@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.model.action
 
+import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition.LocalDestination
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -28,12 +29,12 @@ class NavigateActionDefinitionTest {
 
     @Test
     fun `local command is navigate`() {
-        assertEquals("navigate", NavigateActionDefinition.LocalDestination.command)
+        assertEquals("navigate", LocalDestination.command)
     }
 
     @Test
     fun `local authority is local-destination`() {
-        assertEquals("local-destination", NavigateActionDefinition.LocalDestination.authority)
+        assertEquals("local-destination", LocalDestination.authority)
     }
 
     @Test
@@ -49,7 +50,8 @@ class NavigateActionDefinitionTest {
 
     @Test
     fun `local target values are correct`() {
-        assertEquals("back", NavigateActionDefinition.LocalDestination.Target.back)
-        assertEquals("finish", NavigateActionDefinition.LocalDestination.Target.finish)
+        assertEquals("back", LocalDestination.Target.back)
+        assertEquals("finish", LocalDestination.Target.finish)
+        assertEquals("current", LocalDestination.Target.current)
     }
 }

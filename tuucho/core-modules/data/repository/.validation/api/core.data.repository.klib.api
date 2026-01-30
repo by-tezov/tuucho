@@ -72,13 +72,15 @@ abstract interface com.tezov.tuucho.core.data.repository.image/ImageDiskCachePro
 
 abstract interface com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol : coil3.fetch/Fetcher { // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol|null[0]
     abstract interface Factory : coil3.fetch/Fetcher.Factory<com.tezov.tuucho.core.data.repository.image/ImageRequest> { // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory|null[0]
+        abstract val command // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory.command|{}command[0]
+            abstract fun <get-command>(): kotlin/String // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory.command.<get-command>|<get-command>(){}[0]
+
         abstract suspend fun isAvailable(com.tezov.tuucho.core.data.repository.image/ImageRequest): kotlin/Boolean // com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory.isAvailable|isAvailable(com.tezov.tuucho.core.data.repository.image.ImageRequest){}[0]
     }
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol { // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol|null[0]
     abstract fun get(kotlin/String): com.tezov.tuucho.core.data.repository.image/ImageFetcherProtocol.Factory // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol.get|get(kotlin.String){}[0]
-    abstract fun register(kotlin/String) // com.tezov.tuucho.core.data.repository.image/ImageFetcherRegistryProtocol.register|register(kotlin.String){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerMatcherProtocol|null[0]

@@ -71,11 +71,7 @@ internal object UseCaseModule {
 
         factoryOf(::ProcessActionUseCase)
         factoryOf(::RefreshMaterialCacheUseCase)
-        factory {
-            RetrieveImageUseCase<Any>(
-                imageRepository = get()
-            )
-        }
+        factoryOf<RetrieveImageUseCase<Any>, _>(::RetrieveImageUseCase)
         factoryOf(::ServerHealthCheckUseCase)
 
         factory<SendDataUseCase> {
