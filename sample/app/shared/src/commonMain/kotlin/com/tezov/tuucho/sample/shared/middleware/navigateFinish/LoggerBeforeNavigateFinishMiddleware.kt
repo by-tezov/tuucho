@@ -1,4 +1,4 @@
-package com.tezov.tuucho.sample.shared.middleware.navigateToUrl
+package com.tezov.tuucho.sample.shared.middleware.navigateFinish
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
@@ -8,17 +8,17 @@ import com.tezov.tuucho.sample.shared._system.Logger
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.FlowCollector
 
-class LoggerBeforeNavigateToUrlMiddleware(
+class LoggerBeforeNavigateFinishMiddleware(
     private val logger: Logger,
     private val systemInformation: SystemInformationProtocol
-) : NavigationMiddleware.ToUrl {
+) : NavigationMiddleware.Finish {
 
     override suspend fun ProducerScope<Unit>.process(
-        context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
+        context: Unit,
+        next: MiddlewareProtocol.Next<Unit, Unit>?,
     ) {
         logger.debug("THREAD") { systemInformation.currentThreadName() }
-        logger.debug("NAVIGATION") { "forward: ${context.currentUrl} -> ${context.input.url}" }
+        logger.debug("NAVIGATION") { "finish" }
         next.invoke(context)
     }
 }

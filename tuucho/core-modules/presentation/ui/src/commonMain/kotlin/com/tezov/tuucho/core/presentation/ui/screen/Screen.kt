@@ -49,7 +49,7 @@ internal class Screen(
     suspend fun initialize(
         componentObject: JsonObject
     ) {
-        coroutineScopes.renderer.await {
+        coroutineScopes.default.withContext {
             val type = componentObject.withScope(TypeSchema::Scope).self
             if (type != TypeSchema.Value.component) {
                 throw UiException.Default("object is not a component $componentObject")
@@ -93,7 +93,7 @@ internal class Screen(
     @Suppress("UNCHECKED_CAST")
     override suspend fun <V : DomainViewProtocol> views(
         klass: KClass<V>
-    ) = coroutineScopes.renderer.await {
+    ) = coroutineScopes.default.withContext {
         views.filter { klass.isInstance(it) } as List<V>
     }
 
@@ -107,7 +107,7 @@ internal class Screen(
     override suspend fun update(
         jsonObject: JsonObject
     ) {
-        coroutineScopes.renderer.await {
+        coroutineScopes.default.withContext {
             updateMutex.withLock {
                 val updatedIndexView = updateAndReturnViewIndex(jsonObject)
                 updatedIndexView?.let { views[it].updateIfNeeded() }
@@ -118,7 +118,7 @@ internal class Screen(
     override suspend fun update(
         jsonObjects: List<JsonObject>
     ) {
-        coroutineScopes.renderer.await {
+        coroutineScopes.default.withContext {
             updateMutex.withLock {
                 val updatedIndexViews = buildList {
                     jsonObjects.forEach {

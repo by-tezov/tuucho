@@ -15,22 +15,22 @@ internal class NavigationStackRouteRepository(
     private val stack = mutableListOf<NavigationRoute.Url>()
     private val mutex = Mutex()
 
-    override suspend fun currentRoute() = coroutineScopes.navigation.await {
+    override suspend fun currentRoute() = coroutineScopes.default.withContext {
         mutex.withLock { stack.lastOrNull() }
     }
 
-    override suspend fun priorRoute() = coroutineScopes.navigation.await {
+    override suspend fun priorRoute() = coroutineScopes.default.withContext {
         mutex.withLock { stack.priorLastOrNull() }
     }
 
-    override suspend fun routes() = coroutineScopes.navigation.await {
+    override suspend fun routes() = coroutineScopes.default.withContext {
         mutex.withLock { stack.toList() }
     }
 
     override suspend fun forward(
         route: NavigationRoute.Url,
         navigationOptionObject: JsonObject?,
-    ) = coroutineScopes.navigation.await {
+    ) = coroutineScopes.default.withContext {
         val option = navigationOptionObject?.let {
             NavigationOption.from(it)
         } ?: NavigationOption(
@@ -46,7 +46,7 @@ internal class NavigationStackRouteRepository(
 
     override suspend fun backward(
         route: NavigationRoute
-    ) = coroutineScopes.navigation.await {
+    ) = coroutineScopes.default.withContext {
         mutex.withLock {
             when (route) {
                 is NavigationRoute.Back -> navigateBack()

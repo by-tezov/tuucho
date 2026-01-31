@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.FlowCollector
 
 class LoggerUpdateViewMiddleware(
@@ -12,7 +13,7 @@ class LoggerUpdateViewMiddleware(
     private val systemInformation: SystemInformationProtocol
 ) : UpdateViewMiddleware {
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun ProducerScope<Unit>.process(
         context: UpdateViewMiddleware.Context,
         next: MiddlewareProtocol.Next<UpdateViewMiddleware.Context, Unit>?,
     ) {

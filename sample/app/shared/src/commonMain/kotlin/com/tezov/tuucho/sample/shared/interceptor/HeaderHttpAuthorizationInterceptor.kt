@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
 import io.ktor.client.request.HttpResponseData
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.FlowCollector
 
 class HeaderHttpAuthorizationInterceptor(
@@ -18,7 +19,7 @@ class HeaderHttpAuthorizationInterceptor(
 
     private val authRegex = Regex("^/auth(?:/.*)?$")
 
-    override suspend fun FlowCollector<HttpResponseData>.process(
+    override suspend fun ProducerScope<HttpResponseData>.process(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) {

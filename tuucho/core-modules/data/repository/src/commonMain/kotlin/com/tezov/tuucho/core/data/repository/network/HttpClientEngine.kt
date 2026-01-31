@@ -34,7 +34,9 @@ internal class HttpClientEngine(
         data: HttpRequestData
     ): HttpResponseData {
         val terminal = HttpInterceptor { context, _ ->
-            emit(engine.execute(context.builder.build()))
+            send(coroutineScopes.io.withContext {
+                engine.execute(context.builder.build())
+            })
         }
         val builder = HttpRequestBuilder().takeFrom(data)
         val response = middlewareExecutor.process(

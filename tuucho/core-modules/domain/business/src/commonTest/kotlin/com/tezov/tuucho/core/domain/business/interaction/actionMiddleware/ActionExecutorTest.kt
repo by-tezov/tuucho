@@ -15,8 +15,6 @@ import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.MokkeryMatcherScope
-import dev.mokkery.matcher.any
-import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
@@ -93,7 +91,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
         verifyNoMoreCalls(spy)
     }
@@ -130,7 +128,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
             interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority)
             interactionLockResolver.acquire(any(), any())
             spy.invoke(matches {
@@ -171,7 +169,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
             interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority)
             interactionLockResolver.acquire(any(), any())
             spy.invoke(matchesCommand("second"))
@@ -195,7 +193,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 }

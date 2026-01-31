@@ -22,7 +22,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import com.tezov.tuucho.core.domain.tool.json.string
-import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -49,7 +49,7 @@ internal class FormSendUrlActionMiddleware(
         action.authority == FormActionDefinition.Send.authority &&
         action.target != null
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun ProducerScope<Unit>.process(
         context: Context,
         next: MiddlewareProtocol.Next<Context, Unit>?
     ) {

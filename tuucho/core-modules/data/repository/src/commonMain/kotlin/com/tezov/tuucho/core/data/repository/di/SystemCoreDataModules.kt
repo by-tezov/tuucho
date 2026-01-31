@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import com.tezov.tuucho.core.data.repository._system.SystemInformation
 import com.tezov.tuucho.core.data.repository.di.assembler.AssemblerModule
 import com.tezov.tuucho.core.data.repository.di.assembler.MaterialAssemblerScope
 import com.tezov.tuucho.core.data.repository.di.assembler.ResponseAssemblerScope
 import com.tezov.tuucho.core.data.repository.di.rectifier.MaterialRectifierScope
 import com.tezov.tuucho.core.data.repository.di.rectifier.RectifierModule
 import com.tezov.tuucho.core.data.repository.di.rectifier.ResponseRectifierScope
-import com.tezov.tuucho.core.data.repository.repository.SystemInformation
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi

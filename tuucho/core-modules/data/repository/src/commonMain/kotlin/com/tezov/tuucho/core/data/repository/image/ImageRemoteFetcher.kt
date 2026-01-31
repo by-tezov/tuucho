@@ -16,13 +16,10 @@ internal class ImageRemoteFetcher(
 ) : ImageFetcherProtocol {
     override suspend fun fetch(): SourceFetchResult {
         val diskCacheKey = options.diskCacheKey ?: throw DataException.Default("diskCacheKey is null")
-        diskCache
-            .retrieve(
-                cacheKey = diskCacheKey,
-            )?.let { return it }
+        diskCache.retrieve(cacheKey = diskCacheKey)?.let { return it }
         val response = httpClient.getImage(url)
         return diskCache.saveAndRetrieve(
-            cacheKey = diskCacheKey, // Here pass the TLL
+            cacheKey = diskCacheKey,
             response = response
         )
     }

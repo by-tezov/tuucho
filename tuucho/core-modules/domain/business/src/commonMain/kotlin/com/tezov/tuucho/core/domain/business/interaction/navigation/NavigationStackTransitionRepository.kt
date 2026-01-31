@@ -40,14 +40,14 @@ internal class NavigationStackTransitionRepository(
     private var stack = mutableListOf<Item>()
     private val mutex = Mutex()
 
-    override suspend fun routes() = coroutineScopes.navigation.await {
+    override suspend fun routes() = coroutineScopes.default.withContext {
         mutex.withLock { stack.map { it.route } }
     }
 
     private fun emit(
         event: StackTransition.Event
     ) {
-        coroutineScopes.event
+        coroutineScopes.default
             .async(
                 throwOnFailure = true
             ) {
@@ -101,7 +101,7 @@ internal class NavigationStackTransitionRepository(
         navigationTransitionObject: JsonObject?,
     ) {
         emit(StackTransition.Event.PrepareTransition)
-        coroutineScopes.navigation.await {
+        coroutineScopes.default.withContext {
             val listenerDeferred = listenEndOfTransition(routes)
             mutex.withLock {
                 // assume, only one added at tail or bring back to tail
@@ -129,7 +129,7 @@ internal class NavigationStackTransitionRepository(
         routes: List<NavigationRoute.Url>
     ) {
         emit(StackTransition.Event.PrepareTransition)
-        coroutineScopes.navigation.await {
+        coroutineScopes.default.withContext {
             val listenerDeferred = listenEndOfTransition(routes)
             emit(buildTransitionEvent(DirectionNavigation.backward))
             listenerDeferred.await()
@@ -138,7 +138,7 @@ internal class NavigationStackTransitionRepository(
 
     private fun listenEndOfTransition(
         routes: List<NavigationRoute>
-    ) = coroutineScopes.navigation.async(
+    ) = coroutineScopes.default.async(
         throwOnFailure = false
     ) {
         events

@@ -85,7 +85,7 @@ class NavigateBackUseCase(
             ?.navigateBackward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
-            val job = coroutineScopes.navigation.async(
+            val job = coroutineScopes.default.async(
                 throwOnFailure = false
             ) {
                 suspend fun process() {
@@ -95,9 +95,7 @@ class NavigateBackUseCase(
                             componentObject = componentObject,
                             types = listOf(Shadower.Type.contextual)
                         ).map { it.jsonObject }
-                    coroutineScopes.renderer.await {
-                        screen.update(jsonObjects)
-                    }
+                    screen.update(jsonObjects)
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.process(
@@ -110,7 +108,7 @@ class NavigateBackUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
-                coroutineScopes.navigation.throwOnFailure(job)
+                coroutineScopes.default.throwOnFailure(job)
             }
         }
     }

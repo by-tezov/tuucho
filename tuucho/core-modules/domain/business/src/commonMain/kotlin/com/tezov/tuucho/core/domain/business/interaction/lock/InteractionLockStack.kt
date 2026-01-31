@@ -28,7 +28,7 @@ internal class InteractionLockStack(
 
     override suspend fun isValid(
         lock: InteractionLock
-    ) = coroutineScopes.default.await {
+    ) = coroutineScopes.default.withContext {
         mutex.withLock {
             usedLocks[lock.type]?.id == lock.id
         }
@@ -36,7 +36,7 @@ internal class InteractionLockStack(
 
     override suspend fun isAllValid(
         locks: List<InteractionLock>
-    ) = coroutineScopes.default.await {
+    ) = coroutineScopes.default.withContext {
         mutex.withLock {
             locks.all { usedLocks[it.type]?.id == it.id }
         }
@@ -50,16 +50,16 @@ internal class InteractionLockStack(
     override suspend fun acquire(
         requester: String,
         types: List<InteractionLockType>
-    ): List<InteractionLock> = coroutineScopes.default.await {
+    ): List<InteractionLock> = coroutineScopes.default.withContext {
         tryAcquireInternal(requester, types)?.let { locks ->
             interactionLockMonitor?.process(InteractionLockMonitor.Context(
                 event = Event.Acquired,
                 requester = listOf(requester),
                 lockTypes = locks.map { it.type }
             ))
-            return@await locks
+            return@withContext locks
         }
-        coroutineScopes.io.await {
+        coroutineScopes.io.withContext {
             interactionLockMonitor?.process(
                 InteractionLockMonitor.Context(
                     event = Event.WaitToAcquire,
@@ -90,7 +90,7 @@ internal class InteractionLockStack(
     override suspend fun tryAcquire(
         requester: String,
         types: List<InteractionLockType>
-    ): List<InteractionLock>? = coroutineScopes.default.await {
+    ): List<InteractionLock>? = coroutineScopes.default.withContext {
         tryAcquireInternal(requester, types)?.also { locks ->
             interactionLockMonitor?.process(InteractionLockMonitor.Context(
                 event = Event.AcquireFromTry,
@@ -204,7 +204,7 @@ internal class InteractionLockStack(
             return false
         }
         var canBeReleased = false
-        coroutineScopes.default.await {
+        coroutineScopes.default.withContext {
             mutex.withLock {
                 canBeReleased = usedLocks[lock.type]?.id == lock.id
                 if (canBeReleased) {

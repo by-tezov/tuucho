@@ -9,7 +9,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
-import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.channels.ProducerScope
 
 internal class NavigationUrlActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -24,7 +24,7 @@ internal class NavigationUrlActionMiddleware(
     ) = action.command == NavigateActionDefinition.Url.command &&
         action.authority == NavigateActionDefinition.Url.authority
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun ProducerScope<Unit>.process(
         context: Context,
         next: MiddlewareProtocol.Next<Context, Unit>?
     ) {

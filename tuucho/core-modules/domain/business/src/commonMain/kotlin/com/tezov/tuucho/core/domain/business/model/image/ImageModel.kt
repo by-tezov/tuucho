@@ -56,8 +56,8 @@ data class ImageModel(
         fun from(
             value: String,
             cacheKey: String,
-            tags: Set<String>?,
-            tagsExcluder: Set<String>?
+            tags: Set<String>? = null,
+            tagsExcluder: Set<String>? = null
         ): ImageModel {
             val match = IMAGE_REGEX.matchEntire(value)
                 ?: throw DomainException.Default("invalid image")
@@ -78,8 +78,8 @@ data class ImageModel(
             target: String,
             query: String? = null,
             cacheKey: String,
-            tags: Set<String>?,
-            tagsExcluder: Set<String>?
+            tags: Set<String>? = null,
+            tagsExcluder: Set<String>? = null
         ) = ImageModel(
             command = command,
             target = target,
@@ -105,6 +105,9 @@ data class ImageModel(
                 append("?")
                 append(query.toPrettyString())
             }
+            append("#$cacheKey#")
+            tags?.let { append("-tags:$it") }
+            tagsExcluder?.let { append("-tagsExcluder:$it") }
         }
         return stringBuilder.toString()
     }

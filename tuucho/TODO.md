@@ -1,6 +1,6 @@
 ### Todo:
 
-- error when loading image
+- cache key must exist on Domain and usable of for middleware
 
 - Animation placeholder / final image ?
 - Alternative image (fallback) query fallback local/remote ?

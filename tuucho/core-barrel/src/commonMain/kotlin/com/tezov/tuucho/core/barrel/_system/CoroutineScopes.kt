@@ -2,78 +2,21 @@
 
 package com.tezov.tuucho.core.barrel._system
 
+import com.tezov.tuucho.core.domain.business._system.coroutine.CoroutineContext
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineContextProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionHandlerProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.tool.async.CoroutineContext
-import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
-import com.tezov.tuucho.core.domain.tool.async.CoroutineExceptionMonitor
-import com.tezov.tuucho.core.domain.tool.async.CoroutineUncaughtExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 internal class CoroutineScopes(
-    exceptionMonitor: CoroutineExceptionMonitor?,
-    uncaughtExceptionHandler: CoroutineUncaughtExceptionHandler?
+    exceptionMonitor: CoroutineExceptionMonitorProtocol?,
+    uncaughtExceptionHandler: CoroutineExceptionHandlerProtocol?
 ) : CoroutineScopesProtocol {
-    override val database: CoroutineContextProtocol =
+    override val unconfined: CoroutineContextProtocol =
         CoroutineContext(
-            name = "Database",
-            context = Dispatchers.IO,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val network: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "Network",
-            context = Dispatchers.IO,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val parser: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "Parser",
-            context = Dispatchers.Default,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val renderer: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "Renderer",
-            context = Dispatchers.Default,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val navigation: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "Navigation",
-            context = Dispatchers.Default,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val useCase: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "UseCase",
-            context = Dispatchers.Default,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val action: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "Action",
-            context = Dispatchers.Default,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val image: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "Image",
-            context = Dispatchers.IO,
-            exceptionMonitor = exceptionMonitor,
-            uncaughtExceptionHandler = uncaughtExceptionHandler
-        )
-    override val event: CoroutineContextProtocol =
-        CoroutineContext(
-            name = "Event",
-            context = Dispatchers.Default,
+            name = "Unconfined",
+            context = Dispatchers.Unconfined,
             exceptionMonitor = exceptionMonitor,
             uncaughtExceptionHandler = uncaughtExceptionHandler
         )

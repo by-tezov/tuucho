@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.interaction.navigation
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
-import dev.mokkery.matcher.any
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifySuspend
 import kotlinx.serialization.json.buildJsonObject
@@ -39,7 +38,7 @@ class NavigationStackRouteRepositoryTest {
         assertNull(result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -50,7 +49,7 @@ class NavigationStackRouteRepositoryTest {
         assertNull(result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -61,7 +60,7 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(emptyList(), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -75,8 +74,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -98,8 +97,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -118,8 +117,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -138,8 +137,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(emptyList(), sut.routes())
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -150,7 +149,7 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -163,7 +162,7 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -186,8 +185,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -205,7 +204,7 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -234,8 +233,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route2, NavigationRoute.Url("id", "url")), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -261,8 +260,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeInitial1, routeInitial2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -288,8 +287,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeInitial2, routeInitial1), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -315,8 +314,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeInitial1, routeInitial2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -345,8 +344,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, NavigationRoute.Url("id-X", "url-X")), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -375,8 +374,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeFirst, routeSecond, NavigationRoute.Url("id-X", "url-X")), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -398,7 +397,7 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -422,8 +421,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(NavigationRoute.Url("id-X", "url-shared")), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -444,7 +443,7 @@ class NavigationStackRouteRepositoryTest {
         assertNull(forwardResult)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -461,7 +460,7 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(firstRoute, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -478,7 +477,7 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(lastRoute, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -498,7 +497,7 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route3), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -516,7 +515,7 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -537,8 +536,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -548,7 +547,7 @@ class NavigationStackRouteRepositoryTest {
         assertNull(result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -578,8 +577,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, NavigationRoute.Url("id-X", "url-X")), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -605,8 +604,8 @@ class NavigationStackRouteRepositoryTest {
         )
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -636,8 +635,8 @@ class NavigationStackRouteRepositoryTest {
         )
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -660,8 +659,8 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(r1, r2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 }

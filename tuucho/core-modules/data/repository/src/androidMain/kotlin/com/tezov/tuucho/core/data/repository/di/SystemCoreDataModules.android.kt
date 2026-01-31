@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.data.repository.di
 
 import android.content.Context
+import com.tezov.tuucho.core.data.repository._system.SystemInformation
 import com.tezov.tuucho.core.data.repository._system.SystemInformationAndroid
 import com.tezov.tuucho.core.data.repository._system.SystemPlatform
 import com.tezov.tuucho.core.data.repository._system.SystemPlatformAndroid
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryAndroid
-import com.tezov.tuucho.core.data.repository.repository.SystemInformation
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol

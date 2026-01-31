@@ -71,7 +71,13 @@ internal object UseCaseModule {
 
         factoryOf(::ProcessActionUseCase)
         factoryOf(::RefreshMaterialCacheUseCase)
-        factoryOf<RetrieveImageUseCase<Any>, _>(::RetrieveImageUseCase)
+        factory {
+            RetrieveImageUseCase<Any>(
+                imageRepository = get(),
+                middlewareExecutor = get(),
+                retrieveImageMiddlewares = getAllOrdered()
+            )
+        }
         factoryOf(::ServerHealthCheckUseCase)
 
         factory<SendDataUseCase> {
@@ -92,7 +98,6 @@ internal object UseCaseModule {
         factoryOf(::HasKeyInStoreUseCase)
         factory {
             NavigateFinishUseCase(
-                coroutineScopes = get(),
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()
             )

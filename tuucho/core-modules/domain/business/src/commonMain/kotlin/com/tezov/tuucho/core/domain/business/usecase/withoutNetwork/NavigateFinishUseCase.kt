@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.collect
 
 @OpenForTest
 class NavigateFinishUseCase(
-    private val coroutineScopes: CoroutineScopesProtocol,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Finish>,
 ) : UseCaseProtocol.Async<Unit, Unit>,

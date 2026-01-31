@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlin.concurrent.atomics.AtomicInt
 import kotlin.concurrent.atomics.incrementAndFetch
 
@@ -34,7 +35,7 @@ internal class ImageLoaderSource(
         val counterEnd = requestRemaining.size
         requestRemaining.forEach { enqueue(it, counter, counterEnd) }
         awaitClose { }
-    }
+    }.flowOn(coroutineScopes.default.context)
 
     private fun ProducerScope<ImageResponse>.enqueue(
         request: ImageRequest,
@@ -43,8 +44,8 @@ internal class ImageLoaderSource(
     ) {
         val coilRequest = coil3.request.ImageRequest
             .Builder(platformContext)
-            .fetcherCoroutineContext(coroutineScopes.image.context)
-            .decoderCoroutineContext(coroutineScopes.image.context)
+            .fetcherCoroutineContext(coroutineScopes.default.context)
+            .decoderCoroutineContext(coroutineScopes.default.context)
             .fetcherFactory(imageFetchers.get(request.command))
             .data(request)
             .diskCacheKey(request.cacheKey)

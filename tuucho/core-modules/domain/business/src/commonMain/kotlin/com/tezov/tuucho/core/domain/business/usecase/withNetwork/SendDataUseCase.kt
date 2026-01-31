@@ -38,7 +38,7 @@ class SendDataUseCase(
 
     private fun terminalMiddleware(): SendDataMiddleware = SendDataMiddleware { context, _ ->
         with(context.input) {
-            emit(
+            send(
                 Output(
                     jsonObject = sendDataAndRetrieveMaterialRepository.process(url, jsonObject)
                 )

@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.channelFlow
 
 interface MiddlewareExecutorProtocol {
-    suspend fun <C, R : Any> FlowCollector<R>.process(
+    suspend fun <C, R : Any> ProducerScope<R>.process(
         middlewares: List<MiddlewareProtocol<C, R>>,
         context: C
     )
@@ -14,6 +14,8 @@ interface MiddlewareExecutorProtocol {
         fun <C, R : Any> MiddlewareExecutorProtocol.process(
             middlewares: List<MiddlewareProtocol<C, R>>,
             context: C
-        ): Flow<R> = flow { process(middlewares, context) }
+        ): Flow<R> = channelFlow {
+            process(middlewares, context)
+        }
     }
 }

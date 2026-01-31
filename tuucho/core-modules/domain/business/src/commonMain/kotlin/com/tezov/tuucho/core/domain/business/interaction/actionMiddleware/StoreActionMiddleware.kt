@@ -14,7 +14,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
-import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -36,7 +36,7 @@ internal class StoreActionMiddleware(
         action.authority == StoreActionDefinition.KeyValue.authority &&
         action.query != null
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun ProducerScope<Unit>.process(
         context: Context,
         next: MiddlewareProtocol.Next<Context, Unit>?
     ) {

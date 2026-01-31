@@ -6,13 +6,16 @@ import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssoci
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.scope.Scope
 
 @OpenForTest
-internal class ResponseRectifier : TuuchoKoinScopeComponent {
+internal class ResponseRectifier(
+    private val coroutineScopes: CoroutineScopesProtocol
+) : TuuchoKoinScopeComponent {
     sealed class Association {
         object Processor : Association()
     }
@@ -29,18 +32,20 @@ internal class ResponseRectifier : TuuchoKoinScopeComponent {
     suspend fun process(
         context: RectifierProtocol.Context,
         responseObject: JsonObject
-    ) = responseObject
-        .withScope(::SchemaScope)
-        .apply {
-            responseObject.forEach { (key, element) ->
-                var _element = element
-                rectifiers
-                    .asSequence()
-                    .filter { it.key == key }
-                    .forEach {
-                        _element = it.process(context, ROOT_PATH, element)
-                    }
-                this[key] = _element
-            }
-        }.collect()
+    ) = coroutineScopes.default.withContext {
+        responseObject
+            .withScope(::SchemaScope)
+            .apply {
+                responseObject.forEach { (key, element) ->
+                    var _element = element
+                    rectifiers
+                        .asSequence()
+                        .filter { it.key == key }
+                        .forEach {
+                            _element = it.process(context, ROOT_PATH, element)
+                        }
+                    this[key] = _element
+                }
+            }.collect()
+    }
 }

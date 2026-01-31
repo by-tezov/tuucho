@@ -7,7 +7,6 @@ import dev.mokkery.answering.returns
 import dev.mokkery.answering.sequentiallyReturns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
-import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.resetCalls
 import dev.mokkery.verify.VerifyMode
@@ -46,7 +45,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(emptyList(), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -63,9 +62,9 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(listOf(pushedRoute), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
             screenFactory.create(pushedRoute, any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -93,7 +92,7 @@ class NavigationStackScreenRepositoryTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             screenFactory.create(firstRoute, any())
             screenFactory.create(secondRoute, any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -124,7 +123,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(listOf(screenMatchA, screenMatchB), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -151,7 +150,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(lastScreen, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -178,7 +177,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(initialScreen, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -205,7 +204,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(targetScreen, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -236,7 +235,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(listOf(screenAlpha, screenBeta), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -269,8 +268,8 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(listOf(routeKeepA, routeKeepB), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -293,7 +292,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(null, result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -320,7 +319,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(emptyList(), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -349,8 +348,8 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(emptyList(), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -381,7 +380,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(listOf(routeFirst, routeMiddle, routeLast), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
@@ -403,7 +402,7 @@ class NavigationStackScreenRepositoryTest {
         assertEquals(listOf(screenUnique), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.navigation.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 

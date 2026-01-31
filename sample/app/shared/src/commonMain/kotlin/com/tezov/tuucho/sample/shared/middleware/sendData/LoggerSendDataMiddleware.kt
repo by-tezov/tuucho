@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Co
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase.Output
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -14,7 +15,7 @@ class LoggerSendDataMiddleware(
     private val systemInformation: SystemInformationProtocol
 ) : SendDataMiddleware {
 
-    override suspend fun FlowCollector<Output>.process(
+    override suspend fun ProducerScope<Output>.process(
         context: SendDataMiddleware.Context,
         next: MiddlewareProtocol.Next<SendDataMiddleware.Context, Output>?,
     ) {
@@ -29,6 +30,6 @@ class LoggerSendDataMiddleware(
                 appendLine(output)
             }
         }
-        output?.let { emit(it) }
+        output?.let { send(it) }
     }
 }

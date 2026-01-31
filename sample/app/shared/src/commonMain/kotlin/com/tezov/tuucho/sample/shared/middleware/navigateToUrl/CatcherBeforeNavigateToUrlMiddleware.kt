@@ -5,12 +5,13 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.sample.shared._system.Config
 import com.tezov.tuucho.sample.shared._system.Page
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.FlowCollector
 
 class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun ProducerScope<Unit>.process(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {
@@ -22,7 +23,7 @@ class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
         )
     }
 
-    private suspend fun FlowCollector<Unit>.processWithRetry(
+    private suspend fun ProducerScope<Unit>.processWithRetry(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
         attempt: Int,

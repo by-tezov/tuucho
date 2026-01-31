@@ -141,7 +141,7 @@ class NavigateToUrlUseCase(
             ?.navigateForward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
-            val job = coroutineScopes.navigation.async(
+            val job = coroutineScopes.default.async(
                 throwOnFailure = false
             ) {
                 suspend fun process() {
@@ -151,9 +151,7 @@ class NavigateToUrlUseCase(
                             componentObject = componentObject,
                             types = listOf(Shadower.Type.contextual)
                         ).map { it.jsonObject }
-                    coroutineScopes.renderer.await {
-                        screen.update(jsonObjects)
-                    }
+                    screen.update(jsonObjects)
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.process(
@@ -166,7 +164,7 @@ class NavigateToUrlUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
-                coroutineScopes.navigation.throwOnFailure(job)
+                coroutineScopes.default.throwOnFailure(job)
             }
         }
     }

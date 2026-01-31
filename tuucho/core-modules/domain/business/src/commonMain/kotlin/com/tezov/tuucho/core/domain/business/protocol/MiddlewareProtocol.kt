@@ -1,27 +1,27 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.flow.channelFlow
 
 fun interface MiddlewareProtocol<C, R : Any> {
     fun interface Next<C, R : Any> {
-        suspend fun FlowCollector<R>.invoke(
+        suspend fun ProducerScope<R>.invoke(
             context: C
         )
 
         companion object {
-            context(flowCollector: FlowCollector<R>)
+            context(producerScope: ProducerScope<R>)
             suspend fun <C, R : Any> Next<C, R>?.invoke(
                 context: C
-            ) = this?.run { flowCollector.run { invoke(context) } }
+            ) = this?.run { producerScope.run { invoke(context) } }
 
             fun <C, R : Any> Next<C, R>?.intercept(
                 context: C
-            ) = this?.run { flow { invoke(context) } }
+            ) = this?.run { channelFlow { invoke(context) } }
         }
     }
 
-    suspend fun FlowCollector<R>.process(
+    suspend fun ProducerScope<R>.process(
         context: C,
         next: Next<C, R>?
     )

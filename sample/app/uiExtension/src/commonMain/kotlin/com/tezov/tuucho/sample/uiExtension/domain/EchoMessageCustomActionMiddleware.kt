@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Co
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import com.tezov.tuucho.sample.uiExtension.domain.CustomLabelSchema.Message
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonNull
 
@@ -28,7 +29,7 @@ internal class EchoMessageCustomActionMiddleware(
         action: ActionModel,
     ): Boolean = action.command == EchoMessageCustomActionDefinition.command
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun ProducerScope<Unit>.process(
         context: ActionMiddleware.Context,
         next: MiddlewareProtocol.Next<ActionMiddleware.Context, Unit>?
     ) {

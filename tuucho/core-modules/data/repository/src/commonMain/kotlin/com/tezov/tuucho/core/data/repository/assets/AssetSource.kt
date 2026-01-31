@@ -3,31 +3,33 @@ package com.tezov.tuucho.core.data.repository.assets
 import coil3.annotation.InternalCoilApi
 import coil3.util.MimeTypeMap
 import com.tezov.tuucho.core.data.repository.exception.DataException
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import io.ktor.http.ContentType
 import io.ktor.http.defaultForFileExtension
 
 interface AssetSourceProtocol {
-    fun <T> readFile(
+    suspend fun <T> readFile(
         path: String,
         block: (AssetContent) -> T
     ): T
 
-    fun readFile(
+    suspend fun readFile(
         path: String,
     ): AssetContent
 
-    fun <T> readImage(
+    suspend fun <T> readImage(
         path: String,
         block: (AssetContent) -> T
     ): T
 
-    fun readImage(
+    suspend fun readImage(
         path: String,
     ): AssetContent
 }
 
 internal class AssetSource(
-    private val reader: AssetReaderProtocol
+    private val coroutineScopes: CoroutineScopesProtocol,
+    private val reader: AssetReaderProtocol,
 ) : AssetSourceProtocol {
     companion object {
         private val imageContentTypes = mapOf(
@@ -40,45 +42,49 @@ internal class AssetSource(
         )
     }
 
-    override fun <T> readFile(
+    override suspend fun <T> readFile(
         path: String,
         block: (AssetContent) -> T
-    ): T = reader.read(
-        path = path,
-        contentType = resolveFileContentType(path),
-        block = block
-    )
+    ): T = coroutineScopes.io.withContext {
+        reader.read(
+            path = path,
+            contentType = resolveFileContentType(path),
+            block = block
+        )
+    }
 
-    override fun readFile(
+    override suspend fun readFile(
         path: String,
-    ) = reader.read(
-        path = path,
-        contentType = resolveFileContentType(path),
-    )
+    ) = coroutineScopes.io.withContext {
+        reader.read(
+            path = path,
+            contentType = resolveFileContentType(path),
+        )
+    }
 
-    override fun readImage(
+    override suspend fun readImage(
         path: String,
-    ): AssetContent {
+    ) = coroutineScopes.io.withContext {
         val assetPath = resolveImageAssetPath(path)
-        return reader.read(
+        reader.read(
             path = assetPath,
             contentType = resolveImageFileContentType(assetPath),
         )
     }
 
-    override fun <T> readImage(
+    override suspend fun <T> readImage(
         path: String,
         block: (AssetContent) -> T
-    ): T {
+    ) = coroutineScopes.io.withContext {
         val assetPath = resolveImageAssetPath(path)
-        return reader.read(
+        reader.read(
             path = assetPath,
             contentType = resolveImageFileContentType(assetPath),
             block = block
         )
     }
 
-    private fun resolveImageAssetPath(
+    private suspend fun resolveImageAssetPath(
         path: String
     ): String {
         val hasExtension = path.substringAfterLast('/', "").contains('.')

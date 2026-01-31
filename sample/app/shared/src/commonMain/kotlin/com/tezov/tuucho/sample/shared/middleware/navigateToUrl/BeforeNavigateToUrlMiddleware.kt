@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterial
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
 import com.tezov.tuucho.sample.shared._system.Page
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.FlowCollector
 
 class BeforeNavigateToUrlMiddleware(
@@ -26,7 +27,7 @@ class BeforeNavigateToUrlMiddleware(
         const val AUTH_CONFIG = "auth/_config"
     }
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun ProducerScope<Unit>.process(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ) {
@@ -72,7 +73,7 @@ class BeforeNavigateToUrlMiddleware(
         )
     }
 
-    private suspend fun FlowCollector<Unit>.ensureAuthorizationOrRedirectToLoginPage(
+    private suspend fun ProducerScope<Unit>.ensureAuthorizationOrRedirectToLoginPage(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ): Boolean {
@@ -90,7 +91,7 @@ class BeforeNavigateToUrlMiddleware(
         return false
     }
 
-    private suspend fun FlowCollector<Unit>.autoLoginOnStart(
+    private suspend fun ProducerScope<Unit>.autoLoginOnStart(
         context: NavigationMiddleware.ToUrl.Context,
         next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
     ): Boolean {

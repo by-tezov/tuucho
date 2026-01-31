@@ -6,16 +6,16 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Co
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
 import io.ktor.client.request.HttpResponseData
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
 
 class LoggerHttpInterceptor(
     private val logger: Logger,
     private val systemInformation: SystemInformationProtocol
 ) : HttpInterceptor {
 
-    override suspend fun FlowCollector<HttpResponseData>.process(
+    override suspend fun ProducerScope<HttpResponseData>.process(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) {
@@ -34,13 +34,9 @@ class LoggerHttpInterceptor(
             }
             val output = next.intercept(context)?.firstOrNull()
             output?.let {
-                logger.debug("NETWORK:response") {
-                    buildString {
-                        appendLine("${it.statusCode}")
-                    }
-                }
+                logger.debug("NETWORK:response") { "${it.statusCode}" }
             }
-            output?.let { emit(it) }
+            output?.let { send(it) }
         }
     }
 }

@@ -9,11 +9,13 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Ta
 import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
 internal class MaterialDatabaseSource(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val transactionFactory: DatabaseTransactionFactory,
     private val hookQueries: HookQueries,
     private val jsonObjectQueries: JsonObjectQueries
@@ -26,33 +28,33 @@ internal class MaterialDatabaseSource(
         jsonObjectQueries.deleteAll(url, table)
     }
 
-    @Suppress("RedundantSuspendModifier")
     suspend fun getHookEntityOrNull(
         url: String
-    ) = hookQueries.getOrNull(url = url)
-
-    @Suppress("RedundantSuspendModifier")
-    suspend fun getRootJsonObjectEntityOrNull(
-        url: String
-    ): JsonObjectEntity? {
-        val versioning = hookQueries.getOrNull(url = url) ?: return null
-        versioning.rootPrimaryKey ?: return null
-        return jsonObjectQueries.getCommonOrNull(versioning.rootPrimaryKey)
+    ) = coroutineScopes.io.withContext {
+        hookQueries.getOrNull(url = url)
     }
 
-    @Suppress("RedundantSuspendModifier")
+    suspend fun getRootJsonObjectEntityOrNull(
+        url: String
+    ) = coroutineScopes.io.withContext {
+        val versioning = hookQueries.getOrNull(url = url) ?: return@withContext null
+        versioning.rootPrimaryKey ?: return@withContext null
+        jsonObjectQueries.getCommonOrNull(versioning.rootPrimaryKey)
+    }
+
     suspend fun getLifetimeOrNull(
         url: String
-    ) = hookQueries.getLifetimeOrNull(url)
+    ) = coroutineScopes.io.withContext {
+        hookQueries.getLifetimeOrNull(url)
+    }
 
-    @Suppress("RedundantSuspendModifier")
     suspend fun getAllCommonRefOrNull(
         from: JsonObject,
         url: String,
         type: String,
-    ): List<JsonObject>? {
-        from.onScope(IdSchema::Scope).source ?: return null
-        return buildList {
+    ) = coroutineScopes.io.withContext {
+        from.onScope(IdSchema::Scope).source ?: return@withContext null
+        buildList<JsonObject> {
             var currentEntry = from
             add(currentEntry)
             do {
@@ -69,15 +71,14 @@ internal class MaterialDatabaseSource(
         }
     }
 
-    @Suppress("RedundantSuspendModifier")
     suspend fun getAllRefOrNull(
         from: JsonObject,
         url: String,
         type: String,
         visibility: JsonVisibility.Contextual,
-    ): List<JsonObject>? {
-        from.onScope(IdSchema::Scope).source ?: return null
-        return buildList {
+    ) = coroutineScopes.io.withContext {
+        from.onScope(IdSchema::Scope).source ?: return@withContext null
+        buildList<JsonObject> {
             var currentEntry = from
             add(currentEntry)
             do {
@@ -95,16 +96,16 @@ internal class MaterialDatabaseSource(
         }
     }
 
-    @Suppress("RedundantSuspendModifier")
     suspend fun insert(
         entity: HookEntity
-    ) = hookQueries.insert(entity)
+    ) = coroutineScopes.io.withContext {
+        hookQueries.insert(entity)
+    }
 
-    @Suppress("RedundantSuspendModifier")
     suspend fun insert(
         entity: JsonObjectEntity,
         table: Table
-    ) = transactionFactory.transactionWithResult {
+    ) = coroutineScopes.io.withContext {
         jsonObjectQueries.insert(entity, table)
     }
 }

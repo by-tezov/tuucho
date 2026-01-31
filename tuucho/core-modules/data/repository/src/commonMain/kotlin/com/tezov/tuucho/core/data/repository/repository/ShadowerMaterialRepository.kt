@@ -22,7 +22,7 @@ internal class ShadowerMaterialRepository(
         componentObject: JsonObject,
         types: List<String>
     ) = buildList {
-        coroutineScopes.parser.await {
+        coroutineScopes.default.withContext {
             shadowerMaterialSources
                 .asSequence()
                 .filter { types.contains(it.type) }

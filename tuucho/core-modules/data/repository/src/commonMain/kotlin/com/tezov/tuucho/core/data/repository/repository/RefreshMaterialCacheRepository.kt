@@ -28,7 +28,7 @@ internal class RefreshMaterialCacheRepository(
         url: String
     ) {
         val configModelDomain = remoteSource.resource(url)
-        coroutineScopes.parser.await {
+        coroutineScopes.default.withContext {
             configModelDomain
                 .onScope(ConfigSchema.MaterialResource::Scope)
                 .let { materialResourceScope ->
