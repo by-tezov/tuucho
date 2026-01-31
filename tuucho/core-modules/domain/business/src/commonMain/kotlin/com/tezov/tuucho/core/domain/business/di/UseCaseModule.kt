@@ -73,6 +73,7 @@ internal object UseCaseModule {
         factoryOf(::RefreshMaterialCacheUseCase)
         factory {
             RetrieveImageUseCase<Any>(
+                coroutineScopes = get(),
                 imageRepository = get(),
                 middlewareExecutor = get(),
                 retrieveImageMiddlewares = getAllOrdered()
@@ -82,6 +83,7 @@ internal object UseCaseModule {
 
         factory<SendDataUseCase> {
             SendDataUseCase(
+                coroutineScopes = get(),
                 sendDataAndRetrieveMaterialRepository = get(),
                 middlewareExecutor = get(),
                 sendDataMiddlewares = getAllOrdered()
@@ -98,6 +100,7 @@ internal object UseCaseModule {
         factoryOf(::HasKeyInStoreUseCase)
         factory {
             NavigateFinishUseCase(
+                coroutineScopes = get(),
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()
             )
@@ -111,6 +114,7 @@ internal object UseCaseModule {
 
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(
+                coroutineScopes = get(),
                 navigationScreenStackRepository = get(),
                 middlewareExecutor = get(),
                 updateViewMiddlewares = getAllOrdered()

@@ -1,10 +1,10 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.Context
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -14,9 +14,9 @@ import kotlinx.coroutines.channels.ProducerScope
 internal class NavigationUrlActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigateToUrl: NavigateToUrlUseCase,
-) : ActionMiddleware {
+) : ActionMiddlewareProtocol {
     override val priority: Int
-        get() = ActionMiddleware.Priority.DEFAULT
+        get() = ActionMiddlewareProtocol.Priority.DEFAULT
 
     override fun accept(
         route: NavigationRoute?,

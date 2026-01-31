@@ -6,6 +6,6 @@ import io.ktor.client.request.HttpResponseData
 
 fun interface HttpInterceptor : MiddlewareProtocol<HttpInterceptor.Context, HttpResponseData> {
     data class Context(
-        val builder: HttpRequestBuilder,
+        val requestBuilder: HttpRequestBuilder,
     )
 }

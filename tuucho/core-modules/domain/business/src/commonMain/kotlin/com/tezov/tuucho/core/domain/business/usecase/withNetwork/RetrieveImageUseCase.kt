@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
 import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Image
@@ -20,6 +20,7 @@ import kotlinx.serialization.json.JsonArray
 
 @OpenForTest
 class RetrieveImageUseCase<S : Any>(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val imageRepository: ImageRepositoryProtocol,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val retrieveImageMiddlewares: List<RetrieveImageMiddleware<S>>
@@ -57,6 +58,7 @@ class RetrieveImageUseCase<S : Any>(
 
     override suspend fun invoke(input: Input) = middlewareExecutor
         .process(
+            coroutineContext = coroutineScopes.io,
             middlewares = retrieveImageMiddlewares + terminalMiddleware(),
             context = RetrieveImageMiddleware.Context(
                 input = input,

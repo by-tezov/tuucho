@@ -1,12 +1,12 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
 
 interface CoroutineContextProtocol {
-    val context: CoroutineContext
+    val dispatcher: CoroutineDispatcher
     val scope: CoroutineScope
 
     fun <T> async(
@@ -16,9 +16,7 @@ interface CoroutineContextProtocol {
 
     suspend fun <T> withContext(
         block: suspend CoroutineScope.() -> T
-    ): T = withContext(context) {
-        async(throwOnFailure = false, block = block).await()
-    }
+    ): T
 
     fun <T> throwOnFailure(
         deferred: Deferred<T>

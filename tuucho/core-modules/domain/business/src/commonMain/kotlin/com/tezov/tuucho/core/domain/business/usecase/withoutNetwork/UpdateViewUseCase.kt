@@ -3,8 +3,8 @@ package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware.Context
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase.Input
@@ -14,6 +14,7 @@ import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
 class UpdateViewUseCase(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val navigationScreenStackRepository: NavigationRepositoryProtocol.StackScreen,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val updateViewMiddlewares: List<UpdateViewMiddleware>
@@ -28,6 +29,7 @@ class UpdateViewUseCase(
     ) {
         middlewareExecutor
             .process(
+                coroutineContext = coroutineScopes.default,
                 middlewares = updateViewMiddlewares + terminalMiddleware(),
                 context = Context(
                     input = input,

@@ -13,7 +13,7 @@ class LoggerCoroutineExceptionMonitor(
     ) {
         with(context) {
             logger.debug("THREAD") { systemInformation.currentThreadName() }
-            logger.exception("COROUTINE", throwable) { "$id:$name" }
+            logger.exception("MON-COROUTINE", throwable) { "$id:$name" }
         }
     }
 }

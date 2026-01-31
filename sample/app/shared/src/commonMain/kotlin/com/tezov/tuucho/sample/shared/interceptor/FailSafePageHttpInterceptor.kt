@@ -24,7 +24,7 @@ class FailSafePageHttpInterceptor(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) {
-        with(context.builder) {
+        with(context.requestBuilder) {
             val route = url.toString()
                 .removePrefix("${config.baseUrl}/")
                 .removePrefix("${config.version}/")

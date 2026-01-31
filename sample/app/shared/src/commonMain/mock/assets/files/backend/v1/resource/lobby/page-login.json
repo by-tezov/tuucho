@@ -213,7 +213,7 @@
   },
   "images": {
     "common": {
-      "main-logo": "remote://lobby/logo-compose",
+      "main-logo": "remote://lobby/logo-compose-wrong-url",
       "main-logo-placeholder": {
         "source": "local://img/logo-compose-placeholder",
         "tags": "placeholder"

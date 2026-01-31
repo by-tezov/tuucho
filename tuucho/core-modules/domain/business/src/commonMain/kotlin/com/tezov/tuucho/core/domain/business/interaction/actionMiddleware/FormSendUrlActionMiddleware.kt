@@ -8,10 +8,10 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.Context
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -35,12 +35,12 @@ internal class FormSendUrlActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val getScreenOrNull: GetScreenOrNullUseCase,
     private val sendData: SendDataUseCase,
-) : ActionMiddleware,
+) : ActionMiddlewareProtocol,
     TuuchoKoinComponent {
     private val processAction: ProcessActionUseCase by inject()
 
     override val priority: Int
-        get() = ActionMiddleware.Priority.DEFAULT
+        get() = ActionMiddlewareProtocol.Priority.DEFAULT
 
     override fun accept(
         route: NavigationRoute?,

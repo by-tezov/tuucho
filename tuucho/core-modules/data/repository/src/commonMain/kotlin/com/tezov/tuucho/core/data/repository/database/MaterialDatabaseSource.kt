@@ -16,7 +16,6 @@ import kotlinx.serialization.json.JsonObject
 @OpenForTest
 internal class MaterialDatabaseSource(
     private val coroutineScopes: CoroutineScopesProtocol,
-    private val transactionFactory: DatabaseTransactionFactory,
     private val hookQueries: HookQueries,
     private val jsonObjectQueries: JsonObjectQueries
 ) {

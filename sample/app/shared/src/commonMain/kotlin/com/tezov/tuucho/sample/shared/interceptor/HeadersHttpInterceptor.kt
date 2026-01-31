@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Co
 import com.tezov.tuucho.sample.shared.di.InterceptorModule
 import io.ktor.client.request.HttpResponseData
 import kotlinx.coroutines.channels.ProducerScope
-import kotlinx.coroutines.flow.FlowCollector
 
 class HeadersHttpInterceptor(
     private val config: InterceptorModule.Config
@@ -15,7 +14,7 @@ class HeadersHttpInterceptor(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) {
-        with(context.builder) {
+        with(context.requestBuilder) {
             headers.append("platform", config.headerPlatform)
             next.invoke(context)
         }

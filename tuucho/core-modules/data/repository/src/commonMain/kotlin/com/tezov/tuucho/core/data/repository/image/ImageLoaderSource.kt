@@ -35,7 +35,7 @@ internal class ImageLoaderSource(
         val counterEnd = requestRemaining.size
         requestRemaining.forEach { enqueue(it, counter, counterEnd) }
         awaitClose { }
-    }.flowOn(coroutineScopes.default.context)
+    }.flowOn(coroutineScopes.default.dispatcher)
 
     private fun ProducerScope<ImageResponse>.enqueue(
         request: ImageRequest,
@@ -44,8 +44,8 @@ internal class ImageLoaderSource(
     ) {
         val coilRequest = coil3.request.ImageRequest
             .Builder(platformContext)
-            .fetcherCoroutineContext(coroutineScopes.default.context)
-            .decoderCoroutineContext(coroutineScopes.default.context)
+            .fetcherCoroutineContext(coroutineScopes.default.dispatcher)
+            .decoderCoroutineContext(coroutineScopes.default.dispatcher)
             .fetcherFactory(imageFetchers.get(request.command))
             .data(request)
             .diskCacheKey(request.cacheKey)

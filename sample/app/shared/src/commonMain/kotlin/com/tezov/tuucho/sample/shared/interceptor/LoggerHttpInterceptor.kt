@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
 import io.ktor.client.request.HttpResponseData
 import kotlinx.coroutines.channels.ProducerScope
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.firstOrNull
 
 class LoggerHttpInterceptor(
@@ -19,7 +18,7 @@ class LoggerHttpInterceptor(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) {
-        with(context.builder) {
+        with(context.requestBuilder) {
             logger.debug("THREAD") { systemInformation.currentThreadName() }
             logger.debug("NETWORK:request") {
                 buildString {

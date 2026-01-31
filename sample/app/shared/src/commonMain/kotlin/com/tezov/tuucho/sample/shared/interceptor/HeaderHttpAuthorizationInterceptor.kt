@@ -9,7 +9,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRe
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
 import io.ktor.client.request.HttpResponseData
 import kotlinx.coroutines.channels.ProducerScope
-import kotlinx.coroutines.flow.FlowCollector
 
 class HeaderHttpAuthorizationInterceptor(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -23,7 +22,7 @@ class HeaderHttpAuthorizationInterceptor(
         context: HttpInterceptor.Context,
         next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
     ) {
-        with(context.builder) {
+        with(context.requestBuilder) {
             val route = url.toString()
                 .removePrefix("${config.baseUrl}/")
                 .removePrefix("${config.version}/")

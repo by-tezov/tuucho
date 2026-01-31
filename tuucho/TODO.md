@@ -1,5 +1,9 @@
 ### Todo:
 
+-fix the throw catcher on flow...
+
+- Should be able to pass context coroutine to middleware executor
+
 - cache key must exist on Domain and usable of for middleware
 
 - Animation placeholder / final image ?

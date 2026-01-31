@@ -2,10 +2,10 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
 import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
@@ -58,7 +58,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
 
     @Test
     fun `priority returns DEFAULT`() {
-        assertEquals(ActionMiddleware.Priority.DEFAULT, sut.priority)
+        assertEquals(ActionMiddlewareProtocol.Priority.DEFAULT, sut.priority)
     }
 
     @Test
@@ -76,7 +76,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
     fun `process triggers NavigateBackUseCase then next`() = runTest {
         val action = ActionModel.from("navigate://local-destination/back")
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(
@@ -86,8 +86,8 @@ class NavigationLocalDestinationActionMiddlewareTest {
             )
         )
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
         everySuspend { useCaseExecutor.await<NavigateBackUseCase, Unit>(any(), any()) } returns Unit
 
         flow { sut.run { process(context, next) } }.collect()
@@ -106,7 +106,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
     fun `process triggers NavigateFinishUseCase then next`() = runTest {
         val action = ActionModel.from("navigate://local-destination/finish")
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(
@@ -116,8 +116,8 @@ class NavigationLocalDestinationActionMiddlewareTest {
             )
         )
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
         everySuspend { useCaseExecutor.await<NavigateFinishUseCase, Unit>(any(), any()) } returns Unit
 
         flow { sut.run { process(context, next) } }.collect()
@@ -136,7 +136,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
     fun `process throws when target is unknown`() = runTest {
         val action = ActionModel.from("navigate://local-destination/xxx")
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(
@@ -155,7 +155,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
     fun `process with null next still executes NavigateBack`() = runTest {
         val action = ActionModel.from("navigate://local-destination/back")
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(
