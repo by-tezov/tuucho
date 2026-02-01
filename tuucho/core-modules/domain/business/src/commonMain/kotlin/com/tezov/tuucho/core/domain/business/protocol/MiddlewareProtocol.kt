@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+import com.tezov.tuucho.core.domain.business.middleware.PassThroughProducerScope
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.channelFlow
 
@@ -23,11 +24,18 @@ fun interface MiddlewareProtocolWithReturn<C, R : Any> {
         )
 
         companion object {
-
             context(producerScope: ProducerScope<R>)
             suspend fun <C, R : Any> Next<C, R>.invoke(
                 context: C
             ) = producerScope.run { invoke(context) }
+
+            suspend fun <C, R : Any> ProducerScope<R>.passThrough(
+                next: Next<C, R>?,
+                context: C,
+                onSendIntent: suspend (R) -> R
+            ) = PassThroughProducerScope(this, onSendIntent).also {
+                it.run { next?.invoke(context) }
+            }
 
             fun <C, R : Any> Next<C, R>.intercept(
                 context: C

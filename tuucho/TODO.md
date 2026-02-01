@@ -1,19 +1,13 @@
 ### Todo:
 
--fix the throw catcher on flow...
-
-- Should be able to pass context coroutine to middleware executor
-
-- cache key must exist on Domain and usable of for middleware
-
-- Animation placeholder / final image ?
-- Alternative image (fallback) query fallback local/remote ?
 
 -> close alpha 25
 
+- Animation placeholder / final image ?
 - Then documentation
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
+- error message with class name that throw.
 
 ### Need to fix: 
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?

@@ -22,8 +22,10 @@ class OnShadowerException: NavigationMiddleware.ToUrl.OnShadowerException {
             }
         }
 
-        // do not crash application but
-        // - build a way to inform view the failure (all skimmer)
+
+        // Shadower failed to retrieve remote data at all attempt, we crash the application
+        // TODO: find a design to allow to not crash application but
+        // - have a way to inform view the failure (all skimmer)
         // - on back, when it was failure, how to attempt reload the block if back shadower is off ?
         failure?.let { throw failure }
     }

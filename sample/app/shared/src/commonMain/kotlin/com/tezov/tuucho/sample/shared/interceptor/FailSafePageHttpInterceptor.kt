@@ -30,7 +30,7 @@ class FailSafePageHttpInterceptor(
                 .removePrefix("${config.version}/")
                 .removePrefix(config.resourceEndpoint)
             if (route != "/${Page.failSafe}") {
-                next.invoke(context)
+                next?.invoke(context)
                 return
             }
             send(

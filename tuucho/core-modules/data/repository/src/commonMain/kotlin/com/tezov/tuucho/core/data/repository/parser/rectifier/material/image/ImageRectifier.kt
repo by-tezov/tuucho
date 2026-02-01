@@ -87,12 +87,6 @@ class ImageRectifier(
                             }.collect()
                     }
                 }
-            if (source != null) {
-                cacheKey = ImageSchema.cacheKey(
-                    url = context.url,
-                    id = onScope(IdSchema::Scope).value ?: throw DataException.Default("id can't be null, rectifier id not applied.")
-                )
-            }
             when (val tags = this[ImageSchema.Key.tags]) {
                 is JsonPrimitive -> {
                     this.tags = SetStringDelegate(setOf(tags.string))

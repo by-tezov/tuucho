@@ -46,7 +46,7 @@ class HeaderHttpAuthorizationInterceptor(
                     headers.append("authorization", "Bearer $authorizationKey")
                 }
             }
-            next.invoke(context)
+            next?.invoke(context)
         }
     }
 }

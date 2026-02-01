@@ -1,7 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.sendData
 
 import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.intercept
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase.Output
@@ -17,7 +16,7 @@ class LoggerSendDataMiddleware(
         context: SendDataMiddleware.Context,
         next: MiddlewareProtocolWithReturn.Next<SendDataMiddleware.Context, Output>?,
     ) {
-        val output = next.intercept(context)?.firstOrNull()
+        val output = next?.intercept(context)?.firstOrNull()
         logger.thread()
         logger.debug("SEND DATA") {
             buildString {

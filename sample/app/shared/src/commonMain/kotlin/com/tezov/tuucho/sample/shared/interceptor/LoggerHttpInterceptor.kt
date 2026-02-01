@@ -29,7 +29,7 @@ class LoggerHttpInterceptor(
 //                    }
                 }
             }
-            val output = next.intercept(context)?.firstOrNull()
+            val output = next?.intercept(context)?.firstOrNull()
             output?.let {
                 logger.debug("NETWORK:response") { "${it.statusCode}" }
             }

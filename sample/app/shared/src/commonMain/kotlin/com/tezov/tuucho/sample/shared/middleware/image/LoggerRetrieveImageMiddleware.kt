@@ -6,15 +6,14 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithRetu
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import com.tezov.tuucho.sample.shared._system.Logger
 import kotlinx.coroutines.channels.ProducerScope
-import kotlinx.coroutines.flow.Flow
 
 class LoggerRetrieveImageMiddleware(
     private val logger: Logger
 ) : RetrieveImageMiddleware<Any> {
 
-    override suspend fun ProducerScope<Flow<RetrieveImageUseCase.Output<Any>>>.process(
+    override suspend fun ProducerScope<RetrieveImageUseCase.Output<Any>>.process(
         context: RetrieveImageMiddleware.Context,
-        next: MiddlewareProtocolWithReturn.Next<RetrieveImageMiddleware.Context, Flow<RetrieveImageUseCase.Output<Any>>>?,
+        next: MiddlewareProtocolWithReturn.Next<RetrieveImageMiddleware.Context, RetrieveImageUseCase.Output<Any>>?,
     ) {
         with(context.input) {
             logger.thread()
@@ -24,7 +23,7 @@ class LoggerRetrieveImageMiddleware(
                     models.forEach { appendLine(it) }
                 }
             }
-            next.invoke(context)
+            next?.invoke(context)
         }
     }
 }

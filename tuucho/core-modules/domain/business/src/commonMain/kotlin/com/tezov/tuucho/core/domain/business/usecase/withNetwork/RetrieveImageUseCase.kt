@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
 import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
@@ -37,7 +38,10 @@ class RetrieveImageUseCase<S : Any>(
                     scope.source?.let {
                         ImageModel.from(
                             value = it,
-                            cacheKey = scope.cacheKey ?: throw DomainException.Default("should not be possible"),
+                            id = scope.id
+                                ?.withScope(IdSchema::Scope)
+                                ?.value
+                                ?: throw DomainException.Default("should not be possible"),
                             tags = scope.tags,
                             tagsExcluder = scope.tagsExcluder
                         )

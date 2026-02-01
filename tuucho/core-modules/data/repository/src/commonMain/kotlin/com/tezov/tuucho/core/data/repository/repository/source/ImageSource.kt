@@ -12,6 +12,11 @@ import coil3.Image as CoilImage
 internal class ImageSource(
     private val imageLoaderSource: ImageLoaderSource
 ) {
+    private fun cacheKey(
+        url: String,
+        id: String
+    ) = "$url+$id"
+
     suspend fun <S : Any> process(
         models: List<ImageModel>
     ): Flow<Image<S>> {
@@ -19,7 +24,7 @@ internal class ImageSource(
             ImageRequest(
                 command = it.command,
                 target = it.target,
-                cacheKey = it.cacheKey,
+                cacheKey = cacheKey(url = it.target, id = it.id),
                 tags = it.tags,
                 tagsExcluder = it.tagsExcluder
             )

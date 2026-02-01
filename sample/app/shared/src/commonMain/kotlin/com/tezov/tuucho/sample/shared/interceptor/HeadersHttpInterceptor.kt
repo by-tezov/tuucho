@@ -17,7 +17,7 @@ class HeadersHttpInterceptor(
     ) {
         with(context.requestBuilder) {
             headers.append("platform", config.headerPlatform)
-            next.invoke(context)
+            next?.invoke(context)
         }
     }
 }
