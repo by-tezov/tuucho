@@ -135,8 +135,8 @@ internal class ImageDiskCache(
         cacheKeyPrefix: String
     ) {
         val diskCache = diskCache ?: return
-        val entries = imageDatabase.run { selectAll(cacheKeyPrefix) }
-        entries.forEach {
+        val entities = imageDatabase.run { selectAll(cacheKeyPrefix) }
+        entities.forEach {
             diskCache.remove(it.cacheKey)
         }
         imageDatabase.run { deleteAll(cacheKeyPrefix) }

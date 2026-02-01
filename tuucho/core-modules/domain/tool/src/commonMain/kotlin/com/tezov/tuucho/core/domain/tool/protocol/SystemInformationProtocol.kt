@@ -5,5 +5,6 @@ import kotlin.coroutines.ContinuationInterceptor
 
 interface SystemInformationProtocol {
     suspend fun currentDispatcher() = currentCoroutineContext()[ContinuationInterceptor]
+
     fun currentThreadName(): String
 }

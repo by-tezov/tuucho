@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepository
 internal class ImageRepository(
     private val imageSource: ImageSource
 ) : ImageRepositoryProtocol {
-
     override suspend fun <S : Any> process(
         models: List<ImageModel>
     ) = imageSource.process<S>(models)

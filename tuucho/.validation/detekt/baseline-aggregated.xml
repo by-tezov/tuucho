@@ -11,7 +11,6 @@
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>CyclomaticComplexMethod:ImageRectifier.kt$ImageRectifier$override fun afterAlterObject( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement, ): JsonElement</ID>
-    <ID>LongParameterList:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$( private val coroutineScopes: CoroutineScopesProtocol, private val transactionFactory: DatabaseTransactionFactory, private val materialDatabaseSource: MaterialDatabaseSource, private val imageDiskCache: ImageDiskCache, private val materialBreaker: MaterialBreaker, private val materialAssembler: MaterialAssembler, private val lifetimeResolver: JsonLifetimeResolver, )</ID>
     <ID>MagicNumber:ImageDiskCache.kt$ImageDiskCache$1024L</ID>
     <ID>MatchingDeclarationName:AssetModule.android.kt$AssetModuleAndroid</ID>
     <ID>MatchingDeclarationName:AssetModule.ios.kt$AssetModuleIos</ID>
@@ -43,9 +42,9 @@
     <ID>MatchingDeclarationName:WeakReference.android.kt$WeakReferenceAndroid&lt;T : Any&gt; : Weak</ID>
     <ID>MatchingDeclarationName:WeakReference.ios.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
-    <ID>MaxLineLength:ImageRectifier.kt$ImageRectifier$id = onScope(IdSchema::Scope).value ?: throw DataException.Default("id can't be null, rectifier id not applied.")</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
+    <ID>MaxLineLength:MaterialRectifier.kt$MaterialRectifier$this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }</ID>
     <ID>MaxLineLength:MaterialRectifierScope.kt$MaterialRectifierScope$factoryOf(::SettingComponentNavigationRectifier) associate SettingComponentRectifier.Association.Processor::class</ID>
     <ID>MaxLineLength:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement )</ID>
@@ -85,15 +84,15 @@
     <ID>PackageNaming:StrongReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:SystemInformation.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemInformation.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemInformation.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatform.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatform.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatform.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:WeakReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:WeakReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>ReturnCount:AssetSource.kt$AssetSource$private fun resolveImageAssetPath( path: String ): String</ID>
+    <ID>ReturnCount:AssetSource.kt$AssetSource$private suspend fun resolveImageAssetPath( path: String ): String</ID>
     <ID>ReturnCount:ImageDiskCache.kt$ImageDiskCache$override suspend fun retrieve( cacheKey: String, ): SourceFetchResult?</ID>
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
-    <ID>ReturnCount:MaterialDatabaseSource.kt$MaterialDatabaseSource$@Suppress("RedundantSuspendModifier") suspend fun getRootJsonObjectEntityOrNull( url: String ): JsonObjectEntity?</ID>
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
     <ID>TooGenericExceptionThrown:RemoteSource.kt$RemoteSource$throw Exception("failed to check health at url $url")</ID>
     <ID>TooGenericExceptionThrown:RemoteSource.kt$RemoteSource$throw Exception("failed to retrieve resource at url $url")</ID>
@@ -108,10 +107,9 @@
     <ID>CyclomaticComplexMethod:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
     <ID>EmptyFunctionBlock:MiddlewareExecutorTest.kt$MiddlewareExecutorTest${ }</ID>
     <ID>EmptyFunctionBlock:SchemaScopeMapOperatorTest.kt$SchemaScopeMapOperatorTest${ }</ID>
-    <ID>LongParameterList:ImageModel.kt$ImageModel.Companion$( command: String, target: String, query: String? = null, cacheKey: String, tags: Set&lt;String&gt;?, tagsExcluder: Set&lt;String&gt;? )</ID>
+    <ID>LongParameterList:ImageModel.kt$ImageModel.Companion$( command: String, target: String, query: String? = null, id: String, tags: Set&lt;String&gt;? = null, tagsExcluder: Set&lt;String&gt;? = null )</ID>
     <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, private val navigateFinish: NavigateFinishUseCase, )</ID>
     <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: NavigationRouteIdGenerator, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
-    <ID>MatchingDeclarationName:CoroutineScopesProtocole.kt$CoroutineScopesProtocol</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationOptionSchema.kt$ComponentSettingNavigationOptionSchema</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationSchema.kt$ComponentSettingNavigationSchema</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationSelectorSchema.kt$ComponentSettingNavigationSelectorSchema</ID>
@@ -140,6 +138,7 @@
     <ID>PackageNaming:BindOrderedTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:Constant.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:ConstantTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:CoroutineScope.kt$package com.tezov.tuucho.core.domain.business._system.coroutine</ID>
     <ID>PackageNaming:DelegateSchemaKey.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:DelegateSchemaKeyTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:FormSchema.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._element.form</ID>
@@ -158,12 +157,11 @@
     <ID>PackageNaming:SymbolData.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SymbolDataTest.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>ReturnCount:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
-    <ID>ThrowsCount:ImageModel.kt$ImageModel.Companion$fun from( value: String, cacheKey: String, tags: Set&lt;String&gt;?, tagsExcluder: Set&lt;String&gt;? ): ImageModel</ID>
+    <ID>ThrowsCount:ImageModel.kt$ImageModel.Companion$fun from( value: String, id: String, tags: Set&lt;String&gt;? = null, tagsExcluder: Set&lt;String&gt;? = null ): ImageModel</ID>
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
-    <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareTuuchoKoinComponent</ID>
+    <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareProtocolTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:InteractionLockStack.kt$InteractionLockStack : Stack</ID>
     <ID>TooManyFunctions:SchemaScope.kt$OpenSchemaScope&lt;T : OpenSchemaScope&lt;T&gt;&gt;</ID>
-    <ID>UnusedPrivateProperty:NavigateFinishUseCase.kt$NavigateFinishUseCase$private val coroutineScopes: CoroutineScopesProtocol</ID>
     <!-- ************ Project: :core.domain.test ************ -->
     <ID>PackageNaming:OpenForTest.kt$package com.tezov.tuucho.core.domain.test._system</ID>
     <!-- ************ Project: :core.domain.tool ************ -->

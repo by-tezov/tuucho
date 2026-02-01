@@ -34,7 +34,7 @@ internal class AssetReaderAndroid(
     ): T {
         val assetContent = read(path, contentType)
         return assetContent.source.use {
-            block(assetContent.copy(source = it))
+            block(assetContent)
         }
     }
 

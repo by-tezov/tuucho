@@ -37,8 +37,7 @@ class SendDataUseCase(
                 context = SendDataMiddleware.Context(
                     input = input,
                 )
-            )
-            .flowOn(coroutineScopes.io.dispatcher)
+            ).flowOn(coroutineScopes.io.dispatcher)
             .firstOrNull()
     }
 

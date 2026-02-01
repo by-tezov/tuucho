@@ -7,6 +7,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filter
+import kotlin.jvm.JvmInline
 
 object Notifier {
     class Emitter<T : Any>(
@@ -29,7 +30,6 @@ object Notifier {
         suspend fun emit(
             event: T
         ) = flow.emit(event)
-
     }
 
     @JvmInline

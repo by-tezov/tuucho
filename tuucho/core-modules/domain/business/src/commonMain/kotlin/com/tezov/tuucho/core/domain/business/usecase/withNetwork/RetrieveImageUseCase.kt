@@ -60,15 +60,16 @@ class RetrieveImageUseCase<S : Any>(
         val image: Image<S>
     )
 
-    override suspend fun invoke(input: Input): Flow<Output<S>> = coroutineScopes.io.withContext {
+    override suspend fun invoke(
+        input: Input
+    ): Flow<Output<S>> = coroutineScopes.io.withContext {
         middlewareExecutor
             .process(
                 middlewares = retrieveImageMiddlewares + terminalMiddleware(),
                 context = RetrieveImageMiddleware.Context(
                     input = input,
                 )
-            )
-            .flowOn(coroutineScopes.io.dispatcher)
+            ).flowOn(coroutineScopes.io.dispatcher)
     }
 
     private fun terminalMiddleware() = RetrieveImageMiddleware { context, _ ->
@@ -79,5 +80,4 @@ class RetrieveImageUseCase<S : Any>(
             result.collect { send(it) }
         }
     }
-
 }

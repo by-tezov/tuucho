@@ -42,7 +42,8 @@ class CoroutineScope(
     override fun <T> async(
         throwOnFailure: Boolean,
         block: suspend CoroutineScope.() -> T,
-    ) = scope.async(block = block)
+    ) = scope
+        .async(block = block)
         .also { deferred ->
             if (throwOnFailure) {
                 throwOnFailure(deferred)

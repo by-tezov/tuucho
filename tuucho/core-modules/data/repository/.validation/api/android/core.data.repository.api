@@ -1,4 +1,14 @@
-public final class com/tezov/tuucho/core/data/repository/_system/SystemInformationAndroid : com/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol {
+public final class com/tezov/tuucho/core/data/repository/_system/SystemInformation : com/tezov/tuucho/core/domain/tool/protocol/SystemInformationProtocol {
+	public fun <init> (Lcom/tezov/tuucho/core/data/repository/_system/SystemInformation$PlatformProtocol;)V
+	public fun currentDispatcher (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun currentThreadName ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/data/repository/_system/SystemInformation$PlatformProtocol {
+	public abstract fun currentThreadName ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/_system/SystemInformationAndroid : com/tezov/tuucho/core/data/repository/_system/SystemInformation$PlatformProtocol {
 	public fun <init> ()V
 	public fun currentThreadName ()Ljava/lang/String;
 }
@@ -59,20 +69,16 @@ public final class com/tezov/tuucho/core/data/repository/assets/AssetContent {
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/assets/AssetReaderProtocol {
-	public abstract fun isExist (Ljava/lang/String;)Z
-	public abstract fun read (Ljava/lang/String;Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/assets/AssetContent;
-	public fun read (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/data/repository/assets/AssetReaderProtocol$DefaultImpls {
-	public static fun read (Lcom/tezov/tuucho/core/data/repository/assets/AssetReaderProtocol;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public abstract fun isExist (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun read (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun read (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/assets/AssetSourceProtocol {
-	public abstract fun readFile (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/assets/AssetContent;
-	public abstract fun readFile (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-	public abstract fun readImage (Ljava/lang/String;)Lcom/tezov/tuucho/core/data/repository/assets/AssetContent;
-	public abstract fun readImage (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public abstract fun readFile (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun readFile (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun readImage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun readImage (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/data/repository/database/Database : app/cash/sqldelight/Transacter {
@@ -655,7 +661,7 @@ public final class com/tezov/tuucho/core/data/repository/network/HttpClient {
 	public final fun postJson (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+public abstract interface class com/tezov/tuucho/core/data/repository/network/HttpInterceptor : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn {
 }
 
 public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context {
@@ -664,7 +670,7 @@ public final class com/tezov/tuucho/core/data/repository/network/HttpInterceptor
 	public final fun copy (Lio/ktor/client/request/HttpRequestBuilder;)Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;
 	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;Lio/ktor/client/request/HttpRequestBuilder;ILjava/lang/Object;)Lcom/tezov/tuucho/core/data/repository/network/HttpInterceptor$Context;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBuilder ()Lio/ktor/client/request/HttpRequestBuilder;
+	public final fun getRequestBuilder ()Lio/ktor/client/request/HttpRequestBuilder;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -777,7 +783,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/assembler/materi
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/assembler/material/MaterialAssembler : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent {
-	public fun <init> ()V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
 	public fun closeScope ()V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun getLazyScope ()Lkotlin/Lazy;
@@ -896,7 +902,7 @@ public abstract interface class com/tezov/tuucho/core/data/repository/parser/ass
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/assembler/response/ResponseAssembler : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent {
-	public fun <init> ()V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
 	public fun closeScope ()V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public fun getLazyScope ()Lkotlin/Lazy;
@@ -1355,7 +1361,7 @@ public final class com/tezov/tuucho/core/data/repository/parser/shadower/Content
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/shadower/MaterialShadower : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent {
-	public fun <init> ()V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public final fun process (Lkotlinx/serialization/json/JsonObject;Lcom/tezov/tuucho/core/data/repository/parser/shadower/_system/JsonObjectConsumerProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -1435,14 +1441,5 @@ public abstract interface class com/tezov/tuucho/core/data/repository/parser/sha
 
 public abstract interface class com/tezov/tuucho/core/data/repository/parser/shadower/_system/ShadowerProtocol : com/tezov/tuucho/core/data/repository/parser/shadower/_system/ShadowerMatcherProtocol {
 	public abstract fun process (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;Lcom/tezov/tuucho/core/data/repository/parser/shadower/_system/JsonObjectConsumerProtocol;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class com/tezov/tuucho/core/data/repository/repository/SystemInformation : com/tezov/tuucho/core/domain/tool/protocol/SystemInformationProtocol {
-	public fun <init> (Lcom/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol;)V
-	public fun currentThreadName ()Ljava/lang/String;
-}
-
-public abstract interface class com/tezov/tuucho/core/data/repository/repository/SystemInformation$PlatformProtocol {
-	public abstract fun currentThreadName ()Ljava/lang/String;
 }
 

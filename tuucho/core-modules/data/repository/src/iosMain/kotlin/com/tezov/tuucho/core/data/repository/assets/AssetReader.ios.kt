@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.data.repository.assets
 import com.tezov.tuucho.core.data.repository._system.SystemPlatform
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import okio.Path.Companion.toPath
+import okio.use
 import platform.Foundation.NSBundle
 import platform.Foundation.NSData
 import platform.Foundation.dataWithContentsOfFile
@@ -18,11 +19,22 @@ class AssetReaderIos(
         return NSBundle.mainBundle.pathForResource(name, ext, subdir)
     }
 
-    override fun isExist(
+    override suspend fun isExist(
         path: String
     ) = assetPath(path) != null
 
-    override fun read(
+    override suspend fun <T> read(
+        path: String,
+        contentType: String?,
+        block: (AssetContent) -> T
+    ): T {
+        val assetContent = read(path, contentType)
+        return assetContent.source.use {
+            block(assetContent)
+        }
+    }
+
+    override suspend fun read(
         path: String,
         contentType: String?
     ): AssetContent {

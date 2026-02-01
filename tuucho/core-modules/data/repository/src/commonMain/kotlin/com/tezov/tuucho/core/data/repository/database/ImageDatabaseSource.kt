@@ -9,10 +9,13 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 @OpenForTest
 internal class ImageDatabaseSource(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val databaseTransactionFactory: DatabaseTransactionFactory,
     private val imageQueries: ImageQueries,
 ) {
     suspend fun selectAll() = coroutineScopes.io.withContext {
-        imageQueries.selectAll()
+        databaseTransactionFactory.transactionWithResult {
+            imageQueries.selectAll()
+        }
     }
 
     fun TransactionWithoutReturn.selectAll(
@@ -23,7 +26,9 @@ internal class ImageDatabaseSource(
         cacheKey: String,
     ) {
         coroutineScopes.io.withContext {
-            imageQueries.delete(cacheKey)
+            databaseTransactionFactory.transaction {
+                imageQueries.delete(cacheKey)
+            }
         }
     }
 
@@ -42,17 +47,21 @@ internal class ImageDatabaseSource(
     suspend fun getImageEntityOrNull(
         cacheKey: String
     ) = coroutineScopes.io.withContext {
-        imageQueries.getOrNull(cacheKey = cacheKey)
+        databaseTransactionFactory.transactionWithResult {
+            imageQueries.getOrNull(cacheKey = cacheKey)
+        }
     }
 
     suspend fun insertOrUpdate(
         entity: ImageEntity
     ) {
         coroutineScopes.io.withContext {
-            if (imageQueries.exist(entity.cacheKey)) {
-                imageQueries.update(entity)
-            } else {
-                imageQueries.insert(entity)
+            databaseTransactionFactory.transaction {
+                if (imageQueries.exist(entity.cacheKey)) {
+                    imageQueries.update(entity)
+                } else {
+                    imageQueries.insert(entity)
+                }
             }
         }
     }
