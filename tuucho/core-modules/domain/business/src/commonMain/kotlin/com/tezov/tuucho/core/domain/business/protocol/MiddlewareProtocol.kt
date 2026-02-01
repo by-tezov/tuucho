@@ -23,14 +23,19 @@ fun interface MiddlewareProtocolWithReturn<C, R : Any> {
         )
 
         companion object {
-            context(producerScope: ProducerScope<R>)
-            suspend fun <C, R : Any> Next<C, R>?.invoke(
-                context: C
-            ) = this?.run { producerScope.run { invoke(context) } }
 
-            fun <C, R : Any> Next<C, R>?.intercept(
+            context(producerScope: ProducerScope<R>)
+            suspend fun <C, R : Any> Next<C, R>.invoke(
                 context: C
-            ) = this?.run { channelFlow { invoke(context) } }
+            ) = producerScope.run { invoke(context) }
+
+            fun <C, R : Any> Next<C, R>.intercept(
+                context: C
+            ) = channelFlow {
+                runCatching { invoke(context) }
+                    .onFailure { close(it) }
+                    .onSuccess { close() }
+            }
         }
     }
 

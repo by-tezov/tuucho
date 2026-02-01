@@ -35,6 +35,7 @@ object NetworkModule {
         single {
             io.ktor.client.HttpClient(
                 engineFactory = HttpClientEngineFactory(
+                    coroutineScopes = get(),
                     engineFactory = get<io.ktor.client.engine.HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE),
                     middlewareExecutor = get(),
                     interceptors = getAllOrdered()

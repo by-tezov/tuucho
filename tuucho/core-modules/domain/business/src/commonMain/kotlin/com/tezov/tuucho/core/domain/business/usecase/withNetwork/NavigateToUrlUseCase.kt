@@ -60,7 +60,7 @@ class NavigateToUrlUseCase(
             )
     }
 
-    private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
+    private fun terminalMiddleware() = NavigationMiddleware.ToUrl { context, _ ->
         with(context.input) {
             val componentObject = retrieveMaterialRepository.process(url)
             val navigationSettingObject = componentObject

@@ -25,20 +25,6 @@
     },
     "content": {
       "items": [
-        {
-          "subset": "layout-linear",
-          "style": {
-            "orientation": "horizontal",
-            "background-color": "*background@funny-color",
-            "fill-max-width": true
-          },
-          "content": {
-            "items": [
-              "*item-spacer",
-              "*small-logo"
-            ]
-          }
-        },
         "*item-spacer",
         {
           "subset": "layout-linear",

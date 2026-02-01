@@ -36,6 +36,10 @@ class MiddlewareExecutorWithReturn : MiddlewareExecutorProtocolWithReturn {
                 middleware.run { process(context, prev) }
             }
         }
-        return channelFlow { next.invoke(context) }
+        return channelFlow {
+            runCatching { next?.invoke(context) }
+                .onFailure { close(it) }
+                .onSuccess { close() }
+        }
     }
 }

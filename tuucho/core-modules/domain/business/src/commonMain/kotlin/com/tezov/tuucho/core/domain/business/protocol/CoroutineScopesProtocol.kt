@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
 interface CoroutineScopesProtocol {
-    val unconfined: CoroutineContextProtocol
-    val default: CoroutineContextProtocol
-    val main: CoroutineContextProtocol
-    val io: CoroutineContextProtocol
+    val unconfined: CoroutineScopeProtocol
+    val default: CoroutineScopeProtocol
+    val main: CoroutineScopeProtocol
+    val io: CoroutineScopeProtocol
 }

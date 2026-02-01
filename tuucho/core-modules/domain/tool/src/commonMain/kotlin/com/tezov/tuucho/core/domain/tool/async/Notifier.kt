@@ -7,7 +7,6 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filter
-import kotlin.jvm.JvmInline
 
 object Notifier {
     class Emitter<T : Any>(
@@ -21,6 +20,8 @@ object Notifier {
             onBufferOverflow = onBufferOverflow
         )
 
+        val createCollector get() = Collector(flow)
+
         fun tryEmit(
             event: T
         ) = flow.tryEmit(event)
@@ -29,7 +30,6 @@ object Notifier {
             event: T
         ) = flow.emit(event)
 
-        val createCollector get() = Collector(flow)
     }
 
     @JvmInline

@@ -33,7 +33,7 @@ class UpdateViewUseCase(
             )
     }
 
-    private fun terminalMiddleware(): UpdateViewMiddleware = UpdateViewMiddleware { context, _ ->
+    private fun terminalMiddleware() = UpdateViewMiddleware { context, _ ->
         with(context.input) {
             val screen = navigationScreenStackRepository.getScreenOrNull(route)
             screen?.update(jsonObjects)

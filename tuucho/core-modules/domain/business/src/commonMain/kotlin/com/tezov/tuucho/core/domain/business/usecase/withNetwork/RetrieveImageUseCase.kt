@@ -14,7 +14,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUs
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonArray
 
@@ -56,23 +56,23 @@ class RetrieveImageUseCase<S : Any>(
         val image: Image<S>
     )
 
-    override suspend fun invoke(input: Input) = coroutineScopes.io.withContext {
+    override suspend fun invoke(input: Input): Flow<Output<S>> = coroutineScopes.io.withContext {
         middlewareExecutor
             .process(
                 middlewares = retrieveImageMiddlewares + terminalMiddleware(),
                 context = RetrieveImageMiddleware.Context(
                     input = input,
                 )
-            ).firstOrNull()
+            )
+            .flowOn(coroutineScopes.io.dispatcher)
     }
 
-    private fun terminalMiddleware(): RetrieveImageMiddleware<S> = RetrieveImageMiddleware<S> { context, _ ->
+    private fun terminalMiddleware() = RetrieveImageMiddleware { context, _ ->
         with(context.input) {
-            send(
-                imageRepository
-                    .process<S>(models = models)
-                    .map { Output(image = it) }
-            )
+            val result = imageRepository
+                .process<S>(models = models)
+                .map { Output(image = it) }
+            result.collect { send(it) }
         }
     }
 

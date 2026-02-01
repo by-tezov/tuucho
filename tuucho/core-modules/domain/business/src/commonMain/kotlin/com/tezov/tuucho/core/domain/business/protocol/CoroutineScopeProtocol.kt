@@ -3,9 +3,8 @@ package com.tezov.tuucho.core.domain.business.protocol
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.withContext
 
-interface CoroutineContextProtocol {
+interface CoroutineScopeProtocol {
     val dispatcher: CoroutineDispatcher
     val scope: CoroutineScope
 

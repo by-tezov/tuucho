@@ -8,7 +8,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithRetu
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.supervisorScope
 
 class CatcherRetrieveImageMiddleware() : RetrieveImageMiddleware<Any> {
 
@@ -16,26 +15,25 @@ class CatcherRetrieveImageMiddleware() : RetrieveImageMiddleware<Any> {
         context: RetrieveImageMiddleware.Context,
         next: MiddlewareProtocolWithReturn.Next<RetrieveImageMiddleware.Context, Flow<RetrieveImageUseCase.Output<Any>>>?,
     ) {
-        supervisorScope {
-            try {
-                println("|> A")
-                next.invoke(context)
-                println("|> B")
-            } catch (_: Throwable) {
-                println("|> C")
-                next.invoke(
-                    context.copy(
-                        input = RetrieveImageUseCase.Input.create(
-                            model = ImageModel.from(
-                                command = LocalImageDefinition.command,
-                                target = "img/logo-koin",
-                                cacheKey = "img/logo-koin"
-                            )
-                        )
-                    )
-                )
-                println("|> D")
-            }
+        try {
+            println("before call next who will throw")
+            next.invoke(context)
+            println("after call next")
+        } catch (_: Throwable) {
+
+            println("I catched you")
+
+//            next.invoke(
+//                context.copy(
+//                    input = RetrieveImageUseCase.Input.create(
+//                        model = ImageModel.from(
+//                            command = LocalImageDefinition.command,
+//                            target = "img/logo-koin",
+//                            cacheKey = "img/logo-koin"
+//                        )
+//                    )
+//                )
+//            )
         }
     }
 }
