@@ -57,7 +57,7 @@ private class ActionProjection(
             val processAction = koin.get<ProcessActionUseCase>()
             val interactionLockResolver = koin.get<InteractionLockProtocol.Resolver>()
             val action: ActionTypeAlias = { jsonElement ->
-                coroutineScopes.action.async(
+                coroutineScopes.default.async(
                     throwOnFailure = true
                 ) {
                     val screenLock = interactionLockResolver.tryAcquire(

@@ -4,9 +4,13 @@ import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdere
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.di.ModuleContextDomain
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
+import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
+import com.tezov.tuucho.sample.shared.middleware.image.CatcherRetrieveImageMiddleware
+import com.tezov.tuucho.sample.shared.middleware.image.LoggerRetrieveImageMiddleware
 import com.tezov.tuucho.sample.shared.middleware.navigateBack.LoggerBeforeNavigateBackMiddleware
+import com.tezov.tuucho.sample.shared.middleware.navigateFinish.LoggerBeforeNavigateFinishMiddleware
 import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigateFinishMiddleware
 import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigationFinishPublisher
 import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.BeforeNavigateToUrlMiddleware
@@ -18,16 +22,22 @@ import com.tezov.tuucho.sample.shared.middleware.updateView.LoggerUpdateViewMidd
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.onClose
 
 object MiddlewareModule {
 
     fun invoke() = module(ModuleContextDomain.Middleware) {
+        image()
         navigateToUrl()
         navigateBack()
         navigateFinish()
         sendData()
         updateView()
+    }
+
+
+    private fun Module.image() {
+        factoryOf(::CatcherRetrieveImageMiddleware) bindOrdered RetrieveImageMiddleware::class
+        factoryOf(::LoggerRetrieveImageMiddleware) bindOrdered RetrieveImageMiddleware::class
     }
 
     private fun Module.navigateToUrl() {
@@ -53,6 +63,7 @@ object MiddlewareModule {
     private fun Module.navigateFinish() {
         singleOf(::NavigationFinishPublisher)
         factoryOf(::NavigateFinishMiddleware) bindOrdered NavigationMiddleware.Finish::class
+        factoryOf(::LoggerBeforeNavigateFinishMiddleware) bindOrdered NavigationMiddleware.Finish::class
     }
 
     private fun Module.sendData() {

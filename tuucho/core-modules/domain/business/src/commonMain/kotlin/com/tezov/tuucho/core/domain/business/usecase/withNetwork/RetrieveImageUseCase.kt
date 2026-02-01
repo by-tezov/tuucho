@@ -2,8 +2,12 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
+import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Image
@@ -11,13 +15,17 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUs
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonArray
 
 @OpenForTest
 class RetrieveImageUseCase<S : Any>(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val imageRepository: ImageRepositoryProtocol,
-) : UseCaseProtocol.Sync<Input, Flow<Output<S>>> {
+    private val middlewareExecutor: MiddlewareExecutorProtocolWithReturn,
+    private val retrieveImageMiddlewares: List<RetrieveImageMiddleware<S>>
+) : UseCaseProtocol.Async<Input, Flow<Output<S>>> {
     data class Input(
         val models: List<ImageModel>,
     ) {
@@ -30,7 +38,10 @@ class RetrieveImageUseCase<S : Any>(
                     scope.source?.let {
                         ImageModel.from(
                             value = it,
-                            cacheKey = scope.cacheKey ?: throw DomainException.Default("should not be possible"),
+                            id = scope.id
+                                ?.withScope(IdSchema::Scope)
+                                ?.value
+                                ?: throw DomainException.Default("should not be possible"),
                             tags = scope.tags,
                             tagsExcluder = scope.tagsExcluder
                         )
@@ -49,9 +60,24 @@ class RetrieveImageUseCase<S : Any>(
         val image: Image<S>
     )
 
-    override fun invoke(
+    override suspend fun invoke(
         input: Input
-    ) = imageRepository
-        .process<S>(models = input.models)
-        .map { Output(image = it) }
+    ): Flow<Output<S>> = coroutineScopes.io.withContext {
+        middlewareExecutor
+            .process(
+                middlewares = retrieveImageMiddlewares + terminalMiddleware(),
+                context = RetrieveImageMiddleware.Context(
+                    input = input,
+                )
+            ).flowOn(coroutineScopes.io.dispatcher)
+    }
+
+    private fun terminalMiddleware() = RetrieveImageMiddleware { context, _ ->
+        with(context.input) {
+            val result = imageRepository
+                .process<S>(models = models)
+                .map { Output(image = it) }
+            result.collect { send(it) }
+        }
+    }
 }

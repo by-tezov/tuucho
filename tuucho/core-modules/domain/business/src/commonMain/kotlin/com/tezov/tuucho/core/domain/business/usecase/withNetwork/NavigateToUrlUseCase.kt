@@ -14,7 +14,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol.Companion.process
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
@@ -24,7 +23,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
-import kotlinx.coroutines.flow.collect
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -59,10 +57,10 @@ class NavigateToUrlUseCase(
                     input = input,
                     onShadowerException = null
                 )
-            ).collect()
+            )
     }
 
-    private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->
+    private fun terminalMiddleware() = NavigationMiddleware.ToUrl { context, _ ->
         with(context.input) {
             val componentObject = retrieveMaterialRepository.process(url)
             val navigationSettingObject = componentObject
@@ -141,7 +139,7 @@ class NavigateToUrlUseCase(
             ?.navigateForward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
-            val job = coroutineScopes.navigation.async(
+            val job = coroutineScopes.default.async(
                 throwOnFailure = false
             ) {
                 suspend fun process() {
@@ -151,9 +149,7 @@ class NavigateToUrlUseCase(
                             componentObject = componentObject,
                             types = listOf(Shadower.Type.contextual)
                         ).map { it.jsonObject }
-                    coroutineScopes.renderer.await {
-                        screen.update(jsonObjects)
-                    }
+                    screen.update(jsonObjects)
                 }
                 runCatching { process() }.onFailure { failure ->
                     context.onShadowerException?.process(
@@ -166,7 +162,7 @@ class NavigateToUrlUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
-                coroutineScopes.navigation.throwOnFailure(job)
+                coroutineScopes.default.throwOnFailure(job)
             }
         }
     }

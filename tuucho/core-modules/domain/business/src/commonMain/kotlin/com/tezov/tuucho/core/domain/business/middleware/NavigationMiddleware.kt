@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 
 object NavigationMiddleware {
-    fun interface ToUrl : MiddlewareProtocol<ToUrl.Context, Unit> {
+    fun interface ToUrl : MiddlewareProtocol<ToUrl.Context> {
         fun interface OnShadowerException {
             suspend fun process(
                 exception: Throwable,
@@ -20,7 +20,7 @@ object NavigationMiddleware {
         )
     }
 
-    fun interface Back : MiddlewareProtocol<Back.Context, Unit> {
+    fun interface Back : MiddlewareProtocol<Back.Context> {
         fun interface OnShadowerException {
             suspend fun process(
                 exception: Throwable,
@@ -36,5 +36,5 @@ object NavigationMiddleware {
         )
     }
 
-    fun interface Finish : MiddlewareProtocol<Unit, Unit>
+    fun interface Finish : MiddlewareProtocol<Unit>
 }

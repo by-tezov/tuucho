@@ -8,12 +8,14 @@ import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockReg
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockStack
 import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutor
+import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutorWithReturn
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import com.tezov.tuucho.core.domain.tool.json.InstantSerializer
@@ -40,7 +42,10 @@ internal object MiscModule {
 
         factoryOf(::ExpirationDateTimeRectifier)
         singleOf(::IdGenerator) bind IdGeneratorProtocol::class // <Unit, String>
+
         factoryOf(::MiddlewareExecutor) bind MiddlewareExecutorProtocol::class
+        factoryOf(::MiddlewareExecutorWithReturn) bind MiddlewareExecutorProtocolWithReturn::class
+
         factoryOf(::InteractionLockGenerator)
         singleOf(::InteractionLockStack) bind InteractionLockProtocol.Stack::class
         factoryOf(::InteractionLockResolver) bind InteractionLockProtocol.Resolver::class

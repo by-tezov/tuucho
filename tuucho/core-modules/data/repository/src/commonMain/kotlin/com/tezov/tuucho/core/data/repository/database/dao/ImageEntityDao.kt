@@ -11,11 +11,11 @@ internal class ImageQueries(
 ) {
     private val queries get() = database.imageStatementQueries
 
-    fun selectAll() = queries.selectAll().executeAsList()
+    fun selectAll() = queries.selectAll().executeAsList().map { it.toEntity() }
 
     fun selectAll(
         cacheKeyPrefix: String
-    ) = queries.selectAllLikeCacheKey("$cacheKeyPrefix%").executeAsList()
+    ) = queries.selectAllLikeCacheKey("$cacheKeyPrefix%").executeAsList().map { it.toEntity() }
 
     fun delete(
         cacheKey: String

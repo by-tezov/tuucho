@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssoci
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
@@ -16,7 +17,9 @@ import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
 @OpenForTest
-internal class MaterialRectifier : TuuchoKoinScopeComponent {
+internal class MaterialRectifier(
+    private val coroutineScopes: CoroutineScopesProtocol
+) : TuuchoKoinScopeComponent {
     sealed class Association {
         object Processor : Association()
     }
@@ -35,14 +38,16 @@ internal class MaterialRectifier : TuuchoKoinScopeComponent {
     suspend fun process(
         context: RectifierProtocol.Context,
         materialObject: JsonObject
-    ) = materialObject
-        .withScope(MaterialSchema::Scope)
-        .apply {
-            rootComponent?.let {
-                rootComponent = componentRectifier.process(context, ROOT_PATH, it).jsonObject
-            }
-            rectifiers.forEach { rectifier ->
-                this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }
-            }
-        }.collect()
+    ) = coroutineScopes.default.withContext {
+        materialObject
+            .withScope(MaterialSchema::Scope)
+            .apply {
+                rootComponent?.let {
+                    rootComponent = componentRectifier.process(context, ROOT_PATH, it).jsonObject
+                }
+                rectifiers.forEach { rectifier ->
+                    this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }
+                }
+            }.collect()
+    }
 }

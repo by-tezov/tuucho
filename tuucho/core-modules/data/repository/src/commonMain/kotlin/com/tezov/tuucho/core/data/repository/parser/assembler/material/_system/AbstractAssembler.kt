@@ -4,7 +4,6 @@ package com.tezov.tuucho.core.data.repository.parser.assembler.material._system
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -21,7 +20,7 @@ abstract class AbstractAssembler(
 ) : AssemblerProtocol,
     TuuchoKoinScopeComponent {
     override val lazyScope: Lazy<Scope> = lazy {
-        _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
+        _scope ?: throw DataException.Default("scope can't be null, either pass it in the constructor or override it")
     }
 
     private val jsonObjectMerger: JsonObjectMerger by inject()

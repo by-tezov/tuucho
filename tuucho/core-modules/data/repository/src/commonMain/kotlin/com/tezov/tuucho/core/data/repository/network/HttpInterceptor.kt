@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.data.repository.network
 
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.HttpResponseData
 
-fun interface HttpInterceptor : MiddlewareProtocol<HttpInterceptor.Context, HttpResponseData> {
+fun interface HttpInterceptor : MiddlewareProtocolWithReturn<HttpInterceptor.Context, HttpResponseData> {
     data class Context(
-        val builder: HttpRequestBuilder,
+        val requestBuilder: HttpRequestBuilder,
     )
 }

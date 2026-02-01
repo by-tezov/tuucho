@@ -15,6 +15,7 @@ object SystemSharedModules {
         module(ModuleContextCore.Main) {
             single {
                 Logger(
+                    systemInformation = get(),
                     exceptionVerbose = false
                 )
             }

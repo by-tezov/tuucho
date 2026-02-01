@@ -54,7 +54,7 @@ private fun onBackCompleted(
     interactionLockResolver: InteractionLockProtocol.Resolver,
     actionHandler: ProcessActionUseCase,
 ) {
-    coroutineScopes.action.async(
+    coroutineScopes.default.async(
         throwOnFailure = true,
     ) {
         val screenLock = interactionLockResolver.acquire(

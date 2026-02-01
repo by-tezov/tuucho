@@ -19,7 +19,7 @@ class RegisterToScreenTransitionEventUseCase(
     override fun invoke(
         input: Input
     ) {
-        coroutineScopes.event
+        coroutineScopes.default
             .async(
                 throwOnFailure = true
             ) {

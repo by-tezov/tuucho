@@ -13,7 +13,7 @@ interface ImageRepositoryProtocol {
         val height: Int
     }
 
-    fun <S : Any> process(
+    suspend fun <S : Any> process(
         models: List<ImageModel>
     ): Flow<Image<S>>
 }

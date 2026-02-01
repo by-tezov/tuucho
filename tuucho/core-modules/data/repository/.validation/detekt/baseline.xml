@@ -5,7 +5,6 @@
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>CyclomaticComplexMethod:ImageRectifier.kt$ImageRectifier$override fun afterAlterObject( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement, ): JsonElement</ID>
-    <ID>LongParameterList:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$( private val coroutineScopes: CoroutineScopesProtocol, private val transactionFactory: DatabaseTransactionFactory, private val materialDatabaseSource: MaterialDatabaseSource, private val imageDiskCache: ImageDiskCache, private val materialBreaker: MaterialBreaker, private val materialAssembler: MaterialAssembler, private val lifetimeResolver: JsonLifetimeResolver, )</ID>
     <ID>MagicNumber:ImageDiskCache.kt$ImageDiskCache$1024L</ID>
     <ID>MatchingDeclarationName:AssetModule.android.kt$AssetModuleAndroid</ID>
     <ID>MatchingDeclarationName:AssetModule.ios.kt$AssetModuleIos</ID>
@@ -37,9 +36,9 @@
     <ID>MatchingDeclarationName:WeakReference.android.kt$WeakReferenceAndroid&lt;T : Any&gt; : Weak</ID>
     <ID>MatchingDeclarationName:WeakReference.ios.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
-    <ID>MaxLineLength:ImageRectifier.kt$ImageRectifier$id = onScope(IdSchema::Scope).value ?: throw DataException.Default("id can't be null, rectifier id not applied.")</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
+    <ID>MaxLineLength:MaterialRectifier.kt$MaterialRectifier$this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }</ID>
     <ID>MaxLineLength:MaterialRectifierScope.kt$MaterialRectifierScope$factoryOf(::SettingComponentNavigationRectifier) associate SettingComponentRectifier.Association.Processor::class</ID>
     <ID>MaxLineLength:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement )</ID>
@@ -79,15 +78,15 @@
     <ID>PackageNaming:StrongReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:SystemInformation.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemInformation.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemInformation.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatform.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatform.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatform.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:WeakReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:WeakReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>ReturnCount:AssetSource.kt$AssetSource$private fun resolveImageAssetPath( path: String ): String</ID>
+    <ID>ReturnCount:AssetSource.kt$AssetSource$private suspend fun resolveImageAssetPath( path: String ): String</ID>
     <ID>ReturnCount:ImageDiskCache.kt$ImageDiskCache$override suspend fun retrieve( cacheKey: String, ): SourceFetchResult?</ID>
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
-    <ID>ReturnCount:MaterialDatabaseSource.kt$MaterialDatabaseSource$@Suppress("RedundantSuspendModifier") suspend fun getRootJsonObjectEntityOrNull( url: String ): JsonObjectEntity?</ID>
     <ID>ReturnCount:SettingComponentNavigationDefinitionRectifier.kt$SettingComponentNavigationDefinitionRectifier$private fun JsonObject.rectifySelector(): JsonObject?</ID>
     <ID>TooGenericExceptionThrown:RemoteSource.kt$RemoteSource$throw Exception("failed to check health at url $url")</ID>
     <ID>TooGenericExceptionThrown:RemoteSource.kt$RemoteSource$throw Exception("failed to retrieve resource at url $url")</ID>

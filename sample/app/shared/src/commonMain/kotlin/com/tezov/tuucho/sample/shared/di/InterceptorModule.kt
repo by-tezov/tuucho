@@ -23,11 +23,8 @@ object InterceptorModule {
 
     private fun Module.http() {
         factoryOf(::FailSafePageHttpInterceptor) bindOrdered HttpInterceptor::class
-
         factoryOf(::HeadersHttpInterceptor) bindOrdered HttpInterceptor::class
-
         factoryOf(::HeaderHttpAuthorizationInterceptor) bindOrdered HttpInterceptor::class
-
         factoryOf(::LoggerHttpInterceptor) bindOrdered HttpInterceptor::class
     }
 }

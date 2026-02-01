@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.data.repository.network.HttpClientEngineFactory
 import com.tezov.tuucho.core.data.repository.network.HttpNetworkSource
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.getAllOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
@@ -40,6 +41,9 @@ object NetworkModule {
                     interceptors = getAllOrdered()
                 )
             ) {
+                engine {
+                    dispatcher = get<CoroutineScopesProtocol>().io.dispatcher
+                }
                 install(ContentNegotiation) {
                     json(get<Json>())
                 }

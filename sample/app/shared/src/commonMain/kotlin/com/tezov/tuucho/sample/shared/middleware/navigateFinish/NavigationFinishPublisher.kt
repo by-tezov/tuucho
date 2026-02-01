@@ -14,7 +14,7 @@ class NavigationFinishPublisher(
     private val events get() = _events.createCollector
 
     fun finish() {
-        coroutineScopes.event.async(throwOnFailure = true) {
+        coroutineScopes.default.async(throwOnFailure = true) {
             _events.emit(Unit)
         }
     }

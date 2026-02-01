@@ -11,7 +11,7 @@ internal class HookQueries(
 ) {
     private val queries get() = database.hookStatementQueries
 
-    fun selectAll() = queries.selectAll().executeAsList()
+    fun selectAll() = queries.selectAll().executeAsList().map { it.toEntity() }
 
     fun deleteAll() = queries.deleteAll()
 

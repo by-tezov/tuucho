@@ -2,8 +2,8 @@
 
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system
 
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.find
 import com.tezov.tuucho.core.domain.tool.json.replaceOrInsert
@@ -21,7 +21,7 @@ abstract class AbstractRectifier(
 ) : RectifierProtocol,
     TuuchoKoinScopeComponent {
     override val lazyScope: Lazy<Scope> = lazy {
-        _scope ?: throw DomainException.Default("scope can't be null, either pass it in the constructor or override it")
+        _scope ?: throw DataException.Default("scope can't be null, either pass it in the constructor or override it")
     }
 
     protected open val matchers: List<RectifierMatcherProtocol> = emptyList()

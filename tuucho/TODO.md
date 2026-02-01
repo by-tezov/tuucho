@@ -1,15 +1,14 @@
 ### Todo:
 
-- error when loading image
-
-- Animation placeholder / final image ?
-- Alternative image (fallback) query fallback local/remote ?
+- Test
 
 -> close alpha 25
 
+- Animation placeholder / final image ?
 - Then documentation
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
+- error message with class name that throw.
 
 ### Need to fix: 
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?

@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssoci
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinScopeComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
@@ -15,7 +16,9 @@ import kotlinx.serialization.json.jsonObject
 import org.koin.core.scope.Scope
 
 @OpenForTest
-class ResponseAssembler : TuuchoKoinScopeComponent {
+class ResponseAssembler(
+    private val coroutineScopes: CoroutineScopesProtocol
+) : TuuchoKoinScopeComponent {
     sealed class Association {
         object Processor : Association()
     }
@@ -36,10 +39,10 @@ class ResponseAssembler : TuuchoKoinScopeComponent {
     suspend fun process(
         context: AssemblerProtocol.Context,
         responseObject: JsonObject,
-    ): JsonObject {
+    ) = coroutineScopes.default.withContext {
         val subset = responseObject.withScope(SubsetSchema::Scope).self
             ?: throw DataException.Default("Missing subset in response $responseObject")
-        return assemblers.firstOrNull { it.schemaType == subset }?.let {
+        assemblers.firstOrNull { it.schemaType == subset }?.let {
             val jsonObjectAssembled = it.process(
                 context = context,
                 path = ROOT_PATH,

@@ -5,13 +5,16 @@ import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssoci
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-internal class MaterialBreaker : TuuchoKoinComponent {
+internal class MaterialBreaker(
+    private val coroutineScopes: CoroutineScopesProtocol
+) : TuuchoKoinComponent {
     data class Nodes(
         val rootJsonObject: JsonObject?,
         val jsonObjects: List<JsonObject>,
@@ -28,15 +31,17 @@ internal class MaterialBreaker : TuuchoKoinComponent {
     @Suppress("RedundantSuspendModifier")
     suspend fun process(
         materialObject: JsonObject,
-    ) = with(materialObject.withScope(MaterialSchema::Scope)) {
-        Nodes(
-            rootJsonObject = rootComponent?.let(::JsonObject),
-            jsonObjects = buildList {
-                breakables.forEach { breakable ->
-                    this@with[breakable]?.process()?.also(::addAll)
+    ) = coroutineScopes.default.withContext {
+        with(materialObject.withScope(MaterialSchema::Scope)) {
+            Nodes(
+                rootJsonObject = rootComponent?.let(::JsonObject),
+                jsonObjects = buildList {
+                    breakables.forEach { breakable ->
+                        this@with[breakable]?.process()?.also(::addAll)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     private fun JsonElement.process(): List<JsonObject> {

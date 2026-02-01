@@ -13,7 +13,7 @@ internal class ScreenFactory(
     override suspend fun create(
         route: NavigationRoute.Url,
         componentObject: JsonObject
-    ) = coroutineScopes.renderer.await {
+    ) = coroutineScopes.default.withContext {
         Screen(
             coroutineScopes = coroutineScopes,
             route = route

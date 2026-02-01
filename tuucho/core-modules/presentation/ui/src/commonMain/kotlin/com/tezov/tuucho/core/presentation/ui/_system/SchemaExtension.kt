@@ -2,18 +2,18 @@
 
 package com.tezov.tuucho.core.presentation.ui._system
 
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.ComponentSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.presentation.ui.exception.UiException
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 val JsonElement.idValue
-    get() = idValueOrNull ?: throw DomainException.Default("id value is null for $this")
+    get() = idValueOrNull ?: throw UiException.Default("id value is null for $this")
 
 val JsonElement.idValueOrNull
     get() = onScope(IdSchema::Scope).value
@@ -23,13 +23,13 @@ val JsonElement.idSourceOrNull
 
 val JsonObject.type
     get() = withScope(TypeSchema::Scope).self
-        ?: throw DomainException.Default("type value is null for $this")
+        ?: throw UiException.Default("type value is null for $this")
 
 val JsonObject.subsetOrNull
     get() = withScope(SubsetSchema::Scope).self
 
 val JsonObject.subset
-    get() = subsetOrNull ?: throw DomainException.Default("subset value is null for $this")
+    get() = subsetOrNull ?: throw UiException.Default("subset value is null for $this")
 
 val JsonObject.contentOrNull
     get() = withScope(ComponentSchema::Scope).content
