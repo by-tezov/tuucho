@@ -23,7 +23,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
-import kotlinx.coroutines.flow.collect
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -52,14 +51,13 @@ class NavigateToUrlUseCase(
     ) {
         middlewareExecutor
             .process(
-                coroutineContext = coroutineScopes.default,
                 middlewares = navigationMiddlewares + terminalMiddleware(),
                 context = NavigationMiddleware.ToUrl.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value,
                     input = input,
                     onShadowerException = null
                 )
-            ).collect()
+            )
     }
 
     private fun terminalMiddleware(): NavigationMiddleware.ToUrl = NavigationMiddleware.ToUrl { context, _ ->

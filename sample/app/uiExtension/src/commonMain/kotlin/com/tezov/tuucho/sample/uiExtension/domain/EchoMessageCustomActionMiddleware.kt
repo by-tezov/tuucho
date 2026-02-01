@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import com.tezov.tuucho.sample.uiExtension.domain.CustomLabelSchema.Message
@@ -29,16 +28,16 @@ internal class EchoMessageCustomActionMiddleware(
         action: ActionModel,
     ): Boolean = action.command == EchoMessageCustomActionDefinition.command
 
-    override suspend fun ProducerScope<Unit>.process(
+    override suspend fun process(
         context: ActionMiddlewareProtocol.Context,
-        next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context, Unit>?
+        next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context>?
     ) {
         val route = context.input.route ?: run {
-            next.invoke(context)
+            next?.invoke(context)
             return
         }
         val jsonElement = context.input.jsonElement ?: run {
-            next.invoke(context)
+            next?.invoke(context)
             return
         }
         val messageScope = jsonElement.withScope(Message::Scope)
@@ -57,6 +56,6 @@ internal class EchoMessageCustomActionMiddleware(
                 jsonObjects = listOf(messages)
             )
         )
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

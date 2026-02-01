@@ -4,15 +4,12 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
 import kotlinx.coroutines.channels.ProducerScope
-import kotlinx.coroutines.flow.FlowCollector
 
 class LoggerAction(
-    private val logger: Logger,
-    private val systemInformation: SystemInformationProtocol
+    private val logger: Logger
 ) : ActionMiddlewareProtocol {
     override val priority: Int = ActionMiddlewareProtocol.Priority.LOW
 
@@ -21,12 +18,12 @@ class LoggerAction(
         action: ActionModel,
     ) = true
 
-    override suspend fun ProducerScope<Unit>.process(
+    override suspend fun process(
         context: ActionMiddlewareProtocol.Context,
-        next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context, Unit>?
+        next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context>?
     ) {
-        logger.debug("THREAD") { systemInformation.currentThreadName() }
+        logger.thread()
         logger.debug("ACTION") { "from ${context.input.route}: ${context.actionModel}" }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

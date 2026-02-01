@@ -64,13 +64,15 @@ class CoroutineContext(
     ) {
         deferred.invokeOnCompletion { throwable ->
             throwable?.let {
-                process(
-                    context = CoroutineExceptionMonitorProtocol.Context(
-                        name = scope.coroutineContext[CoroutineName]?.name ?: "unknown",
-                        id = deferred.hashCode().toHexString(),
-                        throwable = throwable
+                scope.async {
+                    process(
+                        context = CoroutineExceptionMonitorProtocol.Context(
+                            name = scope.coroutineContext[CoroutineName]?.name ?: "unknown",
+                            id = deferred.hashCode().toHexString(),
+                            throwable = throwable
+                        )
                     )
-                )
+                }
             }
         }
     }

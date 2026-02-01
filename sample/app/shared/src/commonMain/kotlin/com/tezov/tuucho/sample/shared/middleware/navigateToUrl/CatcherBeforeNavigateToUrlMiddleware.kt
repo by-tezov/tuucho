@@ -2,7 +2,6 @@ package com.tezov.tuucho.sample.shared.middleware.navigateToUrl
 
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.sample.shared._system.Config
 import com.tezov.tuucho.sample.shared._system.Page
 import kotlinx.coroutines.channels.ProducerScope
@@ -11,9 +10,9 @@ import kotlinx.coroutines.flow.FlowCollector
 
 class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 
-    override suspend fun ProducerScope<Unit>.process(
+    override suspend fun process(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context>?,
     ) {
         processWithRetry(
             context = context,
@@ -23,14 +22,14 @@ class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
         )
     }
 
-    private suspend fun ProducerScope<Unit>.processWithRetry(
+    private suspend fun processWithRetry(
         context: NavigationMiddleware.ToUrl.Context,
-        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context, Unit>?,
+        next: MiddlewareProtocol.Next<NavigationMiddleware.ToUrl.Context>?,
         attempt: Int,
         maxRetries: Int,
     ) {
         try {
-            next.invoke(context)
+            next?.invoke(context)
         } catch (exception: Throwable) {
             //IMPROVE: check exception and design action in accord with exception
             if ((attempt + 1) < maxRetries) {
@@ -39,7 +38,7 @@ class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
                 delay(delayMs)
                 processWithRetry(context, next, attempt + 1, maxRetries)
             } else if (context.input.url != Page.failSafe) {
-                next.invoke(
+                next?.invoke(
                     context.copy(
                         input = context.input.copy(url = Page.failSafe)
                     )

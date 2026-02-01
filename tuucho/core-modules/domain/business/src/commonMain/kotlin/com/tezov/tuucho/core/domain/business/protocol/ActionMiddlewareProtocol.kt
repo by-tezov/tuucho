@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.C
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 
-interface ActionMiddlewareProtocol : MiddlewareProtocol<Context, Unit> {
+interface ActionMiddlewareProtocol : MiddlewareProtocol<Context> {
     data class Context(
         val lockable: InteractionLockable,
         val actionModel: ActionModel,

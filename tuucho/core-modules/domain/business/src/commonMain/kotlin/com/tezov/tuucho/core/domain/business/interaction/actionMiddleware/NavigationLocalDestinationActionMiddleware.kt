@@ -7,11 +7,9 @@ import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefiniti
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.Context
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
-import kotlinx.coroutines.channels.ProducerScope
 
 internal class NavigationLocalDestinationActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
@@ -27,9 +25,9 @@ internal class NavigationLocalDestinationActionMiddleware(
     ) = action.command == NavigateActionDefinition.LocalDestination.command &&
         action.authority == NavigateActionDefinition.LocalDestination.authority
 
-    override suspend fun ProducerScope<Unit>.process(
+    override suspend fun process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Unit>?
+        next: MiddlewareProtocol.Next<Context>?
     ) {
         when (context.actionModel.target) {
             NavigateActionDefinition.LocalDestination.Target.back -> {
@@ -50,6 +48,6 @@ internal class NavigationLocalDestinationActionMiddleware(
                 throw DomainException.Default("Unknown target ${context.actionModel.target}")
             }
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

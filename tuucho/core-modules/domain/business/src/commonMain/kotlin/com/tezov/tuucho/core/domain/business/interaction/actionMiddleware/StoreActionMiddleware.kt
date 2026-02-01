@@ -7,14 +7,12 @@ import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.Context
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.tool.json.string
-import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -36,9 +34,9 @@ internal class StoreActionMiddleware(
         action.authority == StoreActionDefinition.KeyValue.authority &&
         action.query != null
 
-    override suspend fun ProducerScope<Unit>.process(
+    override suspend fun process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Unit>?
+        next: MiddlewareProtocol.Next<Context>?
     ) {
         val query = context.actionModel.query ?: throw DomainException.Default("should no be possible")
         when (val target = context.actionModel.target) {
@@ -46,7 +44,7 @@ internal class StoreActionMiddleware(
             StoreActionDefinition.KeyValue.Target.remove -> removeKeys(query)
             else -> throw DomainException.Default("Unknown target $target")
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 
     private suspend fun saveValues(

@@ -18,7 +18,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
-import kotlinx.coroutines.flow.collect
 
 @OpenForTest
 class NavigateBackUseCase(
@@ -39,7 +38,6 @@ class NavigateBackUseCase(
     ) {
         middlewareExecutor
             .process(
-                coroutineContext = coroutineScopes.default,
                 middlewares = navigationMiddlewares + terminalMiddleware(),
                 context = NavigationMiddleware.Back.Context(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
@@ -47,7 +45,7 @@ class NavigateBackUseCase(
                     nextUrl = navigationStackRouteRepository.priorRoute()?.value,
                     onShadowerException = null
                 )
-            ).collect()
+            )
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->

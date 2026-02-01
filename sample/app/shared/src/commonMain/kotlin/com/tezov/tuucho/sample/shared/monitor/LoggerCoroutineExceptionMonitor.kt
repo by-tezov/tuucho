@@ -6,13 +6,12 @@ import com.tezov.tuucho.sample.shared._system.Logger
 
 class LoggerCoroutineExceptionMonitor(
     private val logger: Logger,
-    private val systemInformation: SystemInformationProtocol
 ) : CoroutineExceptionMonitorProtocol {
-    override fun process(
+    override suspend fun process(
         context: CoroutineExceptionMonitorProtocol.Context
     ) {
         with(context) {
-            logger.debug("THREAD") { systemInformation.currentThreadName() }
+            logger.thread()
             logger.exception("MON-COROUTINE", throwable) { "$id:$name" }
         }
     }

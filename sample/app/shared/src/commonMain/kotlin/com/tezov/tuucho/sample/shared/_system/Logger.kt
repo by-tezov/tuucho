@@ -1,13 +1,15 @@
 package com.tezov.tuucho.sample.shared._system
 
+import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import co.touchlab.kermit.Logger as Kermit
 
 class Logger(
+    private val systemInformation: SystemInformationProtocol,
     private val exceptionVerbose: Boolean,
     private val tag: String = ""
 ) {
 
-    fun withTag(tag: String) = Logger(exceptionVerbose, tag.full())
+    fun withTag(tag: String) = Logger(systemInformation, exceptionVerbose, tag.full())
 
     private fun String.full() = "${this@Logger.tag}:$this"
 
@@ -31,6 +33,11 @@ class Logger(
         } else {
             Kermit.e(tag = tag.fullWithPrefix(), null, message = { "${message()}: $throwable" })
         }
+    }
+
+    suspend fun thread() {
+        val currentDispatcher = systemInformation.currentDispatcher()
+        info("THREAD") { "${systemInformation.currentThreadName()} - $currentDispatcher" }
     }
 
 }

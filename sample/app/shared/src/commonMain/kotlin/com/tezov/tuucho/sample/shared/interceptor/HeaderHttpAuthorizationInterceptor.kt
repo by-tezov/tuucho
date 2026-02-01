@@ -2,8 +2,8 @@ package com.tezov.tuucho.sample.shared.interceptor
 
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
@@ -20,7 +20,7 @@ class HeaderHttpAuthorizationInterceptor(
 
     override suspend fun ProducerScope<HttpResponseData>.process(
         context: HttpInterceptor.Context,
-        next: MiddlewareProtocol.Next<HttpInterceptor.Context, HttpResponseData>?
+        next: MiddlewareProtocolWithReturn.Next<HttpInterceptor.Context, HttpResponseData>?
     ) {
         with(context.requestBuilder) {
             val route = url.toString()

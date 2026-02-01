@@ -9,10 +9,11 @@ class NavigateFinishMiddleware(
     private val navigationFinishPublisher: NavigationFinishPublisher
 ) : NavigationMiddleware.Finish {
 
-    override suspend fun ProducerScope<Unit>.process(
+    override suspend fun process(
         context: Unit,
-        next: MiddlewareProtocol.Next<Unit, Unit>?,
+        next: MiddlewareProtocol.Next<Unit>?,
     ) {
+        next?.invoke(Unit)
         navigationFinishPublisher.finish()
     }
 }

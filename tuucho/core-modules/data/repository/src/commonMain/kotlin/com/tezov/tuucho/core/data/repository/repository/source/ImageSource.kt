@@ -12,7 +12,7 @@ import coil3.Image as CoilImage
 internal class ImageSource(
     private val imageLoaderSource: ImageLoaderSource
 ) {
-    fun <S : Any> process(
+    suspend fun <S : Any> process(
         models: List<ImageModel>
     ): Flow<Image<S>> {
         val requests = models.map {

@@ -106,7 +106,7 @@ internal class AssetSource(
                 }
             }
         }
-        throw DataException.Default("resource not found")
+        throw DataException.Default("resource $path not found")
     }
 
     private fun resolveFileContentType(

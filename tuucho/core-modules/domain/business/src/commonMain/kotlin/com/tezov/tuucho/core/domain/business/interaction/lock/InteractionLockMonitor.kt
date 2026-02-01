@@ -18,7 +18,7 @@ interface InteractionLockMonitor {
         val lockTypes: List<InteractionLockType>,
     )
 
-    fun process(
+    suspend fun process(
         context: Context
     )
 }

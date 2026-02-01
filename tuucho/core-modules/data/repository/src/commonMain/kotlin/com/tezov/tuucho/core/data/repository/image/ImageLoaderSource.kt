@@ -21,21 +21,23 @@ internal class ImageLoaderSource(
     private val platformContext: PlatformContext,
     private val imageFetchers: ImageFetcherRegistryProtocol
 ) {
-    fun retrieve(
+    suspend fun retrieve(
         requests: List<ImageRequest>
-    ): Flow<ImageResponse> = callbackFlow {
-        val requestRemaining = requests.filterNot {
-            shouldBeExcluded(it, requests)
-        }
-        if (requestRemaining.isEmpty()) {
-            close(DataException.Default("all image request exclude themself"))
-            return@callbackFlow
-        }
-        val counter = AtomicInt(0)
-        val counterEnd = requestRemaining.size
-        requestRemaining.forEach { enqueue(it, counter, counterEnd) }
-        awaitClose { }
-    }.flowOn(coroutineScopes.default.dispatcher)
+    ): Flow<ImageResponse> = coroutineScopes.io.withContext {
+        callbackFlow {
+            val requestRemaining = requests.filterNot {
+                shouldBeExcluded(it, requests)
+            }
+            if (requestRemaining.isEmpty()) {
+                close(DataException.Default("all image request exclude themself"))
+                return@callbackFlow
+            }
+            val counter = AtomicInt(0)
+            val counterEnd = requestRemaining.size
+            requestRemaining.forEach { enqueue(it, counter, counterEnd) }
+            awaitClose { }
+        }.flowOn(coroutineScopes.io.dispatcher)
+    }
 
     private fun ProducerScope<ImageResponse>.enqueue(
         request: ImageRequest,
@@ -44,7 +46,7 @@ internal class ImageLoaderSource(
     ) {
         val coilRequest = coil3.request.ImageRequest
             .Builder(platformContext)
-            .fetcherCoroutineContext(coroutineScopes.default.dispatcher)
+            .fetcherCoroutineContext(coroutineScopes.io.dispatcher)
             .decoderCoroutineContext(coroutineScopes.default.dispatcher)
             .fetcherFactory(imageFetchers.get(request.command))
             .data(request)

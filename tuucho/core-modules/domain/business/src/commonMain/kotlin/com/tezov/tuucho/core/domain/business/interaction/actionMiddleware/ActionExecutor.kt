@@ -9,7 +9,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
-import kotlinx.coroutines.flow.collect
 
 internal class ActionExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
@@ -34,14 +33,13 @@ internal class ActionExecutor(
                             action = actionModel
                         )
                         middlewareExecutor.process(
-                            coroutineContext = coroutineScopes.unconfined,
                             middlewares = this,
                             context = ActionMiddlewareProtocol.Context(
                                 lockable = locks.freeze(),
                                 actionModel = actionModel,
                                 input = input,
                             )
-                        ).collect()
+                        )
                         locks.releaseLocks(
                             route = input.route,
                             action = actionModel

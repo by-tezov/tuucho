@@ -13,10 +13,8 @@ import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.Context
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
-import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
@@ -35,19 +33,19 @@ internal class FormUpdateActionMiddleware(
     ): Boolean = action.command == FormActionDefinition.Update.command &&
         action.authority == FormActionDefinition.Update.authority
 
-    override suspend fun ProducerScope<Unit>.process(
+    override suspend fun process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Unit>?
+        next: MiddlewareProtocol.Next<Context>?
     ) {
         val route = context.input.route ?: run {
-            next.invoke(context)
+            next?.invoke(context)
             return
         }
         when (val target = context.actionModel.target) {
             FormActionDefinition.Update.Target.error -> updateErrorState(route, context.input.jsonElement)
             else -> throw DomainException.Default("Unknown target $target")
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 
     private suspend fun updateErrorState(

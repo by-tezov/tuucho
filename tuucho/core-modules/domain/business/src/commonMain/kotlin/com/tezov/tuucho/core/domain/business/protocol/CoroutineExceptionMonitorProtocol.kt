@@ -7,7 +7,7 @@ interface CoroutineExceptionMonitorProtocol {
         val throwable: Throwable
     )
 
-    fun process(
+    suspend fun process(
         context: Context
     )
 }
