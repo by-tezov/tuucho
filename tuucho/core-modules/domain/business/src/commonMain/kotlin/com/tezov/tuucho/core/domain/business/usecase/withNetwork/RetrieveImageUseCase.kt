@@ -71,11 +71,11 @@ class RetrieveImageUseCase<S : Any>(
 
     private fun terminalMiddleware(): RetrieveImageMiddleware<S> = RetrieveImageMiddleware<S> { context, _ ->
         with(context.input) {
-            send(
-                imageRepository
-                    .process<S>(models = models)
-                    .map { Output(image = it) }
-            )
+            val result = imageRepository
+                .process<S>(models = models)
+                .map { Output(image = it) }
+
+            send(result)
         }
     }
 

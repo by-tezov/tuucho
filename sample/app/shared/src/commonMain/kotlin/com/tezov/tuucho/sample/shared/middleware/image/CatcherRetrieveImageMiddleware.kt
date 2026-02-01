@@ -16,23 +16,24 @@ class CatcherRetrieveImageMiddleware() : RetrieveImageMiddleware<Any> {
         next: MiddlewareProtocolWithReturn.Next<RetrieveImageMiddleware.Context, Flow<RetrieveImageUseCase.Output<Any>>>?,
     ) {
         try {
-            println("|> A")
+            println("before call next who will throw")
             next.invoke(context)
-            println("|> B")
+            println("after call next")
         } catch (_: Throwable) {
-            println("|> C")
-            next.invoke(
-                context.copy(
-                    input = RetrieveImageUseCase.Input.create(
-                        model = ImageModel.from(
-                            command = LocalImageDefinition.command,
-                            target = "img/logo-koin",
-                            cacheKey = "img/logo-koin"
-                        )
-                    )
-                )
-            )
-            println("|> D")
+
+            println("I catched you")
+
+//            next.invoke(
+//                context.copy(
+//                    input = RetrieveImageUseCase.Input.create(
+//                        model = ImageModel.from(
+//                            command = LocalImageDefinition.command,
+//                            target = "img/logo-koin",
+//                            cacheKey = "img/logo-koin"
+//                        )
+//                    )
+//                )
+//            )
         }
     }
 }

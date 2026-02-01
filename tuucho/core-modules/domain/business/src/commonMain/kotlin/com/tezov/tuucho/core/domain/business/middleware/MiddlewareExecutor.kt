@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.invoke
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
 
 class MiddlewareExecutor : MiddlewareExecutorProtocol {
@@ -37,14 +36,6 @@ class MiddlewareExecutorWithReturn : MiddlewareExecutorProtocolWithReturn {
                 middleware.run { process(context, prev) }
             }
         }
-
-        channelFlow<Int> {
-
-        }
-            .catch {
-
-            }
-
         return channelFlow { next.invoke(context) }
     }
 }
