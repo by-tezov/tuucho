@@ -18,7 +18,7 @@ internal class KeyValueStoreRepository(
         key: KeyValueStoreRepositoryProtocol.Key,
         value: KeyValueStoreRepositoryProtocol.Value?,
     ) {
-        coroutineScopes.io.await {
+        coroutineScopes.io.withContext {
             val prefKey = stringPreferencesKey(key.value)
             dataStore.edit { prefs ->
                 if (value == null) {
@@ -32,7 +32,7 @@ internal class KeyValueStoreRepository(
 
     override suspend fun hasKey(
         key: KeyValueStoreRepositoryProtocol.Key
-    ): Boolean = coroutineScopes.io.await {
+    ) = coroutineScopes.io.withContext {
         val prefKey = stringPreferencesKey(key.value)
         val prefs = dataStore.data.first()
         prefs.contains(prefKey)
@@ -40,12 +40,12 @@ internal class KeyValueStoreRepository(
 
     override suspend fun get(
         key: KeyValueStoreRepositoryProtocol.Key
-    ): KeyValueStoreRepositoryProtocol.Value = getOrNull(key)
+    ) = getOrNull(key)
         ?: throw DataException.Default("Key ${key.value} not found in store")
 
     override suspend fun getOrNull(
         key: KeyValueStoreRepositoryProtocol.Key
-    ): KeyValueStoreRepositoryProtocol.Value? = coroutineScopes.io.await {
+    ) = coroutineScopes.io.withContext {
         val prefKey = stringPreferencesKey(key.value)
         val prefs = dataStore.data.first()
         prefs[prefKey]?.toValue()

@@ -21,6 +21,8 @@ object Notifier {
             onBufferOverflow = onBufferOverflow
         )
 
+        val createCollector get() = Collector(flow)
+
         fun tryEmit(
             event: T
         ) = flow.tryEmit(event)
@@ -28,8 +30,6 @@ object Notifier {
         suspend fun emit(
             event: T
         ) = flow.emit(event)
-
-        val createCollector get() = Collector(flow)
     }
 
     @JvmInline

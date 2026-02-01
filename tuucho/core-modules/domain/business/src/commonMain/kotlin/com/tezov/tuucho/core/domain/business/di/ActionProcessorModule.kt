@@ -7,8 +7,8 @@ import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormUp
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.NavigationLocalDestinationActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.NavigationUrlActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.StoreActionMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
@@ -23,10 +23,10 @@ internal object ActionProcessorModule {
                 interactionLockRegistry = get()
             )
         }
-        factoryOf(::FormSendUrlActionMiddleware) bind ActionMiddleware::class
-        factoryOf(::FormUpdateActionMiddleware) bind ActionMiddleware::class
-        factoryOf(::NavigationLocalDestinationActionMiddleware) bind ActionMiddleware::class
-        factoryOf(::NavigationUrlActionMiddleware) bind ActionMiddleware::class
-        factoryOf(::StoreActionMiddleware) bind ActionMiddleware::class
+        factoryOf(::FormSendUrlActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::FormUpdateActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::NavigationLocalDestinationActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::NavigationUrlActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::StoreActionMiddleware) bind ActionMiddlewareProtocol::class
     }
 }

@@ -103,7 +103,7 @@ class TuuchoEngine(
     private fun onRequestTransitionEvent(
         event: Event.RequestTransition
     ) {
-        coroutineScopes.renderer.async(
+        coroutineScopes.default.async(
             throwOnFailure = true
         ) {
             @Suppress("UNCHECKED_CAST")
@@ -136,7 +136,7 @@ class TuuchoEngine(
     private fun onIdleEvent(
         event: Event.Idle
     ) {
-        coroutineScopes.renderer.async(
+        coroutineScopes.default.async(
             throwOnFailure = true
         ) {
             @Suppress("UNCHECKED_CAST")
@@ -193,7 +193,7 @@ class TuuchoEngine(
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
             LaunchedEffect(redrawTrigger.intValue) {
-                coroutineScopes.event
+                coroutineScopes.default
                     .async(
                         throwOnFailure = true
                     ) {

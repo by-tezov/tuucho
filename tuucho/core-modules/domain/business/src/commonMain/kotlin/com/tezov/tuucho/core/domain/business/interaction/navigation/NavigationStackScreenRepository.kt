@@ -18,13 +18,13 @@ internal class NavigationStackScreenRepository(
     private val stack = mutableListOf<ScreenProtocol>()
     private val mutex = Mutex()
 
-    override suspend fun routes() = coroutineScopes.navigation.await {
+    override suspend fun routes() = coroutineScopes.default.withContext {
         mutex.withLock { stack.map { it.route } }
     }
 
     override suspend fun getScreens(
         routes: List<NavigationRoute.Url>
-    ) = coroutineScopes.navigation.await {
+    ) = coroutineScopes.default.withContext {
         mutex.withLock {
             stack.filter { screen ->
                 routes.any { it == screen.route }
@@ -34,7 +34,7 @@ internal class NavigationStackScreenRepository(
 
     override suspend fun getScreenOrNull(
         route: NavigationRoute
-    ) = coroutineScopes.navigation.await {
+    ) = coroutineScopes.default.withContext {
         mutex.withLock {
             when (route) {
                 is NavigationRoute.Current -> stack.lastOrNull()
@@ -46,7 +46,7 @@ internal class NavigationStackScreenRepository(
 
     override suspend fun getScreensOrNull(
         url: String
-    ) = coroutineScopes.navigation.await {
+    ) = coroutineScopes.default.withContext {
         mutex.withLock { stack.filter { it.route.accept(url) } }
     }
 
@@ -54,7 +54,7 @@ internal class NavigationStackScreenRepository(
         route: NavigationRoute.Url,
         componentObject: JsonObject,
     ) {
-        coroutineScopes.navigation.await {
+        coroutineScopes.default.withContext {
             screenFactory
                 .create(
                     route = route,
@@ -68,7 +68,7 @@ internal class NavigationStackScreenRepository(
     override suspend fun backward(
         routes: List<NavigationRoute.Url>,
     ) {
-        coroutineScopes.navigation.await {
+        coroutineScopes.default.withContext {
             mutex.withLock {
                 stack.retainAll { screen ->
                     routes.any { it == screen.route }

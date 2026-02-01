@@ -1,27 +1,53 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
+import com.tezov.tuucho.core.domain.business.middleware.PassThroughProducerScope
+import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.flow.channelFlow
 
-fun interface MiddlewareProtocol<C, R : Any> {
+fun interface MiddlewareProtocol<C> {
+    fun interface Next<C> {
+        suspend fun invoke(
+            context: C
+        )
+    }
+
+    suspend fun process(
+        context: C,
+        next: Next<C>?
+    )
+}
+
+fun interface MiddlewareProtocolWithReturn<C, R : Any> {
     fun interface Next<C, R : Any> {
-        suspend fun FlowCollector<R>.invoke(
+        suspend fun ProducerScope<R>.invoke(
             context: C
         )
 
         companion object {
-            context(flowCollector: FlowCollector<R>)
-            suspend fun <C, R : Any> Next<C, R>?.invoke(
+            context(producerScope: ProducerScope<R>)
+            suspend fun <C, R : Any> Next<C, R>.invoke(
                 context: C
-            ) = this?.run { flowCollector.run { invoke(context) } }
+            ) = producerScope.run { invoke(context) }
 
-            fun <C, R : Any> Next<C, R>?.intercept(
+            suspend fun <C, R : Any> ProducerScope<R>.passThrough(
+                next: Next<C, R>?,
+                context: C,
+                onSendIntent: suspend (R) -> R
+            ) = PassThroughProducerScope(this, onSendIntent).also {
+                it.run { next?.invoke(context) }
+            }
+
+            fun <C, R : Any> Next<C, R>.intercept(
                 context: C
-            ) = this?.run { flow { invoke(context) } }
+            ) = channelFlow {
+                runCatching { invoke(context) }
+                    .onFailure { close(it) }
+                    .onSuccess { close() }
+            }
         }
     }
 
-    suspend fun FlowCollector<R>.process(
+    suspend fun ProducerScope<R>.process(
         context: C,
         next: Next<C, R>?
     )

@@ -151,10 +151,7 @@
         "background-color": "*background@funny-color"
       },
       "content": {
-        "values": [
-          "*main-logo",
-          "*main-logo-placeholder"
-        ],
+        "values": ["*main-logo", "*main-logo-placeholder" ],
         "description": "Main-Logo"
       }
     },
@@ -216,7 +213,7 @@
   },
   "images": {
     "common": {
-      "main-logo": "remote://lobby/logo-compose",
+      "main-logo": "remote://lobby/logo-compose-wrong-url",
       "main-logo-placeholder": {
         "source": "local://img/logo-compose-placeholder",
         "tags": "placeholder"

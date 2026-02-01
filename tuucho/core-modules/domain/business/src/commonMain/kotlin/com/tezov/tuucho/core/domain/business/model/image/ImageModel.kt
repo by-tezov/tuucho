@@ -12,7 +12,7 @@ data class ImageModel(
     val command: String,
     val target: String,
     val query: JsonElement?,
-    val cacheKey: String,
+    val id: String,
     val tags: Set<String>?,
     val tagsExcluder: Set<String>?
 ) {
@@ -55,9 +55,9 @@ data class ImageModel(
 
         fun from(
             value: String,
-            cacheKey: String,
-            tags: Set<String>?,
-            tagsExcluder: Set<String>?
+            id: String,
+            tags: Set<String>? = null,
+            tagsExcluder: Set<String>? = null
         ): ImageModel {
             val match = IMAGE_REGEX.matchEntire(value)
                 ?: throw DomainException.Default("invalid image")
@@ -67,7 +67,7 @@ data class ImageModel(
                 target = match.groups[2]?.value
                     ?: throw DomainException.Default("image target can't be null"),
                 query = match.groups[3]?.value?.toJsonElement(),
-                cacheKey = cacheKey,
+                id = id,
                 tags = tags,
                 tagsExcluder = tagsExcluder
             )
@@ -77,14 +77,14 @@ data class ImageModel(
             command: String,
             target: String,
             query: String? = null,
-            cacheKey: String,
-            tags: Set<String>?,
-            tagsExcluder: Set<String>?
+            id: String,
+            tags: Set<String>? = null,
+            tagsExcluder: Set<String>? = null
         ) = ImageModel(
             command = command,
             target = target,
             query = query?.toJsonElement(),
-            cacheKey = cacheKey,
+            id = id,
             tags = tags,
             tagsExcluder = tagsExcluder
         )
@@ -105,6 +105,9 @@ data class ImageModel(
                 append("?")
                 append(query.toPrettyString())
             }
+            append("#$id#")
+            tags?.let { append("-tags:$it") }
+            tagsExcluder?.let { append("-tagsExcluder:$it") }
         }
         return stringBuilder.toString()
     }

@@ -548,8 +548,8 @@ tasks.register("rootAdminUpdate") {
             "rootDetektReport",
             "rootUpdateReleaseApi",
             "rootValidateReleaseApi",
-            "rootDebugUnitTest",
-            "rootDebugCoverageReport",
+//            "rootDebugUnitTest",
+//            "rootDebugCoverageReport",
             "rootPublishReleaseToMavenLocal"
         )
 

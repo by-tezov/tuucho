@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlin.concurrent.atomics.AtomicInt
 import kotlin.concurrent.atomics.incrementAndFetch
 
@@ -20,20 +21,22 @@ internal class ImageLoaderSource(
     private val platformContext: PlatformContext,
     private val imageFetchers: ImageFetcherRegistryProtocol
 ) {
-    fun retrieve(
+    suspend fun retrieve(
         requests: List<ImageRequest>
-    ): Flow<ImageResponse> = callbackFlow {
-        val requestRemaining = requests.filterNot {
-            shouldBeExcluded(it, requests)
-        }
-        if (requestRemaining.isEmpty()) {
-            close(DataException.Default("all image request exclude themself"))
-            return@callbackFlow
-        }
-        val counter = AtomicInt(0)
-        val counterEnd = requestRemaining.size
-        requestRemaining.forEach { enqueue(it, counter, counterEnd) }
-        awaitClose { }
+    ): Flow<ImageResponse> = coroutineScopes.io.withContext {
+        callbackFlow {
+            val requestRemaining = requests.filterNot {
+                shouldBeExcluded(it, requests)
+            }
+            if (requestRemaining.isEmpty()) {
+                close(DataException.Default("all image request exclude themself"))
+                return@callbackFlow
+            }
+            val counter = AtomicInt(0)
+            val counterEnd = requestRemaining.size
+            requestRemaining.forEach { enqueue(it, counter, counterEnd) }
+            awaitClose { }
+        }.flowOn(coroutineScopes.io.dispatcher)
     }
 
     private fun ProducerScope<ImageResponse>.enqueue(
@@ -43,8 +46,8 @@ internal class ImageLoaderSource(
     ) {
         val coilRequest = coil3.request.ImageRequest
             .Builder(platformContext)
-            .fetcherCoroutineContext(coroutineScopes.image.context)
-            .decoderCoroutineContext(coroutineScopes.image.context)
+            .fetcherCoroutineContext(coroutineScopes.io.dispatcher)
+            .decoderCoroutineContext(coroutineScopes.default.dispatcher)
             .fetcherFactory(imageFetchers.get(request.command))
             .data(request)
             .diskCacheKey(request.cacheKey)

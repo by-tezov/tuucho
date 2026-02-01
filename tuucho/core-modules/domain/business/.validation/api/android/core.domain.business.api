@@ -1,3 +1,12 @@
+public final class com/tezov/tuucho/core/domain/business/_system/coroutine/CoroutineScope : com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
+	public fun <init> (Ljava/lang/String;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol;)V
+	public fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
+	public fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
+	public fun withContext (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class com/tezov/tuucho/core/domain/business/_system/koin/Associate {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/_system/koin/Associate;
 	public final fun associate (Lorg/koin/core/definition/KoinDefinition;Lkotlin/reflect/KClass;)Lorg/koin/core/definition/KoinDefinition;
@@ -156,7 +165,7 @@ public final class com/tezov/tuucho/core/domain/business/exception/DomainExcepti
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor {
-	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;)V
+	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context {
@@ -782,12 +791,10 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/IdS
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema;
 	public static final field root Ljava/lang/String;
-	public final fun cacheKey (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 }
 
 public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema$Key {
 	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema$Key;
-	public static final field cacheKey Ljava/lang/String;
 	public static final field id Ljava/lang/String;
 	public static final field source Ljava/lang/String;
 	public static final field tags Ljava/lang/String;
@@ -798,14 +805,12 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/material/Ima
 
 public class com/tezov/tuucho/core/domain/business/jsonSchema/material/ImageSchema$OpenScope : com/tezov/tuucho/core/domain/business/jsonSchema/_system/OpenSchemaScope {
 	public fun <init> (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SchemaScopeArgument;)V
-	public final fun getCacheKey ()Ljava/lang/String;
 	public final fun getId ()Lkotlinx/serialization/json/JsonElement;
 	public fun getRoot ()Ljava/lang/String;
 	public final fun getSource ()Ljava/lang/String;
 	public final fun getTags ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate;
 	public final fun getTagsExcluder ()Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate;
 	public final fun getType ()Ljava/lang/String;
-	public final fun setCacheKey (Ljava/lang/String;)V
 	public final fun setId (Lkotlinx/serialization/json/JsonElement;)V
 	public final fun setSource (Ljava/lang/String;)V
 	public final fun setTags (Lcom/tezov/tuucho/core/domain/business/jsonSchema/_system/SetStringDelegate;)V
@@ -1717,36 +1722,14 @@ public final class com/tezov/tuucho/core/domain/business/jsonSchema/response/Typ
 	public static final field text Ljava/lang/String;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/middleware/ActionMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
-	public abstract fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;)Z
-	public abstract fun getPriority ()I
-}
-
-public final class com/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;
-	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;)Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Context;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getActionModel ()Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;
-	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;
-	public final fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Priority {
-	public static final field DEFAULT I
-	public static final field HIGH I
-	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/middleware/ActionMiddleware$Priority;
-	public static final field LOW I
-}
-
 public final class com/tezov/tuucho/core/domain/business/middleware/MiddlewareExecutor : com/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol {
 	public fun <init> ()V
-	public fun process (Lkotlinx/coroutines/flow/FlowCollector;Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun process (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/domain/business/middleware/MiddlewareExecutorWithReturn : com/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocolWithReturn {
+	public fun <init> ()V
+	public fun process (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware {
@@ -1800,7 +1783,34 @@ public abstract interface class com/tezov/tuucho/core/domain/business/middleware
 	public abstract fun process (Ljava/lang/Throwable;Lcom/tezov/tuucho/core/domain/business/middleware/NavigationMiddleware$ToUrl$Context;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+public final class com/tezov/tuucho/core/domain/business/middleware/PassThroughProducerScope : kotlinx/coroutines/channels/ProducerScope {
+	public fun <init> (Lkotlinx/coroutines/channels/ProducerScope;Lkotlin/jvm/functions/Function2;)V
+	public fun close (Ljava/lang/Throwable;)Z
+	public fun getChannel ()Lkotlinx/coroutines/channels/SendChannel;
+	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public fun getOnSend ()Lkotlinx/coroutines/selects/SelectClause2;
+	public fun invokeOnClose (Lkotlin/jvm/functions/Function1;)V
+	public fun isClosedForSend ()Z
+	public fun offer (Ljava/lang/Object;)Z
+	public fun send (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun trySend-JP2dKIU (Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/RetrieveImageMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn {
+}
+
+public final class com/tezov/tuucho/core/domain/business/middleware/RetrieveImageMiddleware$Context {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input;)Lcom/tezov/tuucho/core/domain/business/middleware/RetrieveImageMiddleware$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/middleware/RetrieveImageMiddleware$Context;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/middleware/RetrieveImageMiddleware$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn {
 }
 
 public final class com/tezov/tuucho/core/domain/business/middleware/SendDataMiddleware$Context {
@@ -1949,8 +1959,8 @@ public final class com/tezov/tuucho/core/domain/business/model/image/ImageModel 
 	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
 	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCacheKey ()Ljava/lang/String;
 	public final fun getCommand ()Ljava/lang/String;
+	public final fun getId ()Ljava/lang/String;
 	public final fun getQuery ()Lkotlinx/serialization/json/JsonElement;
 	public final fun getTags ()Ljava/util/Set;
 	public final fun getTagsExcluder ()Ljava/util/Set;
@@ -1963,6 +1973,7 @@ public final class com/tezov/tuucho/core/domain/business/model/image/ImageModel$
 	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
 	public final fun from (Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
 	public static synthetic fun from$default (Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
+	public static synthetic fun from$default (Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/model/image/ImageModel;
 	public final fun toJsonElement (Ljava/lang/String;)Lkotlinx/serialization/json/JsonElement;
 }
 
@@ -1986,19 +1997,65 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/A
 	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/ActionMiddlewareProtocol : com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
+	public abstract fun accept (Lcom/tezov/tuucho/core/domain/business/interaction/navigation/NavigationRoute;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;)Z
+	public abstract fun getPriority ()I
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/ActionMiddlewareProtocol$Context {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public final fun component2 ()Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;
+	public final fun component3 ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;)Lcom/tezov/tuucho/core/domain/business/protocol/ActionMiddlewareProtocol$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/ActionMiddlewareProtocol$Context;Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/ActionMiddlewareProtocol$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActionModel ()Lcom/tezov/tuucho/core/domain/business/model/action/ActionModel;
+	public final fun getInput ()Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/ProcessActionUseCase$Input;
+	public final fun getLockable ()Lcom/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/ActionMiddlewareProtocol$Priority {
+	public static final field DEFAULT I
+	public static final field HIGH I
+	public static final field INSTANCE Lcom/tezov/tuucho/core/domain/business/protocol/ActionMiddlewareProtocol$Priority;
+	public static final field LOW I
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol {
+	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol$Context;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol$Context {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol$Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol$Context;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getThrowable ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
+	public abstract fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public abstract fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
+	public abstract fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
+	public abstract fun withContext (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol {
-	public abstract fun getAction ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getDatabase ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getDefault ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getEvent ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getImage ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getIo ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getMain ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getNavigation ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getNetwork ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getParser ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getRenderer ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
-	public abstract fun getUseCase ()Lcom/tezov/tuucho/core/domain/tool/async/CoroutineContextProtocol;
+	public abstract fun getDefault ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public abstract fun getIo ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public abstract fun getMain ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public abstract fun getUnconfined ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/FormValidatorProtocol : com/tezov/tuucho/core/domain/business/protocol/ValidatorProtocol {
@@ -2019,26 +2076,34 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/I
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol$Companion;
-	public abstract fun process (Lkotlinx/coroutines/flow/FlowCollector;Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun process (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol$Companion {
-	public final fun process (Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;Ljava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocolWithReturn {
+	public abstract fun process (Ljava/util/List;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol {
-	public abstract fun process (Lkotlinx/coroutines/flow/FlowCollector;Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun process (Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next {
-	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next$Companion;
-	public abstract fun invoke (Lkotlinx/coroutines/flow/FlowCollector;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next$Companion {
-	public final fun intercept (Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next;Ljava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
-	public final fun invoke (Lkotlinx/coroutines/flow/FlowCollector;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocol$Next;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn {
+	public abstract fun process (Lkotlinx/coroutines/channels/ProducerScope;Ljava/lang/Object;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn$Next;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn$Next {
+	public static final field Companion Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn$Next$Companion;
+	public abstract fun invoke (Lkotlinx/coroutines/channels/ProducerScope;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn$Next$Companion {
+	public final fun intercept (Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn$Next;Ljava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public final fun invoke (Lkotlinx/coroutines/channels/ProducerScope;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn$Next;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun passThrough (Lkotlinx/coroutines/channels/ProducerScope;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareProtocolWithReturn$Next;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/NavigationDefinitionSelectorMatcherProtocol {
@@ -2075,7 +2140,7 @@ public abstract interface class com/tezov/tuucho/core/domain/business/protocol/V
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol {
-	public abstract fun process (Ljava/util/List;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun process (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol$Image {
@@ -2451,10 +2516,10 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Ref
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Sync {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol;)V
-	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input;)Lkotlinx/coroutines/flow/Flow;
-	public synthetic fun invoke (Ljava/lang/Object;)Ljava/lang/Object;
+public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/ImageRepositoryProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocolWithReturn;Ljava/util/List;)V
+	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/RetrieveImageUseCase$Input {
@@ -2486,7 +2551,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/Ret
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase : com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$SendDataAndRetrieve;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/repository/MaterialRepositoryProtocol$SendDataAndRetrieve;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocolWithReturn;Ljava/util/List;)V
 	public fun invoke (Lcom/tezov/tuucho/core/domain/business/usecase/withNetwork/SendDataUseCase$Input;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -2702,7 +2767,7 @@ public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/
 }
 
 public final class com/tezov/tuucho/core/domain/business/usecase/withoutNetwork/NavigateFinishUseCase : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinComponent, com/tezov/tuucho/core/domain/business/protocol/UseCaseProtocol$Async {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/MiddlewareExecutorProtocol;Ljava/util/List;)V
 	public fun getKoin ()Lorg/koin/core/Koin;
 	public synthetic fun invoke (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (Lkotlin/Unit;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

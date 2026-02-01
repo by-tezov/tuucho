@@ -20,8 +20,8 @@ internal class JsonObjectQueries(
     fun selectAll(
         table: Table
     ) = when (table) {
-        Table.Common -> queriesCommon.selectAll()
-        Table.Contextual -> queriesContextual.selectAll()
+        Table.Common -> queriesCommon.selectAll().executeAsList().map { it.toEntity() }
+        Table.Contextual -> queriesContextual.selectAll().executeAsList().map { it.toEntity() }
     }
 
     fun deleteAll() {

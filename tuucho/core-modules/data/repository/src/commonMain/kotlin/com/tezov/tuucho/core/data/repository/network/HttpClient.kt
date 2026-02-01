@@ -44,6 +44,11 @@ class HttpClient(
         jsonObject: JsonObject?
     ) = with(config) {
         httpClient.post(url) {
+            timeout {
+                requestTimeoutMillis = jsonRequestTimeoutMillis
+                connectTimeoutMillis = jsonRequestTimeoutMillis
+                socketTimeoutMillis = jsonRequestTimeoutMillis
+            }
             contentType(ContentType.Application.Json)
             jsonObject?.let {
                 setBody(

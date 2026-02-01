@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.mock.MockActionMiddleware
 import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
@@ -15,8 +15,6 @@ import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.MokkeryMatcherScope
-import dev.mokkery.matcher.any
-import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
@@ -67,7 +65,7 @@ class ActionExecutorTest {
 
     fun MokkeryMatcherScope.matchesCommand(
         command: String
-    ) = matches<ActionMiddleware.Context> {
+    ) = matches<ActionMiddlewareProtocol.Context> {
         it.actionModel.command == command
     }
 
@@ -75,7 +73,7 @@ class ActionExecutorTest {
     fun `process JsonElement with no accepting middleware returns null`() = coroutineTestScope.run {
         val actionModel = ActionModel.from("cmd://auth/target")
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
         middlewareFirst._accept = false
         middlewareFirst.spy = spy
 
@@ -93,7 +91,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
         verifyNoMoreCalls(spy)
     }
@@ -109,8 +107,8 @@ class ActionExecutorTest {
         val newLock = InteractionLock("req", "new", InteractionLockType.Screen)
         val acquiredLockable = InteractionLockable.Lock(listOf(existingLock, newLock))
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        middlewareFirst._priority = ActionMiddleware.Priority.DEFAULT
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        middlewareFirst._priority = ActionMiddlewareProtocol.Priority.DEFAULT
         middlewareFirst._accept = true
         middlewareFirst.spy = spy
 
@@ -130,7 +128,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
             interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority)
             interactionLockResolver.acquire(any(), any())
             spy.invoke(matches {
@@ -145,16 +143,16 @@ class ActionExecutorTest {
     fun `process JsonElement calls accepting middlewares sorted by priority`() = coroutineTestScope.run {
         val actionModel = ActionModel.from("cmd://auth/target")
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        middlewareFirst._priority = ActionMiddleware.Priority.DEFAULT
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        middlewareFirst._priority = ActionMiddlewareProtocol.Priority.DEFAULT
         middlewareFirst._accept = true
         middlewareFirst.spy = spy
 
-        middlewareSecond._priority = ActionMiddleware.Priority.HIGH
+        middlewareSecond._priority = ActionMiddlewareProtocol.Priority.HIGH
         middlewareSecond._accept = true
         middlewareSecond.spy = spy
 
-        middlewareThird._priority = ActionMiddleware.Priority.LOW
+        middlewareThird._priority = ActionMiddlewareProtocol.Priority.LOW
         middlewareThird._accept = true
         middlewareThird.spy = spy
 
@@ -171,7 +169,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
             interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority)
             interactionLockResolver.acquire(any(), any())
             spy.invoke(matchesCommand("second"))
@@ -195,7 +193,7 @@ class ActionExecutorTest {
         sut.process(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            coroutineTestScope.mock.action.await<Any>(any())
+            coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 }

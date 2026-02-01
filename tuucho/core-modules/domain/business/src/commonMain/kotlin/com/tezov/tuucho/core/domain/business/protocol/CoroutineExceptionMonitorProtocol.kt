@@ -1,13 +1,13 @@
-package com.tezov.tuucho.core.domain.tool.async
+package com.tezov.tuucho.core.domain.business.protocol
 
-interface CoroutineExceptionMonitor {
+interface CoroutineExceptionMonitorProtocol {
     data class Context(
         val name: String,
         val id: String,
         val throwable: Throwable
     )
 
-    fun process(
+    suspend fun process(
         context: Context
     )
 }

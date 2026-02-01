@@ -1,10 +1,10 @@
 package com.tezov.tuucho.core.data.repository.di
 
+import com.tezov.tuucho.core.data.repository._system.SystemInformation
 import com.tezov.tuucho.core.data.repository._system.SystemInformationIos
 import com.tezov.tuucho.core.data.repository._system.SystemPlatform
 import com.tezov.tuucho.core.data.repository._system.SystemPlatformIos
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryIos
-import com.tezov.tuucho.core.data.repository.repository.SystemInformation
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol

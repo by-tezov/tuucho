@@ -68,7 +68,7 @@ internal class ContextualShadowerMaterialSource(
 
     override suspend fun onDone() = map
         .map { (url, jsonObjects) ->
-            coroutineScopes.parser.async(
+            coroutineScopes.default.async(
                 throwOnFailure = false
             ) {
                 downloadAndCache(url)
@@ -112,14 +112,12 @@ internal class ContextualShadowerMaterialSource(
             context = AssemblerProtocol.Context(
                 url = url,
                 findAllRefOrNullFetcher = { from, type ->
-                    coroutineScopes.database.await {
-                        materialDatabaseSource.getAllRefOrNull(
-                            from = from,
-                            url = url,
-                            type = type,
-                            visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
-                        )
-                    }
+                    materialDatabaseSource.getAllRefOrNull(
+                        from = from,
+                        url = url,
+                        type = type,
+                        visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
+                    )
                 }
             ),
             materialObject = jsonObject

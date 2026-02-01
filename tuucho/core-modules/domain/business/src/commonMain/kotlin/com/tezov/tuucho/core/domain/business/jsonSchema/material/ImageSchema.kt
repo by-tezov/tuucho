@@ -11,7 +11,6 @@ object ImageSchema {
     object Key {
         const val id = IdSchema.root
         const val type = TypeSchema.root
-        const val cacheKey = "cache-key"
         const val source = "source"
         const val tags = "tags"
         const val tagsExcluder = "tags-excluder"
@@ -40,14 +39,8 @@ object ImageSchema {
 
         var id by delegate<JsonElement>(Key.id)
         var type by delegate<String?>(Key.type)
-        var cacheKey by delegate<String?>(Key.cacheKey)
         var source by delegate<String?>(Key.source)
         var tags by delegate<SetStringDelegate?>(Key.tags)
         var tagsExcluder by delegate<SetStringDelegate?>(Key.tagsExcluder)
     }
-
-    fun cacheKey(
-        url: String,
-        id: String
-    ) = "$url+$id"
 }

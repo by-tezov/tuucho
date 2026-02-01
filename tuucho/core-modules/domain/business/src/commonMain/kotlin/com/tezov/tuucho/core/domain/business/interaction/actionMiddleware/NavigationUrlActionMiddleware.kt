@@ -1,22 +1,20 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware.Context
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.Context
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
-import kotlinx.coroutines.flow.FlowCollector
 
 internal class NavigationUrlActionMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigateToUrl: NavigateToUrlUseCase,
-) : ActionMiddleware {
+) : ActionMiddlewareProtocol {
     override val priority: Int
-        get() = ActionMiddleware.Priority.DEFAULT
+        get() = ActionMiddlewareProtocol.Priority.DEFAULT
 
     override fun accept(
         route: NavigationRoute?,
@@ -24,9 +22,9 @@ internal class NavigationUrlActionMiddleware(
     ) = action.command == NavigateActionDefinition.Url.command &&
         action.authority == NavigateActionDefinition.Url.authority
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun process(
         context: Context,
-        next: MiddlewareProtocol.Next<Context, Unit>?
+        next: MiddlewareProtocol.Next<Context>?
     ) {
         context.actionModel.target?.let { url ->
             useCaseExecutor.await(
@@ -36,6 +34,6 @@ internal class NavigationUrlActionMiddleware(
                 )
             )
         }
-        next.invoke(context)
+        next?.invoke(context)
     }
 }

@@ -2,7 +2,6 @@
 
 package com.tezov.tuucho.core.data.repository._system
 
-import com.tezov.tuucho.core.data.repository.repository.SystemInformation
 import platform.Foundation.NSThread
 
 class SystemInformationIos : SystemInformation.PlatformProtocol {

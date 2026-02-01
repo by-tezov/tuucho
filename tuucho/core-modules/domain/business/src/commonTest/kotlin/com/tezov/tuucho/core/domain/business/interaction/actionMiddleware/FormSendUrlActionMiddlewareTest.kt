@@ -5,11 +5,11 @@ import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
 import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
@@ -89,7 +89,7 @@ class FormSendUrlActionMiddlewareTest {
 
     @Test
     fun `priority returns DEFAULT`() {
-        assertEquals(ActionMiddleware.Priority.DEFAULT, sut.priority)
+        assertEquals(ActionMiddlewareProtocol.Priority.DEFAULT, sut.priority)
     }
 
     @Test
@@ -115,8 +115,8 @@ class FormSendUrlActionMiddlewareTest {
             action = action
         )
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         flow { sut.run { process(context, next) } }.collect()
 
@@ -137,8 +137,8 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         mockGetScreen(screen = null)
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         flow { sut.run { process(context, next) } }.collect()
 
@@ -203,8 +203,8 @@ class FormSendUrlActionMiddlewareTest {
         mockProcessActionAny()
 
         // ---------- next middleware ----------
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -255,8 +255,8 @@ class FormSendUrlActionMiddlewareTest {
         } returns null
 
         // ---------- next middleware ----------
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -311,8 +311,8 @@ class FormSendUrlActionMiddlewareTest {
         } returns SendDataUseCase.Output(jsonObject = responseObject)
 
         // ---------- next middleware ----------
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -396,8 +396,8 @@ class FormSendUrlActionMiddlewareTest {
         }
 
         // ---------- next middleware ----------
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -521,13 +521,13 @@ class FormSendUrlActionMiddlewareTest {
         }
 
         // ---------- next middleware ----------
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         // ---------- middleware context ----------
         val lockable = InteractionLockable.Empty
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = lockable,
             actionModel = action,
             input = ProcessActionUseCase.Input(
@@ -628,7 +628,7 @@ class FormSendUrlActionMiddlewareTest {
         actionObjectOriginal: JsonObject? = null,
         jsonElement: JsonElement? = null,
         lockable: InteractionLockable = InteractionLockable.Empty
-    ) = ActionMiddleware.Context(
+    ) = ActionMiddlewareProtocol.Context(
         lockable = lockable,
         actionModel = action,
         input = ProcessActionUseCase.Input(

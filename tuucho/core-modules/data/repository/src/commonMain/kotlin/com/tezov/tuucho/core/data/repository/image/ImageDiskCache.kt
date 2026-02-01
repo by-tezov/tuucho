@@ -46,7 +46,7 @@ internal class ImageDiskCache(
     private val diskCache = config.diskCacheSizeMo?.let { size ->
         DiskCache
             .Builder()
-            .cleanupCoroutineContext(coroutineScopes.image.context)
+            .cleanupCoroutineContext(coroutineScopes.default.dispatcher)
             .maxSizeBytes(size * 1024L * 1024L)
             .directory(systemPlatform.pathFromCacheFolder(config.diskCacheDirectory ?: "tuucho.cache-images"))
             .build()
@@ -135,8 +135,8 @@ internal class ImageDiskCache(
         cacheKeyPrefix: String
     ) {
         val diskCache = diskCache ?: return
-        val entries = imageDatabase.run { selectAll(cacheKeyPrefix) }
-        entries.forEach {
+        val entities = imageDatabase.run { selectAll(cacheKeyPrefix) }
+        entities.forEach {
             diskCache.remove(it.cacheKey)
         }
         imageDatabase.run { deleteAll(cacheKeyPrefix) }

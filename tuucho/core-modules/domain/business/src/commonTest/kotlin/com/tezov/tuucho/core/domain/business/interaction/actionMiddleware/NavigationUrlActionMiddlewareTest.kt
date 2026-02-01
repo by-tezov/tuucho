@@ -1,10 +1,10 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.middleware.ActionMiddleware
 import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
 import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
@@ -52,7 +52,7 @@ class NavigationUrlActionMiddlewareTest {
 
     @Test
     fun `priority returns DEFAULT`() {
-        assertEquals(ActionMiddleware.Priority.DEFAULT, sut.priority)
+        assertEquals(ActionMiddlewareProtocol.Priority.DEFAULT, sut.priority)
     }
 
     @Test
@@ -70,7 +70,7 @@ class NavigationUrlActionMiddlewareTest {
     fun `process calls NavigateToUrlUseCase then next`() = runTest {
         val action = ActionModel.from("navigate://url/final")
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(
@@ -80,8 +80,8 @@ class NavigationUrlActionMiddlewareTest {
             )
         )
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
 
         flow { sut.run { process(context, next) } }.collect()
@@ -100,7 +100,7 @@ class NavigationUrlActionMiddlewareTest {
     fun `process skips NavigateToUrlUseCase when no target but still calls next`() = runTest {
         val action = ActionModel.from("navigate://url")
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(
@@ -110,8 +110,8 @@ class NavigationUrlActionMiddlewareTest {
             )
         )
 
-        val spy = SpyMiddlewareNext.create<ActionMiddleware.Context>()
-        val next = MockMiddlewareNext<ActionMiddleware.Context, Unit>(spy)
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
 
         flow { sut.run { process(context, next) } }.collect()
 
@@ -125,7 +125,7 @@ class NavigationUrlActionMiddlewareTest {
     fun `process invokes NavigateToUrlUseCase and completes when next is null`() = runTest {
         val action = ActionModel.from("navigate://url/final")
 
-        val context = ActionMiddleware.Context(
+        val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(

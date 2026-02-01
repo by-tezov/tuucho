@@ -1,13 +1,11 @@
 package com.tezov.tuucho.core.domain.business.mock
 
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.tool.async.CoroutineContextProtocol
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
-import dev.mokkery.matcher.any
-import dev.mokkery.mock
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -27,7 +25,7 @@ class CoroutineTestScope {
 
     private fun createMockContext(
         currentScope: CoroutineScope
-    ) = mock<CoroutineContextProtocol> {
+    ) = mock<CoroutineScopeProtocol> {
         everySuspend {
             await(
                 block = any<suspend CoroutineScope.() -> Any?>()
@@ -70,15 +68,15 @@ class CoroutineTestScope {
         val mainScope = CoroutineScope(mainDispatcher)
 
         mock.apply {
-            every { database } returns createMockContext(ioScope)
-            every { network } returns createMockContext(ioScope)
-            every { parser } returns createMockContext(defaultScope)
-            every { renderer } returns createMockContext(defaultScope)
-            every { navigation } returns createMockContext(defaultScope)
-            every { event } returns createMockContext(defaultScope)
-            every { useCase } returns createMockContext(defaultScope)
-            every { action } returns createMockContext(defaultScope)
-            every { image } returns createMockContext(defaultScope)
+            every { io } returns createMockContext(ioScope)
+            every { io } returns createMockContext(ioScope)
+            every { default } returns createMockContext(defaultScope)
+            every { default } returns createMockContext(defaultScope)
+            every { default } returns createMockContext(defaultScope)
+            every { default } returns createMockContext(defaultScope)
+            every { default } returns createMockContext(defaultScope)
+            every { default } returns createMockContext(defaultScope)
+            every { default } returns createMockContext(defaultScope)
 
             every { default } returns createMockContext(defaultScope)
             every { main } returns createMockContext(mainScope)
@@ -95,15 +93,15 @@ class CoroutineTestScope {
 
     fun verifyNoMoreCalls() {
         dev.mokkery.verifyNoMoreCalls(
-            mock.database,
-            mock.network,
-            mock.parser,
-            mock.renderer,
-            mock.navigation,
-            mock.useCase,
-            mock.action,
-            mock.image,
-            mock.event,
+            mock.io,
+            mock.io,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
             mock.default,
             mock.main,
             mock.io,
@@ -112,15 +110,15 @@ class CoroutineTestScope {
 
     fun resetCalls() {
         dev.mokkery.resetCalls(
-            mock.database,
-            mock.network,
-            mock.parser,
-            mock.renderer,
-            mock.navigation,
-            mock.useCase,
-            mock.action,
-            mock.image,
-            mock.event,
+            mock.io,
+            mock.io,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
+            mock.default,
             mock.default,
             mock.main,
             mock.io,

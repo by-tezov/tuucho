@@ -75,7 +75,7 @@ private class ImageProjection(
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
             val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
             imageLoaded = false
-            coroutineScopes.image.async(
+            coroutineScopes.default.async(
                 throwOnFailure = true
             ) {
                 val result = useCaseExecutor.await(
