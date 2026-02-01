@@ -3,7 +3,7 @@
     <td style="vertical-align: middle; padding-right: 10px;">
       <img src="https://doc.tuucho.com/latest/assets/tuucho-logo.svg" alt="TUUCHO Logo" width="100" />
     </td>
-    <td><h1>🧩 TUUCHO - ตู้โชว์ - Rendering Engine</h1></td>
+    <td><h1>🧩 TUUCHO - ตู้โชว์ - KMP Server Application Rendering Engine</h1></td>
   </tr>
 </table>
 
@@ -15,7 +15,7 @@
 [![Ktlint 1.7.1](https://img.shields.io/badge/ktlint-1.7.1-blue.svg)](https://pinterest.github.io/ktlint/)
 [![Detekt 1.23.8](https://img.shields.io/badge/detekt-1.23.8-blue.svg)](https://detekt.dev/)
 
-**TUUCHO** is a **Kotlin Multiplatform Mobile (KMM)** rendering engine that builds native UIs for iOS and Android from structured **JSON definitions** — no recompilation required.
+**TUUCHO** is a **Kotlin Multiplatform Mobile (KMM)** server application rendering engine that builds native UIs for iOS and Android from structured **JSON definitions** — no recompilation required.
 
 ---
 
@@ -26,7 +26,7 @@ Expect frequent updates, new features, and improvements.
 
 🗺️ [**View the Roadmap**](https://doc.tuucho.com/latest/roadmap/)
 
-**Current Focus**: Now, I'm gonna start to work on the presentation layer.
+**Current Focus**: Working on image processing and display.
 
 ---
 
