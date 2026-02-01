@@ -2,8 +2,8 @@
 
 package com.tezov.tuucho.core.domain.business._system.coroutine
 
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineContextProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -13,11 +13,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class CoroutineContext(
+class CoroutineScope(
     name: String,
     override val dispatcher: CoroutineDispatcher,
     private val exceptionMonitor: CoroutineExceptionMonitorProtocol?
-) : CoroutineContextProtocol {
+) : CoroutineScopeProtocol {
     private val supervisorJob: Job = SupervisorJob()
 
     override val scope: CoroutineScope = CoroutineScope(

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.mock
 
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineContextProtocol
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
@@ -25,7 +25,7 @@ class CoroutineTestScope {
 
     private fun createMockContext(
         currentScope: CoroutineScope
-    ) = mock<CoroutineContextProtocol> {
+    ) = mock<CoroutineScopeProtocol> {
         everySuspend {
             await(
                 block = any<suspend CoroutineScope.() -> Any?>()

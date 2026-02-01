@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.data.repository.network
 
+import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
 import io.ktor.client.engine.HttpClientEngineBase
 import io.ktor.client.engine.HttpClientEngineConfig
@@ -14,9 +15,11 @@ import io.ktor.http.headersOf
 import io.ktor.util.date.GMTDate
 import io.ktor.utils.io.InternalAPI
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
 
 @OptIn(InternalAPI::class)
 internal class HttpClientEngine(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val engine: io.ktor.client.engine.HttpClientEngine,
     private val middlewareExecutor: MiddlewareExecutorProtocolWithReturn,
     private val interceptors: List<HttpInterceptor>
@@ -41,7 +44,7 @@ internal class HttpClientEngine(
             context = HttpInterceptor.Context(
                 requestBuilder = requestBuilder
             )
-        )
+        ).flowOn(coroutineScopes.io.dispatcher)
         return response.firstOrNull() ?: HttpResponseData(
             statusCode = HttpStatusCode.NoContent,
             requestTime = GMTDate(),
@@ -59,6 +62,7 @@ internal class HttpClientEngine(
 }
 
 internal class HttpClientEngineFactory<out T : HttpClientEngineConfig>(
+    private val coroutineScopes: CoroutineScopesProtocol,
     private val engineFactory: io.ktor.client.engine.HttpClientEngineFactory<T>,
     private val middlewareExecutor: MiddlewareExecutorProtocolWithReturn,
     private val interceptors: List<HttpInterceptor>
@@ -66,6 +70,7 @@ internal class HttpClientEngineFactory<out T : HttpClientEngineConfig>(
     override fun create(
         block: T.() -> Unit
     ): HttpClientEngine = HttpClientEngine(
+        coroutineScopes = coroutineScopes,
         engine = engineFactory.create(block),
         middlewareExecutor = middlewareExecutor,
         interceptors = interceptors,

@@ -15,6 +15,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUs
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonArray
 
@@ -63,7 +64,9 @@ class RetrieveImageUseCase<S : Any>(
                 context = RetrieveImageMiddleware.Context(
                     input = input,
                 )
-            ).firstOrNull()
+            )
+            .flowOn(coroutineScopes.io.dispatcher)
+            .firstOrNull()
     }
 
     private fun terminalMiddleware(): RetrieveImageMiddleware<S> = RetrieveImageMiddleware<S> { context, _ ->

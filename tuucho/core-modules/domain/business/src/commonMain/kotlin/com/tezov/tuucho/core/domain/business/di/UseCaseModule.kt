@@ -83,6 +83,7 @@ internal object UseCaseModule {
 
         factory<SendDataUseCase> {
             SendDataUseCase(
+                coroutineScopes = get(),
                 sendDataAndRetrieveMaterialRepository = get(),
                 middlewareExecutor = get(),
                 sendDataMiddlewares = getAllOrdered()
