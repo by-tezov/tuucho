@@ -34,7 +34,6 @@ compose = "1.10.0"
 compose-material3 = "1.9.0"
 
 #lib - android
-compose-activity = "1.12.2"
 compose-navigationevent = "1.0.0"
 compose-ui-tooling = "1.10.2"
 datastore-preferences = "1.2.0"

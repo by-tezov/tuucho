@@ -68,9 +68,7 @@ internal class ContextualShadowerMaterialSource(
 
     override suspend fun onDone() = map
         .map { (url, jsonObjects) ->
-            coroutineScopes.default.async(
-                throwOnFailure = false
-            ) {
+            coroutineScopes.default.async {
                 downloadAndCache(url)
                 jsonObjects.assembleAll(url).also {
                     val lifetime = materialCacheLocalSource.getLifetime(url)

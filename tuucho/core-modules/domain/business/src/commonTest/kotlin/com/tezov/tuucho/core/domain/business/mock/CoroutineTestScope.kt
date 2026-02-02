@@ -2,10 +2,13 @@ package com.tezov.tuucho.core.domain.business.mock
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -27,7 +30,7 @@ class CoroutineTestScope {
         currentScope: CoroutineScope
     ) = mock<CoroutineScopeProtocol> {
         everySuspend {
-            await(
+            withContext(
                 block = any<suspend CoroutineScope.() -> Any?>()
             )
         } calls { args ->
@@ -36,12 +39,22 @@ class CoroutineTestScope {
         }
 
         every {
-            async(
-                throwOnFailure = true,
-                block = any<suspend CoroutineScope.() -> Any?>()
-            )
+            async(block = any<suspend CoroutineScope.() -> Any?>())
         } calls { args ->
-            val block = args.arg(1) as suspend CoroutineScope.() -> Any?
+            val block = args.arg(0) as suspend CoroutineScope.() -> Any?
+            val deferred = CompletableDeferred<Any?>()
+            currentScope.launch {
+                val result = block(currentScope)
+                deferred.complete(result)
+            }
+            deferred
+        }
+
+        @OptIn(TuuchoInternalApi::class)
+        every {
+            asyncOnCompletionThrowing(block = any<suspend CoroutineScope.() -> Any?>())
+        } calls { args ->
+            val block = args.arg(0) as suspend CoroutineScope.() -> Any?
             val deferred = CompletableDeferred<Any?>()
             currentScope.launch {
                 val result = block(currentScope)
@@ -51,7 +64,7 @@ class CoroutineTestScope {
         }
 
         every { scope } returns currentScope
-        every { context } returns currentScope.coroutineContext
+        every { dispatcher } returns StandardTestDispatcher(scheduler)
     }
 
     private fun attach(
@@ -69,18 +82,8 @@ class CoroutineTestScope {
 
         mock.apply {
             every { io } returns createMockContext(ioScope)
-            every { io } returns createMockContext(ioScope)
-            every { default } returns createMockContext(defaultScope)
-            every { default } returns createMockContext(defaultScope)
-            every { default } returns createMockContext(defaultScope)
-            every { default } returns createMockContext(defaultScope)
-            every { default } returns createMockContext(defaultScope)
-            every { default } returns createMockContext(defaultScope)
-            every { default } returns createMockContext(defaultScope)
-
             every { default } returns createMockContext(defaultScope)
             every { main } returns createMockContext(mainScope)
-            every { io } returns createMockContext(ioScope)
         }
     }
 
@@ -94,34 +97,16 @@ class CoroutineTestScope {
     fun verifyNoMoreCalls() {
         dev.mokkery.verifyNoMoreCalls(
             mock.io,
-            mock.io,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
             mock.default,
             mock.main,
-            mock.io,
         )
     }
 
     fun resetCalls() {
         dev.mokkery.resetCalls(
             mock.io,
-            mock.io,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
-            mock.default,
             mock.default,
             mock.main,
-            mock.io,
         )
     }
 

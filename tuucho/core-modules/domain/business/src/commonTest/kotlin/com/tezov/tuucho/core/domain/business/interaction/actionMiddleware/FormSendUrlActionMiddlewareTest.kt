@@ -5,8 +5,8 @@ import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionFormSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
-import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
-import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.middleware.MockMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.middleware.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
@@ -27,8 +27,6 @@ import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -116,9 +114,9 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         verify(VerifyMode.exhaustiveOrder) {
             spy.invoke(context)
@@ -138,9 +136,9 @@ class FormSendUrlActionMiddlewareTest {
 
         mockGetScreen(screen = null)
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -164,7 +162,7 @@ class FormSendUrlActionMiddlewareTest {
             action = action
         )
 
-        flow { sut.run { process(context, null) } }.collect()
+        sut.run { process(context, null) }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -204,7 +202,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- next middleware ----------
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -213,7 +211,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -256,7 +254,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- next middleware ----------
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -265,7 +263,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -312,7 +310,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- next middleware ----------
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -321,7 +319,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -397,7 +395,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- next middleware ----------
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
         // ---------- middleware context ----------
         val context = createContext(
@@ -407,7 +405,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -522,7 +520,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- next middleware ----------
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
         // ---------- middleware context ----------
         val lockable = InteractionLockable.Empty
@@ -540,7 +538,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -602,7 +600,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- Test: expect DomainException from null target in SendData input ----------
         assertFailsWith<DomainException> {
-            flow { sut.run { process(context, null) } }.collect()
+            sut.run { process(context, null) }
         }
 
         // ---------- Verify the single await call so tearDown's verifyNoMoreCalls passes ----------

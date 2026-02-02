@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
@@ -75,9 +76,8 @@ private class ImageProjection(
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
             val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
             imageLoaded = false
-            coroutineScopes.default.async(
-                throwOnFailure = true
-            ) {
+            @OptIn(TuuchoInternalApi::class)
+            coroutineScopes.default.asyncOnCompletionThrowing {
                 val result = useCaseExecutor.await(
                     useCase = retrieveImage,
                     input = RetrieveImageUseCase.Input.create(

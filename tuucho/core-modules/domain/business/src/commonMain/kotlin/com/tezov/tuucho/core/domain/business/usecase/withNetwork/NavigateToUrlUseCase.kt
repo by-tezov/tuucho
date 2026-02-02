@@ -22,6 +22,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase.Input
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationDefinitionSelectorMatcherFactoryUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -139,9 +140,7 @@ class NavigateToUrlUseCase(
             ?.navigateForward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
-            val job = coroutineScopes.default.async(
-                throwOnFailure = false
-            ) {
+            val job = coroutineScopes.default.async {
                 suspend fun process() {
                     val jsonObjects = shadowerMaterialRepository
                         .process(
@@ -162,6 +161,7 @@ class NavigateToUrlUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
+                @OptIn(TuuchoInternalApi::class)
                 coroutineScopes.default.throwOnFailure(job)
             }
         }
