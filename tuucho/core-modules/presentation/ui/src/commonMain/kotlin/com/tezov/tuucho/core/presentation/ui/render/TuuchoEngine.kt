@@ -20,6 +20,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.rememberAnimationProgress
 import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
@@ -103,9 +104,8 @@ class TuuchoEngine(
     private fun onRequestTransitionEvent(
         event: Event.RequestTransition
     ) {
-        coroutineScopes.default.async(
-            throwOnFailure = true
-        ) {
+        @OptIn(TuuchoInternalApi::class)
+        coroutineScopes.default.asyncOnCompletionThrowing {
             @Suppress("UNCHECKED_CAST")
             foregroundGroup = Group(
                 screens = useCaseExecutor
@@ -136,9 +136,8 @@ class TuuchoEngine(
     private fun onIdleEvent(
         event: Event.Idle
     ) {
-        coroutineScopes.default.async(
-            throwOnFailure = true
-        ) {
+        @OptIn(TuuchoInternalApi::class)
+        coroutineScopes.default.asyncOnCompletionThrowing {
             @Suppress("UNCHECKED_CAST")
             foregroundGroup = Group(
                 screens = useCaseExecutor
@@ -193,10 +192,9 @@ class TuuchoEngine(
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
             LaunchedEffect(redrawTrigger.intValue) {
+                @OptIn(TuuchoInternalApi::class)
                 coroutineScopes.default
-                    .async(
-                        throwOnFailure = true
-                    ) {
+                    .asyncOnCompletionThrowing {
                         animationProgress.events.once {
                             useCaseExecutor.async(
                                 useCase = notifyNavigationTransitionCompleted,

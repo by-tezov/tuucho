@@ -1,6 +1,7 @@
 public final class com/tezov/tuucho/core/domain/business/_system/coroutine/CoroutineScope : com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
 	public fun <init> (Ljava/lang/String;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol;)V
-	public fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun asyncOnCompletionThrowing (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
@@ -2044,7 +2045,8 @@ public final class com/tezov/tuucho/core/domain/business/protocol/CoroutineExcep
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
-	public abstract fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public abstract fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public abstract fun asyncOnCompletionThrowing (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public abstract fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public abstract fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V

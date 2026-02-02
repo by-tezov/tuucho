@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.mock
+package com.tezov.tuucho.core.domain.business.mock.middleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
@@ -6,11 +6,10 @@ import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
-import kotlinx.coroutines.flow.FlowCollector
 
-typealias ProcessActionMiddlewareTypeAlias = suspend FlowCollector<Unit>.(
+typealias ProcessActionMiddlewareTypeAlias = suspend (
     context: ActionMiddlewareProtocol.Context,
-    next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context, Unit>?
+    next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context>?
 ) -> Unit
 
 class MockActionMiddleware(
@@ -40,10 +39,10 @@ class MockActionMiddleware(
         action: ActionModel
     ) = _accept ?: error("mock accept not set")
 
-    override suspend fun FlowCollector<Unit>.process(
+    override suspend fun process(
         context: ActionMiddlewareProtocol.Context,
-        next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context, Unit>?
+        next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context>?
     ) {
-        process.invoke(this@process, context, next)
+        process.invoke(context, next)
     }
 }

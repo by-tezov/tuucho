@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
-import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.middleware.MockMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.middleware.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -17,8 +17,6 @@ import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -81,10 +79,10 @@ class NavigationUrlActionMiddlewareTest {
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -111,9 +109,9 @@ class NavigationUrlActionMiddlewareTest {
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.run { process(context, next) }
 
         verify(VerifyMode.exhaustiveOrder) {
             spy.invoke(context)
@@ -137,7 +135,7 @@ class NavigationUrlActionMiddlewareTest {
 
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        flow { sut.run { process(context, null) } }.collect()
+        sut.run { process(context, null) }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(

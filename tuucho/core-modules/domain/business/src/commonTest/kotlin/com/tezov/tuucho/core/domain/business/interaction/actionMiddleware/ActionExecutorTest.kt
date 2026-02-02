@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
-import com.tezov.tuucho.core.domain.business.mock.MockActionMiddleware
-import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareExecutor
-import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.middleware.MockActionMiddleware
+import com.tezov.tuucho.core.domain.business.mock.middleware.MockMiddlewareExecutor
+import com.tezov.tuucho.core.domain.business.mock.middleware.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
@@ -15,6 +15,8 @@ import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.MokkeryMatcherScope
+import dev.mokkery.matcher.any
+import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
@@ -131,9 +133,7 @@ class ActionExecutorTest {
             coroutineTestScope.mock.default.withContext<Any>(any())
             interactionLockRegistry.lockTypeFor(actionModel.command, actionModel.authority)
             interactionLockResolver.acquire(any(), any())
-            spy.invoke(matches {
-                it.actionModel.command == "first"
-            })
+            spy.invoke(matchesCommand("first"))
             interactionLockResolver.release(any(), acquiredLockable)
         }
         verifyNoMoreCalls(spy)

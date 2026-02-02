@@ -1,6 +1,13 @@
 package com.tezov.tuucho.sample.shared._system
 
+import co.touchlab.kermit.CommonWriter
+import co.touchlab.kermit.LogWriter
+import co.touchlab.kermit.LoggerConfig
+import co.touchlab.kermit.Severity
+import co.touchlab.kermit.StaticConfig
+import co.touchlab.kermit.platformLogWriter
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
+import kotlin.collections.listOf
 import co.touchlab.kermit.Logger as Kermit
 
 class Logger(
@@ -9,6 +16,14 @@ class Logger(
     private val tag: String = ""
 ) {
 
+    private val kermit = Kermit(
+        config = StaticConfig(
+            minSeverity = Severity.Verbose,
+            logWriterList = listOf(CommonWriter())
+//            logWriterList = listOf(platformLogWriter()) // seem to bug on ios cause I don't see the debug level
+        )
+    )
+
     fun withTag(tag: String) = Logger(systemInformation, exceptionVerbose, tag.full())
 
     private fun String.full() = "${this@Logger.tag}:$this"
@@ -16,22 +31,22 @@ class Logger(
     private fun String.fullWithPrefix() = "$|>${full()}"
 
     fun debug(tag: String = "", message: () -> Any) {
-        Kermit.d(tag = tag.fullWithPrefix(), null, message = { "${message()}" })
+        kermit.d(tag = tag.fullWithPrefix(), throwable = null, message = { "${message()}" })
     }
 
     fun warning(tag: String = "", message: () -> Any) {
-        Kermit.w(tag = tag.fullWithPrefix(), null, message = { "${message()}" })
+        kermit.w(tag = tag.fullWithPrefix(), throwable = null, message = { "${message()}" })
     }
 
     fun info(tag: String = "", message: () -> Any) {
-        Kermit.i(tag = tag.fullWithPrefix(), null, message = { "${message()}" })
+        kermit.i(tag = tag.fullWithPrefix(), throwable = null, message = { "${message()}" })
     }
 
     fun exception(tag: String = "", throwable: Throwable? = null, message: () -> Any) {
         if (exceptionVerbose) {
-            Kermit.e(tag = tag.fullWithPrefix(), throwable, message = { "${message()}" })
+            kermit.e(tag = tag.fullWithPrefix(), throwable = throwable, message = { "${message()}" })
         } else {
-            Kermit.e(tag = tag.fullWithPrefix(), null, message = { "${message()}: $throwable" })
+            kermit.e(tag = tag.fullWithPrefix(), throwable = null, message = { "${message()}: $throwable" })
         }
     }
 

@@ -16,24 +16,24 @@ class ImageModelTest {
 
     @Test
     fun `from parses command and target`() {
-        val model = ImageModel.from("load://file.png", "cache1", null, null)
+        val model = ImageModel.from("load://file.png", "id", null, null)
         assertEquals("load", model.command)
         assertEquals("file.png", model.target)
         assertNull(model.query)
-        assertEquals("cache1", model.cacheKey)
+        assertEquals("id", model.id)
         assertNull(model.tags)
         assertNull(model.tagsExcluder)
     }
 
     @Test
     fun `from parses command target and query`() {
-        val model = ImageModel.from("load://file.png?a=1&b=2", "cache1", setOf("tag1"), setOf("exclude1"))
+        val model = ImageModel.from("load://file.png?a=1&b=2", "id", setOf("tag1"), setOf("exclude1"))
         assertEquals("load", model.command)
         assertEquals("file.png", model.target)
         assertIs<JsonObject>(model.query)
         assertEquals(JsonPrimitive("1"), model.query["a"])
         assertEquals(JsonPrimitive("2"), model.query["b"])
-        assertEquals("cache1", model.cacheKey)
+        assertEquals("id", model.id)
         assertEquals(setOf("tag1"), model.tags)
         assertEquals(setOf("exclude1"), model.tagsExcluder)
     }
@@ -41,7 +41,7 @@ class ImageModelTest {
     @Test
     fun `from rejects invalid string`() {
         assertFailsWith<DomainException.Default> {
-            ImageModel.from("invalid", "cache1", null, null)
+            ImageModel.from("invalid", "id", null, null)
         }
     }
 
@@ -51,7 +51,7 @@ class ImageModelTest {
             command = "load",
             target = "file.png",
             query = "x=1&y=2",
-            cacheKey = "cache1",
+            id = "id",
             tags = setOf("tag1"),
             tagsExcluder = null
         )
@@ -59,7 +59,7 @@ class ImageModelTest {
         val query = model.query
         assertEquals(JsonPrimitive("1"), query["x"])
         assertEquals(JsonPrimitive("2"), query["y"])
-        assertEquals("cache1", model.cacheKey)
+        assertEquals("id", model.id)
         assertEquals(setOf("tag1"), model.tags)
         assertNull(model.tagsExcluder)
     }
@@ -100,29 +100,29 @@ class ImageModelTest {
 
     @Test
     fun `toString prints command and target`() {
-        val model = ImageModel("cmd", "img.png", null, "cache1", null, null)
-        assertEquals("cmd://img.png", model.toString())
+        val model = ImageModel("cmd", "img.png", null, "id", null, null)
+        assertEquals("cmd://img.png#id#", model.toString())
     }
 
     @Test
     fun `toString prints object query`() {
         val query = JsonObject(mapOf("a" to JsonPrimitive("1"), "b" to JsonPrimitive("2")))
-        val model = ImageModel("cmd", "img.png", query, "cache1", null, null)
-        assertEquals("cmd://img.png?a=1&b=2", model.toString())
+        val model = ImageModel("cmd", "img.png", query, "id", null, null)
+        assertEquals("cmd://img.png?a=1&b=2#id#", model.toString())
     }
 
     @Test
     fun `toString prints array query`() {
         val query = JsonArray(listOf(JsonPrimitive("x"), JsonPrimitive("y")))
-        val model = ImageModel("cmd", "img.png", query, "cache1", null, null)
-        assertEquals("cmd://img.png?x,y", model.toString())
+        val model = ImageModel("cmd", "img.png", query, "id", null, null)
+        assertEquals("cmd://img.png?x,y#id#", model.toString())
     }
 
     @Test
     fun `toString prints primitive query`() {
         val query = JsonPrimitive("test")
-        val model = ImageModel("cmd", "img.png", query, "cache1", null, null)
-        assertEquals("cmd://img.png?test", model.toString())
+        val model = ImageModel("cmd", "img.png", query, "id", null, null)
+        assertEquals("cmd://img.png?test#id#", model.toString())
     }
 
     @Test
@@ -131,7 +131,7 @@ class ImageModelTest {
             command = "load",
             target = "file.png",
             query = "x=1&y=2",
-            cacheKey = "cache1",
+            id = "id",
             tags = setOf("tag1"),
             tagsExcluder = setOf("exclude1")
         )
@@ -141,7 +141,7 @@ class ImageModelTest {
         assertIs<JsonObject>(model.query)
         assertEquals(JsonPrimitive("1"), model.query["x"])
         assertEquals(JsonPrimitive("2"), model.query["y"])
-        assertEquals("cache1", model.cacheKey)
+        assertEquals("id", model.id)
         assertEquals(setOf("tag1"), model.tags)
         assertEquals(setOf("exclude1"), model.tagsExcluder)
     }
@@ -152,7 +152,7 @@ class ImageModelTest {
             command = "load",
             target = "file.png",
             query = null,
-            cacheKey = "cache1",
+            id = "id",
             tags = null,
             tagsExcluder = null
         )
@@ -160,7 +160,7 @@ class ImageModelTest {
         assertEquals("load", model.command)
         assertEquals("file.png", model.target)
         assertNull(model.query)
-        assertEquals("cache1", model.cacheKey)
+        assertEquals("id", model.id)
         assertNull(model.tags)
         assertNull(model.tagsExcluder)
     }

@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.protocol
 
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -9,7 +10,6 @@ interface CoroutineScopeProtocol {
     val scope: CoroutineScope
 
     fun <T> async(
-        throwOnFailure: Boolean,
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T>
 
@@ -17,6 +17,12 @@ interface CoroutineScopeProtocol {
         block: suspend CoroutineScope.() -> T
     ): T
 
+    @TuuchoInternalApi
+    fun <T> asyncOnCompletionThrowing(
+        block: suspend CoroutineScope.() -> T,
+    ): Deferred<T>
+
+    @TuuchoInternalApi
     fun <T> throwOnFailure(
         deferred: Deferred<T>
     )
