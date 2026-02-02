@@ -20,9 +20,7 @@ class HasKeyInStoreUseCase(
 
     override suspend fun invoke(
         input: Input
-    ) = with(input) {
-        Output(
-            result = keyValueRepository.hasKey(key)
-        )
-    }
+    ) = Output(
+        result = keyValueRepository.hasKey(input.key)
+    )
 }

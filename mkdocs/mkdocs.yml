@@ -77,6 +77,7 @@ nav:
       - Dimension: object-definition/dimension.md
       - Form-Validator: object-definition/form-validator.md
       - Id: object-definition/id.md
+      - Image: object-definition/image.md
       - Option: object-definition/option.md
       - Page-Setting: object-definition/page-setting.md
       - State: object-definition/state.md
@@ -88,6 +89,7 @@ nav:
       - Form:
           - Overview: components-definition/form/index.md
           - Field: components-definition/form/field.md
+      - Image: components-definition/image.md
       - Label: components-definition/label.md
       - LayoutLinear: components-definition/layout-linear.md
       - Spacer: components-definition/spacer.md

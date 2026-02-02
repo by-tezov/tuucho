@@ -14,10 +14,10 @@ It can be useful to have a better understanding of any issue.
 ```kotlin
 class LoggerCoroutineExceptionMonitor(
     private val systemInformation: SystemInformationProtocol
-) : CoroutineExceptionMonitor {
+) : CoroutineExceptionMonitorProtocol {
     
     override fun process(
-        context: CoroutineExceptionMonitor.Context
+        context: CoroutineExceptionMonitorProtocol.Context
     ) {
         with(context) {
             println("THREAD ${systemInformation.currentThreadName()}")
@@ -42,9 +42,9 @@ This monitor allows you to observe all lock events.
 ```kotlin
 class LoggerInteractionLockMonitor(
     private val systemInformation: SystemInformationProtocol
-) : InteractionLockMonitor {
+) : InteractionLockMonitorProtocol {
 
-    override fun process(context: InteractionLockMonitor.Context) {
+    override fun process(context: InteractionLockMonitorProtocol.Context) {
         with(context) {
             println("THREAD ${systemInformation.currentThreadName()}")
             println("LOCK:$event $requester - ${if (lockTypes.isEmpty()) "nothing" else lockTypes.toString()} ")

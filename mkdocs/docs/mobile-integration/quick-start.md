@@ -12,11 +12,11 @@ In your **shared module** (`commonMain`) you need the Tuucho core library plus i
 
 ```kotlin
  commonMain.dependencies {
-    implementation("com.tezov:tuucho.core:0.0.1-alpha25_2.3.0") // for kotlin 2.3.0     
-    implementation("com.tezov:tuucho.ui-component.stable:0.0.1-alpha25_2.3.0")
-    implementation("io.insert-koin:koin-core:4.2.0-beta2")     
+    implementation("com.tezov:tuucho.core:0.0.1-alpha26_2.3.0") // for kotlin 2.3.0     
+    implementation("com.tezov:tuucho.ui-component.stable:0.0.1-alpha26_2.3.0")
+    implementation("io.insert-koin:koin-core:4.2.0-RC1")     
     implementation("io.ktor:ktor-client-core:3.3.2")
-
+    
     implementation("org.jetbrains.compose.runtime:runtime:1.10.0")
     implementation("org.jetbrains.compose.foundation:foundation:1.10.0")
     implementation("org.jetbrains.compose.ui:ui:1.10.0")
@@ -57,12 +57,14 @@ object ConfigModule {
     fun invoke() = module(ModuleContextCore.Main) {
         factory<NetworkRepositoryModule.Config> {
             object : NetworkRepositoryModule.Config {
-                override val timeoutMillis = 5000
+                override val jsonRequestTimeoutMillis = 5000
+                override val imageRequestTimeoutMillis = 15000
                 override val version = "v1"
                 override val baseUrl = "http://localhost:3000/"
                 override val healthEndpoint = "health"
                 override val resourceEndpoint = "resource"
                 override val sendEndpoint = "send"
+                override val imageEndpoint = "image"
             }
         }
     }
@@ -82,8 +84,8 @@ First you need the to add the dependencies
 ```kotlin
  dependencies {
     implementation(project(":app:shared"))
-    implementation("com.tezov:tuucho.core:0.0.1-alpha25_2.3.0") // for kotlin 2.3.0     
-    implementation("io.insert-koin:koin-core:4.2.0-beta2")
+    implementation("com.tezov:tuucho.core:0.0.1-alpha26_2.3.0") // for kotlin 2.3.0     
+    implementation("io.insert-koin:koin-core:4.2.0-RC1")
 
     implementation("androidx.activity:activity-compose:1.12.2")
  }

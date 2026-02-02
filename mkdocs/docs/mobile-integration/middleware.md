@@ -2,8 +2,9 @@
 
 Tuucho provides several middleware hooks that let you intercept and alter different parts of the system:
 - 
-- Navigation (forward & back)
+- Navigation (forward, back & finish)
 - SendData operations
+- Load Image operations
 - View updates (contextual rendering)
 
 Middleware execute **in the exact order they are declared**, thanks to `bindOrdered`. All middleware must be supplied to **ModuleContextDomain.Middleware**.
@@ -12,7 +13,7 @@ Middleware execute **in the exact order they are declared**, thanks to `bindOrde
 
 ## Navigation Middleware
 
-Tuucho provides middleware for forward and backward navigation.
+Tuucho provides middleware for forward, backward and finish navigation.
 
 ```kotlin
 object NavigationMiddleware {
@@ -38,6 +39,8 @@ object NavigationMiddleware {
             val onShadowerException: OnShadowerException?
         )
     }
+
+    fun interface Finish : MiddlewareProtocol<Unit>
 }
 ```
 
@@ -120,6 +123,88 @@ Register it:
 ```kotlin
 module(ModuleContextDomain.Middleware) {
     factoryOf(::BeforeNavigateBackMiddleware) bindOrdered NavigationMiddleware.Back::class
+}
+```
+
+Make sure to use **bindOrdered**
+
+---
+
+### Finish Navigation — `NavigationMiddleware.Finish`
+
+Use `NavigationMiddleware.Finish` to get inform that Finish use case has been trigger either by yourself on action or automatically when the navigation stack get empty.
+
+That's your responsibility to honor this demand by finishing Tuucho and/or the activity / uiController / application.
+
+```kotlin
+class NavigationFinishPublisher(
+    private val coroutineScopes: CoroutineScopesProtocol
+) {
+    private val _events = Notifier.Emitter<Unit>(
+        extraBufferCapacity = 0,
+        onBufferOverflow = BufferOverflow.SUSPEND
+    )
+    private val events get() = _events.createCollector
+
+    @OptIn(TuuchoInternalApi::class)
+    fun finish() {
+        coroutineScopes.default.asyncOnCompletionThrowing {
+            _events.emit(Unit)
+        }
+    }
+
+    @OptIn(TuuchoInternalApi::class)
+    fun onFinish(block: () -> Unit) {
+        coroutineScopes.main.asyncOnCompletionThrowing {
+            events.once { block() }
+        }
+    }
+}
+
+class NavigateFinishMiddleware(
+    private val navigationFinishPublisher: NavigationFinishPublisher
+) : NavigationMiddleware.Finish {
+
+    override suspend fun process(
+        context: Unit,
+        next: MiddlewareProtocol.Next<Unit>?,
+    ) {
+        next?.invoke(Unit)
+        navigationFinishPublisher.finish()
+    }
+}
+
+// Then inside where you start Tuucho (code available in sample application) :
+// Android
+AppScreen(
+    applicationModules = listOf(ApplicationModule.invoke(applicationContext)),
+    koinExtension = {
+        koin.get<NavigationFinishPublisher>().onFinish {
+            koin.close()
+            this@MainActivity.finish()
+        }
+    }
+)
+
+// iOS
+let vc = KMPKitKt.uiView(koinExtension: { [weak self] koinApplication in
+    guard let self = self else { return }
+    let publisher = koinApplication.tuuchoKoinIos.get(clazz: NavigationFinishPublisher.self) as! NavigationFinishPublisher
+    publisher.onFinish(block: {
+        self.coordinator?.handleKoinClosed()
+        koinApplication.tuuchoKoinIos.close()
+        self.isKoinInitialized = false
+        UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+    })
+})
+```
+
+Register it:
+
+```kotlin
+module(ModuleContextDomain.Middleware) {
+    singleOf(::NavigationFinishPublisher)
+    factoryOf(::NavigateFinishMiddleware) bindOrdered NavigationMiddleware.Finish::class
 }
 ```
 

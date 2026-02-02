@@ -12,6 +12,7 @@ All subs must be referenced by ID pointer where they are needed as replacement �
     "options": { ... },
     "contents": { ... },
     "texts": { ... },
+    "images": { ... },
     "colors": { ... },
     "dimensions": { ... },
     "actions": { ... },
@@ -29,6 +30,7 @@ Each `subs` file can contain any combination of the following keys:
 - `options` – Define data-driven value lists, such as select dropdown choices. See [Options Object Definition](../object-definition/option.md).
 - `styles` – Reusable visual rules (font-size, color, etc.) referenced by components. See [Style Object Definition](../object-definition/style.md).
 - `texts` – Translatable strings organized by group. See [Text Object Definition](../object-definition/text.md).
+- `images` – images local or remote organized by group. See [Image Object Definition](../object-definition/image.md).
 - `states` – Initial state value. See [State Object Definition](../object-definition/state.md).
 
 ---
@@ -55,6 +57,31 @@ Texts are grouped under categories (`common`, `form`, etc.) and are accessed via
 > Example: `*my-id` or `*common@my-id` are the same reference.
 
 ---
+
+## 🔤 Images
+
+```Json
+{
+    images": {
+        "common": {
+            "main-logo": "remote://lobby/logo-compose-wrong-url",
+            "main-logo-placeholder": {
+              "source": "local://img/logo-compose-placeholder",
+              "tags": "placeholder"
+            },
+            "small-logo": "local://img/logo-koin"
+        }
+    }
+}
+```
+
+Images are grouped under categories (`common`, `feat-a`, etc.) and are accessed via ID references like `*feat-a@main-logo`.
+
+> ⚠️ **Important:** `common` is the default group. If no group is specified in a reference, the system will default to searching in the `common` group.  
+> Example: `*my-id` or `*common@my-id` are the same reference.
+
+---
+
 
 ## 🎨 Colors
 

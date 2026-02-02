@@ -1,13 +1,11 @@
 ### Todo:
 
-- update doc
-
--> close alpha 25
-
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
 - error message with class name that throw.
+
+--> Continue to follow the Roadmap
 
 ### Need to fix: 
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?

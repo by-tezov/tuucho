@@ -6,21 +6,21 @@ The executor exposes two execution modes:
 
 ```kotlin
 interface UseCaseExecutorProtocol {
-    fun async(
+    fun <INPUT : Any, OUTPUT : Any> async(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
         onException: ((DomainException) -> Unit)? = null,
         onResult: OUTPUT?.() -> Unit = {},
     )
 
-    suspend fun await(
+    suspend fun <INPUT : Any, OUTPUT : Any> await(
         useCase: UseCaseProtocol<INPUT, OUTPUT>,
         input: INPUT,
     ): OUTPUT?
 }
 ```
 
-- **async** → fire & forget
+- **async** → fire & forget (or use a deferred result at another time)
 - **await** → suspends execution until the result is produced
 
 ---
@@ -70,45 +70,51 @@ class ProcessActionUseCase(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val actionExecutor: ActionExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Output> {
-    
-    sealed class Input {
-        abstract val route: NavigationRoute.Url?
-        abstract val lockable: InteractionLockable?
 
-        data class JsonElement(
-            override val route: NavigationRoute.Url?,
-            val action: ActionModelDomain,
-            override val lockable: InteractionLockable? = null,
-            val jsonElement: kotlinx.serialization.json.JsonElement? = null,
-        ) : Input()
+    data class Input(
+        val route: NavigationRoute?,
+        val models: List<ActionModel>,
+        val modelObjectOriginal: JsonElement? = null,
+        val lockable: InteractionLockable? = null,
+        val jsonElement: JsonElement? = null
+    ) {
+        companion object {
+            fun create(
+                route: NavigationRoute?,
+                modelObject: JsonObject,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = buildList { ... }
 
-        data class ActionObject(
-            override val route: NavigationRoute.Url?,
-            val actionObject: JsonObject,
-            override val lockable: InteractionLockable? = null,
-        ) : Input()
-    }
+            fun create(
+                route: NavigationRoute?,
+                models: List<ActionModel>,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = Input(
+                route = route,
+                models = models,
+                lockable = lockable,
+                jsonElement = jsonElement,
+            )
 
-    sealed class Output {
-        class Element(
-            val type: KClass<out Any>,
-            val rawValue: Any,
-        ) : Output() {
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> value(): T = rawValue as T
-
-            @Suppress("UNCHECKED_CAST")
-            inline fun <reified T> valueOrNull(): T? = rawValue as? T
+            fun create(
+                route: NavigationRoute?,
+                model: ActionModel,
+                lockable: InteractionLockable? = null,
+                jsonElement: JsonElement? = null,
+            ) = Input(
+                route = route,
+                models = listOf(model),
+                lockable = lockable,
+                jsonElement = jsonElement,
+            )
         }
-
-        class ElementArray(
-            val values: List<Output>,
-        ) : Output()
     }
 
     override suspend fun invoke(
         input: Input
-    ) = coroutineScopes.useCase.await {
+    ) {
         actionExecutor.process(input = input)
     }
 }
@@ -121,9 +127,9 @@ class ProcessActionUseCase(
 ```kotlin
 useCaseExecutor.async(
     useCase = actionHandler,
-    input = ProcessActionUseCase.Input.JsonElement(
+    input = ProcessActionUseCase.Input.create(
         route = null,
-        action = ActionModelDomain.from(
+        model = ActionModelDomain.from(
             command = NavigateAction.command,
             authority = NavigateAction.Url.authority,
             target = "target url",
@@ -154,9 +160,7 @@ class RefreshMaterialCacheUseCase(
     override suspend fun invoke(
         input: Input
     ) {
-        with(input) {
-            refreshMaterialCacheRepository.process(url)
-        }
+        refreshMaterialCacheRepository.process(input.url)
     }
 }
 ```
@@ -225,11 +229,7 @@ class RemoveKeyValueFromStoreUseCase(
 
     override suspend fun invoke(
         input: Input
-    ) = with(input) {
-        coroutineScopes.io.await {
-            keyValueRepository.save(key, null)
-        }
-    }
+    ) = keyValueRepository.save(input.key, null)
 }
 ```
 
@@ -253,13 +253,9 @@ class HasKeyInStoreUseCase(
 
     override suspend fun invoke(
         input: Input
-    ) = with(input) {
-        coroutineScopes.io.await {
-            Output(
-                result = keyValueRepository.hasKey(key)
-            )
-        }
-    }
+    ) = Output(
+        result = keyValueRepository.hasKey(input.key)
+    )
 }
 ```
 
@@ -281,9 +277,7 @@ class SaveKeyValueToStoreUseCase(
     override suspend fun invoke(
         input: Input
     ) = with(input) {
-        coroutineScopes.io.await {
-            keyValueRepository.save(key, value)
-        }
+        keyValueRepository.save(key, value)
     }
 }
 ```

@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.interaction.lock
 
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 
-interface InteractionLockMonitor {
+interface InteractionLockMonitorProtocol {
     enum class Event {
         Acquired,
         AcquireFromTry,

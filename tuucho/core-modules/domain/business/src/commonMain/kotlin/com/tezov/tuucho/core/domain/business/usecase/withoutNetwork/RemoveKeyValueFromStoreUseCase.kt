@@ -15,7 +15,5 @@ class RemoveKeyValueFromStoreUseCase(
 
     override suspend fun invoke(
         input: Input
-    ) = with(input) {
-        keyValueRepository.save(key, null)
-    }
+    ) = keyValueRepository.save(input.key, null)
 }

@@ -2,7 +2,7 @@ package com.tezov.tuucho.sample.shared.di
 
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.di.ModuleContextDomain
-import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol
 import com.tezov.tuucho.sample.shared.monitor.LoggerCoroutineExceptionMonitor
 import com.tezov.tuucho.sample.shared.monitor.LoggerInteractionLockMonitor
@@ -13,6 +13,6 @@ object MonitorModule {
 
     fun invoke() = module(ModuleContextDomain.Main) {
         factoryOf(::LoggerCoroutineExceptionMonitor) bind CoroutineExceptionMonitorProtocol::class
-        factoryOf(::LoggerInteractionLockMonitor) bind InteractionLockMonitor::class
+        factoryOf(::LoggerInteractionLockMonitor) bind InteractionLockMonitorProtocol::class
     }
 }
