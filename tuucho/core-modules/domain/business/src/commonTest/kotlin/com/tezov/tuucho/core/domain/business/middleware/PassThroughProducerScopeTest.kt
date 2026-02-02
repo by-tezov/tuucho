@@ -7,7 +7,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PassThroughProducerScopeTest {
-
     private lateinit var sut: PassThroughProducerScope<Int>
 
     @Test

@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:package-name")
+
 package com.tezov.tuucho.core.domain.business._system.coroutine
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol

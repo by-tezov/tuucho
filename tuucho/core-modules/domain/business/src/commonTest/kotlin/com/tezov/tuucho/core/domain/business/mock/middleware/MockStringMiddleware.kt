@@ -11,7 +11,6 @@ class MockStringMiddleware(
     val command: String,
     val callNext: Boolean = true
 ) : MiddlewareProtocol<Int> {
-
     var commendEcho: String? = null
     var contextEcho: Int? = null
 

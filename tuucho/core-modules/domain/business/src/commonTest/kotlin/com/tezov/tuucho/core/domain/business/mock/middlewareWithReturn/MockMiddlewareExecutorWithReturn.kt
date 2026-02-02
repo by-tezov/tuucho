@@ -15,7 +15,6 @@ class MockMiddlewareExecutorWithReturn : MiddlewareExecutorProtocolWithReturn {
         }
     }
 
-
     override suspend fun <C, R : Any> process(
         middlewares: List<MiddlewareProtocolWithReturn<C, R>>,
         context: C

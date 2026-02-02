@@ -3242,7 +3242,8 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScope
     abstract val scope // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.scope|{}scope[0]
         abstract fun <get-scope>(): kotlinx.coroutines/CoroutineScope // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.scope.<get-scope>|<get-scope>(){}[0]
 
-    abstract fun <#A1: kotlin/Any?> async(kotlin/Boolean, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.async|async(kotlin.Boolean;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> asyncOnCompletionThrowing(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.asyncOnCompletionThrowing|asyncOnCompletionThrowing(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
     abstract fun <#A1: kotlin/Any?> throwOnFailure(kotlinx.coroutines/Deferred<#A1>) // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.throwOnFailure|throwOnFailure(kotlinx.coroutines.Deferred<0:0>){0§<kotlin.Any?>}[0]
     abstract suspend fun <#A1: kotlin/Any?> withContext(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.withContext|withContext(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
@@ -3392,7 +3393,8 @@ final class com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineSco
     final val scope // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.scope|{}scope[0]
         final fun <get-scope>(): kotlinx.coroutines/CoroutineScope // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.scope.<get-scope>|<get-scope>(){}[0]
 
-    final fun <#A1: kotlin/Any?> async(kotlin/Boolean, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.async|async(kotlin.Boolean;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> async(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.async|async(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> asyncOnCompletionThrowing(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.asyncOnCompletionThrowing|asyncOnCompletionThrowing(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
     final fun <#A1: kotlin/Any?> throwOnFailure(kotlinx.coroutines/Deferred<#A1>) // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.throwOnFailure|throwOnFailure(kotlinx.coroutines.Deferred<0:0>){0§<kotlin.Any?>}[0]
     final suspend fun <#A1: kotlin/Any?> withContext(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.withContext|withContext(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
@@ -6316,7 +6318,8 @@ final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSche
 
 public final class com/tezov/tuucho/core/domain/business/_system/coroutine/CoroutineScope : com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
 	public fun <init> (Ljava/lang/String;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol;)V
-	public fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public fun asyncOnCompletionThrowing (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
@@ -8360,7 +8363,8 @@ public final class com/tezov/tuucho/core/domain/business/protocol/CoroutineExcep
 }
 
 public abstract interface class com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
-	public abstract fun async (ZLkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public abstract fun async (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
+	public abstract fun asyncOnCompletionThrowing (Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
 	public abstract fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public abstract fun throwOnFailure (Lkotlinx/coroutines/Deferred;)V
