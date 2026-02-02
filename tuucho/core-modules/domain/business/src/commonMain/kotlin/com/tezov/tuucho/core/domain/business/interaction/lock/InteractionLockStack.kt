@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
-import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitorProtocol.Event
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
@@ -15,7 +15,7 @@ import kotlinx.coroutines.sync.withLock
 internal class InteractionLockStack(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val lockGenerator: InteractionLockGenerator,
-    private val interactionLockMonitor: InteractionLockMonitor?
+    private val interactionLockMonitor: InteractionLockMonitorProtocol?
 ) : InteractionLockProtocol.Stack {
     private data class Waiter(
         val requester: String,
@@ -53,7 +53,7 @@ internal class InteractionLockStack(
         types: List<InteractionLockType>
     ): List<InteractionLock> = coroutineScopes.default.withContext {
         tryAcquireInternal(requester, types)?.let { locks ->
-            interactionLockMonitor?.process(InteractionLockMonitor.Context(
+            interactionLockMonitor?.process(InteractionLockMonitorProtocol.Context(
                 event = Event.Acquired,
                 requester = listOf(requester),
                 lockTypes = locks.map { it.type }
@@ -62,7 +62,7 @@ internal class InteractionLockStack(
         }
         coroutineScopes.io.withContext {
             interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.WaitToAcquire,
                     requester = listOf(requester),
                     lockTypes = types
@@ -93,7 +93,7 @@ internal class InteractionLockStack(
         types: List<InteractionLockType>
     ): List<InteractionLock>? = coroutineScopes.default.withContext {
         tryAcquireInternal(requester, types)?.also { locks ->
-            interactionLockMonitor?.process(InteractionLockMonitor.Context(
+            interactionLockMonitor?.process(InteractionLockMonitorProtocol.Context(
                 event = Event.AcquireFromTry,
                 requester = listOf(requester),
                 lockTypes = locks.map { it.type }
@@ -142,7 +142,7 @@ internal class InteractionLockStack(
         }
         if (hasBeenReleased.isNotEmpty()) {
             interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Released,
                     requester = hasBeenReleased.map { lock ->
                         if (requester == lock.first) {
@@ -168,7 +168,7 @@ internal class InteractionLockStack(
         )
         if (hasBeenReleased) {
             interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Released,
                     requester = listOf(
                         if (requester == lock.owner) {
@@ -190,7 +190,7 @@ internal class InteractionLockStack(
     ): Boolean {
         if (!lock.canBeReleased) {
             interactionLockMonitor?.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.CanNotBeReleased,
                     requester = listOf(
                         if (requester == lock.owner) {
@@ -230,7 +230,7 @@ internal class InteractionLockStack(
                             waiters.remove()
                             toResumes.add(next)
                             interactionLockMonitor?.process(
-                                InteractionLockMonitor.Context(
+                                InteractionLockMonitorProtocol.Context(
                                     event = Event.TryAcquireAgain,
                                     requester = listOf(next.requester),
                                     lockTypes = next.lockTypes

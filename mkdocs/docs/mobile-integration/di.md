@@ -23,7 +23,8 @@ module(ModuleContextCore.Main) {
 
     factory<NetworkRepositoryModule.Config> {
         object : NetworkRepositoryModule.Config {
-            override val timeoutMillis = ...
+            override val timeoutMillistimeoutMillis = ...
+            override val imageRequestTimeoutMillis = ...
             override val version = ...
             override val baseUrl = ...
         }
@@ -48,7 +49,7 @@ object SystemSharedModules {
 
     fun invoke(): List<KoinMass> = listOf(
         module(ModuleContextCore.Main) {
-            single { Logger(exceptionVerbose = false) }
+            single { Logger(systemInformation = get(), exceptionVerbose = false) }
         },
         MonitorModule.invoke(),
         InteractionModule.invoke(),

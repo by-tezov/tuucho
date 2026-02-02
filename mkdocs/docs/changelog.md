@@ -4,6 +4,14 @@
 
 ---
 
+## 0.0.1-alpha26 - 2026-02-01
+
+- image processors and loader
+- coroutine design flatten
+- middleware with and without return
+
+---
+
 ## 0.0.1-alpha25 - 2026-01-17
 
 - allow custom ui

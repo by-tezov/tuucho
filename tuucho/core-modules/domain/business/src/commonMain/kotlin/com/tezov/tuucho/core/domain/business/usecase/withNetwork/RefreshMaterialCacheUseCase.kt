@@ -15,8 +15,6 @@ class RefreshMaterialCacheUseCase(
     override suspend fun invoke(
         input: Input
     ) {
-        with(input) {
-            refreshMaterialCacheRepository.process(url)
-        }
+        refreshMaterialCacheRepository.process(input.url)
     }
 }

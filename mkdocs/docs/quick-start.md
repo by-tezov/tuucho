@@ -45,6 +45,8 @@ All required modules for a Tuucho dev backend:
     HealthController,
     ResourceAuthController,
     ResourceLobbyController,
+    ImageAuthController,
+    ImageLobbyController,
     SendFormLobbyController,
     SendAuthController,
   ],
@@ -53,6 +55,7 @@ All required modules for a Tuucho dev backend:
     AuthGuardOptional,
     LoginTokenStore,
     ResourceRepositoryService,
+    ImageRepositoryService,
   ],
 })
 export class AppModule {}
@@ -60,24 +63,27 @@ export class AppModule {}
 
 ### Controllers overview
 
-| Controller                 | Endpoint area              | Purpose                                              |
-|----------------------------|----------------------------|------------------------------------------------------|
-| `HealthController`         | `/health`                  | Health probe used by Tuucho                         |
-| `ResourceAuthController`   | `/resource/auth`           | Protected resource zone                              |
-| `ResourceLobbyController`  | `/resource/lobby` (public) | Unauthenticated resource zone                        |
-| `SendFormLobbyController`  | `/send/lobby` (public)     | Receive public form submissions                      |
-| `SendAuthController`       | `/send/auth`               | Receive authenticated form submissions               |
+| Controller                 | Endpoint area              | Purpose                                |
+|----------------------------|----------------------------|----------------------------------------|
+| `HealthController`         | `/health`                  | Health probe used by Tuucho            |
+| `ResourceAuthController`   | `/resource/auth`           | Protected resource zone                |
+| `ResourceLobbyController`  | `/resource/lobby` (public) | Unauthenticated resource zone          |
+| `ImageAuthController`   | `/image/auth`              | Protected image zone                   |
+| `ImageLobbyController`  | `/image/lobby` (public)    | Unauthenticated image zone             |
+| `SendFormLobbyController`  | `/send/lobby` (public)     | Receive public form submissions        |
+| `SendAuthController`       | `/send/auth`               | Receive authenticated form submissions |
 
 !!! info
-    The endpoint `/health`, `/resource` and `/send` must matches with those defined in the application. Check [Mobile Config](mobile-integration/config.md)
+    The endpoint `/health`, `/resource`, `/image` and `/send` must matches with those defined in the application. Check [Mobile Config](mobile-integration/config.md)
 
 ### Providers
 
-| Provider              | Role                                                                    |
-|-----------------------|-------------------------------------------------------------------------|
-| `AuthGuard`           | Protects authenticated resource/send zones                              |
-| `LoginTokenStore`     | Stores login tokens for the session                                     |
-| `ResourceRepositoryService` | Provides resource JSON for all endpoints                     |
+| Provider              | Role                                       |
+|-----------------------|--------------------------------------------|
+| `AuthGuard`           | Protects authenticated resource/send zones |
+| `LoginTokenStore`     | Stores login tokens for the session        |
+| `ResourceRepositoryService` | Provides resource JSON for all endpoints   |
+| `ImageRepositoryService` | Provides image for all endpoints      |
 
 Each area uses its own config file and JSON resource definition.
 
@@ -91,6 +97,7 @@ This repository shows:
 
 - health resource
 - public & authenticated resources
+- public & authenticated images
 - send endpoints
 - guards
 - token storage

@@ -39,11 +39,11 @@ interface ImageDiskCacheProtocol {
 
 internal class ImageDiskCache(
     coroutineScopes: CoroutineScopesProtocol,
-    config: ImageModule.Config,
+    config: ImageModule.Config?,
     systemPlatform: SystemPlatform,
     private val imageDatabase: ImageDatabaseSource,
 ) : ImageDiskCacheProtocol {
-    private val diskCache = config.diskCacheSizeMo?.let { size ->
+    private val diskCache = config?.diskCacheSizeMo?.let { size ->
         DiskCache
             .Builder()
             .cleanupCoroutineContext(coroutineScopes.default.dispatcher)

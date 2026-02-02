@@ -2,7 +2,7 @@
 comments: true
 ---
 
-# TUUCHO - ตู้โชว์ - Rendering Engine
+# TUUCHO - ตู้โชว์ - Server Application Rendering Engine
 
 !!! warning
     **Documentation in Progress** — Early stage of development — see [Roadmap](roadmap.md).
@@ -17,7 +17,7 @@ TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interpr
 
 - **Json Content**
     - 100% of the application is driven by the server. Hybrid integration are also possible.
-    - Definable components with unique IDs allowing shared references to reduce JSON payload size. This applies to content, styles, text, and more.
+    - Definable components with unique IDs allowing shared references to reduce JSON payload size. This applies to content, styles, text, image and more.
     - Intelligent caching: JSON objects are cached locally to minimize repeated network requests. Content is fetched over the network only when necessary.
     - Dynamic context data fetch asynchronously with TTL (Time To Live) capabilities
     - Versioning capabilities self managed [Cache Management](cache.md)
@@ -39,6 +39,10 @@ TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interpr
     - Local validator and remote controls with user feedback (error or information)
     - Custom command on success or failure
 
+  - **Image Loader**
+    - Local or Remote image
+    - Disk cache capabilities
+
 ### Ui Components available with stable-ui dependencies
 
 - **Linear Layout** (vertical or horizontal orientation)
@@ -48,9 +52,10 @@ TUUCHO is a dynamic UI rendering engine driven by JSON-based layouts. It interpr
 - **Label**
 - **Input Field** (form element)
 - **Spacer**
+- **Image**
 
-!!! Whaou
-    **You can define your own design system, navigation, actions and more**. That's the power of Tuucho.
+!!! What make it powerful ?
+    **You can define your own design system, navigation, actions and more**. That's the power of Tuucho. It is design to be customizable while giving you enough to not need it.
     The core is basically an application rendering engine from Json without UI. That's up to you to design your UI components, action, whatever.
     But to allow you to quick start, you can use the stable-ui dependencies.
 

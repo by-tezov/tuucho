@@ -19,6 +19,7 @@ This section describes the primary JSON keys used in the TUUCHO rendering engine
 - [state](state.md) — State definitions for components (all current state, initial value, etc...)
 - [style](style.md) — Style definitions for components (all visual appearance settings)
 - [text](text.md) — Multilingual text references
+- [image](image.md) — Image definition
 
 
 For more practical examples, please refer to the [Components Definition](../components-definition/index.md).
