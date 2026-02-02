@@ -1,11 +1,10 @@
 ### Todo:
 
-- Test
+- update doc
 
 -> close alpha 25
 
 - Animation placeholder / final image ?
-- Then documentation
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
 - error message with class name that throw.

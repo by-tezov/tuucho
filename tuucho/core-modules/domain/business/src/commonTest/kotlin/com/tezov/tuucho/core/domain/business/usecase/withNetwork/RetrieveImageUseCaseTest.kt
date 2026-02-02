@@ -1,18 +1,22 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
+import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
+import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
+import com.tezov.tuucho.core.domain.business.mock.middlewareWithReturn.MockMiddlewareExecutorWithReturn
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol.Image
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -23,25 +27,39 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class RetrieveImageUseCaseTest {
+    private val coroutineTestScope = CoroutineTestScope()
+    private lateinit var middlewareExecutor: MiddlewareExecutorProtocolWithReturn
+
     private lateinit var imageRepository: ImageRepositoryProtocol
+    private lateinit var retrieveImageMiddlewares: List<RetrieveImageMiddleware<Any>>
+
     private lateinit var sut: RetrieveImageUseCase<Any>
 
     @BeforeTest
     fun setup() {
         imageRepository = mock()
-        sut = RetrieveImageUseCase(imageRepository = imageRepository)
+        middlewareExecutor = MockMiddlewareExecutorWithReturn()
+        coroutineTestScope.setup()
+        retrieveImageMiddlewares = listOf()
+        sut = RetrieveImageUseCase(
+            coroutineScopes = coroutineTestScope.mock,
+            imageRepository = imageRepository,
+            middlewareExecutor = middlewareExecutor,
+            retrieveImageMiddlewares = retrieveImageMiddlewares
+        )
     }
 
     @AfterTest
     fun tearDown() {
+        coroutineTestScope.verifyNoMoreCalls()
         verifyNoMoreCalls(imageRepository)
     }
 
     @Test
-    fun `invoke returns Output flow from repository`() = runTest {
+    fun `invoke returns Output flow from repository`() = coroutineTestScope.run {
         val imageModel = ImageModel.from(
             value = "command://target",
-            cacheKey = "key",
+            id = "key",
             tags = setOf("tag1"),
             tagsExcluder = setOf("exclude")
         )
@@ -59,16 +77,18 @@ class RetrieveImageUseCaseTest {
         }
 
         verifySuspend {
+            coroutineTestScope.mock.io.withContext<Any>(any())
+            coroutineTestScope.mock.io.dispatcher
             @Suppress("UnusedFlow")
             imageRepository.process<Any>(models = listOf(imageModel))
         }
     }
 
     @Test
-    fun `Input create throws if cacheKey is missing`() = runTest {
+    fun `Input create throws if id is missing`() = coroutineTestScope.run {
         val jsonArray = buildJsonArray {
             add(buildJsonObject {
-                put("source", "command://target") // no cacheKey
+                put("source", "command://target") // no id
             })
         }
 
@@ -80,17 +100,17 @@ class RetrieveImageUseCaseTest {
     }
 
     @Test
-    fun `Input create parses JsonArray into models`() = runTest {
+    fun `Input create parses JsonArray into models`() = coroutineTestScope.run {
         val jsonArray = buildJsonArray {
             add(buildJsonObject {
                 put("source", "command://target1")
-                put("cache-key", "cache1")
+                put("id", buildJsonObject { put("value", "id1") })
                 put("tags", buildJsonArray { })
                 put("tags-excluder", buildJsonArray { })
             })
             add(buildJsonObject {
                 put("source", "command://target2")
-                put("cache-key", "cache2")
+                put("id", buildJsonObject { put("value", "id2") })
                 put("tags", buildJsonArray { })
                 put("tags-excluder", buildJsonArray { })
             })
@@ -99,16 +119,16 @@ class RetrieveImageUseCaseTest {
         val input = RetrieveImageUseCase.Input.create(jsonArray)
 
         assertEquals(2, input.models.size)
-        assertEquals("command://target1", input.models[0].toString())
-        assertEquals("command://target2", input.models[1].toString())
+        assertEquals("command://target1#id1#-tags:[]-tagsExcluder:[]", input.models[0].toString())
+        assertEquals("command://target2#id2#-tags:[]-tagsExcluder:[]", input.models[1].toString())
     }
 
     @Test
-    fun `invoke uses models from JsonArray input`() = runTest {
+    fun `invoke uses models from JsonArray input`() = coroutineTestScope.run {
         val jsonArray = buildJsonArray {
             add(buildJsonObject {
                 put("source", "command://target1")
-                put("cache-key", "cache1")
+                put("id", buildJsonObject { put("value", "id1") })
                 put("tags", buildJsonArray { })
                 put("tags-excluder", buildJsonArray { })
             })
@@ -127,6 +147,8 @@ class RetrieveImageUseCaseTest {
         }
 
         verifySuspend {
+            coroutineTestScope.mock.io.withContext<Any>(any())
+            coroutineTestScope.mock.io.dispatcher
             @Suppress("UnusedFlow")
             imageRepository.process<Any>(models = input.models)
         }

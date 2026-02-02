@@ -4,13 +4,16 @@ import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMon
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import dev.mokkery.answering.returns
 import dev.mokkery.answering.returnsBy
 import dev.mokkery.every
+import dev.mokkery.everySuspend
 import dev.mokkery.matcher.MokkeryMatcherScope
+import dev.mokkery.matcher.any
+import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.resetCalls
-import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
@@ -67,7 +70,7 @@ class InteractionLockStackTest {
         listOf(InteractionLockType.Screen, InteractionLockType.Navigation).forEach { stub(it) }
 
         monitor = mock()
-        every { monitor.process(any()) } returns Unit
+        everySuspend { monitor.process(any()) } returns Unit
 
         coroutineTestScope.setup()
         sut = InteractionLockStack(
@@ -130,7 +133,8 @@ class InteractionLockStackTest {
             generator.generate(matches(InteractionLockType.Screen))
             // release
             coroutineTestScope.mock.default.withContext<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(true, any())
+            @OptIn(TuuchoInternalApi::class)
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
             // reacquired
             coroutineTestScope.mock.default.withContext<Any>(any())
             generator.generate(matches(InteractionLockType.Screen))
@@ -216,7 +220,8 @@ class InteractionLockStackTest {
             coroutineTestScope.mock.io.withContext<Any>(any())
             // release
             coroutineTestScope.mock.default.withContext<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(true, any())
+            @OptIn(TuuchoInternalApi::class)
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
             // acquire second
             coroutineTestScope.mock.default.withContext<Any>(any())
             generator.generate(matches(InteractionLockType.Screen))
@@ -391,7 +396,8 @@ class InteractionLockStackTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(true, any())
+            @OptIn(TuuchoInternalApi::class)
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
         }
     }
 
@@ -413,7 +419,8 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.default.withContext<Any>(any())
-            coroutineTestScope.mock.io.async<Any>(true, any())
+            @OptIn(TuuchoInternalApi::class)
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
         }
     }
 
@@ -424,7 +431,7 @@ class InteractionLockStackTest {
         coroutineTestScope.resetCalls()
         resetCalls(generator)
 
-        verify(VerifyMode.exhaustiveOrder) {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
                 InteractionLockMonitor.Context(
                     event = Event.Acquired,
@@ -443,7 +450,7 @@ class InteractionLockStackTest {
         coroutineTestScope.resetCalls()
         resetCalls(generator)
 
-        verify(VerifyMode.exhaustiveOrder) {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
                 InteractionLockMonitor.Context(
                     event = Event.Released,
@@ -460,7 +467,7 @@ class InteractionLockStackTest {
         coroutineTestScope.resetCalls()
         resetCalls(generator)
 
-        verify(VerifyMode.exhaustiveOrder) {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
                 InteractionLockMonitor.Context(
                     event = Event.AcquireFromTry,
@@ -481,7 +488,7 @@ class InteractionLockStackTest {
         coroutineTestScope.resetCalls()
         resetCalls(generator)
 
-        verify(VerifyMode.exhaustiveOrder) {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
                 InteractionLockMonitor.Context(
                     event = Event.Acquired,
@@ -535,7 +542,7 @@ class InteractionLockStackTest {
         coroutineTestScope.resetCalls()
         resetCalls(generator)
 
-        verify(VerifyMode.exhaustiveOrder) {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
                 InteractionLockMonitor.Context(
                     event = Event.CanNotBeReleased,
@@ -560,7 +567,7 @@ class InteractionLockStackTest {
         coroutineTestScope.resetCalls()
         resetCalls(generator)
 
-        verify(VerifyMode.exhaustiveOrder) {
+        verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
                 InteractionLockMonitor.Context(
                     event = Event.Released,

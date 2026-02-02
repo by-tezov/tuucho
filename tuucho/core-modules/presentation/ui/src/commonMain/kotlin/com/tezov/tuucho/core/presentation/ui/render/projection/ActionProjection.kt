@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
@@ -57,9 +58,8 @@ private class ActionProjection(
             val processAction = koin.get<ProcessActionUseCase>()
             val interactionLockResolver = koin.get<InteractionLockProtocol.Resolver>()
             val action: ActionTypeAlias = { jsonElement ->
-                coroutineScopes.default.async(
-                    throwOnFailure = true
-                ) {
+                @OptIn(TuuchoInternalApi::class)
+                coroutineScopes.default.asyncOnCompletionThrowing {
                     val screenLock = interactionLockResolver.tryAcquire(
                         requester = "$route::ActionProjection::${hashCode().toHexString()}",
                         lockable = InteractionLockable.Type(
@@ -67,7 +67,7 @@ private class ActionProjection(
                         )
                     )
                     if (screenLock is InteractionLockable.Empty) {
-                        return@async
+                        return@asyncOnCompletionThrowing
                     }
                     useCaseExecutor.await(
                         useCase = processAction,

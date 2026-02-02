@@ -6,6 +6,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition.Event
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase.Input
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 
 @OpenForTest
 class RegisterToScreenTransitionEventUseCase(
@@ -19,10 +20,9 @@ class RegisterToScreenTransitionEventUseCase(
     override fun invoke(
         input: Input
     ) {
+        @OptIn(TuuchoInternalApi::class)
         coroutineScopes.default
-            .async(
-                throwOnFailure = true
-            ) {
+            .asyncOnCompletionThrowing {
                 navigationAnimatorStackRepository.events
                     .filter { it != Event.TransitionComplete }
                     .forever { input.onEvent.invoke(it) }

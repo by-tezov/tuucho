@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.sync.Mutex
@@ -47,10 +48,9 @@ internal class NavigationStackTransitionRepository(
     private fun emit(
         event: StackTransition.Event
     ) {
+        @OptIn(TuuchoInternalApi::class)
         coroutineScopes.default
-            .async(
-                throwOnFailure = true
-            ) {
+            .asyncOnCompletionThrowing {
                 mutex.withLock {
                     lastEvent = event
                     _events.emit(event)
@@ -138,9 +138,7 @@ internal class NavigationStackTransitionRepository(
 
     private fun listenEndOfTransition(
         routes: List<NavigationRoute>
-    ) = coroutineScopes.default.async(
-        throwOnFailure = false
-    ) {
+    ) = coroutineScopes.default.async {
         events
             .filter { it == StackTransition.Event.TransitionComplete }
             .once(block = {

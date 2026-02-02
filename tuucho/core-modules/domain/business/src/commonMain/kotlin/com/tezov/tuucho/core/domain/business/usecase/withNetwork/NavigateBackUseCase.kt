@@ -17,6 +17,7 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialReposit
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 
 @OpenForTest
@@ -83,9 +84,7 @@ class NavigateBackUseCase(
             ?.navigateBackward
             ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
-            val job = coroutineScopes.default.async(
-                throwOnFailure = false
-            ) {
+            val job = coroutineScopes.default.async {
                 suspend fun process() {
                     val jsonObjects = shadowerMaterialRepository
                         .process(
@@ -106,6 +105,7 @@ class NavigateBackUseCase(
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 job.await()
             } else {
+                @OptIn(TuuchoInternalApi::class)
                 coroutineScopes.default.throwOnFailure(job)
             }
         }

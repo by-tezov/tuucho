@@ -1,12 +1,10 @@
-package com.tezov.tuucho.core.domain.business.mock
+package com.tezov.tuucho.core.domain.business.mock.middleware
 
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol.Next.Companion.invoke
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
-import kotlinx.coroutines.flow.FlowCollector
 
 interface SpyMiddlewareNext<C> {
     fun invoke(
@@ -20,14 +18,14 @@ interface SpyMiddlewareNext<C> {
     }
 }
 
-class MockMiddlewareNext<C, R : Any>(
+class MockMiddlewareNext<C>(
     var spy: SpyMiddlewareNext<C>? = null
-) : MiddlewareProtocol.Next<C, R> {
-    var invoke: MiddlewareProtocol.Next<C, R> = MiddlewareProtocol.Next {
+) : MiddlewareProtocol.Next<C> {
+    var invoke: MiddlewareProtocol.Next<C> = MiddlewareProtocol.Next {
         spy?.invoke(it)
     }
 
-    override suspend fun FlowCollector<R>.invoke(
+    override suspend fun invoke(
         context: C
     ) {
         invoke.run { invoke(context) }

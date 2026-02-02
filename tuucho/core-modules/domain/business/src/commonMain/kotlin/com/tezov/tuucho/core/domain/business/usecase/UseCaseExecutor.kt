@@ -15,17 +15,14 @@ class UseCaseExecutor(
         onResult: OUTPUT?.() -> Unit,
     ) {
         coroutineScopes.default
-            .async(
-                throwOnFailure = false,
-                block = {
-                    when (useCase) {
-                        is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input)
-                        is UseCaseProtocol.Sync<INPUT, OUTPUT> -> useCase.invoke(input)
-                    }.also {
-                        it.onResult()
-                    }
+            .async {
+                when (useCase) {
+                    is UseCaseProtocol.Async<INPUT, OUTPUT> -> useCase.invoke(input)
+                    is UseCaseProtocol.Sync<INPUT, OUTPUT> -> useCase.invoke(input)
+                }.also {
+                    it.onResult()
                 }
-            ).invokeOnCompletion { throwable ->
+            }.invokeOnCompletion { throwable ->
                 if (throwable == null) return@invokeOnCompletion
                 val output = onException ?: throw throwable
                 when (throwable) {

@@ -4,6 +4,7 @@ package com.tezov.tuucho.core.domain.business._system.coroutine
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -40,23 +41,27 @@ class CoroutineScope(
     }
 
     override fun <T> async(
-        throwOnFailure: Boolean,
+        block: suspend CoroutineScope.() -> T,
+    ) = scope
+        .async(block = block)
+        .also { exceptionMonitor?.attach(it) }
+
+    @TuuchoInternalApi
+    override fun <T> asyncOnCompletionThrowing(
         block: suspend CoroutineScope.() -> T,
     ) = scope
         .async(block = block)
         .also { deferred ->
-            if (throwOnFailure) {
-                throwOnFailure(deferred)
-            }
+            throwOnFailure(deferred)
             exceptionMonitor?.attach(deferred)
         }
 
+    @TuuchoInternalApi
     override fun <T> throwOnFailure(
         deferred: Deferred<T>
     ) {
         deferred.invokeOnCompletion { throwable ->
-            throwable ?: return@invokeOnCompletion
-            throw throwable
+            throwable?.let { throw throwable }
         }
     }
 

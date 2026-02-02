@@ -4,8 +4,8 @@ import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.response.FormSendSchema
-import com.tezov.tuucho.core.domain.business.mock.MockMiddlewareNext
-import com.tezov.tuucho.core.domain.business.mock.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.middleware.MockMiddlewareNext
+import com.tezov.tuucho.core.domain.business.mock.middleware.SpyMiddlewareNext
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -23,8 +23,6 @@ import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.buildJsonArray
@@ -93,9 +91,9 @@ class FormUpdateActionMiddlewareTest {
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.process(context, next)
 
         verify(VerifyMode.exhaustiveOrder) {
             spy.invoke(context)
@@ -130,10 +128,10 @@ class FormUpdateActionMiddlewareTest {
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<UpdateViewUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -185,7 +183,7 @@ class FormUpdateActionMiddlewareTest {
             Unit
         }
 
-        flow { sut.run { process(context, null) } }.collect()
+        sut.process(context, null)
         assertEquals(1, capturedInputs.size)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -213,9 +211,9 @@ class FormUpdateActionMiddlewareTest {
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.process(context, next)
 
         verify(VerifyMode.exhaustiveOrder) {
             spy.invoke(context)
@@ -240,7 +238,7 @@ class FormUpdateActionMiddlewareTest {
         )
 
         assertFailsWith<DomainException> {
-            flow { sut.run { process(context, null) } }.collect()
+            sut.process(context, null)
         }
     }
 
@@ -260,9 +258,9 @@ class FormUpdateActionMiddlewareTest {
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext<ActionMiddlewareProtocol.Context, Unit>(spy)
+        val next = MockMiddlewareNext(spy)
 
-        flow { sut.run { process(context, next) } }.collect()
+        sut.process(context, next)
 
         verify(VerifyMode.exhaustiveOrder) {
             spy.invoke(context)
