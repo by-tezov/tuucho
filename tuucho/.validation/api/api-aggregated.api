@@ -3052,41 +3052,41 @@ abstract interface com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoin
     open fun isScopeInitialized(): kotlin/Boolean // com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinScopeComponent.isScopeInitialized|isScopeInitialized(){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor|null[0]
-    abstract suspend fun process(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.process|process(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Context){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol|null[0]
+    abstract suspend fun process(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.process|process(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitorProtocol.Context){}[0]
 
-    final enum class Event : kotlin/Enum<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event> { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event|null[0]
-        enum entry AcquireFromTry // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.AcquireFromTry|null[0]
-        enum entry Acquired // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.Acquired|null[0]
-        enum entry CanNotBeReleased // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.CanNotBeReleased|null[0]
-        enum entry Released // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.Released|null[0]
-        enum entry TryAcquireAgain // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.TryAcquireAgain|null[0]
-        enum entry WaitToAcquire // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.WaitToAcquire|null[0]
+    final enum class Event : kotlin/Enum<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event> { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event|null[0]
+        enum entry AcquireFromTry // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.AcquireFromTry|null[0]
+        enum entry Acquired // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.Acquired|null[0]
+        enum entry CanNotBeReleased // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.CanNotBeReleased|null[0]
+        enum entry Released // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.Released|null[0]
+        enum entry TryAcquireAgain // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.TryAcquireAgain|null[0]
+        enum entry WaitToAcquire // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.WaitToAcquire|null[0]
 
-        final val entries // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.entries|#static{}entries[0]
-            final fun <get-entries>(): kotlin.enums/EnumEntries<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.entries.<get-entries>|<get-entries>#static(){}[0]
+        final val entries // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.entries.<get-entries>|<get-entries>#static(){}[0]
 
-        final fun valueOf(kotlin/String): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.valueOf|valueOf#static(kotlin.String){}[0]
-        final fun values(): kotlin/Array<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event.values|values#static(){}[0]
+        final fun valueOf(kotlin/String): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event.values|values#static(){}[0]
     }
 
-    final class Context { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context|null[0]
-        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event, kotlin.collections/List<kotlin/String>, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
+    final class Context { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context|null[0]
+        constructor <init>(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event, kotlin.collections/List<kotlin/String>, kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitorProtocol.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
 
-        final val event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.event|{}event[0]
-            final fun <get-event>(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.event.<get-event>|<get-event>(){}[0]
-        final val lockTypes // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.lockTypes|{}lockTypes[0]
-            final fun <get-lockTypes>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.lockTypes.<get-lockTypes>|<get-lockTypes>(){}[0]
-        final val requester // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.requester|{}requester[0]
-            final fun <get-requester>(): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.requester.<get-requester>|<get-requester>(){}[0]
+        final val event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.event|{}event[0]
+            final fun <get-event>(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.event.<get-event>|<get-event>(){}[0]
+        final val lockTypes // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.lockTypes|{}lockTypes[0]
+            final fun <get-lockTypes>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.lockTypes.<get-lockTypes>|<get-lockTypes>(){}[0]
+        final val requester // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.requester|{}requester[0]
+            final fun <get-requester>(): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.requester.<get-requester>|<get-requester>(){}[0]
 
-        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component1|component1(){}[0]
-        final fun component2(): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component2|component2(){}[0]
-        final fun component3(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.component3|component3(){}[0]
-        final fun copy(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Event = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> = ...): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.copy|copy(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitor.Context.toString|toString(){}[0]
+        final fun component1(): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.component1|component1(){}[0]
+        final fun component2(): kotlin.collections/List<kotlin/String> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.component2|component2(){}[0]
+        final fun component3(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.component3|component3(){}[0]
+        final fun copy(com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Event = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockType> = ...): com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.copy|copy(com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitorProtocol.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockMonitorProtocol.Context.toString|toString(){}[0]
     }
 }
 
@@ -6483,35 +6483,35 @@ public final class com/tezov/tuucho/core/domain/business/exception/DomainExcepti
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor {
-	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol {
+	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/List;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;Ljava/util/List;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getEvent ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public final fun getEvent ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 	public final fun getLockTypes ()Ljava/util/List;
 	public final fun getRequester ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event : java/lang/Enum {
-	public static final field AcquireFromTry Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field Acquired Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field CanNotBeReleased Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field Released Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field TryAcquireAgain Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field WaitToAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event : java/lang/Enum {
+	public static final field AcquireFromTry Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field Acquired Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field CanNotBeReleased Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field Released Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field TryAcquireAgain Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field WaitToAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static fun values ()[Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static fun valueOf (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static fun values ()[Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockRegistry : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {

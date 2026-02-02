@@ -4,6 +4,7 @@ Tuucho allows you to configure several core systems:
 
 - Datastore
 - Database
+- Image Repository
 - Network (*required)
 - Ktor client engine
 
@@ -43,6 +44,21 @@ If no configuration is supplied, Tuucho uses the default database file name: **"
 
 ---
 
+## Image Repository
+
+You need to supply a `ImageModule.Config` implementation to activate the image cache. If not, all remote image won't be disk cached.
+
+```kotlin
+factory<ImageModule.Config> {
+    object : ImageModule.Config {
+        override val diskCacheSizeMo = BuildKonfig.imageDiskCacheSizeMo
+        override val diskCacheDirectory = BuildKonfig.imageDiskCacheDirectory
+    }
+}
+```
+
+---
+
 ## Network Configuration
 
 **Network configuration must be supplied.** Tuucho does **not** provide default values for network settings.
@@ -52,24 +68,28 @@ You provide them through a `NetworkRepositoryModule.Config` implementation.
 ```kotlin
 factory<NetworkRepositoryModule.Config> {
     object : NetworkRepositoryModule.Config {
-        override val timeoutMillis = BuildKonfig.serverTimeoutMillis
+        override val jsonRequestTimeoutMillis = BuildKonfig.serverJsonTimeoutMillis
+        override val imageRequestTimeoutMillis = BuildKonfig.serverImageTimeoutMillis
         override val version = BuildKonfig.serverVersion
         override val baseUrl = BuildKonfig.serverBaseUrl
         override val healthEndpoint = BuildKonfig.serverHealthEndpoint
         override val resourceEndpoint = BuildKonfig.serverResourceEndpoint
         override val sendEndpoint = BuildKonfig.serverSendEndpoint
+        override val imageEndpoint = BuildKonfig.serverImageEndpoint
     }
 }
 ```
 
 All fields must be supplied:
 
-- **timeoutMillis**
+- **jsonRequestTimeoutMillis**
+- **imageRequestTimeoutMillis**
 - **version**
 - **baseUrl**
 - **healthEndpoint**
 - **resourceEndpoint**
 - **sendEndpoint**
+- **imageEndpoint**
 
 Tuucho cannot operate without these values.
 
@@ -111,6 +131,10 @@ All configuration modules must be registered under **ModuleContextCore.Main**.
 module(ModuleContextCore.Main) {
 
     factory<StoreRepositoryModule.Config> {
+        ...
+    }
+    
+    factory<ImageModule.Config> {
         ...
     }
 

@@ -15,6 +15,7 @@ A **page** JSON describes a full screen layout.
   "options": [ ... ],
   "contents": [ ... ],
   "texts": [ ... ],
+  "images": [ ... ],
   "colors": [ ... ],
   "dimensions": [ ... ],
   "actions": [ ... ]
@@ -36,6 +37,7 @@ Refer to the following for detailed definitions of each object type:
 -  [Setting](../object-definition/page-setting.md)
 -  [Styles](../object-definition/style.md)
 -  [Texts](../object-definition/text.md)
+-  [Images](../object-definition/image.md)
 
 All available components can be browsed [here](../components-definition/index.md).
 

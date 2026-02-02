@@ -13,8 +13,12 @@ comments: true
 
 Work in progress:
 
-- **Images / Assets store**  
-    - Add a way to cache images and use them (or remote assets)
+- **Implement the use of selectors (language, style, etc...)**
+
+- **Comprehensible errors feedback**
+
+- **Validators, Navigation, Settings, other useful solvable by pointer**
+    - Minimise and keep only what is useful and start to think about the public dev API
 
 - **Component Feature**
     - Add a dev documentation to demonstrate how to create a new View from scratch
@@ -24,13 +28,8 @@ Work in progress:
 
 ## 🎯 Medium-Term Goals
 
-- **Implement the use of selectors (language, style, etc...)**
-
 - **Advanced UI Components**  
   - Add comprehensive, fully tested UI components to cover a wider range of application needs.
-
-- **Validators, Navigation, Settings, other useful solvable by pointer**
-  - Minimise and keep only what is useful and start to think about the public dev API
 
 - **Data store advanced use**  
   Allow the use of recorded data from the JSON (still need to think about the use case and how)
@@ -40,8 +39,6 @@ Work in progress:
 
 - **Real time Data Support**  
   Introduce bi-directional communication to enable real-time content updates.
-
-- **Comprehensible errors feedback**
 
 ---
 
@@ -65,6 +62,9 @@ Work in progress:
 ---
 
 ## ✅ Realized
+
+- **Images / Assets store** (2026-02)
+  - Add a way to cache images and use them (or remote assets)
 
 - **Custom UI capabilities** (2026-01)  
   Allow you to extend and create your own design system.

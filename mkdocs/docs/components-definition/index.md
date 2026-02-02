@@ -12,6 +12,7 @@ List of supported UI components:
 - [Label](label.md) (`subset`: `label`)
 - [LayoutLinear](layout-linear.md) (`subset`: `layout-linear`)
 - [Spacer](spacer.md) (`subset`: `spacer`)
+- [Image](image.md) (`subset`: `spacer`)
 
 ---
 

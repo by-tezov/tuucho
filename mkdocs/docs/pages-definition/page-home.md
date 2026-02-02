@@ -12,6 +12,20 @@
     },
     "content": {
       "items": [
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*small-logo"
+            ]
+          }
+        },
         "*title",
         "*item-spacer-48-v",
         "*body",
@@ -186,6 +200,17 @@
       "text-form-email-placeholder": "my.email@gmail.com",
       "text-form-age-title": "age*",
       "text-form-age-placeholder": "27"
+    }
+  },
+  "images": {
+    "common": {
+      "small-logo": {
+        "source": "remote://auth/logo-koin"
+      },
+      "small-logo-placeholder": {
+        "source": "remote://auth/logo-koin-placeholder",
+        "tags": "placeholder"
+      }
     }
   }
 }

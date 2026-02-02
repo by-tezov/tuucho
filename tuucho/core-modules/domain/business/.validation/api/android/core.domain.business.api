@@ -165,35 +165,35 @@ public final class com/tezov/tuucho/core/domain/business/exception/DomainExcepti
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
-public abstract interface class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor {
-	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol {
+	public abstract fun process (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context {
-	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;)V
-	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/List;
-	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
-	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Context;
+	public final fun copy (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;Ljava/util/List;Ljava/util/List;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;
+	public static synthetic fun copy$default (Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Context;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getEvent ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public final fun getEvent ()Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 	public final fun getLockTypes ()Ljava/util/List;
 	public final fun getRequester ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event : java/lang/Enum {
-	public static final field AcquireFromTry Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field Acquired Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field CanNotBeReleased Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field Released Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field TryAcquireAgain Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static final field WaitToAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event : java/lang/Enum {
+	public static final field AcquireFromTry Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field Acquired Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field CanNotBeReleased Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field Released Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field TryAcquireAgain Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static final field WaitToAcquire Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
-	public static fun values ()[Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitor$Event;
+	public static fun valueOf (Ljava/lang/String;)Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
+	public static fun values ()[Lcom/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockMonitorProtocol$Event;
 }
 
 public final class com/tezov/tuucho/core/domain/business/interaction/lock/InteractionLockRegistry : com/tezov/tuucho/core/domain/business/protocol/repository/InteractionLockProtocol$Registry {

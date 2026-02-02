@@ -51,6 +51,7 @@ Create your own copy of the repository to work on.
 - Base your branch on the **latest release branch** (e.g. `release/x.y.z`).
 - If no release branch exists, **ask for one** before starting.
 - Name your branch using one of these prefixes:
+    - `doc/` — for documentation update
     - `feat/` — for a new feature
     - `fix/` — for a bug fix
     - `chore/` — for non-functional updates (refactor, CI, etc.)

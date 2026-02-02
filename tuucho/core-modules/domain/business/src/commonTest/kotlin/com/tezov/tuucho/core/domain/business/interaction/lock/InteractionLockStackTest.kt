@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.interaction.lock
 
-import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitor.Event
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitorProtocol.Event
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
@@ -31,7 +31,7 @@ import kotlin.test.assertTrue
 class InteractionLockStackTest {
     private val coroutineTestScope = CoroutineTestScope()
     private lateinit var generator: InteractionLockGenerator
-    private lateinit var monitor: InteractionLockMonitor
+    private lateinit var monitor: InteractionLockMonitorProtocol
     private lateinit var sut: InteractionLockStack
     private lateinit var sutMonitored: InteractionLockStack
     private lateinit var counters: MutableMap<InteractionLockType, Int>
@@ -433,7 +433,7 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Acquired,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
@@ -452,7 +452,7 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Released,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
@@ -469,7 +469,7 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.AcquireFromTry,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
@@ -490,35 +490,35 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Acquired,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
                 )
             )
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.WaitToAcquire,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
                 )
             )
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Released,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
                 )
             )
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.TryAcquireAgain,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
                 )
             )
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Acquired,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
@@ -544,7 +544,7 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.CanNotBeReleased,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
@@ -569,7 +569,7 @@ class InteractionLockStackTest {
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             monitor.process(
-                InteractionLockMonitor.Context(
+                InteractionLockMonitorProtocol.Context(
                     event = Event.Released,
                     requester = listOf(requester),
                     lockTypes = listOf(InteractionLockType.Screen)
