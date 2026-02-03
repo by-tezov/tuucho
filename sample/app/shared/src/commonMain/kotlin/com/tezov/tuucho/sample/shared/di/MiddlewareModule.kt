@@ -22,6 +22,8 @@ import com.tezov.tuucho.sample.shared.middleware.updateView.LoggerUpdateViewMidd
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.plugin.module.dsl.factory
+import org.koin.plugin.module.dsl.single
 
 object MiddlewareModule {
 
@@ -36,12 +38,12 @@ object MiddlewareModule {
 
 
     private fun Module.image() {
-        factoryOf(::CatcherRetrieveImageMiddleware) bindOrdered RetrieveImageMiddleware::class
-        factoryOf(::LoggerRetrieveImageMiddleware) bindOrdered RetrieveImageMiddleware::class
+        factory<CatcherRetrieveImageMiddleware>() bindOrdered RetrieveImageMiddleware::class
+        factory<LoggerRetrieveImageMiddleware>() bindOrdered RetrieveImageMiddleware::class
     }
 
     private fun Module.navigateToUrl() {
-        factoryOf(::CatcherBeforeNavigateToUrlMiddleware) bindOrdered NavigationMiddleware.ToUrl::class
+        factory<CatcherBeforeNavigateToUrlMiddleware>() bindOrdered NavigationMiddleware.ToUrl::class
 
         factory<BeforeNavigateToUrlMiddleware> {
             BeforeNavigateToUrlMiddleware(
@@ -53,24 +55,24 @@ object MiddlewareModule {
             )
         } bindOrdered NavigationMiddleware.ToUrl::class
 
-        factoryOf(::LoggerBeforeNavigateToUrlMiddleware) bindOrdered NavigationMiddleware.ToUrl::class
+        factory<LoggerBeforeNavigateToUrlMiddleware>() bindOrdered NavigationMiddleware.ToUrl::class
     }
 
     private fun Module.navigateBack() {
-        factoryOf(::LoggerBeforeNavigateBackMiddleware) bindOrdered NavigationMiddleware.Back::class
+        factory<LoggerBeforeNavigateBackMiddleware>() bindOrdered NavigationMiddleware.Back::class
     }
 
     private fun Module.navigateFinish() {
-        singleOf(::NavigationFinishPublisher)
-        factoryOf(::NavigateFinishMiddleware) bindOrdered NavigationMiddleware.Finish::class
-        factoryOf(::LoggerBeforeNavigateFinishMiddleware) bindOrdered NavigationMiddleware.Finish::class
+        single<NavigationFinishPublisher>()
+        factory<NavigateFinishMiddleware>() bindOrdered NavigationMiddleware.Finish::class
+        factory<LoggerBeforeNavigateFinishMiddleware>() bindOrdered NavigationMiddleware.Finish::class
     }
 
     private fun Module.sendData() {
-        factoryOf(::LoggerSendDataMiddleware) bindOrdered SendDataMiddleware::class
+        factory<LoggerSendDataMiddleware>() bindOrdered SendDataMiddleware::class
     }
 
     private fun Module.updateView() {
-        factoryOf(::LoggerUpdateViewMiddleware) bindOrdered UpdateViewMiddleware::class
+        factory<LoggerUpdateViewMiddleware>() bindOrdered UpdateViewMiddleware::class
     }
 }

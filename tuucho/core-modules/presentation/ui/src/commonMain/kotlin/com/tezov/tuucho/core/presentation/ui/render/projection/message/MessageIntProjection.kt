@@ -1,8 +1,12 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.message
 
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
+import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.MutableStorageProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
+import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.createIntProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.MessageProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
@@ -21,13 +25,12 @@ private class MessageIntProjection(
 ) : MessageIntProjectionProtocol,
     MessageIntProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by status {
-    private val intProjection =
-        _root_ide_package_.com.tezov.tuucho.core.presentation.ui.render.projection.dimension.createIntProjection(
+    private val intProjection = createIntProjection(
             key
         )
 
     init {
-        attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol<MessageIntTextTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<MessageIntTextTypeAlias>)
     }
 
     override suspend fun process(
@@ -44,7 +47,7 @@ private class MessageIntProjection(
 
 private class MutableMessageIntProjection(
     delegate: MessageIntProjectionProtocol,
-    storage: com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol<MessageIntTextTypeAlias>
+    storage: StorageProjectionProtocol<MessageIntTextTypeAlias>
 ) : MessageIntProjectionProtocol by delegate {
     init {
         attach(storage)
@@ -54,7 +57,7 @@ private class MutableMessageIntProjection(
 fun createMessageIntProjection(
     key: String
 ): MessageIntProjectionProtocol = MessageIntProjection(
-    projection = _root_ide_package_.com.tezov.tuucho.core.presentation.ui.render.projection.Projection(
+    projection = Projection(
         key = key
     ),
     status = ResolveStatusProcessor()

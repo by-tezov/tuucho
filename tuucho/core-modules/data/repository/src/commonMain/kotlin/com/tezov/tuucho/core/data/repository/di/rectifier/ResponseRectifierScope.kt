@@ -12,9 +12,9 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.response.form.Form
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
+import org.koin.plugin.module.dsl.factory
 
 internal object ResponseRectifierScope {
     fun invoke() = scope(ScopeContext.Response) {
@@ -26,10 +26,10 @@ internal object ResponseRectifierScope {
     }
 
     private fun ScopeDSL.rectifiers() {
-        factoryOf(::RectifierIdGenerator)
-        factoryOf(::IdRectifier)
-        factoryOf(::TextRectifier)
-        factoryOf(::ActionRectifier)
+        factory<RectifierIdGenerator>()
+        factory<IdRectifier>()
+        factory<TextRectifier>()
+        factory<ActionRectifier>()
 
         associate<ResponseRectifier.Association.Processor> {
             declaration<ActionRectifier>()
@@ -38,7 +38,7 @@ internal object ResponseRectifierScope {
     }
 
     private fun ScopeDSL.idAssociation() {
-        factoryOf(::IdMatcher) associate IdRectifier.Association.Matcher::class
+        factory<IdMatcher>() associate IdRectifier.Association.Matcher::class
     }
 
     private fun ScopeDSL.textAssociation() {

@@ -4,15 +4,15 @@ import com.tezov.tuucho.core.data.repository.di.ModuleContextData
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.onClose
+import org.koin.plugin.module.dsl.single
 
 internal object RectifierModule {
     fun invoke() = module(ModuleContextData.Rectifier) {
-        singleOf(::MaterialRectifier) onClose { rectifier ->
+        single<MaterialRectifier>() onClose { rectifier ->
             rectifier?.closeScope()
         }
-        singleOf(::ResponseRectifier) onClose { rectifier ->
+        single<ResponseRectifier>() onClose { rectifier ->
             rectifier?.closeScope()
         }
     }

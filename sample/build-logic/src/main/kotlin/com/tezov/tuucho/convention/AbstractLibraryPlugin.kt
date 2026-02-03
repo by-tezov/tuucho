@@ -14,6 +14,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
+            pluginManager.apply(plugin(PluginId.koin))
             pluginManager.apply(plugin(PluginId.compose))
             pluginManager.apply(plugin(PluginId.composeCompiler))
         }

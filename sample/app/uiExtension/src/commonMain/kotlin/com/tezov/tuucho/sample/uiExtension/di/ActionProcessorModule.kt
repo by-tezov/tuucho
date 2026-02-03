@@ -9,10 +9,11 @@ import com.tezov.tuucho.sample.uiExtension.domain.EchoMessageCustomActionDefinit
 import com.tezov.tuucho.sample.uiExtension.domain.EchoMessageCustomActionMiddleware
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 internal object ActionProcessorModule {
     fun invoke() = module(ModuleContextDomain.Middleware) {
-        factoryOf(::EchoMessageCustomActionMiddleware) bind ActionMiddlewareProtocol::class
+        factory<EchoMessageCustomActionMiddleware>() bind ActionMiddlewareProtocol::class
 
         factoryObject(EchoMessageCustomActionDefinition) bind ActionDefinitionProtocol::class
     }

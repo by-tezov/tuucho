@@ -40,6 +40,7 @@ internal object MaterialRectifierModule {
     private fun ScopeDSL.contentAssociation() {
         associate<ContentRectifier.Association.Processor> {
             factoryOf(::ContentLayoutLinearItemsRectifier)
+//            factory<ContentLayoutLinearItemsRectifier>() // TODO koin Issue
             factoryOf(::ContentImageValuesRectifier)
             factoryOf(::ContentButtonLabelRectifier)
             factoryOf(::ContentFormFieldTextErrorRectifier)

@@ -6,11 +6,12 @@ import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.sample.shared.action.LoggerAction
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 object InteractionModule {
 
     fun invoke() = module(ModuleContextDomain.Middleware) {
-        factoryOf(::LoggerAction) bind ActionMiddlewareProtocol::class
+        factory<LoggerAction>() bind ActionMiddlewareProtocol::class
     }
 
 }

@@ -10,6 +10,7 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidApplication))
             pluginManager.apply(plugin(PluginId.koltinAndroid))
+            pluginManager.apply(plugin(PluginId.koin))
             pluginManager.apply(plugin(PluginId.compose))
             pluginManager.apply(plugin(PluginId.composeCompiler))
         }

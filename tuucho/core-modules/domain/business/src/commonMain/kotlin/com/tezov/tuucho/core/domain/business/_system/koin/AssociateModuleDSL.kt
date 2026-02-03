@@ -15,11 +15,14 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.named
 import kotlin.reflect.KClass
+import org.koin.plugin.module.dsl.factory as factoryCompiler
+import org.koin.plugin.module.dsl.single as singleCompiler
 
 class AssociateModuleDSL(
     val association: KClass<*>,
     val module: Module
 ) {
+
     @KoinDslMarker
     inline fun <reified T : Any> declaration(
         qualifier: Qualifier? = null
@@ -33,6 +36,14 @@ class AssociateModuleDSL(
 
     // Single
     @KoinDslMarker
+    fun <T> single(): KoinDefinition<T> = with(module) {
+        val koinDefinition = singleCompiler<T>()
+        @Suppress("UNCHECKED_CAST")
+        (koinDefinition as KoinDefinition<Any>) associate association
+        koinDefinition
+    }
+
+
     inline fun <reified T> single(
         qualifier: Qualifier? = null,
         createdAtStart: Boolean = false,
@@ -45,7 +56,6 @@ class AssociateModuleDSL(
         }
     }
 
-    @KoinDslMarker
     inline fun <reified R> singleOf(
         crossinline constructor: () -> R,
         noinline options: DefinitionOptions<R>? = null,
@@ -57,7 +67,6 @@ class AssociateModuleDSL(
         }
     }
 
-    @KoinDslMarker
     inline fun <reified R, reified T1> singleOf(
         crossinline constructor: (T1) -> R,
         noinline options: DefinitionOptions<R>? = null,
@@ -71,6 +80,13 @@ class AssociateModuleDSL(
 
     // Factory
     @KoinDslMarker
+    fun <T> factory(): KoinDefinition<T> = with(module) {
+        val koinDefinition = factoryCompiler<T>()
+        @Suppress("UNCHECKED_CAST")
+        (koinDefinition as KoinDefinition<Any>) associate association
+        koinDefinition
+    }
+
     inline fun <reified T> factory(
         qualifier: Qualifier? = null,
         noinline definition: Definition<T>,
@@ -82,7 +98,6 @@ class AssociateModuleDSL(
         }
     }
 
-    @KoinDslMarker
     inline fun <reified R> factoryOf(
         crossinline constructor: () -> R,
         noinline options: DefinitionOptions<R>? = null,
@@ -94,7 +109,6 @@ class AssociateModuleDSL(
         }
     }
 
-    @KoinDslMarker
     inline fun <reified R, reified T1> factoryOf(
         crossinline constructor: (T1) -> R,
         noinline options: DefinitionOptions<R>? = null,
@@ -107,7 +121,6 @@ class AssociateModuleDSL(
     }
 
     // Misc.
-    @KoinDslMarker
     fun factory(
         value: String
     ) {

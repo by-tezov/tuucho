@@ -25,6 +25,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         const val composeCompiler = "compose.compiler"
         const val ktLint = "ktlint"
         const val detekt = "detekt"
+        const val koin = "koin"
 
         // test
         const val allOpen = "all.open"
@@ -66,6 +67,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
             pluginManager.apply(plugin(PluginId.ktLint))
             pluginManager.apply(plugin(PluginId.detekt))
+            pluginManager.apply(plugin(PluginId.koin))
             pluginManager.apply(plugin(PluginId.conventionMaven))
         }
     }

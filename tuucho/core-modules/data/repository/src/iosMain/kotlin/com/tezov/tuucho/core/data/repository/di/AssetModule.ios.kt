@@ -8,6 +8,6 @@ import org.koin.dsl.bind
 
 internal object AssetModuleIos {
     fun invoke() = module(ModuleContextData.Main) {
-        factoryOf(::AssetReaderIos) bind AssetReaderProtocol::class
+        factory<AssetReaderIos>() bind AssetReaderProtocol::class
     }
 }

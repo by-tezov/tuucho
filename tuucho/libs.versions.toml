@@ -13,12 +13,13 @@ detektRules = "1.23.8"
 
 #plugin
 android-plugin = "8.13.2"
-kotlin-plugin = "2.3.0"
+kotlin-plugin = "2.3.20-Beta2"
 compose-plugin = "1.10.0"
 kotlin-serialization-plugin = "2.3.0"
 maven-plugin = "0.36.0"
-ktlint = "14.0.1"
-detekt = "1.23.8"
+ktlint-plugin = "14.0.1"
+detekt-plugin = "1.23.8"
+koin-plugin = "0.3.0"
 
 #lib - platform
 kotlin-couroutine = "1.10.2"
@@ -47,8 +48,8 @@ mokkery = "3.1.1"
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-plugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
 maven = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "maven-plugin" }
-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint-plugin" }
+detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt-plugin" }
 #lib - platform
 kotlin-couroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-couroutine" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
@@ -92,8 +93,8 @@ convention-library-ui = { id = "com.tezov.tuucho.convention.project.library-ui",
 #convention
 maven = { id = "maven-publish", version = "" }
 signing = { id = "signing", version = "" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
@@ -101,6 +102,7 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
+koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
 #test
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 all-open = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin-plugin" }

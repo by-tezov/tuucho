@@ -15,8 +15,8 @@ import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAda
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonVisibilityAdapter
 import com.tezov.tuucho.core.data.repository.di.DatabaseModule.Name.DATABASE_REPOSITORY_CONFIG
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
+import org.koin.plugin.module.dsl.factory
 
 object DatabaseModule {
     interface Config {
@@ -34,9 +34,9 @@ object DatabaseModule {
             }
         }
 
-        factoryOf(::JsonObjectAdapter)
-        factoryOf(::JsonVisibilityAdapter)
-        factoryOf(::JsonLifetimeAdapter)
+        factory<JsonObjectAdapter>()
+        factory<JsonVisibilityAdapter>()
+        factory<JsonLifetimeAdapter>()
 
         single {
             Database(
@@ -54,11 +54,11 @@ object DatabaseModule {
             )
         }
 
-        factoryOf(::JsonObjectQueries)
-        factoryOf(::HookQueries)
-        factoryOf(::ImageQueries)
-        factoryOf(::DatabaseTransactionFactory)
-        factoryOf(::MaterialDatabaseSource)
-        factoryOf(::ImageDatabaseSource)
+        factory<JsonObjectQueries>()
+        factory<HookQueries>()
+        factory<ImageQueries>()
+        factory<DatabaseTransactionFactory>()
+        factory<MaterialDatabaseSource>()
+        factory<ImageDatabaseSource>()
     }
 }
