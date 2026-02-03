@@ -15,11 +15,9 @@ import org.koin.dsl.bind
 @OptIn(TuuchoInternalApi::class)
 internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = listOf(
     module(ModuleContextData.Main) {
-        factoryOf(::SystemInformationIos) bind SystemInformation.PlatformProtocol::class
-        factoryOf(::ReferenceFactoryIos) bind ReferenceProtocol.Factory::class
-        factory<SystemPlatform> {
-            SystemPlatformIos()
-        }
+        factory<SystemInformationIos>() bind SystemInformation.PlatformProtocol::class
+        factory<ReferenceFactoryIos>() bind ReferenceProtocol.Factory::class
+        factory<SystemPlatformIos>() bind SystemPlatform::class
     },
     DatabaseModuleIos.invoke(),
     NetworkModuleIos.invoke(),

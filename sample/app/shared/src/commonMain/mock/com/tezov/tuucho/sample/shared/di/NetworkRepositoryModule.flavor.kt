@@ -22,6 +22,8 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
+import org.koin.plugin.module.dsl.single
 
 internal object NetworkRepositoryModuleFlavor {
     fun invoke() = module(ModuleContextData.Main) {
@@ -36,17 +38,17 @@ internal object NetworkRepositoryModuleFlavor {
             )
         }
 
-        factoryOf(::HttpClientMockConfig)
-        factoryOf(::HttpClientMockEngineFactory) bind HttpClientEngineFactory::class
+        factory<HttpClientMockConfig>()
+        factory<HttpClientMockEngineFactory>() bind HttpClientEngineFactory::class
     }
 
     private fun Module.misc() {
-        singleOf(::LoginTokenStore)
+        single<LoginTokenStore>()
     }
 
     private fun Module.guards() {
-        factoryOf(::AuthGuard)
-        factoryOf(::AuthGuardOptional)
+        factory<AuthGuard>()
+        factory<AuthGuardOptional>()
     }
 
     private fun Module.services() {
@@ -73,7 +75,7 @@ internal object NetworkRepositoryModuleFlavor {
             )
         } bindOrdered ServiceProtocol::class
 
-        factoryOf(::SendFormLoginService) bindOrdered ServiceProtocol::class
+        factory<SendFormLoginService>() bindOrdered ServiceProtocol::class
 
         factory {
             SendService(

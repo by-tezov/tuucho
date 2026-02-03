@@ -33,9 +33,12 @@ class MavenPlugin : Plugin<Project> {
         group = domain()
         version = versionName
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            androidTarget {
-                publishLibraryVariants("release")
-            }
+//            androidTarget {
+//                publishLibraryVariants("release")
+//            }
+//            targets.withType(KotlinAndroidTarget::class.java).named("android").configure {
+//                publishLibraryVariants("release")
+//            }
         }
         extensions.configure(PublishingExtension::class.java) {
             repositories {
@@ -116,8 +119,8 @@ class MavenPlugin : Plugin<Project> {
                         }
                     }
                     this.artifactId = when (name) {
+                        "android" -> "$artifactId-android"
                         "kotlinMultiplatform" -> artifactId
-                        "androidRelease" -> "$artifactId-android"
                         "iosArm64" -> "$artifactId-iosArm64"
                         "iosSimulatorArm64" -> "$artifactId-iosSimulatorArm64"
                         "iosX64" -> "$artifactId-iosX64"

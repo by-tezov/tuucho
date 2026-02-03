@@ -9,7 +9,7 @@ plugins {
 sqldelight {
     databases {
         create("Database") {
-            packageName.set("${android.namespace}.database")
+            packageName.set("${kotlin.androidLibrary.namespace}.database")
         }
     }
 }

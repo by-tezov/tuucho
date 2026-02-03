@@ -7,6 +7,6 @@ import org.koin.dsl.bind
 
 internal actual fun SystemCoreModules.platformInvoke(): List<KoinMass> = listOf(
     module(ModuleContextCore.Main) {
-        factoryOf(::KoinIos) bind KoinIos::class
+        factory<KoinIos>()
     }
 )

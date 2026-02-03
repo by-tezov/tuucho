@@ -31,9 +31,9 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.Text
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
+import org.koin.plugin.module.dsl.factory
 
 internal object MaterialRectifierScope {
     fun invoke() = scope(ScopeContext.Material) {
@@ -55,30 +55,30 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.rectifiers() {
-        factoryOf(::RectifierIdGenerator)
-        factoryOf(::IdRectifier)
-        factoryOf(::SettingComponentRectifier)
-        factoryOf(::ComponentsRectifier)
-        factoryOf(::ComponentRectifier)
-        factoryOf(::ContentsRectifier)
-        factoryOf(::ContentRectifier)
-        factoryOf(::StylesRectifier)
-        factoryOf(::StyleRectifier)
-        factoryOf(::OptionsRectifier)
-        factoryOf(::OptionRectifier)
-        factoryOf(::StatesRectifier)
-        factoryOf(::StateRectifier)
-        factoryOf(::TextsRectifier)
-        factoryOf(::TextRectifier)
-        factoryOf(::ColorsRectifier)
-        factoryOf(::ColorRectifier)
-        factoryOf(::DimensionsRectifier)
-        factoryOf(::DimensionRectifier)
-        factoryOf(::ActionsRectifier)
-        factoryOf(::ActionRectifier)
-        factoryOf(::ImagesRectifier)
-        factoryOf(::ImageRectifier)
-        factoryOf(::FormValidatorRectifier)
+        factory<RectifierIdGenerator>()
+        factory<IdRectifier>()
+        factory<SettingComponentRectifier>()
+        factory<ComponentsRectifier>()
+        factory<ComponentRectifier>()
+        factory<ContentsRectifier>()
+        factory<ContentRectifier>()
+        factory<StylesRectifier>()
+        factory<StyleRectifier>()
+        factory<OptionsRectifier>()
+        factory<OptionRectifier>()
+        factory<StatesRectifier>()
+        factory<StateRectifier>()
+        factory<TextsRectifier>()
+        factory<TextRectifier>()
+        factory<ColorsRectifier>()
+        factory<ColorRectifier>()
+        factory<DimensionsRectifier>()
+        factory<DimensionRectifier>()
+        factory<ActionsRectifier>()
+        factory<ActionRectifier>()
+        factory<ImagesRectifier>()
+        factory<ImageRectifier>()
+        factory<FormValidatorRectifier>()
 
         associate<MaterialRectifier.Association.Processor> {
             declaration<ComponentsRectifier>()
@@ -95,11 +95,11 @@ internal object MaterialRectifierScope {
     }
 
     private fun ScopeDSL.idAssociation() {
-        factoryOf(::IdMatcher) associate IdRectifier.Association.Matcher::class
+        factory<IdMatcher>() associate IdRectifier.Association.Matcher::class
     }
 
     private fun ScopeDSL.settingAssociation() {
-        factoryOf(::SettingComponentNavigationRectifier) associate SettingComponentRectifier.Association.Processor::class
+        factory<SettingComponentNavigationRectifier>() associate SettingComponentRectifier.Association.Processor::class
         declaration<IdRectifier>() associate SettingComponentRectifier.Association.Processor::class
     }
 

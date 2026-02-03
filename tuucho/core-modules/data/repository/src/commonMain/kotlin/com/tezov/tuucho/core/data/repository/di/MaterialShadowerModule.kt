@@ -11,7 +11,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
+import org.koin.plugin.module.dsl.single
 
 internal object MaterialShadowerModule {
     fun invoke() = module(ModuleContextData.Shadower) {
@@ -21,13 +21,13 @@ internal object MaterialShadowerModule {
     }
 
     private fun Module.shadowers() {
-        singleOf(::MaterialShadower)
-        singleOf(::ComponentShadower)
-        singleOf(::ContentShadower)
-        singleOf(::OptionShadower)
-        singleOf(::StyleShadower)
-        singleOf(::StateShadower)
-        singleOf(::TextShadower)
+        single<MaterialShadower>()
+        single<ComponentShadower>()
+        single<ContentShadower>()
+        single<OptionShadower>()
+        single<StyleShadower>()
+        single<StateShadower>()
+        single<TextShadower>()
     }
 
     private fun Module.componentAssociation() {

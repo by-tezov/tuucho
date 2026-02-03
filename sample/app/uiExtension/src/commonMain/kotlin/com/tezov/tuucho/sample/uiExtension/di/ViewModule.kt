@@ -6,9 +6,10 @@ import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.sample.uiExtension.presentation.CustomLabelViewFactory
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 internal object ViewModule {
     fun invoke() = module(ModuleContextPresentation.View) {
-        factoryOf(::CustomLabelViewFactory) bind ViewFactoryProtocol::class
+        factory<CustomLabelViewFactory>() bind ViewFactoryProtocol::class
     }
 }

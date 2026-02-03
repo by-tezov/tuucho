@@ -12,8 +12,8 @@ import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
+import org.koin.plugin.module.dsl.factory
 
 object NetworkModule {
     interface Config {
@@ -62,7 +62,7 @@ object NetworkModule {
             }
         }
 
-        factoryOf(::HttpClient)
-        factoryOf(::HttpNetworkSource)
+        factory<HttpClient>()
+        factory<HttpNetworkSource>()
     }
 }

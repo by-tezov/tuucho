@@ -1,5 +1,7 @@
 ### Todo:
 
+- Migration, need to fix the preview dependencies
+
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size)?
 - shadower with flow ?

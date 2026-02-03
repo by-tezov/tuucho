@@ -10,6 +10,7 @@ import com.tezov.tuucho.sample.shared.interceptor.HeadersHttpInterceptor
 import com.tezov.tuucho.sample.shared.interceptor.LoggerHttpInterceptor
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
+import org.koin.plugin.module.dsl.factory
 
 object InterceptorModule {
 
@@ -22,9 +23,9 @@ object InterceptorModule {
     }
 
     private fun Module.http() {
-        factoryOf(::FailSafePageHttpInterceptor) bindOrdered HttpInterceptor::class
-        factoryOf(::HeadersHttpInterceptor) bindOrdered HttpInterceptor::class
-        factoryOf(::HeaderHttpAuthorizationInterceptor) bindOrdered HttpInterceptor::class
-        factoryOf(::LoggerHttpInterceptor) bindOrdered HttpInterceptor::class
+        factory<FailSafePageHttpInterceptor>() bindOrdered HttpInterceptor::class
+        factory<HeadersHttpInterceptor>() bindOrdered HttpInterceptor::class
+        factory<HeaderHttpAuthorizationInterceptor>() bindOrdered HttpInterceptor::class
+        factory<LoggerHttpInterceptor>() bindOrdered HttpInterceptor::class
     }
 }

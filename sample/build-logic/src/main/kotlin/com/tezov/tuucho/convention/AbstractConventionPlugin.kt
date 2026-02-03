@@ -17,6 +17,7 @@ abstract class AbstractConventionPlugin : Plugin<Project> {
         const val koltinMultiplatform = "kotlin.multiplatform"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
+        const val koin = "koin"
     }
 
     final override fun apply(project: Project) {

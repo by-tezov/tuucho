@@ -9,16 +9,16 @@ import com.tezov.tuucho.uiComponent.stable.presentation.view.ImageViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.LabelViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.LayoutLinearViewFactory
 import com.tezov.tuucho.uiComponent.stable.presentation.view.SpacerViewFactory
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 internal object ViewModule {
     fun invoke() = module(ModuleContextPresentation.View) {
-        factoryOf(::SpacerViewFactory) bind ViewFactoryProtocol::class
-        factoryOf(::LayoutLinearViewFactory) bind ViewFactoryProtocol::class
-        factoryOf(::LabelViewFactory) bind ViewFactoryProtocol::class
-        factoryOf(::FieldViewFactory) bind ViewFactoryProtocol::class
-        factoryOf(::ButtonViewFactory) bind ViewFactoryProtocol::class
-        factoryOf(::ImageViewFactory) bind ViewFactoryProtocol::class
+        factory<SpacerViewFactory>() bind ViewFactoryProtocol::class
+        factory<LayoutLinearViewFactory>() bind ViewFactoryProtocol::class
+        factory<LabelViewFactory>() bind ViewFactoryProtocol::class
+        factory<FieldViewFactory>() bind ViewFactoryProtocol::class
+        factory<ButtonViewFactory>() bind ViewFactoryProtocol::class
+        factory<ImageViewFactory>() bind ViewFactoryProtocol::class
     }
 }

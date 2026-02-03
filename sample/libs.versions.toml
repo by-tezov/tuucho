@@ -12,9 +12,10 @@ compileSdk = "36"
 
 #plugin
 android-plugin = "8.13.2"
-kotlin-plugin = "2.3.0"
+kotlin-plugin = "2.3.20-Beta2"
 compose-plugin = "1.10.0"
 build-konfig-plugin = "0.17.1"
+koin-plugin = "0.3.0"
 
 #lib - android
 compose = "1.10.0"
@@ -74,3 +75,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-pl
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
+koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }

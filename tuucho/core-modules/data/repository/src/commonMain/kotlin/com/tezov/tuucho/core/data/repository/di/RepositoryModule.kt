@@ -18,9 +18,9 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepository
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ServerHealthCheckRepositoryProtocol
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 internal object RepositoryModule {
     object Name {
@@ -42,11 +42,11 @@ internal object RepositoryModule {
             )
         }
 
-        factoryOf(::ImageRepository) bind ImageRepositoryProtocol::class
-        factoryOf(::RefreshMaterialCacheRepository) bind MaterialRepositoryProtocol.RefreshCache::class
-        factoryOf(::RetrieveMaterialRepository) bind MaterialRepositoryProtocol.Retrieve::class
-        factoryOf(::SendDataAndRetrieveMaterialRepository) bind MaterialRepositoryProtocol.SendDataAndRetrieve::class
-        factoryOf(::ServerHealthCheckRepository) bind ServerHealthCheckRepositoryProtocol::class
+        factory<ImageRepository>() bind ImageRepositoryProtocol::class
+        factory<RefreshMaterialCacheRepository>() bind MaterialRepositoryProtocol.RefreshCache::class
+        factory<RetrieveMaterialRepository>() bind MaterialRepositoryProtocol.Retrieve::class
+        factory<SendDataAndRetrieveMaterialRepository>() bind MaterialRepositoryProtocol.SendDataAndRetrieve::class
+        factory<ServerHealthCheckRepository>() bind ServerHealthCheckRepositoryProtocol::class
         single {
             ShadowerMaterialRepository(
                 coroutineScopes = get(),
@@ -57,11 +57,11 @@ internal object RepositoryModule {
     }
 
     private fun Module.source() {
-        factoryOf(::MaterialCacheLocalSource)
-        factoryOf(::MaterialRemoteSource)
-        factoryOf(::RemoteSource)
-        factoryOf(::SendDataAndRetrieveMaterialRemoteSource)
-        factoryOf(::ImageSource)
+        factory<MaterialCacheLocalSource>()
+        factory<MaterialRemoteSource>()
+        factory<RemoteSource>()
+        factory<SendDataAndRetrieveMaterialRemoteSource>()
+        factory<ImageSource>()
 
         factory<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE) {
             listOf(

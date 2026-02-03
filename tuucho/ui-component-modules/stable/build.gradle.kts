@@ -18,7 +18,7 @@ kotlin {
     }
 }
 
-dependencies {
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.compose.ui.tooling.preview)
-}
+//dependencies {
+//    debugImplementation(libs.compose.ui.tooling)
+//    debugImplementation(libs.compose.ui.tooling.preview)
+//}

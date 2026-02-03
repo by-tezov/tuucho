@@ -21,9 +21,9 @@ import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import com.tezov.tuucho.core.domain.tool.json.InstantSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
+import org.koin.plugin.module.dsl.single
 import kotlin.time.Instant
 
 internal object MiscModule {
@@ -40,15 +40,15 @@ internal object MiscModule {
             }
         }
 
-        factoryOf(::ExpirationDateTimeRectifier)
-        singleOf(::IdGenerator) bind IdGeneratorProtocol::class // <Unit, String>
+        factory<ExpirationDateTimeRectifier>()
+        single<IdGenerator>() bind IdGeneratorProtocol::class // <Unit, String>
 
-        factoryOf(::MiddlewareExecutor) bind MiddlewareExecutorProtocol::class
-        factoryOf(::MiddlewareExecutorWithReturn) bind MiddlewareExecutorProtocolWithReturn::class
+        factory<MiddlewareExecutor>() bind MiddlewareExecutorProtocol::class
+        factory<MiddlewareExecutorWithReturn>() bind MiddlewareExecutorProtocolWithReturn::class
 
-        factoryOf(::InteractionLockGenerator)
-        singleOf(::InteractionLockStack) bind InteractionLockProtocol.Stack::class
-        factoryOf(::InteractionLockResolver) bind InteractionLockProtocol.Resolver::class
+        factory<InteractionLockGenerator>()
+        single<InteractionLockStack>() bind InteractionLockProtocol.Stack::class
+        factory<InteractionLockResolver>() bind InteractionLockProtocol.Resolver::class
 
         single<InteractionLockProtocol.Registry> {
             InteractionLockRegistry(actionDefinitions = getAll())

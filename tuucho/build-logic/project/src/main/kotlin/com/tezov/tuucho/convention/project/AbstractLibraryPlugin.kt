@@ -1,13 +1,10 @@
 package com.tezov.tuucho.convention.project
 
-import com.android.build.api.dsl.CommonExtension
-import com.android.build.api.dsl.LibraryExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
@@ -19,12 +16,13 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     object PluginId {
         const val maven = "maven"
         const val signing = "signing"
-        const val androidLibrary = "android.library"
         const val koltinMultiplatform = "kotlin.multiplatform"
+        const val koltinMultiplatformLibrary = "kotlin.multiplatform.library"
         const val compose = "compose"
         const val composeCompiler = "compose.compiler"
         const val ktLint = "ktlint"
         const val detekt = "detekt"
+        const val koin = "koin"
 
         // test
         const val allOpen = "all.open"
@@ -62,8 +60,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
 
     protected open fun applyPlugins(project: Project) {
         with(project) {
-            pluginManager.apply(plugin(PluginId.androidLibrary))
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
+            pluginManager.apply(plugin(PluginId.koltinMultiplatformLibrary))
+            pluginManager.apply(plugin(PluginId.koin))
             pluginManager.apply(plugin(PluginId.ktLint))
             pluginManager.apply(plugin(PluginId.detekt))
             pluginManager.apply(plugin(PluginId.conventionMaven))
@@ -72,7 +71,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
 
     protected open fun configure(project: Project) {
         with(project) {
-            configureCommonAndroid()
+            configureAndroidLibrary()
             configureLint()
             configureKtLint()
             configureDetekt()
@@ -82,46 +81,78 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.configureCommonAndroid() {
-        extensions.configure(CommonExtension::class.java) {
-            compileSdk = version("compileSdk").toInt()
-
-            buildFeatures {
-                //buildConfig = true
-            }
-
-            defaultConfig {
+    private fun Project.configureAndroidLibrary() {
+        extensions.configure(KotlinMultiplatformExtension::class.java) {
+            androidLibrary {
+                namespace = namespace()
+                compileSdk = version("compileSdk").toInt()
                 minSdk = version("minSdk").toInt()
-            }
-
-            compileOptions {
-                sourceCompatibility = javaVersion()
-                targetCompatibility = javaVersion()
+                compilerOptions.jvmTarget.set(jvmTarget())
             }
         }
-        project.extensions.configure(JavaPluginExtension::class.java) {
-            toolchain {
-                languageVersion.set(javaLanguageVersion())
+    }
+
+    private fun Project.configureMultiplatform() {
+        extensions.configure(KotlinMultiplatformExtension::class.java) {
+            jvmToolchain(this@configureMultiplatform.javaVersionInt())
+            compilerOptions {
+                optIn.addAll(optIn())
+                freeCompilerArgs.addAll(compilerOption())
+                //turn of warning error unique name when maven publication, TODO need to dig in to find what is wrong with KLib
+                allWarningsAsErrors.set(false)
+            }
+            // iOS
+            if (isMacOs) {
+                iosArm64()
+                iosSimulatorArm64()
+            } else {
+                println("⚠️ mac os target disable")
+            }
+            applyDefaultHierarchyTemplate()
+        }
+    }
+
+    private fun Project.configureSourceSets() {
+        val buildType = buildType()
+        extensions.configure(KotlinMultiplatformExtension::class.java) {
+            sourceSets {
+                androidMain {
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/androidMain/$buildType"
+                    )
+                }
+                if (isMacOs) {
+                    iosMain {
+                        kotlin.srcDirs(
+                            "${project.projectDir.path}/src/iosMain/$buildType"
+                        )
+                    }
+                }
+                commonMain {
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/commonMain/$buildType"
+                    )
+                }
             }
         }
     }
 
     private fun Project.configureLint() {
-        extensions.configure(CommonExtension::class.java) {
-            lint {
-//                abortOnError = false
-//                checkDependencies = true
-//                checkReleaseBuilds = false
-//
-//                xmlReport = true
-//                htmlReport = true
-//
-//                xmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.xml")
-//                htmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.html")
-//                baseline = file("lint-baseline.xml")
-                disable.addAll(lintDisabled())
-            }
-        }
+//        extensions.configure(CommonExtension::class.java) {
+//            lint {
+////                abortOnError = false
+////                checkDependencies = true
+////                checkReleaseBuilds = false
+////
+////                xmlReport = true
+////                htmlReport = true
+////
+////                xmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.xml")
+////                htmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.html")
+////                baseline = file("lint-baseline.xml")
+//                disable.addAll(lintDisabled())
+//            }
+//        }
     }
 
     private fun Project.configureKtLint() {
@@ -179,72 +210,19 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     }
 
     private fun Project.configureProguard() {
-        extensions.configure(LibraryExtension::class.java) {
-            buildTypes {
-                getByName("release") {
-                    consumerProguardFiles(
-                        "proguard-rules.pro"
-                    )
-                }
-            }
-        }
-    }
-
-    private fun Project.configureMultiplatform() {
-        extensions.configure(LibraryExtension::class.java) {
-            namespace = namespace()
-        }
+        @Suppress("UnstableApiUsage")
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            jvmToolchain(this@configureMultiplatform.javaVersionInt())
-            compilerOptions {
-                optIn.addAll(optIn())
-                freeCompilerArgs.addAll(compilerOption())
-                //turn of warning error unique name when maven publication, TODO need to dig in to find what is wrong with KLib
-                allWarningsAsErrors.set(false)
-            }
-            // Android
-            val androidTargets = listOf(androidTarget())
-            androidTargets.forEach {
-                it.compilerOptions {
-                    jvmTarget.set(this@configureMultiplatform.jvmTarget())
-                }
-            }
-            // iOS
-            if (isMacOs) {
-                iosArm64()
-                iosSimulatorArm64()
-                iosX64()
-            } else {
-                println("⚠️ mac os target disable")
-            }
-            applyDefaultHierarchyTemplate()
-        }
-    }
-
-    private fun Project.configureSourceSets() {
-        val buildType = buildType()
-        extensions.configure(KotlinMultiplatformExtension::class.java) {
-            sourceSets {
-                androidMain {
-                    kotlin.srcDirs(
-                        "${project.projectDir.path}/src/androidMain/$buildType"
-                    )
-                }
-                if (isMacOs) {
-                    iosMain {
-                        kotlin.srcDirs(
-                            "${project.projectDir.path}/src/iosMain/$buildType"
-                        )
+            androidLibrary {
+                optimization {
+                    consumerKeepRules.apply {
+                        publish = true
+                        file("proguard-rules.pro")
                     }
                 }
-                commonMain {
-                    kotlin.srcDirs(
-                        "${project.projectDir.path}/src/commonMain/$buildType"
-                    )
-                }
             }
         }
     }
+
 }
 
 

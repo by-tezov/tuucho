@@ -8,11 +8,12 @@ import com.tezov.tuucho.sample.shared.monitor.LoggerCoroutineExceptionMonitor
 import com.tezov.tuucho.sample.shared.monitor.LoggerInteractionLockMonitor
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 object MonitorModule {
 
     fun invoke() = module(ModuleContextDomain.Main) {
-        factoryOf(::LoggerCoroutineExceptionMonitor) bind CoroutineExceptionMonitorProtocol::class
-        factoryOf(::LoggerInteractionLockMonitor) bind InteractionLockMonitorProtocol::class
+        factory<LoggerCoroutineExceptionMonitor>() bind CoroutineExceptionMonitorProtocol::class
+        factory<LoggerInteractionLockMonitor>() bind InteractionLockMonitorProtocol::class
     }
 }
