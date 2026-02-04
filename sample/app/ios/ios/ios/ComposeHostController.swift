@@ -31,9 +31,13 @@ class ComposeHostController: UIViewController {
     }
 
     private func setupComposeView() {
-        guard !isKoinInitialized else { return }
+        guard !isKoinInitialized else {
+            return
+        }
         let vc = KMPKitKt.uiView(koinExtension: { [weak self] koinApplication in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             let publisher = koinApplication.tuuchoKoinIos.get(clazz: NavigationFinishPublisher.self) as! NavigationFinishPublisher
             publisher.onFinish(block: {
                 self.coordinator?.handleKoinClosed()

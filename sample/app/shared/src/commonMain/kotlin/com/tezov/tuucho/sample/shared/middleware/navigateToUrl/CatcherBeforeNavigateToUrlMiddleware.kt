@@ -4,9 +4,7 @@ import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.sample.shared._system.Config
 import com.tezov.tuucho.sample.shared._system.Page
-import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.FlowCollector
 
 class CatcherBeforeNavigateToUrlMiddleware : NavigationMiddleware.ToUrl {
 

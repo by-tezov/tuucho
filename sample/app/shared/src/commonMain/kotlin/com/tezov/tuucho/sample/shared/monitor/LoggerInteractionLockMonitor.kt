@@ -1,7 +1,6 @@
 package com.tezov.tuucho.sample.shared.monitor
 
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMonitorProtocol
-import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
 
 class LoggerInteractionLockMonitor(

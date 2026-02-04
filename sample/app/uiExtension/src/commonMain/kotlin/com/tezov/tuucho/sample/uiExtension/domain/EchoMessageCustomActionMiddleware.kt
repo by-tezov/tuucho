@@ -10,8 +10,6 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import com.tezov.tuucho.sample.uiExtension.domain.CustomLabelSchema.Message
-import kotlinx.coroutines.channels.ProducerScope
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.serialization.json.JsonNull
 
 internal class EchoMessageCustomActionMiddleware(

@@ -9,7 +9,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headers
 import kotlinx.coroutines.delay
 import okio.buffer
-import okio.use
 import kotlin.random.Random
 
 internal class ImageService(

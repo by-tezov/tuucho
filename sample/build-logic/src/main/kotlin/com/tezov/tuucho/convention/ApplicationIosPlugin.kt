@@ -55,6 +55,7 @@ class ApplicationIosPlugin : Plugin<Project> {
 
     private fun Project.mergeAllProjectAssets(): File {
         val buildType = buildType()
+
         @Suppress("NewApi")
         val mergedAssetsDir = Files.createTempDirectory("mergedAssets").toFile()
         rootProject.subprojects

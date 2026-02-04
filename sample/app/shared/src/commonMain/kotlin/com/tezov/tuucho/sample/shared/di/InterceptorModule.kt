@@ -9,7 +9,6 @@ import com.tezov.tuucho.sample.shared.interceptor.HeaderHttpAuthorizationInterce
 import com.tezov.tuucho.sample.shared.interceptor.HeadersHttpInterceptor
 import com.tezov.tuucho.sample.shared.interceptor.LoggerHttpInterceptor
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
 import org.koin.plugin.module.dsl.factory
 
 object InterceptorModule {

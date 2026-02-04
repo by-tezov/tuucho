@@ -12,7 +12,9 @@ struct ComposeView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
         if coordinator.shouldRecreateController {
-            guard let controller = uiViewController as? ComposeHostController else { return }
+            guard let controller = uiViewController as? ComposeHostController else {
+                return
+            }
             controller.recreateComposeView()
             DispatchQueue.main.async {
                 coordinator.shouldRecreateController = false

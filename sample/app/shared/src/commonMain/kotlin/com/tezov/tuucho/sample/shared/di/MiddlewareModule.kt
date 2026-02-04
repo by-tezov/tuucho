@@ -20,8 +20,6 @@ import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.OnShadowerExcepti
 import com.tezov.tuucho.sample.shared.middleware.sendData.LoggerSendDataMiddleware
 import com.tezov.tuucho.sample.shared.middleware.updateView.LoggerUpdateViewMiddleware
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.plugin.module.dsl.factory
 import org.koin.plugin.module.dsl.single
 

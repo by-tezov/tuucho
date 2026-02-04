@@ -4,7 +4,6 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import com.tezov.tuucho.core.presentation.ui.di.ModuleContextPresentation
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.sample.uiExtension.presentation.CustomLabelViewFactory
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.plugin.module.dsl.factory
 

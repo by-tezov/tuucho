@@ -249,7 +249,10 @@
         "background-color": "*background@funny-color"
       },
       "content": {
-        "values": ["*small-logo", "*small-logo-placeholder"],
+        "values": [
+          "*small-logo",
+          "*small-logo-placeholder"
+        ],
         "description": "Small-Logo"
       }
     },

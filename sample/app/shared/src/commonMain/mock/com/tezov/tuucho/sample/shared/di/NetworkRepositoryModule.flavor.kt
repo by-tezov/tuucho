@@ -19,8 +19,6 @@ import com.tezov.tuucho.sample.shared.repository.network.backendServer.service.S
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.store.LoginTokenStore
 import io.ktor.client.engine.HttpClientEngineFactory
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.plugin.module.dsl.factory
 import org.koin.plugin.module.dsl.single

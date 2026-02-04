@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockMon
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol
 import com.tezov.tuucho.sample.shared.monitor.LoggerCoroutineExceptionMonitor
 import com.tezov.tuucho.sample.shared.monitor.LoggerInteractionLockMonitor
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.plugin.module.dsl.factory
 

@@ -2,7 +2,6 @@ package com.tezov.tuucho.sample.uiExtension.domain
 
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MessageSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
 
 object CustomLabelSchema {
     object Component {

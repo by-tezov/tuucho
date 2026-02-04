@@ -2,10 +2,7 @@ package com.tezov.tuucho.sample.shared.middleware.updateView
 
 import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
-import kotlinx.coroutines.channels.ProducerScope
-import kotlinx.coroutines.flow.FlowCollector
 
 class LoggerUpdateViewMiddleware(
     private val logger: Logger

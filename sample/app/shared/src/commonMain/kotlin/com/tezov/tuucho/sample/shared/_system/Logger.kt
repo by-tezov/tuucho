@@ -1,13 +1,9 @@
 package com.tezov.tuucho.sample.shared._system
 
 import co.touchlab.kermit.CommonWriter
-import co.touchlab.kermit.LogWriter
-import co.touchlab.kermit.LoggerConfig
 import co.touchlab.kermit.Severity
 import co.touchlab.kermit.StaticConfig
-import co.touchlab.kermit.platformLogWriter
 import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
-import kotlin.collections.listOf
 import co.touchlab.kermit.Logger as Kermit
 
 class Logger(
@@ -44,9 +40,15 @@ class Logger(
 
     fun exception(tag: String = "", throwable: Throwable? = null, message: () -> Any) {
         if (exceptionVerbose) {
-            kermit.e(tag = tag.fullWithPrefix(), throwable = throwable, message = { "${message()}" })
+            kermit.e(
+                tag = tag.fullWithPrefix(),
+                throwable = throwable,
+                message = { "${message()}" })
         } else {
-            kermit.e(tag = tag.fullWithPrefix(), throwable = null, message = { "${message()}: $throwable" })
+            kermit.e(
+                tag = tag.fullWithPrefix(),
+                throwable = null,
+                message = { "${message()}: $throwable" })
         }
     }
 

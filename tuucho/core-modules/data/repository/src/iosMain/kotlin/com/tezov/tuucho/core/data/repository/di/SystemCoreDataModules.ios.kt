@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 @OptIn(TuuchoInternalApi::class)
 internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = listOf(

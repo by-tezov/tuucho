@@ -26,23 +26,11 @@
     <ID>MaxLineLength:KoinIsolatedContext.kt$KoinIsolatedContext$val</ID>
     <ID>MaxLineLength:NavigateFinishUseCase.kt$NavigateFinishUseCase$throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
-      <ID>MemberNameEqualsClassName:Associate.kt$Associate$@OptIn(KoinInternalApi::class) infix fun
-          &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.associate( clazz: KClass&lt;*&gt; ):
-          KoinDefinition&lt;out S&gt;
-      </ID>
-      <ID>MemberNameEqualsClassName:Associate.kt$Associate$infix fun &lt;T : Any&gt; InstanceFactory&lt;T&gt;.associate(
-          clazz: KClass&lt;*&gt; )
-      </ID>
-      <ID>MemberNameEqualsClassName:Associate.kt$Associate$inline fun &lt;reified T : Any&gt;
-          Module.associate( associateDSL: AssociateModuleDSL.() -&gt; Unit )
-      </ID>
-      <ID>MemberNameEqualsClassName:Associate.kt$Associate$inline fun &lt;reified T : Any&gt;
-          ScopeDSL.associate( associateDSL: AssociateScopeDSL.() -&gt; Unit )
-      </ID>
-      <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) infix
-          fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ):
-          KoinDefinition&lt;out S&gt;
-      </ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$@OptIn(KoinInternalApi::class) infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.associate( clazz: KClass&lt;*&gt; ): KoinDefinition&lt;out S&gt;</ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$infix fun &lt;T : Any&gt; InstanceFactory&lt;T&gt;.associate( clazz: KClass&lt;*&gt; )</ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$inline fun &lt;reified T : Any&gt; Module.associate( associateDSL: AssociateModuleDSL.() -&gt; Unit )</ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$inline fun &lt;reified T : Any&gt; ScopeDSL.associate( associateDSL: AssociateScopeDSL.() -&gt; Unit )</ID>
+    <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
     <ID>PackageNaming:Associate.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateModuleDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateScopeDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>

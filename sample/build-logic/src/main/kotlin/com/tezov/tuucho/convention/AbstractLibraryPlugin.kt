@@ -70,7 +70,7 @@ abstract class AbstractLibraryPlugin : AbstractConventionPlugin() {
             }
             // iOS
             if (isMacOs) {
-                val iosTargets = listOf(iosArm64(), iosSimulatorArm64(), iosX64())
+                val iosTargets = listOf(iosArm64(), iosSimulatorArm64())
                 project.afterEvaluate {
                     val namespace = extensions.findByType(CommonExtension::class.java)!!.namespace!!
                     val frameworkName = project.path.split(":")
