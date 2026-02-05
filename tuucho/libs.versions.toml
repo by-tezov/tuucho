@@ -91,14 +91,13 @@ convention-library-test = { id = "com.tezov.tuucho.convention.project.library-te
 convention-library-plain = { id = "com.tezov.tuucho.convention.project.library-plain", version = "" }
 convention-library-ui = { id = "com.tezov.tuucho.convention.project.library-ui", version = "" }
 #<-convention
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
 kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-plugin" }
+koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
-koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
 maven = { id = "maven-publish", version = "" }
 signing = { id = "signing", version = "" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }

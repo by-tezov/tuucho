@@ -11,17 +11,11 @@ targetSdk = "36"
 compileSdk = "36"
 
 #plugin
-android-plugin = "8.13.2"
+android-plugin = "9.0.0"
 kotlin-plugin = "2.3.20-Beta2"
 compose-plugin = "1.10.0"
 build-konfig-plugin = "0.17.1"
 koin-plugin = "0.3.0"
-
-#lib - android
-compose = "1.10.0"
-compose-material3 = "1.9.0"
-compose-activity = "1.12.3"
-compose-ui-tooling = "1.10.2"
 
 #lib - platform
 kermit = "2.0.8"
@@ -30,10 +24,17 @@ koin = "4.2.0-RC1"
 kotlin-serialization-json = "1.10.0"
 kotlin-collections-immutable = "0.4.0"
 
+#lib - android
+compose = "1.10.0"
+compose-material3 = "1.9.0"
+compose-activity = "1.12.3"
+compose-ui-tooling = "1.10.2"
+
 [libraries]
 #build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-plugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
+kotlin-multiplatform-gradle-plugin = { group = "org.jetbrains.kotlin.multiplatform", name = "org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin-plugin" }
 #tuucho
 tuucho = { group = "com.tezov", name = "tuucho.core", version.ref = "versionName" }
 tuucho-android = { group = "com.tezov", name = "tuucho.core-android", version.ref = "versionName" }
@@ -43,13 +44,6 @@ compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", v
 compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "compose" }
 compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose" }
 compose-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "compose-material3" }
-#compose - android
-compose-ui-android = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
-compose-foundation-android = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui-tooling" }
-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui-tooling" }
-tuucho-umbrella-android = { group = "com.tezov", name = "tuucho.core.umbrella-android", version.ref = "versionName" }
 #lib - platform
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
@@ -57,22 +51,28 @@ koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = 
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-collections-immutable" }
+#compose - android
+compose-ui-android = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-foundation-android = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui-tooling" }
+tuucho-umbrella-android = { group = "com.tezov", name = "tuucho.core.umbrella-android", version.ref = "versionName" }
 #lib - android
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 #lib - ios
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 [plugins]
-#convention
+#convention->
 convention-application-android = { id = "com.tezov.tuucho.convention.application-android", version = "unspecified" }
 convention-application-ios = { id = "com.tezov.tuucho.convention.application-ios", version = "unspecified" }
 convention-shared-library = { id = "com.tezov.tuucho.convention.shared-library", version = "unspecified" }
 convention-ui-extension-library = { id = "com.tezov.tuucho.convention.ui-extension-library", version = "unspecified" }
-#convention
-build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig-plugin" }
+#<-convention
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
-android-library = { id = "com.android.library", version.ref = "android-plugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
+kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-plugin" }
+koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
+build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig-plugin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
-koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }

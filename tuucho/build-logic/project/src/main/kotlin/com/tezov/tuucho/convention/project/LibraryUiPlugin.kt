@@ -1,5 +1,7 @@
 package com.tezov.tuucho.convention.project
 
+import com.tezov.tuucho.convention.project._system.PluginId
+import com.tezov.tuucho.convention.project._system.plugin
 import org.gradle.api.Project
 
 class LibraryUiPlugin : LibraryPlainPlugin() {

@@ -1,5 +1,11 @@
 package com.tezov.tuucho.convention.project
 
+import com.tezov.tuucho.convention.project._system.PluginId
+import com.tezov.tuucho.convention.project._system.buildType
+import com.tezov.tuucho.convention.project._system.library
+import com.tezov.tuucho.convention.project._system.namespaceBase
+import com.tezov.tuucho.convention.project._system.plugin
+import com.tezov.tuucho.convention.project._system.version
 import dev.mokkery.gradle.MokkeryGradleExtension
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test

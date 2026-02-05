@@ -1,41 +1,94 @@
 package com.tezov.tuucho.convention
 
 import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.variant.AndroidComponentsExtension
+import com.tezov.tuucho.convention._system.AssetHelper
+import com.tezov.tuucho.convention._system.PluginId
+import com.tezov.tuucho.convention._system.buildType
+import com.tezov.tuucho.convention._system.javaVersion
+import com.tezov.tuucho.convention._system.keystorePropertiesFilePath
+import com.tezov.tuucho.convention._system.namespace
+import com.tezov.tuucho.convention._system.plugin
+import com.tezov.tuucho.convention._system.targetSdk
+import com.tezov.tuucho.convention._system.version
+import com.tezov.tuucho.convention._system.versionCode
+import com.tezov.tuucho.convention._system.versionName
+import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.util.Properties
 
-class ApplicationAndroidPlugin : AbstractConventionPlugin() {
+class ApplicationAndroidPlugin : Plugin<Project> {
 
-    override fun applyPlugins(project: Project) {
+    override fun apply(project: Project) {
+        applyPlugins(project)
+        configure(project)
+    }
+
+    private fun applyPlugins(project: Project) {
         with(project) {
             pluginManager.apply(plugin(PluginId.androidApplication))
-            pluginManager.apply(plugin(PluginId.koltinAndroid))
             pluginManager.apply(plugin(PluginId.koin))
             pluginManager.apply(plugin(PluginId.compose))
             pluginManager.apply(plugin(PluginId.composeCompiler))
         }
     }
 
-    override fun configure(
+    private fun configure(
         project: Project,
     ) {
-        super.configure(project)
         with(project) {
             configureApplication()
+            configureBuildType()
             configureProguard()
             configureSigning()
+            configureAssets()
         }
     }
 
     private fun Project.configureApplication() {
         extensions.configure(ApplicationExtension::class.java) {
             namespace = namespace()
-
+            compileSdk = version("compileSdk").toInt()
             defaultConfig {
                 applicationId = namespace
                 targetSdk = targetSdk()
+                minSdk = version("minSdk").toInt()
                 versionCode = versionCode()
                 versionName = versionName()
+            }
+            compileOptions {
+                sourceCompatibility = javaVersion()
+                targetCompatibility = javaVersion()
+            }
+        }
+    }
+
+    private fun Project.configureBuildType() {
+        extensions.configure(ApplicationExtension::class.java) {
+            buildTypes {
+                create("prod") {
+                    initWith(getByName("release"))
+                    matchingFallbacks += listOf("release")
+                }
+                create("stage") {
+                    initWith(getByName("release"))
+                    matchingFallbacks += listOf("release")
+                }
+                create("dev") {
+                    initWith(getByName("debug"))
+                    matchingFallbacks += listOf("debug")
+                }
+                create("mock") {
+                    initWith(getByName("debug"))
+                    matchingFallbacks += listOf("debug")
+                }
+            }
+        }
+        extensions.configure(AndroidComponentsExtension::class.java) {
+            beforeVariants { builder ->
+                if (builder.buildType == "debug" || builder.buildType == "release") {
+                    builder.enable = false
+                }
             }
         }
     }
@@ -127,6 +180,27 @@ class ApplicationAndroidPlugin : AbstractConventionPlugin() {
         }
     }
 
+    private fun Project.configureAssets() {
+        val buildType = buildType()
+        extensions.configure(AndroidComponentsExtension::class.java) {
+            onVariants { variant ->
+                if (variant.buildType == buildType) {
+                    val assets = variant.sources.assets ?: error("missing assets source")
+                    assets.addStaticSourceDirectory(
+                        project.layout.buildDirectory.dir("generated/assets").get().asFile.path
+                    )
+                }
+            }
+        }
+        AssetHelper.run {
+            registerTask(
+                taskName = "syncAndroidAssets",
+                appDir = layout.buildDirectory.dir("generated").get().asFile,
+                attachToTask = "assemble${buildType.replaceFirstChar { it.uppercaseChar() }}"
+            )
+        }
+    }
 }
+
 
 

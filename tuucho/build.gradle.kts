@@ -5,7 +5,6 @@ import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 plugins {
     base
     id("jacoco")
-    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.multiplatform.library) apply false
     alias(libs.plugins.koin) apply false
@@ -21,7 +20,7 @@ plugins {
     alias(libs.plugins.all.open) apply false
 }
 
-// KtLint
+// KtLintappDir
 tasks.register("rootFormatKtLint") {
     group = "validation"
     description = "Format KtLint"

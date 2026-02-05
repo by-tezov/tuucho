@@ -1,5 +1,17 @@
 package com.tezov.tuucho.convention.project
 
+import com.tezov.tuucho.convention.project._system.PluginId
+import com.tezov.tuucho.convention.project._system.androidLibrary
+import com.tezov.tuucho.convention.project._system.buildType
+import com.tezov.tuucho.convention.project._system.compilerOption
+import com.tezov.tuucho.convention.project._system.isMacOs
+import com.tezov.tuucho.convention.project._system.javaVersionInt
+import com.tezov.tuucho.convention.project._system.javaVersionString
+import com.tezov.tuucho.convention.project._system.jvmTarget
+import com.tezov.tuucho.convention.project._system.namespace
+import com.tezov.tuucho.convention.project._system.optIn
+import com.tezov.tuucho.convention.project._system.plugin
+import com.tezov.tuucho.convention.project._system.version
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
@@ -12,46 +24,6 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jlleitschuh.gradle.ktlint.tasks.KtLintFormatTask
 
 abstract class AbstractLibraryPlugin : Plugin<Project> {
-
-    object PluginId {
-        const val maven = "maven"
-        const val signing = "signing"
-        const val koltinMultiplatform = "kotlin.multiplatform"
-        const val koltinMultiplatformLibrary = "kotlin.multiplatform.library"
-        const val compose = "compose"
-        const val composeCompiler = "compose.compiler"
-        const val ktLint = "ktlint"
-        const val detekt = "detekt"
-        const val koin = "koin"
-
-        // test
-        const val allOpen = "all.open"
-        const val mokkery = "mokkery"
-
-        // convention
-        const val conventionMaven = "convention.maven"
-    }
-
-    companion object {
-
-        private fun lintDisabled() = setOf<String>(
-//            "ComposableNaming"
-        )
-
-        private fun optIn() = listOf(
-            "kotlin.uuid.ExperimentalUuidApi",
-            "kotlin.ExperimentalUnsignedTypes",
-            "kotlin.time.ExperimentalTime",
-            "kotlin.concurrent.atomics.ExperimentalAtomicApi",
-//            "kotlin.ExperimentalMultiplatform",
-        ).asIterable()
-
-        private fun compilerOption() = listOf<String>(
-            "-Xcontext-parameters"
-//            "-Xnested-type-aliases",
-//            "-Xexpect-actual-classes",
-        )
-    }
 
     final override fun apply(project: Project) {
         applyPlugins(project)
@@ -72,12 +44,12 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     protected open fun configure(project: Project) {
         with(project) {
             configureAndroidLibrary()
+            configureMultiplatform()
+            configureSourceSets()
+            configureProguard()
             configureLint()
             configureKtLint()
             configureDetekt()
-            configureProguard()
-            configureMultiplatform()
-            configureSourceSets()
         }
     }
 

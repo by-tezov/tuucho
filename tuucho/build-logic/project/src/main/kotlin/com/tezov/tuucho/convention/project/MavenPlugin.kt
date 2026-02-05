@@ -1,6 +1,13 @@
 package com.tezov.tuucho.convention.project
 
-import com.tezov.tuucho.convention.project.AbstractLibraryPlugin.PluginId
+import com.tezov.tuucho.convention.project._system.PluginId
+import com.tezov.tuucho.convention.project._system.artifactId
+import com.tezov.tuucho.convention.project._system.buildType
+import com.tezov.tuucho.convention.project._system.domain
+import com.tezov.tuucho.convention.project._system.isCI
+import com.tezov.tuucho.convention.project._system.isSnapshot
+import com.tezov.tuucho.convention.project._system.plugin
+import com.tezov.tuucho.convention.project._system.versionName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
