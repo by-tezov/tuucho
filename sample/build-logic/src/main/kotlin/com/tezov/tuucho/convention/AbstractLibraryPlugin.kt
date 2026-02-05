@@ -57,6 +57,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 compileSdk = version("compileSdk").toInt()
                 minSdk = version("minSdk").toInt()
                 compilerOptions.jvmTarget.set(jvmTarget())
+                withHostTestBuilder {}.configure {
+                    enableCoverage = true
+                }
             }
         }
     }

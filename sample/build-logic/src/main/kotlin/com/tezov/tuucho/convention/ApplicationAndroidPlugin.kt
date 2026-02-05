@@ -196,7 +196,7 @@ class ApplicationAndroidPlugin : Plugin<Project> {
             registerTask(
                 taskName = "syncAndroidAssets",
                 appDir = { layout.buildDirectory.dir("generated").get().asFile },
-                attachToTask = "assemble${buildType.replaceFirstChar { it.uppercaseChar() }}"
+                attachToTask = "pre${buildType.replaceFirstChar { it.uppercaseChar() }}Build"
             )
         }
     }

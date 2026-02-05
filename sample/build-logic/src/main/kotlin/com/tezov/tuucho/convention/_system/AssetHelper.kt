@@ -36,6 +36,7 @@ object AssetHelper {
                 it.extra.has("hasAssets") && it.extra.get("hasAssets") == true
             }
             .forEach { subProject ->
+                println("Collecting asset project ${subProject.name}")
                 subProject.collectProjectAssets(buildType)
                     .forEach { file ->
                         val idx = file.path.indexOf("assets")
