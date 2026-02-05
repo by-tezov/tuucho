@@ -6,14 +6,14 @@ import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngine
 import com.tezov.tuucho.core.presentation.ui.render.TuuchoEngineProtocol
 import com.tezov.tuucho.core.presentation.ui.render.misc.RendererIdGenerator
 import com.tezov.tuucho.core.presentation.ui.screen.ScreenFactory
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
+import org.koin.plugin.module.dsl.single
 
 internal object TuuchoEngineModule {
     fun invoke() = module(ModuleContextPresentation.Main) {
-        factoryOf(::RendererIdGenerator)
-        factoryOf(::ScreenFactory) bind ScreenFactoryProtocol::class
-        singleOf(::TuuchoEngine) bind TuuchoEngineProtocol::class
+        factory<RendererIdGenerator>()
+        factory<ScreenFactory>() bind ScreenFactoryProtocol::class
+        single<TuuchoEngine>() bind TuuchoEngineProtocol::class
     }
 }

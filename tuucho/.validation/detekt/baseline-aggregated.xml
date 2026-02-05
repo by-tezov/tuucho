@@ -23,12 +23,8 @@
     <ID>MatchingDeclarationName:ImageModule.android.kt$ImageModuleAndroid</ID>
     <ID>MatchingDeclarationName:ImageModule.ios.kt$ImageModuleIos</ID>
     <ID>MatchingDeclarationName:JsonEntityDao.kt$JsonObjectQueries</ID>
-    <ID>MatchingDeclarationName:NetworkModule.android.dev.kt$NetworkModuleAndroidFlavor</ID>
     <ID>MatchingDeclarationName:NetworkModule.android.kt$NetworkModuleAndroid</ID>
-    <ID>MatchingDeclarationName:NetworkModule.android.prod.kt$NetworkModuleAndroidFlavor</ID>
-    <ID>MatchingDeclarationName:NetworkModule.ios.dev.kt$NetworkModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:NetworkModule.ios.kt$NetworkModuleIos</ID>
-    <ID>MatchingDeclarationName:NetworkModule.ios.prod.kt$NetworkModuleIosFlavor</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.android.kt$ReferenceFactoryAndroid : Factory</ID>
     <ID>MatchingDeclarationName:ReferenceFactory.ios.kt$ReferenceFactoryIos : Factory</ID>
     <ID>MatchingDeclarationName:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid</ID>
@@ -45,7 +41,6 @@
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
     <ID>MaxLineLength:MaterialRectifier.kt$MaterialRectifier$this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }</ID>
-    <ID>MaxLineLength:MaterialRectifierScope.kt$MaterialRectifierScope$factoryOf(::SettingComponentNavigationRectifier) associate SettingComponentRectifier.Association.Processor::class</ID>
     <ID>MaxLineLength:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement )</ID>
     <ID>NestedBlockDepth:ActionsRectifier.kt$ActionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
@@ -126,11 +121,11 @@
     <ID>MaxLineLength:KoinIsolatedContext.kt$KoinIsolatedContext$val</ID>
     <ID>MaxLineLength:NavigateFinishUseCase.kt$NavigateFinishUseCase$throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
-    <ID>MemberNameEqualsClassName:Associate.kt$Associate$@KoinDslMarker infix fun &lt;T : Any&gt; InstanceFactory&lt;T&gt;.associate( clazz: KClass&lt;*&gt; )</ID>
-    <ID>MemberNameEqualsClassName:Associate.kt$Associate$@KoinDslMarker inline fun &lt;reified T : Any&gt; Module.associate( associateDSL: AssociateModuleDSL.() -&gt; Unit )</ID>
-    <ID>MemberNameEqualsClassName:Associate.kt$Associate$@KoinDslMarker inline fun &lt;reified T : Any&gt; ScopeDSL.associate( associateDSL: AssociateScopeDSL.() -&gt; Unit )</ID>
-    <ID>MemberNameEqualsClassName:Associate.kt$Associate$@OptIn(KoinInternalApi::class) @KoinDslMarker infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.associate( clazz: KClass&lt;*&gt; ): KoinDefinition&lt;out S&gt;</ID>
-    <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) @KoinDslMarker infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$@OptIn(KoinInternalApi::class) infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.associate( clazz: KClass&lt;*&gt; ): KoinDefinition&lt;out S&gt;</ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$infix fun &lt;T : Any&gt; InstanceFactory&lt;T&gt;.associate( clazz: KClass&lt;*&gt; )</ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$inline fun &lt;reified T : Any&gt; Module.associate( associateDSL: AssociateModuleDSL.() -&gt; Unit )</ID>
+    <ID>MemberNameEqualsClassName:Associate.kt$Associate$inline fun &lt;reified T : Any&gt; ScopeDSL.associate( associateDSL: AssociateScopeDSL.() -&gt; Unit )</ID>
+    <ID>MemberNameEqualsClassName:BindOrdered.kt$BindOrdered$@OptIn(KoinInternalApi::class) infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.bindOrdered( clazz: KClass&lt;S&gt; ): KoinDefinition&lt;out S&gt;</ID>
     <ID>PackageNaming:Associate.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateModuleDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:AssociateScopeDSL.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
@@ -203,9 +198,6 @@
     <ID>MatchingDeclarationName:TypeProjector.kt$TypeProjectorProtocols : IdProcessorProtocolTypeProcessorProjectorProtocolHasContextualUpdaterProtocolReadyStatusInvalidateProtocols</ID>
     <ID>MatchingDeclarationName:ViewsProjection.kt$ViewsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
     <ID>MaxLineLength:FormStateProjection.kt$FormStateProjection$?:</ID>
-    <ID>MaxLineLength:IntProjection.kt$IntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;IntTypeAlias&gt;)</ID>
-    <ID>MaxLineLength:IntProjection.kt$private typealias IntProjectionTypeAlias = com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols&lt;IntTypeAlias&gt;</ID>
-    <ID>MaxLineLength:MessageIntProjection.kt$MessageIntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;MessageIntTextTypeAlias&gt;)</ID>
     <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>
     <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
     <ID>PackageNaming:CompositionLocalTuuchoKoin.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>

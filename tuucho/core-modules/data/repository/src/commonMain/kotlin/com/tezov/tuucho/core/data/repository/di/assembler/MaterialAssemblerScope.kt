@@ -15,9 +15,9 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.material.TextAssem
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.declaration
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
+import org.koin.plugin.module.dsl.factory
 
 object MaterialAssemblerScope {
     fun invoke() = scope(ScopeContext.Material) {
@@ -30,16 +30,16 @@ object MaterialAssemblerScope {
     }
 
     private fun ScopeDSL.assemblers() {
-        factoryOf(::ComponentAssembler)
-        factoryOf(::ContentAssembler)
-        factoryOf(::StyleAssembler)
-        factoryOf(::OptionAssembler)
-        factoryOf(::StateAssembler)
-        factoryOf(::TextAssembler)
-        factoryOf(::ColorAssembler)
-        factoryOf(::DimensionAssembler)
-        factoryOf(::ActionAssembler)
-        factoryOf(::ImageAssembler)
+        factory<ComponentAssembler>()
+        factory<ContentAssembler>()
+        factory<StyleAssembler>()
+        factory<OptionAssembler>()
+        factory<StateAssembler>()
+        factory<TextAssembler>()
+        factory<ColorAssembler>()
+        factory<DimensionAssembler>()
+        factory<ActionAssembler>()
+        factory<ImageAssembler>()
 
         associate<MaterialAssembler.Association.Processor> {
             declaration<ComponentAssembler>()

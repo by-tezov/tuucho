@@ -7,7 +7,6 @@ import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.definition.KoinDefinition
 import org.koin.core.definition.indexKey
 import org.koin.core.instance.ResolutionContext
-import org.koin.core.module.KoinDslMarker
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.dsl.bind
@@ -15,7 +14,6 @@ import kotlin.reflect.KClass
 
 object BindOrdered {
     @OptIn(KoinInternalApi::class)
-    @KoinDslMarker
     infix fun <S : Any> KoinDefinition<out S>.bindOrdered(
         clazz: KClass<S>
     ): KoinDefinition<out S> {
@@ -31,14 +29,11 @@ object BindOrdered {
     }
 
     @OptIn(KoinInternalApi::class)
-    @KoinDslMarker
     inline fun <reified T : Any> Koin.getAllOrdered(): List<T> = scopeRegistry.rootScope.getAllOrdered(T::class)
 
-    @KoinDslMarker
     inline fun <reified T : Any> Scope.getAllOrdered(): List<T> = getAllOrdered(T::class)
 
     @OptIn(KoinInternalApi::class)
-    @KoinDslMarker
     fun <T : Any> Scope.getAllOrdered(
         clazz: KClass<T>
     ): List<T> = with(getKoin()) {

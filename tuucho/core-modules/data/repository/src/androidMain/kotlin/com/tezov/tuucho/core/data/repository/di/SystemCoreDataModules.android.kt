@@ -10,15 +10,15 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 @OptIn(TuuchoInternalApi::class)
 internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = listOf(
     module(ModuleContextData.Main) {
-        factoryOf(::SystemInformationAndroid) bind SystemInformation.PlatformProtocol::class
-        factoryOf(::ReferenceFactoryAndroid) bind ReferenceProtocol.Factory::class
+        factory<SystemInformationAndroid>() bind SystemInformation.PlatformProtocol::class
+        factory<ReferenceFactoryAndroid>() bind ReferenceProtocol.Factory::class
         factory<SystemPlatform> {
             SystemPlatformAndroid(
                 context = get<Context>(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT)

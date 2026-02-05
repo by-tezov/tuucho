@@ -2,7 +2,6 @@
 
 package com.tezov.tuucho.core.domain.business._system.koin
 
-import org.koin.core.module.KoinDslMarker
 import org.koin.core.module.Module
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.QualifierValue
@@ -36,13 +35,11 @@ sealed class KoinMass {
     }
 
     companion object {
-        @KoinDslMarker
         fun module(
             group: ModuleContext,
             declaration: ModuleDeclaration
         ) = Module(group, declaration)
 
-        @KoinDslMarker
         fun scope(
             scopeContext: ScopeContext,
             declaration: ScopeDeclaration

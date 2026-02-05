@@ -8,10 +8,10 @@ import com.tezov.tuucho.core.domain.business.di.SystemCoreDomainModules
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui.di.SystemCoreUiModules
 import org.koin.core.KoinApplication
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import org.koin.dsl.onClose
+import org.koin.plugin.module.dsl.single
 
 internal expect fun SystemCoreModules.platformInvoke(): List<KoinMass>
 
@@ -36,7 +36,7 @@ internal object SystemCoreModules {
             allowOverride(override = false)
         }.apply {
             modules(module {
-                singleOf(::KoinIsolatedContextLifeCycle) onClose { lifeCycle -> lifeCycle?.onClose() }
+                single<KoinIsolatedContextLifeCycle>() onClose { lifeCycle -> lifeCycle?.onClose() }
             })
             koin.get<KoinIsolatedContextLifeCycle>().init(this)
             modules(koins.groupBy { it.group }.map { (_, groups) ->

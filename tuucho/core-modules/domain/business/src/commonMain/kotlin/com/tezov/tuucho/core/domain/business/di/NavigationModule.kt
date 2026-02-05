@@ -6,15 +6,15 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationSt
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackScreenRepository
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationStackTransitionRepository
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
+import org.koin.plugin.module.dsl.single
 
 internal object NavigationModule {
     fun invoke() = module(ModuleContextDomain.Main) {
-        factoryOf(::NavigationRouteIdGenerator)
-        singleOf(::NavigationStackRouteRepository) bind NavigationRepositoryProtocol.StackRoute::class
-        singleOf(::NavigationStackScreenRepository) bind NavigationRepositoryProtocol.StackScreen::class
-        singleOf(::NavigationStackTransitionRepository) bind NavigationRepositoryProtocol.StackTransition::class
+        factory<NavigationRouteIdGenerator>()
+        single<NavigationStackRouteRepository>() bind NavigationRepositoryProtocol.StackRoute::class
+        single<NavigationStackScreenRepository>() bind NavigationRepositoryProtocol.StackScreen::class
+        single<NavigationStackTransitionRepository>() bind NavigationRepositoryProtocol.StackTransition::class
     }
 }

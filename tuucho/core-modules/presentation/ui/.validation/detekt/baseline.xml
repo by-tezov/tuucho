@@ -18,9 +18,6 @@
     <ID>MatchingDeclarationName:TypeProjector.kt$TypeProjectorProtocols : IdProcessorProtocolTypeProcessorProjectorProtocolHasContextualUpdaterProtocolReadyStatusInvalidateProtocols</ID>
     <ID>MatchingDeclarationName:ViewsProjection.kt$ViewsProjectionProtocol : ProjectionProcessorProtocolHasResolveStatusProtocol</ID>
     <ID>MaxLineLength:FormStateProjection.kt$FormStateProjection$?:</ID>
-    <ID>MaxLineLength:IntProjection.kt$IntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;IntTypeAlias&gt;)</ID>
-    <ID>MaxLineLength:IntProjection.kt$private typealias IntProjectionTypeAlias = com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols&lt;IntTypeAlias&gt;</ID>
-    <ID>MaxLineLength:MessageIntProjection.kt$MessageIntProjection$attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol&lt;MessageIntTextTypeAlias&gt;)</ID>
     <ID>MaxLineLength:Projection.kt$LazyStorageProjection$val init = initializer ?: throw UiException.Default("Initializer was freed but value is null. This should not happen.")</ID>
     <ID>PackageNaming:ColorExtension.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>
     <ID>PackageNaming:CompositionLocalTuuchoKoin.kt$package com.tezov.tuucho.core.presentation.ui._system</ID>

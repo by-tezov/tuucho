@@ -12,9 +12,9 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.onClose
+import org.koin.plugin.module.dsl.factory
 
 internal object StoreRepositoryModuleAndroid {
     private var datastore: DataStore<Preferences>? = null
@@ -38,6 +38,6 @@ internal object StoreRepositoryModuleAndroid {
             // datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...
         }
 
-        factoryOf(::KeyValueStoreRepository) bind KeyValueStoreRepositoryProtocol::class
+        factory<KeyValueStoreRepository>() bind KeyValueStoreRepositoryProtocol::class
     }
 }

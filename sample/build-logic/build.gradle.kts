@@ -71,6 +71,7 @@ val generateProjectBuildConfigTask by tasks.registering {
                 }
             }
             ?.lowercase()
+            ?.takeIf { listOf("mock", "dev", "stage", "prod").contains(it) }
 
         val file = outputDir.file("com/tezov/tuucho/convention/BuildConfig.kt").asFile
         file.parentFile.mkdirs()
