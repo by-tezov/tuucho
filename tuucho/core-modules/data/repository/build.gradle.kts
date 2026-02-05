@@ -1,4 +1,4 @@
-import com.tezov.tuucho.convention.project.isMacOs
+import com.tezov.tuucho.convention.project._system.isMacOs
 
 plugins {
     alias(libs.plugins.convention.library.plain)
@@ -9,7 +9,7 @@ plugins {
 sqldelight {
     databases {
         create("Database") {
-            packageName.set("${android.namespace}.database")
+            packageName.set("${kotlin.androidLibrary.namespace}.database")
         }
     }
 }

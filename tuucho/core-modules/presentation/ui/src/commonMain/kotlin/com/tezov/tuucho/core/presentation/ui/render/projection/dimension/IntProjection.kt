@@ -5,7 +5,11 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.DimensionSchema
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
+import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.MutableStorageProjection
+import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
+import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
+import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
@@ -15,7 +19,7 @@ import kotlinx.serialization.json.JsonPrimitive
 
 private typealias IntTypeAlias = Int
 
-private typealias IntProjectionTypeAlias = com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols<IntTypeAlias>
+private typealias IntProjectionTypeAlias = ProjectionProtocols<IntTypeAlias>
 
 interface IntProjectionProtocol :
     IdProcessorProtocol,
@@ -31,7 +35,7 @@ private class IntProjection(
     IntProjectionTypeAlias by projection,
     ResolveStatusProcessorProtocol by status {
     init {
-        attach(this as com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol<IntTypeAlias>)
+        attach(this as ExtractorProjectionProtocol<IntTypeAlias>)
     }
 
     override suspend fun process(
@@ -64,7 +68,7 @@ private class IntProjection(
 
 private class MutableIntProjection(
     delegate: IntProjectionProtocol,
-    storage: com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol<IntTypeAlias>
+    storage: StorageProjectionProtocol<IntTypeAlias>
 ) : IntProjectionProtocol by delegate {
     init {
         attach(storage)
@@ -81,8 +85,7 @@ fun createIntProjection(
     key: String
 ): IntProjectionProtocol = IntProjection(
     idProcessor = IdProcessor(),
-    projection = _root_ide_package_.com.tezov.tuucho.core.presentation.ui.render.projection
-        .Projection(key = key),
+    projection = Projection(key = key),
     status = ResolveStatusProcessor()
 )
 

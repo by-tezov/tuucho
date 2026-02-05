@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":app:shared"))
+    implementation(project(":modules.shared"))
     implementation(libs.tuucho.android)
     implementation(libs.compose.ui.android)
     implementation(libs.compose.foundation.android)

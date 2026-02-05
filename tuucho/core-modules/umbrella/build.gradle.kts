@@ -1,4 +1,4 @@
-import com.tezov.tuucho.convention.project.isMacOs
+import com.tezov.tuucho.convention.project._system.isMacOs
 
 plugins {
     alias(libs.plugins.convention.library.ui)

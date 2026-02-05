@@ -5,20 +5,22 @@ import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 plugins {
     base
     id("jacoco")
-    alias(libs.plugins.mokkery) apply false
-    alias(libs.plugins.ktlint) apply false
-    alias(libs.plugins.detekt) apply false
-    alias(libs.plugins.all.open) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.multiplatform.library) apply false
+    alias(libs.plugins.koin) apply false
+
     alias(libs.plugins.compose) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.sql.delight) apply false
+
+    alias(libs.plugins.mokkery) apply false
+    alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.all.open) apply false
 }
 
-// KtLint
+// KtLintappDir
 tasks.register("rootFormatKtLint") {
     group = "validation"
     description = "Format KtLint"
@@ -375,7 +377,7 @@ tasks.register<TestReport>("rootDebugUnitTest") {
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     val unitTestTasks = subprojects.flatMap { sub ->
         sub.tasks.withType<Test>().matching {
-            it.name.contains("DebugUnitTest")
+            it.name.contains("testAndroidHostTest")
         }
     }
     dependsOn(unitTestTasks)
@@ -552,7 +554,6 @@ tasks.register("rootAdminUpdate") {
             "rootDebugCoverageReport",
             "rootPublishReleaseToMavenLocal"
         )
-
         tasksToRun.forEach { taskName ->
             println(taskName)
             val process = ProcessBuilder("./gradlew", taskName)

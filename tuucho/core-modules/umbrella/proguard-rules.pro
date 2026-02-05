@@ -1,0 +1,1 @@
+# Must stay empty, its only purpose is to not make fail plugin convention with missing rules file.

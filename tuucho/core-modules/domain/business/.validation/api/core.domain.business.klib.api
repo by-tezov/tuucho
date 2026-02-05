@@ -1,5 +1,5 @@
 // Klib ABI Dump
-// Targets: [iosArm64, iosSimulatorArm64, iosX64]
+// Targets: [iosArm64, iosSimulatorArm64]
 // Rendering settings:
 // - Signature version: 2
 // - Show manifest properties: true
@@ -478,6 +478,8 @@ final class com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDS
     final val module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.module|{}module[0]
         final fun <get-module>(): org.koin.core.module/Module // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.module.<get-module>|<get-module>(){}[0]
 
+    final fun <#A1: kotlin/Any?> factory(): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.factory|factory(){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> single(): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.single|single(){0§<kotlin.Any?>}[0]
     final fun factory(kotlin/String) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.factory|factory(kotlin.String){}[0]
     final inline fun <#A1: reified kotlin/Any> declaration(org.koin.core.qualifier/Qualifier? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.declaration|declaration(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
     final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateModuleDSL.factoryOf|factoryOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
@@ -496,6 +498,8 @@ final class com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL
     final val scopeDSL // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scopeDSL|{}scopeDSL[0]
         final fun <get-scopeDSL>(): org.koin.dsl/ScopeDSL // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scopeDSL.<get-scopeDSL>|<get-scopeDSL>(){}[0]
 
+    final fun <#A1: kotlin/Any?> factory(): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.factory|factory(){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> scope(): org.koin.core.definition/KoinDefinition<#A1> // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.scope|scope(){0§<kotlin.Any?>}[0]
     final fun factory(kotlin/String) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.factory|factory(kotlin.String){}[0]
     final inline fun <#A1: reified kotlin/Any> declaration(org.koin.core.qualifier/Qualifier? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.declaration|declaration(org.koin.core.qualifier.Qualifier?){0§<kotlin.Any>}[0]
     final inline fun <#A1: reified kotlin/Any?, #B1: reified kotlin/Any?> factoryOf(crossinline kotlin/Function1<#B1, #A1>, noinline kotlin/Function1<org.koin.core.definition/BeanDefinition<#A1>, kotlin/Unit>? = ...) // com.tezov.tuucho.core.domain.business._system.koin/AssociateScopeDSL.factoryOf|factoryOf(kotlin.Function1<0:1,0:0>;kotlin.Function1<org.koin.core.definition.BeanDefinition<0:0>,kotlin.Unit>?){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]

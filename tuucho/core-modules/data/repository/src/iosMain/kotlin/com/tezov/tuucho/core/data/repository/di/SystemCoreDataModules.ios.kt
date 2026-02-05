@@ -11,15 +11,14 @@ import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
 
 @OptIn(TuuchoInternalApi::class)
 internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = listOf(
     module(ModuleContextData.Main) {
-        factoryOf(::SystemInformationIos) bind SystemInformation.PlatformProtocol::class
-        factoryOf(::ReferenceFactoryIos) bind ReferenceProtocol.Factory::class
-        factory<SystemPlatform> {
-            SystemPlatformIos()
-        }
+        factory<SystemInformationIos>() bind SystemInformation.PlatformProtocol::class
+        factory<ReferenceFactoryIos>() bind ReferenceProtocol.Factory::class
+        factory<SystemPlatformIos>() bind SystemPlatform::class
     },
     DatabaseModuleIos.invoke(),
     NetworkModuleIos.invoke(),

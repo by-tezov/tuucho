@@ -119,7 +119,7 @@ val iosAssembleDebugTask by tasks.registering(Exec::class) {
         workingDir = project.rootDir
         commandLine(
             "./gradlew",
-            ":app:ios:iosCreateSimulatorApp",
+            ":app.ios:iosCreateSimulatorApp",
             "-Pxcodeproj=ios/ios.xcodeproj",
             "-Pscheme=ios",
             "-Pdevice=$device",

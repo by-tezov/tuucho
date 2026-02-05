@@ -1,0 +1,369 @@
+{
+  "setting": {
+    "time-to-live": {
+      "strategy": "transient",
+      "transient-value": "30s"
+    }
+  },
+  "root": {
+    "setting": {
+      "shadower": {
+        "navigate-forward": {
+          "wait-done-to-render": false,
+          "enable": true
+        },
+        "contextual": {
+          "url": {
+            "component": "${url-origin}-contextual-components"
+          }
+        }
+      },
+      "navigation": {
+        "definitions": {
+          "option": {
+            "clear-stack": true,
+            "single": true,
+            "reuse": "last"
+          },
+          "transition": "fade"
+        }
+      }
+    },
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "background-color": "*background@gray-light",
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              "*small-logo"
+            ]
+          }
+        },
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*title",
+              "*item-spacer",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": "*label-main-button-help",
+                    "content": {
+                      "value": "LogOut"
+                    }
+                  },
+                  "action": {
+                    "primaries": [
+                      "store://key-value/remove?login-authorization",
+                      "navigate://url/lobby/page-login"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "*item-spacer-24-v",
+        "*body",
+        "*item-spacer",
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer",
+              {
+                "subset": "label-custom",
+                "style": {
+                  "font-color-light": "#276CF5",
+                  "font-color-dark": "#F54927",
+                  "font-size": "18"
+                },
+                "content": {
+                  "value": "My Custom Clickable Label",
+                  "action": "echo-message-custom-action://"
+                }
+              },
+              "*item-spacer"
+            ]
+          }
+        },
+        "*item-spacer",
+        {
+          "subset": "label",
+          "style": "*title-section",
+          "content": {
+            "value": "*form@text-form-section-title"
+          }
+        },
+        {
+          "id": "*item-spacer-24-v"
+        },
+        {
+          "id": {
+            "value": "age",
+            "source": "*input-field-age"
+          }
+        },
+        {
+          "id": {
+            "value": "email",
+            "source": "*input-field-email"
+          }
+        },
+        {
+          "id": "comment",
+          "subset": "form-field",
+          "option": {
+            "form-validators": "string-not-null"
+          },
+          "content": {
+            "title": "any comment?",
+            "placeholder": "short comment, please I'm lazy to read",
+            "message-errors": "Can't be empty, bro say something"
+          }
+        },
+        {
+          "subset": "label",
+          "style": "*title-section",
+          "content": {
+            "value": {
+              "id": {
+                "source": "*title-section",
+                "url-source": {
+                  "contextual": "${url-origin}-contextual-texts"
+                }
+              }
+            }
+          }
+        },
+        "*item-spacer-24-v",
+        {
+          "subset": "form-field",
+          "id": {
+            "value": "hobbies",
+            "source": "*input-field-on-demand"
+          }
+        },
+        {
+          "id": "*item-spacer"
+        },
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@funny-color",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*button-form",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": {
+                      "id": "*label-main-button-help"
+                    },
+                    "content": {
+                      "value": "Get Help"
+                    }
+                  },
+                  "action": "navigate://url/auth/page-help"
+                }
+              },
+              {
+                "id": "*item-spacer"
+              },
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": "*label-main-button-default",
+                    "content": {
+                      "value": "Page-A"
+                    }
+                  },
+                  "action": "navigate://url/auth/page-a"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "id": "title",
+      "subset": "label",
+      "style": "*title-label",
+      "content": {
+        "value": {
+          "id": "*text-title"
+        }
+      }
+    },
+    {
+      "id": "body",
+      "subset": "label",
+      "style": {
+        "id": "*title-body"
+      },
+      "content": {
+        "value": {
+          "id": "*text-body"
+        }
+      }
+    },
+    {
+      "id": "small-logo",
+      "subset": "image",
+      "style": {
+        "width": "48",
+        "height": "48",
+        "shape": "rounded",
+        "padding": "3",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "values": [
+          "*small-logo",
+          "*small-logo-placeholder"
+        ],
+        "description": "Small-Logo"
+      }
+    },
+    {
+      "id": "input-field-age",
+      "subset": "form-field",
+      "option": {
+        "form-validators": [
+          {
+            "type": "string-min-value",
+            "value": "18",
+            "message-error-id": "*validator-1"
+          },
+          {
+            "type": "string-max-value",
+            "value": "65",
+            "message-error-id": "*validator-2"
+          },
+          {
+            "type": "string-not-null",
+            "message-error-id": "*validator-4"
+          }
+        ]
+      },
+      "content": {
+        "title": "*form@text-form-age-title",
+        "placeholder": "*form@text-form-age-placeholder",
+        "message-errors": [
+          {
+            "id": "validator-1",
+            "default": "you must have at least 18 years"
+          },
+          {
+            "id": "validator-2",
+            "default": "you must have at most 65 years"
+          },
+          {
+            "id": "validator-4",
+            "default": "age can't be empty"
+          }
+        ]
+      }
+    },
+    {
+      "id": "input-field-email",
+      "subset": "form-field",
+      "option": {
+        "form-validators": [
+          {
+            "type": "string-email",
+            "message-error-id": "*validator-1"
+          },
+          {
+            "type": "string-not-null",
+            "message-error-id": "*validator-2"
+          }
+        ]
+      },
+      "content": "*input-field-age-content"
+    },
+    {
+      "id": "button-form",
+      "subset": "button",
+      "content": {
+        "label": "*button-form-label",
+        "action": {
+          "primaries": "form://send-url/auth/form-from-page-home",
+          "validated": "navigate://url/auth/page-confirmation"
+        }
+      }
+    },
+    {
+      "subset": "label",
+      "id": "button-form-label",
+      "style": {
+        "id": "*label-main-button-form"
+      },
+      "content": {
+        "value": "Send Form"
+      }
+    }
+  ],
+  "styles": [
+    {
+      "id": "title-section",
+      "font-size": "18",
+      "font-color": "*red"
+    }
+  ],
+  "texts": {
+    "common": {
+      "text-title": "Home Page - Mock",
+      "text-body": "bienvenue sur la page d'accueil"
+    },
+    "form": {
+      "text-form-section-title": "Inscription à la new letter",
+      "text-form-email-title": "email*",
+      "text-form-email-placeholder": "my.email@gmail.com",
+      "text-form-age-title": "age*",
+      "text-form-age-placeholder": "27"
+    }
+  },
+  "images": {
+    "common": {
+      "small-logo": {
+        "source": "remote://auth/logo-koin"
+      },
+      "small-logo-placeholder": {
+        "source": "remote://auth/logo-koin-placeholder",
+        "tags": "placeholder"
+      }
+    }
+  }
+}

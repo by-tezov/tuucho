@@ -1,5 +1,9 @@
 ### Todo:
 
+- Migration AGP: 9.0.0:
+    - need to fix the preview dependencies ???
+    - need to find a solution for unit testing, Mokkery is down
+    
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size)?
 - shadower with flow ?

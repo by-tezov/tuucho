@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation(libs.android.gradle.plugin)
     implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.kotlin.multiplatform.gradle.plugin)
     implementation(libs.all.open)
     implementation(libs.mokkery)
     implementation(libs.maven)
@@ -78,23 +79,11 @@ val generateProjectBuildConfigTask by tasks.registering {
                 }
             }
             ?.lowercase()
+            ?.takeIf { listOf("debug", "release").contains(it) } ?: "debug"
 
         val file = outputDir.file("com/tezov/tuucho/project/BuildConfig.kt").asFile
         file.parentFile.mkdirs()
-        val buildTypeResolved: String? = when {
-            !file.exists() -> buildTypeFound ?: "debug".also {
-                println("⚠️ buildType not found and BuildConfig didn't exist → create BuildConfig.kt with 'debug' build type")
-            }
-
-            buildTypeFound == null -> null.also {
-                println("⚠️ buildType not found but BuildConfig exist → keep BuildConfig.kt current build type")
-            }
-
-            else -> buildTypeFound
-        }
-        if (buildTypeResolved != null) {
-            file.writeText(buildConfigContent(packageName, buildTypeResolved))
-        }
+        file.writeText(buildConfigContent(packageName, buildTypeFound))
         if (file.exists()) {
             val content = file.readText()
             val match = Regex("""const val BUILD_TYPE: String = "([^"]+)"""").find(content)

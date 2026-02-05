@@ -26,13 +26,13 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyVal
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
+import org.koin.plugin.module.dsl.factory
+import org.koin.plugin.module.dsl.single
 
 internal object UseCaseModule {
     fun invoke() = module(ModuleContextDomain.UseCase) {
-        singleOf(::UseCaseExecutor) bind UseCaseExecutorProtocol::class
+        single<UseCaseExecutor>() bind UseCaseExecutorProtocol::class
         withNetworkModule()
         withoutNetworkModule()
     }
@@ -69,8 +69,8 @@ internal object UseCaseModule {
             )
         }
 
-        factoryOf(::ProcessActionUseCase)
-        factoryOf(::RefreshMaterialCacheUseCase)
+        factory<ProcessActionUseCase>()
+        factory<RefreshMaterialCacheUseCase>()
         factory {
             RetrieveImageUseCase<Any>(
                 coroutineScopes = get(),
@@ -79,7 +79,7 @@ internal object UseCaseModule {
                 retrieveImageMiddlewares = getAllOrdered()
             )
         }
-        factoryOf(::ServerHealthCheckUseCase)
+        factory<ServerHealthCheckUseCase>()
 
         factory<SendDataUseCase> {
             SendDataUseCase(
@@ -92,24 +92,24 @@ internal object UseCaseModule {
     }
 
     private fun Module.withoutNetworkModule() {
-        factoryOf(::FormValidatorFactoryUseCase)
-        factoryOf(::GetLanguageUseCase)
-        factoryOf(::GetScreenOrNullUseCase)
-        factoryOf(::GetScreensFromRoutesUseCase)
-        factoryOf(::GetValueOrNullFromStoreUseCase)
-        factoryOf(::HasKeyInStoreUseCase)
+        factory<FormValidatorFactoryUseCase>()
+        factory<GetLanguageUseCase>()
+        factory<GetScreenOrNullUseCase>()
+        factory<GetScreensFromRoutesUseCase>()
+        factory<GetValueOrNullFromStoreUseCase>()
+        factory<HasKeyInStoreUseCase>()
         factory {
             NavigateFinishUseCase(
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()
             )
         }
-        factoryOf(::NavigationDefinitionSelectorMatcherFactoryUseCase)
-        factoryOf(::NavigationStackTransitionHelperFactoryUseCase)
-        factoryOf(::NotifyNavigationTransitionCompletedUseCase)
-        factoryOf(::RegisterToScreenTransitionEventUseCase)
-        factoryOf(::RemoveKeyValueFromStoreUseCase)
-        factoryOf(::SaveKeyValueToStoreUseCase)
+        factory<NavigationDefinitionSelectorMatcherFactoryUseCase>()
+        factory<NavigationStackTransitionHelperFactoryUseCase>()
+        factory<NotifyNavigationTransitionCompletedUseCase>()
+        factory<RegisterToScreenTransitionEventUseCase>()
+        factory<RemoveKeyValueFromStoreUseCase>()
+        factory<SaveKeyValueToStoreUseCase>()
 
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(

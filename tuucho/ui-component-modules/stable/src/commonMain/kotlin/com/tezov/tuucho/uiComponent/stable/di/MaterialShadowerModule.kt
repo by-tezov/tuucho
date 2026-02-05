@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.uiComponent.stable.data.parser.shadower.layout.linear.ContentLayoutLinearItemsMatcher
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
+import org.koin.plugin.module.dsl.factory
 
 internal object MaterialShadowerModule {
     fun invoke() = module(ModuleContextData.Shadower) {
@@ -14,6 +14,6 @@ internal object MaterialShadowerModule {
     }
 
     private fun Module.componentAssociation() {
-        factoryOf(::ContentLayoutLinearItemsMatcher) associate ComponentShadower.Association.Matcher::class
+        factory<ContentLayoutLinearItemsMatcher>() associate ComponentShadower.Association.Matcher::class
     }
 }
