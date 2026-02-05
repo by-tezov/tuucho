@@ -1,0 +1,1 @@
+/Users/tezov/.konan/kotlin-native-prebuilt-macos-aarch64-2.3.20-Beta2/klib/commonized/2.3.20-Beta2

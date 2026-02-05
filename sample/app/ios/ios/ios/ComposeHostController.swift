@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import AppSharedFramework
+import ModulesSharedFramework
 
 class ComposeHostController: UIViewController {
 

@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.data.repository.di.ImageModule
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import com.tezov.tuucho.sample.app.shared.BuildKonfig
+import com.tezov.tuucho.sample.modules.shared.BuildKonfig
 
 internal object ConfigModuleIos {
 

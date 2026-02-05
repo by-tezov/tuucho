@@ -27,7 +27,7 @@ class ApplicationIosPlugin : Plugin<Project> {
         AssetHelper.run {
             registerTask(
                 taskName = "syncIosAssets",
-                appDir = resolveIosAppDir(),
+                appDir = { resolveIosAppDir() },
                 attachToTask = "syncComposeResourcesForIos"
             )
         }

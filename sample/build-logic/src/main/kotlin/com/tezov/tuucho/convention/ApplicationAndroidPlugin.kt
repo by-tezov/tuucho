@@ -195,7 +195,7 @@ class ApplicationAndroidPlugin : Plugin<Project> {
         AssetHelper.run {
             registerTask(
                 taskName = "syncAndroidAssets",
-                appDir = layout.buildDirectory.dir("generated").get().asFile,
+                appDir = { layout.buildDirectory.dir("generated").get().asFile },
                 attachToTask = "assemble${buildType.replaceFirstChar { it.uppercaseChar() }}"
             )
         }

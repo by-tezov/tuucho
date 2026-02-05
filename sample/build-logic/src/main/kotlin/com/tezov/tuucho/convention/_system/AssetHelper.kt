@@ -9,13 +9,13 @@ object AssetHelper {
 
     fun Project.registerTask(
         taskName: String,
-        appDir: File,
+        appDir: () -> File,
         attachToTask: String
     ) {
         val syncAssets = tasks.register(taskName) {
             doLast {
                 val mergedAssetsDir = mergeAllProjectAssets()
-                syncAssetsIntoApp(mergedAssetsDir, appDir)
+                syncAssetsIntoApp(mergedAssetsDir, appDir())
                 mergedAssetsDir.deleteRecursively()
             }
         }

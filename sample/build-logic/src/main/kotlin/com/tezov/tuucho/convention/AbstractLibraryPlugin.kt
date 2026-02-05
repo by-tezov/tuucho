@@ -74,7 +74,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 val iosTargets = listOf(iosArm64(), iosSimulatorArm64())
                 project.afterEvaluate {
                     val namespace = namespace()
-                    val frameworkName = project.path.split(":")
+                    val frameworkName = project.path.removePrefix(":").split(".")
                         .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
                     iosTargets.forEach { iosTarget ->
                         iosTarget.binaries.framework {
