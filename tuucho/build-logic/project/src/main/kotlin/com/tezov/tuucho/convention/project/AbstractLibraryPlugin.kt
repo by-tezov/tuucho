@@ -45,7 +45,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         with(project) {
             configureAndroidLibrary()
             configureMultiplatform()
-            configureSourceSets()
+//            configureSourceSets() // TODO fix previewfolder ?
             configureProguard()
             configureLint()
             configureKtLint()
@@ -60,6 +60,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 compileSdk = version("compileSdk").toInt()
                 minSdk = version("minSdk").toInt()
                 compilerOptions.jvmTarget.set(jvmTarget())
+                withHostTestBuilder {}.configure {
+                    enableCoverage = true
+                }
             }
         }
     }

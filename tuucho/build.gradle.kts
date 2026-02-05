@@ -377,7 +377,7 @@ tasks.register<TestReport>("rootDebugUnitTest") {
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     val unitTestTasks = subprojects.flatMap { sub ->
         sub.tasks.withType<Test>().matching {
-            it.name.contains("DebugUnitTest")
+            it.name.contains("testAndroidHostTest")
         }
     }
     dependsOn(unitTestTasks)

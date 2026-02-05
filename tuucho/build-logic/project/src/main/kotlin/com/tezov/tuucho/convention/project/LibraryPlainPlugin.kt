@@ -9,7 +9,6 @@ import com.tezov.tuucho.convention.project._system.version
 import dev.mokkery.gradle.MokkeryGradleExtension
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
-import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
@@ -41,7 +40,6 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
     ) {
         super.configure(project)
         with(project) {
-            extra["hasAssets"] = true
             if (shouldConfigureTest) {
                 configureCoverage()
                 configureTest()
@@ -60,7 +58,6 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
             val unitTestTasks = tasks.withType<Test>()
                 .filter { it.name.contains("DebugUnitTest") }
             dependsOn(unitTestTasks)
-
             executionData.setFrom(
                 unitTestTasks.map {
                     it.extensions

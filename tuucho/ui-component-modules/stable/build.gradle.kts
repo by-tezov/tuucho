@@ -19,6 +19,6 @@ kotlin {
 }
 
 //dependencies {
-//    debugImplementation(libs.compose.ui.tooling)
-//    debugImplementation(libs.compose.ui.tooling.preview)
+//    "androidRuntimeClasspath"(libs.compose.ui.tooling)
+//    "androidRuntimeClasspath"(libs.compose.ui.tooling.preview)
 //}

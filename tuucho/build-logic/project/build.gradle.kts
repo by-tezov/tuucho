@@ -79,6 +79,7 @@ val generateProjectBuildConfigTask by tasks.registering {
                 }
             }
             ?.lowercase()
+            ?.takeIf { listOf("debug", "release").contains(it) }
 
         val file = outputDir.file("com/tezov/tuucho/project/BuildConfig.kt").asFile
         file.parentFile.mkdirs()
