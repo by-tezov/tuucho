@@ -554,7 +554,6 @@ tasks.register("rootAdminUpdate") {
             "rootDebugCoverageReport",
             "rootPublishReleaseToMavenLocal"
         )
-
         tasksToRun.forEach { taskName ->
             println(taskName)
             val process = ProcessBuilder("./gradlew", taskName)
