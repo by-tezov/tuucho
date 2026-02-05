@@ -1,5 +1,6 @@
 package com.tezov.tuucho.convention.project
 
+import com.tezov.tuucho.convention.project._system.LibraryId
 import com.tezov.tuucho.convention.project._system.PluginId
 import com.tezov.tuucho.convention.project._system.buildType
 import com.tezov.tuucho.convention.project._system.library
@@ -98,8 +99,8 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
                 commonTest.dependencies {
-                    implementation(kotlin("test"))
-                    implementation(library("kotlinx.coroutines.test"))
+                    implementation(library(LibraryId.kotlinTest))
+                    implementation(library(LibraryId.kotlinCoroutineTest))
                 }
             }
         }

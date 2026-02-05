@@ -80,6 +80,7 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 #test
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin-plugin" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-couroutine" }
 mokkery = { module = "dev.mokkery:mokkery-gradle", version.ref = "mokkery" }
 all-open = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin-plugin" }
