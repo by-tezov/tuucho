@@ -1,8 +1,7 @@
 ### Todo:
 
-- Migration AGP: 9.0.0:
-    - need to fix the preview dependencies ???
-    - need to find a solution for unit testing, Mokkery is down
+- need to find a solution for unit testing, Mokkery is down <- cause koin compiler 2.3.20 not
+  compatible with Mokkery
     
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size)?

@@ -20,11 +20,3 @@ kotlin {
         }
     }
 }
-
-//dependencies {
-//    mockImplementation(libs.compose.ui.tooling)
-//    mockImplementation(libs.compose.ui.tooling.preview)
-//
-//    devImplementation(libs.compose.ui.tooling)
-//    devImplementation(libs.compose.ui.tooling.preview)
-//}

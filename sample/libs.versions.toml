@@ -13,9 +13,9 @@ compileSdk = "36"
 #plugin
 android-plugin = "9.0.0"
 kotlin-plugin = "2.3.20-Beta2"
+koin-plugin = "0.3.0"
 compose-plugin = "1.10.0"
 build-konfig-plugin = "0.17.1"
-koin-plugin = "0.3.0"
 
 #lib - platform
 kermit = "2.0.8"
@@ -28,7 +28,7 @@ kotlin-collections-immutable = "0.4.0"
 compose = "1.10.0"
 compose-material3 = "1.9.0"
 compose-activity = "1.12.3"
-compose-ui-tooling = "1.10.2"
+compose-ui-tooling = "1.10.0"
 
 [libraries]
 #build-logic
@@ -55,8 +55,8 @@ kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlin
 compose-ui-android = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-foundation-android = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui-tooling" }
-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui-tooling" }
+compose-ui-tooling = { group = "org.jetbrains.compose.ui", name = "ui-tooling", version.ref = "compose-ui-tooling" }
+compose-ui-tooling-preview = { group = "org.jetbrains.compose.components", name = "components-ui-tooling-preview", version.ref = "compose-ui-tooling" }
 tuucho-umbrella-android = { group = "com.tezov", name = "tuucho.core.umbrella-android", version.ref = "versionName" }
 #lib - android
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }

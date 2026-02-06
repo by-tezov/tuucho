@@ -36,17 +36,8 @@ class MavenPlugin : Plugin<Project> {
     private fun Project.configureMaven() {
         val versionName = "${versionName()}${if (isSnapshot()) "-SNAPSHOT" else ""}"
         val artifactId = artifactId()
-
         group = domain()
         version = versionName
-        extensions.configure(KotlinMultiplatformExtension::class.java) {
-//            androidTarget {
-//                publishLibraryVariants("release")
-//            }
-//            targets.withType(KotlinAndroidTarget::class.java).named("android").configure {
-//                publishLibraryVariants("release")
-//            }
-        }
         extensions.configure(PublishingExtension::class.java) {
             repositories {
                 maven {

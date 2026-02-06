@@ -25,6 +25,9 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
     private val Project.shouldConfigureTest
         get() = buildType() == "debug"
 
+    private val Project.shouldConfigureApiValidation
+        get() = buildType() == "release"
+
     override fun applyPlugins(project: Project) {
         super.applyPlugins(project)
         with(project) {
@@ -45,7 +48,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                 configureCoverage()
                 configureTest()
             }
-            if (buildType() == "release") {
+            if (shouldConfigureApiValidation) {
                 configureApiValidation()
             }
         }
