@@ -2,6 +2,7 @@ package com.tezov.tuucho.uiComponent.stable.presentation.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -22,10 +23,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
 import com.tezov.tuucho.core.presentation.ui._system.subset
+import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ActionTypeAlias
 import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.Image
 import com.tezov.tuucho.core.presentation.ui.render.projection.ImageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.action
 import com.tezov.tuucho.core.presentation.ui.render.projection.color
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.DpProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.FloatProjectionProtocol
@@ -61,6 +65,7 @@ interface ImageViewProtocol : ViewProtocol {
         backgroundColor: Color?,
         tintColor: Color?,
         image: Image?,
+        onClick: ActionTypeAlias?,
         description: String?
     )
 
@@ -100,6 +105,7 @@ private class ImageView(
     private lateinit var alpha: FloatProjectionProtocol
     private lateinit var tintColor: ColorProjectionProtocol
     private lateinit var image: ImageProjectionProtocol
+    private lateinit var action: ActionProjectionProtocol
     private lateinit var description: TextProjectionProtocol
 
     override suspend fun createComponentProjector() = componentProjector {
@@ -114,6 +120,10 @@ private class ImageView(
         }
         +content {
             image = +image(Content.Key.values)
+            action = +action(
+                key = Content.Key.action,
+                route = screenContext.route
+            ).mutable
             description = +text(Content.Key.description).mutable
         }.contextual
     }.contextual
@@ -133,6 +143,7 @@ private class ImageView(
             backgroundColor = backgroundColor.value,
             tintColor = tintColor.value,
             image = image.value,
+            onClick = action.value,
             description = description.value,
         )
     }
@@ -147,6 +158,7 @@ private class ImageView(
         backgroundColor: Color?,
         tintColor: Color?,
         image: Image?,
+        onClick: ActionTypeAlias?,
         description: String?
     ) {
         val density = LocalDensity.current
@@ -178,6 +190,7 @@ private class ImageView(
         }
         Box(
             modifier = Modifier
+                .thenIfNotNull(onClick) { clickable(onClick = { onClick?.invoke(null) }) }
                 .thenIfNotNull(_width) { width(it) }
                 .thenIfNotNull(_height) { height(it) }
                 .thenIfNotNull(shape) { resolvedShape(it) }

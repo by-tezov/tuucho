@@ -1,0 +1,14 @@
+package com.tezov.tuucho.core.data.repository.di
+
+import com.tezov.tuucho.core.domain.business._system.koin.KoinMass
+import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
+
+@OptIn(TuuchoInternalApi::class)
+internal actual fun SystemCoreDataModules.platformInvoke(): List<KoinMass> = listOf(
+    PlatformModuleAndroid.invoke(),
+    DatabaseModuleAndroid.invoke(),
+    NetworkModuleAndroid.invoke(),
+    ImageModuleAndroid.invoke(),
+    AssetModuleAndroid.invoke(),
+    StoreRepositoryModuleAndroid.invoke()
+)

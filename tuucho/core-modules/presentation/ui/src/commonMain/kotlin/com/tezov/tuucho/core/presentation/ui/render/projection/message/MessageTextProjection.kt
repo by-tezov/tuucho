@@ -66,5 +66,5 @@ val MessageTextProjectionProtocol.mutable
     )
 
 fun MessageProjectorProtocols.text(
-    key: String,
+    key: String
 ): MessageTextProjectionProtocol = createMessageTextProjection(key)

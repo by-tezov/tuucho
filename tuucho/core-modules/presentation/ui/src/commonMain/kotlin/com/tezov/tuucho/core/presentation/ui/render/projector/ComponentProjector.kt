@@ -90,8 +90,8 @@ private class ContextualComponentProjector(
         }
 }
 
-fun componentProjector(
-    block: ComponentProjectorProtocols.() -> Unit
+suspend fun componentProjector(
+    block: suspend ComponentProjectorProtocols.() -> Unit
 ): ComponentProjectorProtocols = ComponentProjector(
     idProcessor = IdProcessor(),
     statusProcessor = ResolveStatusProcessor()

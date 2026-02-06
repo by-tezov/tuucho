@@ -1,12 +1,21 @@
 ### Todo:
 
-- need to find a solution for unit testing, Mokkery is down <- cause koin compiler 2.3.20 not
-  compatible with Mokkery
+- Key interface store ?
+- fix ios
+- unit test
+- Refresh previous page ? and all page in stack when language change ?
+
+- Doc image action
+- Doc action language
+
+- screen context better way to use it ?
+- projection input dataclass ?
     
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
 - error message with class name that throw.
+- BackHandler interceptor ?
 
 --> Continue to follow the Roadmap
 
@@ -14,6 +23,7 @@
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
 - contextual register, when outer receive later, the inner did not succeed to register
   - check message of contextual field, they never request update view after click
+- Mokkery
 
 **** ****
 - Shadower

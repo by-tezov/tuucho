@@ -1,8 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
-import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
+import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetTextUseCase
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
@@ -30,7 +31,8 @@ private class TextProjection(
 ) : TextProjectionProtocol,
     IdProcessorProtocol by idProcessor,
     TextProjectionTypeAlias by projection,
-    ResolveStatusProcessorProtocol by statusProcessor {
+    ResolveStatusProcessorProtocol by statusProcessor,
+    TuuchoKoinComponent {
     init {
         attach(this as ExtractorProjectionProtocol<TextTypeAlias>)
     }
@@ -47,9 +49,15 @@ private class TextProjection(
         jsonElement: JsonElement?
     ) = when (jsonElement) {
         is JsonObject -> {
-            jsonElement
-                .withScope(TextSchema::Scope)
-                .default
+            val koin = getKoin()
+            val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
+            val getText = koin.get<GetTextUseCase>()
+            useCaseExecutor.await(
+                useCase = getText,
+                input = GetTextUseCase.Input(
+                    jsonObject = jsonElement
+                )
+            )?.text
         }
 
         is JsonPrimitive -> {
@@ -90,7 +98,7 @@ val TextProjectionProtocol.contextual
     )
 
 fun createTextProjection(
-    key: String
+    key: String,
 ): TextProjectionProtocol = TextProjection(
     idProcessor = IdProcessor(),
     projection = Projection(key = key),
