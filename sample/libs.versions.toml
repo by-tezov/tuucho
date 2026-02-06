@@ -11,11 +11,11 @@ targetSdk = "36"
 compileSdk = "36"
 
 #plugin
-android-plugin = "9.0.0"
+android-plugin = "9.1.0-alpha08"
 kotlin-plugin = "2.3.20-Beta2"
+koin-plugin = "0.3.0"
 compose-plugin = "1.10.0"
 build-konfig-plugin = "0.17.1"
-koin-plugin = "0.3.0"
 
 #lib - platform
 kermit = "2.0.8"

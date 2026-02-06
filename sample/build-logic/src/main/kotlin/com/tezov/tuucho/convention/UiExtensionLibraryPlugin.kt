@@ -6,7 +6,7 @@ class UiExtensionLibraryPlugin : AbstractLibraryPlugin() {
 
     ).asIterable()
 
-    override fun compilerOption() = listOf<String>(
+    override fun compilerOption() = listOf(
         "-Xcontext-parameters", // Needed by Tuucho
     )
 
