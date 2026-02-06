@@ -45,7 +45,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         with(project) {
             configureAndroidLibrary()
             configureMultiplatform()
-//            configureSourceSets() // TODO fix previewfolder ?
+            configureSourceSets()
             configureProguard()
             configureLint()
             configureKtLint()

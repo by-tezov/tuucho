@@ -13,12 +13,6 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.coil.core)
             implementation(libs.kotlin.collections.immutable)
-
         }
     }
 }
-
-//dependencies {
-//    "androidRuntimeClasspath"(libs.compose.ui.tooling)
-//    "androidRuntimeClasspath"(libs.compose.ui.tooling.preview)
-//}
