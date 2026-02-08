@@ -92,29 +92,29 @@ private class ContextualTypeProjector(
         }
 }
 
-fun ComponentProjectorProtocols.option(
-    block: TypeProjectorProtocols.() -> Unit
+suspend fun ComponentProjectorProtocols.option(
+    block: suspend TypeProjectorProtocols.() -> Unit
 ): TypeProjectorProtocols = TypeProjector(
     type = TypeSchema.Value.option,
     idProcessor = IdProcessor()
 ).also { it.block() }
 
-fun ComponentProjectorProtocols.style(
-    block: TypeProjectorProtocols.() -> Unit
+suspend fun ComponentProjectorProtocols.style(
+    block: suspend TypeProjectorProtocols.() -> Unit
 ): TypeProjectorProtocols = TypeProjector(
     type = TypeSchema.Value.style,
     idProcessor = IdProcessor()
 ).also { it.block() }
 
-fun ComponentProjectorProtocols.content(
-    block: TypeProjectorProtocols.() -> Unit
+suspend fun ComponentProjectorProtocols.content(
+    block: suspend TypeProjectorProtocols.() -> Unit
 ): TypeProjectorProtocols = TypeProjector(
     type = TypeSchema.Value.content,
     idProcessor = IdProcessor()
 ).also { it.block() }
 
-fun ComponentProjectorProtocols.state(
-    block: TypeProjectorProtocols.() -> Unit
+suspend fun ComponentProjectorProtocols.state(
+    block: suspend TypeProjectorProtocols.() -> Unit
 ): TypeProjectorProtocols = TypeProjector(
     type = TypeSchema.Value.state,
     idProcessor = IdProcessor()

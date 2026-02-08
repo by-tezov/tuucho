@@ -5,6 +5,7 @@ import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
+import com.tezov.tuucho.core.presentation.ui.render.projection.ActionTypeAlias
 import com.tezov.tuucho.core.presentation.ui.render.projection.action
 import com.tezov.tuucho.core.presentation.ui.render.projection.mutable
 import com.tezov.tuucho.core.presentation.ui.render.projection.view.ViewProjectionProtocol
@@ -24,7 +25,7 @@ import kotlinx.serialization.json.JsonObject
 interface ButtonViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
-        onClick: ((JsonElement?) -> Unit)?,
+        onClick: ActionTypeAlias?,
         content: @Composable RowScope.() -> Unit,
     )
 
@@ -86,7 +87,7 @@ private class ButtonView(
 
     @Composable
     override fun ComposeComponent(
-        onClick: ((JsonElement?) -> Unit)?,
+        onClick: ActionTypeAlias?,
         content: @Composable RowScope.() -> Unit,
     ) {
         Button(

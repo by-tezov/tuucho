@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
-import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
+import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition.KeyValue
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol.Context
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
@@ -30,8 +30,8 @@ internal class StoreActionMiddleware(
     override fun accept(
         route: NavigationRoute?,
         action: ActionModel,
-    ) = action.command == StoreActionDefinition.KeyValue.command &&
-        action.authority == StoreActionDefinition.KeyValue.authority &&
+    ) = action.command == KeyValue.command &&
+        action.authority == KeyValue.authority &&
         action.query != null
 
     override suspend fun process(
@@ -40,8 +40,8 @@ internal class StoreActionMiddleware(
     ) {
         val query = context.actionModel.query ?: throw DomainException.Default("should no be possible")
         when (val target = context.actionModel.target) {
-            StoreActionDefinition.KeyValue.Target.save -> saveValues(query)
-            StoreActionDefinition.KeyValue.Target.remove -> removeKeys(query)
+            KeyValue.Target.save -> saveValues(query)
+            KeyValue.Target.remove -> removeKeys(query)
             else -> throw DomainException.Default("Unknown target $target")
         }
         next?.invoke(context)

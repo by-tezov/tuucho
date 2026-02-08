@@ -1,0 +1,234 @@
+{
+  "root": {
+    "setting": {
+      "navigation": {
+        "definitions": {
+          "transition": {
+            "type": "slide-horizontal",
+            "entrance": "from-start",
+            "effect": "cover-push"
+          }
+        }
+      }
+    },
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "background-color": "#FFD9D9D9",
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        "*item-spacer-24",
+        "*flag-usa",
+        "*item-spacer-12",
+        "*flag-french",
+        "*item-spacer-12",
+        "*flag-canada",
+        "*item-spacer-1.0",
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*item-spacer-24",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "content": {
+                      "value": "BACK"
+                    }
+                  },
+                  "action": "navigate://local-destination/back"
+                }
+              },
+              "*item-spacer-1.0",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "content": {
+                      "value": "System Language"
+                    }
+                  },
+                  "action": ["language://system", "navigate://local-destination/back"]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "common": {
+      "item-spacer-1.0": {
+        "subset": "spacer",
+        "style": {
+          "weight": "1.0"
+        }
+      },
+      "item-spacer-24": {
+        "subset": "spacer",
+        "style": {
+          "width": "24",
+          "height": "24"
+        }
+      },
+      "item-spacer-12": {
+        "subset": "spacer",
+        "style": {
+          "width": "12",
+          "height": "12"
+        }
+      },
+      "flag-usa": {
+        "subset": "layout-linear",
+        "style": {
+          "orientation": "horizontal",
+          "fill-max-width": true
+        },
+        "content": {
+          "items": [
+            "*item-spacer-12",
+            {
+              "subset": "image",
+              "style": "*flag-image-style",
+              "content": {
+                "values": [
+                  "*flag-usa",
+                  "*flag-placeholder"
+                ],
+                "action": [
+                  "language://current?code=en",
+                  "navigate://local-destination/back"
+                ],
+                "description": "Usa flag"
+              }
+            },
+            "*item-spacer-12",
+            {
+              "subset": "label",
+              "style": "*flag-label-style",
+              "content": {
+                "value": "*page-language@english"
+              }
+            },
+            "*item-spacer-12"
+          ]
+        }
+      },
+      "flag-french": {
+        "subset": "layout-linear",
+        "style": {
+          "orientation": "horizontal",
+          "fill-max-width": true
+        },
+        "content": {
+          "items": [
+            "*item-spacer-12",
+            {
+              "subset": "image",
+              "style": "*flag-image-style",
+              "content": {
+                "values": [
+                  "*flag-france",
+                  "*flag-placeholder"
+                ],
+                "action": [
+                  "language://current?code=fr",
+                  "navigate://local-destination/back"
+                ],
+                "description": "French flag"
+              }
+            },
+            "*item-spacer-12",
+            {
+              "subset": "label",
+              "style": "*flag-label-style",
+              "content": {
+                "value": "*page-language@french"
+              }
+            },
+            "*item-spacer-12"
+          ]
+        }
+      },
+      "flag-canada": {
+        "subset": "layout-linear",
+        "style": {
+          "orientation": "horizontal",
+          "fill-max-width": true
+        },
+        "content": {
+          "items": [
+            "*item-spacer-12",
+            {
+              "subset": "image",
+              "style": "*flag-image-style",
+              "content": {
+                "values": [
+                  "*flag-canada",
+                  "*flag-placeholder"
+                ],
+                "action": [
+                  "language://current?code=fr&country=CA",
+                  "navigate://local-destination/back"
+                ],
+                "description": "Canada flag"
+              }
+            },
+            "*item-spacer-12",
+            {
+              "subset": "label",
+              "style": "*flag-label-style",
+              "content": {
+                "value": "*page-language@canada"
+              }
+            },
+            "*item-spacer-12"
+          ]
+        }
+      }
+    }
+  },
+  "styles": {
+    "common": {
+      "flag-label-style": {
+        "font-size": "18",
+        "font-color": "*blue"
+      },
+      "flag-image-style": {
+        "width": "56",
+        "height": "56",
+        "shape": "rounded",
+        "padding": "2",
+        "background-color": "*background@royal-purple"
+      }
+    }
+  },
+  "images": {
+    "common": {
+      "flag-usa": "remote://lobby/flag-usa",
+      "flag-france": "remote://lobby/flag-france",
+      "flag-canada": "remote://lobby/flag-canada",
+      "flag-placeholder": {
+        "source": "local://img/flag-placeholder",
+        "tags": "placeholder"
+      }
+    }
+  },
+  "colors": {
+    "common": {
+      "blue": "#FF0000FF"
+    },
+    "background": {
+      "gray-light": "#FFD9D9D9",
+      "royal-purple": "#FF9966FF"
+    }
+  }
+}

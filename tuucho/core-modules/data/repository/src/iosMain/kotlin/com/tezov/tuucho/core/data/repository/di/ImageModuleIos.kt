@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 internal object ImageModuleIos {
     fun invoke() = module(ModuleContextData.Main) {
         factory<PlatformContext> {
-            PlatformContext.INSTANCE
+            PlatformContext.INSTANCE // coil
         }
     }
 }
