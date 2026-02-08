@@ -1,0 +1,173 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.tezov:core.presentation.tool>
+abstract class <#A: kotlin/Any, #B: kotlin/Any> com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound { // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound|null[0]
+    constructor <init>(kotlin.collections/MutableMap<#A, com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator<kotlin/Any>> = ...) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.<init>|<init>(kotlin.collections.MutableMap<1:0,com.tezov.tuucho.core.presentation.tool.animation.AbstractAnimationCompound.Animator<kotlin.Any>>){}[0]
+
+    abstract val doneStep // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.doneStep|{}doneStep[0]
+        abstract fun <get-doneStep>(): #B // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.doneStep.<get-doneStep>|<get-doneStep>(){}[0]
+    abstract val firstStep // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.firstStep|{}firstStep[0]
+        abstract fun <get-firstStep>(): #B // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.firstStep.<get-firstStep>|<get-firstStep>(){}[0]
+    abstract val originStep // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.originStep|{}originStep[0]
+        abstract fun <get-originStep>(): #B // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.originStep.<get-originStep>|<get-originStep>(){}[0]
+    final val isDone // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.isDone|{}isDone[0]
+        final fun <get-isDone>(): kotlin/Boolean // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.isDone.<get-isDone>|<get-isDone>(){}[0]
+
+    final var step // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.step|{}step[0]
+        final fun <get-step>(): androidx.compose.animation.core/MutableTransitionState<#B> // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.step.<get-step>|<get-step>(){}[0]
+        final fun <set-step>(androidx.compose.animation.core/MutableTransitionState<#B>) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.step.<set-step>|<set-step>(androidx.compose.animation.core.MutableTransitionState<1:1>){}[0]
+
+    abstract fun (androidx.compose.animation.core/MutableTransitionState<#B>).updateStep(androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.updateStep|updateStep@androidx.compose.animation.core.MutableTransitionState<1:1>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final fun add(#A, com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator<*>) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.add|add(1:0;com.tezov.tuucho.core.presentation.tool.animation.AbstractAnimationCompound.Animator<*>){}[0]
+    final fun get(#A): com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator<*> // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.get|get(1:0){}[0]
+    final fun start() // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.start|start(){}[0]
+    final fun updateTransition(kotlin/Any?, kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.updateTransition|updateTransition(kotlin.Any?;kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+    open fun onUpdateTransition(androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.onUpdateTransition|onUpdateTransition(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+
+    abstract interface <#A1: kotlin/Any, #B1: kotlin/Any> AnimatorChild : com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator<#B1> { // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorChild|null[0]
+        abstract fun createStepTransformer(): kotlin/Function1<#A1, #B1> // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorChild.createStepTransformer|createStepTransformer(){}[0]
+    }
+
+    abstract interface <#A1: kotlin/Any> Animator { // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator|null[0]
+        abstract fun animate(androidx.compose.ui/Modifier): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator.animate|animate(androidx.compose.ui.Modifier){}[0]
+        abstract fun update(androidx.compose.animation.core/Transition<#A1>, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator.update|update(androidx.compose.animation.core.Transition<1:0>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    }
+
+    final class <#A1: kotlin/Any> AnimatorIdle : com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorChild<#A1, kotlin/Boolean> { // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle|null[0]
+        constructor <init>(kotlin/Int, kotlin/Function1<#A1, kotlin/Boolean>) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle.<init>|<init>(kotlin.Int;kotlin.Function1<1:0,kotlin.Boolean>){}[0]
+
+        final var duration_ms // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle.duration_ms|{}duration_ms[0]
+            final fun <get-duration_ms>(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle.duration_ms.<get-duration_ms>|<get-duration_ms>(){}[0]
+            final fun <set-duration_ms>(kotlin/Int) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle.duration_ms.<set-duration_ms>|<set-duration_ms>(kotlin.Int){}[0]
+
+        final fun animate(androidx.compose.ui/Modifier): kotlin/Nothing // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle.animate|animate(androidx.compose.ui.Modifier){}[0]
+        final fun createStepTransformer(): kotlin/Function1<#A1, kotlin/Boolean> // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle.createStepTransformer|createStepTransformer(){}[0]
+        final fun update(androidx.compose.animation.core/Transition<kotlin/Boolean>, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.AnimatorIdle.update|update(androidx.compose.animation.core.Transition<kotlin.Boolean>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    }
+
+    final object Companion { // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Companion|null[0]
+        final fun (androidx.compose.ui/Modifier).animate(com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Animator<*>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.animation/AbstractAnimationCompound.Companion.animate|animate@androidx.compose.ui.Modifier(com.tezov.tuucho.core.presentation.tool.animation.AbstractAnimationCompound.Animator<*>){}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress { // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress|null[0]
+    final val events // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.events|{}events[0]
+        final fun <get-events>(): com.tezov.tuucho.core.domain.tool.async/Notifier.Collector<kotlin/Unit> // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.events.<get-events>|<get-events>(){}[0]
+    final val isIdle // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.isIdle|{}isIdle[0]
+        final fun <get-isIdle>(): kotlin/Boolean // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.isIdle.<get-isIdle>|<get-isIdle>(){}[0]
+
+    final fun animateFloat(kotlin/Float, kotlin/Float, androidx.compose.animation.core/FiniteAnimationSpec<kotlin/Float>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): androidx.compose.runtime/State<kotlin/Float> // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.animateFloat|animateFloat(kotlin.Float;kotlin.Float;androidx.compose.animation.core.FiniteAnimationSpec<kotlin.Float>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+    final fun start() // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.start|start(){}[0]
+
+    final object Companion { // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.Companion|null[0]
+        final fun rememberAnimationProgress(androidx.compose.runtime/Composer?, kotlin/Int): com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.Companion.rememberAnimationProgress|rememberAnimationProgress(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+        final fun rememberAnimationProgress(kotlin/Any?, androidx.compose.runtime/Composer?, kotlin/Int): com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress // com.tezov.tuucho.core.presentation.tool.animation/AnimationProgress.Companion.rememberAnimationProgress|rememberAnimationProgress(kotlin.Any?;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher { // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher|null[0]
+    constructor <init>() // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.<init>|<init>(){}[0]
+
+    final fun compose(androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.compose|compose(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final fun createId(kotlin/Boolean = ...): com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.createId|createId(kotlin.Boolean){}[0]
+    final fun destroyId(com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId): kotlin/Boolean // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.destroyId|destroyId(com.tezov.tuucho.core.presentation.tool.misc.FocusDispatcher.FocusId){}[0]
+    final fun hasFocus(com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId): kotlin/Boolean // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.hasFocus|hasFocus(com.tezov.tuucho.core.presentation.tool.misc.FocusDispatcher.FocusId){}[0]
+    final fun hideKeyboard() // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.hideKeyboard|hideKeyboard(){}[0]
+    final fun requestClearFocus() // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.requestClearFocus|requestClearFocus(){}[0]
+    final fun requestFocus(com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId) // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.requestFocus|requestFocus(com.tezov.tuucho.core.presentation.tool.misc.FocusDispatcher.FocusId){}[0]
+    final fun showKeyboard() // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.showKeyboard|showKeyboard(){}[0]
+
+    final inner class FocusId { // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId|null[0]
+        final val value // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId.value|{}value[0]
+            final fun <get-value>(): androidx.compose.ui.focus/FocusRequester // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId.value.<get-value>|<get-value>(){}[0]
+
+        final fun hasFocus(): kotlin/Boolean // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId.hasFocus|hasFocus(){}[0]
+        final fun onFocus() // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId.onFocus|onFocus(){}[0]
+        final fun requestFocus() // com.tezov.tuucho.core.presentation.tool.misc/FocusDispatcher.FocusId.requestFocus|requestFocus(){}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder { // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder|null[0]
+    constructor <init>(androidx.compose.ui/Modifier) // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.<init>|<init>(androidx.compose.ui.Modifier){}[0]
+
+    final var modifier // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.modifier|{}modifier[0]
+        final fun <get-modifier>(): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.modifier.<get-modifier>|<get-modifier>(){}[0]
+        final fun <set-modifier>(androidx.compose.ui/Modifier) // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.modifier.<set-modifier>|<set-modifier>(androidx.compose.ui.Modifier){}[0]
+
+    final fun and(com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.and|and(com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder){}[0]
+    final fun and(kotlin/Function1<com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder, kotlin/Unit>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.and|and(kotlin.Function1<com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder,kotlin.Unit>){}[0]
+    final fun build(): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.build|build(){}[0]
+    final fun or(com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.or|or(com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder){}[0]
+    final fun or(kotlin/Function1<com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder, kotlin/Unit>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.or|or(kotlin.Function1<com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder,kotlin.Unit>){}[0]
+    final inline fun <#A1: kotlin/Any?> ifNotNull(#A1?, crossinline kotlin/Function2<androidx.compose.ui/Modifier, #A1, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifNotNull|ifNotNull(0:0?;kotlin.Function2<androidx.compose.ui.Modifier,0:0,androidx.compose.ui.Modifier>){0§<kotlin.Any?>}[0]
+    final inline fun ifFalse(kotlin/Boolean?, crossinline kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifFalse|ifFalse(kotlin.Boolean?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
+    final inline fun ifNull(kotlin/Any?, crossinline kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifNull|ifNull(kotlin.Any?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
+    final inline fun ifTrue(kotlin/Boolean?, crossinline kotlin/Function1<androidx.compose.ui/Modifier, androidx.compose.ui/Modifier>): com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder // com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder.ifTrue|ifTrue(kotlin.Boolean?;kotlin.Function1<androidx.compose.ui.Modifier,androidx.compose.ui.Modifier>){}[0]
+}
+
+final object com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack { // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack|null[0]
+    final class <#A1: kotlin/Any> Group { // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Group|null[0]
+        constructor <init>() // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Group.<init>|<init>(){}[0]
+
+        final var fallBackValue // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Group.fallBackValue|{}fallBackValue[0]
+            final fun <get-fallBackValue>(): kotlin/Function0<#A1>? // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Group.fallBackValue.<get-fallBackValue>|<get-fallBackValue>(){}[0]
+            final fun <set-fallBackValue>(kotlin/Function0<#A1>?) // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Group.fallBackValue.<set-fallBackValue>|<set-fallBackValue>(kotlin.Function0<1:0>?){}[0]
+
+        final fun firstNotNull(): com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref<#A1>? // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Group.firstNotNull|firstNotNull(){}[0]
+        final fun ref(#A1?, kotlin/Function0<#A1>? = ...): com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref<#A1> // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Group.ref|ref(1:0?;kotlin.Function0<1:0>?){}[0]
+    }
+
+    final class <#A1: kotlin/Any> Ref { // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref|null[0]
+        constructor <init>(#A1? = ..., kotlin/Function0<#A1>? = ...) // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.<init>|<init>(1:0?;kotlin.Function0<1:0>?){}[0]
+
+        final var fallBackValue // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.fallBackValue|{}fallBackValue[0]
+            final fun <get-fallBackValue>(): kotlin/Function0<#A1>? // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.fallBackValue.<get-fallBackValue>|<get-fallBackValue>(){}[0]
+            final fun <set-fallBackValue>(kotlin/Function0<#A1>?) // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.fallBackValue.<set-fallBackValue>|<set-fallBackValue>(kotlin.Function0<1:0>?){}[0]
+        final var value // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.value|{}value[0]
+            final fun <get-value>(): kotlin/Function0<#A1>? // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.value.<get-value>|<get-value>(){}[0]
+
+        final fun getValue(kotlin/Any?, kotlin.reflect/KProperty<*>): #A1 // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.getValue|getValue(kotlin.Any?;kotlin.reflect.KProperty<*>){}[0]
+        final fun setValue(kotlin/Any?, kotlin.reflect/KProperty<*>, #A1) // com.tezov.tuucho.core.presentation.tool.delegate/DelegateNullFallBack.Ref.setValue|setValue(kotlin.Any?;kotlin.reflect.KProperty<*>;1:0){}[0]
+    }
+}
+
+final object com.tezov.tuucho.core.presentation.tool.localProvider/LocalProviderTextField { // com.tezov.tuucho.core.presentation.tool.localProvider/LocalProviderTextField|null[0]
+    final val textSelectionColorsNoColor // com.tezov.tuucho.core.presentation.tool.localProvider/LocalProviderTextField.textSelectionColorsNoColor|{}textSelectionColorsNoColor[0]
+        final fun <get-textSelectionColorsNoColor>(): androidx.compose.runtime/ProvidedValue<androidx.compose.foundation.text.selection/TextSelectionColors> // com.tezov.tuucho.core.presentation.tool.localProvider/LocalProviderTextField.textSelectionColorsNoColor.<get-textSelectionColorsNoColor>|<get-textSelectionColorsNoColor>(){}[0]
+    final val textSelectionToolbarDisabled // com.tezov.tuucho.core.presentation.tool.localProvider/LocalProviderTextField.textSelectionToolbarDisabled|{}textSelectionToolbarDisabled[0]
+        final fun <get-textSelectionToolbarDisabled>(): androidx.compose.runtime/ProvidedValue<androidx.compose.ui.platform/TextToolbar> // com.tezov.tuucho.core.presentation.tool.localProvider/LocalProviderTextField.textSelectionToolbarDisabled.<get-textSelectionToolbarDisabled>|<get-textSelectionToolbarDisabled>(){}[0]
+
+    final fun textSelectionColors(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color): androidx.compose.runtime/ProvidedValue<androidx.compose.foundation.text.selection/TextSelectionColors> // com.tezov.tuucho.core.presentation.tool.localProvider/LocalProviderTextField.textSelectionColors|textSelectionColors(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
+}
+
+final val com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack$stableprop // com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Group$stableprop // com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Group$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Group$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Ref$stableprop // com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Ref$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Ref$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop // com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop // com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop[0]
+final val com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop // com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop|#static{}com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop[0]
+
+final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/clickableDisabled(): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/clickableDisabled|clickableDisabled@androidx.compose.ui.Modifier(){}[0]
+final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenIfFalse(kotlin/Boolean?, kotlin/Function3<androidx.compose.ui/Modifier, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenIfFalse|thenIfFalse@androidx.compose.ui.Modifier(kotlin.Boolean?;kotlin.Function3<androidx.compose.ui.Modifier,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){}[0]
+final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenIfNotNull(androidx.compose.ui/Modifier?): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenIfNotNull|thenIfNotNull@androidx.compose.ui.Modifier(androidx.compose.ui.Modifier?){}[0]
+final fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenIfTrue(kotlin/Boolean?, kotlin/Function3<androidx.compose.ui/Modifier, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenIfTrue|thenIfTrue@androidx.compose.ui.Modifier(kotlin.Boolean?;kotlin.Function3<androidx.compose.ui.Modifier,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){}[0]
+final fun <#A: kotlin/Any> (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenIfNotNull(#A?, kotlin/Function4<androidx.compose.ui/Modifier, #A, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenIfNotNull|thenIfNotNull@androidx.compose.ui.Modifier(0:0?;kotlin.Function4<androidx.compose.ui.Modifier,0:0,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){0§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/thenIfNull(#A?, kotlin/Function3<androidx.compose.ui/Modifier, androidx.compose.runtime/Composer, kotlin/Int, androidx.compose.ui/Modifier>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/thenIfNull|thenIfNull@androidx.compose.ui.Modifier(0:0?;kotlin.Function3<androidx.compose.ui.Modifier,androidx.compose.runtime.Composer,kotlin.Int,androidx.compose.ui.Modifier>){0§<kotlin.Any>}[0]
+final fun com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop_getter|com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop_getter|com_tezov_tuucho_core_presentation_tool_animation_AbstractAnimationCompound_AnimatorIdle$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.animation/com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop_getter|com_tezov_tuucho_core_presentation_tool_animation_AnimationProgress$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack$stableprop_getter|com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Group$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Group$stableprop_getter|com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Group$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Ref$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.delegate/com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Ref$stableprop_getter|com_tezov_tuucho_core_presentation_tool_delegate_DelegateNullFallBack_Ref$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.localProvider/com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop_getter|com_tezov_tuucho_core_presentation_tool_localProvider_LocalProviderTextField$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.misc/com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop_getter|com_tezov_tuucho_core_presentation_tool_misc_FocusDispatcher$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.presentation.tool.modifier/com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop_getter|com_tezov_tuucho_core_presentation_tool_modifier_ModifierChainBuilder$stableprop_getter(){}[0]
+final inline fun (androidx.compose.ui/Modifier).com.tezov.tuucho.core.presentation.tool.modifier/then(kotlin/Function1<com.tezov.tuucho.core.presentation.tool.modifier/ModifierChainBuilder, kotlin/Unit>): androidx.compose.ui/Modifier // com.tezov.tuucho.core.presentation.tool.modifier/then|then@androidx.compose.ui.Modifier(kotlin.Function1<com.tezov.tuucho.core.presentation.tool.modifier.ModifierChainBuilder,kotlin.Unit>){}[0]
