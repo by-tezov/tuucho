@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.presentation.ui._system.idValueOrNull
 import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 
-class IdProcessor : IdProcessorProtocol {
+internal class IdProcessor : IdProcessorProtocol {
     override var id: String? = null
         private set
 

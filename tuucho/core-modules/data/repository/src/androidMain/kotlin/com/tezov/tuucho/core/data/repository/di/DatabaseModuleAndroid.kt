@@ -14,7 +14,7 @@ object DatabaseModuleAndroid {
             AndroidSqliteDriver(
                 schema = Database.Schema,
                 context = get(
-                    SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT
+                    PlatformModuleAndroid.Name.APPLICATION_CONTEXT
                 ),
                 name = get<DatabaseModule.Config>(DATABASE_REPOSITORY_CONFIG).fileName
             )

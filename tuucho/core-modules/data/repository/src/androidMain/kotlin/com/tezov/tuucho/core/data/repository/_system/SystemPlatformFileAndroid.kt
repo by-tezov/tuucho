@@ -6,9 +6,9 @@ import android.content.Context
 import okio.FileSystem
 import okio.Path.Companion.toPath
 
-class SystemPlatformAndroid(
+class SystemPlatformFileAndroid(
     private val context: Context
-) : SystemPlatform {
+) : SystemPlatformFileProtocol {
     override fun fileSystem() = FileSystem.SYSTEM
 
     override fun pathFromCacheFolder(

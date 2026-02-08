@@ -1,39 +1,23 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
+import kotlin.jvm.JvmInline
+
 interface KeyValueStoreRepositoryProtocol {
-    interface Key {
+    @JvmInline
+    value class Key(
         val value: String
-
+    ) {
         companion object {
-            fun String.toKey() = object : Key {
-                override val value: String = this@toKey
-
-                override fun equals(
-                    other: Any?
-                ) = other is Key && other.value == value
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = "Key($value)"
-            }
+            fun String.toKey() = Key(this)
         }
     }
 
-    interface Value {
+    @JvmInline
+    value class Value(
         val value: String
-
+    ) {
         companion object {
-            fun String.toValue() = object : Value {
-                override val value: String = this@toValue
-
-                override fun equals(
-                    other: Any?
-                ) = other is Value && other.value == value
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = "Value($value)"
-            }
+            fun String.toValue() = Value(this)
         }
     }
 

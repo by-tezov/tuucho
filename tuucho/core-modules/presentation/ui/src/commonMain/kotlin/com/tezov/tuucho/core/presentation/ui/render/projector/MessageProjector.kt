@@ -28,7 +28,7 @@ interface MessageProjectorProtocols :
 private class MessageProjector(
     override val lazyId: Lazy<String?>,
     override val subset: String,
-    private var onReceived: () -> Unit
+    private var onReceived: suspend () -> Unit
 ) : MessageProjectorProtocols,
     TuuchoKoinComponent {
     private val projections = mutableMapOf<String, ProjectionProcessorProtocol>()
@@ -85,10 +85,10 @@ private class ContextualMessageProjector(
     override val contextualUpdater get() = listOf(this)
 }
 
-fun ComponentProjectorProtocols.message(
+suspend fun ComponentProjectorProtocols.message(
     subset: String,
-    onReceived: () -> Unit,
-    block: MessageProjectorProtocols.() -> Unit
+    onReceived: suspend () -> Unit,
+    block: suspend MessageProjectorProtocols.() -> Unit
 ): MessageProjectorProtocols {
     val messageProjector = MessageProjector(
         lazyId = lazy { id },
