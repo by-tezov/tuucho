@@ -1,7 +1,5 @@
 ### Todo:
 
-- Key interface store ?
-- fix ios
 - unit test
 - Refresh previous page ? and all page in stack when language change ?
 
