@@ -88,7 +88,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
         val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<NavigateBackUseCase, Unit>(any(), any()) } returns Unit
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -118,7 +118,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
         val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<NavigateFinishUseCase, Unit>(any(), any()) } returns Unit
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -145,7 +145,7 @@ class NavigationLocalDestinationActionMiddlewareTest {
         )
 
         assertFailsWith<DomainException> {
-            sut.run { process(context, null) }
+            sut.process(context, null)
         }
     }
 
