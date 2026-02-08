@@ -1,15 +1,15 @@
 ### Todo:
 
-- unit test
 - Refresh previous page ? and all page in stack when language change ?
-
-- Doc image action
-- Doc action language
 
 - screen context better way to use it ?
 - projection input dataclass ?
+
+- Doc image action
+- Doc action language
     
 - Animation placeholder / final image ?
+
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
 - error message with class name that throw.
