@@ -93,7 +93,7 @@ class StoreActionMiddlewareTest {
         val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<SaveKeyValueToStoreUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -128,7 +128,7 @@ class StoreActionMiddlewareTest {
         val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<RemoveKeyValueFromStoreUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -163,7 +163,7 @@ class StoreActionMiddlewareTest {
         val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<RemoveKeyValueFromStoreUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -191,7 +191,7 @@ class StoreActionMiddlewareTest {
         )
 
         assertFailsWith<DomainException> {
-            sut.run { process(context, null) }
+            sut.process(context, null)
         }
     }
 

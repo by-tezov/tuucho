@@ -1,19 +1,20 @@
 package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
+import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.mock.middleware.MockMiddlewareNext
 import com.tezov.tuucho.core.domain.business.mock.middleware.SpyMiddlewareNext
+import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SetLanguageUseCase
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
-import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
@@ -22,21 +23,21 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-class NavigationUrlActionMiddlewareTest {
+class LanguageActionMiddlewareTest {
     private lateinit var useCaseExecutor: UseCaseExecutorProtocol
-    private lateinit var navigateToUrl: NavigateToUrlUseCase
-    private lateinit var sut: NavigationUrlActionMiddleware
+    private lateinit var setLanguageUseCase: SetLanguageUseCase
+    private lateinit var sut: LanguageActionMiddleware
 
     @BeforeTest
     fun setup() {
         useCaseExecutor = mock()
-        navigateToUrl = mock()
-        sut = NavigationUrlActionMiddleware(
+        setLanguageUseCase = mock()
+        sut = LanguageActionMiddleware(
             useCaseExecutor = useCaseExecutor,
-            navigateToUrl = navigateToUrl
+            setLanguage = setLanguageUseCase
         )
     }
 
@@ -44,7 +45,7 @@ class NavigationUrlActionMiddlewareTest {
     fun tearDown() {
         verifyNoMoreCalls(
             useCaseExecutor,
-            navigateToUrl
+            setLanguageUseCase
         )
     }
 
@@ -53,20 +54,18 @@ class NavigationUrlActionMiddlewareTest {
         assertEquals(ActionMiddlewareProtocol.Priority.DEFAULT, sut.priority)
     }
 
-    @Test
-    fun `accept matches only NavigateAction Url`() {
-        val valid = ActionModel.from("navigate://url/whatever")
-        val invalidCmd = ActionModel.from("x://url/t")
-        val invalidAuth = ActionModel.from("navigate://xxx/t")
+    // **************** Authority Current
 
-        assertTrue(sut.accept(null, valid))
-        assertFalse(sut.accept(null, invalidCmd))
-        assertFalse(sut.accept(null, invalidAuth))
+    @Test
+    fun `accept returns true for current authority`() {
+        val action = ActionModel.from("language://current?code=en")
+
+        assertTrue(sut.accept(null, action))
     }
 
     @Test
-    fun `process calls NavigateToUrlUseCase then next`() = runTest {
-        val action = ActionModel.from("navigate://url/final")
+    fun `process current sets explicit language then next`() = runTest {
+        val action = ActionModel.from("language://current?code=fr&country=FR")
 
         val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
@@ -74,20 +73,26 @@ class NavigationUrlActionMiddlewareTest {
             input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
                 model = action,
-                lockable = InteractionLockable.Empty
+                lockable = InteractionLockable.Empty,
+                jsonElement = null
             )
         )
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
         val next = MockMiddlewareNext(spy)
-        everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
+        everySuspend { useCaseExecutor.await<SetLanguageUseCase.Input, Unit>(any(), any()) } returns Unit
 
         sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
-                useCase = navigateToUrl,
-                input = NavigateToUrlUseCase.Input(url = "final")
+                useCase = setLanguageUseCase,
+                input = SetLanguageUseCase.Input(
+                    LanguageModelDomain(
+                        code = "fr",
+                        country = "FR"
+                    )
+                )
             )
             spy.invoke(context)
         }
@@ -95,8 +100,8 @@ class NavigationUrlActionMiddlewareTest {
     }
 
     @Test
-    fun `process skips NavigateToUrlUseCase when no target but still calls next`() = runTest {
-        val action = ActionModel.from("navigate://url")
+    fun `process current throws when query is not object`() = runTest {
+        val action = ActionModel.from("language://current?invalid")
 
         val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
@@ -104,44 +109,58 @@ class NavigationUrlActionMiddlewareTest {
             input = ProcessActionUseCase.Input.create(
                 route = NavigationRoute.Back,
                 model = action,
-                lockable = InteractionLockable.Empty
+                lockable = InteractionLockable.Empty,
+                jsonElement = null
             )
         )
 
-        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
-        val next = MockMiddlewareNext(spy)
-
-        sut.process(context, next)
-
-        verify(VerifyMode.exhaustiveOrder) {
-            spy.invoke(context)
+        assertFailsWith<DomainException> {
+            sut.process(context, null)
         }
-        verifyNoMoreCalls(spy)
+    }
+
+    // **************** Authority Language
+
+    @Test
+    fun `accept returns true for system authority`() {
+        val action = ActionModel.from("language://system")
+
+        assertTrue(sut.accept(null, action))
     }
 
     @Test
-    fun `process invokes NavigateToUrlUseCase and completes when next is null`() = runTest {
-        val action = ActionModel.from("navigate://url/final")
+    fun `process system sets system language then next`() = runTest {
+        val action = ActionModel.from("language://system")
 
         val context = ActionMiddlewareProtocol.Context(
             lockable = InteractionLockable.Empty,
             actionModel = action,
             input = ProcessActionUseCase.Input.create(
-                route = NavigationRoute.Current,
+                route = NavigationRoute.Back,
                 model = action,
-                lockable = InteractionLockable.Empty
+                lockable = InteractionLockable.Empty,
+                jsonElement = null
             )
         )
 
-        everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
+        val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
+        val next = MockMiddlewareNext(spy)
+        everySuspend { useCaseExecutor.await<SetLanguageUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.process(context, null)
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
-                useCase = navigateToUrl,
-                input = NavigateToUrlUseCase.Input(url = "final")
+                useCase = setLanguageUseCase,
+                input = SetLanguageUseCase.Input(
+                    LanguageModelDomain(
+                        code = null,
+                        country = null
+                    )
+                )
             )
+            spy.invoke(context)
         }
+        verifyNoMoreCalls(spy)
     }
 }

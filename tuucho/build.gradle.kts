@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.multiplatform.library) apply false
     alias(libs.plugins.koin) apply false
-
     alias(libs.plugins.compose) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.serialization) apply false
@@ -112,7 +111,8 @@ tasks.register("rootUpdateKtLintBaseline") {
     dependsOn(ktLineTasks)
     doLast {
         val baselineFilesByProject = subprojects.mapNotNull { sub ->
-            val baselineFile = sub.layout.projectDirectory.dir(".validation/ktlint/baseline.xml").asFile
+            val baselineFile =
+                sub.layout.projectDirectory.dir(".validation/ktlint/baseline.xml").asFile
             if (baselineFile.exists()) sub.path to baselineFile else null
         }
         if (baselineFilesByProject.isEmpty()) {
@@ -249,7 +249,8 @@ tasks.register("rootUpdateDetektBaseline") {
     dependsOn(detektTasks)
     doLast {
         val baselineFilesByProject = subprojects.mapNotNull { sub ->
-            val baselineFile = sub.layout.projectDirectory.dir(".validation/detekt/baseline.xml").asFile
+            val baselineFile =
+                sub.layout.projectDirectory.dir(".validation/detekt/baseline.xml").asFile
             if (baselineFile.exists()) sub.path to baselineFile else null
         }
         if (baselineFilesByProject.isEmpty()) {
