@@ -13,5 +13,5 @@ interface SystemPlatformInformationProtocol {
 
     fun currentLanguage(): String
 
-    fun currentCountry(): String
+    fun currentCountry(): String?
 }

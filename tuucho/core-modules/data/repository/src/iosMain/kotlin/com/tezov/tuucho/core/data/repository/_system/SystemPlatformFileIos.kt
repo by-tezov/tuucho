@@ -11,7 +11,7 @@ import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL
 import platform.Foundation.NSUserDomainMask
 
-class SystemPlatformFileIos : SystemPlatform {
+class SystemPlatformFileIos : SystemPlatformFileProtocol {
     override fun fileSystem() = FileSystem.SYSTEM
 
     override fun pathFromCacheFolder(

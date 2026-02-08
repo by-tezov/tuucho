@@ -9,5 +9,5 @@ class SystemPlatformInformationAndroid : SystemPlatformInformationProtocol {
 
     override fun currentLanguage(): String = Locale.getDefault().language
 
-    override fun currentCountry(): String = Locale.getDefault().country
+    override fun currentCountry(): String? = Locale.getDefault().country
 }

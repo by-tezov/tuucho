@@ -13,9 +13,9 @@ import org.koin.dsl.module
 import org.koin.dsl.onClose
 import org.koin.plugin.module.dsl.single
 
-internal expect fun SystemCoreModulesAndroid.platformInvoke(): List<KoinMass>
+internal expect fun SystemCoreModules.platformInvoke(): List<KoinMass>
 
-internal object SystemCoreModulesAndroid {
+internal object SystemCoreModules {
     fun invoke(): List<KoinMass> = listOf(
         CoroutineScopeModules.invoke(),
     ) +

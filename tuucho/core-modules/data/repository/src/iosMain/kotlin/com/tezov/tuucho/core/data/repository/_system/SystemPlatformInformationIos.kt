@@ -2,7 +2,11 @@
 
 package com.tezov.tuucho.core.data.repository._system
 
+import platform.Foundation.NSLocale
 import platform.Foundation.NSThread
+import platform.Foundation.countryCode
+import platform.Foundation.currentLocale
+import platform.Foundation.languageCode
 
 class SystemPlatformInformationIos : SystemPlatformInformationProtocol {
     override fun currentThreadName(): String {
@@ -16,5 +20,5 @@ class SystemPlatformInformationIos : SystemPlatformInformationProtocol {
 
     override fun currentLanguage(): String = NSLocale.currentLocale.languageCode
 
-    override fun currentCountry(): String = NSLocale.currentLocale.countryCode
+    override fun currentCountry(): String? = NSLocale.currentLocale.countryCode
 }
