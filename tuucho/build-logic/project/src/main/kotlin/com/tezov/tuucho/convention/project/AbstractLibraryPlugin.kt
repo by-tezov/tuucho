@@ -34,7 +34,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         with(project) {
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
             pluginManager.apply(plugin(PluginId.koltinMultiplatformLibrary))
-            pluginManager.apply(plugin(PluginId.koin))
+//            pluginManager.apply(plugin(PluginId.koin))
             pluginManager.apply(plugin(PluginId.ktLint))
             pluginManager.apply(plugin(PluginId.detekt))
             pluginManager.apply(plugin(PluginId.conventionMaven))

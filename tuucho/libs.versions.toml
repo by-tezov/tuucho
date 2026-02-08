@@ -13,7 +13,7 @@ detektRules = "1.23.8"
 
 #plugin
 android-plugin = "9.0.0"
-kotlin-plugin = "2.3.20-Beta2"
+kotlin-plugin = "2.3.0"
 koin-plugin = "0.3.0"
 compose-plugin = "1.10.0"
 kotlin-serialization-plugin = "2.3.0"
