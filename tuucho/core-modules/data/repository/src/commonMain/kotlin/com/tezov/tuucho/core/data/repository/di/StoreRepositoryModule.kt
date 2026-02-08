@@ -21,6 +21,5 @@ object StoreRepositoryModule {
                 override val prefixStore = "tuucho.prefix"
             }
         }
-
     }
 }

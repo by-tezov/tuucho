@@ -11,8 +11,7 @@ class KeyValueStoreRepositoryIos(
     private val userDefaults: NSUserDefaults,
     private val prefix: String?,
 ) : KeyValueStoreRepositoryProtocol {
-
-    private val KeyValueStoreRepositoryProtocol.Key.withPrefix get() = prefix?.let { "$prefix-${value}" } ?: this.value
+    private val KeyValueStoreRepositoryProtocol.Key.withPrefix get() = prefix?.let { "$prefix-$value" } ?: this.value
 
     override suspend fun save(
         key: KeyValueStoreRepositoryProtocol.Key,

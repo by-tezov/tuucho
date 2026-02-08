@@ -52,12 +52,13 @@ private class TextProjection(
             val koin = getKoin()
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
             val getText = koin.get<GetTextUseCase>()
-            useCaseExecutor.await(
-                useCase = getText,
-                input = GetTextUseCase.Input(
-                    jsonObject = jsonElement
-                )
-            )?.text
+            useCaseExecutor
+                .await(
+                    useCase = getText,
+                    input = GetTextUseCase.Input(
+                        jsonObject = jsonElement
+                    )
+                )?.text
         }
 
         is JsonPrimitive -> {

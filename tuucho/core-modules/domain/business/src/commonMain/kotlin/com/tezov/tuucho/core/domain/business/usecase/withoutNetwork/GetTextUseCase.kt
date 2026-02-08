@@ -14,7 +14,6 @@ import kotlinx.serialization.json.JsonObject
 class GetTextUseCase(
     private val platformRepository: SystemPlatformRepositoryProtocol
 ) : UseCaseProtocol.Async<Input, Output> {
-
     data class Input(
         val jsonObject: JsonObject,
     )
@@ -33,14 +32,18 @@ class GetTextUseCase(
                 input.jsonObject.firstNotNullOfOrNull {
                     if (language.matchCodeFallback(it.key)) {
                         it.value.stringOrNull
-                    } else null
+                    } else {
+                        null
+                    }
                 }
             }
             ?: input.jsonObject[TextSchema.Key.default].stringOrNull
         return Output(text = text)
     }
 
-    private fun LanguageModelDomain.matchCodeFallback(key: String): Boolean {
+    private fun LanguageModelDomain.matchCodeFallback(
+        key: String
+    ): Boolean {
         val code = key.split("-", limit = 2).first()
         return code == this.code
     }

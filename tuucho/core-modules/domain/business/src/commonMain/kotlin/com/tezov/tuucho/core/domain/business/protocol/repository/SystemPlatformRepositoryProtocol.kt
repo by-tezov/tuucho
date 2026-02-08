@@ -5,5 +5,7 @@ import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 interface SystemPlatformRepositoryProtocol {
     suspend fun getCurrentLanguage(): LanguageModelDomain
 
-    suspend fun setCurrentLanguage(value: LanguageModelDomain)
+    suspend fun setCurrentLanguage(
+        value: LanguageModelDomain
+    )
 }

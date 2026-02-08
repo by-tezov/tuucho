@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformR
 import org.koin.core.parameter.parametersOf
 
 object PlatformModule {
-
     internal fun invoke() = module(ModuleContextData.Main) {
         factory<SystemPlatformRepositoryProtocol> {
             SystemPlatformRepository(

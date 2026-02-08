@@ -6,7 +6,6 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlin.coroutines.ContinuationInterceptor
 
 interface SystemPlatformInformationProtocol {
-
     suspend fun currentDispatcher() = currentCoroutineContext()[ContinuationInterceptor]
 
     fun currentThreadName(): String

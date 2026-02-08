@@ -3,16 +3,19 @@ package com.tezov.tuucho.core.domain.business.protocol.repository
 import kotlin.jvm.JvmInline
 
 interface KeyValueStoreRepositoryProtocol {
-
     @JvmInline
-    value class Key(val value: String){
+    value class Key(
+        val value: String
+    ) {
         companion object {
             fun String.toKey() = Key(this)
         }
     }
 
     @JvmInline
-    value class Value(val value: String){
+    value class Value(
+        val value: String
+    ) {
         companion object {
             fun String.toValue() = Value(this)
         }

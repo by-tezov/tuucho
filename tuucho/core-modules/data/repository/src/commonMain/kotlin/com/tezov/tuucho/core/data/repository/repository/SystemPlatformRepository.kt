@@ -10,7 +10,6 @@ internal class SystemPlatformRepository(
     private val keyValueStorage: KeyValueStoreRepositoryProtocol,
     private val systemPlatformInformation: SystemPlatformInformationProtocol,
 ) : SystemPlatformRepositoryProtocol {
-
     override suspend fun getCurrentLanguage(): LanguageModelDomain {
         var language = keyValueStorage.getOrNull(KeyValueStoreRepository.language)?.value
         var country = keyValueStorage.getOrNull(KeyValueStoreRepository.country)?.value
@@ -26,7 +25,9 @@ internal class SystemPlatformRepository(
         return LanguageModelDomain(language, country)
     }
 
-    override suspend fun setCurrentLanguage(value: LanguageModelDomain) {
+    override suspend fun setCurrentLanguage(
+        value: LanguageModelDomain
+    ) {
         keyValueStorage.save(KeyValueStoreRepository.language, value.code?.toValue())
         keyValueStorage.save(KeyValueStoreRepository.country, value.country?.toValue())
     }

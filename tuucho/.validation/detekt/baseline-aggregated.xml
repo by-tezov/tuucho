@@ -12,27 +12,14 @@
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>CyclomaticComplexMethod:ImageRectifier.kt$ImageRectifier$override fun afterAlterObject( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement, ): JsonElement</ID>
     <ID>MagicNumber:ImageDiskCache.kt$ImageDiskCache$1024L</ID>
-    <ID>MatchingDeclarationName:AssetModule.android.kt$AssetModuleAndroid</ID>
-    <ID>MatchingDeclarationName:AssetModule.ios.kt$AssetModuleIos</ID>
-    <ID>MatchingDeclarationName:DatabaseModule.android.kt$DatabaseModuleAndroid</ID>
-    <ID>MatchingDeclarationName:DatabaseModule.ios.kt$DatabaseModuleIos</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
     <ID>MatchingDeclarationName:ImageEntityDao.kt$ImageQueries</ID>
-    <ID>MatchingDeclarationName:ImageModule.android.kt$ImageModuleAndroid</ID>
-    <ID>MatchingDeclarationName:ImageModule.ios.kt$ImageModuleIos</ID>
     <ID>MatchingDeclarationName:JsonEntityDao.kt$JsonObjectQueries</ID>
-    <ID>MatchingDeclarationName:NetworkModule.android.kt$NetworkModuleAndroid</ID>
-    <ID>MatchingDeclarationName:NetworkModule.ios.kt$NetworkModuleIos</ID>
-      <ID>MatchingDeclarationName:PlatformModule.android.kt$PlatformModuleAndroid</ID>
-      <ID>MatchingDeclarationName:PlatformModule.ios.kt$PlatformModuleIos</ID>
-    <ID>MatchingDeclarationName:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid</ID>
-    <ID>MatchingDeclarationName:StoreRepositoryModule.ios.kt$StoreRepositoryModuleIos</ID>
-      <ID>MatchingDeclarationName:WeakReference.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
     <ID>MaxLineLength:MaterialRectifier.kt$MaterialRectifier$this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }</ID>
-    <ID>MaxLineLength:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
+    <ID>MaxLineLength:StoreRepositoryModuleAndroid.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement )</ID>
     <ID>NestedBlockDepth:ActionsRectifier.kt$ActionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:ColorsRectifier.kt$ColorsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
@@ -62,29 +49,20 @@
     <ID>PackageNaming:RectifierIdGenerator.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:RectifierMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:RectifierProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
-      <ID>PackageNaming:ReferenceFactory.kt$package
-          com.tezov.tuucho.core.data.repository._system.reference
-      </ID>
+    <ID>PackageNaming:ReferenceFactoryAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:ReferenceFactoryIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:ShadowerMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:ShadowerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
-      <ID>PackageNaming:StrongReference.kt$package
-          com.tezov.tuucho.core.data.repository._system.reference
-      </ID>
-      <ID>PackageNaming:SystemPlatformFile.kt$package
-          com.tezov.tuucho.core.data.repository._system
-      </ID>
-      <ID>PackageNaming:SystemPlatformFileProtocol.kt$package
-          com.tezov.tuucho.core.data.repository._system
-      </ID>
-      <ID>PackageNaming:SystemPlatformInformation.kt$package
-          com.tezov.tuucho.core.data.repository._system
-      </ID>
-      <ID>PackageNaming:SystemPlatformInformationProtocol.kt$package
-          com.tezov.tuucho.core.data.repository._system
-      </ID>
-      <ID>PackageNaming:WeakReference.kt$package
-          com.tezov.tuucho.core.data.repository._system.reference
-      </ID>
+    <ID>PackageNaming:StrongReferenceAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:StrongReferenceIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:SystemPlatformFileAndroid.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformFileIos.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformFileProtocol.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformInformationAndroid.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformInformationIos.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformInformationProtocol.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:WeakReferenceAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:WeakReferenceIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>ReturnCount:AssetSource.kt$AssetSource$private suspend fun resolveImageAssetPath( path: String ): String</ID>
     <ID>ReturnCount:ImageDiskCache.kt$ImageDiskCache$override suspend fun retrieve( cacheKey: String, ): SourceFetchResult?</ID>
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>
@@ -119,6 +97,7 @@
     <ID>MaxLineLength:DelegateSchemaKey.kt$DelegateSchemaKey$JsonElement::class, JsonObject::class, JsonPrimitive::class, JsonArray::class, JsonNull::class -&gt; value</ID>
     <ID>MaxLineLength:FormActionDefinition.kt$FormActionDefinition.Send$override val lockable get() = NavigateActionDefinition.Url.lockable + NavigateActionDefinition.LocalDestination.lockable</ID>
     <ID>MaxLineLength:KoinIsolatedContext.kt$KoinIsolatedContext$val</ID>
+    <ID>MaxLineLength:LanguageActionMiddleware.kt$LanguageActionMiddleware$val query = (context.actionModel.query as? JsonObject) ?: throw DomainException.Default("should no be possible")</ID>
     <ID>MaxLineLength:NavigateFinishUseCase.kt$NavigateFinishUseCase$throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
     <ID>MemberNameEqualsClassName:Associate.kt$Associate$@OptIn(KoinInternalApi::class) infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.associate( clazz: KClass&lt;*&gt; ): KoinDefinition&lt;out S&gt;</ID>
@@ -207,18 +186,19 @@
     <ID>PackageNaming:TransitionModifier.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
+    <ID>UnusedPrivateProperty:ScreenContext.kt$ScreenContext$private var _language: LanguageModelDomain? = null</ID>
     <!-- ************ Project: :ui-component.stable ************ -->
     <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: ActionTypeAlias? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
-    <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: ((JsonElement?) -&gt; Unit)?, content: @Composable RowScope.() -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposeComponent( onClick: ActionTypeAlias?, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonView.kt$ButtonViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>FunctionNaming:FieldPreview.kt$@Composable fun FieldPreviewComponent( fieldValue: String? = "value", showError: Boolean = false, titleValue: String? = "title", placeholderValue: String? = "placeholder", supportingTexts: List&lt;String&gt;? = listOf("error message 1"), messageErrorExtra: String? = null, )</ID>
     <ID>FunctionNaming:FieldPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun FieldPreviewComponentFromSequence( @PreviewParameter(FieldPreviewDataProvider::class) data: FieldPreviewData )</ID>
     <ID>FunctionNaming:FieldView.kt$FieldViewProtocol$@Composable fun ComposeComponent( fieldValue: ValueStorageProjectionProtocol&lt;String&gt;, showError: MutableState&lt;Boolean&gt;, titleValue: String?, placeholderValue: String?, supportingTexts: List&lt;String&gt;?, messageErrorExtra: String?, )</ID>
     <ID>FunctionNaming:FieldView.kt$FieldViewProtocol$@Composable fun ComposePlaceHolder()</ID>
-    <ID>FunctionNaming:ImagePreview.kt$@Composable fun ImagePreviewComponent( width: Dp? = 128.dp, height: Dp? = 128.dp, shape: String? = Style.Value.Shape.roundedSquare, padding: Dp? = 4.dp, alpha: Float? = 1.0f, backgroundColor: Color? = Color.LightGray, tintColor: Color? = Color.Transparent, image: Image? = null, description: String? = "description", )</ID>
+    <ID>FunctionNaming:ImagePreview.kt$@Composable fun ImagePreviewComponent( width: Dp? = 128.dp, height: Dp? = 128.dp, shape: String? = Style.Value.Shape.roundedSquare, padding: Dp? = 4.dp, alpha: Float? = 1.0f, backgroundColor: Color? = Color.LightGray, tintColor: Color? = Color.Transparent, image: Image? = null, onClick: ActionTypeAlias? = null, description: String? = "description", )</ID>
     <ID>FunctionNaming:ImagePreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ImagePreviewComponentFromSequence( @PreviewParameter(ImagePreviewDataProvider::class) data: ImagePreviewData )</ID>
-    <ID>FunctionNaming:ImageView.kt$ImageViewProtocol$@Composable fun ComposeComponent( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: Image?, description: String? )</ID>
+    <ID>FunctionNaming:ImageView.kt$ImageViewProtocol$@Composable fun ComposeComponent( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: Image?, onClick: ActionTypeAlias?, description: String? )</ID>
     <ID>FunctionNaming:ImageView.kt$ImageViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>FunctionNaming:LabelPreview.kt$@Composable fun LabelPreviewComponent( textValue: String? = "Label", fontColor: Color? = Color.Black, fontSize: TextUnit? = 16.sp, )</ID>
     <ID>FunctionNaming:LabelPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun LabelPreviewComponentFromSequence( @PreviewParameter(LabelPreviewDataProvider::class) data: LabelPreviewData )</ID>
@@ -235,8 +215,8 @@
     <ID>FunctionNaming:SpacerView.kt$SpacerViewProtocol$@Composable fun ComposePlaceHolder()</ID>
     <ID>LongParameterList:FieldPreview.kt$( fieldValue: String? = "value", showError: Boolean = false, titleValue: String? = "title", placeholderValue: String? = "placeholder", supportingTexts: List&lt;String&gt;? = listOf("error message 1"), messageErrorExtra: String? = null, )</ID>
     <ID>LongParameterList:FieldView.kt$FieldViewProtocol$( fieldValue: ValueStorageProjectionProtocol&lt;String&gt;, showError: MutableState&lt;Boolean&gt;, titleValue: String?, placeholderValue: String?, supportingTexts: List&lt;String&gt;?, messageErrorExtra: String?, )</ID>
-    <ID>LongParameterList:ImagePreview.kt$( width: Dp? = 128.dp, height: Dp? = 128.dp, shape: String? = Style.Value.Shape.roundedSquare, padding: Dp? = 4.dp, alpha: Float? = 1.0f, backgroundColor: Color? = Color.LightGray, tintColor: Color? = Color.Transparent, image: Image? = null, description: String? = "description", )</ID>
-    <ID>LongParameterList:ImageView.kt$ImageViewProtocol$( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: Image?, description: String? )</ID>
+    <ID>LongParameterList:ImagePreview.kt$( width: Dp? = 128.dp, height: Dp? = 128.dp, shape: String? = Style.Value.Shape.roundedSquare, padding: Dp? = 4.dp, alpha: Float? = 1.0f, backgroundColor: Color? = Color.LightGray, tintColor: Color? = Color.Transparent, image: Image? = null, onClick: ActionTypeAlias? = null, description: String? = "description", )</ID>
+    <ID>LongParameterList:ImageView.kt$ImageViewProtocol$( width: Dp?, height: Dp?, shape: String?, padding: Dp?, alpha: Float?, backgroundColor: Color?, tintColor: Color?, image: Image?, onClick: ActionTypeAlias?, description: String? )</ID>
     <ID>MagicNumber:LayoutLinearPreview.kt$LayoutLinearPreviewDataProvider$0.5f</ID>
     <ID>UnusedPrivateMember:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>
     <ID>UnusedPrivateMember:FieldPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun FieldPreviewComponentFromSequence( @PreviewParameter(FieldPreviewDataProvider::class) data: FieldPreviewData )</ID>

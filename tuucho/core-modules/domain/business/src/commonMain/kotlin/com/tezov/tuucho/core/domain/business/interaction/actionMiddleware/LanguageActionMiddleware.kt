@@ -20,7 +20,6 @@ internal class LanguageActionMiddleware(
     private val setLanguage: SetLanguageUseCase,
 ) : ActionMiddlewareProtocol,
     TuuchoKoinComponent {
-
     override val priority: Int
         get() = ActionMiddlewareProtocol.Priority.DEFAULT
 
@@ -33,8 +32,6 @@ internal class LanguageActionMiddleware(
         context: ActionMiddlewareProtocol.Context,
         next: MiddlewareProtocol.Next<ActionMiddlewareProtocol.Context>?
     ) {
-
-
         when (context.actionModel.authority) {
             Current.authority -> {
                 val query = (context.actionModel.query as? JsonObject) ?: throw DomainException.Default("should no be possible")
@@ -45,7 +42,6 @@ internal class LanguageActionMiddleware(
                 setSystem()
             }
         }
-
 
         next?.invoke(context)
     }
