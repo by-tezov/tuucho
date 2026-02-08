@@ -25,9 +25,16 @@ abstract fun interface com.tezov.tuucho.core.data.repository.parser.assembler.ma
     abstract suspend fun invoke(kotlinx.serialization.json/JsonObject, kotlin/String): kotlin.collections/List<kotlinx.serialization.json/JsonObject>? // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/FindAllRefOrNullFetcherProtocol.invoke|invoke(kotlinx.serialization.json.JsonObject;kotlin.String){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.data.repository._system/SystemPlatform { // com.tezov.tuucho.core.data.repository._system/SystemPlatform|null[0]
-    abstract fun fileSystem(): okio/FileSystem // com.tezov.tuucho.core.data.repository._system/SystemPlatform.fileSystem|fileSystem(){}[0]
-    abstract fun pathFromCacheFolder(kotlin/String): okio/Path // com.tezov.tuucho.core.data.repository._system/SystemPlatform.pathFromCacheFolder|pathFromCacheFolder(kotlin.String){}[0]
+abstract interface com.tezov.tuucho.core.data.repository._system/SystemPlatformFileProtocol { // com.tezov.tuucho.core.data.repository._system/SystemPlatformFileProtocol|null[0]
+    abstract fun fileSystem(): okio/FileSystem // com.tezov.tuucho.core.data.repository._system/SystemPlatformFileProtocol.fileSystem|fileSystem(){}[0]
+    abstract fun pathFromCacheFolder(kotlin/String): okio/Path // com.tezov.tuucho.core.data.repository._system/SystemPlatformFileProtocol.pathFromCacheFolder|pathFromCacheFolder(kotlin.String){}[0]
+}
+
+abstract interface com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationProtocol { // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationProtocol|null[0]
+    abstract fun currentCountry(): kotlin/String? // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationProtocol.currentCountry|currentCountry(){}[0]
+    abstract fun currentLanguage(): kotlin/String // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationProtocol.currentLanguage|currentLanguage(){}[0]
+    abstract fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationProtocol.currentThreadName|currentThreadName(){}[0]
+    open suspend fun currentDispatcher(): kotlin.coroutines/ContinuationInterceptor? // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationProtocol.currentDispatcher|currentDispatcher(){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.assets/AssetReaderProtocol { // com.tezov.tuucho.core.data.repository.assets/AssetReaderProtocol|null[0]
@@ -229,27 +236,19 @@ final class com.tezov.tuucho.core.data.repository._system.reference/ReferenceFac
     final fun <#A1: kotlin/Any> create(kotlin.reflect/KClass<out com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<*>>, #A1?): com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol<#A1> // com.tezov.tuucho.core.data.repository._system.reference/ReferenceFactoryIos.create|create(kotlin.reflect.KClass<out|com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol<*>>;0:0?){0§<kotlin.Any>}[0]
 }
 
-final class com.tezov.tuucho.core.data.repository._system/SystemInformation : com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol { // com.tezov.tuucho.core.data.repository._system/SystemInformation|null[0]
-    constructor <init>(com.tezov.tuucho.core.data.repository._system/SystemInformation.PlatformProtocol) // com.tezov.tuucho.core.data.repository._system/SystemInformation.<init>|<init>(com.tezov.tuucho.core.data.repository._system.SystemInformation.PlatformProtocol){}[0]
+final class com.tezov.tuucho.core.data.repository._system/SystemPlatformFileIos : com.tezov.tuucho.core.data.repository._system/SystemPlatformFileProtocol { // com.tezov.tuucho.core.data.repository._system/SystemPlatformFileIos|null[0]
+    constructor <init>() // com.tezov.tuucho.core.data.repository._system/SystemPlatformFileIos.<init>|<init>(){}[0]
 
-    final fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.data.repository._system/SystemInformation.currentThreadName|currentThreadName(){}[0]
-
-    abstract interface PlatformProtocol { // com.tezov.tuucho.core.data.repository._system/SystemInformation.PlatformProtocol|null[0]
-        abstract fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.data.repository._system/SystemInformation.PlatformProtocol.currentThreadName|currentThreadName(){}[0]
-    }
+    final fun fileSystem(): okio/FileSystem // com.tezov.tuucho.core.data.repository._system/SystemPlatformFileIos.fileSystem|fileSystem(){}[0]
+    final fun pathFromCacheFolder(kotlin/String): okio/Path // com.tezov.tuucho.core.data.repository._system/SystemPlatformFileIos.pathFromCacheFolder|pathFromCacheFolder(kotlin.String){}[0]
 }
 
-final class com.tezov.tuucho.core.data.repository._system/SystemInformationIos : com.tezov.tuucho.core.data.repository._system/SystemInformation.PlatformProtocol { // com.tezov.tuucho.core.data.repository._system/SystemInformationIos|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository._system/SystemInformationIos.<init>|<init>(){}[0]
+final class com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationIos : com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationProtocol { // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationIos|null[0]
+    constructor <init>() // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationIos.<init>|<init>(){}[0]
 
-    final fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.data.repository._system/SystemInformationIos.currentThreadName|currentThreadName(){}[0]
-}
-
-final class com.tezov.tuucho.core.data.repository._system/SystemPlatformIos : com.tezov.tuucho.core.data.repository._system/SystemPlatform { // com.tezov.tuucho.core.data.repository._system/SystemPlatformIos|null[0]
-    constructor <init>() // com.tezov.tuucho.core.data.repository._system/SystemPlatformIos.<init>|<init>(){}[0]
-
-    final fun fileSystem(): okio/FileSystem // com.tezov.tuucho.core.data.repository._system/SystemPlatformIos.fileSystem|fileSystem(){}[0]
-    final fun pathFromCacheFolder(kotlin/String): okio/Path // com.tezov.tuucho.core.data.repository._system/SystemPlatformIos.pathFromCacheFolder|pathFromCacheFolder(kotlin.String){}[0]
+    final fun currentCountry(): kotlin/String? // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationIos.currentCountry|currentCountry(){}[0]
+    final fun currentLanguage(): kotlin/String // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationIos.currentLanguage|currentLanguage(){}[0]
+    final fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.data.repository._system/SystemPlatformInformationIos.currentThreadName|currentThreadName(){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.assets/AssetContent { // com.tezov.tuucho.core.data.repository.assets/AssetContent|null[0]
@@ -272,7 +271,7 @@ final class com.tezov.tuucho.core.data.repository.assets/AssetContent { // com.t
 }
 
 final class com.tezov.tuucho.core.data.repository.assets/AssetReaderIos : com.tezov.tuucho.core.data.repository.assets/AssetReaderProtocol { // com.tezov.tuucho.core.data.repository.assets/AssetReaderIos|null[0]
-    constructor <init>(com.tezov.tuucho.core.data.repository._system/SystemPlatform) // com.tezov.tuucho.core.data.repository.assets/AssetReaderIos.<init>|<init>(com.tezov.tuucho.core.data.repository._system.SystemPlatform){}[0]
+    constructor <init>(com.tezov.tuucho.core.data.repository._system/SystemPlatformFileProtocol) // com.tezov.tuucho.core.data.repository.assets/AssetReaderIos.<init>|<init>(com.tezov.tuucho.core.data.repository._system.SystemPlatformFileProtocol){}[0]
 
     final suspend fun <#A1: kotlin/Any?> read(kotlin/String, kotlin/String?, kotlin/Function1<com.tezov.tuucho.core.data.repository.assets/AssetContent, #A1>): #A1 // com.tezov.tuucho.core.data.repository.assets/AssetReaderIos.read|read(kotlin.String;kotlin.String?;kotlin.Function1<com.tezov.tuucho.core.data.repository.assets.AssetContent,0:0>){0§<kotlin.Any?>}[0]
     final suspend fun isExist(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.data.repository.assets/AssetReaderIos.isExist|isExist(kotlin.String){}[0]
@@ -1070,13 +1069,13 @@ final class com.tezov.tuucho.core.data.repository.parser.shadower/TextShadower :
     }
 }
 
-final class com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepository : com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol { // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepository|null[0]
-    constructor <init>(platform.Foundation/NSUserDefaults) // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepository.<init>|<init>(platform.Foundation.NSUserDefaults){}[0]
+final class com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepositoryIos : com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol { // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepositoryIos|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, platform.Foundation/NSUserDefaults, kotlin/String?) // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepositoryIos.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;platform.Foundation.NSUserDefaults;kotlin.String?){}[0]
 
-    final suspend fun get(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepository.get|get(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
-    final suspend fun getOrNull(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value? // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepository.getOrNull|getOrNull(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
-    final suspend fun hasKey(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key): kotlin/Boolean // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepository.hasKey|hasKey(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
-    final suspend fun save(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value?) // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepository.save|save(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value?){}[0]
+    final suspend fun get(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepositoryIos.get|get(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
+    final suspend fun getOrNull(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key): com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value? // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepositoryIos.getOrNull|getOrNull(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
+    final suspend fun hasKey(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key): kotlin/Boolean // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepositoryIos.hasKey|hasKey(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key){}[0]
+    final suspend fun save(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Key, com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol.Value?) // com.tezov.tuucho.core.data.repository.repository/KeyValueStoreRepositoryIos.save|save(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key;com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value?){}[0]
 }
 
 sealed class com.tezov.tuucho.core.data.repository.database.type/JsonLifetime { // com.tezov.tuucho.core.data.repository.database.type/JsonLifetime|null[0]
@@ -1382,10 +1381,14 @@ final object com.tezov.tuucho.core.data.repository.di/NetworkModule { // com.tez
     }
 }
 
+final object com.tezov.tuucho.core.data.repository.di/PlatformModule // com.tezov.tuucho.core.data.repository.di/PlatformModule|null[0]
+
 final object com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule { // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule|null[0]
     abstract interface Config { // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config|null[0]
         abstract val fileName // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config.fileName|{}fileName[0]
             abstract fun <get-fileName>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config.fileName.<get-fileName>|<get-fileName>(){}[0]
+        abstract val prefixStore // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config.prefixStore|{}prefixStore[0]
+            abstract fun <get-prefixStore>(): kotlin/String // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Config.prefixStore.<get-prefixStore>|<get-prefixStore>(){}[0]
     }
 
     final object Name { // com.tezov.tuucho.core.data.repository.di/StoreRepositoryModule.Name|null[0]

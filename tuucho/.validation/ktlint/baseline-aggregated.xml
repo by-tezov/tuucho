@@ -5,10 +5,4 @@
           <error line="23" column="1" source="standard:comment-spacing" />
           <error line="26" column="1" source="standard:comment-spacing" />
       </file>
-  <!-- ************ Project: :ui-component.stable ************ -->
-  <file name="build.gradle.kts">
-          <error line="16" column="1" source="standard:no-blank-line-before-rbrace" />
-          <error line="21" column="1" source="standard:comment-spacing" />
-          <error line="24" column="1" source="standard:comment-spacing" />
-      </file>
 </baseline>

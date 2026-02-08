@@ -6,6 +6,8 @@ import com.tezov.tuucho.core.data.repository.di.ImageModule
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.sample.modules.shared.BuildKonfig
 
 internal object ConfigModuleAndroid {
@@ -15,6 +17,7 @@ internal object ConfigModuleAndroid {
         factory<StoreRepositoryModule.Config> {
             object : StoreRepositoryModule.Config {
                 override val fileName = BuildKonfig.localDatastoreFileName
+                override val prefixStore: String = "tuucho.prefix"
             }
         }
 

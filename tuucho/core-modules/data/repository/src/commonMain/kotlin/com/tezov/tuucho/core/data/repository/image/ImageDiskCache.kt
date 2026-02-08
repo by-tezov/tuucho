@@ -5,7 +5,7 @@ import coil3.decode.DataSource
 import coil3.decode.ImageSource
 import coil3.disk.DiskCache
 import coil3.fetch.SourceFetchResult
-import com.tezov.tuucho.core.data.repository._system.SystemPlatform
+import com.tezov.tuucho.core.data.repository._system.SystemPlatformFileProtocol
 import com.tezov.tuucho.core.data.repository.database.ImageDatabaseSource
 import com.tezov.tuucho.core.data.repository.database.entity.ImageEntity
 import com.tezov.tuucho.core.data.repository.di.ImageModule
@@ -40,7 +40,7 @@ interface ImageDiskCacheProtocol {
 internal class ImageDiskCache(
     coroutineScopes: CoroutineScopesProtocol,
     config: ImageModule.Config?,
-    systemPlatform: SystemPlatform,
+    systemPlatform: SystemPlatformFileProtocol,
     private val imageDatabase: ImageDatabaseSource,
 ) : ImageDiskCacheProtocol {
     private val diskCache = config?.diskCacheSizeMo?.let { size ->

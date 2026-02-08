@@ -6,36 +6,14 @@
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>CyclomaticComplexMethod:ImageRectifier.kt$ImageRectifier$override fun afterAlterObject( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement, ): JsonElement</ID>
     <ID>MagicNumber:ImageDiskCache.kt$ImageDiskCache$1024L</ID>
-    <ID>MatchingDeclarationName:AssetModule.android.kt$AssetModuleAndroid</ID>
-    <ID>MatchingDeclarationName:AssetModule.ios.kt$AssetModuleIos</ID>
-    <ID>MatchingDeclarationName:AssetReader.android.kt$AssetReaderAndroid : AssetReaderProtocol</ID>
-    <ID>MatchingDeclarationName:AssetReader.ios.kt$AssetReaderIos : AssetReaderProtocol</ID>
-    <ID>MatchingDeclarationName:DatabaseModule.android.kt$DatabaseModuleAndroid</ID>
-    <ID>MatchingDeclarationName:DatabaseModule.ios.kt$DatabaseModuleIos</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
     <ID>MatchingDeclarationName:ImageEntityDao.kt$ImageQueries</ID>
-    <ID>MatchingDeclarationName:ImageModule.android.kt$ImageModuleAndroid</ID>
-    <ID>MatchingDeclarationName:ImageModule.ios.kt$ImageModuleIos</ID>
     <ID>MatchingDeclarationName:JsonEntityDao.kt$JsonObjectQueries</ID>
-    <ID>MatchingDeclarationName:NetworkModule.android.kt$NetworkModuleAndroid</ID>
-    <ID>MatchingDeclarationName:NetworkModule.ios.kt$NetworkModuleIos</ID>
-    <ID>MatchingDeclarationName:ReferenceFactory.android.kt$ReferenceFactoryAndroid : Factory</ID>
-    <ID>MatchingDeclarationName:ReferenceFactory.ios.kt$ReferenceFactoryIos : Factory</ID>
-    <ID>MatchingDeclarationName:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid</ID>
-    <ID>MatchingDeclarationName:StoreRepositoryModule.ios.kt$StoreRepositoryModuleIos</ID>
-    <ID>MatchingDeclarationName:StrongReference.android.kt$StrongReferenceAndroid&lt;T : Any&gt; : Strong</ID>
-    <ID>MatchingDeclarationName:StrongReference.ios.kt$StrongReferenceIos&lt;T : Any&gt; : Strong</ID>
-    <ID>MatchingDeclarationName:SystemInformation.android.kt$SystemInformationAndroid : PlatformProtocol</ID>
-    <ID>MatchingDeclarationName:SystemInformation.ios.kt$SystemInformationIos : PlatformProtocol</ID>
-    <ID>MatchingDeclarationName:SystemPlatform.android.kt$SystemPlatformAndroid : SystemPlatform</ID>
-    <ID>MatchingDeclarationName:SystemPlatform.ios.kt$SystemPlatformIos : SystemPlatform</ID>
-    <ID>MatchingDeclarationName:WeakReference.android.kt$WeakReferenceAndroid&lt;T : Any&gt; : Weak</ID>
-    <ID>MatchingDeclarationName:WeakReference.ios.kt$WeakReferenceIos&lt;T : Any&gt; : Weak</ID>
     <ID>MaxLineLength:AbstractShadower.kt$AbstractShadower$"By design element inside array must be object, so there is surely something missing in the rectifier for $entry "</ID>
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
     <ID>MaxLineLength:MaterialRectifier.kt$MaterialRectifier$this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }</ID>
-    <ID>MaxLineLength:StoreRepositoryModule.android.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
+    <ID>MaxLineLength:StoreRepositoryModuleAndroid.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement )</ID>
     <ID>NestedBlockDepth:ActionsRectifier.kt$ActionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:ColorsRectifier.kt$ColorsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
@@ -65,20 +43,20 @@
     <ID>PackageNaming:RectifierIdGenerator.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:RectifierMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:RectifierProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
-    <ID>PackageNaming:ReferenceFactory.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:ReferenceFactory.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:ReferenceFactoryAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:ReferenceFactoryIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:ShadowerMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:ShadowerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
-    <ID>PackageNaming:StrongReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:StrongReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:SystemInformation.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
-    <ID>PackageNaming:SystemInformation.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
-    <ID>PackageNaming:SystemInformation.kt$package com.tezov.tuucho.core.data.repository._system</ID>
-    <ID>PackageNaming:SystemPlatform.android.kt$package com.tezov.tuucho.core.data.repository._system</ID>
-    <ID>PackageNaming:SystemPlatform.ios.kt$package com.tezov.tuucho.core.data.repository._system</ID>
-    <ID>PackageNaming:SystemPlatform.kt$package com.tezov.tuucho.core.data.repository._system</ID>
-    <ID>PackageNaming:WeakReference.android.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
-    <ID>PackageNaming:WeakReference.ios.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:StrongReferenceAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:StrongReferenceIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:SystemPlatformFileAndroid.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformFileIos.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformFileProtocol.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformInformationAndroid.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformInformationIos.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformInformationProtocol.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:WeakReferenceAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:WeakReferenceIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>ReturnCount:AssetSource.kt$AssetSource$private suspend fun resolveImageAssetPath( path: String ): String</ID>
     <ID>ReturnCount:ImageDiskCache.kt$ImageDiskCache$override suspend fun retrieve( cacheKey: String, ): SourceFetchResult?</ID>
     <ID>ReturnCount:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$suspend fun isCacheValid( url: String, remoteValidityKey: String?, now: () -&gt; Instant = { Clock.System.now() }, ): Boolean</ID>

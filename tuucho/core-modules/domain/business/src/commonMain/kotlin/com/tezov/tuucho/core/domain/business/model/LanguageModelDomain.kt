@@ -1,18 +1,8 @@
 package com.tezov.tuucho.core.domain.business.model
 
-enum class LanguageModelDomain(
-    val code: String
+data class LanguageModelDomain(
+    val code: String?,
+    val country: String?
 ) {
-    Default("default"),
-    French("fr");
-
-    companion object {
-        fun fromOrNull(
-            value: String
-        ) = entries.firstOrNull { value == it.code }
-
-        fun from(
-            value: String
-        ) = entries.first { value == it.code }
-    }
+    val tag get() = country?.let { "$code-$country" }
 }

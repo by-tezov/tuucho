@@ -1,8 +1,23 @@
 {
   "texts": {
     "common": {
-      "credentials-request": {
-        "default": "Please enter your credentials"
+      "credentials-request": "Please enter your credentials"
+    },
+    "page-language": {
+      "english": {
+        "default": "English - Actif",
+        "fr": "Anglais",
+        "fr-CA": "Anglais-USA"
+      },
+      "french": {
+        "default": "French",
+        "fr": "Français - Actif",
+        "fr-CA": "Fronçais"
+      },
+      "canada": {
+        "default": "no value",
+        "fr": "Canadien",
+        "fr-CA": "Yes c'est nous - Actif"
       }
     }
   }

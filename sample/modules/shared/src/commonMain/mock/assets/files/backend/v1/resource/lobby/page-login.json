@@ -34,6 +34,7 @@
           },
           "content": {
             "items": [
+              "*flag-logo",
               "*item-spacer",
               "*small-logo"
             ]
@@ -172,6 +173,27 @@
         "values": "*small-logo",
         "description": "Small-Logo"
       }
+    },
+    {
+      "id": "flag-logo",
+      "subset": "image",
+      "style": {
+        "width": "48",
+        "height": "48",
+        "shape": "rounded",
+        "padding": "3",
+        "background-color": "*background@funny-color"
+      },
+      "content": {
+        "values": [
+          "*flag-placeholder",
+          "*flag-logo"
+        ],
+        "action": {
+          "primaries": "navigate://url/lobby/page-language"
+        },
+        "description": "Flag-Logo"
+      }
     }
   ],
   "styles": {
@@ -221,7 +243,12 @@
         "source": "local://img/logo-compose-placeholder",
         "tags": "placeholder"
       },
-      "small-logo": "local://img/logo-koin"
+      "small-logo": "local://img/logo-koin",
+      "flag-logo": "remote://lobby/flag-logo",
+      "flag-placeholder": {
+        "source": "local://img/flag-placeholder",
+        "tags": "placeholder"
+      }
     }
   },
   "texts": {

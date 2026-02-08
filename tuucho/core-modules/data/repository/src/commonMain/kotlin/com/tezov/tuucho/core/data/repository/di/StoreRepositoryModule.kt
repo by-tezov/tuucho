@@ -7,6 +7,7 @@ import org.koin.core.qualifier.named
 object StoreRepositoryModule {
     interface Config {
         val fileName: String
+        val prefixStore: String
     }
 
     object Name {
@@ -17,6 +18,7 @@ object StoreRepositoryModule {
         factory<Config>(STORE_REPOSITORY_CONFIG) {
             getOrNull<Config>() ?: object : Config {
                 override val fileName = "tuucho.datastore"
+                override val prefixStore = "tuucho.prefix"
             }
         }
     }

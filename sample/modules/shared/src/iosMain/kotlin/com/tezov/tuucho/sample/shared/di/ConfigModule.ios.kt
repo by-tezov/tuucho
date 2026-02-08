@@ -15,6 +15,7 @@ internal object ConfigModuleIos {
         factory<StoreRepositoryModule.Config> {
             object : StoreRepositoryModule.Config {
                 override val fileName = BuildKonfig.localDatastoreFileName
+                override val prefixStore: String = "tuucho.prefix"
             }
         }
 

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.data.repository.assets
 
-import com.tezov.tuucho.core.data.repository._system.SystemPlatform
+import com.tezov.tuucho.core.data.repository._system.SystemPlatformFileProtocol
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import okio.Path.Companion.toPath
 import okio.use
@@ -10,7 +10,7 @@ import platform.Foundation.dataWithContentsOfFile
 import platform.UniformTypeIdentifiers.UTType
 
 class AssetReaderIos(
-    private val platform: SystemPlatform
+    private val platform: SystemPlatformFileProtocol
 ) : AssetReaderProtocol {
     private fun assetPath(
         path: String

@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 internal object ImageModuleAndroid {
     fun invoke() = module(ModuleContextData.Main) {
         factory<PlatformContext> {
-            get(SystemCoreDataModulesAndroid.Name.APPLICATION_CONTEXT)
+            get(PlatformModuleAndroid.Name.APPLICATION_CONTEXT) // coil
         }
     }
 }

@@ -27,5 +27,6 @@
     <ID>PackageNaming:TransitionModifier.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
+    <ID>UnusedPrivateProperty:ScreenContext.kt$ScreenContext$private var _language: LanguageModelDomain? = null</ID>
   </CurrentIssues>
 </SmellBaseline>
