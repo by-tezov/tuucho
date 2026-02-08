@@ -3,7 +3,7 @@ package com.tezov.tuucho.core.data.repository.repository
 import com.tezov.tuucho.core.data.repository._system.SystemPlatformInformationProtocol
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
+import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.String.Companion.toValue
 import com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol
 
 internal class SystemPlatformRepository(
@@ -12,8 +12,8 @@ internal class SystemPlatformRepository(
 ) : SystemPlatformRepositoryProtocol {
 
     override suspend fun getCurrentLanguage(): LanguageModelDomain {
-        var language = keyValueStorage.getOrNull(KeyValueStoreRepository.language)?.value
-        var country = keyValueStorage.getOrNull(KeyValueStoreRepository.country)?.value
+        var language = keyValueStorage.getOrNull(KeyValueStoreRepository.language)?.valueString
+        var country = keyValueStorage.getOrNull(KeyValueStoreRepository.country)?.valueString
         if (language != null) {
             return LanguageModelDomain(language, country)
         }

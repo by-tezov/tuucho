@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.Companion.toValue
+import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Value.String.Companion.toValue
 import kotlinx.coroutines.flow.first
 
 internal class KeyValueStoreRepositoryAndroid(
@@ -28,7 +28,7 @@ internal class KeyValueStoreRepositoryAndroid(
                 if (value == null) {
                     prefs.remove(prefKey)
                 } else {
-                    prefs[prefKey] = value.value
+                    prefs[prefKey] = value.valueString
                 }
             }
         }
