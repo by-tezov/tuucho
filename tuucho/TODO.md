@@ -31,3 +31,10 @@
 - Error when Compose enter in the game
 - Add bottom/top screen not react to transition
 - Find a solution for share mock test instead of duplicated code
+
+
+- Unit Test
+- parameter + file properties + getAll
+- Clean architecture + viewModel
+- Annotation
+- Koin Compiler
