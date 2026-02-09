@@ -14,7 +14,6 @@ class BeforeNavigateToUrlMiddleware(
     private val serverHealthCheck: ServerHealthCheckUseCase,
     private val refreshMaterialCache: RefreshMaterialCacheUseCase,
     private val getValueOrNullFromStore: GetValueOrNullFromStoreUseCase,
-    private val onShadowerException: OnShadowerException,
 ) : NavigationMiddleware.ToUrl {
 
     private companion object {
@@ -31,9 +30,7 @@ class BeforeNavigateToUrlMiddleware(
         if (ensureAuthorizationOrRedirectToLoginPage(context, next)) return
         if (autoLoginOnStart(context, next)) return
         loadLobbyConfigOnStart(context) || loadAuthConfigAfterSuccessfulLogin(context)
-        next?.invoke(
-            context.copy(onShadowerException = onShadowerException)
-        )
+        next?.invoke(context)
     }
 
     private suspend fun isAuthorizationExist() = useCaseExecutor.await(
@@ -77,10 +74,7 @@ class BeforeNavigateToUrlMiddleware(
         if (context.input.url.startsWith("$AUTH_PREFIX/")) {
             if (!isAuthorizationExist()) {
                 next?.invoke(
-                    context.copy(
-                        onShadowerException = onShadowerException,
-                        input = context.input.copy(url = Page.login)
-                    )
+                    context.copy(input = context.input.copy(url = Page.login))
                 )
                 return true
             }
@@ -95,10 +89,7 @@ class BeforeNavigateToUrlMiddleware(
         if (context.currentUrl == null && context.input.url == Page.login && isAuthorizationExist() && isAuthorizationValid()) {
             loadAuthConfig()
             next?.invoke(
-                context.copy(
-                    onShadowerException = onShadowerException,
-                    input = context.input.copy(url = Page.home)
-                )
+                context.copy(input = context.input.copy(url = Page.home))
             )
             return true
         }

@@ -10,22 +10,18 @@ interface CoroutineScopeProtocol {
     val dispatcher: CoroutineDispatcher
     val scope: CoroutineScope
 
+    suspend fun <T> withContext(
+        block: suspend CoroutineScope.() -> T
+    ): T
+
     fun <T> async(
         start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T>
 
-    suspend fun <T> withContext(
-        block: suspend CoroutineScope.() -> T
-    ): T
-
     @TuuchoInternalApi
     fun <T> asyncOnCompletionThrowing(
+        start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T>
-
-    @TuuchoInternalApi
-    fun <T> throwOnFailure(
-        deferred: Deferred<T>
-    )
 }

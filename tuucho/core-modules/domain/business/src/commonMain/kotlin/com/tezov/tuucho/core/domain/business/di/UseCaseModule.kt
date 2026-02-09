@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateShadowerUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
@@ -42,27 +43,38 @@ internal object UseCaseModule {
     private fun Module.withNetworkModule() {
         factory {
             NavigateBackUseCase(
-                coroutineScopes = get(),
                 useCaseExecutor = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
-                retrieveMaterialRepository = get(),
-                shadowerMaterialRepository = get(),
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered(),
-                navigateFinish = get()
+                navigateFinish = get(),
+                navigateShadower = get()
+            )
+        }
+
+        factory {
+            NavigateShadowerUseCase(
+                coroutineScopes = get(),
+                navigationStackScreenRepository = get(),
+                materialCacheRepository = get(),
+                shadowerMaterialRepository = get(),
+                middlewareExecutor = get(),
+                shadowerMiddlewares = getAllOrdered(),
             )
         }
 
         factory {
             NavigateToUrlUseCase(
+                useCaseExecutor = get(),
                 navigationRouteIdGenerator = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
                 middlewareExecutor = get(),
-                navigationMiddlewares = getAllOrdered()
+                navigationMiddlewares = getAllOrdered(),
+                navigateShadower = get()
             )
         }
 

@@ -3,28 +3,25 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema.Key
 import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
-import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
 @OpenForTest
 class NavigateBackUseCase(
-    private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
-    private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve,
-    private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val navigationMiddlewares: List<NavigationMiddleware.Back>,
     private val navigateFinish: NavigateFinishUseCase,
+    private val navigateShadower: NavigateShadowerUseCase
 ) : UseCaseProtocol.Async<Unit, Unit>,
     TuuchoKoinComponent {
     override suspend fun invoke(
@@ -37,19 +34,18 @@ class NavigateBackUseCase(
                     currentUrl = navigationStackRouteRepository.currentRoute()?.value
                         ?: throw DomainException.Default("Shouldn't be possible"),
                     nextUrl = navigationStackRouteRepository.priorRoute()?.value,
-                    onShadowerException = null
                 )
             )
     }
 
     private fun terminalMiddleware() = NavigationMiddleware.Back { context, _ ->
-        navigationStackRouteRepository.backward(
+        val restoredRoute = navigationStackRouteRepository.backward(
             route = NavigationRoute.Back
         )
-//        restoredRoute?.let { runShadower(restoredRoute, context) }
+        restoredRoute?.let { runShadower(it) }
         navigationStackTransitionRepository.backward()
         navigationStackScreenRepository.backward()
-        if (navigationStackRouteRepository.currentRoute() == null) {
+        if (context.nextUrl == null) {
             useCaseExecutor.await(
                 useCase = navigateFinish,
                 input = Unit
@@ -57,46 +53,15 @@ class NavigateBackUseCase(
         }
     }
 
-//    private suspend fun runShadower(
-//        route: NavigationRoute.Url,
-//        context: NavigationMiddleware.Back.Context
-//    ) {
-//        val screen = navigationStackScreenRepository
-//            .getScreenOrNull(route)
-//            ?: return
-//        val componentObject = retrieveMaterialRepository.process(route.value)
-//        val componentSettingScope = componentObject
-//            .onScope(ComponentSettingSchema.Root::Scope)
-//        val settingShadowerScope = componentSettingScope
-//            .shadower
-//            ?.withScope(SettingComponentShadowerSchema::Scope)
-//            ?.navigateBackward
-//            ?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
-//        if (settingShadowerScope?.enable.isTrue) {
-//            val job = coroutineScopes.default.async {
-//                suspend fun process() {
-//                    val jsonObjects = shadowerMaterialRepository
-//                        .process(
-//                            url = route.value,
-//                            componentObject = componentObject,
-//                            types = listOf(Shadower.Type.contextual)
-//                        ).map { it.jsonObject }
-//                    screen.update(jsonObjects)
-//                }
-//                runCatching { process() }.onFailure { failure ->
-//                    context.onShadowerException?.process(
-//                        exception = failure,
-//                        context = context,
-//                        replay = ::process
-//                    ) ?: throw failure
-//                }
-//            }
-//            if (settingShadowerScope?.waitDoneToRender.isTrue) {
-//                job.await()
-//            } else {
-//                @OptIn(TuuchoInternalApi::class)
-//                coroutineScopes.default.throwOnFailure(job)
-//            }
-//        }
-//    }
+    private suspend fun runShadower(
+        route: NavigationRoute.Url
+    ) {
+        useCaseExecutor.await(
+            useCase = navigateShadower,
+            input = NavigateShadowerUseCase.Input(
+                route = route,
+                direction = Key.navigateForward
+            )
+        )
+    }
 }

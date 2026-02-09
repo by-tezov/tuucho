@@ -38,6 +38,20 @@ object NavigationRepositoryProtocol {
         suspend fun getNavigationDefinitionTransitionObject(
             url: String
         ): JsonObject?
+
+        suspend fun getShadowerSettingObject(
+            url: String
+        ): JsonObject?
+
+
+        suspend fun getShadowerSettingNavigateForwardObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getShadowerSettingNavigateBackwardObject(
+            url: String
+        ): JsonObject?
+
     }
 
     interface StackRoute {
