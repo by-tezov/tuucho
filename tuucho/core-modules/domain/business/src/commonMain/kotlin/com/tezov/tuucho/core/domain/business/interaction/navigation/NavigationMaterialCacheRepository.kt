@@ -25,8 +25,8 @@ class NavigationMaterialCacheRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase,
-) : MaterialCache, TuuchoKoinComponent {
-
+) : MaterialCache,
+    TuuchoKoinComponent {
     private val retrieveMaterialRepository by inject<Retrieve>()
     private val navigationStackScreenRepository by inject<StackScreen>()
 
@@ -41,19 +41,22 @@ class NavigationMaterialCacheRepository(
         }
 
         val setting = suspendLazy {
-            component.await()
+            component
+                .await()
                 .onScope(ComponentSettingSchema.Root::Scope)
                 .navigation
         }
 
         val settingExtra = suspendLazy {
-            setting.await()
+            setting
+                .await()
                 ?.withScope(ComponentSettingNavigationSchema::Scope)
                 ?.extra
         }
 
         val definition = suspendLazy {
-            setting.await()
+            setting
+                .await()
                 ?.withScope(ComponentSettingNavigationSchema::Scope)
                 ?.definitions
                 ?.firstOrNull { it.jsonObject.accept() }
@@ -61,17 +64,18 @@ class NavigationMaterialCacheRepository(
         }
 
         val definitionOption = suspendLazy {
-            definition.await()
+            definition
+                .await()
                 ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
                 ?.option
         }
 
         val definitionTransition = suspendLazy {
-            definition.await()
+            definition
+                .await()
                 ?.withScope(ComponentSettingNavigationSchema.Definition::Scope)
                 ?.transition
         }
-
 
         private suspend fun JsonObject.accept(): Boolean {
             val selectorObject =
@@ -99,34 +103,47 @@ class NavigationMaterialCacheRepository(
         }
     }
 
-    private fun <T> suspendLazy(block: suspend () -> T) = coroutineScopes.default.async(start = CoroutineStart.LAZY) { block() }
+    private fun <T> suspendLazy(
+        block: suspend () -> T
+    ) = coroutineScopes.default.async(start = CoroutineStart.LAZY) { block() }
 
-    private fun getEntry(url: String) = cache.getOrPut(url) { CacheEntry(url) }
+    private fun getEntry(
+        url: String
+    ) = cache.getOrPut(url) { CacheEntry(url) }
 
-    override suspend fun releaseAll(urls: List<String>) {
+    override suspend fun releaseAll(
+        urls: List<String>
+    ) {
         mutex.withLock { urls.forEach { cache.remove(it) } }
     }
 
-    override suspend fun release(url: String) {
+    override suspend fun release(
+        url: String
+    ) {
         mutex.withLock { cache.remove(url) }
     }
 
-    override suspend fun getComponentObject(url: String) =
-        mutex.withLock { getEntry(url).component.await() }
+    override suspend fun getComponentObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).component.await() }
 
-    override suspend fun getNavigationSettingObject(url: String) =
-        mutex.withLock { getEntry(url).setting.await() }
+    override suspend fun getNavigationSettingObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).setting.await() }
 
-    override suspend fun getNavigationSettingExtraObject(url: String) =
-        mutex.withLock { getEntry(url).settingExtra.await() }
+    override suspend fun getNavigationSettingExtraObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).settingExtra.await() }
 
-    override suspend fun getNavigationDefinitionObject(url: String) =
-        mutex.withLock { getEntry(url).definition.await() }
+    override suspend fun getNavigationDefinitionObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).definition.await() }
 
-    override suspend fun getNavigationDefinitionOptionObject(url: String) =
-        mutex.withLock { getEntry(url).definitionOption.await() }
+    override suspend fun getNavigationDefinitionOptionObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).definitionOption.await() }
 
-    override suspend fun getNavigationDefinitionTransitionObject(url: String) =
-        mutex.withLock { getEntry(url).definitionTransition.await() }
-
+    override suspend fun getNavigationDefinitionTransitionObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).definitionTransition.await() }
 }

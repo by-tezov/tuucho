@@ -2,6 +2,9 @@
 
 - Refresh previous page ? and all page in stack when language change ?
 
+    - invalidate screen to refresh
+    - fx shadower
+
 - screen context better way to use it ?
 - projection input dataclass ?
 
@@ -13,7 +16,6 @@
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
 - error message with class name that throw.
-- BackHandler interceptor ?
 
 --> Continue to follow the Roadmap
 

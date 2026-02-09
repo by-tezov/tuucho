@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.presentation.ui.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
@@ -9,6 +10,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
@@ -19,11 +21,11 @@ import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
+import org.koin.core.component.inject
 import kotlin.reflect.KClass
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol as DomainViewProtocol
 
 internal class Screen(
-    private val coroutineScopes: CoroutineScopesProtocol,
     override val route: NavigationRoute.Url
 ) : ScreenProtocol,
     TuuchoKoinComponent {
@@ -32,43 +34,52 @@ internal class Screen(
         val updaterProcessor: ContextualUpdaterProcessorProtocol
     )
 
-    private val viewFactories: List<ViewFactoryProtocol> by lazy {
-        getKoin().getAll()
-    }
+    private val coroutineScopes by inject<CoroutineScopesProtocol>()
+    private val materialCacheRepository by inject<NavigationRepositoryProtocol.MaterialCache>()
+    private val viewFactories: List<ViewFactoryProtocol> by lazy { getKoin().getAll() }
 
-    private lateinit var rootView: ViewProtocol
+    private val redrawCounterTrigger = mutableIntStateOf(0)
+    private var rootView: ViewProtocol? = null
     private val views = mutableListOf<ViewProtocol>()
     private val updatables = mutableMapOf<String, Updatable>()
-    private val updateMutex = Mutex()
+    private val mutex = Mutex()
 
     private fun keyTypeId(
         type: String,
         id: String
     ) = "$type+$id"
 
-    suspend fun initialize(
-        componentObject: JsonObject
-    ) {
+    suspend fun createViews() {
         coroutineScopes.default.withContext {
-            val type = componentObject.withScope(TypeSchema::Scope).self
-            if (type != TypeSchema.Value.component) {
-                throw UiException.Default("object is not a component $componentObject")
-            }
-            val id = componentObject.onScope(IdSchema::Scope).value
-            val subset = componentObject.withScope(SubsetSchema::Scope).self
-            val factory = viewFactories
-                .filter { it.accept(componentObject) }
-                .singleOrThrow(id, subset)
-                ?: throw UiException.Default("No renderer found for $componentObject")
-            val screenContext = ScreenContext(
-                route = route,
-                addViewBlock = ::addView
-            )
-            rootView = factory
-                .process(screenContext = screenContext)
-                .apply { initialize(componentObject) }
-            screenContext.addView(rootView)
+            mutex.withLock { createViewsNoSync() }
         }
+    }
+
+    private suspend fun createViewsNoSync() {
+        if (this@Screen.rootView != null) {
+            throw UiException.Default("View root is not null")
+        }
+        val componentObject = materialCacheRepository.getComponentObject(route.value)
+        val type = componentObject.withScope(TypeSchema::Scope).self
+        if (type != TypeSchema.Value.component) {
+            throw UiException.Default("object is not a component $componentObject")
+        }
+        val id = componentObject.onScope(IdSchema::Scope).value
+        val subset = componentObject.withScope(SubsetSchema::Scope).self
+        val factory = viewFactories
+            .filter { it.accept(componentObject) }
+            .singleOrThrow(id, subset)
+            ?: throw UiException.Default("No renderer found for $componentObject")
+        val screenContext = ScreenContext(
+            route = route,
+            addViewBlock = ::addView
+        )
+        val rootView = factory
+            .process(screenContext = screenContext)
+            .apply { initialize(componentObject) }
+        screenContext.addView(rootView)
+        this@Screen.rootView = rootView
+        redrawCounterTrigger.intValue += 1
     }
 
     private fun addView(
@@ -94,21 +105,34 @@ internal class Screen(
     override suspend fun <V : DomainViewProtocol> views(
         klass: KClass<V>
     ) = coroutineScopes.default.withContext {
-        views.filter { klass.isInstance(it) } as List<V>
+        mutex.withLock { views.filter { klass.isInstance(it) } as List<V> }
     }
 
     @Composable
     override fun display(
         scope: Any?
     ) {
-        rootView.display(scope)
+        if (redrawCounterTrigger.intValue > 0) {
+            rootView?.display(scope)
+        }
+    }
+
+    override suspend fun recreateViews() {
+        coroutineScopes.default.withContext {
+            mutex.withLock {
+                updatables.clear()
+                views.clear()
+                rootView = null
+                createViewsNoSync()
+            }
+        }
     }
 
     override suspend fun update(
         jsonObject: JsonObject
     ) {
         coroutineScopes.default.withContext {
-            updateMutex.withLock {
+            mutex.withLock {
                 val updatedIndexView = updateAndReturnViewIndex(jsonObject)
                 updatedIndexView?.let { views[it].updateIfNeeded() }
             }
@@ -119,7 +143,7 @@ internal class Screen(
         jsonObjects: List<JsonObject>
     ) {
         coroutineScopes.default.withContext {
-            updateMutex.withLock {
+            mutex.withLock {
                 val updatedIndexViews = buildList {
                     jsonObjects.forEach {
                         updateAndReturnViewIndex(it)?.let(::add)
