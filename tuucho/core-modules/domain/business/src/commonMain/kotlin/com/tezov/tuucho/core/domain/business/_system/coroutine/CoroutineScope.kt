@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -41,6 +42,7 @@ class CoroutineScope(
     }
 
     override fun <T> async(
+        start: CoroutineStart,
         block: suspend CoroutineScope.() -> T,
     ) = scope
         .async(block = block)

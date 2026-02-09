@@ -3,6 +3,7 @@ package com.tezov.tuucho.core.domain.business.protocol
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Deferred
 
 interface CoroutineScopeProtocol {
@@ -10,6 +11,7 @@ interface CoroutineScopeProtocol {
     val scope: CoroutineScope
 
     fun <T> async(
+        start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T>
 

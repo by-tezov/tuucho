@@ -57,15 +57,10 @@ internal object UseCaseModule {
 
         factory {
             NavigateToUrlUseCase(
-                coroutineScopes = get(),
-                useCaseExecutor = get(),
-                retrieveMaterialRepository = get(),
                 navigationRouteIdGenerator = get(),
-                navigationOptionSelectorFactory = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
-                shadowerMaterialRepository = get(),
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered()
             )

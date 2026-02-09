@@ -2,20 +2,22 @@ package com.tezov.tuucho.core.domain.business.interaction.navigation
 
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenFactoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionList.priorLastOrNull
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.json.JsonObject
 
 internal class NavigationStackScreenRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
+    private val materialCacheRepository: NavigationRepositoryProtocol.MaterialCache,
     private val screenFactory: ScreenFactoryProtocol,
 ) : StackScreen,
     TuuchoKoinComponent {
-    private val stack = mutableListOf<ScreenProtocol>()
+    private var stack = mutableListOf<ScreenProtocol>()
     private val mutex = Mutex()
 
     override suspend fun routes() = coroutineScopes.default.withContext {
@@ -51,9 +53,9 @@ internal class NavigationStackScreenRepository(
     }
 
     override suspend fun forward(
-        route: NavigationRoute.Url,
-        componentObject: JsonObject,
+        route: NavigationRoute.Url
     ) {
+        val componentObject = materialCacheRepository.getComponentObject(route.value)
         coroutineScopes.default.withContext {
             screenFactory
                 .create(
@@ -65,13 +67,17 @@ internal class NavigationStackScreenRepository(
         }
     }
 
-    override suspend fun backward(
-        routes: List<NavigationRoute.Url>,
-    ) {
+    override suspend fun backward() {
+        val routes = navigationStackRouteRepository.routes()
         coroutineScopes.default.withContext {
             mutex.withLock {
-                stack.retainAll { screen ->
-                    routes.any { it == screen.route }
+                val iterator = stack.listIterator()
+                while (iterator.hasNext()) {
+                    val screen = iterator.next()
+                    if (routes.none { it == screen.route }) {
+                        iterator.remove()
+                        materialCacheRepository.release(screen.route.value)
+                    }
                 }
             }
         }
