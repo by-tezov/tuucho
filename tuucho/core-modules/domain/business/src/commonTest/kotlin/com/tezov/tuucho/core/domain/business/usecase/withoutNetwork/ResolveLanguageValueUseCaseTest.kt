@@ -49,7 +49,7 @@ class ResolveLanguageValueUseCaseTest {
 
         everySuspend { systemPlatformRepository.getCurrentLanguage() } returns language
 
-        val output = sut.invoke(Input(json))
+        val output = sut.invoke(Input("default", json))
 
         assertEquals("hello", output.value)
 
@@ -72,7 +72,7 @@ class ResolveLanguageValueUseCaseTest {
 
         everySuspend { systemPlatformRepository.getCurrentLanguage() } returns language
 
-        val output = sut.invoke(Input(json))
+        val output = sut.invoke(Input("default", json))
 
         assertEquals("hello", output.value)
 
@@ -95,7 +95,7 @@ class ResolveLanguageValueUseCaseTest {
 
         everySuspend { systemPlatformRepository.getCurrentLanguage() } returns language
 
-        val output = sut.invoke(Input(json))
+        val output = sut.invoke(Input("default", json))
 
         assertEquals("hello-us", output.value)
 
@@ -118,7 +118,7 @@ class ResolveLanguageValueUseCaseTest {
 
         everySuspend { systemPlatformRepository.getCurrentLanguage() } returns language
 
-        val output = sut.invoke(Input(json))
+        val output = sut.invoke(Input("default", json))
 
         assertEquals("default-text", output.value)
 
@@ -140,7 +140,7 @@ class ResolveLanguageValueUseCaseTest {
 
         everySuspend { systemPlatformRepository.getCurrentLanguage() } returns language
 
-        val output = sut.invoke(Input(json))
+        val output = sut.invoke(Input("default", json))
 
         assertNull(output.value)
 

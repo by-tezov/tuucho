@@ -31,7 +31,7 @@ class TransformImageJsonArrayToImageModelUseCase(
         input: Input
     ): Output {
         val models = input.jsonArray.mapNotNull { jsonElement ->
-            val jsonObject = (jsonElement as? JsonObject) ?: throw DomainException.Default("Expect JsonObject")
+            val jsonObject = (jsonElement as? JsonObject) ?: throw DomainException.Default("expect JsonObject")
             val scope = jsonObject.withScope(ImageSchema::Scope)
             val source = useCaseExecutor
                 .await(

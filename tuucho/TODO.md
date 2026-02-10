@@ -1,6 +1,5 @@
 ### Todo:
 
-- Image language too
 - Shadower catch network error ? -> sample application strategy ?
 - contextual update ??? does it react to language ?
 
