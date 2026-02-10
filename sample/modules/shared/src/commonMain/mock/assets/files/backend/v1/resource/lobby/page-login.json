@@ -238,15 +238,18 @@
   },
   "images": {
     "common": {
-      "main-logo": "remote://lobby/logo-compose-wrong-url",
+      "main-logo": {
+        "default" : "remote://lobby/logo-compose-wrong-url",
+        "fr" : "remote://lobby/logo-compose"
+      },
       "main-logo-placeholder": {
-        "source": "local://img/logo-compose-placeholder",
+        "default": "local://img/logo-compose-placeholder",
         "tags": "placeholder"
       },
       "small-logo": "local://img/logo-koin",
       "flag-logo": "remote://lobby/flag-logo",
       "flag-placeholder": {
-        "source": "local://img/flag-placeholder",
+        "default": "local://img/flag-placeholder",
         "tags": "placeholder"
       }
     }

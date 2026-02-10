@@ -1,13 +1,12 @@
 ### Todo:
 
+- Shadower catch network error ? -> sample application strategy ?
 - contextual update ??? does it react to language ?
 
-- Shadower catch network error ? -> sample application strategy ?
 - NavigationRepositoryProtocol.MaterialCache -> better than class, useless to build
   an object with lot al suspendlazy class when not all are used...
 - screen context better way to use it ?
 - projection input dataclass ?
-- Image language too
 
 - Doc image action
 - Doc action language

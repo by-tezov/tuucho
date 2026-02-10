@@ -1,9 +1,10 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetTextUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
@@ -51,14 +52,15 @@ private class TextProjection(
         is JsonObject -> {
             val koin = getKoin()
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
-            val getText = koin.get<GetTextUseCase>()
+            val resolveLanguageValue = koin.get<ResolveLanguageValueUseCase>()
             useCaseExecutor
                 .await(
-                    useCase = getText,
-                    input = GetTextUseCase.Input(
+                    useCase = resolveLanguageValue,
+                    input = ResolveLanguageValueUseCase.Input(
+                        resolvedKey = TextSchema.Key.default,
                         jsonObject = jsonElement
                     )
-                )?.text
+                )?.value
         }
 
         is JsonPrimitive -> {

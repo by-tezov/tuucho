@@ -217,7 +217,7 @@
       "flag-france": "remote://lobby/flag-france",
       "flag-canada": "remote://lobby/flag-canada",
       "flag-placeholder": {
-        "source": "local://img/flag-placeholder",
+        "default": "local://img/flag-placeholder",
         "tags": "placeholder"
       }
     }

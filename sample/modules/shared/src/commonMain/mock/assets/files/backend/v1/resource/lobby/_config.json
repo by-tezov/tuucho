@@ -3,7 +3,7 @@
     "global": {
       "subs": [
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "lobby/common/subs/sub-texts"
         }
       ]
@@ -11,11 +11,11 @@
     "local": {
       "pages": [
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "lobby/page-login"
         },
         {
-          "validity-key": "3",
+          "validity-key": "1",
           "url": "lobby/page-language"
         }
       ]

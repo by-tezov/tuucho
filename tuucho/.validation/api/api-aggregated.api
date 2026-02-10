@@ -1903,11 +1903,6 @@ final class <#A: kotlin/Any> com.tezov.tuucho.core.domain.business.usecase.withN
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.toString|toString(){}[0]
-
-        final object Companion { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.Companion|null[0]
-            final fun create(com.tezov.tuucho.core.domain.business.model.image/ImageModel): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.Companion.create|create(com.tezov.tuucho.core.domain.business.model.image.ImageModel){}[0]
-            final fun create(kotlinx.serialization.json/JsonArray): com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withNetwork/RetrieveImageUseCase.Input.Companion.create|create(kotlinx.serialization.json.JsonArray){}[0]
-        }
     }
 }
 
@@ -2507,38 +2502,6 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetScre
     }
 }
 
-final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/SystemPlatformRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol){}[0]
-
-    final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetTextUseCase.Input){}[0]
-
-    final class Input { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input|null[0]
-        constructor <init>(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.<init>|<init>(kotlinx.serialization.json.JsonObject){}[0]
-
-        final val jsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.jsonObject|{}jsonObject[0]
-            final fun <get-jsonObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.jsonObject.<get-jsonObject>|<get-jsonObject>(){}[0]
-
-        final fun component1(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.component1|component1(){}[0]
-        final fun copy(kotlinx.serialization.json/JsonObject = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.copy|copy(kotlinx.serialization.json.JsonObject){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Input.toString|toString(){}[0]
-    }
-
-    final class Output { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output|null[0]
-        constructor <init>(kotlin/String?) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.<init>|<init>(kotlin.String?){}[0]
-
-        final val text // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.text|{}text[0]
-            final fun <get-text>(): kotlin/String? // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.text.<get-text>|<get-text>(){}[0]
-
-        final fun component1(): kotlin/String? // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.component1|component1(){}[0]
-        final fun copy(kotlin/String? = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.copy|copy(kotlin.String?){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetTextUseCase.Output.toString|toString(){}[0]
-    }
-}
-
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/GetValueOrNullFromStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
@@ -2717,6 +2680,41 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/RemoveK
     }
 }
 
+final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/SystemPlatformRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol){}[0]
+
+    final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase.Input){}[0]
+
+    final class Input { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input|null[0]
+        constructor <init>(kotlin/String, kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.<init>|<init>(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+
+        final val jsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.jsonObject|{}jsonObject[0]
+            final fun <get-jsonObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.jsonObject.<get-jsonObject>|<get-jsonObject>(){}[0]
+        final val resolvedKey // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.resolvedKey|{}resolvedKey[0]
+            final fun <get-resolvedKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.resolvedKey.<get-resolvedKey>|<get-resolvedKey>(){}[0]
+
+        final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.component1|component1(){}[0]
+        final fun component2(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlinx.serialization.json/JsonObject = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.copy|copy(kotlin.String;kotlinx.serialization.json.JsonObject){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Input.toString|toString(){}[0]
+    }
+
+    final class Output { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output|null[0]
+        constructor <init>(kotlin/String?) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.<init>|<init>(kotlin.String?){}[0]
+
+        final val value // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.value|{}value[0]
+            final fun <get-value>(): kotlin/String? // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin/String? // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.component1|component1(){}[0]
+        final fun copy(kotlin/String? = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.copy|copy(kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase.Output.toString|toString(){}[0]
+    }
+}
+
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/KeyValueStoreRepositoryProtocol) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKeyValueToStoreUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol){}[0]
 
@@ -2755,6 +2753,38 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLang
         final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.Input.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.Input.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.Input.toString|toString(){}[0]
+    }
+}
+
+final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/UseCaseExecutorProtocol, com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/ResolveLanguageValueUseCase) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol;com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase){}[0]
+
+    final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase.Input){}[0]
+
+    final class Input { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input|null[0]
+        constructor <init>(kotlinx.serialization.json/JsonArray) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.<init>|<init>(kotlinx.serialization.json.JsonArray){}[0]
+
+        final val jsonArray // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.jsonArray|{}jsonArray[0]
+            final fun <get-jsonArray>(): kotlinx.serialization.json/JsonArray // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.jsonArray.<get-jsonArray>|<get-jsonArray>(){}[0]
+
+        final fun component1(): kotlinx.serialization.json/JsonArray // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.component1|component1(){}[0]
+        final fun copy(kotlinx.serialization.json/JsonArray = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.copy|copy(kotlinx.serialization.json.JsonArray){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Input.toString|toString(){}[0]
+    }
+
+    final class Output { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output|null[0]
+        constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel>?) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.image.ImageModel>?){}[0]
+
+        final val models // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.models|{}models[0]
+            final fun <get-models>(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel>? // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.models.<get-models>|<get-models>(){}[0]
+
+        final fun component1(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel>? // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.component1|component1(){}[0]
+        final fun copy(kotlin.collections/List<com.tezov.tuucho.core.domain.business.model.image/ImageModel>? = ...): com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.copy|copy(kotlin.collections.List<com.tezov.tuucho.core.domain.business.model.image.ImageModel>?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/TransformImageJsonArrayToImageModelUseCase.Output.toString|toString(){}[0]
     }
 }
 
@@ -4100,12 +4130,12 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSche
         open val root // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.root|{}root[0]
             open fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.root.<get-root>|<get-root>(){}[0]
 
+        final var default // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.default|{}default[0]
+            final fun <get-default>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.default.<get-default>|<get-default>(){}[0]
+            final fun <set-default>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.default.<set-default>|<set-default>(kotlin.String?){}[0]
         final var id // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id|{}id[0]
             final fun <get-id>(): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id.<get-id>|<get-id>(){}[0]
             final fun <set-id>(kotlinx.serialization.json/JsonElement?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.id.<set-id>|<set-id>(kotlinx.serialization.json.JsonElement?){}[0]
-        final var source // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source|{}source[0]
-            final fun <get-source>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source.<get-source>|<get-source>(){}[0]
-            final fun <set-source>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.source.<set-source>|<set-source>(kotlin.String?){}[0]
         final var tags // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags|{}tags[0]
             final fun <get-tags>(): com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate? // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags.<get-tags>|<get-tags>(){}[0]
             final fun <set-tags>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SetStringDelegate?) // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.OpenScope.tags.<set-tags>|<set-tags>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SetStringDelegate?){}[0]
@@ -4118,16 +4148,14 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSche
     }
 
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key|null[0]
+        final const val default // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.default|{}default[0]
+            final fun <get-default>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.default.<get-default>|<get-default>(){}[0]
         final const val id // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.id|{}id[0]
             final fun <get-id>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.id.<get-id>|<get-id>(){}[0]
-        final const val source // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.source|{}source[0]
-            final fun <get-source>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.source.<get-source>|<get-source>(){}[0]
         final const val tags // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tags|{}tags[0]
             final fun <get-tags>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tags.<get-tags>|<get-tags>(){}[0]
         final const val tagsExcluder // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tagsExcluder|{}tagsExcluder[0]
             final fun <get-tagsExcluder>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.tagsExcluder.<get-tagsExcluder>|<get-tagsExcluder>(){}[0]
-        final const val timeToLive // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.timeToLive|{}timeToLive[0]
-            final fun <get-timeToLive>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.timeToLive.<get-timeToLive>|<get-timeToLive>(){}[0]
         final const val type // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.type|{}type[0]
             final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Key.type.<get-type>|<get-type>(){}[0]
     }
@@ -4141,8 +4169,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSche
         final object Tag { // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag|null[0]
             final const val placeholder // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.placeholder|{}placeholder[0]
                 final fun <get-placeholder>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
-            final const val primary // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.primary|{}primary[0]
-                final fun <get-primary>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/ImageSchema.Value.Tag.primary.<get-primary>|<get-primary>(){}[0]
         }
     }
 }

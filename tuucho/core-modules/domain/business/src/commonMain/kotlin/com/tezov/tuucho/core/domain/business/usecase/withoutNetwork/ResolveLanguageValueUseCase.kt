@@ -1,32 +1,32 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TextSchema
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetTextUseCase.Input
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetTextUseCase.Output
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase.Input
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-class GetTextUseCase(
+class ResolveLanguageValueUseCase(
     private val platformRepository: SystemPlatformRepositoryProtocol
 ) : UseCaseProtocol.Async<Input, Output> {
     data class Input(
+        val resolvedKey: String,
         val jsonObject: JsonObject,
     )
 
     data class Output(
-        val text: String?,
+        val value: String?,
     )
 
     override suspend fun invoke(
         input: Input
     ): Output {
         val language = platformRepository.getCurrentLanguage()
-        val text = language.tag?.let { input.jsonObject[it].stringOrNull }
+        val resolved = language.tag?.let { input.jsonObject[it].stringOrNull }
             ?: input.jsonObject[language.code].stringOrNull
             ?: run {
                 input.jsonObject.firstNotNullOfOrNull {
@@ -37,8 +37,8 @@ class GetTextUseCase(
                     }
                 }
             }
-            ?: input.jsonObject[TextSchema.Key.default].stringOrNull
-        return Output(text = text)
+            ?: input.jsonObject[input.resolvedKey].stringOrNull
+        return Output(value = resolved)
     }
 
     private fun LanguageModelDomain.matchCodeFallback(
