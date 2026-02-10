@@ -59,8 +59,8 @@ private fun onBackCompleted(
     coroutineScopes.default.asyncOnCompletionThrowing {
         val screenLock = interactionLockResolver.acquire(
             requester = "BackHandler",
-            lockable = InteractionLockable.Type(
-                value = listOf(InteractionLockType.Screen)
+            lockable = InteractionLockable.Types(
+                values = listOf(InteractionLockType.Screen)
             )
         )
         useCaseExecutor.await(

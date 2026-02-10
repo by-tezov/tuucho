@@ -11,7 +11,6 @@ class NavigateFinishMiddleware(
         context: Unit,
         next: MiddlewareProtocol.Next<Unit>?,
     ) {
-        next?.invoke(Unit)
         navigationFinishPublisher.finish()
     }
 }

@@ -1,19 +1,22 @@
 ### Todo:
 
-- unit test
-- Refresh previous page ? and all page in stack when language change ?
+- contextual update ??? does it react to language ?
+
+- Shadower catch network error ? -> sample application strategy ?
+- NavigationRepositoryProtocol.MaterialCache -> better than class, useless to build
+  an object with lot al suspendlazy class when not all are used...
+- screen context better way to use it ?
+- projection input dataclass ?
+- Image language too
 
 - Doc image action
 - Doc action language
-
-- screen context better way to use it ?
-- projection input dataclass ?
     
 - Animation placeholder / final image ?
+
 - do a smart padding object - can do also for size)?
 - shadower with flow ?
 - error message with class name that throw.
-- BackHandler interceptor ?
 
 --> Continue to follow the Roadmap
 
@@ -31,3 +34,10 @@
 - Error when Compose enter in the game
 - Add bottom/top screen not react to transition
 - Find a solution for share mock test instead of duplicated code
+
+
+- Unit Test
+- parameter + file properties + getAll
+- Clean architecture + viewModel
+- Annotation
+- Koin Compiler

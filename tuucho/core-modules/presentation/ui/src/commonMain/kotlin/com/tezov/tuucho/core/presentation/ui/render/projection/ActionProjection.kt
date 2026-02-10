@@ -62,8 +62,8 @@ private class ActionProjection(
                 coroutineScopes.default.asyncOnCompletionThrowing {
                     val screenLock = interactionLockResolver.tryAcquire(
                         requester = "$route::ActionProjection::${hashCode().toHexString()}",
-                        lockable = InteractionLockable.Type(
-                            value = listOf(InteractionLockType.Screen)
+                        lockable = InteractionLockable.Types(
+                            values = listOf(InteractionLockType.Screen)
                         )
                     )
                     if (screenLock is InteractionLockable.Empty) {

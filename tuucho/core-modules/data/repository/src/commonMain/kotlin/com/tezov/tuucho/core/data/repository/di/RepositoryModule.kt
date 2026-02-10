@@ -50,6 +50,7 @@ internal object RepositoryModule {
         single {
             ShadowerMaterialRepository(
                 coroutineScopes = get(),
+                materialCacheRepository = get(),
                 materialShadower = get(),
                 shadowerMaterialSources = get<List<ShadowerMaterialSourceProtocol>>(Name.SHADOWER_SOURCE)
             )
