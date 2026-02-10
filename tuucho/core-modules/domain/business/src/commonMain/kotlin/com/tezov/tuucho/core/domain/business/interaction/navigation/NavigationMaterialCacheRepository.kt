@@ -22,7 +22,8 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import org.koin.core.component.inject
 
-class NavigationMaterialCacheRepository(
+// TODO do test when clean is done on this class
+internal class NavigationMaterialCacheRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase,

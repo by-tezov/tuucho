@@ -41,7 +41,7 @@ class CoroutineTestScope {
         every {
             async(block = any<suspend CoroutineScope.() -> Any?>())
         } calls { args ->
-            val block = args.arg(0) as suspend CoroutineScope.() -> Any?
+            val block = args.arg(1) as suspend CoroutineScope.() -> Any?
             val deferred = CompletableDeferred<Any?>()
             currentScope.launch {
                 val result = block(currentScope)
@@ -54,7 +54,7 @@ class CoroutineTestScope {
         every {
             asyncOnCompletionThrowing(block = any<suspend CoroutineScope.() -> Any?>())
         } calls { args ->
-            val block = args.arg(0) as suspend CoroutineScope.() -> Any?
+            val block = args.arg(1) as suspend CoroutineScope.() -> Any?
             val deferred = CompletableDeferred<Any?>()
             currentScope.launch {
                 val result = block(currentScope)
