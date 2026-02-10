@@ -16,7 +16,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidato
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetTextUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.HasKeyInStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigateFinishUseCase
@@ -25,8 +24,10 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationSt
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SetLanguageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.bind
@@ -105,7 +106,6 @@ internal object UseCaseModule {
         factory<GetLanguageUseCase>()
         factory<GetScreenOrNullUseCase>()
         factory<GetScreensFromRoutesUseCase>()
-        factory<GetTextUseCase>()
         factory<GetValueOrNullFromStoreUseCase>()
         factory<HasKeyInStoreUseCase>()
         factory {
@@ -119,8 +119,10 @@ internal object UseCaseModule {
         factory<NotifyNavigationTransitionCompletedUseCase>()
         factory<RegisterToScreenTransitionEventUseCase>()
         factory<RemoveKeyValueFromStoreUseCase>()
+        factory<ResolveLanguageValueUseCase>()
         factory<SaveKeyValueToStoreUseCase>()
         factory<SetLanguageUseCase>()
+        factory<TransformImageJsonArrayToImageModelUseCase>()
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(
                 navigationScreenStackRepository = get(),

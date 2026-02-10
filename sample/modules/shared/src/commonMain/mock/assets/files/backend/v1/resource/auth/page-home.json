@@ -358,10 +358,10 @@
   "images": {
     "common": {
       "small-logo": {
-        "source": "remote://auth/logo-koin"
+        "default": "remote://auth/logo-koin"
       },
       "small-logo-placeholder": {
-        "source": "remote://auth/logo-koin-placeholder",
+        "default": "remote://auth/logo-koin-placeholder",
         "tags": "placeholder"
       }
     }

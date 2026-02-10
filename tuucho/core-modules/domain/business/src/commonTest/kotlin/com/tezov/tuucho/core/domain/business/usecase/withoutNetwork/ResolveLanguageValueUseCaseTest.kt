@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetTextUseCase.Input
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase.Input
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -18,14 +18,14 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class GetTextUseCaseTest {
+class ResolveLanguageValueUseCaseTest {
     private lateinit var systemPlatformRepository: SystemPlatformRepositoryProtocol
-    private lateinit var sut: GetTextUseCase
+    private lateinit var sut: ResolveLanguageValueUseCase
 
     @BeforeTest
     fun setup() {
         systemPlatformRepository = mock()
-        sut = GetTextUseCase(
+        sut = ResolveLanguageValueUseCase(
             platformRepository = systemPlatformRepository
         )
     }
@@ -51,7 +51,7 @@ class GetTextUseCaseTest {
 
         val output = sut.invoke(Input(json))
 
-        assertEquals("hello", output.text)
+        assertEquals("hello", output.value)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             systemPlatformRepository.getCurrentLanguage()
@@ -74,7 +74,7 @@ class GetTextUseCaseTest {
 
         val output = sut.invoke(Input(json))
 
-        assertEquals("hello", output.text)
+        assertEquals("hello", output.value)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             systemPlatformRepository.getCurrentLanguage()
@@ -97,7 +97,7 @@ class GetTextUseCaseTest {
 
         val output = sut.invoke(Input(json))
 
-        assertEquals("hello-us", output.text)
+        assertEquals("hello-us", output.value)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             systemPlatformRepository.getCurrentLanguage()
@@ -120,7 +120,7 @@ class GetTextUseCaseTest {
 
         val output = sut.invoke(Input(json))
 
-        assertEquals("default-text", output.text)
+        assertEquals("default-text", output.value)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             systemPlatformRepository.getCurrentLanguage()
@@ -142,7 +142,7 @@ class GetTextUseCaseTest {
 
         val output = sut.invoke(Input(json))
 
-        assertNull(output.text)
+        assertNull(output.value)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             systemPlatformRepository.getCurrentLanguage()
