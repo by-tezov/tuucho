@@ -53,7 +53,7 @@ class ImageRectifier(
                 id = this.element
             } else {
                 id = JsonNull
-                source = stringValue
+                default = stringValue
             }
         }.collect()
 
@@ -96,7 +96,7 @@ class ImageRectifier(
                 }
 
                 else -> {
-                    throw DataException.Default("by design tagsExcluder must be null, a string or an array")
+                    throw DataException.Default("by design tagsExcluder can only be null, a string or an array")
                 }
             }
             when (val tagsExcluder = this[ImageSchema.Key.tagsExcluder]) {

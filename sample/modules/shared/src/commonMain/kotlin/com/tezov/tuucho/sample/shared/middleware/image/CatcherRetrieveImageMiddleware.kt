@@ -19,12 +19,12 @@ class CatcherRetrieveImageMiddleware() : RetrieveImageMiddleware<Any> {
         } catch (_: Throwable) {
             next?.invoke(
                 context.copy(
-                    input = RetrieveImageUseCase.Input.create(
-                        model = ImageModel.from(
+                    input = RetrieveImageUseCase.Input(
+                        models = listOf(ImageModel.from(
                             command = LocalImageDefinition.command,
                             target = "img/safe-image",
                             id = "sage-image"
-                        )
+                        ))
                     )
                 )
             )

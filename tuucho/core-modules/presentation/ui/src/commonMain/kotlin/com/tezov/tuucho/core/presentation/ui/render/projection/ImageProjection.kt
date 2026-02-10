@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase
 import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
@@ -75,21 +76,30 @@ private class ImageProjection(
             val coroutineScopes = koin.get<CoroutineScopesProtocol>()
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
             val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
+            val transformImageJsonArrayToImageModel = koin.get<TransformImageJsonArrayToImageModelUseCase>()
             imageLoaded = false
             @OptIn(TuuchoInternalApi::class)
             coroutineScopes.default.asyncOnCompletionThrowing {
-                val result = useCaseExecutor.await(
-                    useCase = retrieveImage,
-                    input = RetrieveImageUseCase.Input.create(
-                        imageArray = imageArray
+                val modelsResult = useCaseExecutor.await(
+                    useCase = transformImageJsonArrayToImageModel,
+                    input = TransformImageJsonArrayToImageModelUseCase.Input(
+                        jsonArray = imageArray
                     )
                 )
-                result?.collect {
-                    if (it.image.tags?.contains(ImageSchema.Value.Tag.placeholder) != true) {
-                        imageLoaded = true
-                        this@ImageProjection.value = Image(coilImage = it.image)
-                    } else if (!imageLoaded) {
-                        this@ImageProjection.value = Image(coilImage = it.image)
+                modelsResult?.models?.let { models ->
+                    val imagesResult = useCaseExecutor.await(
+                        useCase = retrieveImage,
+                        input = RetrieveImageUseCase.Input(
+                            models = models
+                        )
+                    )
+                    imagesResult?.collect {
+                        if (it.image.tags?.contains(ImageSchema.Value.Tag.placeholder) != true) {
+                            imageLoaded = true
+                            this@ImageProjection.value = Image(coilImage = it.image)
+                        } else if (!imageLoaded) {
+                            this@ImageProjection.value = Image(coilImage = it.image)
+                        }
                     }
                 }
             }
