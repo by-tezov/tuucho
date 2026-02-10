@@ -1,9 +1,8 @@
 package com.tezov.tuucho.core.domain.business.model.action
 
-import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
+import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertSame
 
 class LanguageActionDefinitionTest {
     @Test
@@ -18,7 +17,13 @@ class LanguageActionDefinitionTest {
 
     @Test
     fun `current lockable is empty`() {
-        assertSame(InteractionLockable.Empty, LanguageActionDefinition.Current.lockable)
+        assertEquals(
+            listOf(
+                InteractionLockType.Screen,
+                InteractionLockType.Navigation
+            ),
+            LanguageActionDefinition.Current.lockable.getTypes()
+        )
     }
 
     @Test
@@ -43,6 +48,12 @@ class LanguageActionDefinitionTest {
 
     @Test
     fun `system lockable is empty`() {
-        assertSame(InteractionLockable.Empty, LanguageActionDefinition.System.lockable)
+        assertEquals(
+            listOf(
+                InteractionLockType.Screen,
+                InteractionLockType.Navigation
+            ),
+            LanguageActionDefinition.System.lockable.getTypes()
+        )
     }
 }
