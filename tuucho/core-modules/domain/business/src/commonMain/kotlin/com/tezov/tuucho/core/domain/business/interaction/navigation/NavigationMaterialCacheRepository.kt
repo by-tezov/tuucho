@@ -169,12 +169,15 @@ class NavigationMaterialCacheRepository(
         url: String
     ) = mutex.withLock { getEntry(url).navigationDefinitionTransition.await() }
 
-    override suspend fun getShadowerSettingObject(url: String) = mutex.withLock { getEntry(url).shadowerSetting.await() }
+    override suspend fun getShadowerSettingObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).shadowerSetting.await() }
 
-    override suspend fun getShadowerSettingNavigateForwardObject(url: String) =
-        mutex.withLock { getEntry(url).shadowerSettingNavigateForward.await() }
+    override suspend fun getShadowerSettingNavigateForwardObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).shadowerSettingNavigateForward.await() }
 
-    override suspend fun getShadowerSettingNavigateBackwardObject(url: String) =
-        mutex.withLock { getEntry(url).shadowerSettingNavigateBackward.await() }
-
+    override suspend fun getShadowerSettingNavigateBackwardObject(
+        url: String
+    ) = mutex.withLock { getEntry(url).shadowerSettingNavigateBackward.await() }
 }

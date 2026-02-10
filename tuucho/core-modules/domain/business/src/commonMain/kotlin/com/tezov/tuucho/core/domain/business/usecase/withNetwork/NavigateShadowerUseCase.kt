@@ -29,7 +29,6 @@ class NavigateShadowerUseCase(
     private val shadowerMiddlewares: List<NavigationMiddleware.Shadower>
 ) : UseCaseProtocol.Async<Input, Unit>,
     TuuchoKoinComponent {
-
     data class Input(
         val route: NavigationRoute.Url,
         val direction: String
@@ -49,25 +48,26 @@ class NavigateShadowerUseCase(
 
     private fun terminalMiddleware() = NavigationMiddleware.Shadower { context, _ ->
         with(context.input) {
-
             println("****************** A")
 
             val screen = navigationStackScreenRepository
                 .getScreenOrNull(route)
                 ?: return@with
-            val settingShadowerScope = materialCacheRepository.let {
-                when (direction) {
-                    Key.navigateForward -> it.getShadowerSettingNavigateForwardObject(route.value)
-                    Key.navigateBackward -> it.getShadowerSettingNavigateBackwardObject(route.value)
-                    else -> throw DomainException.Default("invalid direction $direction")
-                }
-            }?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
+            val settingShadowerScope = materialCacheRepository
+                .let {
+                    when (direction) {
+                        Key.navigateForward -> it.getShadowerSettingNavigateForwardObject(route.value)
+                        Key.navigateBackward -> it.getShadowerSettingNavigateBackwardObject(route.value)
+                        else -> throw DomainException.Default("invalid direction $direction")
+                    }
+                }?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
             if (settingShadowerScope?.enable.isTrue) {
                 if (settingShadowerScope?.waitDoneToRender.isTrue) {
                     processShadowerAndUpdateScreen(screen)
                 } else {
                     @OptIn(TuuchoInternalApi::class)
-                    coroutineScopes.default.asyncOnCompletionThrowing { // TODO: How can I catch that ?
+                    coroutineScopes.default.asyncOnCompletionThrowing {
+                        // TODO: How can I catch that ?
                         processShadowerAndUpdateScreen(screen)
                     }
                 }
@@ -85,5 +85,4 @@ class NavigateShadowerUseCase(
             ).map { it.jsonObject }
         screen.update(jsonObjects)
     }
-
 }

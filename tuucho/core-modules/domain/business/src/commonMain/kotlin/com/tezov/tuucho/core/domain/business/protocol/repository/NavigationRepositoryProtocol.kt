@@ -43,7 +43,6 @@ object NavigationRepositoryProtocol {
             url: String
         ): JsonObject?
 
-
         suspend fun getShadowerSettingNavigateForwardObject(
             url: String
         ): JsonObject?
@@ -51,7 +50,6 @@ object NavigationRepositoryProtocol {
         suspend fun getShadowerSettingNavigateBackwardObject(
             url: String
         ): JsonObject?
-
     }
 
     interface StackRoute {
