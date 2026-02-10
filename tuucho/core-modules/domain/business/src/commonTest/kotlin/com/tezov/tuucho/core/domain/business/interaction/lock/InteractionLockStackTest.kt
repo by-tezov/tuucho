@@ -134,7 +134,7 @@ class InteractionLockStackTest {
             // release
             coroutineTestScope.mock.default.withContext<Any>(any())
             @OptIn(TuuchoInternalApi::class)
-            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any(), any())
             // reacquired
             coroutineTestScope.mock.default.withContext<Any>(any())
             generator.generate(matches(InteractionLockType.Screen))
@@ -221,7 +221,7 @@ class InteractionLockStackTest {
             // release
             coroutineTestScope.mock.default.withContext<Any>(any())
             @OptIn(TuuchoInternalApi::class)
-            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any(), any())
             // acquire second
             coroutineTestScope.mock.default.withContext<Any>(any())
             generator.generate(matches(InteractionLockType.Screen))
@@ -397,7 +397,7 @@ class InteractionLockStackTest {
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
             @OptIn(TuuchoInternalApi::class)
-            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any(), any())
         }
     }
 
@@ -420,7 +420,7 @@ class InteractionLockStackTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             coroutineTestScope.mock.default.withContext<Any>(any())
             @OptIn(TuuchoInternalApi::class)
-            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any())
+            coroutineTestScope.mock.io.asyncOnCompletionThrowing<Any>(any(), any())
         }
     }
 

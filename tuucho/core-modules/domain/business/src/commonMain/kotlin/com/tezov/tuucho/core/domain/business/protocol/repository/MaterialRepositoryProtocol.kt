@@ -31,7 +31,6 @@ object MaterialRepositoryProtocol {
 
         suspend fun process(
             url: String,
-            componentObject: JsonObject,
             types: List<String>,
         ): List<Output>
     }

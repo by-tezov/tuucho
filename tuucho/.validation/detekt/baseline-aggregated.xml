@@ -78,12 +78,15 @@
     <ID>ConstructorParameterNaming:MockActionMiddleware.kt$MockActionMiddleware$var _accept: Boolean? = null</ID>
     <ID>ConstructorParameterNaming:MockActionMiddleware.kt$MockActionMiddleware$var _priority: Int? = null</ID>
     <ID>CyclomaticComplexMethod:InteractionLockProtocol.kt$InteractionLockable$operator fun plus( other: InteractionLockable ): InteractionLockable</ID>
+    <ID>CyclomaticComplexMethod:NavigationStackRouteRepository.kt$NavigationStackRouteRepository$private fun navigateUrl( route: NavigationRoute, option: NavigationOption, ): NavigationRoute.Url</ID>
     <ID>EmptyFunctionBlock:MiddlewareExecutorTest.kt$MiddlewareExecutorTest${ }</ID>
     <ID>EmptyFunctionBlock:MiddlewareExecutorWithReturnTest.kt$MiddlewareExecutorWithReturnTest${ }</ID>
     <ID>EmptyFunctionBlock:SchemaScopeMapOperatorTest.kt$SchemaScopeMapOperatorTest${ }</ID>
+    <ID>ForbiddenComment:NavigateShadowerUseCase.kt$NavigateShadowerUseCase$// TODO: How can I catch that ?</ID>
+    <ID>LargeClass:NavigationStackRouteRepositoryTest.kt$NavigationStackRouteRepositoryTest</ID>
     <ID>LongParameterList:ImageModel.kt$ImageModel.Companion$( command: String, target: String, query: String? = null, id: String, tags: Set&lt;String&gt;? = null, tagsExcluder: Set&lt;String&gt;? = null )</ID>
-    <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, private val navigateFinish: NavigateFinishUseCase, )</ID>
-    <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val coroutineScopes: CoroutineScopesProtocol, private val useCaseExecutor: UseCaseExecutorProtocol, private val retrieveMaterialRepository: MaterialRepositoryProtocol.Retrieve, private val navigationRouteIdGenerator: NavigationRouteIdGenerator, private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt; )</ID>
+    <ID>LongParameterList:NavigateBackUseCase.kt$NavigateBackUseCase$( private val useCaseExecutor: UseCaseExecutorProtocol, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.Back&gt;, private val navigateFinish: NavigateFinishUseCase, private val navigateShadower: NavigateShadowerUseCase )</ID>
+    <ID>LongParameterList:NavigateToUrlUseCase.kt$NavigateToUrlUseCase$( private val useCaseExecutor: UseCaseExecutorProtocol, private val navigationRouteIdGenerator: NavigationRouteIdGenerator, private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute, private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen, private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition, private val middlewareExecutor: MiddlewareExecutorProtocol, private val navigationMiddlewares: List&lt;NavigationMiddleware.ToUrl&gt;, private val navigateShadower: NavigateShadowerUseCase )</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationOptionSchema.kt$ComponentSettingNavigationOptionSchema</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationSchema.kt$ComponentSettingNavigationSchema</ID>
     <ID>MatchingDeclarationName:SettingComponentNavigationSelectorSchema.kt$ComponentSettingNavigationSelectorSchema</ID>
@@ -100,6 +103,7 @@
     <ID>MaxLineLength:LanguageActionMiddleware.kt$LanguageActionMiddleware$val query = (context.actionModel.query as? JsonObject) ?: throw DomainException.Default("should no be possible")</ID>
     <ID>MaxLineLength:NavigateFinishUseCase.kt$NavigateFinishUseCase$throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
+    <ID>MaxLineLength:NavigationStackTransitionRepository.kt$NavigationStackTransitionRepository$transitionObject = materialCacheRepository.getNavigationDefinitionTransitionObject(route.value)</ID>
     <ID>MemberNameEqualsClassName:Associate.kt$Associate$@OptIn(KoinInternalApi::class) infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.associate( clazz: KClass&lt;*&gt; ): KoinDefinition&lt;out S&gt;</ID>
     <ID>MemberNameEqualsClassName:Associate.kt$Associate$infix fun &lt;T : Any&gt; InstanceFactory&lt;T&gt;.associate( clazz: KClass&lt;*&gt; )</ID>
     <ID>MemberNameEqualsClassName:Associate.kt$Associate$inline fun &lt;reified T : Any&gt; Module.associate( associateDSL: AssociateModuleDSL.() -&gt; Unit )</ID>
@@ -137,6 +141,8 @@
     <ID>TooGenericExceptionCaught:UseCaseExecutor.kt$UseCaseExecutor$e: Throwable</ID>
     <ID>TooManyFunctions:FormSendUrlActionMiddleware.kt$FormSendUrlActionMiddleware : ActionMiddlewareProtocolTuuchoKoinComponent</ID>
     <ID>TooManyFunctions:InteractionLockStack.kt$InteractionLockStack : Stack</ID>
+    <ID>TooManyFunctions:NavigationMaterialCacheRepository.kt$NavigationMaterialCacheRepository : MaterialCacheTuuchoKoinComponent</ID>
+    <ID>TooManyFunctions:NavigationRepositoryProtocol.kt$NavigationRepositoryProtocol$MaterialCache</ID>
     <ID>TooManyFunctions:SchemaScope.kt$OpenSchemaScope&lt;T : OpenSchemaScope&lt;T&gt;&gt;</ID>
     <!-- ************ Project: :core.domain.test ************ -->
     <ID>PackageNaming:OpenForTest.kt$package com.tezov.tuucho.core.domain.test._system</ID>
@@ -186,7 +192,10 @@
     <ID>PackageNaming:TransitionModifier.kt$package com.tezov.tuucho.core.presentation.ui.transition._system</ID>
     <ID>ReturnCount:ColorExtension.kt$fun String.toColorOrNull(): Color?</ID>
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
+    <ID>ThrowsCount:Screen.kt$Screen$private suspend fun createViewsNoSync()</ID>
+    <ID>TooManyFunctions:Screen.kt$Screen : ScreenProtocolTuuchoKoinComponent</ID>
     <ID>UnusedPrivateProperty:ScreenContext.kt$ScreenContext$private var _language: LanguageModelDomain? = null</ID>
+    <ID>UnusedPrivateProperty:ScreenFactory.kt$ScreenFactory$private val coroutineScopes: CoroutineScopesProtocol</ID>
     <!-- ************ Project: :ui-component.stable ************ -->
     <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: ActionTypeAlias? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>

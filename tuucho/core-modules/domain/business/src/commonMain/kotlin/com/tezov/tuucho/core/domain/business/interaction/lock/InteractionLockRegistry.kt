@@ -12,11 +12,11 @@ class InteractionLockRegistry(
         actionDefinitions.forEach { register(it) }
     }
 
-    private fun MutableMap<Pair<String, String?>, InteractionLockable.Type>.register(
+    private fun MutableMap<Pair<String, String?>, InteractionLockable.Types>.register(
         action: ActionDefinitionProtocol,
     ) {
         when (val lockable = action.lockable) {
-            is InteractionLockable.Type -> {
+            is InteractionLockable.Types -> {
                 val key = action.command to action.authority
                 this[key] = lockable
             }

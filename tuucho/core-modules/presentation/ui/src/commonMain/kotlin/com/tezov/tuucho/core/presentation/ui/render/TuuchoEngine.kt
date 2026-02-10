@@ -60,7 +60,7 @@ class TuuchoEngine(
     private var foregroundGroup: Group? = null
     private var backgroundGroup: Group? = null
     private var transitionRequested = false
-    private val redrawTrigger = mutableIntStateOf(0)
+    private val redrawCounterTrigger = mutableIntStateOf(0)
 
     override suspend fun start(
         url: String
@@ -129,7 +129,7 @@ class TuuchoEngine(
                 transitionSpecObject = event.backgroundGroup.transitionSpecObject
             )
             transitionRequested = true
-            redrawTrigger.intValue += 1
+            redrawCounterTrigger.intValue += 1
         }
     }
 
@@ -154,18 +154,18 @@ class TuuchoEngine(
             )
             backgroundGroup = null
             transitionRequested = false
-            redrawTrigger.intValue += 1
+            redrawCounterTrigger.intValue += 1
         }
     }
 
     @Composable
     override fun display() {
         val animationProgress = if (transitionRequested) {
-            rememberAnimationProgress(redrawTrigger.intValue)
+            rememberAnimationProgress(redrawCounterTrigger.intValue)
         } else {
             null
         }
-        val screens = remember(redrawTrigger.intValue) {
+        val screens = remember(redrawCounterTrigger.intValue) {
             buildList<Pair<String, @Composable () -> Unit>> {
                 backgroundGroup?.let { group ->
                     group.screens.forEach { screen ->
@@ -191,7 +191,7 @@ class TuuchoEngine(
         }
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
-            LaunchedEffect(redrawTrigger.intValue) {
+            LaunchedEffect(redrawCounterTrigger.intValue) {
                 @OptIn(TuuchoInternalApi::class)
                 coroutineScopes.default
                     .asyncOnCompletionThrowing {

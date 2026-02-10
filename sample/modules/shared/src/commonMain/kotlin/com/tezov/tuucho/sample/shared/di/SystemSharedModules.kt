@@ -15,7 +15,7 @@ object SystemSharedModules {
             single {
                 Logger(
                     systemInformation = get(),
-                    exceptionVerbose = false
+                    exceptionVerbose = true
                 )
             }
         },

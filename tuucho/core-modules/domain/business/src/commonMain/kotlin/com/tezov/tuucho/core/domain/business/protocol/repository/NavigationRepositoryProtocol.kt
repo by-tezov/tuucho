@@ -6,6 +6,52 @@ import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.serialization.json.JsonObject
 
 object NavigationRepositoryProtocol {
+    interface MaterialCache {
+        suspend fun releaseAll(
+            urls: List<String>
+        )
+
+        suspend fun release(
+            url: String
+        )
+
+        suspend fun getComponentObject(
+            url: String
+        ): JsonObject
+
+        suspend fun getNavigationSettingObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getNavigationSettingExtraObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getNavigationDefinitionObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getNavigationDefinitionOptionObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getNavigationDefinitionTransitionObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getShadowerSettingObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getShadowerSettingNavigateForwardObject(
+            url: String
+        ): JsonObject?
+
+        suspend fun getShadowerSettingNavigateBackwardObject(
+            url: String
+        ): JsonObject?
+    }
+
     interface StackRoute {
         suspend fun currentRoute(): NavigationRoute.Url?
 
@@ -15,8 +61,7 @@ object NavigationRepositoryProtocol {
 
         suspend fun forward(
             route: NavigationRoute.Url,
-            navigationOptionObject: JsonObject?,
-        ): NavigationRoute.Url?
+        ): NavigationRoute.Url
 
         suspend fun backward(
             route: NavigationRoute,
@@ -27,7 +72,7 @@ object NavigationRepositoryProtocol {
         suspend fun routes(): List<NavigationRoute.Url>
 
         suspend fun getScreens(
-            routes: List<NavigationRoute.Url>
+            routes: List<NavigationRoute.Url>? = null
         ): List<ScreenProtocol>
 
         suspend fun getScreenOrNull(
@@ -40,12 +85,9 @@ object NavigationRepositoryProtocol {
 
         suspend fun forward(
             route: NavigationRoute.Url,
-            componentObject: JsonObject,
         )
 
-        suspend fun backward(
-            routes: List<NavigationRoute.Url>,
-        )
+        suspend fun backward()
     }
 
     interface StackTransition {
@@ -76,13 +118,9 @@ object NavigationRepositoryProtocol {
         suspend fun notifyTransitionCompleted()
 
         suspend fun forward(
-            routes: List<NavigationRoute.Url>,
-            navigationExtraObject: JsonObject?,
-            navigationTransitionObject: JsonObject?,
+            route: NavigationRoute.Url,
         )
 
-        suspend fun backward(
-            routes: List<NavigationRoute.Url>,
-        )
+        suspend fun backward()
     }
 }

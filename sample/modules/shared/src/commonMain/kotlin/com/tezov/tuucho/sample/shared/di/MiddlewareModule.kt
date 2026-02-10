@@ -16,7 +16,6 @@ import com.tezov.tuucho.sample.shared.middleware.navigateFinish.NavigationFinish
 import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.BeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.CatcherBeforeNavigateToUrlMiddleware
 import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.LoggerBeforeNavigateToUrlMiddleware
-import com.tezov.tuucho.sample.shared.middleware.navigateToUrl.OnShadowerException
 import com.tezov.tuucho.sample.shared.middleware.sendData.LoggerSendDataMiddleware
 import com.tezov.tuucho.sample.shared.middleware.updateView.LoggerUpdateViewMiddleware
 import org.koin.core.module.Module
@@ -49,7 +48,6 @@ object MiddlewareModule {
                 serverHealthCheck = get(),
                 refreshMaterialCache = get(),
                 getValueOrNullFromStore = get(),
-                onShadowerException = OnShadowerException(),
             )
         } bindOrdered NavigationMiddleware.ToUrl::class
 
