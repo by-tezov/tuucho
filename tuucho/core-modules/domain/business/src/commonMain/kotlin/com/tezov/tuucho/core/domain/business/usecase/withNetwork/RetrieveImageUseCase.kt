@@ -21,7 +21,6 @@ class RetrieveImageUseCase<S : Any>(
     private val middlewareExecutor: MiddlewareExecutorProtocolWithReturn,
     private val retrieveImageMiddlewares: List<RetrieveImageMiddleware<S>>,
 ) : UseCaseProtocol.Async<Input, Flow<Output<S>>> {
-
     data class Input(
         val models: List<ImageModel>,
     )

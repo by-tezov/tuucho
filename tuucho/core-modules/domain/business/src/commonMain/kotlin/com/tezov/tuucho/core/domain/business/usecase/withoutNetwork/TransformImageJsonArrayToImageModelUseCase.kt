@@ -18,7 +18,6 @@ class TransformImageJsonArrayToImageModelUseCase(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val resolveLanguageValue: ResolveLanguageValueUseCase,
 ) : UseCaseProtocol.Async<Input, Output> {
-
     data class Input(
         val jsonArray: JsonArray,
     )
@@ -55,5 +54,4 @@ class TransformImageJsonArrayToImageModelUseCase(
         }
         return Output(models = models.takeIf { it.isNotEmpty() })
     }
-
 }
