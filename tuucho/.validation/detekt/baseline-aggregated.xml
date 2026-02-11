@@ -19,7 +19,6 @@
     <ID>MaxLineLength:MaterialBreaker.kt$MaterialBreaker$throw DataException.Default("By design it must be an array because object should has been rectified but $this")</ID>
     <ID>MaxLineLength:MaterialCacheLocalSource.kt$MaterialCacheLocalSource$?:</ID>
     <ID>MaxLineLength:MaterialRectifier.kt$MaterialRectifier$this[rectifier.key]?.let { this[rectifier.key] = rectifier.process(context, ROOT_PATH, it).jsonArray }</ID>
-    <ID>MaxLineLength:StoreRepositoryModuleAndroid.kt$StoreRepositoryModuleAndroid$// datastore = null, doesn't work, when datastore restart, application crash. For now, I keep it alive forever...</ID>
     <ID>NestedBlockDepth:AbstractRectifier.kt$AbstractRectifier$private fun alter( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement )</ID>
     <ID>NestedBlockDepth:ActionsRectifier.kt$ActionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:ColorsRectifier.kt$ColorsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>

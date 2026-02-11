@@ -1783,6 +1783,7 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScope
 
     abstract fun <#A1: kotlin/Any?> async(kotlinx.coroutines/CoroutineStart = ..., kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.async|async(kotlinx.coroutines.CoroutineStart;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
     abstract fun <#A1: kotlin/Any?> asyncOnCompletionThrowing(kotlinx.coroutines/CoroutineStart = ..., kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.asyncOnCompletionThrowing|asyncOnCompletionThrowing(kotlinx.coroutines.CoroutineStart;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    abstract fun cancel() // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.cancel|cancel(){}[0]
     abstract suspend fun <#A1: kotlin/Any?> withContext(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol.withContext|withContext(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
@@ -1795,6 +1796,8 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/CoroutineScope
         abstract fun <get-main>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.main.<get-main>|<get-main>(){}[0]
     abstract val unconfined // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.unconfined|{}unconfined[0]
         abstract fun <get-unconfined>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.unconfined.<get-unconfined>|<get-unconfined>(){}[0]
+
+    abstract fun cancel() // com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol.cancel|cancel(){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol { // com.tezov.tuucho.core.domain.business.protocol/ImageDefinitionProtocol|null[0]
@@ -1928,6 +1931,7 @@ final class com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineSco
 
     final fun <#A1: kotlin/Any?> async(kotlinx.coroutines/CoroutineStart, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.async|async(kotlinx.coroutines.CoroutineStart;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
     final fun <#A1: kotlin/Any?> asyncOnCompletionThrowing(kotlinx.coroutines/CoroutineStart, kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): kotlinx.coroutines/Deferred<#A1> // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.asyncOnCompletionThrowing|asyncOnCompletionThrowing(kotlinx.coroutines.CoroutineStart;kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
+    final fun cancel() // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.cancel|cancel(){}[0]
     final suspend fun <#A1: kotlin/Any?> withContext(kotlin.coroutines/SuspendFunction1<kotlinx.coroutines/CoroutineScope, #A1>): #A1 // com.tezov.tuucho.core.domain.business._system.coroutine/CoroutineScope.withContext|withContext(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.CoroutineScope,0:0>){0§<kotlin.Any?>}[0]
 }
 
