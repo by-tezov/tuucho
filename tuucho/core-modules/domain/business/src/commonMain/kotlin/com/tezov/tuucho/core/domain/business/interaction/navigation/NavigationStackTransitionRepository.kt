@@ -51,11 +51,11 @@ internal class NavigationStackTransitionRepository(
         event: StackTransition.Event
     ) {
         coroutineScopes.default.async {
-                mutex.withLock {
-                    lastEvent = event
-                    _events.emit(event)
-                }
+            mutex.withLock {
+                lastEvent = event
+                _events.emit(event)
             }
+        }
     }
 
     override suspend fun notifyTransitionCompleted() {

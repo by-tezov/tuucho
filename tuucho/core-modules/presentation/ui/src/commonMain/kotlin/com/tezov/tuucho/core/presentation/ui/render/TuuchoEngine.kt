@@ -190,13 +190,13 @@ class TuuchoEngine(
         animationProgress?.let {
             LaunchedEffect(redrawCounterTrigger.intValue) {
                 coroutineScopes.default.async {
-                        animationProgress.events.once {
-                            useCaseExecutor.async(
-                                useCase = notifyNavigationTransitionCompleted,
-                                input = Unit
-                            )
-                        }
+                    animationProgress.events.once {
+                        useCaseExecutor.async(
+                            useCase = notifyNavigationTransitionCompleted,
+                            input = Unit
+                        )
                     }
+                }
                 animationProgress.start()
             }
         }

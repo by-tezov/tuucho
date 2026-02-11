@@ -217,27 +217,27 @@ internal class InteractionLockStack(
 
     private fun wakeup() {
         coroutineScopes.io.async {
-                val toResumes = mutableListOf<Waiter>()
-                mutex.withLock {
-                    val usedLocksKeys = usedLocks.keys.toMutableSet()
-                    val waiters = waiters.listIterator()
-                    while (waiters.hasNext()) {
-                        val next = waiters.next()
-                        if (next.lockTypes.all { it !in usedLocksKeys }) {
-                            waiters.remove()
-                            toResumes.add(next)
-                            interactionLockMonitor?.process(
-                                InteractionLockMonitorProtocol.Context(
-                                    event = Event.TryAcquireAgain,
-                                    requester = listOf(next.requester),
-                                    lockTypes = next.lockTypes
-                                )
+            val toResumes = mutableListOf<Waiter>()
+            mutex.withLock {
+                val usedLocksKeys = usedLocks.keys.toMutableSet()
+                val waiters = waiters.listIterator()
+                while (waiters.hasNext()) {
+                    val next = waiters.next()
+                    if (next.lockTypes.all { it !in usedLocksKeys }) {
+                        waiters.remove()
+                        toResumes.add(next)
+                        interactionLockMonitor?.process(
+                            InteractionLockMonitorProtocol.Context(
+                                event = Event.TryAcquireAgain,
+                                requester = listOf(next.requester),
+                                lockTypes = next.lockTypes
                             )
-                            usedLocksKeys.addAll(next.lockTypes)
-                        }
+                        )
+                        usedLocksKeys.addAll(next.lockTypes)
                     }
                 }
-                toResumes.forEach { it.deferred.complete(Unit) }
             }
+            toResumes.forEach { it.deferred.complete(Unit) }
+        }
     }
 }

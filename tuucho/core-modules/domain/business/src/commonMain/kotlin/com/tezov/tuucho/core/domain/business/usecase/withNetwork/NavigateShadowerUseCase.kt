@@ -78,5 +78,4 @@ class NavigateShadowerUseCase(
                 ) ?: throw failure
             }
     }
-
 }
