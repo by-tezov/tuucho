@@ -2,15 +2,20 @@ import SwiftUI
 
 @main
 struct iosApp: App {
-    @StateObject private var coordinator = AppCoordinator()
+    @StateObject private var lifecycleManager = LifecycleManager()
 
     var body: some Scene {
         WindowGroup {
-            ComposeView(coordinator: coordinator)
+            ComposeView(lifecycleManager: lifecycleManager)
                 .onAppear {
-                    coordinator.handleAppAppear()
+                    lifecycleManager.handleOnAppear()
                 }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                    lifecycleManager.handleOnAppear()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                lifecycleManager.handleOnSuspend()
+            }
         }
     }
-
 }

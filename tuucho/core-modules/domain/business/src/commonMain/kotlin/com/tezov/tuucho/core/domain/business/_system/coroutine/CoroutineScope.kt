@@ -14,6 +14,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.cancellation.CancellationException
 
 class CoroutineScope(
     name: String,
@@ -62,6 +63,7 @@ class CoroutineScope(
                     exceptionMonitor?.let { monitor ->
                         scope.async { monitor.log(throwable) }
                     }
+                    if (throwable is CancellationException) return@invokeOnCompletion
                     throw throwable
                 }
             }

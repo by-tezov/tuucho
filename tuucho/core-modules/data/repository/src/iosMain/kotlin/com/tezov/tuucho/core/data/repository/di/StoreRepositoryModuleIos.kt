@@ -4,11 +4,9 @@ import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule.Name.STORE
 import com.tezov.tuucho.core.data.repository.repository.KeyValueStoreRepositoryIos
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
-import org.koin.dsl.onClose
 import platform.Foundation.NSUserDefaults
 
 internal object StoreRepositoryModuleIos {
-
     fun invoke() = module(ModuleContextData.Main) {
         single<NSUserDefaults> {
             NSUserDefaults(
