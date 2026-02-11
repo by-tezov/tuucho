@@ -1,12 +1,17 @@
 package com.tezov.tuucho.sample.shared.di
 
+import com.tezov.tuucho.core.data.repository.network.HttpExchangeMiddleware
 import com.tezov.tuucho.core.domain.business._system.koin.BindOrdered.bindOrdered
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.di.ModuleContextDomain
-import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
-import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.NavigationMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.RetrieveImageMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.SendDataMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.UpdateViewMiddleware
+import com.tezov.tuucho.sample.shared.middleware.http.FailSafePageHttpMiddleware
+import com.tezov.tuucho.sample.shared.middleware.http.HeaderHttpAuthorizationMiddleware
+import com.tezov.tuucho.sample.shared.middleware.http.HeadersHttpMiddleware
+import com.tezov.tuucho.sample.shared.middleware.http.LoggerHttpMiddleware
 import com.tezov.tuucho.sample.shared.middleware.image.CatcherRetrieveImageMiddleware
 import com.tezov.tuucho.sample.shared.middleware.image.LoggerRetrieveImageMiddleware
 import com.tezov.tuucho.sample.shared.middleware.navigateBack.LoggerBeforeNavigateBackMiddleware
@@ -25,18 +30,35 @@ import org.koin.plugin.module.dsl.single
 object MiddlewareModule {
 
     fun invoke() = module(ModuleContextDomain.Middleware) {
+        http()
         image()
-        navigateToUrl()
         navigateBack()
         navigateFinish()
+        navigateToUrl()
         sendData()
         updateView()
     }
 
+    private fun Module.http() {
+        factory<FailSafePageHttpMiddleware>() bindOrdered HttpExchangeMiddleware::class
+        factory<HeadersHttpMiddleware>() bindOrdered HttpExchangeMiddleware::class
+        factory<HeaderHttpAuthorizationMiddleware>() bindOrdered HttpExchangeMiddleware::class
+        factory<LoggerHttpMiddleware>() bindOrdered HttpExchangeMiddleware::class
+    }
 
     private fun Module.image() {
         factory<CatcherRetrieveImageMiddleware>() bindOrdered RetrieveImageMiddleware::class
         factory<LoggerRetrieveImageMiddleware>() bindOrdered RetrieveImageMiddleware::class
+    }
+
+    private fun Module.navigateBack() {
+        factory<LoggerBeforeNavigateBackMiddleware>() bindOrdered NavigationMiddleware.Back::class
+    }
+
+    private fun Module.navigateFinish() {
+        single<NavigationFinishPublisher>()
+        factory<NavigateFinishMiddleware>() bindOrdered NavigationMiddleware.Finish::class
+        factory<LoggerBeforeNavigateFinishMiddleware>() bindOrdered NavigationMiddleware.Finish::class
     }
 
     private fun Module.navigateToUrl() {
@@ -52,16 +74,6 @@ object MiddlewareModule {
         } bindOrdered NavigationMiddleware.ToUrl::class
 
         factory<LoggerBeforeNavigateToUrlMiddleware>() bindOrdered NavigationMiddleware.ToUrl::class
-    }
-
-    private fun Module.navigateBack() {
-        factory<LoggerBeforeNavigateBackMiddleware>() bindOrdered NavigationMiddleware.Back::class
-    }
-
-    private fun Module.navigateFinish() {
-        single<NavigationFinishPublisher>()
-        factory<NavigateFinishMiddleware>() bindOrdered NavigationMiddleware.Finish::class
-        factory<LoggerBeforeNavigateFinishMiddleware>() bindOrdered NavigationMiddleware.Finish::class
     }
 
     private fun Module.sendData() {

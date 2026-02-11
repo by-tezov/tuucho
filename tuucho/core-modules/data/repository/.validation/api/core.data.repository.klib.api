@@ -6,18 +6,18 @@
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core.data.repository>
-abstract fun interface com.tezov.tuucho.core.data.repository.network/HttpInterceptor : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocolWithReturn<com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context, io.ktor.client.request/HttpResponseData> { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor|null[0]
-    final class Context { // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context|null[0]
-        constructor <init>(io.ktor.client.request/HttpRequestBuilder) // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.<init>|<init>(io.ktor.client.request.HttpRequestBuilder){}[0]
+abstract fun interface com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocolWithReturn<com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context, io.ktor.client.request/HttpResponseData> { // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware|null[0]
+    final class Context { // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context|null[0]
+        constructor <init>(io.ktor.client.request/HttpRequestBuilder) // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.<init>|<init>(io.ktor.client.request.HttpRequestBuilder){}[0]
 
-        final val requestBuilder // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.requestBuilder|{}requestBuilder[0]
-            final fun <get-requestBuilder>(): io.ktor.client.request/HttpRequestBuilder // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.requestBuilder.<get-requestBuilder>|<get-requestBuilder>(){}[0]
+        final val requestBuilder // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.requestBuilder|{}requestBuilder[0]
+            final fun <get-requestBuilder>(): io.ktor.client.request/HttpRequestBuilder // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.requestBuilder.<get-requestBuilder>|<get-requestBuilder>(){}[0]
 
-        final fun component1(): io.ktor.client.request/HttpRequestBuilder // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.component1|component1(){}[0]
-        final fun copy(io.ktor.client.request/HttpRequestBuilder = ...): com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.copy|copy(io.ktor.client.request.HttpRequestBuilder){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.network/HttpInterceptor.Context.toString|toString(){}[0]
+        final fun component1(): io.ktor.client.request/HttpRequestBuilder // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.component1|component1(){}[0]
+        final fun copy(io.ktor.client.request/HttpRequestBuilder = ...): com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.copy|copy(io.ktor.client.request.HttpRequestBuilder){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.tezov.tuucho.core.data.repository.network/HttpExchangeMiddleware.Context.toString|toString(){}[0]
     }
 }
 

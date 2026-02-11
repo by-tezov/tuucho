@@ -6,9 +6,8 @@ import com.tezov.tuucho.core.data.repository.di.ImageModule
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
 import com.tezov.tuucho.core.data.repository.di.StoreRepositoryModule
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol
-import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
 import com.tezov.tuucho.sample.modules.shared.BuildKonfig
+import com.tezov.tuucho.sample.shared.middleware.http.HeadersHttpMiddleware
 
 internal object ConfigModuleAndroid {
 
@@ -47,8 +46,8 @@ internal object ConfigModuleAndroid {
             }
         }
 
-        factory<InterceptorModule.Config> {
-            object : InterceptorModule.Config {
+        factory<HeadersHttpMiddleware.Config> {
+            object : HeadersHttpMiddleware.Config {
                 override val headerPlatform = BuildKonfig.headerPlatform
             }
         }

@@ -1,6 +1,6 @@
-package com.tezov.tuucho.sample.shared.interceptor
+package com.tezov.tuucho.sample.shared.middleware.http
 
-import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
+import com.tezov.tuucho.core.data.repository.network.HttpExchangeMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.intercept
 import com.tezov.tuucho.sample.shared._system.Logger
@@ -8,13 +8,13 @@ import io.ktor.client.request.HttpResponseData
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.firstOrNull
 
-class LoggerHttpInterceptor(
+class LoggerHttpMiddleware(
     private val logger: Logger
-) : HttpInterceptor {
+) : HttpExchangeMiddleware {
 
     override suspend fun ProducerScope<HttpResponseData>.process(
-        context: HttpInterceptor.Context,
-        next: MiddlewareProtocolWithReturn.Next<HttpInterceptor.Context, HttpResponseData>?
+        context: HttpExchangeMiddleware.Context,
+        next: MiddlewareProtocolWithReturn.Next<HttpExchangeMiddleware.Context, HttpResponseData>?
     ) {
         with(context.requestBuilder) {
             logger.thread()

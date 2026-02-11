@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.mock
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import dev.mokkery.answering.calls
 import dev.mokkery.answering.returns
 import dev.mokkery.every
@@ -40,19 +39,6 @@ class CoroutineTestScope {
 
         every {
             async(block = any<suspend CoroutineScope.() -> Any?>())
-        } calls { args ->
-            val block = args.arg(1) as suspend CoroutineScope.() -> Any?
-            val deferred = CompletableDeferred<Any?>()
-            currentScope.launch {
-                val result = block(currentScope)
-                deferred.complete(result)
-            }
-            deferred
-        }
-
-        @OptIn(TuuchoInternalApi::class)
-        every {
-            asyncOnCompletionThrowing(block = any<suspend CoroutineScope.() -> Any?>())
         } calls { args ->
             val block = args.arg(1) as suspend CoroutineScope.() -> Any?
             val deferred = CompletableDeferred<Any?>()

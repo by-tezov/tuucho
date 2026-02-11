@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
-import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn

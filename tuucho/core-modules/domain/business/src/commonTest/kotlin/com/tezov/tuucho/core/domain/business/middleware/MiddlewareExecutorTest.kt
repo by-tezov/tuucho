@@ -2,6 +2,7 @@
 
 package com.tezov.tuucho.core.domain.business.middleware
 
+import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.mock.middleware.MockStringMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import kotlinx.coroutines.test.runTest

@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.navigateToUrl
 
-import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
 

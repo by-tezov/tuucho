@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
+import com.tezov.tuucho.core.domain.business.interaction.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
-import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.mock.middleware.MockMiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol

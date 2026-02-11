@@ -14,16 +14,14 @@ class NavigationFinishPublisher(
     )
     private val events get() = _events.createCollector
 
-    @OptIn(TuuchoInternalApi::class)
     fun finish() {
-        coroutineScopes.default.asyncOnCompletionThrowing {
+        coroutineScopes.default.async {
             _events.emit(Unit)
         }
     }
 
-    @OptIn(TuuchoInternalApi::class)
     fun onFinish(block: () -> Unit) {
-        coroutineScopes.default.asyncOnCompletionThrowing {
+        coroutineScopes.default.async {
             events.once { block() }
         }
     }
