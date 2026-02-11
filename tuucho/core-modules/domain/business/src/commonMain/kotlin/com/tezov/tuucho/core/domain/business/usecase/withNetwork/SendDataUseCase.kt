@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
-import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol

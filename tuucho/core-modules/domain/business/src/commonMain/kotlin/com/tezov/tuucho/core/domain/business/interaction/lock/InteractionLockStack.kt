@@ -6,7 +6,6 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockType
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -217,9 +216,7 @@ internal class InteractionLockStack(
     }
 
     private fun wakeup() {
-        @OptIn(TuuchoInternalApi::class)
-        coroutineScopes.io
-            .asyncOnCompletionThrowing {
+        coroutineScopes.io.async {
                 val toResumes = mutableListOf<Waiter>()
                 mutex.withLock {
                     val usedLocksKeys = usedLocks.keys.toMutableSet()

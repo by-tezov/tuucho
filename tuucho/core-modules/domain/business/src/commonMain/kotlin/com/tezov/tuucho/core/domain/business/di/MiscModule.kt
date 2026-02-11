@@ -7,8 +7,8 @@ import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGen
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRegistry
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockStack
-import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutor
-import com.tezov.tuucho.core.domain.business.middleware.MiddlewareExecutorWithReturn
+import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutor
+import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutorWithReturn
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition

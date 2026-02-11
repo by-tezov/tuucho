@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.updateView
 
-import com.tezov.tuucho.core.domain.business.middleware.UpdateViewMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 import com.tezov.tuucho.sample.shared._system.Logger
 

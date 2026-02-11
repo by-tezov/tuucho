@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.navigateFinish
 
-import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 
 class NavigateFinishMiddleware(

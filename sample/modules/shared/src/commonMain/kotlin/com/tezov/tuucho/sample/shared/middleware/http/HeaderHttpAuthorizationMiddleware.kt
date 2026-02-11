@@ -1,7 +1,7 @@
-package com.tezov.tuucho.sample.shared.interceptor
+package com.tezov.tuucho.sample.shared.middleware.http
 
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
-import com.tezov.tuucho.core.data.repository.network.HttpInterceptor
+import com.tezov.tuucho.core.data.repository.network.HttpExchangeMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -10,17 +10,17 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNu
 import io.ktor.client.request.HttpResponseData
 import kotlinx.coroutines.channels.ProducerScope
 
-class HeaderHttpAuthorizationInterceptor(
+class HeaderHttpAuthorizationMiddleware(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val config: NetworkModule.Config,
     private val getValueOrNullFromStore: GetValueOrNullFromStoreUseCase
-) : HttpInterceptor {
+) : HttpExchangeMiddleware {
 
     private val authRegex = Regex("^/auth(?:/.*)?$")
 
     override suspend fun ProducerScope<HttpResponseData>.process(
-        context: HttpInterceptor.Context,
-        next: MiddlewareProtocolWithReturn.Next<HttpInterceptor.Context, HttpResponseData>?
+        context: HttpExchangeMiddleware.Context,
+        next: MiddlewareProtocolWithReturn.Next<HttpExchangeMiddleware.Context, HttpResponseData>?
     ) {
         with(context.requestBuilder) {
             val route = url.toString()

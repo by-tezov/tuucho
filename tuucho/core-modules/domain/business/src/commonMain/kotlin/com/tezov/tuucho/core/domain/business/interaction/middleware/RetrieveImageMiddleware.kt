@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.domain.business.middleware
+package com.tezov.tuucho.core.domain.business.interaction.middleware
 
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase

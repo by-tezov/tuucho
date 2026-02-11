@@ -12,7 +12,6 @@ import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
@@ -78,8 +77,7 @@ private class ImageProjection(
             val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
             val transformImageJsonArrayToImageModel = koin.get<TransformImageJsonArrayToImageModelUseCase>()
             imageLoaded = false
-            @OptIn(TuuchoInternalApi::class)
-            coroutineScopes.default.asyncOnCompletionThrowing {
+            coroutineScopes.default.async {
                 val modelsResult = useCaseExecutor.await(
                     useCase = transformImageJsonArrayToImageModel,
                     input = TransformImageJsonArrayToImageModelUseCase.Input(

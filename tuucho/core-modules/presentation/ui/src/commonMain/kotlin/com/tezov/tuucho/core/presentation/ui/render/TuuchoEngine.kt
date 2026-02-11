@@ -20,7 +20,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.rememberAnimationProgress
 import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
@@ -104,8 +103,7 @@ class TuuchoEngine(
     private fun onRequestTransitionEvent(
         event: Event.RequestTransition
     ) {
-        @OptIn(TuuchoInternalApi::class)
-        coroutineScopes.default.asyncOnCompletionThrowing {
+        coroutineScopes.default.async {
             @Suppress("UNCHECKED_CAST")
             foregroundGroup = Group(
                 screens = useCaseExecutor
@@ -136,8 +134,7 @@ class TuuchoEngine(
     private fun onIdleEvent(
         event: Event.Idle
     ) {
-        @OptIn(TuuchoInternalApi::class)
-        coroutineScopes.default.asyncOnCompletionThrowing {
+        coroutineScopes.default.async {
             @Suppress("UNCHECKED_CAST")
             foregroundGroup = Group(
                 screens = useCaseExecutor
@@ -192,9 +189,7 @@ class TuuchoEngine(
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
             LaunchedEffect(redrawCounterTrigger.intValue) {
-                @OptIn(TuuchoInternalApi::class)
-                coroutineScopes.default
-                    .asyncOnCompletionThrowing {
+                coroutineScopes.default.async {
                         animationProgress.events.once {
                             useCaseExecutor.async(
                                 useCase = notifyNavigationTransitionCompleted,
