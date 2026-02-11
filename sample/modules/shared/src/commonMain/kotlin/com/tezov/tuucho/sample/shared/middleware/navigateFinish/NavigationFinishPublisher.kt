@@ -23,7 +23,7 @@ class NavigationFinishPublisher(
 
     @OptIn(TuuchoInternalApi::class)
     fun onFinish(block: () -> Unit) {
-        coroutineScopes.main.asyncOnCompletionThrowing {
+        coroutineScopes.default.asyncOnCompletionThrowing {
             events.once { block() }
         }
     }

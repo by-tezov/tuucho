@@ -5,4 +5,6 @@ interface CoroutineScopesProtocol {
     val default: CoroutineScopeProtocol
     val main: CoroutineScopeProtocol
     val io: CoroutineScopeProtocol
+
+    fun cancel()
 }
