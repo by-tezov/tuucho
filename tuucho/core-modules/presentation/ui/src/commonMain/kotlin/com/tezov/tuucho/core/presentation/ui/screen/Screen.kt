@@ -31,7 +31,7 @@ internal class Screen(
     TuuchoKoinComponent {
     private data class Updatable(
         val viewIndex: Int,
-        val updaterProcessor: ContextualUpdaterProcessorProtocol
+        val updaterProcessor: MutableList<ContextualUpdaterProcessorProtocol>
     )
 
     private val coroutineScopes by inject<CoroutineScopesProtocol>()
@@ -42,6 +42,7 @@ internal class Screen(
     private var rootView: ViewProtocol? = null
     private val views = mutableListOf<ViewProtocol>()
     private val updatables = mutableMapOf<String, Updatable>()
+
     private val mutex = Mutex()
 
     private fun keyTypeId(
@@ -87,16 +88,18 @@ internal class Screen(
     ) {
         views.add(view)
         val viewIndex = views.lastIndex
-        view.contextualUpdater.forEach { updatable ->
-            updatable.id?.let { id ->
-                val keyTypeId = keyTypeId(updatable.type, id)
-                if (this.updatables.contains(keyTypeId)) {
-                    throw UiException.Default("Error, typeId $keyTypeId already exist")
-                }
-                this@Screen.updatables[keyTypeId] = Updatable(
-                    viewIndex = viewIndex,
-                    updaterProcessor = updatable
-                )
+        view.contextualUpdater.forEach { updater ->
+            updater.id?.let { id ->
+                val keyTypeId = keyTypeId(updater.type, id)
+                updatables[keyTypeId]
+                    ?.updaterProcessor
+                    ?.add(updater)
+                    ?: run {
+                        updatables[keyTypeId] = Updatable(
+                            viewIndex = viewIndex,
+                            updaterProcessor = mutableListOf(updater)
+                        )
+                    }
             }
         }
     }
@@ -161,9 +164,9 @@ internal class Screen(
     ): Int? {
         val id = jsonObject.idValue
         val type = jsonObject.type
-        return updatables[keyTypeId(type, id)]?.let {
-            it.updaterProcessor.process(jsonObject)
-            it.viewIndex
+        return updatables[keyTypeId(type, id)]?.let { updatable ->
+            updatable.updaterProcessor.forEach { it.process(jsonObject) }
+            updatable.viewIndex
         }
     }
 

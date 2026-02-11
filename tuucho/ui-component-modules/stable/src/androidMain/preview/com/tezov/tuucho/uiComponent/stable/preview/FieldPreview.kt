@@ -80,6 +80,7 @@ private fun FieldPreviewComponentFromSequence(
 
 @Composable
 fun FieldPreviewComponent(
+    scope: Any? = null,
     fieldValue: String? = "value",
     showError: Boolean = false,
     titleValue: String? = "title",
@@ -89,6 +90,7 @@ fun FieldPreviewComponent(
 ) {
     val view = createFieldView(screenContext = DummyScreenContext())
     view.ComposeComponent(
+        scope = scope,
         fieldValue = StorageOf(fieldValue),
         showError = remember { mutableStateOf(showError) },
         titleValue = titleValue,

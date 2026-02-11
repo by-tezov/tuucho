@@ -3,7 +3,23 @@
     "global": {
       "subs": [
         {
-          "validity-key": "1",
+          "validity-key": "2",
+          "url": "lobby/common/subs/sub-colors"
+        },
+        {
+          "validity-key": "2",
+          "url": "lobby/common/subs/sub-components"
+        },
+        {
+          "validity-key": "2",
+          "url": "lobby/common/subs/sub-dimensions"
+        },
+        {
+          "validity-key": "2",
+          "url": "lobby/common/subs/sub-styles"
+        },
+        {
+          "validity-key": "2",
           "url": "lobby/common/subs/sub-texts"
         }
       ]

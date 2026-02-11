@@ -1,0 +1,63 @@
+{
+  "components": {
+    "spacer": {
+      "full": {
+        "subset": "spacer",
+        "style": {
+          "weight": "*weight@full"
+        }
+      },
+      "half": {
+        "subset": "spacer",
+        "style": {
+          "weight": "*weight@half"
+        }
+      },
+      "very-small": {
+        "subset": "spacer",
+        "style": {
+          "width": "*padding@very-small",
+          "height": "*padding@very-small"
+        }
+      },
+      "small": {
+        "subset": "spacer",
+        "style": {
+          "width": "*padding@small",
+          "height": "*padding@small"
+        }
+      },
+      "big": {
+        "subset": "spacer",
+        "style": {
+          "width": "*padding@big",
+          "height": "*padding@big"
+        }
+      }
+    },
+    "label": {
+      "title": {
+        "subset": "label",
+        "style": "*label@title"
+      },
+      "section": {
+        "subset": "label",
+        "style": "*label@section"
+      },
+      "button": {
+        "subset": "label",
+        "style": "*label@button"
+      }
+    },
+    "image": {
+      "main": {
+        "subset": "image",
+        "style": "*image@main"
+      },
+      "small": {
+        "subset": "image",
+        "style": "*image@small"
+      }
+    }
+  }
+}

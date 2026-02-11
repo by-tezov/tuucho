@@ -1,0 +1,15 @@
+{
+  "colors": {
+    "text": {
+      "black": "#FF000000",
+      "red": "#FFFF0000",
+      "blue": "#FF0000FF"
+    },
+    "background": {
+      "blue-sky": "#FF66D9FF",
+      "gray-light": "#FFD9D9D9",
+      "purple-light": "#FF789AC0",
+      "royal-purple": "#FF9966FF"
+    }
+  }
+}

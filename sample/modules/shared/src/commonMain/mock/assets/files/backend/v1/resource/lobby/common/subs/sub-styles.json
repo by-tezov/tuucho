@@ -1,0 +1,45 @@
+{
+  "styles": {
+    "label": {
+      "title": {
+        "font-size": "*font@title",
+        "font-color": "*text@blue"
+      },
+      "section": {
+        "font-size": "*font@section",
+        "font-color": "*text@red"
+      },
+      "button": {
+        "font-size": "*font@button",
+        "font-color": "*text@blue"
+      },
+      "flag": {
+        "font-size": "*font@section",
+        "font-color": "*text@blue"
+      }
+    },
+    "image": {
+      "main": {
+        "width": "*image-main@size",
+        "height": "*image-main@size",
+        "shape": "rounded-square",
+        "padding": "*image-main@padding",
+        "background-color": "*background@blue-sky"
+      },
+      "small": {
+        "width": "*image-small@size",
+        "height": "*image-small@size",
+        "shape": "rounded",
+        "padding": "*image-small@padding",
+        "background-color": "*background@purple-light"
+      },
+      "flag": {
+        "width": "*image-flag@size",
+        "height": "*image-flag@size",
+        "shape": "rounded-square",
+        "padding": "*image-flag@padding",
+        "background-color": "*background@royal-purple"
+      }
+    }
+  }
+}

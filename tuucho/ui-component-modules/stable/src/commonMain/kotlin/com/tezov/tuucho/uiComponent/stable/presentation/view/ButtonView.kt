@@ -19,7 +19,6 @@ import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ButtonSchema.Component
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ButtonSchema.Content
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 interface ButtonViewProtocol : ViewProtocol {

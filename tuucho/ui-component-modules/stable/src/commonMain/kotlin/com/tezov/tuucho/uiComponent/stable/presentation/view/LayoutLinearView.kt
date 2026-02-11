@@ -42,7 +42,7 @@ interface LayoutLinearViewProtocol : ViewProtocol {
         orientation: String?,
         fillMaxSize: Boolean?,
         fillMaxWidth: Boolean?,
-        contents: List<@Composable Any.() -> Unit>,
+        contents: List<@Composable (scope: Any?) -> Unit>,
     )
 
     @Composable
@@ -108,7 +108,7 @@ private class LayoutLinearView(
             contents = buildList {
                 itemViews.views.let { views ->
                     for (view in views) {
-                        add({ view.value?.display(this) })
+                        add({ scope -> view.value?.display(scope) })
                     }
                 }
             }
@@ -121,7 +121,7 @@ private class LayoutLinearView(
         orientation: String?,
         fillMaxSize: Boolean?,
         fillMaxWidth: Boolean?,
-        contents: List<@Composable Any.() -> Unit>,
+        contents: List<@Composable (scope: Any?) -> Unit>,
     ) {
         val modifier = Modifier
             .then {
