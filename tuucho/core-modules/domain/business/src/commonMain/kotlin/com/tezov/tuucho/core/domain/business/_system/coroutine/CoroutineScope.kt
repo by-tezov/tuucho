@@ -4,7 +4,6 @@ package com.tezov.tuucho.core.domain.business._system.coroutine
 
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +13,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.cancellation.CancellationException
 
 class CoroutineScope(
     name: String,
@@ -47,24 +45,6 @@ class CoroutineScope(
                     it?.let { throwable ->
                         scope.async { monitor.log(throwable) }
                     }
-                }
-            }
-        }
-
-    @TuuchoInternalApi
-    override fun <T> asyncOnCompletionThrowing(
-        start: CoroutineStart,
-        block: suspend CoroutineScope.() -> T,
-    ) = scope
-        .async(block = block)
-        .also { deferred ->
-            deferred.invokeOnCompletion {
-                it?.let { throwable ->
-                    exceptionMonitor?.let { monitor ->
-                        scope.async { monitor.log(throwable) }
-                    }
-                    if (throwable is CancellationException) return@invokeOnCompletion
-                    throw throwable
                 }
             }
         }

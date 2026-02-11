@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
-import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.mock.middlewareWithReturn.MockMiddlewareExecutorWithReturn
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel

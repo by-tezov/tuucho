@@ -55,16 +55,7 @@ internal object UseCaseModule {
             )
         }
 
-        factory {
-            NavigateShadowerUseCase(
-                coroutineScopes = get(),
-                navigationStackScreenRepository = get(),
-                materialCacheRepository = get(),
-                shadowerMaterialRepository = get(),
-                middlewareExecutor = get(),
-                shadowerMiddlewares = getAllOrdered(),
-            )
-        }
+        factory<NavigateShadowerUseCase>()
 
         factory {
             NavigateToUrlUseCase(

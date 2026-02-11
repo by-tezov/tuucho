@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.sendData
 
-import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.intercept
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase.Output

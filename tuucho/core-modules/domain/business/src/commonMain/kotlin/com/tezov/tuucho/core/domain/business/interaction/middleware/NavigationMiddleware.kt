@@ -1,7 +1,6 @@
-package com.tezov.tuucho.core.domain.business.middleware
+package com.tezov.tuucho.core.domain.business.interaction.middleware
 
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateShadowerUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 
 object NavigationMiddleware {
@@ -9,12 +8,6 @@ object NavigationMiddleware {
         data class Context(
             val currentUrl: String?,
             val input: NavigateToUrlUseCase.Input,
-        )
-    }
-
-    fun interface Shadower : MiddlewareProtocol<Shadower.Context> {
-        data class Context(
-            val input: NavigateShadowerUseCase.Input,
         )
     }
 

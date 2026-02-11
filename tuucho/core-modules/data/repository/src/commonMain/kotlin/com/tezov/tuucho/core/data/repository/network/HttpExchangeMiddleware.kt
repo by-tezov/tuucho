@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithRetu
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.HttpResponseData
 
-fun interface HttpInterceptor : MiddlewareProtocolWithReturn<HttpInterceptor.Context, HttpResponseData> {
+fun interface HttpExchangeMiddleware : MiddlewareProtocolWithReturn<HttpExchangeMiddleware.Context, HttpResponseData> {
     data class Context(
         val requestBuilder: HttpRequestBuilder,
     )

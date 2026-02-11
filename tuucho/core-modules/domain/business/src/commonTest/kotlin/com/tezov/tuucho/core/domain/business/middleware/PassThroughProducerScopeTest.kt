@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.middleware
 
+import com.tezov.tuucho.core.domain.business.interaction.middleware.PassThroughProducerScope
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
