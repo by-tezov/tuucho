@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorP
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 internal class CoroutineScopes(
     exceptionMonitor: CoroutineExceptionMonitorProtocol?,
@@ -36,4 +35,11 @@ internal class CoroutineScopes(
             dispatcher = Dispatchers.IO,
             exceptionMonitor = exceptionMonitor,
         )
+
+    override fun cancel() {
+        unconfined.cancel()
+        default.cancel()
+        main.cancel()
+        io.cancel()
+    }
 }

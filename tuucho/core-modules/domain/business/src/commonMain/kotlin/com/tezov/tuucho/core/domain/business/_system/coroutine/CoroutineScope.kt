@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.withContext
 
 class CoroutineScope(
@@ -75,5 +76,9 @@ class CoroutineScope(
                 throwable = throwable
             )
         )
+    }
+
+    override fun cancel() {
+        scope.cancel()
     }
 }

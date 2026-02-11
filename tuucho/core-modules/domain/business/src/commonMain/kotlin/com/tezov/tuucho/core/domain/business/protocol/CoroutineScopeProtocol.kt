@@ -24,4 +24,6 @@ interface CoroutineScopeProtocol {
         start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> T,
     ): Deferred<T>
+
+    fun cancel()
 }

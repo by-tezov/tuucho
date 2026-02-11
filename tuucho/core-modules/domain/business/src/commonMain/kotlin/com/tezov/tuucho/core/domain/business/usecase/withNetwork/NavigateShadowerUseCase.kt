@@ -48,8 +48,6 @@ class NavigateShadowerUseCase(
 
     private fun terminalMiddleware() = NavigationMiddleware.Shadower { context, _ ->
         with(context.input) {
-            println("****************** A")
-
             val screen = navigationStackScreenRepository
                 .getScreenOrNull(route)
                 ?: return@with
