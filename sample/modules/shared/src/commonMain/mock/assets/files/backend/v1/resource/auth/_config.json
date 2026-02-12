@@ -3,28 +3,34 @@
     "global": {
       "subs": [
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "auth/common/subs/sub-colors"
         },
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "auth/common/subs/sub-components"
         },
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "auth/common/subs/sub-dimensions"
         },
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "auth/common/subs/sub-styles"
         },
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "auth/common/subs/sub-texts"
         },
         {
-          "validity-key": "2",
+          "validity-key": "1",
           "url": "auth/common/subs/sub-images"
+        }
+      ],
+      "templates": [
+        {
+          "validity-key": "1",
+          "url": "auth/common/templates/template-page-default"
         }
       ]
     },

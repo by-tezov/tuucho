@@ -13,32 +13,25 @@
       "items": [
         {
           "subset": "label",
-          "style": {
-            "id": "*title-label",
-            "font-color": "#FF78FF78"
-          },
+          "style": "*label@title",
           "content": {
             "id": "*title-content"
           }
         },
         {
-          "id": "*item-spacer"
+          "id": "*spacer@full"
         },
         {
           "subset": "label",
           "style": {
-            "font-size": "18",
-            "font-color": {
-              "id": "*blue"
-            }
+            "font-size": "32",
+            "font-color": "*text@black"
           },
           "content": {
             "id": "*body-content"
           }
         },
-        {
-          "id": "*item-spacer"
-        },
+        "*spacer@full",
         {
           "subset": "button",
           "content": {

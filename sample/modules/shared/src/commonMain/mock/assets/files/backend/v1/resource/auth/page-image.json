@@ -34,81 +34,173 @@
         },
         "*spacer@full",
         {
-          "subset": "label",
-          "style": "*label@body",
-          "content": {
-            "value": "*broken-image"
-          }
-        },
-        {
-          "subset": "image",
+          "subset": "layout-linear",
           "style": {
-            "width": "84",
-            "height": "84"
+            "orientation": "horizontal",
+            "fill-max-width": true
           },
           "content": {
-            "values": "*broken",
-            "description": "broken-image"
+            "items": [
+              "*spacer@full",
+              {
+                "subset": "layout-linear",
+                "style": {
+                  "orientation": "vertical"
+                },
+                "content": {
+                  "items": [
+                    {
+                      "subset": "label",
+                      "style": "*label@body",
+                      "content": {
+                        "value": "*broken-image"
+                      }
+                    },
+                    {
+                      "subset": "image",
+                      "style": {
+                        "width": "84",
+                        "height": "84"
+                      },
+                      "content": {
+                        "values": "*broken",
+                        "description": "broken-image"
+                      }
+                    }
+                  ]
+                }
+              },
+              "*spacer@full"
+            ]
           }
         },
         "*spacer@full",
         {
-          "subset": "label",
-          "style": "*label@body",
-          "content": {
-            "value": "*local-image"
-          }
-        },
-        {
-          "subset": "image",
+          "subset": "layout-linear",
           "style": {
-            "width": "84",
-            "height": "84"
+            "orientation": "horizontal",
+            "fill-max-width": true
           },
           "content": {
-            "values": "*local",
-            "description": "local-image"
+            "items": [
+              "*spacer@full",
+              {
+                "subset": "layout-linear",
+                "style": {
+                  "orientation": "vertical"
+                },
+                "content": {
+                  "items": [
+                    {
+                      "subset": "label",
+                      "style": "*label@body",
+                      "content": {
+                        "value": "*local-image"
+                      }
+                    },
+                    {
+                      "subset": "image",
+                      "style": {
+                        "width": "84",
+                        "height": "84"
+                      },
+                      "content": {
+                        "values": "*local",
+                        "description": "local-image"
+                      }
+                    }
+                  ]
+                }
+              },
+              "*spacer@full"
+            ]
           }
         },
         "*spacer@full",
         {
-          "subset": "label",
-          "style": "*label@body",
-          "content": {
-            "value": "*remote-image"
-          }
-        },
-        {
-          "subset": "image",
+          "subset": "layout-linear",
           "style": {
-            "width": "84",
-            "height": "84"
+            "orientation": "horizontal",
+            "fill-max-width": true
           },
           "content": {
-            "values": "*remote",
-            "description": "remote-image"
+            "items": [
+              "*spacer@full",
+              {
+                "subset": "layout-linear",
+                "style": {
+                  "orientation": "vertical"
+                },
+                "content": {
+                  "items": [
+                    {
+                      "subset": "label",
+                      "style": "*label@body",
+                      "content": {
+                        "value": "*remote-image"
+                      }
+                    },
+                    {
+                      "subset": "image",
+                      "style": {
+                        "width": "84",
+                        "height": "84"
+                      },
+                      "content": {
+                        "values": "*remote",
+                        "description": "remote-image"
+                      }
+                    }
+                  ]
+                }
+              },
+              "*spacer@full"
+            ]
           }
         },
         "*spacer@full",
         {
-          "subset": "label",
-          "style": "*label@body",
-          "content": {
-            "value": "*remote-image+local-placeholder"
-          }
-        },
-        {
-          "subset": "image",
+          "subset": "layout-linear",
           "style": {
-            "width": "84",
-            "height": "84"
+            "orientation": "horizontal",
+            "fill-max-width": true
           },
           "content": {
-            "values": [
-              "*placeholder",
-              "*remote"
-            ],
-            "description": "remote-image+local-placeholder"
+            "items": [
+              "*spacer@full",
+              {
+                "subset": "layout-linear",
+                "style": {
+                  "orientation": "vertical"
+                },
+                "content": {
+                  "items": [
+                    {
+                      "subset": "label",
+                      "style": "*label@body",
+                      "content": {
+                        "value": "*remote-image+local-placeholder"
+                      }
+                    },
+                    {
+                      "subset": "image",
+                      "style": {
+                        "width": "84",
+                        "height": "84"
+                      },
+                      "content": {
+                        "values": [
+                          "*placeholder",
+                          "*remote"
+                        ],
+                        "description": "remote-image+local-placeholder"
+                      }
+                    }
+                  ]
+                }
+              },
+              "*spacer@full"
+            ]
           }
         },
         "*spacer@full",
