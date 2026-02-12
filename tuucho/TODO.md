@@ -1,10 +1,10 @@
 ### Todo:
 
+- fix merge style ... previous / next, button -> issue multiple sub ??, button issue to assemble style ?
+
 - popup ? selector navigation seem to not work ->
   because selector can't work a cause de NavigationMaterialCacheRepository,
   un seul choix est gardé en mémoire ou alors routes is changing.
-
-- fix merge style ... previous / next, button
 
 - update test 2e2
 - logic multi level sub resolution + remove hack to list FIrst

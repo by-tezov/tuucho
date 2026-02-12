@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility;
 CREATE TABLE hookEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT NOT NULL UNIQUE,
+    urlWhiteList TEXT,
     rootPrimaryKey INTEGER REFERENCES jsonObjectCommonEntry(primaryKey),
     visibility TEXT AS JsonVisibility NOT NULL,
     lifetime TEXT AS JsonLifetime NOT NULL

@@ -1,0 +1,116 @@
+{
+  "material-resource": {
+    "global": {
+      "setting": {
+        "visibility": [
+          "auth"
+        ]
+      },
+      "subs": [
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-colors"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-components"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-dimensions"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-styles"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-texts"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/common/subs/sub-images"
+        }
+      ],
+      "templates": {
+        "setting": {
+          "visibility": [
+            "auth"
+          ]
+        },
+        "definition": [
+          {
+            "validity-key": "1",
+            "url": "auth/common/templates/template-page-default"
+          }
+        ]
+      }
+    },
+    "local": {
+      "setting": {
+        "preload": false
+      },
+      "pages": [
+        {
+          "validity-key": "1",
+          "url": "auth/page-home"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-a"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-image",
+          "preload": true
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-b",
+          "preload": true
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-c"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-d"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-e"
+        }
+      ]
+    },
+    "contextual": {
+      "page-home": {
+        "setting": {
+          "url-origin": "auth/page-home"
+        },
+        "definition": [
+          {
+            "validity-key": "1",
+            "url-origin": "auth/page-home",
+            "url": "${url-origin}-contextual-texts"
+          },
+          {
+            "validity-key": "1",
+            "url-origin": "auth/page-home",
+            "url": "${url-origin}-contextual-components"
+          },
+          {
+            "validity-key": "1",
+            "url-origin": "auth/page-c"
+          }
+        ]
+      },
+      "other": [
+        {
+          "validity-key": "1",
+          "url-origin": "auth/page-c"
+        }
+      ]
+    }
+  }
+}

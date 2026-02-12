@@ -9,7 +9,14 @@ plugins {
 sqldelight {
     databases {
         create("Database") {
-            packageName.set("${kotlin.androidLibrary.namespace}.database")
+            packageName = "${kotlin.androidLibrary.namespace}.database"
+            srcDirs.setFrom("src/commonMain/sqldelight")
+            dialect(
+                libs.sql.delight.dialect.get().toString().replace(
+                    oldValue = "{{version}}",
+                    newValue = libs.versions.sql.delight.dialect.get()
+                )
+            )
         }
     }
 }
@@ -42,7 +49,7 @@ kotlin {
             implementation(libs.ktor.cio)
             implementation(libs.ktor.serialization)
             implementation(libs.sql.delight.runtime)
-            implementation(libs.sql.delight.coroutines)
+            implementation(libs.sql.delight.json)
         }
     }
 }
