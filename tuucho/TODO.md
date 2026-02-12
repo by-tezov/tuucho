@@ -1,7 +1,8 @@
 ### Todo:
 
-- why contextual page home content doesn't work
+- from error message
 - popup ? selector navigation seem to not work
+
 - update test 2e2
 - logic multi level sub resolution + remove hack to list FIrst
 

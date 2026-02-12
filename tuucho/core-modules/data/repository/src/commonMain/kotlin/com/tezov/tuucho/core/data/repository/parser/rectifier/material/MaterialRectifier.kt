@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
+import com.tezov.tuucho.core.domain.tool._system.logAll
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
