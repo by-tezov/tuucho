@@ -215,9 +215,7 @@
         "primaries": "form://send-url/form-from-page-login",
         "validated": "navigate://url/auth/page-home"
       },
-      "language": {
-        "primaries": "navigate://url/lobby/page-language"
-      },
+      "language": "navigate://url/lobby/page-language",
       "confirm": {
         "primaries": "form://send-url/form-from-page-login",
         "validated": "navigate://url/auth/page-home"

@@ -40,6 +40,10 @@
         "subset": "label",
         "style": "*label@title"
       },
+      "body": {
+        "subset": "label",
+        "style": "*label@body"
+      },
       "section": {
         "subset": "label",
         "style": "*label@section"

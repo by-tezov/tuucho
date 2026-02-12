@@ -4,7 +4,7 @@
       "navigation": {
         "definitions": {
           "option": {
-            "single": true
+            "single": false
           },
           "transition": {
             "type": "slide-vertical",
@@ -24,12 +24,20 @@
       "items": [
         {
           "subset": "label",
-          "style": "*title-label",
+          "style": "*label@title",
           "content": {
-            "value": "Page-E"
+            "value": "*title"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
+        {
+          "subset": "label",
+          "style": "*label@body",
+          "content": {
+            "value": "*body"
+          }
+        },
+        "*spacer@full",
         {
           "subset": "layout-linear",
           "style": {
@@ -43,18 +51,64 @@
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": {
+                      "id": "*label@button-previous"
+                    },
                     "content": {
-                      "value": "BACK"
+                      "value": "*back"
                     }
                   },
-                  "action": "navigate://local-destination/back"
+                  "action": "*back"
+                }
+              },
+              "*spacer@full",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": {
+                      "id": "*label@button"
+                    },
+                    "content": {
+                      "value": "*page-b"
+                    }
+                  },
+                  "action": "*page-b"
+                }
+              },
+              "*spacer@full",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": "*label@button-next",
+                    "content": {
+                      "value": "*next"
+                    }
+                  },
+                  "action": "*next"
                 }
               }
             ]
           }
         }
       ]
+    }
+  },
+  "texts": {
+    "common": {
+      "back": "back",
+      "next": "next",
+      "page-b": "Page-B",
+      "title": "Page-E",
+      "body": "TLL infinite \n\n- nav stack not single \n\n- transition vertical from top cover push effect"
+    }
+  },
+  "actions": {
+    "common": {
+      "back": "navigate://local-destination/back",
+      "next": "navigate://url/auth/page-e",
+      "page-b": "navigate://url/auth/page-b"
     }
   }
 }

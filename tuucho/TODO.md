@@ -1,6 +1,10 @@
 ### Todo:
 
-- better example
+- why contextual page home content doesn't work
+- popup ? selector navigation seem to not work
+- update test 2e2
+- logic multi level sub resolution + remove hack to list FIrst
+
 
 - NavigationRepositoryProtocol.MaterialCache -> better than class, useless to build
   an object with lot al suspendlazy class when not all are used...

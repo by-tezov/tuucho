@@ -33,6 +33,32 @@
         {
           "validity-key": "1",
           "url": "auth/page-home"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-a"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-image",
+          "preload": false
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-b",
+          "preload": false
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-c"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-d"
+        },
+        {
+          "validity-key": "1",
+          "url": "auth/page-e"
         }
       ]
     },

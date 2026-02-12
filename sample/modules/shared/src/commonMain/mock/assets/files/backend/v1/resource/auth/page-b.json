@@ -9,6 +9,25 @@
       "navigation": {
         "definitions": [
           {
+            "selector": {
+              "type": "page-bread-crumb",
+              "value": "auth/page-e"
+            },
+            "option": {
+              "single": true,
+              "popUpTo": {
+                "route": "auth/page-e",
+                "inclusive": false,
+                "greedy": true
+              }
+            },
+            "transition": {
+              "type": "slide-horizontal",
+              "entrance": "from-start",
+              "effect": "push-cover"
+            }
+          },
+          {
             "option": {
               "single": true
             },
@@ -31,20 +50,20 @@
       "items": [
         {
           "subset": "label",
-          "style": "*title-label",
+          "style": "*label@title",
           "content": {
-            "value": "Page-B"
+            "value": "*title"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
         {
           "subset": "label",
-          "style": "*title-body",
+          "style": "*label@body",
           "content": {
-            "value": "Page TLL of single use"
+            "value": "*body"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
         {
           "subset": "layout-linear",
           "style": {
@@ -58,45 +77,47 @@
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
-                    "content": {
-                      "value": "BACK"
-                    }
-                  },
-                  "action": "navigate://local-destination/back"
-                }
-              },
-              {
-                "subset": "button",
-                "content": {
-                  "label": {
                     "style": {
-                      "id": "*label-main-button-back"
+                      "id": "*label@button-previous"
                     },
                     "content": {
-                      "value": "Another Page-A"
+                      "value": "*back"
                     }
                   },
-                  "action": "navigate://url/auth/page-a"
+                  "action": "*back"
                 }
               },
-              "*item-spacer",
+              "*spacer@full",
               {
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": "*label@button-next",
                     "content": {
-                      "value": "Page-C"
+                      "value": "*next"
                     }
                   },
-                  "action": "navigate://url/auth/page-c"
+                  "action": "*next"
                 }
               }
             ]
           }
         }
       ]
+    }
+  },
+  "texts": {
+    "common": {
+      "back": "back",
+      "next": "next",
+      "title": "Page-B",
+      "body": "TLL single use not preloaded \n\n- nav stack single \n\n- transition horizontal from start push effect"
+    }
+  },
+  "actions": {
+    "common": {
+      "back": "navigate://local-destination/back",
+      "next": "navigate://url/auth/page-c"
     }
   }
 }

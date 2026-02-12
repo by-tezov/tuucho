@@ -5,20 +5,28 @@
         "font-size": "*font@title",
         "font-color": "*text@blue"
       },
+      "body": {
+        "font-size": "*font@title",
+        "font-color": "*text@black"
+      },
       "section": {
         "font-size": "*font@section",
         "font-color": "*text@red"
       },
-      "button-next": {
+      "button": {
         "font-size": "*font@button",
+        "font-color": "*text@blue"
+      },
+      "button-next": {
+        "id": "*label@button",
         "font-color": "*text@green"
       },
       "button-previous": {
-        "font-size": "*font@button",
+        "id": "*label@button",
         "font-color": "*text@black"
       },
       "button-info": {
-        "font-size": "*font@button",
+        "id": "*label@button",
         "font-color": "*text@blue"
       }
     },

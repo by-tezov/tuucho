@@ -30,12 +30,20 @@
       "items": [
         {
           "subset": "label",
-          "style": "*title-label",
+          "style": "*label@title",
           "content": {
-            "value": "Page-C"
+            "value": "*title"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
+        {
+          "subset": "label",
+          "style": "*label@body",
+          "content": {
+            "value": "*body"
+          }
+        },
+        "*spacer@half",
         {
           "subset": "label",
           "style": "*title-body",
@@ -43,7 +51,7 @@
             "value": "*title-body"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
         {
           "subset": "layout-linear",
           "style": {
@@ -57,45 +65,64 @@
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": {
+                      "id": "*label@button-previous"
+                    },
                     "content": {
-                      "value": "BACK"
+                      "value": "*back"
                     }
                   },
-                  "action": "navigate://local-destination/back"
+                  "action": "*back"
                 }
               },
+              "*spacer@full",
               {
                 "subset": "button",
                 "content": {
                   "label": {
                     "style": {
-                      "id": "*label-main-button-back"
+                      "id": "*label@button"
                     },
                     "content": {
-                      "value": "Another Page-A"
+                      "value": "*page-a"
                     }
                   },
-                  "action": "navigate://url/auth/page-a"
+                  "action": "*page-a"
                 }
               },
-              "*item-spacer",
+              "*spacer@full",
               {
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": "*label@button-next",
                     "content": {
-                      "value": "Page-D"
+                      "value": "*next"
                     }
                   },
-                  "action": "navigate://url/auth/page-d"
+                  "action": "*next"
                 }
               }
             ]
           }
         }
       ]
+    }
+  },
+  "texts": {
+    "common": {
+      "back": "back",
+      "page-a": "Page-A",
+      "next": "next",
+      "title": "Page-C",
+      "body": "TLL infinite \n\n- nav stack single \n\n- transition horizontal from end cover effect \n\n- contextual forward wait to render"
+    }
+  },
+  "actions": {
+    "common": {
+      "back": "navigate://local-destination/back",
+      "page-a": "navigate://url/auth/page-a",
+      "next": "navigate://url/auth/page-d"
     }
   }
 }
