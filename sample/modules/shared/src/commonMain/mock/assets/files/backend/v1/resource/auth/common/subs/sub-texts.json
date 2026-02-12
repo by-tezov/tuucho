@@ -1,6 +1,82 @@
 {
   "texts": {
     "common": {
+      "back-button": {
+        "default": "Help?",
+        "fr": "Aide?"
+      },
+      "next-button": {
+        "default": "Next",
+        "fr": "Suivant"
+      },
+      "previous-button": {
+        "default": "Previous",
+        "fr": "Precedent"
+      }
+    },
+    "page-home": {
+      "title": {
+        "default": "Home Page - Mock",
+        "fr": "Page d'accueil - Mock"
+      },
+      "body": {
+        "default": "Tuucho Sample Application",
+        "fr": "Tuccho Application example"
+      },
+      "form-title": {
+        "default": "Newsletter subscription",
+        "fr": "Inscription à la newsletter"
+      },
+      "form-email": {
+        "default": "email",
+        "fr": "courriel"
+      },
+      "form-email-placeholder": {
+        "default": "name.last-name@gmail.com",
+        "fr": "prenom.nom@gmail.com"
+      },
+      "form-email-invalid": {
+        "default": "your email is not valid",
+        "fr": "votre courriel n'est pas valide"
+      },
+      "form-email-empty": {
+        "default": "your email is required",
+        "fr": "votre courriel est requis"
+      },
+      "form-age": {
+        "default": "age",
+        "fr": "âge"
+      },
+      "form-age-placeholder": {
+        "default": "from 18 to 65",
+        "fr": "compris entre 18 et 65"
+      },
+      "form-age-low-range": {
+        "default": "age must be over or equal to 18",
+        "fr": "l'age doit être supérieur ou égal à 18"
+      },
+      "form-age-high-range": {
+        "default": "age must be below or equal to 65",
+        "fr": "l'age doit être inférieur ou égal à 65"
+      },
+      "form-age-empty": {
+        "default": "your age is required",
+        "fr": "votre age est requis"
+      },
+      "send-form-button": {
+        "default": "Subscribe",
+        "fr": "S'inscrire"
+      },
+      "help-button": {
+        "default": "Help?",
+        "fr": "Aide?"
+      },
+      "logout-button": {
+        "default": "Logout",
+        "fr": "Quittez"
+      }
+    },
+    "page-help": {
       "text-body-content-help": {
         "default": "There is no help available at the moment"
       }

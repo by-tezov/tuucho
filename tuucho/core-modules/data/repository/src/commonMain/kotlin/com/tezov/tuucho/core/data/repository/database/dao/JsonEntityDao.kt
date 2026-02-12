@@ -81,7 +81,8 @@ internal class JsonObjectQueries(
         id: String
     ) = queriesJoin
         .getCommonByTypeIdVisibility(JsonVisibility.Global, type, id)
-        .executeAsOneOrNull()
+        .executeAsList() // TODO -> fix with multiple zone resolution subs
+        .firstOrNull()
         ?.toEntity()
 
     fun getContextualOrNull(

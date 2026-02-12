@@ -3,26 +3,28 @@
     "global": {
       "subs": [
         {
-          "validity-key": "1",
-          "url": "auth/common/subs/sub-texts"
+          "validity-key": "2",
+          "url": "auth/common/subs/sub-colors"
         },
         {
-          "validity-key": "1",
+          "validity-key": "2",
+          "url": "auth/common/subs/sub-components"
+        },
+        {
+          "validity-key": "2",
+          "url": "auth/common/subs/sub-dimensions"
+        },
+        {
+          "validity-key": "2",
           "url": "auth/common/subs/sub-styles"
         },
         {
-          "validity-key": "1",
-          "url": "auth/common/subs/sub-contents"
+          "validity-key": "2",
+          "url": "auth/common/subs/sub-texts"
         },
         {
-          "validity-key": "1",
-          "url": "auth/common/subs/sub-components"
-        }
-      ],
-      "templates": [
-        {
-          "validity-key": "1",
-          "url": "auth/common/templates/template-page-default"
+          "validity-key": "2",
+          "url": "auth/common/subs/sub-images"
         }
       ]
     },
@@ -31,24 +33,6 @@
         {
           "validity-key": "1",
           "url": "auth/page-home"
-        },
-        {
-          "validity-key": "1",
-          "url": "auth/page-help",
-          "pre-download": false
-        },
-        {
-          "validity-key": "1",
-          "url": "auth/page-a"
-        },
-        {
-          "validity-key": "1",
-          "url": "auth/page-b",
-          "pre-download": false
-        },
-        {
-          "validity-key": "1",
-          "url": "auth/page-c"
         }
       ]
     },

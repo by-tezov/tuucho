@@ -1,8 +1,7 @@
 {
   "setting": {
     "time-to-live": {
-      "strategy": "transient",
-      "transient-value": "30s"
+      "strategy": "single-use"
     }
   },
   "root": {
@@ -38,54 +37,43 @@
     "content": {
       "items": [
         {
+          "id": "top-bar-layout",
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
-            "background-color": "*background@funny-color",
+            "background-color": "*background@blue-sky",
             "fill-max-width": true
           },
           "content": {
             "items": [
-              "*item-spacer",
-              "*small-logo"
+              "*spacer@very-small",
+              "*image@small-logo",
+              "*spacer@full",
+              "*button@help",
+              "*spacer@very-small",
+              "*button@logout",
+              "*spacer@very-small"
             ]
           }
         },
         {
+          "id": "top-bar-layout",
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
-            "background-color": "*background@funny-color",
+            "background-color": "*background@blue-sky",
             "fill-max-width": true
           },
           "content": {
             "items": [
-              "*title",
-              "*item-spacer",
-              {
-                "subset": "button",
-                "content": {
-                  "label": {
-                    "style": "*label-main-button-help",
-                    "content": {
-                      "value": "LogOut"
-                    }
-                  },
-                  "action": {
-                    "primaries": [
-                      "store://key-value/remove?login-authorization",
-                      "navigate://url/lobby/page-login"
-                    ]
-                  }
-                }
-              }
+              "*spacer@very-small",
+              "*label@home-title"
             ]
           }
         },
-        "*item-spacer-24-v",
-        "*body",
-        "*item-spacer",
+        "*spacer@full",
         {
+          "id": "input-field-layout",
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
@@ -93,276 +81,166 @@
           },
           "content": {
             "items": [
-              "*item-spacer",
+              "*spacer@small",
               {
-                "subset": "label-custom",
-                "style": {
-                  "font-color-light": "#276CF5",
-                  "font-color-dark": "#F54927",
-                  "font-size": "18"
-                },
-                "content": {
-                  "value": "My Custom Clickable Label",
-                  "action": "echo-message-custom-action://"
+                "id": {
+                  "value": "input-field-email",
+                  "source": "*fields@input-email"
                 }
               },
-              "*item-spacer"
+              "*spacer@small"
             ]
           }
         },
-        "*item-spacer",
         {
-          "subset": "label",
-          "style": "*title-section",
-          "content": {
-            "value": "*form@text-form-section-title"
-          }
-        },
-        {
-          "id": "*item-spacer-24-v"
-        },
-        {
-          "id": {
-            "value": "age",
-            "source": "*input-field-age"
-          }
-        },
-        {
-          "id": {
-            "value": "email",
-            "source": "*input-field-email"
-          }
-        },
-        {
-          "id": "comment",
-          "subset": "form-field",
-          "option": {
-            "form-validators": "string-not-null"
-          },
-          "content": {
-            "title": "any comment?",
-            "placeholder": "short comment, please I'm lazy to read",
-            "message-errors": "Can't be empty, bro say something"
-          }
-        },
-        {
-          "subset": "label",
-          "style": "*title-section",
-          "content": {
-            "value": {
-              "id": {
-                "source": "*title-section",
-                "url-source": {
-                  "contextual": "${url-origin}-contextual-texts"
-                }
-              }
-            }
-          }
-        },
-        "*item-spacer-24-v",
-        {
-          "subset": "form-field",
-          "id": {
-            "value": "hobbies",
-            "source": "*input-field-on-demand"
-          }
-        },
-        {
-          "id": "*item-spacer"
-        },
-        {
+          "id": "input-field-layout",
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
-            "background-color": "*background@funny-color",
             "fill-max-width": true
           },
           "content": {
             "items": [
-              "*button-form",
+              "*spacer@small",
               {
-                "subset": "button",
-                "content": {
-                  "label": {
-                    "style": {
-                      "id": "*label-main-button-help"
-                    },
-                    "content": {
-                      "value": "Get Help"
-                    }
-                  },
-                  "action": "navigate://url/auth/page-help"
+                "id": {
+                  "value": "input-field-age",
+                  "source": "*fields@input-age"
                 }
               },
-              {
-                "id": "*item-spacer"
-              },
-              {
-                "subset": "button",
-                "content": {
-                  "label": {
-                    "style": "*label-main-button-default",
-                    "content": {
-                      "value": "Page-A"
-                    }
-                  },
-                  "action": "navigate://url/auth/page-a"
-                }
-              }
+              "*spacer@small"
+            ]
+          }
+        },
+        "*spacer@full",
+        {
+          "id": "button-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@very-small",
+              "*button@send",
+              "*spacer@full",
+              "*button@next",
+              "*spacer@very-small"
             ]
           }
         }
       ]
     }
   },
-  "components": [
-    {
-      "id": "title",
-      "subset": "label",
-      "style": "*title-label",
-      "content": {
-        "value": {
-          "id": "*text-title"
-        }
-      }
-    },
-    {
-      "id": "body",
-      "subset": "label",
-      "style": {
-        "id": "*title-body"
-      },
-      "content": {
-        "value": {
-          "id": "*text-body"
-        }
-      }
-    },
-    {
-      "id": "small-logo",
-      "subset": "image",
-      "style": {
-        "width": "48",
-        "height": "48",
-        "shape": "rounded",
-        "padding": "3",
-        "background-color": "*background@funny-color"
-      },
-      "content": {
-        "values": [
-          "*small-logo",
-          "*small-logo-placeholder"
-        ],
-        "description": "Small-Logo"
-      }
-    },
-    {
-      "id": "input-field-age",
-      "subset": "form-field",
-      "option": {
-        "form-validators": [
-          {
-            "type": "string-min-value",
-            "value": "18",
-            "message-error-id": "*validator-1"
-          },
-          {
-            "type": "string-max-value",
-            "value": "65",
-            "message-error-id": "*validator-2"
-          },
-          {
-            "type": "string-not-null",
-            "message-error-id": "*validator-4"
-          }
-        ]
-      },
-      "content": {
-        "title": "*form@text-form-age-title",
-        "placeholder": "*form@text-form-age-placeholder",
-        "message-errors": [
-          {
-            "id": "validator-1",
-            "default": "you must have at least 18 years"
-          },
-          {
-            "id": "validator-2",
-            "default": "you must have at most 65 years"
-          },
-          {
-            "id": "validator-4",
-            "default": "age can't be empty"
-          }
-        ]
-      }
-    },
-    {
-      "id": "input-field-email",
-      "subset": "form-field",
-      "option": {
-        "form-validators": [
-          {
-            "type": "string-email",
-            "message-error-id": "*validator-1"
-          },
-          {
-            "type": "string-not-null",
-            "message-error-id": "*validator-2"
-          }
-        ]
-      },
-      "content": "*input-field-age-content"
-    },
-    {
-      "id": "button-form",
-      "subset": "button",
-      "content": {
-        "label": "*button-form-label",
-        "action": {
-          "primaries": "form://send-url/auth/form-from-page-home",
-          "validated": "navigate://url/auth/page-confirmation"
-        }
-      }
-    },
-    {
-      "subset": "label",
-      "id": "button-form-label",
-      "style": {
-        "id": "*label-main-button-form"
-      },
-      "content": {
-        "value": "Send Form"
-      }
-    }
-  ],
-  "styles": [
-    {
-      "id": "title-section",
-      "font-size": "18",
-      "font-color": "*red"
-    }
-  ],
-  "texts": {
-    "common": {
-      "text-title": "Home Page - Mock",
-      "text-body": "bienvenue sur la page d'accueil"
-    },
-    "form": {
-      "text-form-section-title": "Inscription à la new letter",
-      "text-form-email-title": "email*",
-      "text-form-email-placeholder": "my.email@gmail.com",
-      "text-form-age-title": "age*",
-      "text-form-age-placeholder": "27"
-    }
-  },
-  "images": {
-    "common": {
+  "components": {
+    "image": {
       "small-logo": {
-        "default": "remote://auth/logo-koin"
+        "id": "*image@small",
+        "subset": "image",
+        "content": {
+          "values": "*top-bar@small-logo",
+          "description": "small-Logo"
+        }
+      }
+    },
+    "label": {
+      "home-title": {
+        "id": "*label@title",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@title"
+        }
       },
-      "small-logo-placeholder": {
-        "default": "remote://auth/logo-koin-placeholder",
-        "tags": "placeholder"
+      "home-message": {
+        "id": "*label@section",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@body"
+        }
+      },
+      "send-form-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@send-form-button"
+        }
+      },
+      "help-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@help-button"
+        }
+      },
+      "next-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*next-button"
+        }
+      },
+      "logout-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@logout-button"
+        }
+      }
+    },
+    "button": {
+      "send": {
+        "subset": "button",
+        "content": {
+          "label": "*label@send-form-button",
+          "action": "*send"
+        }
+      },
+      "help": {
+        "subset": "button",
+        "content": {
+          "label": "*label@help-button",
+          "action": "*help"
+        }
+      },
+      "next": {
+        "subset": "button",
+        "content": {
+          "label": "*label@next-button",
+          "action": "*next"
+        }
+      },
+      "logout": {
+        "subset": "button",
+        "content": {
+          "label": "*label@logout-button",
+          "action": "*logout"
+        }
+      }
+    },
+    "fields": {
+      "input-email": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": "string-not-null"
+        },
+        "content": {
+          "title": "*page-home@form-email",
+          "placeholder": "*page-home@form-email-placeholder",
+          "message-errors": "can not be null"
+        }
+      },
+      "input-age": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": "string-not-null"
+        },
+        "content": {
+          "title": "*page-home@form-age",
+          "placeholder": "*page-home@form-age-placeholder",
+          "message-errors": "can not be null"
+        }
       }
     }
   }
