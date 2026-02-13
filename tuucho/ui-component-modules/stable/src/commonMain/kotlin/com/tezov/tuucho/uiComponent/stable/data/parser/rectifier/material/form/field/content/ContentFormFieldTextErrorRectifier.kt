@@ -1,12 +1,8 @@
 package com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.content
 
-import com.tezov.tuucho.core.data.repository.parser._system.isSubsetOf
-import com.tezov.tuucho.core.data.repository.parser._system.isTypeOf
-import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath
 import com.tezov.tuucho.core.domain.tool.json.ROOT_PATH
 import com.tezov.tuucho.core.domain.tool.json.find
@@ -23,15 +19,12 @@ class ContentFormFieldTextErrorRectifier(
     override val key = FormFieldSchema.Content.Key.messageErrors
     private val textRectifier: TextRectifier by inject()
 
+    private val matcher = ContentFormFieldTextErrorRectifierMatcher()
+
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
-    ): Boolean {
-        if (!path.lastSegmentIs(FormFieldSchema.Content.Key.messageErrors)) return false
-        val parent = element.find(path.parent())
-        return parent.isSubsetOf(FormFieldSchema.Component.Value.subset) &&
-            parent.isTypeOf(TypeSchema.Value.content)
-    }
+    ) = matcher.accept(path, element)
 
     override fun beforeAlterPrimitive(
         context: RectifierProtocol.Context,

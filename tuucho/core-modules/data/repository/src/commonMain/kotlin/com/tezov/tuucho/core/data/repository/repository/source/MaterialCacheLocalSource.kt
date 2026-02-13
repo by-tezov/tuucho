@@ -18,6 +18,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.PageSettingSchema
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -64,6 +65,7 @@ internal class MaterialCacheLocalSource(
     suspend fun insert(
         materialObject: JsonObject,
         url: String,
+        urlWhiteList: JsonArray?,
         visibility: JsonVisibility,
         weakLifetime: JsonLifetime,
     ) {
@@ -81,6 +83,7 @@ internal class MaterialCacheLocalSource(
             }
             HookEntity(
                 url = url,
+                urlWhiteList = urlWhiteList,
                 rootPrimaryKey = rootPrimaryKey,
                 visibility = visibility,
                 lifetime = lifetimeResolver.invoke(
@@ -112,11 +115,13 @@ internal class MaterialCacheLocalSource(
 
     suspend fun enroll(
         url: String,
+        urlWhiteList: JsonArray?,
         validityKey: String,
         visibility: JsonVisibility,
     ) {
         HookEntity(
             url = url,
+            urlWhiteList = urlWhiteList,
             rootPrimaryKey = null,
             visibility = visibility,
             lifetime = JsonLifetime.Enrolled(validityKey),

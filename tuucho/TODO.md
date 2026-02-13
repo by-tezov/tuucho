@@ -1,9 +1,15 @@
 ### Todo:
 
-- better example
+- logic multi level sub resolution + remove hack to list FIrst
+    - finir avec un autre level setting (setting / definition)
 
-- NavigationRepositoryProtocol.MaterialCache -> better than class, useless to build
-  an object with lot al suspendlazy class when not all are used...
+- fix merge style ... previous / next, button -> issue multiple sub ??, button issue to assemble style ?
+
+- popup ? selector navigation seem to not work ->
+  because selector can't work a cause de NavigationMaterialCacheRepository,
+  un seul choix est gardé en mémoire ou alors routes is changing.
+
+- update test 2e2
 
 - screen context better way to use it ?
 - projection input dataclass ?

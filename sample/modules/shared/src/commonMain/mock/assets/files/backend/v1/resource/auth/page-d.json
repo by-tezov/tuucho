@@ -6,9 +6,6 @@
           "is-background-solid": false
         },
         "definitions": {
-          "option": {
-            "single": true
-          },
           "transition": {
             "type": "slide-vertical",
             "entrance": "from-top",
@@ -25,15 +22,22 @@
     },
     "content": {
       "items": [
-        "*item-spacer",
         {
           "subset": "label",
-          "style": "*title-label",
+          "style": "*label@title",
           "content": {
-            "value": "Page-D - with not solid background"
+            "value": "*title"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
+        {
+          "subset": "label",
+          "style": "*label@body",
+          "content": {
+            "value": "*body"
+          }
+        },
+        "*spacer@full",
         {
           "subset": "layout-linear",
           "style": {
@@ -47,31 +51,47 @@
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": {
+                      "id": "*label@button-previous"
+                    },
                     "content": {
-                      "value": "BACK"
+                      "value": "*back"
                     }
                   },
-                  "action": "navigate://local-destination/back"
+                  "action": "*back"
                 }
               },
-              "*item-spacer",
+              "*spacer@full",
               {
                 "subset": "button",
                 "content": {
                   "label": {
-                    "style": "*label-main-button-default",
+                    "style": "*label@button-next",
                     "content": {
-                      "value": "Page-E"
+                      "value": "*next"
                     }
                   },
-                  "action": "navigate://url/auth/page-e"
+                  "action": "*next"
                 }
               }
             ]
           }
         }
       ]
+    }
+  },
+  "texts": {
+    "common": {
+      "back": "back",
+      "next": "next",
+      "title": "Page-D",
+      "body": "TLL infinite \n\n- nav background not solid \n\n- transition vertical from top cover effect"
+    }
+  },
+  "actions": {
+    "common": {
+      "back": "navigate://local-destination/back",
+      "next": "navigate://url/auth/page-e"
     }
   }
 }

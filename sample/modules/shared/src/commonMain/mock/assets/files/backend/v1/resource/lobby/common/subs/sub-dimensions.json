@@ -1,0 +1,31 @@
+{
+  "dimensions": {
+    "font": {
+      "title": "32",
+      "section": "28",
+      "body": "24",
+      "button": "26"
+    },
+    "padding": {
+      "very-small": "8",
+      "small": "24",
+      "big": "48"
+    },
+    "weight": {
+      "half": "0.5",
+      "full": "1.0"
+    },
+    "image-small": {
+      "padding": "3",
+      "size": "48"
+    },
+    "image-main": {
+      "padding": "6",
+      "size": "196"
+    },
+    "image-flag": {
+      "padding": "2",
+      "size": "56"
+    }
+  }
+}

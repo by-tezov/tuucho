@@ -1,0 +1,25 @@
+{
+  "colors": {
+    "text": {
+      "black": "#FF000000",
+      "red": "#FFFF0000",
+      "green": "#FF00FF00",
+      "blue": "#FF0000FF"
+    },
+    "background": {
+      "blue-sky": "#FF66D9FF",
+      "gray-light": "#FFD9D9D9",
+      "purple-light": "#FF789AC0",
+      "royal-purple": "#FF9966FF",
+      "funny-color": "#FF66D9FF",
+      "why-not-color": "#FF789AC0",
+      "sunny-yellow": "#FFFFD966",
+      "crazy-orange": "#FFFF9966",
+      "minty-green": "#FF66FF99",
+      "electric-pink": "#FFFF66CC",
+      "aqua-splash": {
+        "default": "#8833CCFF"
+      }
+    }
+  }
+}

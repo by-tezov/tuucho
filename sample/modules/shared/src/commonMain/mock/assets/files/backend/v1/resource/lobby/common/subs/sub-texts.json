@@ -1,23 +1,50 @@
 {
   "texts": {
-    "common": {
-      "credentials-request": "Please enter your credentials"
+    "page-login": {
+      "title": {
+        "default": "Welcome",
+        "fr": "Bienvenue"
+      },
+      "credentials-request": {
+        "default": "Please enter your credentials",
+        "fr": "Entrez vos identifiants"
+      },
+      "login": {
+        "default": "Login",
+        "fr": "Identifiant"
+      },
+      "password": {
+        "default": "Password",
+        "fr": "Mot de passe"
+      },
+      "login-button": {
+        "default": "Enter",
+        "fr": "Entrez"
+      }
     },
     "page-language": {
       "english": {
-        "default": "English - Actif",
+        "default": "English *",
         "fr": "Anglais",
-        "fr-CA": "Anglais-USA"
+        "fr-CA": "Anglais"
       },
       "french": {
         "default": "French",
-        "fr": "Français - Actif",
-        "fr-CA": "Fronçais"
+        "fr": "Français *",
+        "fr-CA": "Français"
       },
       "canada": {
-        "default": "no value",
-        "fr": "Canadien",
-        "fr-CA": "Yes c'est nous - Actif"
+        "default": "French Canadian",
+        "fr": "Français Canadien",
+        "fr-CA": "Français Canadien *"
+      },
+      "cancel-button": {
+        "default": "Cancel",
+        "fr": "Annuler"
+      },
+      "system-button": {
+        "default": "Default",
+        "fr": "Default"
       }
     }
   }

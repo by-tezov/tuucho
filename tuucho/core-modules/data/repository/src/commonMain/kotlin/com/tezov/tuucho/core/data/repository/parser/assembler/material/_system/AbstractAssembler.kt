@@ -81,9 +81,9 @@ abstract class AbstractAssembler(
                 rectify(context, path, element)
                     ?.also { _element = element.replaceOrInsert(path, it) }
             } ?: run {
-            // fallback, nothing to rectify
-            this
-        }
+                // fallback, nothing to rectify
+                this
+            }
 
         if (childProcessors.isNotEmpty()) {
             current.keys.forEach { childKey ->

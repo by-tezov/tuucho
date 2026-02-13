@@ -10,7 +10,7 @@ object Shadower {
     object Contextual {
         fun String.replaceUrlOriginToken(
             value: String
-        ) = replace("\${${ConfigSchema.MaterialItem.Key.urlOrigin}}", value)
+        ) = replace("\${${ConfigSchema.MaterialResource.Contextual.Setting.Key.urlOrigin}}", value)
 
         fun defaultUrl(
             base: String

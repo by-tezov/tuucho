@@ -1,0 +1,13 @@
+{
+  "images": {
+    "top-bar": {
+      "small-logo": {
+        "default": "remote://auth/logo-koin"
+      },
+      "small-logo-placeholder": {
+        "default": "remote://auth/logo-koin-placeholder",
+        "tags": "placeholder"
+      }
+    }
+  }
+}

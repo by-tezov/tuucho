@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.data.repository.repository.ServerHealthCheckReposit
 import com.tezov.tuucho.core.data.repository.repository.ShadowerMaterialRepository
 import com.tezov.tuucho.core.data.repository.repository.source.ImageSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
+import com.tezov.tuucho.core.data.repository.repository.source.MaterialConfigRemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.RemoteSource
 import com.tezov.tuucho.core.data.repository.repository.source.SendDataAndRetrieveMaterialRemoteSource
@@ -36,7 +37,7 @@ internal object RepositoryModule {
         factory<MaterialRepositoryProtocol.RefreshCache> {
             RefreshMaterialCacheRepository(
                 coroutineScopes = get(),
-                remoteSource = get(),
+                materialConfigRemoteSource = get(),
                 materialRemoteSource = get(),
                 materialCacheLocalSource = get()
             )
@@ -59,6 +60,7 @@ internal object RepositoryModule {
 
     private fun Module.source() {
         factory<MaterialCacheLocalSource>()
+        factory<MaterialConfigRemoteSource>()
         factory<MaterialRemoteSource>()
         factory<RemoteSource>()
         factory<SendDataAndRetrieveMaterialRemoteSource>()
