@@ -13,5 +13,3 @@ class ContentFormFieldTextErrorAssemblerMatcher : AssemblerMatcherProtocol {
         element: JsonElement
     ) = matcher.accept(path, element)
 }
-
-

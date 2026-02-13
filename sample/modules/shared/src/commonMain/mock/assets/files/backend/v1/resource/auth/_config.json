@@ -1,6 +1,9 @@
 {
   "material-resource": {
     "global": {
+      "setting": {
+        "urls-white-list": "auth/"
+      },
       "subs": [
         {
           "validity-key": "1",
@@ -35,6 +38,9 @@
       ]
     },
     "local": {
+      "setting": {
+        "pre-download": true
+      },
       "pages": [
         {
           "validity-key": "1",
@@ -47,12 +53,12 @@
         {
           "validity-key": "1",
           "url": "auth/page-image",
-          "preload": false
+          "pre-download": false
         },
         {
           "validity-key": "1",
           "url": "auth/page-b",
-          "preload": false
+          "pre-download": false
         },
         {
           "validity-key": "1",
@@ -69,17 +75,20 @@
       ]
     },
     "contextual": {
-      "all": [
+      "setting": {
+        "url-origin": "auth/page-home"
+      },
+      "page-home": [
         {
           "validity-key": "1",
-          "url-origin": "auth/page-home",
           "url": "${url-origin}-contextual-texts"
         },
         {
           "validity-key": "1",
-          "url-origin": "auth/page-home",
           "url": "${url-origin}-contextual-components"
-        },
+        }
+      ],
+      "other": [
         {
           "validity-key": "1",
           "url-origin": "auth/page-c"

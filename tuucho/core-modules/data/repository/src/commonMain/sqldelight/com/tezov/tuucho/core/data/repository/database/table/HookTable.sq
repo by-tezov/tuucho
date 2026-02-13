@@ -1,10 +1,11 @@
 import com.tezov.tuucho.core.data.repository.database.type.JsonLifetime;
 import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility;
+import kotlinx.serialization.json.JsonArray;
 
 CREATE TABLE hookEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT NOT NULL UNIQUE,
-    urlWhiteList TEXT,
+    urlWhiteList TEXT AS JsonArray,
     rootPrimaryKey INTEGER REFERENCES jsonObjectCommonEntry(primaryKey),
     visibility TEXT AS JsonVisibility NOT NULL,
     lifetime TEXT AS JsonLifetime NOT NULL

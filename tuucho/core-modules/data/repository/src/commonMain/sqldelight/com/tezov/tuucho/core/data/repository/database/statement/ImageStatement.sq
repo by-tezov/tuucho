@@ -2,28 +2,28 @@ selectAll:
 SELECT * FROM imageEntry;
 
 selectAllLikeCacheKey:
-SELECT * FROM imageEntry WHERE cacheKey LIKE ?;
+SELECT * FROM imageEntry WHERE cacheKey LIKE :cacheKey;
 
 deleteAll:
 DELETE FROM imageEntry;
 
 deleteByCacheKey:
-DELETE FROM imageEntry WHERE cacheKey = ?;
+DELETE FROM imageEntry WHERE cacheKey = :cacheKey;
 
 deleteAllLikeCacheKey:
-DELETE FROM imageEntry WHERE cacheKey LIKE ?;
+DELETE FROM imageEntry WHERE cacheKey LIKE :cacheKey;
 
 insert:
 INSERT INTO imageEntry(cacheKey, mimeType)
-VALUES ( ?, ?);
+VALUES (:cacheKey, :mimeType);
 
 updateImageByCacheKey:
 UPDATE imageEntry
-SET mimeType = ?
-WHERE cacheKey = ?;
+SET mimeType = :mimeType
+WHERE cacheKey = :cacheKey;
 
 existWithCacheKey:
-SELECT EXISTS(SELECT 1 FROM imageEntry WHERE cacheKey = ?) AS exist;
+SELECT EXISTS(SELECT 1 FROM imageEntry WHERE cacheKey = :cacheKey) AS exist;
 
 getByCacheKey:
-SELECT * FROM imageEntry WHERE cacheKey = ?;
+SELECT * FROM imageEntry WHERE cacheKey = :cacheKey;

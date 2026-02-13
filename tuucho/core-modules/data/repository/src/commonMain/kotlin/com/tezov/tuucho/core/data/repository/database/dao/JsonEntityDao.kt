@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.repository.database.entity.toEntity
 import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 
 @OpenForTest
@@ -34,8 +35,8 @@ internal class JsonObjectQueries(
         table: Table
     ) {
         when (table) {
-            Table.Common -> queriesCommon.deleteByUrl(url)
-            Table.Contextual -> queriesContextual.deleteByUrl(url)
+            Table.Common -> queriesCommon.deleteByUrl(url = url)
+            Table.Contextual -> queriesContextual.deleteByUrl(url = url)
         }
     }
 
@@ -68,20 +69,28 @@ internal class JsonObjectQueries(
 
     fun getCommonOrNull(
         primaryKey: Long
-    ) = queriesCommon.getByPrimaryKey(primaryKey).executeAsOneOrNull()?.toEntity()
+    ) = queriesCommon.getByPrimaryKey(primaryKey = primaryKey).executeAsOneOrNull()?.toEntity()
 
     fun getCommonOrNull(
         type: String,
         url: String,
         id: String,
-    ) = queriesCommon.getByTypeUrlId(type, url, id).executeAsOneOrNull()?.toEntity()
+    ) = queriesCommon.getByTypeUrlId(type = type, url = url, id = id).executeAsOneOrNull()?.toEntity()
 
     fun getCommonGlobalOrNull(
         type: String,
+        url: String,
         id: String
     ) = queriesJoin
-        .getCommonByTypeIdVisibility(JsonVisibility.Global, type, id)
-        .executeAsList() // TODO -> fix with multiple zone resolution subs
+        .getCommonByTypeUrlIdVisibility(
+            url = url, visibility = JsonVisibility.Global, type = type, id = id
+        )
+        .executeAsList()
+        .also {
+            if (it.size > 1) {
+                throw DataException.Default("More than one global object found with base url $url for object $type $id")
+            }
+        }
         .firstOrNull()
         ?.toEntity()
 
@@ -91,7 +100,7 @@ internal class JsonObjectQueries(
         id: String,
         visibility: JsonVisibility,
     ) = queriesJoin
-        .getContextualByTypeUrlIdVisibility(visibility, type, url, id)
+        .getContextualByTypeUrlIdVisibility(visibility = visibility, type = type, url = url, id = id)
         .executeAsOneOrNull()
         ?.toEntity()
 }

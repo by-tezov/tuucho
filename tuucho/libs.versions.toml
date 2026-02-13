@@ -26,7 +26,7 @@ kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.10.0"
 kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.2.1"
-sql-delight-dialect = "3-35"
+sql-delight-dialect = "3-38"
 ktor = "3.4.0"
 koin = "4.2.0-RC1"
 kotlin-datetime = "0.7.1"
@@ -78,7 +78,6 @@ datastore-preferences = { group = "androidx.datastore", name = "datastore-prefer
 compose-navigationevent = { group = "org.jetbrains.androidx.navigationevent", name = "navigationevent-compose", version.ref = "compose-navigationevent" }
 compose-ui-tooling = { group = "org.jetbrains.compose.ui", name = "ui-tooling", version.ref = "compose-ui-tooling" }
 compose-ui-tooling-preview = { group = "org.jetbrains.compose.components", name = "components-ui-tooling-preview", version.ref = "compose-ui-tooling" }
-
 #lib - ios
 sql-delight-driver-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sql-delight" }
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }

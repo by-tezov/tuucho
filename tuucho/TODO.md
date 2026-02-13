@@ -1,5 +1,8 @@
 ### Todo:
 
+- logic multi level sub resolution + remove hack to list FIrst
+    - finir avec un autre level setting (setting / definition)
+
 - fix merge style ... previous / next, button -> issue multiple sub ??, button issue to assemble style ?
 
 - popup ? selector navigation seem to not work ->
@@ -7,7 +10,6 @@
   un seul choix est gardé en mémoire ou alors routes is changing.
 
 - update test 2e2
-- logic multi level sub resolution + remove hack to list FIrst
 
 - screen context better way to use it ?
 - projection input dataclass ?

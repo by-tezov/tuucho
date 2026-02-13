@@ -17,6 +17,7 @@ sqldelight {
                     newValue = libs.versions.sql.delight.dialect.get()
                 )
             )
+            module(libs.sql.delight.json)
         }
     }
 }
@@ -49,7 +50,6 @@ kotlin {
             implementation(libs.ktor.cio)
             implementation(libs.ktor.serialization)
             implementation(libs.sql.delight.runtime)
-            implementation(libs.sql.delight.json)
         }
     }
 }

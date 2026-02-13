@@ -1,6 +1,9 @@
 {
   "material-resource": {
     "global": {
+      "setting": {
+        "urls-white-list": "lobby/"
+      },
       "subs": [
         {
           "validity-key": "2",

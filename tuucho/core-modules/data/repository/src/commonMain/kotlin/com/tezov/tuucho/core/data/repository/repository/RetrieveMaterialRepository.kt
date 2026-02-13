@@ -30,6 +30,7 @@ internal class RetrieveMaterialRepository(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
+            urlWhiteList = null,
             weakLifetime = if (lifetime == null || lifetime is JsonLifetime.Enrolled) {
                 JsonLifetime.Unlimited(
                     validityKey = lifetime?.validityKey

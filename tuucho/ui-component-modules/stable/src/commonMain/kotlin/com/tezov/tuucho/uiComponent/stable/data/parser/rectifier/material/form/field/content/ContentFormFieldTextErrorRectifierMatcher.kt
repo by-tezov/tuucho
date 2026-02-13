@@ -11,7 +11,6 @@ import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form.FormF
 import kotlinx.serialization.json.JsonElement
 
 class ContentFormFieldTextErrorRectifierMatcher : RectifierMatcherProtocol {
-
     override fun accept(
         path: JsonElementPath,
         element: JsonElement
@@ -22,5 +21,3 @@ class ContentFormFieldTextErrorRectifierMatcher : RectifierMatcherProtocol {
             parent.isTypeOf(TypeSchema.Value.content)
     }
 }
-
-
