@@ -40,10 +40,6 @@
         "subset": "label",
         "style": "*label@title"
       },
-      "body": {
-        "subset": "label",
-        "style": "*label@body"
-      },
       "section": {
         "subset": "label",
         "style": "*label@section"
@@ -54,6 +50,10 @@
       }
     },
     "image": {
+      "main": {
+        "subset": "image",
+        "style": "*image@main"
+      },
       "small": {
         "subset": "image",
         "style": "*image@small"

@@ -6,6 +6,6 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 interface ScreenProtocol : ScreenProtocol {
     @Composable
     fun display(
-        scope: Any? = null
+        scope: Any?
     )
 }

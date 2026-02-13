@@ -14,7 +14,12 @@
       },
       "action-content": {
         "label": {
-          "id": "*button-label-help-to-home"
+          "style": {
+            "id": "*label@button-previous"
+          },
+          "content": {
+            "value": "*back-to-home"
+          }
         },
         "action": "navigate://local-destination/back"
       }
@@ -23,10 +28,8 @@
   "texts": {
     "common": {
       "text-body-title": "Looking for help?",
-      "text-body-content": {
-        "id": "*text-body-content-help"
-      },
-      "text-action-help": "Navigate to home page"
+      "text-body-content": "I'm afraid you won't find anything here.",
+      "back-to-home": "Navigate To Home Page"
     }
   }
 }

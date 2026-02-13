@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.component
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIdsWithGroup
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -68,7 +68,7 @@ class ComponentRectifier(
             .withScope(ComponentSchema::Scope)
             .takeIf {
                 it
-                    .rectifyIds(ComponentSchema.Value.Group.common)
+                    .rectifyIdsWithGroup(ComponentSchema.Value.Group.common)
                     .also { (value, source) ->
                         valueRectified = value
                         sourceRectified = source

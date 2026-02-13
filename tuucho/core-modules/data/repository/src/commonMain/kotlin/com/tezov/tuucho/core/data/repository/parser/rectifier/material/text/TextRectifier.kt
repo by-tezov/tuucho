@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.text
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIdsWithGroup
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
@@ -83,7 +83,7 @@ class TextRectifier(
             .withScope(TextSchema::Scope)
             .takeIf {
                 it
-                    .rectifyIds(TextSchema.Value.Group.common)
+                    .rectifyIdsWithGroup(TextSchema.Value.Group.common)
                     .also { (value, source) ->
                         valueRectified = value
                         sourceRectified = source

@@ -1,10 +1,4 @@
 {
-  "setting": {
-    "time-to-live": {
-      "strategy": "transient",
-      "transient-value": "10s"
-    }
-  },
   "root": {
     "setting": {
       "navigation": {
@@ -26,22 +20,28 @@
     "content": {
       "items": [
         {
+          "id": "top-bar-layout",
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
-            "background-color": "*background@funny-color",
+            "background-color": "*background@blue-sky",
             "fill-max-width": true
           },
           "content": {
             "items": [
-              "*flag-logo",
-              "*item-spacer",
-              "*small-logo"
+              "*spacer@very-small",
+              "*image@language",
+              "*spacer@half",
+              "*label@login-title",
+              "*spacer@full",
+              "*image@small-logo",
+              "*spacer@very-small"
             ]
           }
         },
-        "*item-spacer",
+        "*spacer@half",
         {
+          "id": "main-logo-layout",
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
@@ -49,187 +49,173 @@
           },
           "content": {
             "items": [
-              "*item-spacer",
-              "*main-logo",
-              "*item-spacer"
+              "*spacer@full",
+              "*image@main-logo",
+              "*spacer@full"
             ]
           }
         },
-        "*item-spacer",
+        "*spacer@big",
+        "*label@login-section",
+        "*spacer@small",
         {
-          "subset": "label",
-          "style": "*title-section",
-          "content": {
-            "value": "*credentials-title"
-          }
-        },
-        "*item-spacer-24-v",
-        {
-          "id": "input-field-login",
-          "subset": "form-field",
-          "option": {
-            "form-validators": "string-not-null"
-          },
-          "content": {
-            "title": "Login",
-            "placeholder": "login",
-            "message-errors": "can not be null"
-          }
-        },
-        {
-          "id": "input-field-password",
-          "subset": "form-field",
-          "option": {
-            "form-validators": "string-not-null"
-          },
-          "content": {
-            "title": "Password",
-            "placeholder": "password",
-            "message-errors": "can not be null"
-          }
-        },
-        "*item-spacer",
-        {
+          "id": "input-field-layout",
           "subset": "layout-linear",
           "style": {
             "orientation": "horizontal",
-            "background-color": "*background@funny-color",
             "fill-max-width": true
           },
           "content": {
             "items": [
-              "*item-spacer",
+              "*spacer@small",
               {
-                "subset": "button",
-                "content": {
-                  "label": {
-                    "style": "*label-main-button-default",
-                    "content": {
-                      "value": "Connection"
-                    }
-                  },
-                  "action": "*button@confirm"
+                "id": {
+                  "value": "input-field-login",
+                  "source": "*fields@input-login"
                 }
               },
-              "*item-spacer"
+              "*spacer@small"
+            ]
+          }
+        },
+        {
+          "id": "input-field-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@small",
+              {
+                "id": {
+                  "value": "input-field-password",
+                  "source": "*fields@input-password"
+                }
+              },
+              "*spacer@small"
+            ]
+          }
+        },
+        "*spacer@full",
+        {
+          "id": "button-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@full",
+              "*button@login",
+              "*spacer@full"
             ]
           }
         }
       ]
     }
   },
-  "components": [
-    {
-      "id": "item-spacer",
-      "subset": "spacer",
-      "style": {
-        "weight": "1.0"
-      }
-    },
-    {
-      "id": "item-spacer-24-v",
-      "subset": "spacer",
-      "style": {
-        "height": "*padding@spacer-24"
-      }
-    },
-    {
-      "id": "item-spacer-half",
-      "subset": "spacer",
-      "style": {
-        "weight": "0.2"
-      }
-    },
-    {
-      "id": "main-logo",
-      "subset": "image",
-      "style": {
-        "width": "196",
-        "height": "196",
-        "shape": "rounded-square",
-        "padding": "6",
-        "alpha": "0.85",
-        "background-color": "*background@funny-color"
+  "components": {
+    "image": {
+      "small-logo": {
+        "id": "*image@small",
+        "subset": "image",
+        "content": {
+          "values": "*small-logo",
+          "description": "small-Logo"
+        }
       },
-      "content": {
-        "values": [
-          "*main-logo",
-          "*main-logo-placeholder"
-        ],
-        "description": "Main-Logo"
+      "main-logo": {
+        "id": "*image@main",
+        "subset": "image",
+        "content": {
+          "values": [
+            "*main-logo",
+            "*main-logo-placeholder"
+          ],
+          "description": "main-logo"
+        }
+      },
+      "language": {
+        "id": "*image@small",
+        "subset": "image",
+        "content": {
+          "values": [
+            "*flag-placeholder",
+            "*flag-logo"
+          ],
+          "action": "*language",
+          "description": "language-logo"
+        }
       }
     },
-    {
-      "id": "small-logo",
-      "subset": "image",
-      "style": {
-        "width": "48",
-        "height": "48",
-        "shape": "rounded",
-        "padding": "3",
-        "background-color": "*background@funny-color"
+    "label": {
+      "login-title": {
+        "id": "*label@title",
+        "subset": "label",
+        "content": {
+          "value": "*page-login@title"
+        }
       },
-      "content": {
-        "values": "*small-logo",
-        "description": "Small-Logo"
+      "login-section": {
+        "id": "*label@section",
+        "subset": "label",
+        "content": {
+          "value": "*page-login@credentials-request"
+        }
+      },
+      "login-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-login@login-button"
+        }
       }
     },
-    {
-      "id": "flag-logo",
-      "subset": "image",
-      "style": {
-        "width": "48",
-        "height": "48",
-        "shape": "rounded",
-        "padding": "3",
-        "background-color": "*background@funny-color"
-      },
-      "content": {
-        "values": [
-          "*flag-placeholder",
-          "*flag-logo"
-        ],
-        "action": {
-          "primaries": "navigate://url/lobby/page-language"
+    "button": {
+      "login": {
+        "subset": "button",
+        "content": {
+          "label": "*label@login-button",
+          "action": "*confirm"
+        }
+      }
+    },
+    "fields": {
+      "input-login": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": "string-not-null"
         },
-        "description": "Flag-Logo"
-      }
-    }
-  ],
-  "styles": {
-    "common": {
-      "title-section": {
-        "font-size": "18",
-        "font-color": "*red"
+        "content": {
+          "title": "*page-login@login",
+          "placeholder": "*page-login@login",
+          "message-errors": "can not be null"
+        }
       },
-      "label-main-button-default": {
-        "font-size": {
-          "id": "*font@button"
+      "input-password": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": "string-not-null"
         },
-        "font-color": "*blue"
+        "content": {
+          "title": "*page-login@password",
+          "placeholder": "*page-login@password",
+          "message-errors": "can not be null"
+        }
       }
-    }
-  },
-  "colors": {
-    "common": {
-      "red": "#FFFF0000",
-      "blue": "#FF0000FF"
-    },
-    "background": {
-      "gray-light": "#FFD9D9D9",
-      "funny-color": "#FF66D9FF"
-    }
-  },
-  "dimensions": {
-    "font": {
-      "button": "16"
-    },
-    "padding": {
-      "spacer-24": "24"
     }
   },
   "actions": {
-    "button": {
+    "common": {
+      "connection": {
+        "primaries": "form://send-url/form-from-page-login",
+        "validated": "navigate://url/auth/page-home"
+      },
+      "language": "navigate://url/lobby/page-language",
       "confirm": {
         "primaries": "form://send-url/form-from-page-login",
         "validated": "navigate://url/auth/page-home"
@@ -239,8 +225,8 @@
   "images": {
     "common": {
       "main-logo": {
-        "default" : "remote://lobby/logo-compose-wrong-url",
-        "fr" : "remote://lobby/logo-compose"
+        "default": "remote://lobby/logo-compose-wrong-url",
+        "fr": "remote://lobby/logo-compose"
       },
       "main-logo-placeholder": {
         "default": "local://img/logo-compose-placeholder",
@@ -251,13 +237,6 @@
       "flag-placeholder": {
         "default": "local://img/flag-placeholder",
         "tags": "placeholder"
-      }
-    }
-  },
-  "texts": {
-    "common": {
-      "credentials-title": {
-        "id": "*credentials-request"
       }
     }
   }

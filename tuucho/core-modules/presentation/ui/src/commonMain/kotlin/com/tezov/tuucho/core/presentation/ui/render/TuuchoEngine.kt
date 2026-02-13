@@ -216,7 +216,7 @@ class TuuchoEngine(
                     block = { modifierTransition(it, spec = spec) }
                 )
         ) {
-            display()
+            display(scope = this)
         }
     }
 
