@@ -83,15 +83,16 @@ internal class JsonObjectQueries(
         id: String
     ) = queriesJoin
         .getCommonByTypeUrlIdVisibility(
-            url = url, visibility = JsonVisibility.Global, type = type, id = id
-        )
-        .executeAsList()
+            url = url,
+            visibility = JsonVisibility.Global,
+            type = type,
+            id = id
+        ).executeAsList()
         .also {
             if (it.size > 1) {
                 throw DataException.Default("More than one global object found with base url $url for object $type $id")
             }
-        }
-        .firstOrNull()
+        }.firstOrNull()
         ?.toEntity()
 
     fun getContextualOrNull(

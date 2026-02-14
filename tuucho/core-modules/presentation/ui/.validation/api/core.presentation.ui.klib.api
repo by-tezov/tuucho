@@ -223,10 +223,6 @@ abstract interface com.tezov.tuucho.core.presentation.ui.screen.protocol/ScreenC
 
 abstract interface com.tezov.tuucho.core.presentation.ui.screen.protocol/ScreenProtocol : com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol { // com.tezov.tuucho.core.presentation.ui.screen.protocol/ScreenProtocol|null[0]
     abstract fun display(kotlin/Any?, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.ui.screen.protocol/ScreenProtocol.display|display(kotlin.Any?;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
-
-    final class ComposeDefaultImpls { // com.tezov.tuucho.core.presentation.ui.screen.protocol/ScreenProtocol.ComposeDefaultImpls|null[0]
-        final fun display$default(kotlin/Any?, com.tezov.tuucho.core.presentation.ui.screen.protocol/ScreenProtocol, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.presentation.ui.screen.protocol/ScreenProtocol.ComposeDefaultImpls.display$default|display$default#static(kotlin.Any?;com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenProtocol;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
-    }
 }
 
 abstract interface com.tezov.tuucho.core.presentation.ui.view.protocol/ViewFactoryMatcherProtocol { // com.tezov.tuucho.core.presentation.ui.view.protocol/ViewFactoryMatcherProtocol|null[0]
@@ -241,10 +237,6 @@ abstract interface com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProto
     abstract fun display(kotlin/Any?, androidx.compose.runtime/Composer?, kotlin/Int) // com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProtocol.display|display(kotlin.Any?;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     abstract fun updateIfNeeded() // com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProtocol.updateIfNeeded|updateIfNeeded(){}[0]
     abstract suspend fun initialize(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProtocol.initialize|initialize(kotlinx.serialization.json.JsonObject){}[0]
-
-    final class ComposeDefaultImpls { // com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProtocol.ComposeDefaultImpls|null[0]
-        final fun display$default(kotlin/Any?, com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProtocol, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.tezov.tuucho.core.presentation.ui.view.protocol/ViewProtocol.ComposeDefaultImpls.display$default|display$default#static(kotlin.Any?;com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
-    }
 }
 
 abstract class com.tezov.tuucho.core.presentation.ui.transition._system/AbstractModifierTransition : androidx.compose.ui/Modifier { // com.tezov.tuucho.core.presentation.ui.transition._system/AbstractModifierTransition|null[0]

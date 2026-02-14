@@ -20,43 +20,46 @@ import kotlinx.serialization.json.jsonArray
 
 @OpenForTest
 internal class ConfigMaterialResourceRectifier {
-
     private val globalResourceRectifier by lazy { GlobalResourceRectifier() }
     private val localResourceRectifier by lazy { LocalResourceRectifier() }
     private val contextualResourceRectifier by lazy { ContextualResourceRectifier() }
 
     fun process(
         materialResourceObject: JsonObject
-    ) = materialResourceObject.withScope(MaterialResource::Scope).apply {
-        global?.let { global = globalResourceRectifier.process(it) }
-        local?.let { local = localResourceRectifier.process(it) }
-        contextual?.let { contextual = contextualResourceRectifier.process(it) }
-    }.collect()
+    ) = materialResourceObject
+        .withScope(MaterialResource::Scope)
+        .apply {
+            global?.let { global = globalResourceRectifier.process(it) }
+            local?.let { local = localResourceRectifier.process(it) }
+            contextual?.let { contextual = contextualResourceRectifier.process(it) }
+        }.collect()
 }
 
 private abstract class AbstractResourceRectifier<S : OpenSchemaScope<S>, D : OpenSchemaScope<D>> {
-
     fun process(
         resourceObject: JsonObject
     ): JsonObject {
         val baseSetting = resourceObject.rectifyOnSetting(base = null)
-        return (resourceObject - rootSettingKey).mapValues { (_, element) ->
-            when (element) {
-                is JsonObject -> {
-                    val elementSetting = element.rectifyOnSetting(base = baseSetting)
-                    element.onScope(scopeDefinitionFactory).element
-                        .rectifyDefinitions(setting = elementSetting)
-                }
+        return (resourceObject - rootSettingKey)
+            .mapValues { (_, element) ->
+                when (element) {
+                    is JsonObject -> {
+                        val elementSetting = element.rectifyOnSetting(base = baseSetting)
+                        element
+                            .onScope(scopeDefinitionFactory)
+                            .element
+                            .rectifyDefinitions(setting = elementSetting)
+                    }
 
-                is JsonArray -> {
-                    element.rectifyDefinitions(setting = baseSetting)
-                }
+                    is JsonArray -> {
+                        element.rectifyDefinitions(setting = baseSetting)
+                    }
 
-                else -> {
-                    throw DataException.Default("invalid material resource entry")
+                    else -> {
+                        throw DataException.Default("invalid material resource entry")
+                    }
                 }
-            }
-        }.let(::JsonObject)
+            }.let(::JsonObject)
     }
 
     protected abstract val rootSettingKey: String
@@ -67,10 +70,12 @@ private abstract class AbstractResourceRectifier<S : OpenSchemaScope<S>, D : Ope
 
     private fun JsonElement.rectifyDefinitions(
         setting: S
-    ) = jsonArray.map {
-        it.withScope(scopeDefinitionFactory)
-            .rectifyDefinition(setting = setting)
-    }.let(::JsonArray)
+    ) = jsonArray
+        .map {
+            it
+                .withScope(scopeDefinitionFactory)
+                .rectifyDefinition(setting = setting)
+        }.let(::JsonArray)
 
     private fun JsonObject.rectifyOnSetting(
         base: S?
@@ -86,7 +91,6 @@ private abstract class AbstractResourceRectifier<S : OpenSchemaScope<S>, D : Ope
 }
 
 private class GlobalResourceRectifier : AbstractResourceRectifier<Global.Setting.Scope, Global.Definition.Scope>() {
-
     override val rootSettingKey: String
         get() = Global.Setting.root
 
@@ -133,7 +137,6 @@ private class GlobalResourceRectifier : AbstractResourceRectifier<Global.Setting
 }
 
 private class LocalResourceRectifier : AbstractResourceRectifier<Local.Setting.Scope, Local.Definition.Scope>() {
-
     override val rootSettingKey: String
         get() = Local.Setting.root
 
@@ -177,7 +180,6 @@ private class LocalResourceRectifier : AbstractResourceRectifier<Local.Setting.S
 }
 
 private class ContextualResourceRectifier : AbstractResourceRectifier<Contextual.Setting.Scope, Contextual.Definition.Scope>() {
-
     override val rootSettingKey: String
         get() = Contextual.Setting.root
 

@@ -69,7 +69,6 @@ object ConfigSchema {
                     var url by delegate<String?>(Key.url)
                 }
             }
-
         }
 
         object Local {
@@ -142,8 +141,6 @@ object ConfigSchema {
                     var url by delegate<String?>(Key.url)
                 }
             }
-
         }
-
     }
 }
