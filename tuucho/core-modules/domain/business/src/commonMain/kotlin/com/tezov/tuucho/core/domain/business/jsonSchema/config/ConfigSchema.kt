@@ -40,6 +40,7 @@ object ConfigSchema {
                 const val root = "setting"
 
                 object Key {
+                    const val validityKey = "validity-key"
                     const val urlsWhiteList = "urls-white-list"
                 }
 
@@ -48,10 +49,13 @@ object ConfigSchema {
                 ) : OpenSchemaScope<Scope>(argument) {
                     override val root = Setting.root
                     var urlsWhiteList by delegate<JsonArray?>(Key.urlsWhiteList)
+                    var validityKey by delegate<String?>(Key.validityKey)
                 }
             }
 
-            object Item {
+            object Definition {
+                const val root = "definition"
+
                 object Key {
                     const val validityKey = "validity-key"
                     const val url = "url"
@@ -60,11 +64,11 @@ object ConfigSchema {
                 class Scope(
                     argument: SchemaScopeArgument
                 ) : OpenSchemaScope<Scope>(argument) {
+                    override val root = Definition.root
                     var validityKey by delegate<String?>(Key.validityKey)
                     var url by delegate<String?>(Key.url)
                 }
             }
-
         }
 
         object Local {
@@ -72,6 +76,7 @@ object ConfigSchema {
                 const val root = "setting"
 
                 object Key {
+                    const val validityKey = "validity-key"
                     const val preDownload = "pre-download"
                 }
 
@@ -79,12 +84,14 @@ object ConfigSchema {
                     argument: SchemaScopeArgument
                 ) : OpenSchemaScope<Scope>(argument) {
                     override val root = Setting.root
-
+                    var validityKey by delegate<String?>(Key.validityKey)
                     var preDownload by delegate<Boolean?>(Key.preDownload)
                 }
             }
 
-            object Item {
+            object Definition {
+                const val root = "definition"
+
                 object Key {
                     const val validityKey = "validity-key"
                     const val url = "url"
@@ -93,6 +100,7 @@ object ConfigSchema {
                 class Scope(
                     argument: SchemaScopeArgument
                 ) : OpenSchemaScope<Scope>(argument) {
+                    override val root = Definition.root
                     var validityKey by delegate<String?>(Key.validityKey)
                     var url by delegate<String?>(Key.url)
                 }
@@ -104,6 +112,7 @@ object ConfigSchema {
                 const val root = "setting"
 
                 object Key {
+                    const val validityKey = "validity-key"
                     const val urlOrigin = "url-origin"
                 }
 
@@ -111,12 +120,14 @@ object ConfigSchema {
                     argument: SchemaScopeArgument
                 ) : OpenSchemaScope<Scope>(argument) {
                     override val root = Setting.root
-
+                    var validityKey by delegate<String?>(Key.validityKey)
                     var urlOrigin by delegate<String?>(Key.urlOrigin)
                 }
             }
 
-            object Item {
+            object Definition {
+                const val root = "definition"
+
                 object Key {
                     const val validityKey = "validity-key"
                     const val url = "url"
@@ -125,12 +136,11 @@ object ConfigSchema {
                 class Scope(
                     argument: SchemaScopeArgument
                 ) : OpenSchemaScope<Scope>(argument) {
+                    override val root = Definition.root
                     var validityKey by delegate<String?>(Key.validityKey)
                     var url by delegate<String?>(Key.url)
                 }
             }
-
         }
-
     }
 }

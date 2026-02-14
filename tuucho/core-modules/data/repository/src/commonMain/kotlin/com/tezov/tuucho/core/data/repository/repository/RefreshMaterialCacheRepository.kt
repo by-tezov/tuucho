@@ -76,7 +76,7 @@ internal class RefreshMaterialCacheRepository(
     private suspend fun JsonObject.refreshGlobalCache() {
         forEach { (_, value) ->
             for (element in value.jsonArray) {
-                element.withScope(ConfigSchema.MaterialResource.Global.Item::Scope).let { configScope ->
+                element.withScope(ConfigSchema.MaterialResource.Global.Definition::Scope).let { configScope ->
                     val url = configScope.url
                         ?: throw DataException.Default("missing url in global material $this")
                     val validityKey = configScope.validityKey
@@ -99,7 +99,7 @@ internal class RefreshMaterialCacheRepository(
     private suspend fun JsonObject.refreshLocalCache() {
         forEach { (_, value) ->
             for (element in value.jsonArray) {
-                element.withScope(Local.Item::Scope).let { configScope ->
+                element.withScope(Local.Definition::Scope).let { configScope ->
                     val url = configScope.url
                         ?: throw DataException.Default("missing url in local material $this")
                     val validityKey = configScope.validityKey
@@ -133,7 +133,7 @@ internal class RefreshMaterialCacheRepository(
             for (element in value.jsonArray) {
                 val urlOrigin = element.withScope(Contextual.Setting::Scope).urlOrigin
                     ?: throw DataException.Default("missing urlOrigin in contextual material $this")
-                element.withScope(Contextual.Item::Scope).let { configScope ->
+                element.withScope(Contextual.Definition::Scope).let { configScope ->
                     val url = configScope.url?.replaceUrlOriginToken(urlOrigin)
                         ?: ShadowerContextual.defaultUrl(urlOrigin)
                     val validityKey = configScope.validityKey

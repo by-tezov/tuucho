@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <baseline>
+  <!-- ************ Project: :core.data.repository ************ -->
+  <file name="build.gradle.kts">
+          <error line="17" column="65" source="standard:chain-method-continuation" />
+          <error line="17" column="71" source="standard:trailing-comma-on-call-site" />
+          <error line="18" column="18" source="standard:trailing-comma-on-call-site" />
+      </file>
   <!-- ************ Project: :core.presentation.ui ************ -->
   <file name="build.gradle.kts">
           <error line="23" column="1" source="standard:comment-spacing" />

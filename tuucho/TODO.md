@@ -1,8 +1,5 @@
 ### Todo:
 
-- logic multi level sub resolution + remove hack to list FIrst
-    - finir avec un autre level setting (setting / definition)
-
 - fix merge style ... previous / next, button -> issue multiple sub ??, button issue to assemble style ?
 
 - popup ? selector navigation seem to not work ->
@@ -17,6 +14,7 @@
 - Doc Http interceptor renamed to middleware exchange
 - Doc image action
 - Doc action language
+- Doc config avec url-white-list
     
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size)?
