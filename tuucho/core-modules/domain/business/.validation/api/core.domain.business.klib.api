@@ -1842,36 +1842,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchem
             final fun <get-materialResource>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.Key.materialResource.<get-materialResource>|<get-materialResource>(){}[0]
     }
 
-    final object MaterialItem { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem|null[0]
-        final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope|null[0]
-            constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
-
-            final var preDownload // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.preDownload|{}preDownload[0]
-                final fun <get-preDownload>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.preDownload.<get-preDownload>|<get-preDownload>(){}[0]
-                final fun <set-preDownload>(kotlin/Boolean?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.preDownload.<set-preDownload>|<set-preDownload>(kotlin.Boolean?){}[0]
-            final var url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.url|{}url[0]
-                final fun <get-url>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.url.<get-url>|<get-url>(){}[0]
-                final fun <set-url>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.url.<set-url>|<set-url>(kotlin.String?){}[0]
-            final var urlOrigin // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.urlOrigin|{}urlOrigin[0]
-                final fun <get-urlOrigin>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.urlOrigin.<get-urlOrigin>|<get-urlOrigin>(){}[0]
-                final fun <set-urlOrigin>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.urlOrigin.<set-urlOrigin>|<set-urlOrigin>(kotlin.String?){}[0]
-            final var validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.validityKey|{}validityKey[0]
-                final fun <get-validityKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
-                final fun <set-validityKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Scope.validityKey.<set-validityKey>|<set-validityKey>(kotlin.String?){}[0]
-        }
-
-        final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key|null[0]
-            final const val preDownload // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.preDownload|{}preDownload[0]
-                final fun <get-preDownload>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.preDownload.<get-preDownload>|<get-preDownload>(){}[0]
-            final const val url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.url|{}url[0]
-                final fun <get-url>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.url.<get-url>|<get-url>(){}[0]
-            final const val urlOrigin // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.urlOrigin|{}urlOrigin[0]
-                final fun <get-urlOrigin>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.urlOrigin.<get-urlOrigin>|<get-urlOrigin>(){}[0]
-            final const val validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.validityKey|{}validityKey[0]
-                final fun <get-validityKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialItem.Key.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
-        }
-    }
-
     final object MaterialResource { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource|null[0]
         final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.root|{}root[0]
             final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.root.<get-root>|<get-root>(){}[0]
@@ -1893,6 +1863,114 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchem
                 final fun <set-local>(kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Scope.local.<set-local>|<set-local>(kotlinx.serialization.json.JsonObject?){}[0]
         }
 
+        final object Contextual { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual|null[0]
+            final object Definition { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition|null[0]
+                final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.root|{}root[0]
+                    final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.root.<get-root>|<get-root>(){}[0]
+
+                final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope|null[0]
+                    constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+                    final val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.root|{}root[0]
+                        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.root.<get-root>|<get-root>(){}[0]
+
+                    final var url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.url|{}url[0]
+                        final fun <get-url>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.url.<get-url>|<get-url>(){}[0]
+                        final fun <set-url>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.url.<set-url>|<set-url>(kotlin.String?){}[0]
+                    final var validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                        final fun <set-validityKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Scope.validityKey.<set-validityKey>|<set-validityKey>(kotlin.String?){}[0]
+                }
+
+                final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Key|null[0]
+                    final const val url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Key.url|{}url[0]
+                        final fun <get-url>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Key.url.<get-url>|<get-url>(){}[0]
+                    final const val validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Key.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Definition.Key.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                }
+            }
+
+            final object Setting { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting|null[0]
+                final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.root|{}root[0]
+                    final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.root.<get-root>|<get-root>(){}[0]
+
+                final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope|null[0]
+                    constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+                    final val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.root|{}root[0]
+                        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.root.<get-root>|<get-root>(){}[0]
+
+                    final var urlOrigin // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.urlOrigin|{}urlOrigin[0]
+                        final fun <get-urlOrigin>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.urlOrigin.<get-urlOrigin>|<get-urlOrigin>(){}[0]
+                        final fun <set-urlOrigin>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.urlOrigin.<set-urlOrigin>|<set-urlOrigin>(kotlin.String?){}[0]
+                    final var validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                        final fun <set-validityKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Scope.validityKey.<set-validityKey>|<set-validityKey>(kotlin.String?){}[0]
+                }
+
+                final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Key|null[0]
+                    final const val urlOrigin // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Key.urlOrigin|{}urlOrigin[0]
+                        final fun <get-urlOrigin>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Key.urlOrigin.<get-urlOrigin>|<get-urlOrigin>(){}[0]
+                    final const val validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Key.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Contextual.Setting.Key.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                }
+            }
+        }
+
+        final object Global { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global|null[0]
+            final object Definition { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition|null[0]
+                final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.root|{}root[0]
+                    final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.root.<get-root>|<get-root>(){}[0]
+
+                final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope|null[0]
+                    constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+                    final val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.root|{}root[0]
+                        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.root.<get-root>|<get-root>(){}[0]
+
+                    final var url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.url|{}url[0]
+                        final fun <get-url>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.url.<get-url>|<get-url>(){}[0]
+                        final fun <set-url>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.url.<set-url>|<set-url>(kotlin.String?){}[0]
+                    final var validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                        final fun <set-validityKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Scope.validityKey.<set-validityKey>|<set-validityKey>(kotlin.String?){}[0]
+                }
+
+                final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Key|null[0]
+                    final const val url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Key.url|{}url[0]
+                        final fun <get-url>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Key.url.<get-url>|<get-url>(){}[0]
+                    final const val validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Key.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Definition.Key.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                }
+            }
+
+            final object Setting { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting|null[0]
+                final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.root|{}root[0]
+                    final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.root.<get-root>|<get-root>(){}[0]
+
+                final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope|null[0]
+                    constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+                    final val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.root|{}root[0]
+                        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.root.<get-root>|<get-root>(){}[0]
+
+                    final var urlsWhiteList // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.urlsWhiteList|{}urlsWhiteList[0]
+                        final fun <get-urlsWhiteList>(): kotlinx.serialization.json/JsonArray? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.urlsWhiteList.<get-urlsWhiteList>|<get-urlsWhiteList>(){}[0]
+                        final fun <set-urlsWhiteList>(kotlinx.serialization.json/JsonArray?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.urlsWhiteList.<set-urlsWhiteList>|<set-urlsWhiteList>(kotlinx.serialization.json.JsonArray?){}[0]
+                    final var validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                        final fun <set-validityKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Scope.validityKey.<set-validityKey>|<set-validityKey>(kotlin.String?){}[0]
+                }
+
+                final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Key|null[0]
+                    final const val urlsWhiteList // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Key.urlsWhiteList|{}urlsWhiteList[0]
+                        final fun <get-urlsWhiteList>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Key.urlsWhiteList.<get-urlsWhiteList>|<get-urlsWhiteList>(){}[0]
+                    final const val validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Key.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Global.Setting.Key.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                }
+            }
+        }
+
         final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key|null[0]
             final const val contextual // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.contextual|{}contextual[0]
                 final fun <get-contextual>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.contextual.<get-contextual>|<get-contextual>(){}[0]
@@ -1900,6 +1978,60 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchem
                 final fun <get-global>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.global.<get-global>|<get-global>(){}[0]
             final const val local // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.local|{}local[0]
                 final fun <get-local>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Key.local.<get-local>|<get-local>(){}[0]
+        }
+
+        final object Local { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local|null[0]
+            final object Definition { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition|null[0]
+                final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.root|{}root[0]
+                    final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.root.<get-root>|<get-root>(){}[0]
+
+                final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope|null[0]
+                    constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+                    final val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.root|{}root[0]
+                        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.root.<get-root>|<get-root>(){}[0]
+
+                    final var url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.url|{}url[0]
+                        final fun <get-url>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.url.<get-url>|<get-url>(){}[0]
+                        final fun <set-url>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.url.<set-url>|<set-url>(kotlin.String?){}[0]
+                    final var validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                        final fun <set-validityKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Scope.validityKey.<set-validityKey>|<set-validityKey>(kotlin.String?){}[0]
+                }
+
+                final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Key|null[0]
+                    final const val url // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Key.url|{}url[0]
+                        final fun <get-url>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Key.url.<get-url>|<get-url>(){}[0]
+                    final const val validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Key.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Definition.Key.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                }
+            }
+
+            final object Setting { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting|null[0]
+                final const val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.root|{}root[0]
+                    final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.root.<get-root>|<get-root>(){}[0]
+
+                final class Scope : com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope> { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope|null[0]
+                    constructor <init>(com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.<init>|<init>(com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument){}[0]
+
+                    final val root // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.root|{}root[0]
+                        final fun <get-root>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.root.<get-root>|<get-root>(){}[0]
+
+                    final var preDownload // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.preDownload|{}preDownload[0]
+                        final fun <get-preDownload>(): kotlin/Boolean? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.preDownload.<get-preDownload>|<get-preDownload>(){}[0]
+                        final fun <set-preDownload>(kotlin/Boolean?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.preDownload.<set-preDownload>|<set-preDownload>(kotlin.Boolean?){}[0]
+                    final var validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String? // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                        final fun <set-validityKey>(kotlin/String?) // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Scope.validityKey.<set-validityKey>|<set-validityKey>(kotlin.String?){}[0]
+                }
+
+                final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Key|null[0]
+                    final const val preDownload // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Key.preDownload|{}preDownload[0]
+                        final fun <get-preDownload>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Key.preDownload.<get-preDownload>|<get-preDownload>(){}[0]
+                    final const val validityKey // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Key.validityKey|{}validityKey[0]
+                        final fun <get-validityKey>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.config/ConfigSchema.MaterialResource.Local.Setting.Key.validityKey.<get-validityKey>|<get-validityKey>(){}[0]
+                }
+            }
         }
     }
 }
