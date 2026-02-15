@@ -1,7 +1,5 @@
 ### Todo:
 
-- fix merge style ... previous / next, button -> issue multiple sub ??, button issue to assemble style ?
-
 - popup ? selector navigation seem to not work ->
   because selector can't work a cause de NavigationMaterialCacheRepository,
   un seul choix est gardé en mémoire ou alors routes is changing.
@@ -17,7 +15,7 @@
 - Doc config avec url-white-list
     
 - Animation placeholder / final image ?
-- do a smart padding object - can do also for size)?
+- do a smart padding object - can do also for size?
 - shadower with flow ?
 - error message with class name that throw.
 

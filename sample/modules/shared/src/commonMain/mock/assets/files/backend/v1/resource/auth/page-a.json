@@ -86,7 +86,7 @@
                 "content": {
                   "label": {
                     "style": {
-                      "id": "*label@button-previous"
+                      "id": "*label@button"
                     },
                     "content": {
                       "value": "*page-image"

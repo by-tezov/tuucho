@@ -254,10 +254,7 @@
       "next-button": {
         "id": "*label@button",
         "subset": "label",
-        "style": {
-          "font-size": "*font@button",
-          "font-color": "*text@red"
-        },
+        "style": "*label@button-next",
         "content": {
           "value": "*next-button"
         }
