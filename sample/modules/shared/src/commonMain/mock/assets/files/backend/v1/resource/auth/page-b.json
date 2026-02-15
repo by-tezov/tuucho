@@ -15,8 +15,8 @@
             },
             "option": {
               "single": true,
-              "popUpTo": {
-                "route": "auth/page-e",
+              "pop-up-to": {
+                "url": "auth/page-e",
                 "inclusive": false,
                 "greedy": true
               }
@@ -24,7 +24,7 @@
             "transition": {
               "type": "slide-horizontal",
               "entrance": "from-start",
-              "effect": "push-cover"
+              "effect": "cover-push"
             }
           },
           {

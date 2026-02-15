@@ -238,6 +238,6 @@ internal class InteractionLockStack(
                 }
             }
             toResumes.forEach { it.deferred.complete(Unit) }
-        }
+        }.start()
     }
 }

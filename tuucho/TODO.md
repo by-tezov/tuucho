@@ -1,10 +1,8 @@
 ### Todo:
 
-- popup ? selector navigation seem to not work ->
-  because selector can't work a cause de NavigationMaterialCacheRepository,
-  un seul choix est gardé en mémoire ou alors routes is changing.
+- Write test for material cache
+- Update test 2e2
 
-- update test 2e2
 
 - screen context better way to use it ?
 - projection input dataclass ?

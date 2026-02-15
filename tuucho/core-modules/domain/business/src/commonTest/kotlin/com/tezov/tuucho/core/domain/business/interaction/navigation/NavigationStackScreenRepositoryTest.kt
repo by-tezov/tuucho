@@ -42,7 +42,7 @@ class NavigationStackScreenRepositoryTest {
         )
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {}
     }
 
@@ -280,7 +280,7 @@ class NavigationStackScreenRepositoryTest {
         } returns listOf(routeKeepA, routeKeepB)
 
         everySuspend {
-            materialCacheRepository.release(any())
+            materialCacheRepository.releaseCache(any())
         } returns Unit
 
         sut.backward()
@@ -291,7 +291,7 @@ class NavigationStackScreenRepositoryTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             navigationStackRouteRepository.routes()
             coroutineTestScope.mock.default.withContext<Any>(any())
-            materialCacheRepository.release(routeRemove.value)
+            materialCacheRepository.releaseCache(routeRemove.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -370,7 +370,7 @@ class NavigationStackScreenRepositoryTest {
         } returns emptyList()
 
         everySuspend {
-            materialCacheRepository.release(any())
+            materialCacheRepository.releaseCache(any())
         } returns Unit
 
         sut.backward()
@@ -381,8 +381,8 @@ class NavigationStackScreenRepositoryTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             navigationStackRouteRepository.routes()
             coroutineTestScope.mock.default.withContext<Any>(any())
-            materialCacheRepository.release(routeA.value)
-            materialCacheRepository.release(routeB.value)
+            materialCacheRepository.releaseCache(routeA.value)
+            materialCacheRepository.releaseCache(routeB.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }

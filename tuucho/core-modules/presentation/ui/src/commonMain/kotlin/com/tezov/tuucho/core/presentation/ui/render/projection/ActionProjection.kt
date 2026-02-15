@@ -80,7 +80,7 @@ private class ActionProjection(
                         requester = "$route::ActionProjection::${hashCode().toHexString()}",
                         lockable = screenLock
                     )
-                }
+                }.start()
             }
             action
         }

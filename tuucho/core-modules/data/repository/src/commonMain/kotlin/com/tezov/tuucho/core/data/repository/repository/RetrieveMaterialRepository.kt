@@ -13,6 +13,14 @@ internal class RetrieveMaterialRepository(
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
 ) : MaterialRepositoryProtocol.Retrieve {
+
+    override suspend fun isValid(
+        url: String
+    ): Boolean {
+        val lifetime = materialCacheLocalSource.getLifetime(url)
+        return materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)
+    }
+
     override suspend fun process(
         url: String
     ): JsonObject {

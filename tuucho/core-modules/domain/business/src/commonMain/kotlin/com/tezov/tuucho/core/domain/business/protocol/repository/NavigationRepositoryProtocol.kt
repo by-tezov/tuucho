@@ -7,48 +7,38 @@ import kotlinx.serialization.json.JsonObject
 
 object NavigationRepositoryProtocol {
     interface MaterialCache {
-        suspend fun releaseAll(
-            urls: List<String>
+
+        suspend fun prepareNavigationConsumable(
+            url: String
         )
 
-        suspend fun release(
-            url: String
+        suspend fun bindComponentObjectCache(
+            route: NavigationRoute.Url
+        )
+
+        suspend fun unbindComponentObjectCache(
+            route: NavigationRoute.Url
         )
 
         suspend fun getComponentObject(
             url: String
         ): JsonObject
 
-        suspend fun getNavigationSettingObject(
+        suspend fun consumeNavigationSettingExtraObject(
             url: String
         ): JsonObject?
 
-        suspend fun getNavigationSettingExtraObject(
+        suspend fun consumeNavigationDefinitionOptionObject(
             url: String
         ): JsonObject?
 
-        suspend fun getNavigationDefinitionObject(
+        suspend fun consumeNavigationDefinitionTransitionObject(
             url: String
         ): JsonObject?
 
-        suspend fun getNavigationDefinitionOptionObject(
-            url: String
-        ): JsonObject?
-
-        suspend fun getNavigationDefinitionTransitionObject(
-            url: String
-        ): JsonObject?
-
-        suspend fun getShadowerSettingObject(
-            url: String
-        ): JsonObject?
-
-        suspend fun getShadowerSettingNavigateForwardObject(
-            url: String
-        ): JsonObject?
-
-        suspend fun getShadowerSettingNavigateBackwardObject(
-            url: String
+        suspend fun consumeShadowerSettingObject(
+            url: String,
+            direction: String
         ): JsonObject?
     }
 

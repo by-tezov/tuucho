@@ -77,5 +77,5 @@ private fun onBackCompleted(
             requester = "BackHandler",
             lockable = screenLock
         )
-    }
+    }.start()
 }

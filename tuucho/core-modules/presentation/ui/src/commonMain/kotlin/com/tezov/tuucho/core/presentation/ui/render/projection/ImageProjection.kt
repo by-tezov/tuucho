@@ -100,7 +100,7 @@ private class ImageProjection(
                         }
                     }
                 }
-            }
+            }.start()
             null
         }
 }

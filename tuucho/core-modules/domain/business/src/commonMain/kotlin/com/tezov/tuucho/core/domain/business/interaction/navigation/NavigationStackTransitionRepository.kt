@@ -55,7 +55,7 @@ internal class NavigationStackTransitionRepository(
                 lastEvent = event
                 _events.emit(event)
             }
-        }
+        }.start()
     }
 
     override suspend fun notifyTransitionCompleted() {
@@ -113,8 +113,8 @@ internal class NavigationStackTransitionRepository(
                     stack.add(
                         Item(
                             route = pushedRoute,
-                            extraObject = materialCacheRepository.getNavigationSettingExtraObject(route.value),
-                            transitionObject = materialCacheRepository.getNavigationDefinitionTransitionObject(route.value)
+                            extraObject = materialCacheRepository.consumeNavigationSettingExtraObject(route.value),
+                            transitionObject = materialCacheRepository.consumeNavigationDefinitionTransitionObject(route.value)
                         )
                     )
                 }
@@ -141,8 +141,13 @@ internal class NavigationStackTransitionRepository(
             .filter { it == StackTransition.Event.TransitionComplete }
             .once(block = {
                 val event: StackTransition.Event.Idle = mutex.withLock {
-                    stack.retainAll { item ->
-                        routes.any { it == item.route }
+                    val iterator = stack.listIterator()
+                    while (iterator.hasNext()) {
+                        val item = iterator.next()
+                        if (routes.none { it == item.route }) {
+                            iterator.remove()
+                            materialCacheRepository.unbindComponentObjectCache(item.route)
+                        }
                     }
                     StackTransition.Event.Idle(
                         routes = buildList {

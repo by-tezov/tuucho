@@ -23,6 +23,6 @@ class RegisterToScreenTransitionEventUseCase(
             navigationAnimatorStackRepository.events
                 .filter { it != Event.TransitionComplete }
                 .forever { input.onEvent.invoke(it) }
-        }
+        }.start()
     }
 }

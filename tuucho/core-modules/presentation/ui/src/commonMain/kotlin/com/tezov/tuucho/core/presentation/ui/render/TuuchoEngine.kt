@@ -128,7 +128,7 @@ class TuuchoEngine(
             )
             transitionRequested = true
             redrawCounterTrigger.intValue += 1
-        }
+        }.start()
     }
 
     private fun onIdleEvent(
@@ -152,7 +152,7 @@ class TuuchoEngine(
             backgroundGroup = null
             transitionRequested = false
             redrawCounterTrigger.intValue += 1
-        }
+        }.start()
     }
 
     @Composable
@@ -196,7 +196,7 @@ class TuuchoEngine(
                             input = Unit
                         )
                     }
-                }
+                }.start()
                 animationProgress.start()
             }
         }
