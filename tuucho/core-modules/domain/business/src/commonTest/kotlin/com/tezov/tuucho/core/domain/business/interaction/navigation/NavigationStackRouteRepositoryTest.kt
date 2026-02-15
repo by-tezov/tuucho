@@ -2,8 +2,14 @@ package com.tezov.tuucho.core.domain.business.interaction.navigation
 
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
+import dev.mokkery.mock
+import dev.mokkery.resetCalls
 import dev.mokkery.verify.VerifyMode
+import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -16,20 +22,25 @@ import kotlin.test.assertNull
 
 class NavigationStackRouteRepositoryTest {
     private val coroutineTestScope = CoroutineTestScope()
+    private lateinit var materialCacheRepository: NavigationRepositoryProtocol.MaterialCache
+
     private lateinit var sut: NavigationStackRouteRepository
 
     @BeforeTest
     fun setup() {
         coroutineTestScope.setup()
+        materialCacheRepository = mock()
 
         sut = NavigationStackRouteRepository(
-            coroutineScopes = coroutineTestScope.mock
+            coroutineScopes = coroutineTestScope.mock,
+            materialCacheRepository = materialCacheRepository
         )
     }
 
     @AfterTest
     fun tearDown() {
         coroutineTestScope.verifyNoMoreCalls()
+        verifyNoMoreCalls(materialCacheRepository)
     }
 
     @Test
@@ -69,12 +80,17 @@ class NavigationStackRouteRepositoryTest {
     fun `forward pushes route`() = coroutineTestScope.run {
         val route = NavigationRoute.Url("id", "url")
 
-        sut.forward(route, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route)
 
         val result = sut.routes()
         assertEquals(listOf(route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -85,19 +101,27 @@ class NavigationStackRouteRepositoryTest {
         val route1 = NavigationRoute.Url("id-1", "url-1")
         val route2 = NavigationRoute.Url("id-2", "url-2")
 
-        sut.forward(route1, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+        } returns buildJsonObject {
+            put("clear-stack", true)
+        }
+
+        sut.forward(route1)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
-        sut.forward(
-            route = route2,
-            navigationOptionObject = buildJsonObject {
-                put("clear-stack", true)
-            }
-        )
+
+        sut.forward(route = route2)
 
         val result = sut.routes()
         assertEquals(listOf(route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -108,8 +132,13 @@ class NavigationStackRouteRepositoryTest {
         val route1 = NavigationRoute.Url("id-1", "url-1")
         val route2 = NavigationRoute.Url("id-2", "url-2")
 
-        sut.forward(route1, null)
-        sut.forward(route2, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        sut.forward(route2)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         sut.backward(NavigationRoute.Back)
@@ -128,8 +157,13 @@ class NavigationStackRouteRepositoryTest {
         val route1 = NavigationRoute.Url("id-1", "url-1")
         val route2 = NavigationRoute.Url("id-2", "url-2")
 
-        sut.forward(route1, null)
-        sut.forward(route2, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        sut.forward(route2)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         val result = sut.backward(NavigationRoute.Finish)
@@ -172,20 +206,27 @@ class NavigationStackRouteRepositoryTest {
         val route1 = NavigationRoute.Url("id-1", "url")
         val route2 = NavigationRoute.Url("id-2", "url")
 
-        sut.forward(route1, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+        } returns buildJsonObject {
+            put("single", true)
+        }
+
+        sut.forward(route1)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = route2,
-            navigationOptionObject = buildJsonObject {
-                put("single", true)
-            }
-        )
+        sut.forward(route = route2)
 
         val result = sut.routes()
         assertEquals(listOf(route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -195,45 +236,55 @@ class NavigationStackRouteRepositoryTest {
     fun `forward with invalid reuse throws`() = coroutineTestScope.run {
         val route = NavigationRoute.Url("id", "url")
 
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns buildJsonObject {
+            put("reuse", "invalid")
+        }
+
         assertFailsWith<DomainException.Default> {
-            sut.forward(
-                route = route,
-                navigationOptionObject = buildJsonObject {
-                    put("reuse", "invalid")
-                }
-            )
+            sut.forward(route = route)
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
     @Test
     fun `popupTo removes items until matching`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id", "url")
         val route1 = NavigationRoute.Url("id-1", "url-1")
         val route2 = NavigationRoute.Url("id-2", "url-2")
         val route3 = NavigationRoute.Url("id-3", "url-3")
 
-        sut.forward(route1, null)
-        sut.forward(route2, null)
-        sut.forward(route3, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("pop-up-to", buildJsonObject {
+                put("url", "url-2")
+                put("inclusive", false)
+            })
+        }
+
+        sut.forward(route1)
+        sut.forward(route2)
+        sut.forward(route3)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = NavigationRoute.Url("id", "url"),
-            navigationOptionObject = buildJsonObject {
-                put("pop-up-to", buildJsonObject {
-                    put("url", "url-2")
-                    put("inclusive", false)
-                })
-            }
-        )
+        sut.forward(route = route)
 
         val result = sut.routes()
-        assertEquals(listOf(route1, route2, NavigationRoute.Url("id", "url")), result)
+        assertEquals(listOf(route1, route2, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -241,26 +292,34 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `forward with reuse last reuses last matching`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url")
         val routeInitial1 = NavigationRoute.Url("id-1", "url")
         val routeInitial2 = NavigationRoute.Url("id-2", "url")
 
-        sut.forward(routeInitial1, null)
-        sut.forward(routeInitial2, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(routeInitial1)
+        sut.forward(routeInitial2)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        val forwardResult = sut.forward(
-            route = NavigationRoute.Url("id-X", "url"),
-            navigationOptionObject = buildJsonObject {
-                put("reuse", "last")
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("reuse", "last")
+        }
 
-        assertNull(forwardResult)
+        val forwardResult = sut.forward(route = route)
+
+        assertEquals(routeInitial2, forwardResult)
 
         val result = sut.routes()
         assertEquals(listOf(routeInitial1, routeInitial2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -268,26 +327,34 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `forward with reuse first reuses first matching`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url")
         val routeInitial1 = NavigationRoute.Url("id-1", "url")
         val routeInitial2 = NavigationRoute.Url("id-2", "url")
 
-        sut.forward(routeInitial1, null)
-        sut.forward(routeInitial2, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(routeInitial1)
+        sut.forward(routeInitial2)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        val forwardResult = sut.forward(
-            route = NavigationRoute.Url("id-X", "url"),
-            navigationOptionObject = buildJsonObject {
-                put("reuse", "first")
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("reuse", "first")
+        }
 
-        assertNull(forwardResult)
+        val forwardResult = sut.forward(route = route)
+
+        assertEquals(routeInitial1, forwardResult)
 
         val result = sut.routes()
         assertEquals(listOf(routeInitial2, routeInitial1), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -295,26 +362,34 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `forward with reuse true behaves as last`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url")
         val routeInitial1 = NavigationRoute.Url("id-1", "url")
         val routeInitial2 = NavigationRoute.Url("id-2", "url")
 
-        sut.forward(routeInitial1, null)
-        sut.forward(routeInitial2, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(routeInitial1)
+        sut.forward(routeInitial2)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        val forwardResult = sut.forward(
-            route = NavigationRoute.Url("id-X", "url"),
-            navigationOptionObject = buildJsonObject {
-                put("reuse", "true")
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("reuse", "true")
+        }
 
-        assertNull(forwardResult)
+        val forwardResult = sut.forward(route = route)
+
+        assertEquals(routeInitial2, forwardResult)
 
         val result = sut.routes()
         assertEquals(listOf(routeInitial1, routeInitial2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -322,29 +397,37 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `popupTo inclusive true removes including target`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url-x")
         val route1 = NavigationRoute.Url("id-1", "url-1")
         val route2 = NavigationRoute.Url("id-2", "url-2")
         val route3 = NavigationRoute.Url("id-3", "url-3")
 
-        sut.forward(route1, null)
-        sut.forward(route2, null)
-        sut.forward(route3, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        sut.forward(route2)
+        sut.forward(route3)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = NavigationRoute.Url("id-X", "url-X"),
-            navigationOptionObject = buildJsonObject {
-                put("pop-up-to", buildJsonObject {
-                    put("url", "url-2")
-                    put("inclusive", true)
-                })
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("pop-up-to", buildJsonObject {
+                put("url", "url-2")
+                put("inclusive", true)
+            })
+        }
+
+        sut.forward(route = route)
 
         val result = sut.routes()
-        assertEquals(listOf(route1, NavigationRoute.Url("id-X", "url-X")), result)
+        assertEquals(listOf(route1, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -352,29 +435,37 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `popupTo greedy false uses last matching`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url-x")
         val routeFirst = NavigationRoute.Url("id-a", "shared")
         val routeSecond = NavigationRoute.Url("id-b", "shared")
         val routeThird = NavigationRoute.Url("id-c", "other")
 
-        sut.forward(routeFirst, null)
-        sut.forward(routeSecond, null)
-        sut.forward(routeThird, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(routeFirst)
+        sut.forward(routeSecond)
+        sut.forward(routeThird)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = NavigationRoute.Url("id-X", "url-X"),
-            navigationOptionObject = buildJsonObject {
-                put("pop-up-to", buildJsonObject {
-                    put("url", "shared")
-                    put("greedy", false)
-                })
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("pop-up-to", buildJsonObject {
+                put("url", "shared")
+                put("greedy", false)
+            })
+        }
+
+        sut.forward(route = route)
 
         val result = sut.routes()
-        assertEquals(listOf(routeFirst, routeSecond, NavigationRoute.Url("id-X", "url-X")), result)
+        assertEquals(listOf(routeFirst, routeSecond, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -382,46 +473,64 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `popupTo route not found throws`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url-x")
         val existingRoute = NavigationRoute.Url("id-1", "url-existing")
-        sut.forward(existingRoute, null)
+
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(existingRoute)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("pop-up-to", buildJsonObject {
+                put("url", "shared")
+                put("greedy", false)
+            })
+        }
+
         assertFailsWith<DomainException.Default> {
-            sut.forward(
-                route = NavigationRoute.Url("id-X", "url-X"),
-                navigationOptionObject = buildJsonObject {
-                    put("pop-up-to", buildJsonObject {
-                        put("url", "missing-url")
-                    })
-                }
-            )
+            sut.forward(route)
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
 
     @Test
     fun `single removes all previous matching routes`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url-shared")
         val routeFirst = NavigationRoute.Url("id-1", "url-shared")
         val routeSecond = NavigationRoute.Url("id-2", "url-shared")
 
-        sut.forward(routeFirst, null)
-        sut.forward(routeSecond, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(routeFirst)
+        sut.forward(routeSecond)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = NavigationRoute.Url("id-X", "url-shared"),
-            navigationOptionObject = buildJsonObject {
-                put("single", true)
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("single", true)
+        }
+
+        sut.forward(route)
 
         val result = sut.routes()
-        assertEquals(listOf(NavigationRoute.Url("id-X", "url-shared")), result)
+        assertEquals(listOf(route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -429,21 +538,29 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `forward returns null when route is reused`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url")
         val routeInitial = NavigationRoute.Url("id-1", "url")
 
-        sut.forward(routeInitial, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(routeInitial)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        val forwardResult = sut.forward(
-            route = NavigationRoute.Url("id-X", "url"),
-            navigationOptionObject = buildJsonObject {
-                put("reuse", "last")
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+        } returns buildJsonObject {
+            put("reuse", "last")
+        }
 
-        assertNull(forwardResult)
+        val forwardResult = sut.forward(route)
+
+        assertEquals(routeInitial, forwardResult)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -453,8 +570,13 @@ class NavigationStackRouteRepositoryTest {
         val firstRoute = NavigationRoute.Url("id-1", "url-1")
         val secondRoute = NavigationRoute.Url("id-2", "url-2")
 
-        sut.forward(firstRoute, null)
-        sut.forward(secondRoute, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(firstRoute)
+        sut.forward(secondRoute)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         val result = sut.priorRoute()
@@ -470,8 +592,13 @@ class NavigationStackRouteRepositoryTest {
         val firstRoute = NavigationRoute.Url("id-1", "url-1")
         val lastRoute = NavigationRoute.Url("id-2", "url-2")
 
-        sut.forward(firstRoute, null)
-        sut.forward(lastRoute, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(firstRoute)
+        sut.forward(lastRoute)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         val result = sut.currentRoute()
@@ -488,10 +615,15 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url-2")
         val route3 = NavigationRoute.Url("id-3", "url-3")
 
-        sut.forward(route1, null)
-        sut.forward(route2, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        sut.forward(route2)
         sut.backward(NavigationRoute.Back)
-        sut.forward(route3, null)
+        sut.forward(route3)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         val result = sut.routes()
@@ -504,18 +636,22 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `popupTo missing url throws`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-1", "url-1")
+
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns buildJsonObject {
+            put("pop-up-to", buildJsonObject {
+                // no url
+            })
+        }
+
         assertFailsWith<DomainException.Default> {
-            sut.forward(
-                route = NavigationRoute.Url("id", "value"),
-                navigationOptionObject = buildJsonObject {
-                    put("pop-up-to", buildJsonObject {
-                        // no url
-                    })
-                }
-            )
+            sut.forward(route = route)
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -525,18 +661,25 @@ class NavigationStackRouteRepositoryTest {
         val route1 = NavigationRoute.Url("id-1", "url")
         val route2 = NavigationRoute.Url("id-2", "url")
 
-        sut.forward(route1, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = route2,
-            navigationOptionObject = buildJsonObject { }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns buildJsonObject { }
+
+        sut.forward(route = route2)
 
         val result = sut.routes()
         assertEquals(listOf(route1, route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -554,30 +697,38 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `popupTo greedy true inclusive false`() = coroutineTestScope.run {
+        val route = NavigationRoute.Url("id-X", "url-X")
         val route1 = NavigationRoute.Url("id-1", "shared")
         val route2 = NavigationRoute.Url("id-2", "shared")
         val route3 = NavigationRoute.Url("id-3", "other")
 
-        sut.forward(route1, null)
-        sut.forward(route2, null)
-        sut.forward(route3, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        sut.forward(route2)
+        sut.forward(route3)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = NavigationRoute.Url("id-X", "url-X"),
-            navigationOptionObject = buildJsonObject {
-                put("pop-up-to", buildJsonObject {
-                    put("url", "shared")
-                    put("inclusive", false)
-                    put("greedy", true)
-                })
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns buildJsonObject {
+            put("pop-up-to", buildJsonObject {
+                put("url", "shared")
+                put("inclusive", false)
+                put("greedy", true)
+            })
+        }
+
+        sut.forward(route = route)
 
         val result = sut.routes()
-        assertEquals(listOf(route1, NavigationRoute.Url("id-X", "url-X")), result)
+        assertEquals(listOf(route1, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -585,15 +736,24 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `forward reuse last does nothing when no matching route`() = coroutineTestScope.run {
-        sut.forward(NavigationRoute.Url("id-1", "url-A"), null)
+        val route = NavigationRoute.Url("id-2", "url-B")
+        val route1 = NavigationRoute.Url("id-1", "url-A")
+
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = NavigationRoute.Url("id-2", "url-B"),
-            navigationOptionObject = buildJsonObject {
-                put("reuse", "last")
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns buildJsonObject {
+            put("reuse", "last")
+        }
+
+        sut.forward(route = route)
 
         val result = sut.routes()
         assertEquals(
@@ -605,6 +765,7 @@ class NavigationStackRouteRepositoryTest {
         )
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -612,30 +773,31 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `forward reuse first does nothing when no matching route`() = coroutineTestScope.run {
-        val r1 = NavigationRoute.Url("id-1", "url-A")
-        val r2 = NavigationRoute.Url("id-2", "url-B")
+        val route1 = NavigationRoute.Url("id-1", "url-A")
+        val route2 = NavigationRoute.Url("id-2", "url-B")
 
-        sut.forward(r1, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = r2,
-            navigationOptionObject = buildJsonObject {
-                put("reuse", "first")
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns buildJsonObject {
+            put("reuse", "first")
+        }
+
+        sut.forward(route = route2)
 
         val result = sut.routes()
 
-        assertEquals(
-            listOf(
-                NavigationRoute.Url("id-1", "url-A"),
-                NavigationRoute.Url("id-2", "url-B")
-            ),
-            result
-        )
+        assertEquals(listOf(route1, route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
@@ -643,23 +805,30 @@ class NavigationStackRouteRepositoryTest {
 
     @Test
     fun `forward with single false keeps previous matching`() = coroutineTestScope.run {
-        val r1 = NavigationRoute.Url("id-1", "url")
-        val r2 = NavigationRoute.Url("id-2", "url")
+        val route1 = NavigationRoute.Url("id-1", "url")
+        val route2 = NavigationRoute.Url("id-2", "url")
 
-        sut.forward(r1, null)
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns null
+
+        sut.forward(route1)
+        resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
-        sut.forward(
-            route = r2,
-            navigationOptionObject = buildJsonObject {
-                put("single", false)
-            }
-        )
+        everySuspend {
+            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+        } returns buildJsonObject {
+            put("single", false)
+        }
+
+        sut.forward(route = route2)
 
         val result = sut.routes()
-        assertEquals(listOf(r1, r2), result)
+        assertEquals(listOf(route1, route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
+            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
             coroutineTestScope.mock.default.withContext<Any>(any())
         }

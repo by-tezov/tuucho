@@ -35,11 +35,11 @@ class ImagesRectifier(
         path: JsonElementPath,
         element: JsonElement,
     ) = buildList {
-        element.find(path).jsonObject.forEach { (group, options) ->
-            options.jsonObject.forEach { (key, option) ->
-                when (option) {
-                    is JsonPrimitive -> alterPrimitive(key, group, option)
-                    is JsonObject -> alterObject(key, group, option)
+        element.find(path).jsonObject.forEach { (group, images) ->
+            images.jsonObject.forEach { (key, image) ->
+                when (image) {
+                    is JsonPrimitive -> alterPrimitive(key, group, image)
+                    is JsonObject -> alterObject(key, group, image)
                     else -> error("type not managed")
                 }.let(::add)
             }
@@ -62,7 +62,7 @@ class ImagesRectifier(
                     }.collect()
             } else {
                 id = key.addGroup(group).let(::JsonPrimitive)
-                source = stringValue
+                default = stringValue
             }
         }.collect()
 

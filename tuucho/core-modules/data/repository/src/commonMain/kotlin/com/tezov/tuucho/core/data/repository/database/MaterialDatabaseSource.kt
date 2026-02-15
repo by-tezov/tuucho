@@ -82,7 +82,7 @@ internal class MaterialDatabaseSource(
                     val idRef = currentEntry.onScope(IdSchema::Scope).source
                     val entity = idRef?.let { ref ->
                         jsonObjectQueries.getCommonOrNull(type = type, url = url, id = ref)
-                            ?: jsonObjectQueries.getCommonGlobalOrNull(type = type, id = ref)
+                            ?: jsonObjectQueries.getCommonGlobalOrNull(type = type, url = url, id = ref)
                     }
                     if (entity != null) {
                         currentEntry = entity.jsonObject
@@ -101,7 +101,7 @@ internal class MaterialDatabaseSource(
     ) = coroutineScopes.io.withContext {
         databaseTransactionFactory.transactionWithResult {
             from.onScope(IdSchema::Scope).source ?: return@transactionWithResult null
-            buildList<JsonObject> {
+            buildList {
                 var currentEntry = from
                 add(currentEntry)
                 do {
@@ -109,7 +109,7 @@ internal class MaterialDatabaseSource(
                     val entity = idRef?.let { ref ->
                         jsonObjectQueries.getContextualOrNull(type = type, url = url, id = ref, visibility = visibility)
                             ?: jsonObjectQueries.getCommonOrNull(type = type, url = visibility.urlOrigin, id = ref)
-                            ?: jsonObjectQueries.getCommonGlobalOrNull(type = type, id = ref)
+                            ?: jsonObjectQueries.getCommonGlobalOrNull(type = type, url = url, id = ref)
                     }
                     if (entity != null) {
                         currentEntry = entity.jsonObject

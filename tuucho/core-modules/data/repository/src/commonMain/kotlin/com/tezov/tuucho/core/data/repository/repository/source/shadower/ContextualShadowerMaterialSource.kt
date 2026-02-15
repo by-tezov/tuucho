@@ -92,6 +92,7 @@ internal class ContextualShadowerMaterialSource(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
+            urlWhiteList = null,
             weakLifetime = if (lifetime == null || lifetime is JsonLifetime.Enrolled) {
                 JsonLifetime.SingleUse(
                     validityKey = lifetime?.validityKey

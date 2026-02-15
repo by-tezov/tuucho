@@ -9,12 +9,13 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.form.Form
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.text.TextRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
-import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.action.ActionButtonRectifierMatcher
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.action.ContentActionButtonRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.button.content.label.ContentButtonLabelRectifier
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.content.ContentFormFieldTextErrorRectifier
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.content.ContentFormFieldTextRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.option.OptionFormFieldValidatorRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.form.field.state.StateFormFieldTextRectifierMatcher
+import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.ContentActionImageRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.ContentImageTextRectifierMatcher
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.content.ContentImageValuesRectifier
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.image.style.StyleImageColorRectifierMatcher
@@ -74,7 +75,8 @@ internal object MaterialRectifierModule {
 
     private fun ScopeDSL.actionAssociation() {
         associate<ActionRectifier.Association.Matcher> {
-            factoryOf(::ActionButtonRectifierMatcher)
+            factoryOf(::ContentActionButtonRectifierMatcher)
+            factoryOf(::ContentActionImageRectifierMatcher)
         }
     }
 

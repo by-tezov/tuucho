@@ -21,13 +21,13 @@ class InteractionLockRegistryTest {
 
     @Test
     fun `stores a type for given command and authority`() {
-        val type = InteractionLockable.Type(listOf(InteractionLockType.Screen))
+        val types = InteractionLockable.Types(listOf(InteractionLockType.Screen))
 
         val sut = InteractionLockRegistry(
-            listOf(action("open", "system", type))
+            listOf(action("open", "system", types))
         )
 
-        assertEquals(type, sut.lockTypeFor("open", "system"))
+        assertEquals(types, sut.lockTypeFor("open", "system"))
     }
 
     @Test
@@ -44,8 +44,8 @@ class InteractionLockRegistryTest {
 
     @Test
     fun `last definition wins when same key is registered twice`() {
-        val first = InteractionLockable.Type(listOf(InteractionLockType.Screen))
-        val second = InteractionLockable.Type(listOf(InteractionLockType.Navigation))
+        val first = InteractionLockable.Types(listOf(InteractionLockType.Screen))
+        val second = InteractionLockable.Types(listOf(InteractionLockType.Navigation))
 
         val sut = InteractionLockRegistry(
             listOf(
@@ -59,7 +59,7 @@ class InteractionLockRegistryTest {
 
     @Test
     fun `throws when lockable is not Type or Empty`() {
-        val invalid = InteractionLockable.Lock(emptyList())
+        val invalid = InteractionLockable.Locks(emptyList())
 
         assertFailsWith<DomainException.Default> {
             InteractionLockRegistry(
@@ -80,8 +80,8 @@ class InteractionLockRegistryTest {
 
     @Test
     fun `returns different values for different command-authority pairs`() {
-        val a = InteractionLockable.Type(listOf(InteractionLockType.Screen))
-        val b = InteractionLockable.Type(listOf(InteractionLockType.Navigation))
+        val a = InteractionLockable.Types(listOf(InteractionLockType.Screen))
+        val b = InteractionLockable.Types(listOf(InteractionLockType.Navigation))
 
         val sut = InteractionLockRegistry(
             listOf(

@@ -14,7 +14,7 @@ interface TextsProjectionProtocol :
 }
 
 private class TextsProjection(
-    override val key: String,
+    override val key: String
 ) : TextsProjectionProtocol {
     override var hasBeenResolved: Boolean? = null
         private set
@@ -47,5 +47,5 @@ fun createTextsProjection(
 )
 
 fun TypeProjectorProtocols.texts(
-    key: String,
+    key: String
 ): TextsProjectionProtocol = createTextsProjection(key)

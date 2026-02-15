@@ -1,0 +1,224 @@
+{
+  "root": {
+    "setting": {
+      "navigation": {
+        "definitions": {
+          "transition": {
+            "type": "slide-horizontal",
+            "entrance": "from-start",
+            "effect": "cover-push"
+          }
+        }
+      }
+    },
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "background-color": "*background@gray-light",
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        "*spacer@big",
+        "*flag-layout@usa",
+        "*spacer@big",
+        "*flag-layout@french",
+        "*spacer@big",
+        "*flag-layout@canada",
+        "*spacer@full",
+        {
+          "id": "button-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@big",
+              "*button@cancel",
+              "*spacer@full",
+              "*button@system",
+              "*spacer@big"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "button": {
+      "system": {
+        "subset": "button",
+        "content": {
+          "label": "*label@system-button",
+          "action": "*system"
+        }
+      },
+      "cancel": {
+        "subset": "button",
+        "content": {
+          "label": "*label@cancel-button",
+          "action": "*cancel"
+        }
+      }
+    },
+    "label": {
+      "cancel-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-language@cancel-button"
+        }
+      },
+      "system-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-language@system-button"
+        }
+      }
+    },
+    "flag-label": {
+      "usa": {
+        "subset": "label",
+        "style": "*label@flag",
+        "content": {
+          "value": "*page-language@english"
+        }
+      },
+      "french": {
+        "subset": "label",
+        "style": "*label@flag",
+        "content": {
+          "value": "*page-language@french"
+        }
+      },
+      "canada": {
+        "subset": "label",
+        "style": "*label@flag",
+        "content": {
+          "value": "*page-language@canada"
+        }
+      }
+    },
+    "flag-image": {
+      "usa": {
+        "subset": "image",
+        "style": "*image@flag",
+        "content": {
+          "values": [
+            "*flag-usa",
+            "*flag-placeholder"
+          ],
+          "action": "*english",
+          "description": "Usa flag"
+        }
+      },
+      "french": {
+        "subset": "image",
+        "style": "*image@flag",
+        "content": {
+          "values": [
+            "*flag-france",
+            "*flag-placeholder"
+          ],
+          "action": "*french",
+          "description": "French flag"
+        }
+      },
+      "canada": {
+        "subset": "image",
+        "style": "*image@flag",
+        "content": {
+          "values": [
+            "*flag-canada",
+            "*flag-placeholder"
+          ],
+          "action": "*french-CA",
+          "description": "Canada flag"
+        }
+      }
+    },
+    "flag-layout": {
+      "usa": {
+        "subset": "layout-linear",
+        "style": {
+          "orientation": "horizontal",
+          "fill-max-width": true
+        },
+        "content": {
+          "items": [
+            "*spacer@small",
+            "*flag-image@usa",
+            "*spacer@small",
+            "*flag-label@usa"
+          ]
+        }
+      },
+      "french": {
+        "subset": "layout-linear",
+        "style": {
+          "orientation": "horizontal",
+          "fill-max-width": true
+        },
+        "content": {
+          "items": [
+            "*spacer@small",
+            "*flag-image@french",
+            "*spacer@small",
+            "*flag-label@french"
+          ]
+        }
+      },
+      "canada": {
+        "subset": "layout-linear",
+        "style": {
+          "orientation": "horizontal",
+          "fill-max-width": true
+        },
+        "content": {
+          "items": [
+            "*spacer@small",
+            "*flag-image@canada",
+            "*spacer@small",
+            "*flag-label@canada"
+          ]
+        }
+      }
+    }
+  },
+  "actions": {
+    "common": {
+      "cancel": "navigate://local-destination/back",
+      "system": [
+        "language://system",
+        "navigate://local-destination/back"
+      ],
+      "english": [
+        "language://current?code=en",
+        "navigate://local-destination/back"
+      ],
+      "french": [
+        "language://current?code=fr",
+        "navigate://local-destination/back"
+      ],
+      "french-CA": [
+        "language://current?code=fr&country=CA",
+        "navigate://local-destination/back"
+      ]
+    }
+  },
+  "images": {
+    "common": {
+      "flag-usa": "remote://lobby/flag-usa",
+      "flag-france": "remote://lobby/flag-france",
+      "flag-canada": "remote://lobby/flag-canada",
+      "flag-placeholder": {
+        "default": "local://img/flag-placeholder",
+        "tags": "placeholder"
+      }
+    }
+  }
+}

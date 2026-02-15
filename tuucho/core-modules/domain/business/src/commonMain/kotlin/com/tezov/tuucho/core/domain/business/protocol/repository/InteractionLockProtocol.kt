@@ -22,54 +22,54 @@ data class InteractionLock(
 sealed class InteractionLockable {
     data object Empty : InteractionLockable()
 
-    data class Type(
-        val value: List<InteractionLockType>
+    data class Types(
+        val values: List<InteractionLockType>
     ) : InteractionLockable()
 
-    data class Lock(
-        val value: List<InteractionLock>
+    data class Locks(
+        val values: List<InteractionLock>
     ) : InteractionLockable()
 
     data class Composite(
-        val type: Type,
-        val lock: Lock
+        val types: Types,
+        val locks: Locks
     ) : InteractionLockable()
 
     operator fun get(
         type: InteractionLockType
     ): InteractionLock? = when (this) {
-        is Lock -> value.firstOrNull { it.type == type }
-        is Composite -> lock.value.firstOrNull { it.type == type }
+        is Locks -> values.firstOrNull { it.type == type }
+        is Composite -> locks.values.firstOrNull { it.type == type }
         else -> null
     }
 
     fun getTypes(): List<InteractionLockType> = when (this) {
-        is Type -> value
-        is Composite -> type.value
+        is Types -> values
+        is Composite -> types.values
         else -> emptyList()
     }
 
     fun getLocks(): List<InteractionLock> = when (this) {
-        is Lock -> value
-        is Composite -> lock.value
+        is Locks -> values
+        is Composite -> locks.values
         else -> emptyList()
     }
 
     fun freeze(): InteractionLockable = when (this) {
-        is Lock -> Lock(value.map { it.freeze() })
-        is Composite -> Composite(type, Lock(lock.value.map { it.freeze() }))
+        is Locks -> Locks(values.map { it.freeze() })
+        is Composite -> Composite(types, Locks(locks.values.map { it.freeze() }))
         else -> this
     }
 
     private fun mergeTypes(
-        a: Type,
-        b: Type
-    ): Type = Type((a.value + b.value).distinct())
+        a: Types,
+        b: Types
+    ): Types = Types((a.values + b.values).distinct())
 
     private fun mergeLocks(
-        a: Lock,
-        b: Lock
-    ): Lock = Lock((a.value + b.value).distinct())
+        a: Locks,
+        b: Locks
+    ): Locks = Locks((a.values + b.values).distinct())
 
     operator fun plus(
         other: InteractionLockable
@@ -77,26 +77,26 @@ sealed class InteractionLockable {
         if (this is Empty) return other
         if (other is Empty) return this
         return when (this) {
-            is Type -> when (other) {
-                is Type -> mergeTypes(this, other)
-                is Lock -> Composite(this, other)
-                is Composite -> Composite(mergeTypes(this, other.type), other.lock)
+            is Types -> when (other) {
+                is Types -> mergeTypes(this, other)
+                is Locks -> Composite(this, other)
+                is Composite -> Composite(mergeTypes(this, other.types), other.locks)
             }
 
-            is Lock -> when (other) {
-                is Lock -> mergeLocks(this, other)
-                is Type -> Composite(other, this)
-                is Composite -> Composite(other.type, mergeLocks(this, other.lock))
+            is Locks -> when (other) {
+                is Locks -> mergeLocks(this, other)
+                is Types -> Composite(other, this)
+                is Composite -> Composite(other.types, mergeLocks(this, other.locks))
             }
 
             is Composite -> when (other) {
-                is Type -> Composite(mergeTypes(type, other), lock)
+                is Types -> Composite(mergeTypes(types, other), locks)
 
-                is Lock -> Composite(type, mergeLocks(lock, other))
+                is Locks -> Composite(types, mergeLocks(locks, other))
 
                 is Composite -> Composite(
-                    mergeTypes(type, other.type),
-                    mergeLocks(lock, other.lock)
+                    mergeTypes(types, other.types),
+                    mergeLocks(locks, other.locks)
                 )
             }
         }

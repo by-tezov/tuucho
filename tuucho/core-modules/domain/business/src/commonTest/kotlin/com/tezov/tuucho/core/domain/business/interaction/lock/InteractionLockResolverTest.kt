@@ -53,11 +53,11 @@ class InteractionLockResolverTest {
 
         val result = sut.acquire(
             requester,
-            InteractionLockable.Type(listOf(InteractionLockType.Screen))
+            InteractionLockable.Types(listOf(InteractionLockType.Screen))
         )
 
-        assertTrue(result is InteractionLockable.Lock)
-        assertEquals(listOf(acquired), result.value)
+        assertTrue(result is InteractionLockable.Locks)
+        assertEquals(listOf(acquired), result.values)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             repo.acquire(requester, listOf(InteractionLockType.Screen))
@@ -72,15 +72,15 @@ class InteractionLockResolverTest {
         everySuspend { repo.isAllValid(listOf(held)) } returns true
         everySuspend { repo.acquire(requester, listOf(InteractionLockType.Navigation)) } returns listOf(newLock)
 
-        val input = InteractionLockable.Lock(listOf(held)) +
-            InteractionLockable.Type(
+        val input = InteractionLockable.Locks(listOf(held)) +
+            InteractionLockable.Types(
                 listOf(InteractionLockType.Screen, InteractionLockType.Navigation)
             )
 
         val result = sut.acquire(requester, input)
 
-        assertTrue(result is InteractionLockable.Lock)
-        assertEquals(listOf(held, newLock), result.value)
+        assertTrue(result is InteractionLockable.Locks)
+        assertEquals(listOf(held, newLock), result.values)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             repo.isAllValid(listOf(held))
@@ -99,7 +99,7 @@ class InteractionLockResolverTest {
         everySuspend { repo.isValid(valid) } returns true
         everySuspend { repo.isValid(invalid) } returns false
 
-        val input = InteractionLockable.Lock(locks)
+        val input = InteractionLockable.Locks(locks)
 
         assertFailsWith<DomainException.Default> {
             sut.acquire(requester, input)
@@ -118,7 +118,7 @@ class InteractionLockResolverTest {
 
         val result = sut.tryAcquire(
             requester,
-            InteractionLockable.Type(listOf(InteractionLockType.Screen))
+            InteractionLockable.Types(listOf(InteractionLockType.Screen))
         )
 
         assertEquals(InteractionLockable.Empty, result)
@@ -138,15 +138,15 @@ class InteractionLockResolverTest {
         everySuspend { repo.isAllValid(heldLocks) } returns true
         everySuspend { repo.tryAcquire(requester, listOf(InteractionLockType.Navigation)) } returns listOf(newLock)
 
-        val input = InteractionLockable.Lock(heldLocks) +
-            InteractionLockable.Type(
+        val input = InteractionLockable.Locks(heldLocks) +
+            InteractionLockable.Types(
                 listOf(InteractionLockType.Screen, InteractionLockType.Navigation)
             )
 
         val result = sut.tryAcquire(requester, input)
 
-        assertTrue(result is InteractionLockable.Lock)
-        assertEquals(listOf(held, newLock), result.value)
+        assertTrue(result is InteractionLockable.Locks)
+        assertEquals(listOf(held, newLock), result.values)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             repo.isAllValid(heldLocks)
@@ -165,7 +165,7 @@ class InteractionLockResolverTest {
         everySuspend { repo.isValid(valid) } returns true
         everySuspend { repo.isValid(invalid) } returns false
 
-        val input = InteractionLockable.Lock(locks)
+        val input = InteractionLockable.Locks(locks)
 
         assertFailsWith<DomainException.Default> {
             sut.tryAcquire(requester, input)
@@ -189,7 +189,7 @@ class InteractionLockResolverTest {
 
         everySuspend { repo.release(requester, locks) } returns Unit
 
-        sut.release(requester, InteractionLockable.Lock(locks))
+        sut.release(requester, InteractionLockable.Locks(locks))
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             repo.release(requester, locks)
@@ -203,8 +203,8 @@ class InteractionLockResolverTest {
         everySuspend { repo.release(requester, locks) } returns Unit
 
         val input = InteractionLockable.Composite(
-            type = InteractionLockable.Type(listOf(InteractionLockType.Screen)),
-            lock = InteractionLockable.Lock(locks)
+            types = InteractionLockable.Types(listOf(InteractionLockType.Screen)),
+            locks = InteractionLockable.Locks(locks)
         )
 
         sut.release(requester, input)
@@ -221,11 +221,11 @@ class InteractionLockResolverTest {
         everySuspend { repo.isAllValid(heldLocks) } returns true
         everySuspend { repo.acquire(requester, emptyList()) } returns emptyList()
 
-        val input = InteractionLockable.Lock(heldLocks)
+        val input = InteractionLockable.Locks(heldLocks)
         val result = sut.acquire(requester, input)
 
-        assertTrue(result is InteractionLockable.Lock)
-        assertEquals(heldLocks, result.value)
+        assertTrue(result is InteractionLockable.Locks)
+        assertEquals(heldLocks, result.values)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             repo.isAllValid(heldLocks)
@@ -241,11 +241,11 @@ class InteractionLockResolverTest {
         everySuspend { repo.isAllValid(heldLocks) } returns true
         everySuspend { repo.tryAcquire(requester, emptyList()) } returns null
 
-        val input = InteractionLockable.Lock(heldLocks)
+        val input = InteractionLockable.Locks(heldLocks)
         val result = sut.tryAcquire(requester, input)
 
-        assertTrue(result is InteractionLockable.Lock)
-        assertEquals(heldLocks, result.value)
+        assertTrue(result is InteractionLockable.Locks)
+        assertEquals(heldLocks, result.values)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             repo.isAllValid(heldLocks)

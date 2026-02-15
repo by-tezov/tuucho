@@ -3,14 +3,15 @@ package com.tezov.tuucho.core.domain.business.interaction.navigation
 import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationOptionSchema.Value.Reuse
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionList.priorLastOrNull
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.json.JsonObject
 
 internal class NavigationStackRouteRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val materialCacheRepository: NavigationRepositoryProtocol.MaterialCache,
 ) : StackRoute {
     private val stack = mutableListOf<NavigationRoute.Url>()
     private val mutex = Mutex()
@@ -28,19 +29,22 @@ internal class NavigationStackRouteRepository(
     }
 
     override suspend fun forward(
-        route: NavigationRoute.Url,
-        navigationOptionObject: JsonObject?,
-    ) = coroutineScopes.default.withContext {
-        val option = navigationOptionObject?.let {
-            NavigationOption.from(it)
-        } ?: NavigationOption(
-            single = false,
-            reuse = null,
-            popUpTo = null,
-            clearStack = false
-        )
-        mutex.withLock {
-            navigateUrl(route, option)
+        route: NavigationRoute.Url
+    ): NavigationRoute.Url {
+        val navigationOptionObject = materialCacheRepository
+            .getNavigationDefinitionOptionObject(route.value)
+        return coroutineScopes.default.withContext {
+            val option = navigationOptionObject?.let {
+                NavigationOption.from(it)
+            } ?: NavigationOption(
+                single = false,
+                reuse = null,
+                popUpTo = null,
+                clearStack = false
+            )
+            mutex.withLock {
+                navigateUrl(route, option)
+            }
         }
     }
 
@@ -69,7 +73,7 @@ internal class NavigationStackRouteRepository(
     private fun navigateUrl(
         route: NavigationRoute,
         option: NavigationOption,
-    ): NavigationRoute.Url? {
+    ): NavigationRoute.Url {
         val route = (route as NavigationRoute.Url)
         val reusableRoute = option.reuse?.let { reuse ->
             when (reuse) {
@@ -111,12 +115,16 @@ internal class NavigationStackRouteRepository(
                 throw DomainException.Default("popUpTo route ${popUpTo.route} not found in stack")
             }
         }
-        if (reusableRoute != null) {
-            stack.add(reusableRoute)
-            return null
-        } else {
-            stack.add(route)
-            return route
+        return when {
+            reusableRoute != null -> {
+                stack.add(reusableRoute)
+                reusableRoute
+            }
+
+            else -> {
+                stack.add(route)
+                route
+            }
         }
     }
 }

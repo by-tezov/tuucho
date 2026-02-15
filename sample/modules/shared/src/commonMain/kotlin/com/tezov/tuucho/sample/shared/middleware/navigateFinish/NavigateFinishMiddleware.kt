@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.navigateFinish
 
-import com.tezov.tuucho.core.domain.business.middleware.NavigationMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.NavigationMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocol
 
 class NavigateFinishMiddleware(
@@ -11,7 +11,6 @@ class NavigateFinishMiddleware(
         context: Unit,
         next: MiddlewareProtocol.Next<Unit>?,
     ) {
-        next?.invoke(Unit)
         navigationFinishPublisher.finish()
     }
 }

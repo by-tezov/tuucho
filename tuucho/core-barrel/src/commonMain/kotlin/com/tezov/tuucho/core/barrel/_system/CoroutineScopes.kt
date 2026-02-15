@@ -36,4 +36,11 @@ internal class CoroutineScopes(
             dispatcher = Dispatchers.IO,
             exceptionMonitor = exceptionMonitor,
         )
+
+    override fun cancel() {
+        unconfined.cancel()
+        default.cancel()
+        main.cancel()
+        io.cancel()
+    }
 }

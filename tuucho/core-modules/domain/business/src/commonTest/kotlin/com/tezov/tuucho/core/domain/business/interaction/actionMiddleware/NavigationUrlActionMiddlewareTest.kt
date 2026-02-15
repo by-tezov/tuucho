@@ -82,7 +82,7 @@ class NavigationUrlActionMiddlewareTest {
         val next = MockMiddlewareNext(spy)
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -111,7 +111,7 @@ class NavigationUrlActionMiddlewareTest {
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
         val next = MockMiddlewareNext(spy)
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verify(VerifyMode.exhaustiveOrder) {
             spy.invoke(context)
@@ -135,7 +135,7 @@ class NavigationUrlActionMiddlewareTest {
 
         everySuspend { useCaseExecutor.await<NavigateToUrlUseCase.Input, Unit>(any(), any()) } returns Unit
 
-        sut.run { process(context, null) }
+        sut.process(context, null)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(

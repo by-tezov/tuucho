@@ -1,13 +1,13 @@
 package com.tezov.tuucho.sample.shared._system
 
-import co.touchlab.kermit.CommonWriter
 import co.touchlab.kermit.Severity
 import co.touchlab.kermit.StaticConfig
-import com.tezov.tuucho.core.domain.tool.protocol.SystemInformationProtocol
+import co.touchlab.kermit.platformLogWriter
+import com.tezov.tuucho.core.data.repository._system.SystemPlatformInformationProtocol
 import co.touchlab.kermit.Logger as Kermit
 
 class Logger(
-    private val systemInformation: SystemInformationProtocol,
+    private val systemInformation: SystemPlatformInformationProtocol,
     private val exceptionVerbose: Boolean,
     private val tag: String = ""
 ) {
@@ -15,8 +15,8 @@ class Logger(
     private val kermit = Kermit(
         config = StaticConfig(
             minSeverity = Severity.Verbose,
-            logWriterList = listOf(CommonWriter())
-//            logWriterList = listOf(platformLogWriter()) // seem to bug on ios cause I don't see the debug level
+//            logWriterList = listOf(CommonWriter())
+            logWriterList = listOf(platformLogWriter()) // seem to bug on ios cause I don't see the debug level
         )
     )
 

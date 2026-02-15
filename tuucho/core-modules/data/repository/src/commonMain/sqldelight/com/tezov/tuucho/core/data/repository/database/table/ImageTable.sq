@@ -3,5 +3,5 @@ import com.tezov.tuucho.core.data.repository.database.type.ImageLifetime;
 CREATE TABLE imageEntry (
     primaryKey INTEGER PRIMARY KEY AUTOINCREMENT,
     cacheKey TEXT NOT NULL UNIQUE,
-    mimeType Text NOT NULL
+    mimeType TEXT NOT NULL
 );

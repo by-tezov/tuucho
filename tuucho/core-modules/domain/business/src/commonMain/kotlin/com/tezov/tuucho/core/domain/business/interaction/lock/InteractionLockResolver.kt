@@ -21,7 +21,7 @@ internal class InteractionLockResolver(
             .getTypes()
             .filter { it !in lockAlreadyAcquiredTypes }
             .acquire(requester)
-        return InteractionLockable.Lock(locksAlreadyAcquired + types)
+        return InteractionLockable.Locks(locksAlreadyAcquired + types)
     }
 
     override suspend fun tryAcquire(
@@ -39,7 +39,7 @@ internal class InteractionLockResolver(
             ?: emptyList()
         return (locksAlreadyAcquired + types)
             .takeIf { it.isNotEmpty() }
-            ?.let(InteractionLockable::Lock)
+            ?.let(InteractionLockable::Locks)
             ?: InteractionLockable.Empty
     }
 
@@ -78,12 +78,12 @@ internal class InteractionLockResolver(
         lockable: InteractionLockable
     ) {
         when (lockable) {
-            is InteractionLockable.Lock -> {
-                lockable.value.release(requester)
+            is InteractionLockable.Locks -> {
+                lockable.values.release(requester)
             }
 
             is InteractionLockable.Composite -> {
-                release(requester, lockable.lock)
+                release(requester, lockable.locks)
             }
 
             else -> {}

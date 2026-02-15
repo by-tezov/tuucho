@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.data.repository.parser._system.lastSegmentIs
 import com.tezov.tuucho.core.data.repository.parser._system.parentIsTypeOf
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIdsWithGroup
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
@@ -81,7 +81,7 @@ class ContentRectifier(
             .withScope(ContentSchema::Scope)
             .takeIf {
                 it
-                    .rectifyIds(ContentSchema.Value.Group.common)
+                    .rectifyIdsWithGroup(ContentSchema.Value.Group.common)
                     .also { (value, source) ->
                         valueRectified = value
                         sourceRectified = source

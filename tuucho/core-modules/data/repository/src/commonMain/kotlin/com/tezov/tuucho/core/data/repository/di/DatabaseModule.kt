@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.data.repository.database.dao.JsonObjectQueries
 import com.tezov.tuucho.core.data.repository.database.table.HookEntry
 import com.tezov.tuucho.core.data.repository.database.table.JsonObjectCommonEntry
 import com.tezov.tuucho.core.data.repository.database.table.JsonObjectContextualEntry
+import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonArrayAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonLifetimeAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonObjectAdapter
 import com.tezov.tuucho.core.data.repository.database.type.adapter.JsonVisibilityAdapter
@@ -35,6 +36,7 @@ object DatabaseModule {
         }
 
         factory<JsonObjectAdapter>()
+        factory<JsonArrayAdapter>()
         factory<JsonVisibilityAdapter>()
         factory<JsonLifetimeAdapter>()
 
@@ -49,7 +51,8 @@ object DatabaseModule {
                 ),
                 hookEntryAdapter = HookEntry.Adapter(
                     visibilityAdapter = get<JsonVisibilityAdapter>(),
-                    lifetimeAdapter = get<JsonLifetimeAdapter>()
+                    lifetimeAdapter = get<JsonLifetimeAdapter>(),
+                    urlWhiteListAdapter = get<JsonArrayAdapter>()
                 )
             )
         }

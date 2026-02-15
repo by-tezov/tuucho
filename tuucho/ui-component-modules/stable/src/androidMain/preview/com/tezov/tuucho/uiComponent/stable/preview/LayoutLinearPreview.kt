@@ -17,11 +17,11 @@ private data class LayoutLinearPreviewData(
     val orientation: String? = null,
     val fillMaxSize: Boolean? = null,
     val fillMaxWidth: Boolean? = null,
-    val contents: List<@Composable Any.() -> Unit>,
+    val contents: List<@Composable (scope: Any?) -> Unit>,
 )
 
 private object LayoutLinearPreviewSampleView {
-    val labelTitle: @Composable Any.() -> Unit = {
+    val labelTitle: @Composable (scope: Any?) -> Unit = {
         LabelPreviewComponent(
             textValue = "Label Title",
             fontColor = Color.Black,
@@ -31,7 +31,7 @@ private object LayoutLinearPreviewSampleView {
 
     fun labelSection(
         color: Color
-    ): @Composable Any.() -> Unit = {
+    ): @Composable (scope: Any?) -> Unit = {
         LabelPreviewComponent(
             textValue = "Label Section",
             fontColor = color,
@@ -42,14 +42,15 @@ private object LayoutLinearPreviewSampleView {
     fun field(
         title: String,
         showError: Boolean = false
-    ): @Composable Any.() -> Unit = {
+    ): @Composable (scope: Any?) -> Unit = { scope ->
         FieldPreviewComponent(
+            scope = scope,
             showError = showError,
             titleValue = title,
         )
     }
 
-    val button: @Composable Any.() -> Unit = {
+    val button: @Composable (scope: Any?) -> Unit = {
         ButtonPreviewComponent(
             content = {
                 LabelPreviewComponent(
@@ -63,23 +64,23 @@ private object LayoutLinearPreviewSampleView {
 
     fun spacerWeight(
         value: Float
-    ): @Composable Any.() -> Unit = {
+    ): @Composable (scope: Any?) -> Unit = { scope ->
         SpacerPreviewComponent(
-            scope = this,
+            scope = scope,
             weight = value
         )
     }
 
     fun spacerHeight(
         value: Dp
-    ): @Composable Any.() -> Unit = {
+    ): @Composable (scope: Any?) -> Unit = { scope ->
         SpacerPreviewComponent(
-            scope = this,
+            scope = scope,
             height = value
         )
     }
 
-    val rowLayout: @Composable Any.() -> Unit = {
+    val rowLayout: @Composable (scope: Any?) -> Unit = {
         LayoutLinearPreviewComponent(
             backgroundColor = Color.Gray,
             orientation = Orientation.horizontal,
@@ -166,7 +167,7 @@ fun LayoutLinearPreviewComponent(
     orientation: String? = Orientation.vertical,
     fillMaxSize: Boolean? = null,
     fillMaxWidth: Boolean? = null,
-    contents: List<@Composable Any.() -> Unit>,
+    contents: List<@Composable (scope: Any?) -> Unit>,
 ) {
     val view = createLayoutLinearView(screenContext = DummyScreenContext())
     view.ComposeComponent(

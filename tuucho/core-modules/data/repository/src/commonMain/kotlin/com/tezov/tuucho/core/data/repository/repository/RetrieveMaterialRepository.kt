@@ -30,6 +30,7 @@ internal class RetrieveMaterialRepository(
         materialCacheLocalSource.insert(
             materialObject = remoteMaterialObject,
             url = url,
+            urlWhiteList = null,
             weakLifetime = if (lifetime == null || lifetime is JsonLifetime.Enrolled) {
                 JsonLifetime.Unlimited(
                     validityKey = lifetime?.validityKey
@@ -39,7 +40,6 @@ internal class RetrieveMaterialRepository(
             },
             visibility = JsonVisibility.Local
         )
-
         return materialCacheLocalSource.assemble(url).also {
             val lifetime = materialCacheLocalSource.getLifetime(url)
             if (lifetime is JsonLifetime.SingleUse) {

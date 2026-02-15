@@ -15,7 +15,10 @@ internal class ImageQueries(
 
     fun selectAll(
         cacheKeyPrefix: String
-    ) = queries.selectAllLikeCacheKey("$cacheKeyPrefix%").executeAsList().map { it.toEntity() }
+    ): List<ImageEntity> {
+        val map = queries.selectAllLikeCacheKey("$cacheKeyPrefix%").executeAsList().map { it.toEntity() }
+        return map
+    }
 
     fun delete(
         cacheKey: String
@@ -28,12 +31,12 @@ internal class ImageQueries(
     fun deleteAll(
         cacheKeyPrefix: String
     ) {
-        queries.deleteAllLikeCacheKey("$cacheKeyPrefix%")
+        queries.deleteAllLikeCacheKey(cacheKey = "$cacheKeyPrefix%")
     }
 
     fun exist(
         cacheKey: String
-    ) = queries.existWithCacheKey(cacheKey).executeAsOneOrNull() == true
+    ) = queries.existWithCacheKey(cacheKey = cacheKey).executeAsOneOrNull() == true
 
     fun insert(
         entity: ImageEntity
@@ -55,5 +58,5 @@ internal class ImageQueries(
 
     fun getOrNull(
         cacheKey: String
-    ) = queries.getByCacheKey(cacheKey).executeAsOneOrNull()?.toEntity()
+    ) = queries.getByCacheKey(cacheKey = cacheKey).executeAsOneOrNull()?.toEntity()
 }

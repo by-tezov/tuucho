@@ -14,7 +14,7 @@ import com.tezov.tuucho.core.domain.tool.json.findOrNull
 import kotlinx.serialization.json.JsonElement
 
 object RectifierHelper {
-    fun <T : OpenSchemaScope<T>> OpenSchemaScope<T>.rectifyIds(
+    fun <T : OpenSchemaScope<T>> OpenSchemaScope<T>.rectifyIdsWithGroup(
         defaultGroup: String
     ): Pair<String?, String?> {
         var valueRectified: String?

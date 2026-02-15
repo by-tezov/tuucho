@@ -15,13 +15,13 @@ object SystemSharedModules {
             single {
                 Logger(
                     systemInformation = get(),
-                    exceptionVerbose = false
+                    exceptionVerbose = true
                 )
             }
         },
         MonitorModule.invoke(),
         InteractionModule.invoke(),
-        InterceptorModule.invoke(),
+        ExceptionHandlerModule.invoke(),
         MiddlewareModule.invoke(),
     ) + platformInvoke() + SystemUiModules.invoke()
 

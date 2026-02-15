@@ -1,6 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
-import com.tezov.tuucho.core.domain.business.middleware.SendDataMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.SendDataMiddleware
 import com.tezov.tuucho.core.domain.business.mock.CoroutineTestScope
 import com.tezov.tuucho.core.domain.business.mock.middlewareWithReturn.MockMiddlewareExecutorWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn

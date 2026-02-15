@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.image
 
-import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.invoke
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase

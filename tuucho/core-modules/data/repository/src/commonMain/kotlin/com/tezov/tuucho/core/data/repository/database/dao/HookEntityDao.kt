@@ -26,6 +26,7 @@ internal class HookQueries(
     ) {
         queries.insert(
             url = entity.url,
+            urlWhiteList = entity.urlWhiteList,
             rootPrimaryKey = entity.rootPrimaryKey,
             visibility = entity.visibility,
             lifetime = entity.lifetime,
@@ -34,9 +35,9 @@ internal class HookQueries(
 
     fun getOrNull(
         url: String
-    ) = queries.getByUrl(url).executeAsOneOrNull()?.toEntity()
+    ) = queries.getByUrl(url = url).executeAsOneOrNull()?.toEntity()
 
     fun getLifetimeOrNull(
         url: String
-    ) = queries.getLifetimeByUrl(url).executeAsOneOrNull()
+    ) = queries.getLifetimeByUrl(url = url).executeAsOneOrNull()
 }

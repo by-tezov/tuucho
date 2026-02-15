@@ -116,7 +116,7 @@ class FormSendUrlActionMiddlewareTest {
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
         val next = MockMiddlewareNext(spy)
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verify(VerifyMode.exhaustiveOrder) {
             spy.invoke(context)
@@ -138,7 +138,7 @@ class FormSendUrlActionMiddlewareTest {
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
         val next = MockMiddlewareNext(spy)
 
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -162,7 +162,7 @@ class FormSendUrlActionMiddlewareTest {
             action = action
         )
 
-        sut.run { process(context, null) }
+        sut.process(context, null)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(
@@ -211,7 +211,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -263,7 +263,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -319,7 +319,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -405,7 +405,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -538,7 +538,7 @@ class FormSendUrlActionMiddlewareTest {
         )
 
         // ---------- Test ----------
-        sut.run { process(context, next) }
+        sut.process(context, next)
 
         // ---------- Verify ----------
         verifySuspend(VerifyMode.exhaustiveOrder) {
@@ -600,7 +600,7 @@ class FormSendUrlActionMiddlewareTest {
 
         // ---------- Test: expect DomainException from null target in SendData input ----------
         assertFailsWith<DomainException> {
-            sut.run { process(context, null) }
+            sut.process(context, null)
         }
 
         // ---------- Verify the single await call so tearDown's verifyNoMoreCalls passes ----------

@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.data.repository.parser.rectifier.material.image
 
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIdsWithGroup
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
@@ -53,7 +53,7 @@ class ImageRectifier(
                 id = this.element
             } else {
                 id = JsonNull
-                source = stringValue
+                default = stringValue
             }
         }.collect()
 
@@ -77,7 +77,7 @@ class ImageRectifier(
         .find(path)
         .withScope(ImageSchema::Scope)
         .apply {
-            rectifyIds(ImageSchema.Value.Group.common)
+            rectifyIdsWithGroup(ImageSchema.Value.Group.common)
                 .let { (valueRectified, sourceRectified) ->
                     if (valueRectified != null || sourceRectified != null) {
                         id = onScope(IdSchema::Scope)
@@ -96,7 +96,7 @@ class ImageRectifier(
                 }
 
                 else -> {
-                    throw DataException.Default("by design tagsExcluder must be null, a string or an array")
+                    throw DataException.Default("by design tagsExcluder can only be null, a string or an array")
                 }
             }
             when (val tagsExcluder = this[ImageSchema.Key.tagsExcluder]) {

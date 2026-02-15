@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.data.repository.parser.rectifier.material.dimension
 
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.AbstractRectifier
-import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIds
+import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierHelper.rectifyIdsWithGroup
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierMatcherProtocol
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.getAllAssociated
@@ -77,7 +77,7 @@ class DimensionRectifier(
             .withScope(DimensionSchema::Scope)
             .takeIf {
                 it
-                    .rectifyIds(DimensionSchema.Value.Group.common)
+                    .rectifyIdsWithGroup(DimensionSchema.Value.Group.common)
                     .also { (value, source) ->
                         valueRectified = value
                         sourceRectified = source

@@ -79,14 +79,13 @@ class IdRectifier(
     private fun rectifyIds(
         id: String?,
         idFrom: String?
-    ): Triple<String, String?, Boolean?> {
-        if (id == null || id.isRef) {
-            return Triple(
-                idGenerator.generate(),
-                id?.removePrefix(SymbolData.ID_REF_INDICATOR),
-                true
-            )
-        }
-        return Triple(id, idFrom?.removePrefix(SymbolData.ID_REF_INDICATOR), null)
+    ) = if (id == null || id.isRef) {
+        Triple(
+            idGenerator.generate(),
+            (id ?: idFrom)?.removePrefix(SymbolData.ID_REF_INDICATOR),
+            true
+        )
+    } else {
+        Triple(id, idFrom?.removePrefix(SymbolData.ID_REF_INDICATOR), null)
     }
 }

@@ -14,7 +14,7 @@ interface ViewProtocol :
 
     @Composable
     fun display(
-        scope: Any? = null
+        scope: Any?
     )
 
     fun updateIfNeeded()

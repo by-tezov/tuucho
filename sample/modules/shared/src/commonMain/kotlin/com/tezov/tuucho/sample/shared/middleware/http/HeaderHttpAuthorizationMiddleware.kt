@@ -1,0 +1,52 @@
+package com.tezov.tuucho.sample.shared.middleware.http
+
+import com.tezov.tuucho.core.data.repository.di.NetworkModule
+import com.tezov.tuucho.core.data.repository.network.HttpExchangeMiddleware
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
+import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn.Next.Companion.invoke
+import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.KeyValueStoreRepositoryProtocol.Key.Companion.toKey
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetValueOrNullFromStoreUseCase
+import io.ktor.client.request.HttpResponseData
+import kotlinx.coroutines.channels.ProducerScope
+
+class HeaderHttpAuthorizationMiddleware(
+    private val useCaseExecutor: UseCaseExecutorProtocol,
+    private val config: NetworkModule.Config,
+    private val getValueOrNullFromStore: GetValueOrNullFromStoreUseCase
+) : HttpExchangeMiddleware {
+
+    private val authRegex = Regex("^/auth(?:/.*)?$")
+
+    override suspend fun ProducerScope<HttpResponseData>.process(
+        context: HttpExchangeMiddleware.Context,
+        next: MiddlewareProtocolWithReturn.Next<HttpExchangeMiddleware.Context, HttpResponseData>?
+    ) {
+        with(context.requestBuilder) {
+            val route = url.toString()
+                .removePrefix("${config.baseUrl}/")
+                .removePrefix("${config.version}/")
+                .let {
+                    when {
+                        it.startsWith(config.healthEndpoint) -> it.removePrefix(config.healthEndpoint)
+                        it.startsWith(config.resourceEndpoint) -> it.removePrefix(config.resourceEndpoint)
+                        it.startsWith(config.sendEndpoint) -> it.removePrefix(config.sendEndpoint)
+                        it.startsWith(config.imageEndpoint) -> it.removePrefix(config.imageEndpoint)
+                        else -> it
+                    }
+                }
+
+            if (route.matches(authRegex)) {
+                useCaseExecutor.await(
+                    useCase = getValueOrNullFromStore,
+                    input = GetValueOrNullFromStoreUseCase.Input(
+                        key = "login-authorization".toKey()
+                    )
+                )?.value?.value?.let { authorizationKey ->
+                    headers.append("authorization", "Bearer $authorizationKey")
+                }
+            }
+            next?.invoke(context)
+        }
+    }
+}

@@ -9,9 +9,9 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.compone
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.SettingComponentNavigationTransitionSchema.Spec.Value.Type
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackTransition
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationStackTransitionHelperFactoryUseCase
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.domain.tool.async.Notifier
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.sync.Mutex
@@ -22,6 +22,8 @@ import kotlinx.serialization.json.JsonObject
 internal class NavigationStackTransitionRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val useCaseExecutor: UseCaseExecutorProtocol,
+    private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
+    private val materialCacheRepository: NavigationRepositoryProtocol.MaterialCache,
     private val navigationStackTransitionHelperFactory: NavigationStackTransitionHelperFactoryUseCase,
 ) : StackTransition,
     TuuchoKoinComponent {
@@ -48,14 +50,12 @@ internal class NavigationStackTransitionRepository(
     private fun emit(
         event: StackTransition.Event
     ) {
-        @OptIn(TuuchoInternalApi::class)
-        coroutineScopes.default
-            .asyncOnCompletionThrowing {
-                mutex.withLock {
-                    lastEvent = event
-                    _events.emit(event)
-                }
+        coroutineScopes.default.async {
+            mutex.withLock {
+                lastEvent = event
+                _events.emit(event)
             }
+        }
     }
 
     override suspend fun notifyTransitionCompleted() {
@@ -96,11 +96,10 @@ internal class NavigationStackTransitionRepository(
         ?.isBackgroundSolid ?: true
 
     override suspend fun forward(
-        routes: List<NavigationRoute.Url>,
-        navigationExtraObject: JsonObject?,
-        navigationTransitionObject: JsonObject?,
+        route: NavigationRoute.Url
     ) {
         emit(StackTransition.Event.PrepareTransition)
+        val routes = navigationStackRouteRepository.routes()
         coroutineScopes.default.withContext {
             val listenerDeferred = listenEndOfTransition(routes)
             mutex.withLock {
@@ -114,8 +113,8 @@ internal class NavigationStackTransitionRepository(
                     stack.add(
                         Item(
                             route = pushedRoute,
-                            extraObject = navigationExtraObject,
-                            transitionObject = navigationTransitionObject
+                            extraObject = materialCacheRepository.getNavigationSettingExtraObject(route.value),
+                            transitionObject = materialCacheRepository.getNavigationDefinitionTransitionObject(route.value)
                         )
                     )
                 }
@@ -125,9 +124,8 @@ internal class NavigationStackTransitionRepository(
         }
     }
 
-    override suspend fun backward(
-        routes: List<NavigationRoute.Url>
-    ) {
+    override suspend fun backward() {
+        val routes = navigationStackRouteRepository.routes()
         emit(StackTransition.Event.PrepareTransition)
         coroutineScopes.default.withContext {
             val listenerDeferred = listenEndOfTransition(routes)

@@ -10,11 +10,6 @@ open annotation class com.tezov.tuucho.core.domain.tool.annotation/TuuchoInterna
     constructor <init>() // com.tezov.tuucho.core.domain.tool.annotation/TuuchoInternalApi.<init>|<init>(){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol { // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol|null[0]
-    abstract fun currentThreadName(): kotlin/String // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol.currentThreadName|currentThreadName(){}[0]
-    open suspend fun currentDispatcher(): kotlin.coroutines/ContinuationInterceptor? // com.tezov.tuucho.core.domain.tool.protocol/SystemInformationProtocol.currentDispatcher|currentDispatcher(){}[0]
-}
-
 sealed interface <#A: kotlin/Any> com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol { // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol|null[0]
     abstract fun clear() // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.clear|clear(){}[0]
     abstract fun getOrNull(): #A? // com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.getOrNull|getOrNull(){}[0]

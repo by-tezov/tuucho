@@ -22,7 +22,7 @@ internal class HttpClientEngine(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val engine: io.ktor.client.engine.HttpClientEngine,
     private val middlewareExecutor: MiddlewareExecutorProtocolWithReturn,
-    private val interceptors: List<HttpInterceptor>
+    private val interceptors: List<HttpExchangeMiddleware>
 ) : HttpClientEngineBase("HttpClientEngine") {
     override val dispatcher get() = engine.dispatcher
 
@@ -33,7 +33,7 @@ internal class HttpClientEngine(
     override suspend fun execute(
         data: HttpRequestData
     ): HttpResponseData {
-        val terminal = HttpInterceptor { context, _ ->
+        val terminal = HttpExchangeMiddleware { context, _ ->
             val request = context.requestBuilder.build()
             val response = engine.execute(request)
             send(response)
@@ -42,7 +42,7 @@ internal class HttpClientEngine(
         val response = middlewareExecutor
             .process(
                 middlewares = interceptors + terminal,
-                context = HttpInterceptor.Context(
+                context = HttpExchangeMiddleware.Context(
                     requestBuilder = requestBuilder
                 )
             ).flowOn(coroutineScopes.io.dispatcher)
@@ -66,7 +66,7 @@ internal class HttpClientEngineFactory<out T : HttpClientEngineConfig>(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val engineFactory: io.ktor.client.engine.HttpClientEngineFactory<T>,
     private val middlewareExecutor: MiddlewareExecutorProtocolWithReturn,
-    private val interceptors: List<HttpInterceptor>
+    private val interceptors: List<HttpExchangeMiddleware>
 ) : io.ktor.client.engine.HttpClientEngineFactory<T> {
     override fun create(
         block: T.() -> Unit

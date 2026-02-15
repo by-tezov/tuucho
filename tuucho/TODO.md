@@ -1,25 +1,37 @@
 ### Todo:
 
-- need to find a solution for unit testing, Mokkery is down <- cause koin compiler 2.3.20 not
-  compatible with Mokkery
+- popup ? selector navigation seem to not work ->
+  because selector can't work a cause de NavigationMaterialCacheRepository,
+  un seul choix est gardé en mémoire ou alors routes is changing.
+
+- update test 2e2
+
+- screen context better way to use it ?
+- projection input dataclass ?
+
+- Doc Http interceptor renamed to middleware exchange
+- Doc image action
+- Doc action language
+- Doc config avec url-white-list
     
 - Animation placeholder / final image ?
-- do a smart padding object - can do also for size)?
+- do a smart padding object - can do also for size?
 - shadower with flow ?
 - error message with class name that throw.
 
---> Continue to follow the Roadmap
+--> Update RoadMap and proceed
 
 ### Need to fix: 
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
 - contextual register, when outer receive later, the inner did not succeed to register
   - check message of contextual field, they never request update view after click
+- Mokkery + Koin
 
-**** ****
-- Shadower
-    // do not crash application but 
-    // - build a way to inform view the failure (all skimmer)
-    // - on back, when it was failure, how to attempt reload the block if back shadower is off ?
-- Error when Compose enter in the game
+### Improve
+
+- Shadower Failure -> On screen protocol, allow to replace skimmer with failure view
 - Add bottom/top screen not react to transition
 - Find a solution for share mock test instead of duplicated code
+- Unit Test (Data + UI)
+- parameter + file properties
+- JsonElement home made efficient mutable

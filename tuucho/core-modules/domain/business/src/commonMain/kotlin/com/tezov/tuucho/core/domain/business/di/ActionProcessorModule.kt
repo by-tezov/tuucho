@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.ActionExecutor
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormSendUrlActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.FormUpdateActionMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.LanguageActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.NavigationLocalDestinationActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.NavigationUrlActionMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.StoreActionMiddleware
@@ -28,5 +29,6 @@ internal object ActionProcessorModule {
         factory<NavigationLocalDestinationActionMiddleware>() bind ActionMiddlewareProtocol::class
         factory<NavigationUrlActionMiddleware>() bind ActionMiddlewareProtocol::class
         factory<StoreActionMiddleware>() bind ActionMiddlewareProtocol::class
+        factory<LanguageActionMiddleware>() bind ActionMiddlewareProtocol::class
     }
 }

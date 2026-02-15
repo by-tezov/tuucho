@@ -15,7 +15,7 @@
           {
             "selector": {
               "type": "page-bread-crumb",
-              "value": "page-c"
+              "value": "auth/page-c"
             },
             "transition": {
               "type": "slide-vertical",
@@ -43,20 +43,20 @@
       "items": [
         {
           "subset": "label",
-          "style": "*title-label",
+          "style": "*label@title",
           "content": {
-            "value": "Page-A"
+            "value": "*title"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
         {
           "subset": "label",
-          "style": "*title-body",
+          "style": "*label@body",
           "content": {
-            "value": "Page TLL of 10s"
+            "value": "*body"
           }
         },
-        "*item-spacer",
+        "*spacer@full",
         {
           "subset": "layout-linear",
           "style": {
@@ -71,34 +71,63 @@
                 "content": {
                   "label": {
                     "style": {
-                      "id": "*label-main-button-back"
+                      "id": "*label@button-previous"
                     },
                     "content": {
-                      "value": "BACK"
+                      "value": "*back"
                     }
                   },
-                  "action": "navigate://local-destination/back"
+                  "action": "*back"
                 }
               },
-              "*item-spacer",
+              "*spacer@full",
               {
                 "subset": "button",
                 "content": {
                   "label": {
                     "style": {
-                      "id": "*label-main-button-back"
+                      "id": "*label@button"
                     },
                     "content": {
-                      "value": "Page-B"
+                      "value": "*page-image"
                     }
                   },
-                  "action": "navigate://url/auth/page-b"
+                  "action": "*page-image"
+                }
+              },
+              "*spacer@full",
+              {
+                "subset": "button",
+                "content": {
+                  "label": {
+                    "style": "*label@button-next",
+                    "content": {
+                      "value": "*next"
+                    }
+                  },
+                  "action": "*next"
                 }
               }
             ]
           }
         }
       ]
+    }
+  },
+  "texts": {
+    "common": {
+      "back": "back",
+      "page-image": "Page-Image",
+      "next": "next",
+      "title": "Page-A",
+      "body": "TLL transient of 10s \n\n- nav stack single + reuse \n\n- transition horizontal from end cover effect by default \n\n- transition cover vertical from bottom if come from page C"
+    }
+  },
+  "actions": {
+    "common": {
+      "back": "navigate://local-destination/back",
+      "page-image": "navigate://url/auth/page-image",
+      "next": "navigate://url/auth/page-b"
     }
   }
 }

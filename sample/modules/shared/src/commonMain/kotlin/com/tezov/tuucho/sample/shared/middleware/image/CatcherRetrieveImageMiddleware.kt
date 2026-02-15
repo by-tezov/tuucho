@@ -1,6 +1,6 @@
 package com.tezov.tuucho.sample.shared.middleware.image
 
-import com.tezov.tuucho.core.domain.business.middleware.RetrieveImageMiddleware
+import com.tezov.tuucho.core.domain.business.interaction.middleware.RetrieveImageMiddleware
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
 import com.tezov.tuucho.core.domain.business.model.image.LocalImageDefinition
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn
@@ -19,12 +19,12 @@ class CatcherRetrieveImageMiddleware() : RetrieveImageMiddleware<Any> {
         } catch (_: Throwable) {
             next?.invoke(
                 context.copy(
-                    input = RetrieveImageUseCase.Input.create(
-                        model = ImageModel.from(
+                    input = RetrieveImageUseCase.Input(
+                        models = listOf(ImageModel.from(
                             command = LocalImageDefinition.command,
                             target = "img/safe-image",
                             id = "sage-image"
-                        )
+                        ))
                     )
                 )
             )

@@ -2,6 +2,7 @@
 
 package com.tezov.tuucho.core.domain.business.middleware
 
+import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutorWithReturn
 import com.tezov.tuucho.core.domain.business.mock.middlewareWithReturn.MockStringMiddlewareWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareProtocolWithReturn

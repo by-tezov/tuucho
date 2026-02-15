@@ -103,11 +103,11 @@ class ActionExecutorTest {
         val actionModel = ActionModel.from("cmd://auth/target")
 
         val existingLock = InteractionLock("req", "existing", InteractionLockType.Navigation)
-        val inputLockable = InteractionLockable.Lock(listOf(existingLock))
-        val lockTypesForAction = InteractionLockable.Type(listOf(InteractionLockType.Screen))
+        val inputLockable = InteractionLockable.Locks(listOf(existingLock))
+        val lockTypesForAction = InteractionLockable.Types(listOf(InteractionLockType.Screen))
 
         val newLock = InteractionLock("req", "new", InteractionLockType.Screen)
-        val acquiredLockable = InteractionLockable.Lock(listOf(existingLock, newLock))
+        val acquiredLockable = InteractionLockable.Locks(listOf(existingLock, newLock))
 
         val spy = SpyMiddlewareNext.create<ActionMiddlewareProtocol.Context>()
         middlewareFirst._priority = ActionMiddlewareProtocol.Priority.DEFAULT

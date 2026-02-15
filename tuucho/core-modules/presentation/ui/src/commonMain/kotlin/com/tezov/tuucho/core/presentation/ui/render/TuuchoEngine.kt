@@ -20,7 +20,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUs
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreensFromRoutesUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
-import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress
 import com.tezov.tuucho.core.presentation.tool.animation.AnimationProgress.Companion.rememberAnimationProgress
 import com.tezov.tuucho.core.presentation.tool.modifier.thenIfNotNull
@@ -60,7 +59,7 @@ class TuuchoEngine(
     private var foregroundGroup: Group? = null
     private var backgroundGroup: Group? = null
     private var transitionRequested = false
-    private val redrawTrigger = mutableIntStateOf(0)
+    private val redrawCounterTrigger = mutableIntStateOf(0)
 
     override suspend fun start(
         url: String
@@ -104,8 +103,7 @@ class TuuchoEngine(
     private fun onRequestTransitionEvent(
         event: Event.RequestTransition
     ) {
-        @OptIn(TuuchoInternalApi::class)
-        coroutineScopes.default.asyncOnCompletionThrowing {
+        coroutineScopes.default.async {
             @Suppress("UNCHECKED_CAST")
             foregroundGroup = Group(
                 screens = useCaseExecutor
@@ -129,15 +127,14 @@ class TuuchoEngine(
                 transitionSpecObject = event.backgroundGroup.transitionSpecObject
             )
             transitionRequested = true
-            redrawTrigger.intValue += 1
+            redrawCounterTrigger.intValue += 1
         }
     }
 
     private fun onIdleEvent(
         event: Event.Idle
     ) {
-        @OptIn(TuuchoInternalApi::class)
-        coroutineScopes.default.asyncOnCompletionThrowing {
+        coroutineScopes.default.async {
             @Suppress("UNCHECKED_CAST")
             foregroundGroup = Group(
                 screens = useCaseExecutor
@@ -154,18 +151,18 @@ class TuuchoEngine(
             )
             backgroundGroup = null
             transitionRequested = false
-            redrawTrigger.intValue += 1
+            redrawCounterTrigger.intValue += 1
         }
     }
 
     @Composable
     override fun display() {
         val animationProgress = if (transitionRequested) {
-            rememberAnimationProgress(redrawTrigger.intValue)
+            rememberAnimationProgress(redrawCounterTrigger.intValue)
         } else {
             null
         }
-        val screens = remember(redrawTrigger.intValue) {
+        val screens = remember(redrawCounterTrigger.intValue) {
             buildList<Pair<String, @Composable () -> Unit>> {
                 backgroundGroup?.let { group ->
                     group.screens.forEach { screen ->
@@ -191,17 +188,15 @@ class TuuchoEngine(
         }
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
-            LaunchedEffect(redrawTrigger.intValue) {
-                @OptIn(TuuchoInternalApi::class)
-                coroutineScopes.default
-                    .asyncOnCompletionThrowing {
-                        animationProgress.events.once {
-                            useCaseExecutor.async(
-                                useCase = notifyNavigationTransitionCompleted,
-                                input = Unit
-                            )
-                        }
+            LaunchedEffect(redrawCounterTrigger.intValue) {
+                coroutineScopes.default.async {
+                    animationProgress.events.once {
+                        useCaseExecutor.async(
+                            useCase = notifyNavigationTransitionCompleted,
+                            input = Unit
+                        )
                     }
+                }
                 animationProgress.start()
             }
         }
@@ -221,7 +216,7 @@ class TuuchoEngine(
                     block = { modifierTransition(it, spec = spec) }
                 )
         ) {
-            display()
+            display(scope = this)
         }
     }
 

@@ -1,11 +1,28 @@
-getCommonByTypeIdVisibility:
-SELECT jsonObject.*
-FROM jsonObjectCommonEntry jsonObject
-JOIN hookEntry hook ON jsonObject.url = hook.url
-WHERE hook.visibility = ? AND jsonObject.type = ? AND jsonObject.id = ?;
-
 getContextualByTypeUrlIdVisibility:
 SELECT jsonObject.*
 FROM jsonObjectContextualEntry jsonObject
 JOIN hookEntry hook ON jsonObject.url = hook.url
-WHERE hook.visibility = ? AND jsonObject.type = ? AND jsonObject.url = ? AND jsonObject.id = ?;
+WHERE hook.visibility = :visibility
+  AND jsonObject.type = :type
+  AND jsonObject.url = :url
+  AND jsonObject.id = :id;
+
+getCommonByTypeIdVisibility:
+SELECT jsonObject.*
+FROM jsonObjectCommonEntry jsonObject
+JOIN hookEntry hook ON jsonObject.url = hook.url
+WHERE hook.visibility = :visibility
+  AND jsonObject.type = :type
+  AND jsonObject.id = :id;
+
+getCommonByTypeUrlIdVisibility:
+SELECT jsonObject.*
+FROM jsonObjectCommonEntry jsonObject
+JOIN hookEntry hook
+    ON jsonObject.url = hook.url
+LEFT JOIN json_each(hook.urlWhiteList) AS urlWhiteList
+    ON urlWhiteList.value != '' AND instr((:url || ''), urlWhiteList.value) = 1
+WHERE hook.visibility = :visibility
+  AND jsonObject.type = :type
+  AND jsonObject.id = :id
+  AND (hook.urlWhiteList IS NULL OR urlWhiteList.value IS NOT NULL);

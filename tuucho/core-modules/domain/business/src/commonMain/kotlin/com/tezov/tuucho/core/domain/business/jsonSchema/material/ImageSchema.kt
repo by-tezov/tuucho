@@ -11,10 +11,9 @@ object ImageSchema {
     object Key {
         const val id = IdSchema.root
         const val type = TypeSchema.root
-        const val source = "source"
+        const val default = "default"
         const val tags = "tags"
         const val tagsExcluder = "tags-excluder"
-        const val timeToLive = "time-to-live"
     }
 
     object Value {
@@ -23,7 +22,6 @@ object ImageSchema {
         }
 
         object Tag {
-            const val primary = "primary"
             const val placeholder = "placeholder"
         }
     }
@@ -39,7 +37,7 @@ object ImageSchema {
 
         var id by delegate<JsonElement>(Key.id)
         var type by delegate<String?>(Key.type)
-        var source by delegate<String?>(Key.source)
+        var default by delegate<String?>(Key.default)
         var tags by delegate<SetStringDelegate?>(Key.tags)
         var tagsExcluder by delegate<SetStringDelegate?>(Key.tagsExcluder)
     }

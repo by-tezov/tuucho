@@ -42,13 +42,11 @@ internal object ResponseRectifierScope {
     }
 
     private fun ScopeDSL.textAssociation() {
-        declaration<IdRectifier>() associate TextRectifier.Association.Matcher::class
+        declaration<IdRectifier>() associate TextRectifier.Association.Processor::class
     }
 
     private fun ScopeDSL.actionAssociation() {
-        associate<ActionRectifier.Association.Matcher> {
-            declaration<IdRectifier>()
-            factoryOf(::FormActionRectifierMatcher)
-        }
+        factory<FormActionRectifierMatcher>() associate ActionRectifier.Association.Matcher::class
+        declaration<IdRectifier>() associate ActionRectifier.Association.Processor::class
     }
 }

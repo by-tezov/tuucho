@@ -1,11 +1,16 @@
 {
   "material-resource": {
     "global": {
+      "setting": {
+        "validity-key": "1",
+        "urls-white-list": "lobby/"
+      },
       "subs": [
-        {
-          "validity-key": "1",
-          "url": "lobby/common/subs/sub-texts"
-        }
+        "lobby/common/subs/sub-colors",
+        "lobby/common/subs/sub-components",
+        "lobby/common/subs/sub-dimensions",
+        "lobby/common/subs/sub-styles",
+        "lobby/common/subs/sub-texts"
       ]
     },
     "local": {
@@ -13,6 +18,10 @@
         {
           "validity-key": "1",
           "url": "lobby/page-login"
+        },
+        {
+          "validity-key": "1",
+          "url": "lobby/page-language"
         }
       ]
     }

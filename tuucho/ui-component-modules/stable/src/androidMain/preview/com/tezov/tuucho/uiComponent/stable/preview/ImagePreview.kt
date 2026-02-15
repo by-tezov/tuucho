@@ -14,6 +14,7 @@ import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
 import com.tezov.tuucho.core.presentation.ui.preview.DummyImage
 import com.tezov.tuucho.core.presentation.ui.preview.DummyKoin
 import com.tezov.tuucho.core.presentation.ui.preview.DummyScreenContext
+import com.tezov.tuucho.core.presentation.ui.render.projection.ActionTypeAlias
 import com.tezov.tuucho.core.presentation.ui.render.projection.Image
 import com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.ImageSchema.Style
 import com.tezov.tuucho.uiComponent.stable.presentation.view.ImageViewFactory.Companion.createImageView
@@ -28,6 +29,7 @@ private data class ImagePreviewData(
     val backgroundColor: Color? = null,
     val tintColor: Color? = null,
     val image: Image? = null,
+    val onClick: ActionTypeAlias? = null,
     val description: String? = null,
 )
 
@@ -110,6 +112,7 @@ private fun ImagePreviewComponentFromSequence(
         backgroundColor = data.backgroundColor,
         tintColor = data.tintColor,
         image = data.image,
+        onClick = data.onClick,
         description = data.description
     )
 }
@@ -124,6 +127,7 @@ fun ImagePreviewComponent(
     backgroundColor: Color? = Color.LightGray,
     tintColor: Color? = Color.Transparent,
     image: Image? = null,
+    onClick: ActionTypeAlias? = null,
     description: String? = "description",
 ) {
     val context = LocalContext.current
@@ -140,6 +144,7 @@ fun ImagePreviewComponent(
             backgroundColor = backgroundColor,
             tintColor = tintColor,
             image = image,
+            onClick = onClick,
             description = description
         )
     }

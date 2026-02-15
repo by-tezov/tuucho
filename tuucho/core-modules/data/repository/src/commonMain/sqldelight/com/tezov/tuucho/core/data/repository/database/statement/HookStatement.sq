@@ -5,14 +5,14 @@ deleteAll:
 DELETE FROM hookEntry;
 
 deleteByUrl:
-DELETE FROM hookEntry WHERE url = ?;
+DELETE FROM hookEntry WHERE url = :url;
 
 insert:
-INSERT INTO hookEntry(url, rootPrimaryKey, visibility, lifetime)
-VALUES ( ?, ?, ?,?);
+INSERT INTO hookEntry(url, urlWhiteList, rootPrimaryKey, visibility, lifetime)
+VALUES (:url, :urlWhiteList, :rootPrimaryKey, :visibility, :lifetime);
 
 getByUrl:
-SELECT * FROM hookEntry WHERE url = ?;
+SELECT * FROM hookEntry WHERE url = :url;
 
 getLifetimeByUrl:
-SELECT lifetime FROM hookEntry WHERE url = ?;
+SELECT lifetime FROM hookEntry WHERE url = :url;

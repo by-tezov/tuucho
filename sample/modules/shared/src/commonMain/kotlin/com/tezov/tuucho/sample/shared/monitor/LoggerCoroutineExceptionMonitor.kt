@@ -6,12 +6,14 @@ import com.tezov.tuucho.sample.shared._system.Logger
 class LoggerCoroutineExceptionMonitor(
     private val logger: Logger,
 ) : CoroutineExceptionMonitorProtocol {
+
+    @OptIn(ExperimentalStdlibApi::class)
     override suspend fun process(
         context: CoroutineExceptionMonitorProtocol.Context
     ) {
         with(context) {
             logger.thread()
-            logger.exception("MON-COROUTINE", throwable) { "$id:$name" }
+            logger.exception("MON-COROUTINE", throwable) { "${throwable.hashCode().toHexString()}:$name" }
         }
     }
 }

@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.UseCaseExecutor
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateBackUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateShadowerUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateToUrlUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterialCacheUseCase
@@ -23,7 +24,10 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NavigationSt
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.NotifyNavigationTransitionCompletedUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RegisterToScreenTransitionEventUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyValueFromStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SetLanguageUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.bind
@@ -40,32 +44,29 @@ internal object UseCaseModule {
     private fun Module.withNetworkModule() {
         factory {
             NavigateBackUseCase(
-                coroutineScopes = get(),
                 useCaseExecutor = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
-                retrieveMaterialRepository = get(),
-                shadowerMaterialRepository = get(),
                 middlewareExecutor = get(),
                 navigationMiddlewares = getAllOrdered(),
-                navigateFinish = get()
+                navigateFinish = get(),
+                navigateShadower = get()
             )
         }
 
+        factory<NavigateShadowerUseCase>()
+
         factory {
             NavigateToUrlUseCase(
-                coroutineScopes = get(),
                 useCaseExecutor = get(),
-                retrieveMaterialRepository = get(),
                 navigationRouteIdGenerator = get(),
-                navigationOptionSelectorFactory = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),
-                shadowerMaterialRepository = get(),
                 middlewareExecutor = get(),
-                navigationMiddlewares = getAllOrdered()
+                navigationMiddlewares = getAllOrdered(),
+                navigateShadower = get()
             )
         }
 
@@ -109,8 +110,10 @@ internal object UseCaseModule {
         factory<NotifyNavigationTransitionCompletedUseCase>()
         factory<RegisterToScreenTransitionEventUseCase>()
         factory<RemoveKeyValueFromStoreUseCase>()
+        factory<ResolveLanguageValueUseCase>()
         factory<SaveKeyValueToStoreUseCase>()
-
+        factory<SetLanguageUseCase>()
+        factory<TransformImageJsonArrayToImageModelUseCase>()
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(
                 navigationScreenStackRepository = get(),

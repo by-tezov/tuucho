@@ -8,21 +8,23 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower
+import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
 internal class ShadowerMaterialRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
+    private val materialCacheRepository: NavigationRepositoryProtocol.MaterialCache,
     private val materialShadower: MaterialShadower,
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol>,
 ) : Shadower,
     TuuchoKoinComponent {
     override suspend fun process(
         url: String,
-        componentObject: JsonObject,
         types: List<String>
     ) = buildList {
         coroutineScopes.default.withContext {
+            val componentObject = materialCacheRepository.getComponentObject(url)
             shadowerMaterialSources
                 .asSequence()
                 .filter { types.contains(it.type) }

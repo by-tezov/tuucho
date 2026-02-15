@@ -1,19 +1,19 @@
 package com.tezov.tuucho.uiComponent.stable.presentation.view
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tezov.tuucho.core.domain.business.jsonSchema._element.form.FormSchema
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProtocol
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
+import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui._system.subset
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextsProjectionProtocol
@@ -45,6 +45,7 @@ import kotlinx.serialization.json.JsonObject
 interface FieldViewProtocol : ViewProtocol {
     @Composable
     fun ComposeComponent(
+        scope: Any?,
         fieldValue: ValueStorageProjectionProtocol<String>,
         showError: MutableState<Boolean>,
         titleValue: String?,
@@ -134,6 +135,7 @@ private class FieldView(
         scope: Any?
     ) {
         ComposeComponent(
+            scope = scope,
             fieldValue = fieldValue,
             showError = showError,
             titleValue = titleValue.value,
@@ -145,6 +147,7 @@ private class FieldView(
 
     @Composable
     override fun ComposeComponent(
+        scope: Any?,
         fieldValue: ValueStorageProjectionProtocol<String>,
         showError: MutableState<Boolean>,
         titleValue: String?,
@@ -157,8 +160,12 @@ private class FieldView(
         //  - when gain focus and user write, remove the error while user is typing
         TextField(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .then {
+                    modifier = when (scope) {
+                        is RowScope -> scope.run { modifier.weight(1.0f) }
+                        else -> modifier.fillMaxWidth()
+                    }
+                },
             value = fieldValue.value ?: "",
             onValueChange = { newValue ->
                 showError.value = false
