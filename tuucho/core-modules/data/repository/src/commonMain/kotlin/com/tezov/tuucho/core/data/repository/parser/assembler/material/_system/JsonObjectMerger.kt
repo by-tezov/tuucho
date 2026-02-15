@@ -10,7 +10,6 @@ import kotlinx.serialization.json.JsonObject
 
 // TODO: Not efficient at all
 internal class JsonObjectMerger {
-
     fun merge(
         from: List<JsonObject>
     ) = if (from.size == 1) {
@@ -54,6 +53,8 @@ internal class JsonObjectMerger {
                     remove(IdSchema.Key.source) // we remove source, since previous is the source about to be merged
                 }.collect()
                 .let { merge(it, true) }
-        } else merge(next, false)
+        } else {
+            merge(next, false)
+        }
     }
 }
