@@ -73,7 +73,7 @@ internal class NavigationStackScreenRepository(
                     val screen = iterator.next()
                     if (routes.none { it == screen.route }) {
                         iterator.remove()
-                        materialCacheRepository.release(screen.route.value)
+                        materialCacheRepository.release(screen.route)
                     }
                 }
             }

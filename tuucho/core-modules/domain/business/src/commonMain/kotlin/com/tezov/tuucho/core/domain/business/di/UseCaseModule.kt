@@ -61,6 +61,7 @@ internal object UseCaseModule {
             NavigateToUrlUseCase(
                 useCaseExecutor = get(),
                 navigationRouteIdGenerator = get(),
+                materialCacheRepository = get(),
                 navigationStackRouteRepository = get(),
                 navigationStackScreenRepository = get(),
                 navigationStackTransitionRepository = get(),

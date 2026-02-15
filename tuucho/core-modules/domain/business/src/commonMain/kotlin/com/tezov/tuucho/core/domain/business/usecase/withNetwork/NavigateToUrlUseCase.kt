@@ -16,6 +16,7 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 class NavigateToUrlUseCase(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val navigationRouteIdGenerator: NavigationRouteIdGenerator,
+    private val materialCacheRepository: NavigationRepositoryProtocol.MaterialCache,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val navigationStackTransitionRepository: NavigationRepositoryProtocol.StackTransition,
@@ -47,6 +48,7 @@ class NavigateToUrlUseCase(
                 id = navigationRouteIdGenerator.generate(),
                 value = url
             )
+            materialCacheRepository.buildAndLoad(route = inputRoute)
             val outputRoute = navigationStackRouteRepository
                 .forward(route = inputRoute)
             if (outputRoute.id == inputRoute.id) {
@@ -56,6 +58,7 @@ class NavigateToUrlUseCase(
             }
             navigationStackTransitionRepository
                 .forward(route = outputRoute)
+            materialCacheRepository.unload(route = inputRoute)
         }
     }
 

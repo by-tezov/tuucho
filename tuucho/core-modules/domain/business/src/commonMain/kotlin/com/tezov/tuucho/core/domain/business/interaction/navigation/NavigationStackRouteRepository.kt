@@ -32,7 +32,7 @@ internal class NavigationStackRouteRepository(
         route: NavigationRoute.Url
     ): NavigationRoute.Url {
         val navigationOptionObject = materialCacheRepository
-            .getNavigationDefinitionOptionObject(route.value)
+            .getNavigationDefinitionOptionObject(route)
         return coroutineScopes.default.withContext {
             val option = navigationOptionObject?.let {
                 NavigationOption.from(it)

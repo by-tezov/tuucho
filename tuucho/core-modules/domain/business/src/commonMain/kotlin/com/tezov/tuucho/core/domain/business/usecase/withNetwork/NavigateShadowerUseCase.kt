@@ -40,8 +40,8 @@ class NavigateShadowerUseCase(
         val settingShadowerScope = materialCacheRepository
             .let {
                 when (input.direction) {
-                    Key.navigateForward -> it.getShadowerSettingNavigateForwardObject(input.route.value)
-                    Key.navigateBackward -> it.getShadowerSettingNavigateBackwardObject(input.route.value)
+                    Key.navigateForward -> it.getShadowerSettingNavigateForwardObject(input.route)
+                    Key.navigateBackward -> it.getShadowerSettingNavigateBackwardObject(input.route)
                     else -> throw DomainException.Default("invalid direction $input.direction")
                 }
             }?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
@@ -51,7 +51,7 @@ class NavigateShadowerUseCase(
             } else {
                 coroutineScopes.default.async {
                     processShadowerAndUpdateScreen(screen)
-                }
+                }.start()
             }
         }
     }
@@ -62,7 +62,7 @@ class NavigateShadowerUseCase(
         suspend fun process() {
             val jsonObjects = shadowerMaterialRepository
                 .process(
-                    url = screen.route.value,
+                    route = screen.route,
                     types = listOf(Shadower.Type.contextual)
                 ).map { it.jsonObject }
             screen.update(jsonObjects)

@@ -113,8 +113,8 @@ internal class NavigationStackTransitionRepository(
                     stack.add(
                         Item(
                             route = pushedRoute,
-                            extraObject = materialCacheRepository.getNavigationSettingExtraObject(route.value),
-                            transitionObject = materialCacheRepository.getNavigationDefinitionTransitionObject(route.value)
+                            extraObject = materialCacheRepository.getNavigationSettingExtraObject(route),
+                            transitionObject = materialCacheRepository.getNavigationDefinitionTransitionObject(route)
                         )
                     )
                 }

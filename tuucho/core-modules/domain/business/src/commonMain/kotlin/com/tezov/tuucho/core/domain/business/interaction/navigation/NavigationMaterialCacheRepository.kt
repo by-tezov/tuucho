@@ -134,51 +134,57 @@ internal class NavigationMaterialCacheRepository(
         url: String
     ) = cache.getOrPut(url) { CacheEntry(url) }
 
-    override suspend fun releaseAll(
-        urls: List<String>
+    override suspend fun buildAndLoad(
+        route: NavigationRoute.Url
     ) {
-        mutex.withLock { urls.forEach { cache.remove(it) } }
+        mutex.withLock { }
+    }
+
+    override suspend fun unload(
+        route: NavigationRoute.Url
+    ) {
+        mutex.withLock { }
     }
 
     override suspend fun release(
-        url: String
+        route: NavigationRoute.Url
     ) {
-        mutex.withLock { cache.remove(url) }
+        mutex.withLock { }
     }
 
     override suspend fun getComponentObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).component.await() }
 
     override suspend fun getNavigationSettingObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).navigationSetting.await() }
 
     override suspend fun getNavigationSettingExtraObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).navigationSettingExtra.await() }
 
     override suspend fun getNavigationDefinitionObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).navigationDefinition.await() }
 
     override suspend fun getNavigationDefinitionOptionObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).navigationDefinitionOption.await() }
 
     override suspend fun getNavigationDefinitionTransitionObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).navigationDefinitionTransition.await() }
 
     override suspend fun getShadowerSettingObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).shadowerSetting.await() }
 
     override suspend fun getShadowerSettingNavigateForwardObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).shadowerSettingNavigateForward.await() }
 
     override suspend fun getShadowerSettingNavigateBackwardObject(
-        url: String
+        route: NavigationRoute.Url
     ) = mutex.withLock { getEntry(url).shadowerSettingNavigateBackward.await() }
 }

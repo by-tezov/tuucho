@@ -60,7 +60,7 @@ internal class Screen(
         if (this@Screen.rootView != null) {
             throw UiException.Default("View root is not null")
         }
-        val componentObject = materialCacheRepository.getComponentObject(route.value)
+        val componentObject = materialCacheRepository.getComponentObject(route)
         val type = componentObject.withScope(TypeSchema::Scope).self
         if (type != TypeSchema.Value.component) {
             throw UiException.Default("object is not a component $componentObject")
