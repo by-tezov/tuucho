@@ -2,7 +2,7 @@
   "material-resource": {
     "global": {
       "setting": {
-        "validity-key": "1",
+        "validity-key": "2",
         "urls-white-list": "auth/"
       },
       "subs": [
@@ -19,8 +19,7 @@
     },
     "local": {
       "setting": {
-        "validity-key": "1",
-        "pre-download": true
+        "validity-key": "1"
       },
       "pages": [
         {
@@ -28,8 +27,11 @@
           "url": "auth/page-home"
         },
         "auth/page-a",
+        {
+          "url": "auth/page-c",
+          "pre-download": false
+        },
         "auth/page-c",
-        "auth/page-d",
         "auth/page-e"
       ]
     },

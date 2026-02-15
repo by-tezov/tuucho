@@ -5,6 +5,7 @@
     <ID>ConstructorParameterNaming:AbstractAssembler.kt$AbstractAssembler$private val _scope: Scope? = null</ID>
     <ID>ConstructorParameterNaming:AbstractRectifier.kt$AbstractRectifier$private val _scope: Scope? = null</ID>
     <ID>CyclomaticComplexMethod:ImageRectifier.kt$ImageRectifier$override fun afterAlterObject( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement, ): JsonElement</ID>
+    <ID>ForbiddenComment:JsonObjectMerger.kt$JsonObjectMerger$// TODO: Not efficient at all</ID>
     <ID>MagicNumber:ImageDiskCache.kt$ImageDiskCache$1024L</ID>
     <ID>MatchingDeclarationName:HookEntityDao.kt$HookQueries</ID>
     <ID>MatchingDeclarationName:ImageEntityDao.kt$ImageQueries</ID>
@@ -22,7 +23,7 @@
     <ID>NestedBlockDepth:DimensionsRectifier.kt$DimensionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:ImageRectifier.kt$ImageRectifier$override fun afterAlterObject( context: RectifierProtocol.Context, path: JsonElementPath, element: JsonElement, ): JsonElement</ID>
     <ID>NestedBlockDepth:ImagesRectifier.kt$ImagesRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
-    <ID>NestedBlockDepth:JsonObjectMerger.kt$JsonObjectMerger$private fun SchemaScope.merge( next: JsonObject )</ID>
+    <ID>NestedBlockDepth:JsonObjectMerger.kt$JsonObjectMerger$private fun SchemaScope.merge( next: JsonObject, isRoot: Boolean )</ID>
     <ID>NestedBlockDepth:OptionsRectifier.kt$OptionsRectifier$private fun alterObject( key: String, group: String, jsonObject: JsonObject, )</ID>
     <ID>NestedBlockDepth:RefreshMaterialCacheRepository.kt$RefreshMaterialCacheRepository$private suspend fun JsonObject.refreshContextualCache()</ID>
     <ID>NestedBlockDepth:RefreshMaterialCacheRepository.kt$RefreshMaterialCacheRepository$private suspend fun JsonObject.refreshGlobalCache()</ID>
