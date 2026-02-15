@@ -15,7 +15,7 @@
       },
       "button": {
         "font-size": "*font@button",
-        "font-color": "*text@blue"
+        "font-color": "*text@black"
       },
       "button-next": {
         "id": "*label@button",
@@ -23,7 +23,7 @@
       },
       "button-previous": {
         "id": "*label@button",
-        "font-color": "*text@black"
+        "font-color": "*text@blue"
       },
       "button-info": {
         "id": "*label@button",
