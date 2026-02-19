@@ -54,28 +54,29 @@ private fun onBackCompleted(
     interactionLockResolver: InteractionLockProtocol.Resolver,
     actionHandler: ProcessActionUseCase,
 ) {
-    coroutineScopes.default.async {
-        val screenLock = interactionLockResolver.acquire(
-            requester = "BackHandler",
-            lockable = InteractionLockable.Types(
-                values = listOf(InteractionLockType.Screen)
+    coroutineScopes.default
+        .async {
+            val screenLock = interactionLockResolver.acquire(
+                requester = "BackHandler",
+                lockable = InteractionLockable.Types(
+                    values = listOf(InteractionLockType.Screen)
+                )
             )
-        )
-        useCaseExecutor.await(
-            useCase = actionHandler,
-            input = ProcessActionUseCase.Input.create(
-                route = NavigationRoute.Current,
-                model = ActionModel.from(
-                    command = NavigateActionDefinition.LocalDestination.command,
-                    authority = NavigateActionDefinition.LocalDestination.authority,
-                    target = NavigateActionDefinition.LocalDestination.Target.back,
-                ),
-                lockable = screenLock.freeze()
+            useCaseExecutor.await(
+                useCase = actionHandler,
+                input = ProcessActionUseCase.Input.create(
+                    route = NavigationRoute.Current,
+                    model = ActionModel.from(
+                        command = NavigateActionDefinition.LocalDestination.command,
+                        authority = NavigateActionDefinition.LocalDestination.authority,
+                        target = NavigateActionDefinition.LocalDestination.Target.back,
+                    ),
+                    lockable = screenLock.freeze()
+                )
             )
-        )
-        interactionLockResolver.release(
-            requester = "BackHandler",
-            lockable = screenLock
-        )
-    }
+            interactionLockResolver.release(
+                requester = "BackHandler",
+                lockable = screenLock
+            )
+        }.start()
 }

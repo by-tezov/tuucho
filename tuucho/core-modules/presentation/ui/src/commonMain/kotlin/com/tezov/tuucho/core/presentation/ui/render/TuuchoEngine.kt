@@ -103,56 +103,58 @@ class TuuchoEngine(
     private fun onRequestTransitionEvent(
         event: Event.RequestTransition
     ) {
-        coroutineScopes.default.async {
-            @Suppress("UNCHECKED_CAST")
-            foregroundGroup = Group(
-                screens = useCaseExecutor
-                    .await(
-                        useCase = getScreensFromRoutes,
-                        input = GetScreensFromRoutesUseCase.Input(
-                            routes = event.foregroundGroup.routes
-                        )
-                    )?.screens as List<ScreenProtocol>,
-                transitionSpecObject = event.foregroundGroup.transitionSpecObject
-            )
-            @Suppress("UNCHECKED_CAST")
-            backgroundGroup = Group(
-                screens = useCaseExecutor
-                    .await(
-                        useCase = getScreensFromRoutes,
-                        input = GetScreensFromRoutesUseCase.Input(
-                            routes = event.backgroundGroup.routes
-                        )
-                    )?.screens as List<ScreenProtocol>,
-                transitionSpecObject = event.backgroundGroup.transitionSpecObject
-            )
-            transitionRequested = true
-            redrawCounterTrigger.intValue += 1
-        }
+        coroutineScopes.default
+            .async {
+                @Suppress("UNCHECKED_CAST")
+                foregroundGroup = Group(
+                    screens = useCaseExecutor
+                        .await(
+                            useCase = getScreensFromRoutes,
+                            input = GetScreensFromRoutesUseCase.Input(
+                                routes = event.foregroundGroup.routes
+                            )
+                        )?.screens as List<ScreenProtocol>,
+                    transitionSpecObject = event.foregroundGroup.transitionSpecObject
+                )
+                @Suppress("UNCHECKED_CAST")
+                backgroundGroup = Group(
+                    screens = useCaseExecutor
+                        .await(
+                            useCase = getScreensFromRoutes,
+                            input = GetScreensFromRoutesUseCase.Input(
+                                routes = event.backgroundGroup.routes
+                            )
+                        )?.screens as List<ScreenProtocol>,
+                    transitionSpecObject = event.backgroundGroup.transitionSpecObject
+                )
+                transitionRequested = true
+                redrawCounterTrigger.intValue += 1
+            }.start()
     }
 
     private fun onIdleEvent(
         event: Event.Idle
     ) {
-        coroutineScopes.default.async {
-            @Suppress("UNCHECKED_CAST")
-            foregroundGroup = Group(
-                screens = useCaseExecutor
-                    .await(
-                        useCase = getScreensFromRoutes,
-                        input = GetScreensFromRoutesUseCase.Input(
-                            routes = event.routes
-                        )
-                    )?.screens as List<ScreenProtocol>,
-                transitionSpecObject = JsonNull
-                    .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
-                    .apply { type = Type.none }
-                    .collect()
-            )
-            backgroundGroup = null
-            transitionRequested = false
-            redrawCounterTrigger.intValue += 1
-        }
+        coroutineScopes.default
+            .async {
+                @Suppress("UNCHECKED_CAST")
+                foregroundGroup = Group(
+                    screens = useCaseExecutor
+                        .await(
+                            useCase = getScreensFromRoutes,
+                            input = GetScreensFromRoutesUseCase.Input(
+                                routes = event.routes
+                            )
+                        )?.screens as List<ScreenProtocol>,
+                    transitionSpecObject = JsonNull
+                        .withScope(SettingComponentNavigationTransitionSchema.Spec::Scope)
+                        .apply { type = Type.none }
+                        .collect()
+                )
+                backgroundGroup = null
+                transitionRequested = false
+                redrawCounterTrigger.intValue += 1
+            }.start()
     }
 
     @Composable
@@ -189,14 +191,15 @@ class TuuchoEngine(
         screens.forEach { (id, screen) -> key(id) { screen.invoke() } }
         animationProgress?.let {
             LaunchedEffect(redrawCounterTrigger.intValue) {
-                coroutineScopes.default.async {
-                    animationProgress.events.once {
-                        useCaseExecutor.async(
-                            useCase = notifyNavigationTransitionCompleted,
-                            input = Unit
-                        )
-                    }
-                }
+                coroutineScopes.default
+                    .async {
+                        animationProgress.events.once {
+                            useCaseExecutor.async(
+                                useCase = notifyNavigationTransitionCompleted,
+                                input = Unit
+                            )
+                        }
+                    }.start()
                 animationProgress.start()
             }
         }

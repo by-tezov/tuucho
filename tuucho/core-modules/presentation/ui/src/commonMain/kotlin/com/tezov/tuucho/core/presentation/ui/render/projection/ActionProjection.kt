@@ -57,30 +57,31 @@ private class ActionProjection(
             val processAction = koin.get<ProcessActionUseCase>()
             val interactionLockResolver = koin.get<InteractionLockProtocol.Resolver>()
             val action: ActionTypeAlias = { jsonElement ->
-                coroutineScopes.default.async {
-                    val screenLock = interactionLockResolver.tryAcquire(
-                        requester = "$route::ActionProjection::${hashCode().toHexString()}",
-                        lockable = InteractionLockable.Types(
-                            values = listOf(InteractionLockType.Screen)
+                coroutineScopes.default
+                    .async {
+                        val screenLock = interactionLockResolver.tryAcquire(
+                            requester = "$route::ActionProjection::${hashCode().toHexString()}",
+                            lockable = InteractionLockable.Types(
+                                values = listOf(InteractionLockType.Screen)
+                            )
                         )
-                    )
-                    if (screenLock is InteractionLockable.Empty) {
-                        return@async
-                    }
-                    useCaseExecutor.await(
-                        useCase = processAction,
-                        input = ProcessActionUseCase.Input.create(
-                            route = route,
-                            modelObject = actionObject,
-                            lockable = screenLock.freeze(),
-                            jsonElement = jsonElement
+                        if (screenLock is InteractionLockable.Empty) {
+                            return@async
+                        }
+                        useCaseExecutor.await(
+                            useCase = processAction,
+                            input = ProcessActionUseCase.Input.create(
+                                route = route,
+                                modelObject = actionObject,
+                                lockable = screenLock.freeze(),
+                                jsonElement = jsonElement
+                            )
                         )
-                    )
-                    interactionLockResolver.release(
-                        requester = "$route::ActionProjection::${hashCode().toHexString()}",
-                        lockable = screenLock
-                    )
-                }
+                        interactionLockResolver.release(
+                            requester = "$route::ActionProjection::${hashCode().toHexString()}",
+                            lockable = screenLock
+                        )
+                    }.start()
             }
             action
         }

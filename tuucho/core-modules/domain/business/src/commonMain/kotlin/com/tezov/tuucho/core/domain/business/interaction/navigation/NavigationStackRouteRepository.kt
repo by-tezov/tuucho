@@ -31,8 +31,9 @@ internal class NavigationStackRouteRepository(
     override suspend fun forward(
         route: NavigationRoute.Url
     ): NavigationRoute.Url {
+        materialCacheRepository.prepareNavigationConsumable(url = route.value)
         val navigationOptionObject = materialCacheRepository
-            .getNavigationDefinitionOptionObject(route.value)
+            .consumeNavigationDefinitionOptionObject(url = route.value)
         return coroutineScopes.default.withContext {
             val option = navigationOptionObject?.let {
                 NavigationOption.from(it)
@@ -43,7 +44,9 @@ internal class NavigationStackRouteRepository(
                 clearStack = false
             )
             mutex.withLock {
-                navigateUrl(route, option)
+                navigateUrl(route, option).also {
+                    materialCacheRepository.bindComponentObjectCache(route)
+                }
             }
         }
     }

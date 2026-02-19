@@ -13,7 +13,6 @@ import kotlinx.coroutines.sync.withLock
 internal class NavigationStackScreenRepository(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
-    private val materialCacheRepository: NavigationRepositoryProtocol.MaterialCache,
     private val screenFactory: ScreenFactoryProtocol,
 ) : StackScreen,
     TuuchoKoinComponent {
@@ -68,13 +67,8 @@ internal class NavigationStackScreenRepository(
         val routes = navigationStackRouteRepository.routes()
         coroutineScopes.default.withContext {
             mutex.withLock {
-                val iterator = stack.listIterator()
-                while (iterator.hasNext()) {
-                    val screen = iterator.next()
-                    if (routes.none { it == screen.route }) {
-                        iterator.remove()
-                        materialCacheRepository.release(screen.route.value)
-                    }
+                stack.retainAll { screen ->
+                    routes.any { it == screen.route }
                 }
             }
         }

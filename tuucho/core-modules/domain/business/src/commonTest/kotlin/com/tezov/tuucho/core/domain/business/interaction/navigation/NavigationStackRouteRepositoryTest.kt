@@ -81,8 +81,16 @@ class NavigationStackRouteRepositoryTest {
         val route = NavigationRoute.Url("id", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route)
 
@@ -90,8 +98,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -102,11 +112,19 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url-2")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route2.value)
         } returns buildJsonObject {
             put("clear-stack", true)
         }
@@ -121,8 +139,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+            materialCacheRepository.prepareNavigationConsumable(route2.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route2)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -133,8 +153,16 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url-2")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         sut.forward(route2)
@@ -158,8 +186,16 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url-2")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         sut.forward(route2)
@@ -207,11 +243,19 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route2.value)
         } returns buildJsonObject {
             put("single", true)
         }
@@ -226,8 +270,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+            materialCacheRepository.prepareNavigationConsumable(route2.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route2)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -237,7 +283,11 @@ class NavigationStackRouteRepositoryTest {
         val route = NavigationRoute.Url("id", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {
             put("reuse", "invalid")
         }
@@ -247,7 +297,8 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -260,11 +311,18 @@ class NavigationStackRouteRepositoryTest {
         val route3 = NavigationRoute.Url("id-3", "url-3")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("pop-up-to", buildJsonObject {
                 put("url", "url-2")
@@ -284,8 +342,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route2, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -297,8 +357,16 @@ class NavigationStackRouteRepositoryTest {
         val routeInitial2 = NavigationRoute.Url("id-2", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(routeInitial1)
         sut.forward(routeInitial2)
@@ -306,7 +374,7 @@ class NavigationStackRouteRepositoryTest {
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("reuse", "last")
         }
@@ -319,8 +387,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeInitial1, routeInitial2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -332,8 +402,16 @@ class NavigationStackRouteRepositoryTest {
         val routeInitial2 = NavigationRoute.Url("id-2", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(routeInitial1)
         sut.forward(routeInitial2)
@@ -341,7 +419,7 @@ class NavigationStackRouteRepositoryTest {
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("reuse", "first")
         }
@@ -354,8 +432,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeInitial2, routeInitial1), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -367,8 +447,16 @@ class NavigationStackRouteRepositoryTest {
         val routeInitial2 = NavigationRoute.Url("id-2", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(routeInitial1)
         sut.forward(routeInitial2)
@@ -376,7 +464,7 @@ class NavigationStackRouteRepositoryTest {
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("reuse", "true")
         }
@@ -389,8 +477,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeInitial1, routeInitial2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -403,8 +493,16 @@ class NavigationStackRouteRepositoryTest {
         val route3 = NavigationRoute.Url("id-3", "url-3")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         sut.forward(route2)
@@ -413,7 +511,7 @@ class NavigationStackRouteRepositoryTest {
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("pop-up-to", buildJsonObject {
                 put("url", "url-2")
@@ -427,8 +525,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -441,8 +541,16 @@ class NavigationStackRouteRepositoryTest {
         val routeThird = NavigationRoute.Url("id-c", "other")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(routeFirst)
         sut.forward(routeSecond)
@@ -451,7 +559,7 @@ class NavigationStackRouteRepositoryTest {
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("pop-up-to", buildJsonObject {
                 put("url", "shared")
@@ -465,8 +573,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(routeFirst, routeSecond, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -477,15 +587,23 @@ class NavigationStackRouteRepositoryTest {
         val existingRoute = NavigationRoute.Url("id-1", "url-existing")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(existingRoute)
         resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("pop-up-to", buildJsonObject {
                 put("url", "shared")
@@ -498,7 +616,8 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -510,8 +629,16 @@ class NavigationStackRouteRepositoryTest {
         val routeSecond = NavigationRoute.Url("id-2", "url-shared")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(routeFirst)
         sut.forward(routeSecond)
@@ -519,7 +646,7 @@ class NavigationStackRouteRepositoryTest {
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("single", true)
         }
@@ -530,8 +657,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -542,15 +671,23 @@ class NavigationStackRouteRepositoryTest {
         val routeInitial = NavigationRoute.Url("id-1", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(routeInitial)
         resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
         } returns buildJsonObject {
             put("reuse", "last")
         }
@@ -560,8 +697,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(routeInitial, forwardResult)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
         }
     }
 
@@ -571,8 +710,16 @@ class NavigationStackRouteRepositoryTest {
         val secondRoute = NavigationRoute.Url("id-2", "url-2")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(firstRoute)
         sut.forward(secondRoute)
@@ -593,8 +740,16 @@ class NavigationStackRouteRepositoryTest {
         val lastRoute = NavigationRoute.Url("id-2", "url-2")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(firstRoute)
         sut.forward(lastRoute)
@@ -616,8 +771,16 @@ class NavigationStackRouteRepositoryTest {
         val route3 = NavigationRoute.Url("id-3", "url-3")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         sut.forward(route2)
@@ -639,7 +802,11 @@ class NavigationStackRouteRepositoryTest {
         val route = NavigationRoute.Url("id-1", "url-1")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {
             put("pop-up-to", buildJsonObject {
                 // no url
@@ -651,7 +818,8 @@ class NavigationStackRouteRepositoryTest {
         }
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -662,15 +830,23 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject { }
 
         sut.forward(route = route2)
@@ -679,8 +855,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+            materialCacheRepository.prepareNavigationConsumable(route2.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route2)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -703,8 +881,16 @@ class NavigationStackRouteRepositoryTest {
         val route3 = NavigationRoute.Url("id-3", "other")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         sut.forward(route2)
@@ -713,7 +899,7 @@ class NavigationStackRouteRepositoryTest {
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {
             put("pop-up-to", buildJsonObject {
                 put("url", "shared")
@@ -728,8 +914,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -740,15 +928,23 @@ class NavigationStackRouteRepositoryTest {
         val route1 = NavigationRoute.Url("id-1", "url-A")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {
             put("reuse", "last")
         }
@@ -765,8 +961,10 @@ class NavigationStackRouteRepositoryTest {
         )
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route.value)
+            materialCacheRepository.prepareNavigationConsumable(route.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -777,15 +975,23 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url-B")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {
             put("reuse", "first")
         }
@@ -797,8 +1003,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+            materialCacheRepository.prepareNavigationConsumable(route2.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route2)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -809,15 +1017,23 @@ class NavigationStackRouteRepositoryTest {
         val route2 = NavigationRoute.Url("id-2", "url")
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.prepareNavigationConsumable(any())
+        } returns Unit
+
+        everySuspend {
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns null
+
+        everySuspend {
+            materialCacheRepository.bindComponentObjectCache(any())
+        } returns Unit
 
         sut.forward(route1)
         resetCalls(materialCacheRepository)
         coroutineTestScope.resetCalls()
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {
             put("single", false)
         }
@@ -828,8 +1044,10 @@ class NavigationStackRouteRepositoryTest {
         assertEquals(listOf(route1, route2), result)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
-            materialCacheRepository.getNavigationDefinitionOptionObject(route2.value)
+            materialCacheRepository.prepareNavigationConsumable(route2.value)
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(route2.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
+            materialCacheRepository.bindComponentObjectCache(route2)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
