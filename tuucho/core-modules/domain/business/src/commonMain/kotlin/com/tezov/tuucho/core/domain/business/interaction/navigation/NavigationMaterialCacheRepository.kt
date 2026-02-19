@@ -34,7 +34,9 @@ internal class NavigationMaterialCacheRepository(
     private val entriesCache = mutableMapOf<String, JsonElement>()
     private val routesCaches = mutableMapOf<String, List<NavigationRoute.Url>>()
 
-    private fun String.key(postfix: String? = null) = postfix?.let { "$this+${postfix}" } ?: this
+    private fun String.key(
+        postfix: String? = null
+    ) = postfix?.let { "$this+$postfix" } ?: this
 
     private suspend fun JsonObject.acceptNavigationDefinition(): Boolean {
         val selectorObject =

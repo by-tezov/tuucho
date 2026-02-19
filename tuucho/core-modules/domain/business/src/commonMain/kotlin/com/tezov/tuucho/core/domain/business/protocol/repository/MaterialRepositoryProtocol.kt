@@ -11,7 +11,6 @@ object MaterialRepositoryProtocol {
     }
 
     interface Retrieve {
-
         suspend fun isValid(
             url: String
         ): Boolean

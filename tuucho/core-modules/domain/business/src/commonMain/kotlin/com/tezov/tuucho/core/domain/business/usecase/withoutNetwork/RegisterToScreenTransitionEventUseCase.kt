@@ -19,10 +19,11 @@ class RegisterToScreenTransitionEventUseCase(
     override fun invoke(
         input: Input
     ) {
-        coroutineScopes.default.async {
-            navigationAnimatorStackRepository.events
-                .filter { it != Event.TransitionComplete }
-                .forever { input.onEvent.invoke(it) }
-        }.start()
+        coroutineScopes.default
+            .async {
+                navigationAnimatorStackRepository.events
+                    .filter { it != Event.TransitionComplete }
+                    .forever { input.onEvent.invoke(it) }
+            }.start()
     }
 }

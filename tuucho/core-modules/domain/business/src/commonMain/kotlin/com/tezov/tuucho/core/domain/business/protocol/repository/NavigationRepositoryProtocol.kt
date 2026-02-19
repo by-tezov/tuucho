@@ -7,7 +7,6 @@ import kotlinx.serialization.json.JsonObject
 
 object NavigationRepositoryProtocol {
     interface MaterialCache {
-
         suspend fun prepareNavigationConsumable(
             url: String
         )

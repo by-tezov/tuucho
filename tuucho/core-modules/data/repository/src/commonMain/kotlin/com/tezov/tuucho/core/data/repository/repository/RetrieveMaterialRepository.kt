@@ -13,7 +13,6 @@ internal class RetrieveMaterialRepository(
     private val materialCacheLocalSource: MaterialCacheLocalSource,
     private val materialRemoteSource: MaterialRemoteSource,
 ) : MaterialRepositoryProtocol.Retrieve {
-
     override suspend fun isValid(
         url: String
     ): Boolean {

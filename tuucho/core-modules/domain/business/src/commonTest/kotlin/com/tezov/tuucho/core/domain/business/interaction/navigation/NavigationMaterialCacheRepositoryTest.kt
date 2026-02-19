@@ -33,7 +33,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 internal class NavigationMaterialCacheRepositoryTest {
-
     private lateinit var useCaseExecutor: UseCaseExecutorProtocol
     private lateinit var navigationDefinitionSelectorMatcherFactory: NavigationDefinitionSelectorMatcherFactoryUseCase
 
@@ -312,7 +311,7 @@ internal class NavigationMaterialCacheRepositoryTest {
             useCaseExecutor.await<
                 NavigationDefinitionSelectorMatcherFactoryUseCase.Input,
                 NavigationDefinitionSelectorMatcherFactoryUseCase.Output
-                >(any(), any())
+            >(any(), any())
         } returns NavigationDefinitionSelectorMatcherFactoryUseCase.Output(
             selector = PageBreadCrumbNavigationDefinitionSelectorMatcher(values = listOf(route.value))
         )
@@ -406,5 +405,4 @@ internal class NavigationMaterialCacheRepositoryTest {
             retrieveMaterialRepository.isValid(route.value)
         }
     }
-
 }

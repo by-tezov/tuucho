@@ -77,30 +77,31 @@ private class ImageProjection(
             val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
             val transformImageJsonArrayToImageModel = koin.get<TransformImageJsonArrayToImageModelUseCase>()
             imageLoaded = false
-            coroutineScopes.default.async {
-                val modelsResult = useCaseExecutor.await(
-                    useCase = transformImageJsonArrayToImageModel,
-                    input = TransformImageJsonArrayToImageModelUseCase.Input(
-                        jsonArray = imageArray
-                    )
-                )
-                modelsResult?.models?.let { models ->
-                    val imagesResult = useCaseExecutor.await(
-                        useCase = retrieveImage,
-                        input = RetrieveImageUseCase.Input(
-                            models = models
+            coroutineScopes.default
+                .async {
+                    val modelsResult = useCaseExecutor.await(
+                        useCase = transformImageJsonArrayToImageModel,
+                        input = TransformImageJsonArrayToImageModelUseCase.Input(
+                            jsonArray = imageArray
                         )
                     )
-                    imagesResult?.collect {
-                        if (it.image.tags?.contains(ImageSchema.Value.Tag.placeholder) != true) {
-                            imageLoaded = true
-                            this@ImageProjection.value = Image(coilImage = it.image)
-                        } else if (!imageLoaded) {
-                            this@ImageProjection.value = Image(coilImage = it.image)
+                    modelsResult?.models?.let { models ->
+                        val imagesResult = useCaseExecutor.await(
+                            useCase = retrieveImage,
+                            input = RetrieveImageUseCase.Input(
+                                models = models
+                            )
+                        )
+                        imagesResult?.collect {
+                            if (it.image.tags?.contains(ImageSchema.Value.Tag.placeholder) != true) {
+                                imageLoaded = true
+                                this@ImageProjection.value = Image(coilImage = it.image)
+                            } else if (!imageLoaded) {
+                                this@ImageProjection.value = Image(coilImage = it.image)
+                            }
                         }
                     }
-                }
-            }.start()
+                }.start()
             null
         }
 }

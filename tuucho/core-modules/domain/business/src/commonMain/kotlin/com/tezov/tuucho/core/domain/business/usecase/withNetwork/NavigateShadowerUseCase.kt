@@ -35,17 +35,19 @@ class NavigateShadowerUseCase(
         val screen = navigationStackScreenRepository
             .getScreenOrNull(input.route)
             ?: return
-        val settingShadowerScope = materialCacheRepository.consumeShadowerSettingObject(
-            url = input.route.value,
-            direction = input.direction
-        )?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
+        val settingShadowerScope = materialCacheRepository
+            .consumeShadowerSettingObject(
+                url = input.route.value,
+                direction = input.direction
+            )?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 processShadowerAndUpdateScreen(screen)
             } else {
-                coroutineScopes.default.async {
-                    processShadowerAndUpdateScreen(screen)
-                }.start()
+                coroutineScopes.default
+                    .async {
+                        processShadowerAndUpdateScreen(screen)
+                    }.start()
             }
         }
     }
