@@ -24,7 +24,7 @@ import org.koin.core.component.inject
 
 internal class NavigationMaterialCacheRepository(
     private val useCaseExecutor: UseCaseExecutorProtocol,
-    private val navigationOptionSelectorFactory: NavigationDefinitionSelectorMatcherFactoryUseCase,
+    private val navigationDefinitionSelectorMatcherFactory: NavigationDefinitionSelectorMatcherFactoryUseCase,
 ) : MaterialCache,
     TuuchoKoinComponent {
     private val retrieveMaterialRepository by inject<Retrieve>()
@@ -41,7 +41,7 @@ internal class NavigationMaterialCacheRepository(
             withScope(ComponentSettingNavigationSchema.Definition::Scope).selector ?: return true
         val selector = useCaseExecutor
             .await(
-                useCase = navigationOptionSelectorFactory,
+                useCase = navigationDefinitionSelectorMatcherFactory,
                 input = NavigationDefinitionSelectorMatcherFactoryUseCase.Input(
                     prototypeObject = selectorObject
                 )
