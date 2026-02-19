@@ -1,5 +1,7 @@
 ### Todo:
 
+--> Need to fix crash when nav + language change
+
 - Update test 2e2
   -> Close release
 
