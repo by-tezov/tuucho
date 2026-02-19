@@ -103,10 +103,12 @@ internal class NavigationMaterialCacheRepository(
     override suspend fun bindComponentObjectCache(
         route: NavigationRoute.Url
     ) {
-        routesCaches[route.value]?.let { routes ->
-            routesCaches[route.value] = routes + route
-        } ?: run {
-            routesCaches[route.value] = listOf(route)
+        mutex.withLock {
+            routesCaches[route.value]?.let { routes ->
+                routesCaches[route.value] = routes + route
+            } ?: run {
+                routesCaches[route.value] = listOf(route)
+            }
         }
     }
 
