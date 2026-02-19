@@ -1,25 +1,24 @@
 ### Todo:
 
-- popup ? selector navigation seem to not work ->
-  because selector can't work a cause de NavigationMaterialCacheRepository,
-  un seul choix est gardé en mémoire ou alors routes is changing.
+--> Need to fix crash when nav + language change
 
-- update test 2e2
-
-- screen context better way to use it ?
-- projection input dataclass ?
+- Update test 2e2
+  -> Close release
 
 - Doc Http interceptor renamed to middleware exchange
 - Doc image action
 - Doc action language
 - Doc config avec url-white-list
-    
+  -> Close release
+
+Then all on this in one shot release
+- screen context better way to use it ?
+- projection input dataclass ?
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size?
 - shadower with flow ?
 - error message with class name that throw.
 
---> Update RoadMap and proceed
 
 ### Need to fix: 
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
@@ -28,7 +27,6 @@
 - Mokkery + Koin
 
 ### Improve
-
 - Shadower Failure -> On screen protocol, allow to replace skimmer with failure view
 - Add bottom/top screen not react to transition
 - Find a solution for share mock test instead of duplicated code

@@ -37,12 +37,11 @@ class NavigationStackScreenRepositoryTest {
         sut = NavigationStackScreenRepository(
             coroutineScopes = coroutineTestScope.mock,
             navigationStackRouteRepository = navigationStackRouteRepository,
-            materialCacheRepository = materialCacheRepository,
             screenFactory = screenFactory
         )
 
         everySuspend {
-            materialCacheRepository.getNavigationDefinitionOptionObject(any())
+            materialCacheRepository.consumeNavigationDefinitionOptionObject(any())
         } returns buildJsonObject {}
     }
 
@@ -279,10 +278,6 @@ class NavigationStackScreenRepositoryTest {
             navigationStackRouteRepository.routes()
         } returns listOf(routeKeepA, routeKeepB)
 
-        everySuspend {
-            materialCacheRepository.release(any())
-        } returns Unit
-
         sut.backward()
 
         val result = sut.routes()
@@ -291,7 +286,6 @@ class NavigationStackScreenRepositoryTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             navigationStackRouteRepository.routes()
             coroutineTestScope.mock.default.withContext<Any>(any())
-            materialCacheRepository.release(routeRemove.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }
@@ -369,10 +363,6 @@ class NavigationStackScreenRepositoryTest {
             navigationStackRouteRepository.routes()
         } returns emptyList()
 
-        everySuspend {
-            materialCacheRepository.release(any())
-        } returns Unit
-
         sut.backward()
 
         val result = sut.routes()
@@ -381,8 +371,6 @@ class NavigationStackScreenRepositoryTest {
         verifySuspend(VerifyMode.exhaustiveOrder) {
             navigationStackRouteRepository.routes()
             coroutineTestScope.mock.default.withContext<Any>(any())
-            materialCacheRepository.release(routeA.value)
-            materialCacheRepository.release(routeB.value)
             coroutineTestScope.mock.default.withContext<Any>(any())
         }
     }

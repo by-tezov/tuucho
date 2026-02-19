@@ -4,6 +4,7 @@ import com.tezov.tuucho.core.data.repository.parser.shadower.MaterialShadower
 import com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol
 import com.tezov.tuucho.core.data.repository.repository.source.shadower.ShadowerMaterialSourceProtocol
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
@@ -20,15 +21,15 @@ internal class ShadowerMaterialRepository(
 ) : Shadower,
     TuuchoKoinComponent {
     override suspend fun process(
-        url: String,
+        route: NavigationRoute.Url,
         types: List<String>
     ) = buildList {
         coroutineScopes.default.withContext {
-            val componentObject = materialCacheRepository.getComponentObject(url)
+            val componentObject = materialCacheRepository.getComponentObject(route.value)
             shadowerMaterialSources
                 .asSequence()
                 .filter { types.contains(it.type) }
-                .forEach { it.onStart(url, componentObject) }
+                .forEach { it.onStart(route.value, componentObject) }
             materialShadower.process(
                 componentObject = componentObject,
                 jsonObjectConsumer = object : JsonObjectConsumerProtocol {
@@ -61,7 +62,7 @@ internal class ShadowerMaterialRepository(
                                     .map { jsonObject ->
                                         Shadower.Output(
                                             type = it.type,
-                                            url = url,
+                                            route = route,
                                             jsonObject = jsonObject
                                         )
                                     }.let(::addAll)

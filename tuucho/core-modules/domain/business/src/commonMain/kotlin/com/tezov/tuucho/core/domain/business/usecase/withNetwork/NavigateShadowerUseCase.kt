@@ -1,13 +1,11 @@
 package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
-import com.tezov.tuucho.core.domain.business.exception.DomainException
 import com.tezov.tuucho.core.domain.business.interaction.exceptionHandler.ShadowerExceptionHandler
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema.Key
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
@@ -38,20 +36,18 @@ class NavigateShadowerUseCase(
             .getScreenOrNull(input.route)
             ?: return
         val settingShadowerScope = materialCacheRepository
-            .let {
-                when (input.direction) {
-                    Key.navigateForward -> it.getShadowerSettingNavigateForwardObject(input.route.value)
-                    Key.navigateBackward -> it.getShadowerSettingNavigateBackwardObject(input.route.value)
-                    else -> throw DomainException.Default("invalid direction $input.direction")
-                }
-            }?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
+            .consumeShadowerSettingObject(
+                url = input.route.value,
+                direction = input.direction
+            )?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
                 processShadowerAndUpdateScreen(screen)
             } else {
-                coroutineScopes.default.async {
-                    processShadowerAndUpdateScreen(screen)
-                }
+                coroutineScopes.default
+                    .async {
+                        processShadowerAndUpdateScreen(screen)
+                    }.start()
             }
         }
     }
@@ -62,7 +58,7 @@ class NavigateShadowerUseCase(
         suspend fun process() {
             val jsonObjects = shadowerMaterialRepository
                 .process(
-                    url = screen.route.value,
+                    route = screen.route,
                     types = listOf(Shadower.Type.contextual)
                 ).map { it.jsonObject }
             screen.update(jsonObjects)
