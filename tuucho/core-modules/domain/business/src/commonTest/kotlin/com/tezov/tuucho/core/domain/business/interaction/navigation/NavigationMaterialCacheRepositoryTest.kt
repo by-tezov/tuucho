@@ -42,7 +42,6 @@ internal class NavigationMaterialCacheRepositoryTest {
 
     private lateinit var sut: NavigationMaterialCacheRepository
 
-
     @BeforeTest
     fun setup() {
         useCaseExecutor = mock()
