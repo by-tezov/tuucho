@@ -7,6 +7,7 @@ struct iosApp: App {
     var body: some Scene {
         WindowGroup {
             ComposeView(lifecycleManager: lifecycleManager)
+            .ignoresSafeArea(.keyboard)
                 .onAppear {
                     lifecycleManager.handleOnAppear()
                 }
