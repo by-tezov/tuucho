@@ -20,6 +20,14 @@
     "content": {
       "items": [
         "*spacer@big",
+        {
+          "subset": "label",
+          "style": "*label@title",
+          "content": {
+            "value": "*page-language@title"
+          }
+        },
+        "*spacer@big",
         "*flag-layout@usa",
         "*spacer@big",
         "*flag-layout@french",

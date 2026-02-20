@@ -23,6 +23,10 @@
       }
     },
     "page-language": {
+      "title": {
+        "default": "Choose language",
+        "fr": "Choissisez une langue"
+      },
       "english": {
         "default": "English *",
         "fr": "Anglais",

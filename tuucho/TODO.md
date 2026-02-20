@@ -1,7 +1,5 @@
 ### Todo:
 
-- filed language not correct on error
-
 - Update test 2e2
   -> Close release
 
