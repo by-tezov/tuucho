@@ -35,7 +35,7 @@ object NavigationRepositoryProtocol {
             url: String
         ): JsonObject?
 
-        suspend fun consumeShadowerSettingObject(
+        suspend fun getShadowerSettingObjectOrNull(
             url: String,
             direction: String
         ): JsonObject?
@@ -72,11 +72,11 @@ object NavigationRepositoryProtocol {
             url: String
         ): List<ScreenProtocol>?
 
-        suspend fun forward(
+        suspend fun push(
             route: NavigationRoute.Url,
         )
 
-        suspend fun backward()
+        suspend fun sync()
     }
 
     interface StackTransition {

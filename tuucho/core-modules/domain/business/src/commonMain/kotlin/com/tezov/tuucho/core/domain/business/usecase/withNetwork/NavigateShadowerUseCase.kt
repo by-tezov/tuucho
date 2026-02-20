@@ -36,7 +36,7 @@ class NavigateShadowerUseCase(
             .getScreenOrNull(input.route)
             ?: return
         val settingShadowerScope = materialCacheRepository
-            .consumeShadowerSettingObject(
+            .getShadowerSettingObjectOrNull(
                 url = input.route.value,
                 direction = input.direction
             )?.withScope(SettingComponentShadowerSchema.Navigate::Scope)

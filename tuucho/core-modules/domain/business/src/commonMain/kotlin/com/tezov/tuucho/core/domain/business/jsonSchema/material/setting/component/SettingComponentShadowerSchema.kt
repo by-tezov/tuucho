@@ -11,7 +11,7 @@ object SettingComponentShadowerSchema {
     object Key {
         const val navigateForward = "navigate-forward"
         const val navigateBackward = "navigate-backward"
-        // implicit object retrieve with get Shadower.Type
+        // + implicit key/object retrieve with get Shadower.Type (contextual)
     }
 
     class Scope(
@@ -31,7 +31,7 @@ object SettingComponentShadowerSchema {
         class Scope(
             argument: SchemaScopeArgument
         ) : OpenScope<Scope>(argument) {
-            // implicit object retrieve with get TypeSchema.Value (component, content, text)
+            // implicit object with keys of TypeSchema.Value (component, content, text)
             var url by delegate<JsonObject?>(Key.url)
         }
     }
