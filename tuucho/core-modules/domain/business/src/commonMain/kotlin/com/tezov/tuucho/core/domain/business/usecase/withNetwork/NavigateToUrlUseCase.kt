@@ -51,11 +51,12 @@ class NavigateToUrlUseCase(
                 .forward(route = inputRoute)
             if (outputRoute.id == inputRoute.id) {
                 navigationStackScreenRepository
-                    .forward(route = outputRoute)
+                    .push(route = outputRoute)
                 runShadower(route = outputRoute)
             }
             navigationStackTransitionRepository
                 .forward(route = outputRoute)
+            navigationStackScreenRepository.sync()
         }
     }
 

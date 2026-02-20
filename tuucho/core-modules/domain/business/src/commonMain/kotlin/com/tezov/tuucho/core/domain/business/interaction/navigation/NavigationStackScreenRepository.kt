@@ -53,7 +53,7 @@ internal class NavigationStackScreenRepository(
         mutex.withLock { stack.filter { it.route.accept(url) } }
     }
 
-    override suspend fun forward(
+    override suspend fun push(
         route: NavigationRoute.Url
     ) {
         coroutineScopes.default.withContext {
@@ -63,7 +63,7 @@ internal class NavigationStackScreenRepository(
         }
     }
 
-    override suspend fun backward() {
+    override suspend fun sync() {
         val routes = navigationStackRouteRepository.routes()
         coroutineScopes.default.withContext {
             mutex.withLock {

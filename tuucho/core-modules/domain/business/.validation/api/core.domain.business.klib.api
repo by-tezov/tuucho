@@ -1273,7 +1273,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SaveKey
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/SystemPlatformRepositoryProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol.repository/SystemPlatformRepositoryProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackRoute, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackRoute;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withoutNetwork/SetLanguageUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SetLanguageUseCase.Input){}[0]
 
@@ -1419,7 +1419,7 @@ open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSch
     final fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.contains|contains(kotlin.String){}[0]
     final fun get(kotlin/String): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.get|get(kotlin.String){}[0]
     final fun keys(): kotlin.collections/Set<kotlin/String> // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.keys|keys(){}[0]
-    final fun remove(kotlin/String) // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.remove|remove(kotlin.String){}[0]
+    final fun remove(kotlin/String): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.remove|remove(kotlin.String){}[0]
     final fun set(kotlin/String, kotlinx.serialization.json/JsonElement) // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.set|set(kotlin.String;kotlinx.serialization.json.JsonElement){}[0]
     final inline fun <#A1: reified kotlin/Any?> delegate(kotlin/String? = ...): com.tezov.tuucho.core.domain.business.jsonSchema._system/DelegateSchemaKey<#A1> // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.delegate|delegate(kotlin.String?){0§<kotlin.Any?>}[0]
     open fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.toString|toString(){}[0]
@@ -1432,7 +1432,7 @@ open class <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSch
 
         abstract fun collect(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.collect|collect(){}[0]
         abstract fun contains(kotlin/String): kotlin/Boolean // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.contains|contains(kotlin.String){}[0]
-        abstract fun remove(kotlin/String) // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.remove|remove(kotlin.String){}[0]
+        abstract fun remove(kotlin/String): kotlinx.serialization.json/JsonElement? // com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator.remove|remove(kotlin.String){}[0]
     }
 }
 
@@ -3587,8 +3587,8 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/Navigatio
         abstract suspend fun consumeNavigationDefinitionOptionObject(kotlin/String): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.consumeNavigationDefinitionOptionObject|consumeNavigationDefinitionOptionObject(kotlin.String){}[0]
         abstract suspend fun consumeNavigationDefinitionTransitionObject(kotlin/String): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.consumeNavigationDefinitionTransitionObject|consumeNavigationDefinitionTransitionObject(kotlin.String){}[0]
         abstract suspend fun consumeNavigationSettingExtraObject(kotlin/String): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.consumeNavigationSettingExtraObject|consumeNavigationSettingExtraObject(kotlin.String){}[0]
-        abstract suspend fun consumeShadowerSettingObject(kotlin/String, kotlin/String): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.consumeShadowerSettingObject|consumeShadowerSettingObject(kotlin.String;kotlin.String){}[0]
         abstract suspend fun getComponentObject(kotlin/String): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.getComponentObject|getComponentObject(kotlin.String){}[0]
+        abstract suspend fun getShadowerSettingObjectOrNull(kotlin/String, kotlin/String): kotlinx.serialization.json/JsonObject? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.getShadowerSettingObjectOrNull|getShadowerSettingObjectOrNull(kotlin.String;kotlin.String){}[0]
         abstract suspend fun prepareNavigationConsumable(kotlin/String) // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.prepareNavigationConsumable|prepareNavigationConsumable(kotlin.String){}[0]
         abstract suspend fun unbindComponentObjectCache(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url) // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache.unbindComponentObjectCache|unbindComponentObjectCache(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url){}[0]
     }
@@ -3602,12 +3602,12 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/Navigatio
     }
 
     abstract interface StackScreen { // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen|null[0]
-        abstract suspend fun backward() // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.backward|backward(){}[0]
-        abstract suspend fun forward(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url) // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.forward|forward(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url){}[0]
         abstract suspend fun getScreenOrNull(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute): com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.getScreenOrNull|getScreenOrNull(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute){}[0]
         abstract suspend fun getScreens(kotlin.collections/List<com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url>? = ...): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol> // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.getScreens|getScreens(kotlin.collections.List<com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url>?){}[0]
         abstract suspend fun getScreensOrNull(kotlin/String): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol>? // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.getScreensOrNull|getScreensOrNull(kotlin.String){}[0]
+        abstract suspend fun push(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url) // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.push|push(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url){}[0]
         abstract suspend fun routes(): kotlin.collections/List<com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url> // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.routes|routes(){}[0]
+        abstract suspend fun sync() // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen.sync|sync(){}[0]
     }
 
     abstract interface StackTransition { // com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackTransition|null[0]

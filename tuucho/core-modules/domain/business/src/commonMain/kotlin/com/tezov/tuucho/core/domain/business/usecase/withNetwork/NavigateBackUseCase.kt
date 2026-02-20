@@ -44,7 +44,7 @@ class NavigateBackUseCase(
         )
         restoredRoute?.let { runShadower(it) }
         navigationStackTransitionRepository.backward()
-        navigationStackScreenRepository.backward()
+        navigationStackScreenRepository.sync()
         if (context.nextUrl == null) {
             useCaseExecutor.await(
                 useCase = navigateFinish,
@@ -60,7 +60,7 @@ class NavigateBackUseCase(
             useCase = navigateShadower,
             input = NavigateShadowerUseCase.Input(
                 route = route,
-                direction = Key.navigateForward
+                direction = Key.navigateBackward
             )
         )
     }

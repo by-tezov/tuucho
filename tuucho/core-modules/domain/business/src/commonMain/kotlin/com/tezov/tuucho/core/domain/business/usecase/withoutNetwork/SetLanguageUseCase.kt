@@ -10,6 +10,7 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 @OpenForTest
 class SetLanguageUseCase(
     private val platformRepository: SystemPlatformRepositoryProtocol,
+    private val navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute,
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
 ) : UseCaseProtocol.Async<Input, Unit> {
     data class Input(
@@ -20,8 +21,11 @@ class SetLanguageUseCase(
         input: Input
     ) {
         platformRepository.setCurrentLanguage(input.language)
-        navigationStackScreenRepository.getScreens().forEach {
-            it.recreateViews()
+        val routes = navigationStackRouteRepository.routes()
+        val screens = navigationStackScreenRepository.getScreens()
+        val orderedScreens = screens.sortedBy { screen ->
+            routes.indexOf(screen.route)
         }
+        orderedScreens.asReversed().forEach { it.recreateViews() }
     }
 }

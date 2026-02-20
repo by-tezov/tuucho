@@ -62,13 +62,13 @@ class NavigationStackScreenRepositoryTest {
     }
 
     @Test
-    fun `forward pushes a screen onto the stack`() = coroutineTestScope.run {
+    fun `push pushes a screen onto the stack`() = coroutineTestScope.run {
         val pushedRoute = NavigationRoute.Url("route-id", "route-url")
         val pushedScreen = mock<ScreenProtocol>()
         every { pushedScreen.route } returns pushedRoute
         everySuspend { screenFactory.create(pushedRoute) } returns pushedScreen
 
-        sut.forward(pushedRoute)
+        sut.push(pushedRoute)
 
         val result = sut.routes()
         assertEquals(listOf(pushedRoute), result)
@@ -94,8 +94,8 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(firstScreen, secondScreen))
 
-        sut.forward(firstRoute)
-        sut.forward(secondRoute)
+        sut.push(firstRoute)
+        sut.push(secondRoute)
         coroutineTestScope.resetCalls()
 
         val result = sut.routes()
@@ -125,9 +125,9 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenMatchA, screenNoMatch, screenMatchB))
 
-        sut.forward(routeMatchA)
-        sut.forward(routeNoMatch)
-        sut.forward(routeMatchB)
+        sut.push(routeMatchA)
+        sut.push(routeNoMatch)
+        sut.push(routeMatchB)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -153,8 +153,8 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(firstScreen, lastScreen))
 
-        sut.forward(firstRoute)
-        sut.forward(lastRoute)
+        sut.push(firstRoute)
+        sut.push(lastRoute)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -180,8 +180,8 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(initialScreen, nextScreen))
 
-        sut.forward(initialRoute)
-        sut.forward(nextRoute)
+        sut.push(initialRoute)
+        sut.push(nextRoute)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -207,8 +207,8 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(firstScreen, targetScreen))
 
-        sut.forward(firstRoute)
-        sut.forward(targetRoute)
+        sut.push(firstRoute)
+        sut.push(targetRoute)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -237,9 +237,9 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenAlpha, screenBeta, screenOther))
 
-        sut.forward(routeAlpha)
-        sut.forward(routeBeta)
-        sut.forward(routeOther)
+        sut.push(routeAlpha)
+        sut.push(routeBeta)
+        sut.push(routeOther)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -252,7 +252,7 @@ class NavigationStackScreenRepositoryTest {
     }
 
     @Test
-    fun `backward keeps only screens matching provided routes`() = coroutineTestScope.run {
+    fun `sync keeps only screens matching provided routes`() = coroutineTestScope.run {
         val routeKeepA = NavigationRoute.Url("keep-a-id", "keep-a-url")
         val routeRemove = NavigationRoute.Url("remove-id", "remove-url")
         val routeKeepB = NavigationRoute.Url("keep-b-id", "keep-b-url")
@@ -268,9 +268,9 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenKeepA, screenRemove, screenKeepB))
 
-        sut.forward(routeKeepA)
-        sut.forward(routeRemove)
-        sut.forward(routeKeepB)
+        sut.push(routeKeepA)
+        sut.push(routeRemove)
+        sut.push(routeKeepB)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -278,7 +278,7 @@ class NavigationStackScreenRepositoryTest {
             navigationStackRouteRepository.routes()
         } returns listOf(routeKeepA, routeKeepB)
 
-        sut.backward()
+        sut.sync()
 
         val result = sut.routes()
         assertEquals(listOf(routeKeepA, routeKeepB), result)
@@ -301,7 +301,7 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(existingScreen))
 
-        sut.forward(existingRoute)
+        sut.push(existingRoute)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -327,8 +327,8 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenA, screenB))
 
-        sut.forward(routeA)
-        sut.forward(routeB)
+        sut.push(routeA)
+        sut.push(routeB)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -341,7 +341,7 @@ class NavigationStackScreenRepositoryTest {
     }
 
     @Test
-    fun `backward empty list clears all screens`() = coroutineTestScope.run {
+    fun `sync empty list clears all screens`() = coroutineTestScope.run {
         val routeA = NavigationRoute.Url("id-a", "url-a")
         val routeB = NavigationRoute.Url("id-b", "url-b")
 
@@ -354,8 +354,8 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenA, screenB))
 
-        sut.forward(routeA)
-        sut.forward(routeB)
+        sut.push(routeA)
+        sut.push(routeB)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -363,7 +363,7 @@ class NavigationStackScreenRepositoryTest {
             navigationStackRouteRepository.routes()
         } returns emptyList()
 
-        sut.backward()
+        sut.sync()
 
         val result = sut.routes()
         assertEquals(emptyList(), result)
@@ -376,7 +376,7 @@ class NavigationStackScreenRepositoryTest {
     }
 
     @Test
-    fun `forward preserves screen order`() = coroutineTestScope.run {
+    fun `push preserves screen order`() = coroutineTestScope.run {
         val routeFirst = NavigationRoute.Url("id-first", "url-first")
         val routeMiddle = NavigationRoute.Url("id-middle", "url-middle")
         val routeLast = NavigationRoute.Url("id-last", "url-last")
@@ -392,9 +392,9 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenFirst, screenMiddle, screenLast))
 
-        sut.forward(routeFirst)
-        sut.forward(routeMiddle)
-        sut.forward(routeLast)
+        sut.push(routeFirst)
+        sut.push(routeMiddle)
+        sut.push(routeLast)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -416,7 +416,7 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenUnique))
 
-        sut.forward(routeUnique)
+        sut.push(routeUnique)
         resetCalls(screenFactory)
         coroutineTestScope.resetCalls()
 
@@ -442,8 +442,8 @@ class NavigationStackScreenRepositoryTest {
         everySuspend { screenFactory.create(any()) }
             .sequentiallyReturns(listOf(screenA, screenB))
 
-        sut.forward(routeA)
-        sut.forward(routeB)
+        sut.push(routeA)
+        sut.push(routeB)
         coroutineTestScope.resetCalls()
 
         verifySuspend(VerifyMode.exhaustiveOrder) {

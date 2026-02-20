@@ -29,6 +29,11 @@
     <ID>MaxLineLength:KoinIsolatedContext.kt$KoinIsolatedContext$val</ID>
     <ID>MaxLineLength:LanguageActionMiddleware.kt$LanguageActionMiddleware$val query = (context.actionModel.query as? JsonObject) ?: throw DomainException.Default("should no be possible")</ID>
     <ID>MaxLineLength:NavigateFinishUseCase.kt$NavigateFinishUseCase$throw DomainException.Default("you should finish activity and never call the last next of NavigationMiddleware.Finish")</ID>
+    <ID>MaxLineLength:NavigationMaterialCacheRepositoryTest.kt$NavigationMaterialCacheRepositoryTest$// assertNull(sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateBackward))</ID>
+    <ID>MaxLineLength:NavigationMaterialCacheRepositoryTest.kt$NavigationMaterialCacheRepositoryTest$// assertNull(sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateForward))</ID>
+    <ID>MaxLineLength:NavigationMaterialCacheRepositoryTest.kt$NavigationMaterialCacheRepositoryTest$// val result = sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateBackward)</ID>
+    <ID>MaxLineLength:NavigationMaterialCacheRepositoryTest.kt$NavigationMaterialCacheRepositoryTest$// val result = sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateForward)</ID>
+    <ID>MaxLineLength:NavigationMaterialCacheRepositoryTest.kt$NavigationMaterialCacheRepositoryTest$assertNotNull(sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateForward))</ID>
     <ID>MaxLineLength:NavigationOption.kt$NavigationOption.Companion$it.url ?: throw DomainException.Default("url should not be null, fix your json popupUpTo navigation")</ID>
     <ID>MaxLineLength:NavigationStackTransitionRepository.kt$NavigationStackTransitionRepository$transitionObject = materialCacheRepository.consumeNavigationDefinitionTransitionObject(route.value)</ID>
     <ID>MemberNameEqualsClassName:Associate.kt$Associate$@OptIn(KoinInternalApi::class) infix fun &lt;S : Any&gt; KoinDefinition&lt;out S&gt;.associate( clazz: KClass&lt;*&gt; ): KoinDefinition&lt;out S&gt;</ID>
