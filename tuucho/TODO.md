@@ -1,21 +1,20 @@
 ### Todo:
 
-- Update test 2e2
-  -> Close release
-
-- Doc Http interceptor renamed to middleware exchange
-- Doc image action
-- Doc action language
-- Doc config avec url-white-list
-  -> Close release
-
 Then all on this in one shot release
+
 - screen context better way to use it ?
 - projection input dataclass ?
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size?
 - shadower with flow ?
 - error message with class name that throw.
+
+
+- Doc Http interceptor renamed to middleware exchange
+- Doc image action
+- Doc action language
+- Doc config avec url-white-list
+  -> Close release
 
 ### Need to fix: 
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
