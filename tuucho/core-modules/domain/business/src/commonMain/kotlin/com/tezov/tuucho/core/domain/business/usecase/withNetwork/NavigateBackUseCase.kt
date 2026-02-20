@@ -60,7 +60,7 @@ class NavigateBackUseCase(
             useCase = navigateShadower,
             input = NavigateShadowerUseCase.Input(
                 route = route,
-                direction = Key.navigateForward
+                direction = Key.navigateBackward
             )
         )
     }

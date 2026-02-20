@@ -57,9 +57,7 @@ internal class SchemaScopeMapOperator(
 
     override fun remove(
         key: String
-    ) {
-        resolveMutableMap.remove(key)
-    }
+    ) = resolveMutableMap.remove(key)
 
     override fun collect() = _map?.let(::JsonObject)
         ?: (element as? JsonObject)

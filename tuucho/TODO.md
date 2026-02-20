@@ -1,7 +1,5 @@
 ### Todo:
 
---> Need to fix crash when nav + language change
-
 - Update test 2e2
   -> Close release
 
@@ -24,6 +22,8 @@ Then all on this in one shot release
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
 - contextual register, when outer receive later, the inner did not succeed to register
   - check message of contextual field, they never request update view after click
+- when update language, what about shadower if back shadower not enable, page won't be updated with
+  correct language
 - Mokkery + Koin
 
 ### Improve

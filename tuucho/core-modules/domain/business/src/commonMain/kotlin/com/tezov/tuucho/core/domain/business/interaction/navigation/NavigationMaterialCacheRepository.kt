@@ -155,11 +155,11 @@ internal class NavigationMaterialCacheRepository(
         entriesCache.remove(url.key(ComponentSettingNavigationSchema.Definition.Key.transition)) as? JsonObject
     }
 
-    override suspend fun consumeShadowerSettingObject(
+    override suspend fun getShadowerSettingObjectOrNull(
         url: String,
         direction: String
     ) = mutex.withLock {
-        (entriesCache.remove(url.key(ComponentSettingSchema.Root.Key.shadower)) as? JsonObject)
+        (entriesCache[url.key(ComponentSettingSchema.Root.Key.shadower)] as? JsonObject)
             ?.withScope(SettingComponentShadowerSchema::Scope)
             ?.let {
                 when (direction) {

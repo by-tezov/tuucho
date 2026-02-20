@@ -128,59 +128,60 @@ internal class NavigationMaterialCacheRepositoryTest {
         }
     }
 
-    @Test
-    fun `shadower forward can be prepared and consume once`() = runTest {
-        val expectedObject = buildJsonObject {
-            put("key", "value")
-        }
-        val route = NavigationRoute.Url("id-1", "value-1")
-
-        everySuspend { retrieveMaterialRepository.process(any()) } returns buildJsonObject {
-            put(TypeSchema.Value.Setting.prefix, buildJsonObject {
-                put(ComponentSettingSchema.Root.Key.shadower, buildJsonObject {
-                    put(SettingComponentShadowerSchema.Key.navigateForward, expectedObject)
-                    put(SettingComponentShadowerSchema.Key.navigateBackward, buildJsonObject { })
-                })
-            })
-        }
-
-        sut.prepareNavigationConsumable(route.value)
-        val result = sut.consumeShadowerSettingObject(route.value, SettingComponentShadowerSchema.Key.navigateForward)
-
-        assertEquals(expectedObject, result)
-        assertNull(sut.consumeShadowerSettingObject(route.value, SettingComponentShadowerSchema.Key.navigateForward))
-
-        verifySuspend(VerifyMode.exhaustiveOrder) {
-            retrieveMaterialRepository.process(route.value)
-        }
-    }
-
-    @Test
-    fun `shadower backward can be prepared and consume once`() = runTest {
-        val expectedObject = buildJsonObject {
-            put("key", "value")
-        }
-        val route = NavigationRoute.Url("id-1", "value-1")
-
-        everySuspend { retrieveMaterialRepository.process(any()) } returns buildJsonObject {
-            put(TypeSchema.Value.Setting.prefix, buildJsonObject {
-                put(ComponentSettingSchema.Root.Key.shadower, buildJsonObject {
-                    put(SettingComponentShadowerSchema.Key.navigateBackward, expectedObject)
-                    put(SettingComponentShadowerSchema.Key.navigateForward, buildJsonObject { })
-                })
-            })
-        }
-
-        sut.prepareNavigationConsumable(route.value)
-        val result = sut.consumeShadowerSettingObject(route.value, SettingComponentShadowerSchema.Key.navigateBackward)
-
-        assertEquals(expectedObject, result)
-        assertNull(sut.consumeShadowerSettingObject(route.value, SettingComponentShadowerSchema.Key.navigateBackward))
-
-        verifySuspend(VerifyMode.exhaustiveOrder) {
-            retrieveMaterialRepository.process(route.value)
-        }
-    }
+// not consume, just get
+//    @Test
+//    fun `shadower forward can be prepared and consume once`() = runTest {
+//        val expectedObject = buildJsonObject {
+//            put("key", "value")
+//        }
+//        val route = NavigationRoute.Url("id-1", "value-1")
+//
+//        everySuspend { retrieveMaterialRepository.process(any()) } returns buildJsonObject {
+//            put(TypeSchema.Value.Setting.prefix, buildJsonObject {
+//                put(ComponentSettingSchema.Root.Key.shadower, buildJsonObject {
+//                    put(SettingComponentShadowerSchema.Key.navigateForward, expectedObject)
+//                    put(SettingComponentShadowerSchema.Key.navigateBackward, buildJsonObject { })
+//                })
+//            })
+//        }
+//
+//        sut.prepareNavigationConsumable(route.value)
+//        val result = sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateForward)
+//
+//        assertEquals(expectedObject, result)
+//        assertNull(sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateForward))
+//
+//        verifySuspend(VerifyMode.exhaustiveOrder) {
+//            retrieveMaterialRepository.process(route.value)
+//        }
+//    }
+//
+//    @Test
+//    fun `shadower backward can be prepared and consume once`() = runTest {
+//        val expectedObject = buildJsonObject {
+//            put("key", "value")
+//        }
+//        val route = NavigationRoute.Url("id-1", "value-1")
+//
+//        everySuspend { retrieveMaterialRepository.process(any()) } returns buildJsonObject {
+//            put(TypeSchema.Value.Setting.prefix, buildJsonObject {
+//                put(ComponentSettingSchema.Root.Key.shadower, buildJsonObject {
+//                    put(SettingComponentShadowerSchema.Key.navigateBackward, expectedObject)
+//                    put(SettingComponentShadowerSchema.Key.navigateForward, buildJsonObject { })
+//                })
+//            })
+//        }
+//
+//        sut.prepareNavigationConsumable(route.value)
+//        val result = sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateBackward)
+//
+//        assertEquals(expectedObject, result)
+//        assertNull(sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateBackward))
+//
+//        verifySuspend(VerifyMode.exhaustiveOrder) {
+//            retrieveMaterialRepository.process(route.value)
+//        }
+//    }
 
     @Test
     fun `navigation extra can be prepared and consume once`() = runTest {
@@ -358,7 +359,7 @@ internal class NavigationMaterialCacheRepositoryTest {
         everySuspend { retrieveMaterialRepository.isValid(any()) } returns false
         sut.prepareNavigationConsumable(route.value)
 
-        assertNull(sut.consumeShadowerSettingObject(route.value, SettingComponentShadowerSchema.Key.navigateForward))
+        assertNull(sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateForward))
         assertNull(sut.consumeNavigationSettingExtraObject(route.value))
         assertNull(sut.consumeNavigationDefinitionOptionObject(route.value))
         assertNull(sut.consumeNavigationDefinitionTransitionObject(route.value))
@@ -396,7 +397,7 @@ internal class NavigationMaterialCacheRepositoryTest {
         everySuspend { retrieveMaterialRepository.isValid(any()) } returns true
         sut.prepareNavigationConsumable(route.value)
 
-        assertNotNull(sut.consumeShadowerSettingObject(route.value, SettingComponentShadowerSchema.Key.navigateForward))
+        assertNotNull(sut.getShadowerSettingObjectOrNull(route.value, SettingComponentShadowerSchema.Key.navigateForward))
         assertNotNull(sut.consumeNavigationSettingExtraObject(route.value))
         assertNotNull(sut.consumeNavigationDefinitionOptionObject(route.value))
         assertNotNull(sut.consumeNavigationDefinitionTransitionObject(route.value))

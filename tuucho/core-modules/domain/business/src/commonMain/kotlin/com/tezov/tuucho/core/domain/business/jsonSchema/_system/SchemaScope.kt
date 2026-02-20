@@ -65,7 +65,7 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
 
         fun remove(
             key: String
-        )
+        ): JsonElement?
 
         fun collect(): JsonObject
     }
@@ -105,9 +105,7 @@ open class OpenSchemaScope<T : OpenSchemaScope<T>>(
 
     fun remove(
         key: String
-    ) {
-        mapOperator.remove(key)
-    }
+    ) = mapOperator.remove(key)
 
     protected inline fun <reified T : Any?> delegate(
         key: String? = null,
