@@ -72,11 +72,11 @@ object NavigationRepositoryProtocol {
             url: String
         ): List<ScreenProtocol>?
 
-        suspend fun forward(
+        suspend fun push(
             route: NavigationRoute.Url,
         )
 
-        suspend fun backward()
+        suspend fun sync()
     }
 
     interface StackTransition {
