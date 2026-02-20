@@ -11,6 +11,10 @@
           "wait-done-to-render": false,
           "enable": true
         },
+        "navigate-backward": {
+          "wait-done-to-render": false,
+          "enable": true
+        },
         "contextual": {
           "url": {
             "component": "${url-origin}-contextual-components"
