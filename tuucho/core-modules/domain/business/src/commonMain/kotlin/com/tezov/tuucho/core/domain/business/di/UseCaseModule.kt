@@ -55,7 +55,16 @@ internal object UseCaseModule {
             )
         }
 
-        factory<NavigateShadowerUseCase>()
+        factory {
+            NavigateShadowerUseCase(
+                coroutineScopes = get(),
+                navigationStackScreenRepository = get(),
+                materialCacheRepository = get(),
+                shadowerMaterialRepository = get(),
+                shadowerProcessors = getAll<NavigateShadowerUseCase.Processor>(),
+                shadowerExceptionHandler = get()
+            )
+        }
 
         factory {
             NavigateToUrlUseCase(

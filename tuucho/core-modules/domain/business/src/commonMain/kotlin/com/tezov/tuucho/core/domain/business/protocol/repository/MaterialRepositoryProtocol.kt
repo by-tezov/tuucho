@@ -1,6 +1,7 @@
 package com.tezov.tuucho.core.domain.business.protocol.repository
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonObject
 
 object MaterialRepositoryProtocol {
@@ -30,13 +31,12 @@ object MaterialRepositoryProtocol {
     interface Shadower {
         data class Output(
             val type: String,
-            val route: NavigationRoute.Url,
-            val jsonObject: JsonObject,
+            val jsonObjects: Flow<JsonObject>,
         )
 
         suspend fun process(
             route: NavigationRoute.Url,
             types: List<String>,
-        ): List<Output>
+        ): Flow<Output>
     }
 }

@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.interaction.actionMiddleware
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
-import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
@@ -10,13 +10,13 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLock
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
 
-internal class ActionExecutor(
+internal class ActionMiddlewareExecutor(
     private val coroutineScopes: CoroutineScopesProtocol,
     private val middlewareExecutor: MiddlewareExecutorProtocol,
     private val middlewares: List<ActionMiddlewareProtocol>,
     private val interactionLockResolver: InteractionLockProtocol.Resolver,
     private val interactionLockRegistry: InteractionLockProtocol.Registry
-) : ActionExecutorProtocol {
+) : ActionMiddlewareExecutorProtocol {
     override suspend fun process(
         input: Input
     ) {

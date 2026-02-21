@@ -37,7 +37,7 @@ object NavigationRepositoryProtocol {
 
         suspend fun getShadowerSettingObjectOrNull(
             url: String,
-            direction: String
+            key: String
         ): JsonObject?
     }
 

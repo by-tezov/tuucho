@@ -1,21 +1,19 @@
 package com.tezov.tuucho.core.data.repository.repository.source.shadower
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonObject
 
-internal interface ShadowerMaterialSourceProtocol {
+internal interface ShadowerMaterialSourceProtocol<C : ShadowerMaterialSourceProtocol.Context> {
+
+    interface Context
+
     val type: String
 
-    val isCancelled: Boolean
+    fun accept(url: String, setting: JsonObject?, componentObject: JsonObject): Boolean
 
-    suspend fun onStart(
-        url: String,
-        materialElement: JsonObject
-    )
+    fun createContext(url: String, setting: JsonObject?, componentObject: JsonObject): C
 
-    suspend fun onNext(
-        jsonObject: JsonObject,
-        settingObject: JsonObject?
-    )
+    fun process(context: C, jsonObject: JsonObject)
 
-    suspend fun onDone(): List<JsonObject>
+    suspend fun finalize(context: C): Flow<JsonObject>
 }
