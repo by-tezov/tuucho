@@ -19,8 +19,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
@@ -81,20 +80,19 @@ internal class ContextualShadowerMaterialSource(
 
     override suspend fun finalize(
         context: Context
-    ) = context.map
-        .map { (url, jsonObjects) ->
+    ) = channelFlow {
+        context.map.forEach { (url, jsonObjects) ->
             coroutineScopes.default.async {
                 downloadAndCache(url, context.urlOrigin)
-                jsonObjects.assembleAll(url, context.urlOrigin).also {
-                    val lifetime = materialCacheLocalSource.getLifetime(url)
-                    if (lifetime is JsonLifetime.SingleUse) {
-                        materialCacheLocalSource.delete(url, Table.Common)
-                    }
+                jsonObjects.forEach { jsonObject ->
+                    jsonObject.assemble(
+                        url = url,
+                        urlOrigin = context.urlOrigin
+                    ).also { send(it) }
                 }
-            }
-        }.awaitAll()
-        .flatten()
-        .asFlow()
+            }.start()
+        }
+    }
 
     private suspend fun downloadAndCache(
         url: String,
@@ -121,23 +119,21 @@ internal class ContextualShadowerMaterialSource(
         )
     }
 
-    private suspend fun List<JsonObject>.assembleAll(
+    private suspend fun JsonObject.assemble(
         url: String,
         urlOrigin: String
-    ) = mapNotNull { jsonObject ->
-        materialAssembler.process(
-            context = AssemblerProtocol.Context(
-                url = url,
-                findAllRefOrNullFetcher = { from, type ->
-                    materialDatabaseSource.getAllRefOrNull(
-                        from = from,
-                        url = url,
-                        type = type,
-                        visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
-                    )
-                }
-            ),
-            materialObject = jsonObject
-        )
-    }
+    ) = materialAssembler.process(
+        context = AssemblerProtocol.Context(
+            url = url,
+            findAllRefOrNullFetcher = { from, type ->
+                materialDatabaseSource.getAllRefOrNull(
+                    from = from,
+                    url = url,
+                    type = type,
+                    visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
+                )
+            }
+        ),
+        materialObject = this
+    )
 }
