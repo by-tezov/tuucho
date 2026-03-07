@@ -12,7 +12,7 @@ ktlintRules = "1.7.1"
 detektRules = "1.23.8"
 
 #plugin
-android-plugin = "9.0.0"
+android-plugin = "9.0.1"
 kotlin-plugin = "2.3.10"
 koin-plugin = "0.3.0"
 compose-plugin = "1.10.1"
@@ -31,7 +31,7 @@ ktor = "3.4.0"
 koin = "4.2.0-RC1"
 kotlin-datetime = "0.7.1"
 okio = "3.16.4"
-coil = "3.3.0"
+coil = "3.4.0"
 compose = "1.10.1"
 compose-material3 = "1.9.0"
 
