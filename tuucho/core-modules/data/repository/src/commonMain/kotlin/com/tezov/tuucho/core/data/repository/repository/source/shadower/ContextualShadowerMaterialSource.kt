@@ -19,6 +19,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -81,7 +82,7 @@ internal class ContextualShadowerMaterialSource(
     override suspend fun finalize(
         context: Context
     ) = channelFlow {
-        context.map.forEach { (url, jsonObjects) ->
+        context.map.map { (url, jsonObjects) ->
             coroutineScopes.default.async {
                 downloadAndCache(url, context.urlOrigin)
                 jsonObjects.forEach { jsonObject ->
@@ -90,8 +91,8 @@ internal class ContextualShadowerMaterialSource(
                         urlOrigin = context.urlOrigin
                     ).also { send(it) }
                 }
-            }.start()
-        }
+            }
+        }.awaitAll()
     }
 
     private suspend fun downloadAndCache(
