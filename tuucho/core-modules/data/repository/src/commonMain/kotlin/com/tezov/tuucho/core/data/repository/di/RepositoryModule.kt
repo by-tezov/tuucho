@@ -19,8 +19,8 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepository
 import com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ServerHealthCheckRepositoryProtocol
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
-import org.koin.plugin.module.dsl.factory
 
 internal object RepositoryModule {
     fun invoke() = module(ModuleContextData.Main) {
@@ -38,11 +38,11 @@ internal object RepositoryModule {
             )
         }
 
-        factory<ImageRepository>() bind ImageRepositoryProtocol::class
-        factory<RefreshMaterialCacheRepository>() bind MaterialRepositoryProtocol.RefreshCache::class
-        factory<RetrieveMaterialRepository>() bind MaterialRepositoryProtocol.Retrieve::class
-        factory<SendDataAndRetrieveMaterialRepository>() bind MaterialRepositoryProtocol.SendDataAndRetrieve::class
-        factory<ServerHealthCheckRepository>() bind ServerHealthCheckRepositoryProtocol::class
+        factoryOf(::ImageRepository) bind ImageRepositoryProtocol::class
+        factoryOf(::RefreshMaterialCacheRepository) bind MaterialRepositoryProtocol.RefreshCache::class
+        factoryOf(::RetrieveMaterialRepository) bind MaterialRepositoryProtocol.Retrieve::class
+        factoryOf(::SendDataAndRetrieveMaterialRepository) bind MaterialRepositoryProtocol.SendDataAndRetrieve::class
+        factoryOf(::ServerHealthCheckRepository) bind ServerHealthCheckRepositoryProtocol::class
         single {
             ShadowerMaterialRepository(
                 coroutineScopes = get(),
@@ -54,12 +54,12 @@ internal object RepositoryModule {
     }
 
     private fun Module.source() {
-        factory<MaterialCacheLocalSource>()
-        factory<MaterialConfigRemoteSource>()
-        factory<MaterialRemoteSource>()
-        factory<RemoteSource>()
-        factory<SendDataAndRetrieveMaterialRemoteSource>()
-        factory<ImageSource>()
-        factory<ContextualShadowerMaterialSource>() bind ShadowerMaterialSourceProtocol::class
+        factoryOf(::MaterialCacheLocalSource)
+        factoryOf(::MaterialConfigRemoteSource)
+        factoryOf(::MaterialRemoteSource)
+        factoryOf(::RemoteSource)
+        factoryOf(::SendDataAndRetrieveMaterialRemoteSource)
+        factoryOf(::ImageSource)
+        factoryOf(::ContextualShadowerMaterialSource) bind ShadowerMaterialSourceProtocol::class
     }
 }

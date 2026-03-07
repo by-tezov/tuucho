@@ -4,11 +4,11 @@ import com.tezov.tuucho.core.data.repository.parser.breaker.MaterialBreaker
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema.Key
-import org.koin.plugin.module.dsl.single
+import org.koin.core.module.dsl.singleOf
 
 internal object MaterialBreakerModule {
     fun invoke() = module(ModuleContextData.Breaker) {
-        single<MaterialBreaker>()
+        singleOf(::MaterialBreaker)
 
         associate<MaterialBreaker.Association.Breakable> {
             with(Key) {

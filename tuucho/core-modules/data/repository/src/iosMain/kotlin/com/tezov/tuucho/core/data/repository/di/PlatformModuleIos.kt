@@ -7,15 +7,15 @@ import com.tezov.tuucho.core.data.repository._system.SystemPlatformInformationPr
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryIos
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
-import org.koin.plugin.module.dsl.factory
 
 internal object PlatformModuleIos {
     fun invoke() = module(ModuleContextData.Main) {
-        factory<ReferenceFactoryIos>() bind ReferenceProtocol.Factory::class
+        factoryOf(::ReferenceFactoryIos) bind ReferenceProtocol.Factory::class
 
-        factory<SystemPlatformInformationIos>() bind SystemPlatformInformationProtocol::class
+        factoryOf(::SystemPlatformInformationIos) bind SystemPlatformInformationProtocol::class
 
-        factory<SystemPlatformFileIos>() bind SystemPlatformFileProtocol::class
+        factoryOf(::SystemPlatformFileIos) bind SystemPlatformFileProtocol::class
     }
 }

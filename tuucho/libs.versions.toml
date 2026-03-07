@@ -12,13 +12,12 @@ ktlintRules = "1.7.1"
 detektRules = "1.23.8"
 
 #plugin
-android-plugin = "9.0.0"
+android-plugin = "9.1.0"
 kotlin-plugin = "2.3.10"
-koin-plugin = "0.3.0"
-compose-plugin = "1.10.1"
+compose-plugin = "1.10.2"
 kotlin-serialization-plugin = "2.3.10"
 maven-plugin = "0.36.0"
-ktlint-plugin = "14.0.1"
+ktlint-plugin = "14.1.0"
 detekt-plugin = "1.23.8"
 
 #lib - platform
@@ -27,17 +26,17 @@ kotlin-serialization-json = "1.10.0"
 kotlin-collections-immutable = "0.4.0"
 sql-delight = "2.2.1"
 sql-delight-dialect = "3-38"
-ktor = "3.4.0"
+ktor = "3.4.1"
 koin = "4.2.0-RC1"
 kotlin-datetime = "0.7.1"
 okio = "3.16.4"
-coil = "3.3.0"
-compose = "1.10.1"
+coil = "3.4.0"
+compose = "1.10.2"
 compose-material3 = "1.9.0"
 
 #lib - android
 compose-navigationevent = "1.0.1"
-compose-ui-tooling = "1.10.1"
+compose-ui-tooling = "1.10.2"
 datastore-preferences = "1.2.0"
 
 #test
@@ -96,7 +95,6 @@ convention-library-ui = { id = "com.tezov.tuucho.convention.project.library-ui",
 #<-convention
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
 kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-plugin" }
-koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }

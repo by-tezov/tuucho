@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
+import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.LanguageModelDomain
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.SystemPlatformRepositoryProtocol
@@ -19,6 +20,7 @@ import kotlin.test.Test
 
 class SetLanguageUseCaseTest {
     private lateinit var systemPlatformRepository: SystemPlatformRepositoryProtocol
+    private lateinit var navigationStackRouteRepository: NavigationRepositoryProtocol.StackRoute
     private lateinit var navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen
     private lateinit var screenA: ScreenProtocol
     private lateinit var screenB: ScreenProtocol
@@ -28,9 +30,11 @@ class SetLanguageUseCaseTest {
     @BeforeTest
     fun setup() {
         systemPlatformRepository = mock()
+        navigationStackRouteRepository = mock()
         navigationStackScreenRepository = mock()
         sut = SetLanguageUseCase(
             platformRepository = systemPlatformRepository,
+            navigationStackRouteRepository = navigationStackRouteRepository,
             navigationStackScreenRepository = navigationStackScreenRepository
         )
         screenA = mock()
@@ -39,7 +43,7 @@ class SetLanguageUseCaseTest {
 
     @AfterTest
     fun tearDown() {
-        verifyNoMoreCalls(systemPlatformRepository, navigationStackScreenRepository, screenA, screenB)
+        verifyNoMoreCalls(systemPlatformRepository, navigationStackRouteRepository, navigationStackScreenRepository, screenA, screenB)
     }
 
     @Test
@@ -53,18 +57,27 @@ class SetLanguageUseCaseTest {
             language = language,
         )
 
+        val routeA = NavigationRoute.Url("id-a", "routeA")
+        val routeB = NavigationRoute.Url("id-b", "routeB")
+
         everySuspend { systemPlatformRepository.setCurrentLanguage(any()) } returns Unit
+        everySuspend { navigationStackRouteRepository.routes() } returns listOf(routeA, routeB)
         everySuspend { navigationStackScreenRepository.getScreens() } returns listOf(screenA, screenB)
         everySuspend { screenA.recreateViews() } returns Unit
+        everySuspend { screenA.route } returns routeA
         everySuspend { screenB.recreateViews() } returns Unit
+        everySuspend { screenB.route } returns routeB
 
         sut.invoke(input)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             systemPlatformRepository.setCurrentLanguage(language)
+            navigationStackRouteRepository.routes()
             navigationStackScreenRepository.getScreens()
-            screenA.recreateViews()
+            screenB.route
+            screenA.route
             screenB.recreateViews()
+            screenA.recreateViews()
         }
     }
 }
