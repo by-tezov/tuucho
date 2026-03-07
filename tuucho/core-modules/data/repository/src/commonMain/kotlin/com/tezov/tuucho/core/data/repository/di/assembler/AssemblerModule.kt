@@ -8,6 +8,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.onClose
+
 internal object AssemblerModule {
     fun invoke() = module(ModuleContextData.Assembler) {
         factoryOf(::JsonObjectMerger)

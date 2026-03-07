@@ -5,6 +5,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.MaterialSchema.Key
 import org.koin.core.module.dsl.singleOf
+
 internal object MaterialBreakerModule {
     fun invoke() = module(ModuleContextData.Breaker) {
         singleOf(::MaterialBreaker)

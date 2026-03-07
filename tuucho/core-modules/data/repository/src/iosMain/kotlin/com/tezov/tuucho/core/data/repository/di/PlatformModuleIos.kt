@@ -7,6 +7,7 @@ import com.tezov.tuucho.core.data.repository._system.SystemPlatformInformationPr
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryIos
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 
 internal object PlatformModuleIos {
