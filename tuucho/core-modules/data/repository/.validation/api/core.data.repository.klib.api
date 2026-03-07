@@ -155,7 +155,7 @@ abstract interface com.tezov.tuucho.core.data.repository.parser.shadower._system
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol : com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol|null[0]
-    abstract suspend fun process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement, com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol.process|process(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement;com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol){}[0]
+    abstract suspend fun (kotlinx.coroutines.flow/FlowCollector<kotlinx.serialization.json/JsonObject>).process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement) // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol.process|process@kotlinx.coroutines.flow.FlowCollector<kotlinx.serialization.json.JsonObject>(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 abstract class com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AbstractAssembler : com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerProtocol, com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinScopeComponent { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AbstractAssembler|null[0]
@@ -205,7 +205,7 @@ abstract class com.tezov.tuucho.core.data.repository.parser.shadower/AbstractSha
         open fun <get-matchers>(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerMatcherProtocol> // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.matchers.<get-matchers>|<get-matchers>(){}[0]
 
     open fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
-    open suspend fun process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement, com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.process|process(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement;com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol){}[0]
+    open suspend fun (kotlinx.coroutines.flow/FlowCollector<kotlinx.serialization.json/JsonObject>).process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement) // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.process|process@kotlinx.coroutines.flow.FlowCollector<kotlinx.serialization.json.JsonObject>(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 final class <#A: kotlin/Any> com.tezov.tuucho.core.data.repository._system.reference/StrongReferenceIos : com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Strong<#A> { // com.tezov.tuucho.core.data.repository._system.reference/StrongReferenceIos|null[0]
@@ -1025,7 +1025,7 @@ final class com.tezov.tuucho.core.data.repository.parser.shadower/ContentShadowe
 final class com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinComponent { // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol){}[0]
 
-    final suspend fun process(kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower.process|process(kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol){}[0]
+    final fun process(kotlinx.serialization.json/JsonObject): kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject> // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower.process|process(kotlinx.serialization.json.JsonObject){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower : com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower { // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower|null[0]

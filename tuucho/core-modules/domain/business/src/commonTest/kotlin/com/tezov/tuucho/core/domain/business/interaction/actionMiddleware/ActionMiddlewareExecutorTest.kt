@@ -26,7 +26,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class ActionExecutorTest {
+class ActionMiddlewareExecutorTest {
     private val coroutineTestScope = CoroutineTestScope()
     private lateinit var middlewareExecutor: MockMiddlewareExecutor
 
@@ -35,7 +35,7 @@ class ActionExecutorTest {
     private lateinit var middlewareFirst: MockActionMiddleware
     private lateinit var middlewareSecond: MockActionMiddleware
     private lateinit var middlewareThird: MockActionMiddleware
-    private lateinit var sut: ActionExecutor
+    private lateinit var sut: ActionMiddlewareExecutor
 
     @BeforeTest
     fun setup() {
@@ -47,7 +47,7 @@ class ActionExecutorTest {
         middlewareSecond = MockActionMiddleware("second")
         middlewareThird = MockActionMiddleware("third")
 
-        sut = ActionExecutor(
+        sut = ActionMiddlewareExecutor(
             coroutineScopes = coroutineTestScope.mock,
             middlewareExecutor = middlewareExecutor,
             middlewares = listOf(middlewareFirst, middlewareSecond, middlewareThird),

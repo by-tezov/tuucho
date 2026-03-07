@@ -2,13 +2,13 @@
 
 Then all on this in one shot release
 
+- validator allow add custom
+- error message with class name that throw.
+
 - screen context better way to use it ?
 - projection input dataclass ?
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size?
-- shadower with flow ?
-- error message with class name that throw.
-
 
 - Doc Http interceptor renamed to middleware exchange
 - Doc image action

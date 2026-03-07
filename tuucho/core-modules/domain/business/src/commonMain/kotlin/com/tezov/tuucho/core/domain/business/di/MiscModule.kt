@@ -9,6 +9,7 @@ import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRes
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockStack
 import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutorWithReturn
+import com.tezov.tuucho.core.domain.business.interaction.shadower.ContextualShadowerProcessor
 import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
 import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
@@ -17,6 +18,7 @@ import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockProtocol
+import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateShadowerUseCase
 import com.tezov.tuucho.core.domain.tool.datetime.ExpirationDateTimeRectifier
 import com.tezov.tuucho.core.domain.tool.json.InstantSerializer
 import kotlinx.serialization.json.Json
@@ -49,7 +51,6 @@ internal object MiscModule {
         factory<InteractionLockGenerator>()
         single<InteractionLockStack>() bind InteractionLockProtocol.Stack::class
         factory<InteractionLockResolver>() bind InteractionLockProtocol.Resolver::class
-
         single<InteractionLockProtocol.Registry> {
             InteractionLockRegistry(actionDefinitions = getAll())
         }
@@ -59,5 +60,7 @@ internal object MiscModule {
         factoryObject(FormActionDefinition.Send) bind ActionDefinitionProtocol::class
         factoryObject(FormActionDefinition.Update) bind ActionDefinitionProtocol::class
         factoryObject(StoreActionDefinition.KeyValue) bind ActionDefinitionProtocol::class
+
+        factory { ContextualShadowerProcessor() } bind NavigateShadowerUseCase.Processor::class
     }
 }

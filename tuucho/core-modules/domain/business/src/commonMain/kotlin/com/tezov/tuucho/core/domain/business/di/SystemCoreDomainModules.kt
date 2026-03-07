@@ -8,7 +8,7 @@ object SystemCoreDomainModules {
     fun invoke(): List<KoinMass> = listOf(
         MiscModule.invoke(),
         NavigationModule.invoke(),
-        ActionProcessorModule.invoke(),
+        ActionMiddlewareModule.invoke(),
         UseCaseModule.invoke()
     )
 }

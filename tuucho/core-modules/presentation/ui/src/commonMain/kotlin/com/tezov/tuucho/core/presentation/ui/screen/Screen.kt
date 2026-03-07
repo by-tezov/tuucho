@@ -18,6 +18,7 @@ import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterPr
 import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
@@ -143,12 +144,12 @@ internal class Screen(
     }
 
     override suspend fun update(
-        jsonObjects: List<JsonObject>
+        jsonObjects: Flow<JsonObject>
     ) {
         coroutineScopes.default.withContext {
             mutex.withLock {
                 val updatedIndexViews = buildList {
-                    jsonObjects.forEach {
+                    jsonObjects.collect {
                         updateAndReturnViewIndex(it)?.let(::add)
                     }
                 }

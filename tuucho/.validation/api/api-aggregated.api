@@ -195,7 +195,7 @@ abstract interface com.tezov.tuucho.core.data.repository.parser.shadower._system
 }
 
 abstract interface com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol : com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol|null[0]
-    abstract suspend fun process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement, com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol.process|process(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement;com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol){}[0]
+    abstract suspend fun (kotlinx.coroutines.flow/FlowCollector<kotlinx.serialization.json/JsonObject>).process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement) // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerProtocol.process|process@kotlinx.coroutines.flow.FlowCollector<kotlinx.serialization.json.JsonObject>(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 abstract class com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AbstractAssembler : com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AssemblerProtocol, com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinScopeComponent { // com.tezov.tuucho.core.data.repository.parser.assembler.material._system/AbstractAssembler|null[0]
@@ -245,7 +245,7 @@ abstract class com.tezov.tuucho.core.data.repository.parser.shadower/AbstractSha
         open fun <get-matchers>(): kotlin.collections/List<com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerMatcherProtocol> // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.matchers.<get-matchers>|<get-matchers>(){}[0]
 
     open fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
-    open suspend fun process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement, com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.process|process(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement;com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol){}[0]
+    open suspend fun (kotlinx.coroutines.flow/FlowCollector<kotlinx.serialization.json/JsonObject>).process(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement) // com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower.process|process@kotlinx.coroutines.flow.FlowCollector<kotlinx.serialization.json.JsonObject>(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
 
 final class <#A: kotlin/Any> com.tezov.tuucho.core.data.repository._system.reference/StrongReferenceIos : com.tezov.tuucho.core.domain.tool._system/ReferenceProtocol.Strong<#A> { // com.tezov.tuucho.core.data.repository._system.reference/StrongReferenceIos|null[0]
@@ -1065,7 +1065,7 @@ final class com.tezov.tuucho.core.data.repository.parser.shadower/ContentShadowe
 final class com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinComponent { // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower|null[0]
     constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol){}[0]
 
-    final suspend fun process(kotlinx.serialization.json/JsonObject, com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol) // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower.process|process(kotlinx.serialization.json.JsonObject;com.tezov.tuucho.core.data.repository.parser.shadower._system.JsonObjectConsumerProtocol){}[0]
+    final fun process(kotlinx.serialization.json/JsonObject): kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject> // com.tezov.tuucho.core.data.repository.parser.shadower/MaterialShadower.process|process(kotlinx.serialization.json.JsonObject){}[0]
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower : com.tezov.tuucho.core.data.repository.parser.shadower/AbstractShadower { // com.tezov.tuucho.core.data.repository.parser.shadower/OptionShadower|null[0]
@@ -1714,7 +1714,7 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol.screen/ScreenP
 
     abstract suspend fun <#A1: com.tezov.tuucho.core.domain.business.protocol.screen.view/ViewProtocol> views(kotlin.reflect/KClass<#A1>): kotlin.collections/List<#A1> // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.views|views(kotlin.reflect.KClass<0:0>){0§<com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol>}[0]
     abstract suspend fun recreateViews() // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.recreateViews|recreateViews(){}[0]
-    abstract suspend fun update(kotlin.collections/List<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlin.collections.List<kotlinx.serialization.json.JsonObject>){}[0]
+    abstract suspend fun update(kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlinx.coroutines.flow.Flow<kotlinx.serialization.json.JsonObject>){}[0]
     abstract suspend fun update(kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol.update|update(kotlinx.serialization.json.JsonObject){}[0]
 }
 
@@ -1727,8 +1727,8 @@ abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionDefiniti
         abstract fun <get-lockable>(): com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockable // com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol.lockable.<get-lockable>|<get-lockable>(){}[0]
 }
 
-abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol|null[0]
-    abstract suspend fun process(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input) // com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol.process|process(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
+abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionMiddlewareExecutorProtocol { // com.tezov.tuucho.core.domain.business.protocol/ActionMiddlewareExecutorProtocol|null[0]
+    abstract suspend fun process(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input) // com.tezov.tuucho.core.domain.business.protocol/ActionMiddlewareExecutorProtocol.process|process(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
 }
 
 abstract interface com.tezov.tuucho.core.domain.business.protocol/ActionMiddlewareProtocol : com.tezov.tuucho.core.domain.business.protocol/MiddlewareProtocol<com.tezov.tuucho.core.domain.business.protocol/ActionMiddlewareProtocol.Context> { // com.tezov.tuucho.core.domain.business.protocol/ActionMiddlewareProtocol|null[0]
@@ -2072,6 +2072,15 @@ final class com.tezov.tuucho.core.domain.business.interaction.navigation/Navigat
     final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRouteIdGenerator.generate|generate(){}[0]
 }
 
+final class com.tezov.tuucho.core.domain.business.interaction.shadower/ContextualShadowerProcessor : com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Processor { // com.tezov.tuucho.core.domain.business.interaction.shadower/ContextualShadowerProcessor|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.business.interaction.shadower/ContextualShadowerProcessor.<init>|<init>(){}[0]
+
+    final val type // com.tezov.tuucho.core.domain.business.interaction.shadower/ContextualShadowerProcessor.type|{}type[0]
+        final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.interaction.shadower/ContextualShadowerProcessor.type.<get-type>|<get-type>(){}[0]
+
+    final suspend fun process(com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol, kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.interaction.shadower/ContextualShadowerProcessor.process|process(com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol;kotlinx.coroutines.flow.Flow<kotlinx.serialization.json.JsonObject>){}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate : kotlin.collections/List<kotlin/String> { // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate|null[0]
     constructor <init>(kotlin.collections/List<kotlin/String>) // com.tezov.tuucho.core.domain.business.jsonSchema._system/ListStringDelegate.<init>|<init>(kotlin.collections.List<kotlin.String>){}[0]
 
@@ -2237,9 +2246,16 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateBa
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinComponent, com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, com.tezov.tuucho.core.domain.business.interaction.exceptionHandler/ShadowerExceptionHandler.Navigate?) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.MaterialCache;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;com.tezov.tuucho.core.domain.business.interaction.exceptionHandler.ShadowerExceptionHandler.Navigate?){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.StackScreen, com.tezov.tuucho.core.domain.business.protocol.repository/NavigationRepositoryProtocol.MaterialCache, com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower, kotlin.collections/List<com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Processor>, com.tezov.tuucho.core.domain.business.interaction.exceptionHandler/ShadowerExceptionHandler.Navigate?) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.StackScreen;com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol.MaterialCache;com.tezov.tuucho.core.domain.business.protocol.repository.MaterialRepositoryProtocol.Shadower;kotlin.collections.List<com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateShadowerUseCase.Processor>;com.tezov.tuucho.core.domain.business.interaction.exceptionHandler.ShadowerExceptionHandler.Navigate?){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateShadowerUseCase.Input){}[0]
+
+    abstract interface Processor { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Processor|null[0]
+        abstract val type // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Processor.type|{}type[0]
+            abstract fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Processor.type.<get-type>|<get-type>(){}[0]
+
+        abstract suspend fun process(com.tezov.tuucho.core.domain.business.protocol.screen/ScreenProtocol, kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Processor.process|process(com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol;kotlinx.coroutines.flow.Flow<kotlinx.serialization.json.JsonObject>){}[0]
+    }
 
     final class Input { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Input|null[0]
         constructor <init>(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlin/String) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateShadowerUseCase.Input.<init>|<init>(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlin.String){}[0]
@@ -2278,7 +2294,7 @@ final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/NavigateTo
 }
 
 final class com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase : com.tezov.tuucho.core.domain.business.protocol/UseCaseProtocol.Async<com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input, kotlin/Unit> { // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase|null[0]
-    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ActionExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol){}[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/ActionMiddlewareExecutorProtocol) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareExecutorProtocol){}[0]
 
     final suspend fun invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.Input) // com.tezov.tuucho.core.domain.business.usecase.withNetwork/ProcessActionUseCase.invoke|invoke(com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input){}[0]
 
@@ -4028,6 +4044,8 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.c
     }
 
     final object Key { // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component/SettingComponentShadowerSchema.Key|null[0]
+        final const val contextual // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component/SettingComponentShadowerSchema.Key.contextual|{}contextual[0]
+            final fun <get-contextual>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component/SettingComponentShadowerSchema.Key.contextual.<get-contextual>|<get-contextual>(){}[0]
         final const val navigateBackward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component/SettingComponentShadowerSchema.Key.navigateBackward|{}navigateBackward[0]
             final fun <get-navigateBackward>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component/SettingComponentShadowerSchema.Key.navigateBackward.<get-navigateBackward>|<get-navigateBackward>(){}[0]
         final const val navigateForward // com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component/SettingComponentShadowerSchema.Key.navigateForward|{}navigateForward[0]
@@ -4523,11 +4541,6 @@ final object com.tezov.tuucho.core.domain.business.jsonSchema.material/Shadower 
     final object Contextual { // com.tezov.tuucho.core.domain.business.jsonSchema.material/Shadower.Contextual|null[0]
         final fun (kotlin/String).replaceUrlOriginToken(kotlin/String): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/Shadower.Contextual.replaceUrlOriginToken|replaceUrlOriginToken@kotlin.String(kotlin.String){}[0]
         final fun defaultUrl(kotlin/String): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/Shadower.Contextual.defaultUrl|defaultUrl(kotlin.String){}[0]
-    }
-
-    final object Type { // com.tezov.tuucho.core.domain.business.jsonSchema.material/Shadower.Type|null[0]
-        final const val contextual // com.tezov.tuucho.core.domain.business.jsonSchema.material/Shadower.Type.contextual|{}contextual[0]
-            final fun <get-contextual>(): kotlin/String // com.tezov.tuucho.core.domain.business.jsonSchema.material/Shadower.Type.contextual.<get-contextual>|<get-contextual>(){}[0]
     }
 }
 
@@ -5036,22 +5049,19 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/MaterialR
     }
 
     abstract interface Shadower { // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower|null[0]
-        abstract suspend fun process(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlin.collections/List<kotlin/String>): kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output> // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.process|process(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlin.collections.List<kotlin.String>){}[0]
+        abstract suspend fun process(com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlin.collections/List<kotlin/String>): kotlinx.coroutines.flow/Flow<com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output> // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.process|process(com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlin.collections.List<kotlin.String>){}[0]
 
         final class Output { // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output|null[0]
-            constructor <init>(kotlin/String, com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url, kotlinx.serialization.json/JsonObject) // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.<init>|<init>(kotlin.String;com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
+            constructor <init>(kotlin/String, kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject>) // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.<init>|<init>(kotlin.String;kotlinx.coroutines.flow.Flow<kotlinx.serialization.json.JsonObject>){}[0]
 
-            final val jsonObject // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.jsonObject|{}jsonObject[0]
-                final fun <get-jsonObject>(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.jsonObject.<get-jsonObject>|<get-jsonObject>(){}[0]
-            final val route // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.route|{}route[0]
-                final fun <get-route>(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.route.<get-route>|<get-route>(){}[0]
+            final val jsonObjects // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.jsonObjects|{}jsonObjects[0]
+                final fun <get-jsonObjects>(): kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject> // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.jsonObjects.<get-jsonObjects>|<get-jsonObjects>(){}[0]
             final val type // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.type|{}type[0]
                 final fun <get-type>(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.type.<get-type>|<get-type>(){}[0]
 
             final fun component1(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.component1|component1(){}[0]
-            final fun component2(): com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.component2|component2(){}[0]
-            final fun component3(): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.component3|component3(){}[0]
-            final fun copy(kotlin/String = ..., com.tezov.tuucho.core.domain.business.interaction.navigation/NavigationRoute.Url = ..., kotlinx.serialization.json/JsonObject = ...): com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.copy|copy(kotlin.String;com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute.Url;kotlinx.serialization.json.JsonObject){}[0]
+            final fun component2(): kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject> // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.component2|component2(){}[0]
+            final fun copy(kotlin/String = ..., kotlinx.coroutines.flow/Flow<kotlinx.serialization.json/JsonObject> = ...): com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.copy|copy(kotlin.String;kotlinx.coroutines.flow.Flow<kotlinx.serialization.json.JsonObject>){}[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.business.protocol.repository/MaterialRepositoryProtocol.Shadower.Output.toString|toString(){}[0]
