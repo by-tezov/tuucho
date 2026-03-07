@@ -145,11 +145,6 @@ abstract interface com.tezov.tuucho.core.data.repository.parser.rectifier.materi
     }
 }
 
-abstract interface com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol { // com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol|null[0]
-    abstract suspend fun onDone() // com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol.onDone|onDone(){}[0]
-    abstract suspend fun onNext(kotlinx.serialization.json/JsonObject, kotlinx.serialization.json/JsonObject?) // com.tezov.tuucho.core.data.repository.parser.shadower._system/JsonObjectConsumerProtocol.onNext|onNext(kotlinx.serialization.json.JsonObject;kotlinx.serialization.json.JsonObject?){}[0]
-}
-
 abstract interface com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerMatcherProtocol|null[0]
     abstract fun accept(com.tezov.tuucho.core.domain.tool.json/JsonElementPath, kotlinx.serialization.json/JsonElement): kotlin/Boolean // com.tezov.tuucho.core.data.repository.parser.shadower._system/ShadowerMatcherProtocol.accept|accept(com.tezov.tuucho.core.domain.tool.json.JsonElementPath;kotlinx.serialization.json.JsonElement){}[0]
 }
