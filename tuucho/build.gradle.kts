@@ -388,6 +388,7 @@ extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
 
+// TODO  -> Maybe moove to Kover again ...
 tasks.register<JacocoReport>("rootDebugCoverageReport") {
     if (System.getenv("IS_CI") != "true") {
         dependsOn("rootDebugUnitTest")
@@ -396,10 +397,7 @@ tasks.register<JacocoReport>("rootDebugCoverageReport") {
     description = "Aggregates Html coverage report from all modules into root build folder"
 
     val reportsList = subprojects
-        .filterNot {
-            it.path in listOf(":sample:android", ":sample:ios") ||
-                    !it.file("build.gradle.kts").exists()
-        }
+        .filter { it.file("build.gradle.kts").exists() }
         .mapNotNull { sub ->
             sub.tasks.findByName("coverageDebugTestReport") as? JacocoReport
         }
@@ -551,7 +549,6 @@ tasks.register("rootAdminUpdate") {
             "rootUpdateReleaseApi",
             "rootValidateReleaseApi",
             "rootDebugUnitTest",
-            "rootDebugCoverageReport",
             "rootPublishReleaseToMavenLocal"
         )
         tasksToRun.forEach { taskName ->
