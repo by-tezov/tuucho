@@ -10,8 +10,8 @@ import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.Naviga
 import com.tezov.tuucho.core.domain.business.interaction.actionMiddleware.StoreActionMiddleware
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareProtocol
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
-import org.koin.plugin.module.dsl.factory
 
 internal object ActionMiddlewareModule {
     fun invoke() = module(ModuleContextDomain.Middleware) {
@@ -25,11 +25,11 @@ internal object ActionMiddlewareModule {
             )
         }
 
-        factory<FormSendUrlActionMiddleware>() bind ActionMiddlewareProtocol::class
-        factory<FormUpdateActionMiddleware>() bind ActionMiddlewareProtocol::class
-        factory<NavigationLocalDestinationActionMiddleware>() bind ActionMiddlewareProtocol::class
-        factory<NavigationUrlActionMiddleware>() bind ActionMiddlewareProtocol::class
-        factory<StoreActionMiddleware>() bind ActionMiddlewareProtocol::class
-        factory<LanguageActionMiddleware>() bind ActionMiddlewareProtocol::class
+        factoryOf(::FormSendUrlActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::FormUpdateActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::NavigationLocalDestinationActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::NavigationUrlActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::StoreActionMiddleware) bind ActionMiddlewareProtocol::class
+        factoryOf(::LanguageActionMiddleware) bind ActionMiddlewareProtocol::class
     }
 }

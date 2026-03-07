@@ -11,9 +11,9 @@ import com.tezov.tuucho.core.data.repository.image.ImageLoaderSource
 import com.tezov.tuucho.core.data.repository.image.ImageLocalFetcher
 import com.tezov.tuucho.core.data.repository.image.ImageRemoteFetcher
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
-import org.koin.plugin.module.dsl.factory
-import org.koin.plugin.module.dsl.single
 
 object ImageModule {
     interface Config {
@@ -22,19 +22,19 @@ object ImageModule {
     }
 
     internal operator fun invoke() = module(ModuleContextData.Main) {
-        single<ImageDiskCache>() bind ImageDiskCacheProtocol::class
+        singleOf(::ImageDiskCache) bind ImageDiskCacheProtocol::class
 
         single {
             ImageLoader.Builder(context = get<PlatformContext>()).build()
         }
 
-        factory<ImageLoaderSource>()
+        factoryOf(::ImageLoaderSource)
 
         single<ImageFetcherRegistryProtocol> {
             ImageFetcherRegistry(factories = getAll())
         }
 
-        factory<ImageRemoteFetcher.Factory>() bind ImageFetcherProtocol.Factory::class
-        factory<ImageLocalFetcher.Factory>() bind ImageFetcherProtocol.Factory::class
+        factoryOf(ImageRemoteFetcher::Factory) bind ImageFetcherProtocol.Factory::class
+        factoryOf(ImageLocalFetcher::Factory) bind ImageFetcherProtocol.Factory::class
     }
 }

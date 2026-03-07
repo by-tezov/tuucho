@@ -5,18 +5,18 @@ import com.tezov.tuucho.core.data.repository.parser.rectifier.material.MaterialR
 import com.tezov.tuucho.core.data.repository.parser.rectifier.material.config.ConfigRectifier
 import com.tezov.tuucho.core.data.repository.parser.rectifier.response.ResponseRectifier
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.onClose
-import org.koin.plugin.module.dsl.factory
-import org.koin.plugin.module.dsl.single
 
 internal object RectifierModule {
     fun invoke() = module(ModuleContextData.Rectifier) {
-        single<MaterialRectifier>() onClose { rectifier ->
+        singleOf(::MaterialRectifier) onClose { rectifier ->
             rectifier?.closeScope()
         }
-        single<ResponseRectifier>() onClose { rectifier ->
+        singleOf(::ResponseRectifier) onClose { rectifier ->
             rectifier?.closeScope()
         }
-        factory<ConfigRectifier>()
+        factoryOf(::ConfigRectifier)
     }
 }
