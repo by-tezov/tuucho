@@ -82,17 +82,19 @@ internal class ContextualShadowerMaterialSource(
     override suspend fun finalize(
         context: Context
     ) = channelFlow {
-        context.map.map { (url, jsonObjects) ->
-            coroutineScopes.default.async {
-                downloadAndCache(url, context.urlOrigin)
-                jsonObjects.forEach { jsonObject ->
-                    jsonObject.assemble(
-                        url = url,
-                        urlOrigin = context.urlOrigin
-                    ).also { send(it) }
+        context.map
+            .map { (url, jsonObjects) ->
+                coroutineScopes.default.async {
+                    downloadAndCache(url, context.urlOrigin)
+                    jsonObjects.forEach { jsonObject ->
+                        jsonObject
+                            .assemble(
+                                url = url,
+                                urlOrigin = context.urlOrigin
+                            ).also { send(it) }
+                    }
                 }
-            }
-        }.awaitAll()
+            }.awaitAll()
     }
 
     private suspend fun downloadAndCache(

@@ -47,7 +47,6 @@
     <ID>PackageNaming:AssemblerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:FindAllRefOrNullFetcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:JsonLifetimeResolver.kt$package com.tezov.tuucho.core.data.repository.repository.source._system</ID>
-    <ID>PackageNaming:JsonObjectConsumerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:JsonObjectMerger.kt$package com.tezov.tuucho.core.data.repository.parser.assembler.material._system</ID>
     <ID>PackageNaming:MatcherHelperExtension.kt$package com.tezov.tuucho.core.data.repository.parser._system</ID>
     <ID>PackageNaming:RectifierHelper.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
