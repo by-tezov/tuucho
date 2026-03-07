@@ -2,7 +2,7 @@ package com.tezov.tuucho.sample.shared.repository.network.backendServer.service
 
 import com.tezov.tuucho.core.data.repository.assets.AssetSourceProtocol
 import com.tezov.tuucho.core.data.repository.di.NetworkModule
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Type
+import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.BackendServer
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.GuardProtocol
 import com.tezov.tuucho.sample.shared.repository.network.backendServer.protocol.ServiceProtocol
@@ -51,7 +51,7 @@ internal class ResourceService(
                 val bytes = content.source.buffer().readByteArray()
                 Triple(bytes, content.contentType, content.size)
             }
-            if (request.url.endsWith("-${Type.contextual}") || request.url.contains("-${Type.contextual}-")) {
+            if (request.url.endsWith("-${SettingComponentShadowerSchema.Key.contextual}") || request.url.contains("-${SettingComponentShadowerSchema.Key.contextual}-")) {
                 delay(Random.nextLong(500, 3000))
             }
             BackendServer.Response(

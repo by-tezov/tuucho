@@ -23,7 +23,6 @@ import org.koin.dsl.bind
 import org.koin.plugin.module.dsl.factory
 
 internal object RepositoryModule {
-
     fun invoke() = module(ModuleContextData.Main) {
         source()
         repository()

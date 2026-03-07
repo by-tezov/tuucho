@@ -68,5 +68,4 @@ abstract class AbstractShadower :
         }
         flowCollector.emit(this)
     }
-
 }

@@ -19,7 +19,6 @@ internal class ShadowerMaterialRepository(
     private val shadowerMaterialSources: List<ShadowerMaterialSourceProtocol<Context>>,
 ) : Shadower,
     TuuchoKoinComponent {
-
     private data class Item(
         val shadower: ShadowerMaterialSourceProtocol<Context>,
         val context: Context
@@ -66,18 +65,19 @@ internal class ShadowerMaterialRepository(
     private suspend fun List<Item>.processShadowers(
         route: NavigationRoute.Url
     ) {
-        materialShadower.process(
-            componentObject = materialCacheRepository.getComponentObject(route.value)
-        ).collect { jsonObject ->
-            forEach { (shadower, context) -> shadower.process(context, jsonObject) }
-        }
+        materialShadower
+            .process(
+                componentObject = materialCacheRepository.getComponentObject(route.value)
+            ).collect { jsonObject ->
+                forEach { (shadower, context) -> shadower.process(context, jsonObject) }
+            }
     }
 
-    private fun List<Item>.finalizeShadowers() = asFlow().map { item ->
-        Shadower.Output(
-            type = item.shadower.type,
-            jsonObjects = item.shadower.finalize(item.context)
-        )
-    }.flowOn(coroutineScopes.default.dispatcher)
-
+    private fun List<Item>.finalizeShadowers() = asFlow()
+        .map { item ->
+            Shadower.Output(
+                type = item.shadower.type,
+                jsonObjects = item.shadower.finalize(item.context)
+            )
+        }.flowOn(coroutineScopes.default.dispatcher)
 }

@@ -31,7 +31,6 @@ internal class ContextualShadowerMaterialSource(
     private val materialAssembler: MaterialAssembler,
     private val materialDatabaseSource: MaterialDatabaseSource,
 ) : ShadowerMaterialSourceProtocol<Context> {
-
     data class Context(
         val urlOrigin: String,
         val urlContextualFallback: (type: String) -> String,
@@ -56,7 +55,8 @@ internal class ContextualShadowerMaterialSource(
             setting
                 ?.withScope(SettingComponentShadowerSchema.Contextual::Scope)
                 ?.url
-                ?.get(type).stringOrNull
+                ?.get(type)
+                .stringOrNull
                 ?.replaceUrlOriginToken(url)
                 ?: Shadower.Contextual.defaultUrl(url)
         }
@@ -71,24 +71,30 @@ internal class ContextualShadowerMaterialSource(
             idScope.source ?: return
             val url = idScope.urlSource
                 ?.jsonObject
-                ?.get(type).stringOrNull
+                ?.get(type)
+                .stringOrNull
                 ?.replaceUrlOriginToken(urlOrigin)
                 ?: urlContextualFallback(jsonObject.withScope(TypeSchema::Scope).self ?: throw DataException.Default("type is null"))
             map.getOrPut(url) { mutableListOf() }.add(jsonObject)
         }
     }
 
-    override suspend fun finalize(context: Context) = context.map.map { (url, jsonObjects) ->
-        coroutineScopes.default.async {
-            downloadAndCache(url, context.urlOrigin)
-            jsonObjects.assembleAll(url, context.urlOrigin).also {
-                val lifetime = materialCacheLocalSource.getLifetime(url)
-                if (lifetime is JsonLifetime.SingleUse) {
-                    materialCacheLocalSource.delete(url, Table.Common)
+    override suspend fun finalize(
+        context: Context
+    ) = context.map
+        .map { (url, jsonObjects) ->
+            coroutineScopes.default.async {
+                downloadAndCache(url, context.urlOrigin)
+                jsonObjects.assembleAll(url, context.urlOrigin).also {
+                    val lifetime = materialCacheLocalSource.getLifetime(url)
+                    if (lifetime is JsonLifetime.SingleUse) {
+                        materialCacheLocalSource.delete(url, Table.Common)
+                    }
                 }
             }
-        }
-    }.awaitAll().flatten().asFlow()
+        }.awaitAll()
+        .flatten()
+        .asFlow()
 
     private suspend fun downloadAndCache(
         url: String,

@@ -26,10 +26,13 @@ class NavigateShadowerUseCase(
     private val shadowerExceptionHandler: ShadowerExceptionHandler.Navigate?
 ) : UseCaseProtocol.Async<Input, Unit>,
     TuuchoKoinComponent {
-
     interface Processor {
         val type: String
-        suspend fun process(screen: ScreenProtocol, jsonObjects: Flow<JsonObject>)
+
+        suspend fun process(
+            screen: ScreenProtocol,
+            jsonObjects: Flow<JsonObject>
+        )
     }
 
     data class Input(
@@ -68,9 +71,9 @@ class NavigateShadowerUseCase(
                 .process(
                     route = screen.route,
                     types = shadowerProcessors.map { it.type }
-                )
-                .collect { output ->
-                    shadowerProcessors.firstOrNull { output.type == it.type }
+                ).collect { output ->
+                    shadowerProcessors
+                        .firstOrNull { output.type == it.type }
                         ?.process(screen, output.jsonObjects)
                 }
         }
