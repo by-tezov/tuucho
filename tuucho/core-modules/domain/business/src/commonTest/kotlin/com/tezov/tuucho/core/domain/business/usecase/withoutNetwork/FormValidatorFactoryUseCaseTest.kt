@@ -23,7 +23,18 @@ class FormValidatorFactoryUseCaseTest {
 
     @BeforeTest
     fun setup() {
-        sut = FormValidatorFactoryUseCase()
+        sut = FormValidatorFactoryUseCase(
+            factories = listOf(
+                StringEmailFormValidator.Factory(),
+                StringMaxLengthFieldFormValidator.Factory(),
+                StringMaxValueFormValidator.Factory(),
+                StringMinDigitLengthFormValidator.Factory(),
+                StringMinLengthFormValidator.Factory(),
+                StringMinValueFormValidator.Factory(),
+                StringNotNullFormValidator.Factory(),
+                StringOnlyDigitsFormValidator.Factory(),
+            )
+        )
     }
 
     private fun prototype(
@@ -33,8 +44,8 @@ class FormValidatorFactoryUseCaseTest {
     ) = FormValidatorFactoryUseCase.Input(
         prototypeObject = buildJsonObject {
             put(FormValidatorSchema.Key.type, type)
-            length?.let { put(FormValidatorSchema.Key.length, it) }
-            value?.let { put(FormValidatorSchema.Key.value, it) }
+            length?.let { put(FormValidatorSchema.Key.Param.length, it) }
+            value?.let { put(FormValidatorSchema.Key.Param.value, it) }
         }
     )
 

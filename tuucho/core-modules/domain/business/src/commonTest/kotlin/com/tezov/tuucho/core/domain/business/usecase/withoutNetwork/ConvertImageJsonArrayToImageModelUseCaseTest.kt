@@ -23,17 +23,17 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class TransformImageJsonArrayToImageModelUseCaseTest {
+class ConvertImageJsonArrayToImageModelUseCaseTest {
     private lateinit var useCaseExecutor: UseCaseExecutorProtocol
     private lateinit var resolveLanguageValue: ResolveLanguageValueUseCase
 
-    private lateinit var sut: TransformImageJsonArrayToImageModelUseCase
+    private lateinit var sut: ConvertImageJsonArrayToImageModelUseCase
 
     @BeforeTest
     fun setup() {
         useCaseExecutor = mock()
         resolveLanguageValue = mock()
-        sut = TransformImageJsonArrayToImageModelUseCase(
+        sut = ConvertImageJsonArrayToImageModelUseCase(
             useCaseExecutor = useCaseExecutor,
             resolveLanguageValue = resolveLanguageValue
         )
@@ -51,7 +51,7 @@ class TransformImageJsonArrayToImageModelUseCaseTest {
         }
 
         val exception = assertFailsWith<DomainException.Default> {
-            sut.invoke(TransformImageJsonArrayToImageModelUseCase.Input(jsonArray))
+            sut.invoke(ConvertImageJsonArrayToImageModelUseCase.Input(jsonArray))
         }
 
         assertTrue(exception.message?.contains("expect JsonObject") == true)
@@ -71,7 +71,7 @@ class TransformImageJsonArrayToImageModelUseCaseTest {
         } returns ResolveLanguageValueUseCase.Output(value = "command://target")
 
         val exception = assertFailsWith<DomainException.Default> {
-            sut.invoke(TransformImageJsonArrayToImageModelUseCase.Input(jsonArray))
+            sut.invoke(ConvertImageJsonArrayToImageModelUseCase.Input(jsonArray))
         }
 
         assertTrue(exception.message?.contains("should not be possible") == true)
@@ -114,7 +114,7 @@ class TransformImageJsonArrayToImageModelUseCaseTest {
             returns(ResolveLanguageValueUseCase.Output(value = "command://target2"))
         }
 
-        val result = sut.invoke(TransformImageJsonArrayToImageModelUseCase.Input(jsonArray))
+        val result = sut.invoke(ConvertImageJsonArrayToImageModelUseCase.Input(jsonArray))
 
         assertEquals(2, result.models?.size)
         assertEquals("command://target1#id1#-tags:[]-tagsExcluder:[]", result.models?.get(0).toString())
