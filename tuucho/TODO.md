@@ -2,11 +2,11 @@
 
 Then all on this in one shot release
 
-- validator allow add custom
 - error message with class name that throw.
 
 - screen context better way to use it ?
 - projection input dataclass ?
+
 - Animation placeholder / final image ?
 - do a smart padding object - can do also for size?
 
@@ -14,6 +14,7 @@ Then all on this in one shot release
 - Doc image action
 - Doc action language
 - Doc config avec url-white-list
+- Doc validator custom
   -> Close release
 
 ### Need to fix: 
@@ -22,16 +23,16 @@ Then all on this in one shot release
   - check message of contextual field, they never request update view after click
 - Shadower / Language Side effect
     - when update language, what about shadower if back shadower not enable, page won't be updated
-      with
-      correct language
+      with correct language
     - still set language, force to activate shadower back and it is done even if language hasn't
       been changed
-- Mokkery + Koin
 
 ### Improve
 - Shadower Failure -> On screen protocol, allow to replace skimmer with failure view
 - Add bottom/top screen not react to transition
+- Transition parameter
 - Find a solution for share mock test instead of duplicated code
 - Unit Test (Data + UI)
 - parameter + file properties
 - JsonElement home made efficient mutable
+- Fix Jacoco

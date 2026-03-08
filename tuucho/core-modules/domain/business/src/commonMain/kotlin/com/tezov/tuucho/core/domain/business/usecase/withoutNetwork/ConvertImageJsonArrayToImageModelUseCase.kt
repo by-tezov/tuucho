@@ -7,14 +7,14 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.ImageSchema
 import com.tezov.tuucho.core.domain.business.model.image.ImageModel
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase.Input
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase.Output
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ConvertImageJsonArrayToImageModelUseCase.Input
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ConvertImageJsonArrayToImageModelUseCase.Output
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-class TransformImageJsonArrayToImageModelUseCase(
+class ConvertImageJsonArrayToImageModelUseCase(
     private val useCaseExecutor: UseCaseExecutorProtocol,
     private val resolveLanguageValue: ResolveLanguageValueUseCase,
 ) : UseCaseProtocol.Async<Input, Output> {

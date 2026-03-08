@@ -2,7 +2,6 @@ package com.tezov.tuucho.core.domain.business.di
 
 import com.tezov.tuucho.core.domain.business._system.IdGenerator
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
-import com.tezov.tuucho.core.domain.business._system.koin.KoinModuleExtension.factoryObject
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockRegistry
 import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockResolver
@@ -10,10 +9,6 @@ import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockSta
 import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutor
 import com.tezov.tuucho.core.domain.business.interaction.middleware.MiddlewareExecutorWithReturn
 import com.tezov.tuucho.core.domain.business.interaction.shadower.ContextualShadowerProcessor
-import com.tezov.tuucho.core.domain.business.model.action.FormActionDefinition
-import com.tezov.tuucho.core.domain.business.model.action.NavigateActionDefinition
-import com.tezov.tuucho.core.domain.business.model.action.StoreActionDefinition
-import com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.MiddlewareExecutorProtocolWithReturn
@@ -54,12 +49,6 @@ internal object MiscModule {
         single<InteractionLockProtocol.Registry> {
             InteractionLockRegistry(actionDefinitions = getAll())
         }
-
-        factoryObject(NavigateActionDefinition.Url) bind ActionDefinitionProtocol::class
-        factoryObject(NavigateActionDefinition.LocalDestination) bind ActionDefinitionProtocol::class
-        factoryObject(FormActionDefinition.Send) bind ActionDefinitionProtocol::class
-        factoryObject(FormActionDefinition.Update) bind ActionDefinitionProtocol::class
-        factoryObject(StoreActionDefinition.KeyValue) bind ActionDefinitionProtocol::class
 
         factory { ContextualShadowerProcessor() } bind NavigateShadowerUseCase.Processor::class
     }

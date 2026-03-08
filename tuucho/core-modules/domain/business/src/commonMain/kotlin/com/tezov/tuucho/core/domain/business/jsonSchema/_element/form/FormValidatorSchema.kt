@@ -12,8 +12,10 @@ object FormValidatorSchema {
         const val type = "type"
         const val messageErrorId = "message-error-id"
 
-        const val length = "length"
-        const val value = "value"
+        object Param {
+            const val length = "length"
+            const val value = "value"
+        }
     }
 
     object Value {
@@ -36,8 +38,5 @@ object FormValidatorSchema {
 
         var type by delegate<String?>(Key.type)
         var messageErrorId by delegate<String?>(Key.messageErrorId)
-
-        var length by delegate<String?>(Key.length)
-        var value by delegate<String?>(Key.value)
     }
 }

@@ -12,6 +12,7 @@ import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RefreshMaterial
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.SendDataUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ServerHealthCheckUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ConvertImageJsonArrayToImageModelUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetLanguageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.GetScreenOrNullUseCase
@@ -27,7 +28,6 @@ import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.RemoveKeyVal
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ResolveLanguageValueUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SaveKeyValueToStoreUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.SetLanguageUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.UpdateViewUseCase
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
@@ -102,7 +102,12 @@ internal object UseCaseModule {
     }
 
     private fun Module.withoutNetworkModule() {
-        factoryOf(::FormValidatorFactoryUseCase)
+        factoryOf(::ConvertImageJsonArrayToImageModelUseCase)
+        factory {
+            FormValidatorFactoryUseCase(
+                factories = getAll()
+            )
+        }
         factoryOf(::GetLanguageUseCase)
         factoryOf(::GetScreenOrNullUseCase)
         factoryOf(::GetScreensFromRoutesUseCase)
@@ -122,7 +127,6 @@ internal object UseCaseModule {
         factoryOf(::ResolveLanguageValueUseCase)
         factoryOf(::SaveKeyValueToStoreUseCase)
         factoryOf(::SetLanguageUseCase)
-        factoryOf(::TransformImageJsonArrayToImageModelUseCase)
         factory<UpdateViewUseCase> {
             UpdateViewUseCase(
                 navigationScreenStackRepository = get(),
