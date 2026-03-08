@@ -7,7 +7,6 @@ import kotlinx.serialization.json.JsonObject
 class StringOnlyDigitsFormValidator(
     errorMessagesId: String?,
 ) : AbstractFormValidator<String>(errorMessagesId) {
-
     class Factory : FormValidatorProtocol.Factory {
         override val type: String = FormValidatorSchema.Value.Type.stringOnlyDigits
 

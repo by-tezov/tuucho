@@ -9,7 +9,6 @@ class StringMinLengthFormValidator(
     errorMessagesId: String?,
     private val length: Int,
 ) : AbstractFormValidator<String>(errorMessagesId) {
-
     class Factory : FormValidatorProtocol.Factory {
         override val type: String = FormValidatorSchema.Value.Type.stringMinLength
 

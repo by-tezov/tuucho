@@ -7,7 +7,6 @@ import kotlinx.serialization.json.JsonObject
 class StringNotNullFormValidator(
     errorMessagesId: String?,
 ) : AbstractFormValidator<String>(errorMessagesId) {
-
     class Factory : FormValidatorProtocol.Factory {
         override val type: String = FormValidatorSchema.Value.Type.stringNotNull
 

@@ -9,7 +9,6 @@ class StringMinValueFormValidator(
     errorMessagesId: String?,
     private val minValue: Int,
 ) : AbstractFormValidator<String>(errorMessagesId) {
-
     class Factory : FormValidatorProtocol.Factory {
         override val type: String = FormValidatorSchema.Value.Type.stringMinValue
 

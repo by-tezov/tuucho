@@ -11,7 +11,6 @@ interface ValidatorProtocol<T : Any> {
 }
 
 interface FormValidatorProtocol<T : Any> : ValidatorProtocol<T> {
-
     interface Factory {
         val type: String
 

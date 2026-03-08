@@ -9,7 +9,6 @@ class StringMaxValueFormValidator(
     errorMessagesId: String?,
     private val maxValue: Int,
 ) : AbstractFormValidator<String>(errorMessagesId) {
-
     class Factory : FormValidatorProtocol.Factory {
         override val type: String = FormValidatorSchema.Value.Type.stringMaxValue
 
