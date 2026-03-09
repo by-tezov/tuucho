@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.render.protocol
+package com.tezov.tuucho.core.presentation.ui.protocol
 
 // TODO: not scalable, check the TODO to do something better. Will do the job for now
 

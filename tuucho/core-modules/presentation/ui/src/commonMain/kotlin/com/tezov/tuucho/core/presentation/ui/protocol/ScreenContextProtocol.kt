@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.screen.protocol
+package com.tezov.tuucho.core.presentation.ui.protocol
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
@@ -6,7 +6,7 @@ import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 interface ScreenContextProtocol {
     val route: NavigationRoute
 
-    fun addView(
+    suspend fun addView(
         view: ViewProtocol
     )
 }

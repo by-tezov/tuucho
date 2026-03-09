@@ -4,9 +4,9 @@ import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.protocol.FormValidatorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.FormValidatorFactoryUseCase
+import com.tezov.tuucho.core.presentation.ui.protocol.HasResolveStatusProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ProjectionProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasResolveStatusProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject

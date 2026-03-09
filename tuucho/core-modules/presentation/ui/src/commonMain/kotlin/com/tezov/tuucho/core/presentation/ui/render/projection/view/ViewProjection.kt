@@ -1,11 +1,11 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.view
 
 import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
+import com.tezov.tuucho.core.presentation.ui.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.Projection
 import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtocols
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonElement

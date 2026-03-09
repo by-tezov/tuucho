@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.render.protocol
+package com.tezov.tuucho.core.presentation.ui.protocol
 
 import kotlinx.serialization.json.JsonElement
 

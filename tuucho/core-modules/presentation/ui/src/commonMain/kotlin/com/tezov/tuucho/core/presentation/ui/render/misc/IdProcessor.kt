@@ -1,7 +1,7 @@
 package com.tezov.tuucho.core.presentation.ui.render.misc
 
 import com.tezov.tuucho.core.presentation.ui._system.idValueOrNull
-import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.IdProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 
 internal class IdProcessor : IdProcessorProtocol {

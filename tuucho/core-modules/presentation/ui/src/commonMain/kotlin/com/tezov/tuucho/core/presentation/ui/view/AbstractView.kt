@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
 import com.tezov.tuucho.core.presentation.ui.composable.shimmerComposable
+import com.tezov.tuucho.core.presentation.ui.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.ComponentProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.serialization.json.JsonObject
 import kotlin.concurrent.atomics.AtomicBoolean

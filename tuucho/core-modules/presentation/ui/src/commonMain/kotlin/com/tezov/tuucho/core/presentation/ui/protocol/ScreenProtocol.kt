@@ -1,4 +1,4 @@
-package com.tezov.tuucho.core.presentation.ui.screen.protocol
+package com.tezov.tuucho.core.presentation.ui.protocol
 
 import androidx.compose.runtime.Composable
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol

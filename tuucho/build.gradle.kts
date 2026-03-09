@@ -397,6 +397,7 @@ tasks.register("allTests") {
 extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
+
 tasks.register("rootDebugCoveragePostProcessReport") {
 
     doFirst {

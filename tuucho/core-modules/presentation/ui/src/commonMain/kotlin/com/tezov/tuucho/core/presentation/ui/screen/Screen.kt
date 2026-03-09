@@ -14,8 +14,8 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ContextualUpdaterProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.coroutines.flow.Flow
@@ -30,20 +30,19 @@ internal class Screen(
     override val route: NavigationRoute.Url
 ) : ScreenProtocol,
     TuuchoKoinComponent {
+
     private data class Updatable(
         val viewIndex: Int,
-        val updaterProcessor: MutableList<ContextualUpdaterProcessorProtocol>
+        val processors: MutableList<ContextualUpdaterProcessorProtocol>
     )
 
     private val coroutineScopes by inject<CoroutineScopesProtocol>()
     private val materialCacheRepository by inject<NavigationRepositoryProtocol.MaterialCache>()
     private val viewFactories: List<ViewFactoryProtocol> by lazy { getKoin().getAll() }
-
     private val redrawCounterTrigger = mutableIntStateOf(0)
     private var rootView: ViewProtocol? = null
     private val views = mutableListOf<ViewProtocol>()
     private val updatables = mutableMapOf<String, Updatable>()
-
     private val mutex = Mutex()
 
     private fun keyTypeId(
@@ -76,31 +75,29 @@ internal class Screen(
             route = route,
             addViewBlock = ::addView
         )
-        val rootView = factory
-            .process(screenContext = screenContext)
-            .apply { initialize(componentObject) }
+        val rootView = factory.process(screenContext = screenContext)
         screenContext.addView(rootView)
         this@Screen.rootView = rootView
+            .apply { initialize(componentObject) }
         redrawCounterTrigger.intValue += 1
     }
 
-    private fun addView(
+    private suspend fun addView(
         view: ViewProtocol
     ) {
-        views.add(view)
-        val viewIndex = views.lastIndex
-        view.contextualUpdater.forEach { updater ->
-            updater.id?.let { id ->
-                val keyTypeId = keyTypeId(updater.type, id)
-                updatables[keyTypeId]
-                    ?.updaterProcessor
-                    ?.add(updater)
-                    ?: run {
-                        updatables[keyTypeId] = Updatable(
+        mutex.withLock {
+            views.add(view)
+            val viewIndex = views.lastIndex
+            view.contextualUpdater.forEach { updater ->
+                updater.id?.let { id ->
+                    val keyTypeId = keyTypeId(updater.type, id)
+                    updatables.getOrPut(keyTypeId) {
+                        Updatable(
                             viewIndex = viewIndex,
-                            updaterProcessor = mutableListOf(updater)
+                            processors = mutableListOf()
                         )
-                    }
+                    }.processors.add(updater)
+                }
             }
         }
     }
@@ -166,7 +163,7 @@ internal class Screen(
         val id = jsonObject.idValue
         val type = jsonObject.type
         return updatables[keyTypeId(type, id)]?.let { updatable ->
-            updatable.updaterProcessor.forEach { it.process(jsonObject) }
+            updatable.processors.forEach { it.process(jsonObject) }
             updatable.viewIndex
         }
     }
