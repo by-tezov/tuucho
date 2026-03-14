@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     base
-    id("jacoco")
+    jacoco
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.multiplatform.library) apply false
     alias(libs.plugins.compose) apply false
@@ -374,17 +374,23 @@ tasks.register<TestReport>("rootDebugUnitTest") {
     group = "verification"
     description =
         "Unit test and Aggregates Html unit test reports from all modules into root build folder"
-    destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     val unitTestTasks = subprojects.flatMap { sub ->
         sub.tasks.withType<Test>().matching {
             it.name.contains("testAndroidHostTest")
         }
     }
+    if (System.getenv("IS_CI") != "true") {
+        unitTestTasks.forEach {
+            it.outputs.upToDateWhen { false }
+        }
+    }
     dependsOn(unitTestTasks)
+    destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     testResults.from(unitTestTasks.map { it.binaryResultsDirectory })
 }
 tasks.register("allTests") {
-    dependsOn(tasks.matching { it.name.equals("rootDebugUnitTest") })
+    group = "verification"
+    dependsOn(tasks.named("rootDebugUnitTest"))
 }
 
 // Coverage
@@ -486,6 +492,7 @@ tasks.register("rootDebugCoveragePostProcessReport") {
     }
 }
 tasks.register<JacocoReport>("rootDebugCoverageReport") {
+    dependsOn(tasks.named("rootDebugUnitTest"))
     finalizedBy(tasks.named("rootDebugCoveragePostProcessReport"))
 
     group = "verification"
@@ -516,8 +523,9 @@ tasks.register<JacocoReport>("rootDebugCoverageReport") {
         xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoRootReport.xml"))
     }
 }
-tasks.register("rootAllCoverages") {
-    dependsOn(tasks.matching { it.name.equals("rootDebugCoverageReport") })
+tasks.register("allTestsCoverage") {
+    group = "verification"
+    dependsOn(tasks.named("rootDebugCoverageReport"))
 }
 
 // Maven Publication

@@ -26,9 +26,9 @@ kotlin-collections-immutable = "0.4.0"
 
 #lib - android
 compose = "1.10.2"
-compose-android = "1.10.4"
+compose-android = "1.10.5"
 compose-material3 = "1.9.0"
-compose-activity = "1.12.4"
+compose-activity = "1.13.0"
 compose-ui-tooling = "1.10.2"
 
 [libraries]
