@@ -9,7 +9,7 @@ plugins {
 sqldelight {
     databases {
         create("Database") {
-            packageName = "${kotlin.androidLibrary.namespace}.database"
+            packageName = "${kotlin.android.namespace}.database"
             srcDirs.setFrom("src/commonMain/sqldelight")
             dialect(
                 libs.sql.delight.dialect.get().toString().replace(

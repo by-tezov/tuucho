@@ -9,6 +9,7 @@ object PluginId {
     const val signing = "signing"
     const val ktLint = "ktlint"
     const val detekt = "detekt"
+    const val jacoco = "jacoco"
 
     // test
     const val allOpen = "all.open"

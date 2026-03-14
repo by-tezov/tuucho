@@ -32,7 +32,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         super.applyPlugins(project)
         with(project) {
             if (shouldConfigureTest) {
-                pluginManager.apply("jacoco")
+                pluginManager.apply(PluginId.jacoco)
                 pluginManager.apply(plugin(PluginId.allOpen))
                 pluginManager.apply(plugin(PluginId.mokkery))
             }
@@ -45,8 +45,8 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         super.configure(project)
         with(project) {
             if (shouldConfigureTest) {
+                configureUnitTest()
                 configureCoverage()
-                configureTest()
             }
             if (shouldConfigureApiValidation) {
                 configureApiValidation()
@@ -54,42 +54,7 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
         }
     }
 
-    private fun Project.configureCoverage() {
-        extensions.configure(JacocoPluginExtension::class.java) {
-            toolVersion = version("jacoco")
-        }
-        tasks.register("coverageDebugTestReport", JacocoReport::class.java) {
-            val unitTestTasks = tasks.withType<Test>()
-                .filter { it.name.contains("DebugUnitTest") }
-            dependsOn(unitTestTasks)
-            executionData.setFrom(
-                unitTestTasks.map {
-                    it.extensions
-                        .getByType(JacocoTaskExtension::class.java)
-                        .destinationFile
-                }
-            )
-            classDirectories.setFrom(
-                fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/debug") {
-                    exclude(
-                        "**/R.class",
-                        "**/R$*.class",
-                        "**/BuildConfig.*",
-                        "**/Manifest*.*",
-                        "**/*Test*.*"
-                    )
-                }
-            )
-            sourceDirectories.setFrom(files("$projectDir/src/commonMain/kotlin"))
-
-            reports {
-                xml.required.set(true)
-                html.required.set(true)
-            }
-        }
-    }
-
-    private fun Project.configureTest() {
+    private fun Project.configureUnitTest() {
         extensions.configure(MokkeryGradleExtension::class.java) {
             with(stubs) {
                 allowConcreteClassInstantiation.set(true)
@@ -105,6 +70,31 @@ open class LibraryPlainPlugin : AbstractLibraryPlugin() {
                     implementation(library(LibraryId.kotlinTest))
                     implementation(library(LibraryId.kotlinCoroutineTest))
                 }
+            }
+        }
+    }
+
+    private fun Project.configureCoverage() {
+        extensions.configure(JacocoPluginExtension::class.java) {
+            toolVersion = version("jacoco")
+            reportsDirectory.set(layout.buildDirectory.dir("reports/jacoco"))
+        }
+        tasks.register("coverageDebugTestReport", JacocoReport::class.java) {
+            val unitTestTasks = tasks.withType<Test>().first {
+                it.name.contains("testAndroidHostTest")
+            }
+            unitTestTasks.extensions.configure(JacocoTaskExtension::class.java) {
+                destinationFile = layout.buildDirectory.file("jacoco/jacocoTest.exec").get().asFile
+            }
+            dependsOn(unitTestTasks)
+            executionData(unitTestTasks)
+            classDirectories.setFrom(
+                fileTree("${layout.buildDirectory.get().asFile}/classes/kotlin/android/main")
+            )
+            sourceDirectories.setFrom(files("$projectDir/src/commonMain/kotlin"))
+            reports {
+                html.required.set(true)
+                xml.required.set(true)
             }
         }
     }
