@@ -37,7 +37,7 @@ compose-material3 = "1.9.0"
 #lib - android
 compose-navigationevent = "1.0.1"
 compose-ui-tooling = "1.10.2"
-datastore-preferences = "1.2.0"
+datastore-preferences = "1.2.1"
 
 #test
 jacoco = "0.8.14"

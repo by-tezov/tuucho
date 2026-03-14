@@ -18,7 +18,7 @@ plugins {
     alias(libs.plugins.all.open) apply false
 }
 
-// KtLintappDir
+// KtLint
 tasks.register("rootFormatKtLint") {
     group = "validation"
     description = "Format KtLint"
@@ -90,7 +90,7 @@ tasks.register("rootKtLintReport") {
     }
 }
 
-val cleanKtLintFolder by tasks.registering(Delete::class) {
+tasks.register<Delete>("cleanKtLintFolder") {
     group = "validation"
     description = "Delete KtLint validation folders for all subprojects and root"
     val ktlintProjects = subprojects.filter { sub ->
@@ -105,7 +105,7 @@ tasks.register("rootUpdateKtLintBaseline") {
         sub.tasks.matching { it.name.equals("ktlintGenerateBaseline", ignoreCase = true) }
     }
     ktLineTasks.forEach {
-        it.dependsOn(cleanKtLintFolder)
+        it.dependsOn(tasks.named("cleanKtLintFolder"))
     }
     dependsOn(ktLineTasks)
     doLast {
@@ -226,7 +226,7 @@ tasks.register("rootDetektReport") {
     }
 }
 
-val cleanDetektFolder by tasks.registering(Delete::class) {
+tasks.register<Delete>("cleanDetektFolder") {
     group = "validation"
     description = "Delete Detekt baseline folders for all subprojects"
     val detektProjects = subprojects.filter { sub ->
@@ -243,7 +243,7 @@ tasks.register("rootUpdateDetektBaseline") {
             .matching { it.name == "detektBaseline" }
     }
     detektTasks.forEach {
-        it.dependsOn(cleanDetektFolder)
+        it.dependsOn(tasks.named("cleanDetektFolder"))
     }
     dependsOn(detektTasks)
     doLast {
@@ -311,7 +311,7 @@ tasks.register("rootValidateReleaseApi") {
     dependsOn(abiTasks)
 }
 
-val cleanApiFolder by tasks.registering(Delete::class) {
+tasks.register<Delete>("cleanApiFolder") {
     group = "validation"
     description = "Delete API validation folders for all subprojects"
     val apiProjects = subprojects.filter { sub ->
@@ -326,7 +326,7 @@ tasks.register("rootUpdateReleaseApi") {
         sub.tasks.matching { it.name.equals("updateLegacyAbi", ignoreCase = true) }
     }
     abiTasks.forEach {
-        it.dependsOn(cleanApiFolder)
+        it.dependsOn(tasks.named("cleanApiFolder"))
     }
     dependsOn(abiTasks)
     doLast {
@@ -369,7 +369,7 @@ tasks.register("rootUpdateReleaseApi") {
     }
 }
 
-// Unit tests + Coverage
+// Unit tests
 tasks.register<TestReport>("rootDebugUnitTest") {
     group = "verification"
     description =
@@ -383,44 +383,14 @@ tasks.register<TestReport>("rootDebugUnitTest") {
     dependsOn(unitTestTasks)
     testResults.from(unitTestTasks.map { it.binaryResultsDirectory })
 }
+tasks.register("allTests") {
+    dependsOn(tasks.matching { it.name.equals("rootDebugUnitTest") })
+}
 
+// Coverage
 extensions.configure(JacocoPluginExtension::class.java) {
     toolVersion = libs.versions.jacoco.get()
 }
-
-// TODO  -> Maybe moove to Kover again ...
-tasks.register<JacocoReport>("rootDebugCoverageReport") {
-    if (System.getenv("IS_CI") != "true") {
-        dependsOn("rootDebugUnitTest")
-    }
-    group = "verification"
-    description = "Aggregates Html coverage report from all modules into root build folder"
-
-    val reportsList = subprojects
-        .filter { it.file("build.gradle.kts").exists() }
-        .mapNotNull { sub ->
-            sub.tasks.findByName("coverageDebugTestReport") as? JacocoReport
-        }
-
-    executionData.setFrom(reportsList.flatMap { it.executionData.files })
-    classDirectories.setFrom(reportsList.flatMap { it.classDirectories.files })
-    sourceDirectories.setFrom(reportsList.flatMap { it.sourceDirectories.files })
-
-    doFirst {
-        val reportDir = layout.buildDirectory.dir("reports/jacoco/html").get().asFile
-        if (reportDir.exists()) {
-            delete(reportDir)
-        }
-    }
-
-    reports {
-        xml.required.set(true)
-        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoRootReport.xml"))
-        html.required.set(true)
-        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/html"))
-    }
-}
-
 tasks.register("rootDebugCoveragePostProcessReport") {
 
     doFirst {
@@ -515,13 +485,45 @@ tasks.register("rootDebugCoveragePostProcessReport") {
         }
     }
 }
+tasks.register<JacocoReport>("rootDebugCoverageReport") {
+    finalizedBy(tasks.named("rootDebugCoveragePostProcessReport"))
 
-tasks.named("rootDebugCoverageReport") {
-    finalizedBy("rootDebugCoveragePostProcessReport")
+    group = "verification"
+    description = "Aggregates Html coverage report from all modules into root build folder"
+
+    val reportsList = subprojects.flatMap { sub ->
+        sub.tasks.withType<JacocoReport>().matching {
+            it.name.contains("coverageDebugTestReport")
+        }
+    }
+    dependsOn(reportsList)
+
+    classDirectories.setFrom(reportsList.map { it.classDirectories.files })
+    executionData.setFrom(reportsList.map { it.executionData.files })
+    sourceDirectories.setFrom(reportsList.map { it.sourceDirectories.files })
+
+    doFirst {
+        val reportDir = layout.buildDirectory.dir("reports/jacoco/html").get().asFile
+        if (reportDir.exists()) {
+            delete(reportDir)
+        }
+    }
+
+    reports {
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/html"))
+        xml.required.set(true)
+        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoRootReport.xml"))
+    }
+}
+tasks.register("rootAllCoverages") {
+    dependsOn(tasks.matching { it.name.equals("rootDebugCoverageReport") })
 }
 
 // Maven Publication
-val cleanMavenLocalFolder by tasks.registering {
+tasks.register<Delete>("cleanMavenLocalFolder") {
+    group = "validation"
+    description = "Delete Maven local folder"
     delete(".m2")
 }
 tasks.register("rootPublishReleaseToMavenLocal") {
@@ -533,11 +535,12 @@ tasks.register("rootPublishReleaseToMavenLocal") {
             .matching { it.name.endsWith("ToProjectMavenRepository") }
     }
     publishTasks.forEach {
-        it.dependsOn(cleanMavenLocalFolder)
+        it.dependsOn(tasks.named("cleanMavenLocalFolder"))
     }
     dependsOn(publishTasks)
 }
 
+// Admin
 tasks.register("rootAdminUpdate") {
     doLast {
         val tasksToRun = listOf(
@@ -549,6 +552,7 @@ tasks.register("rootAdminUpdate") {
             "rootUpdateReleaseApi",
             "rootValidateReleaseApi",
             "rootDebugUnitTest",
+            "rootDebugCoverageReport",
             "rootPublishReleaseToMavenLocal"
         )
         tasksToRun.forEach { taskName ->
