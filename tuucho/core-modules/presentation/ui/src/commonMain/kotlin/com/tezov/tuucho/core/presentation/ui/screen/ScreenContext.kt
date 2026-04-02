@@ -8,7 +8,6 @@ internal class ScreenContext(
     override val route: NavigationRoute,
     private val addViewBlock: suspend (view: ViewProtocol) -> Unit
 ) : ScreenContextProtocol {
-
     override suspend fun addView(
         view: ViewProtocol
     ) = addViewBlock(view)

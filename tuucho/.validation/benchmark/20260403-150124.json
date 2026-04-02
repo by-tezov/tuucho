@@ -1,0 +1,468 @@
+[
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark.benchmarkMethod",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "8"
+    },
+    "primaryMetric": {
+      "score": 6.009022506897563E-9,
+      "scoreError": 2.6084607012825296E-10,
+      "scoreConfidence": [
+        5.74817643676931E-9,
+        6.269868577025816E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 5.9037763271394966E-9,
+        "50.0": 6.015702772098143E-9,
+        "90.0": 6.090015654194216E-9,
+        "95.0": 6.090015654194216E-9,
+        "99.0": 6.090015654194216E-9,
+        "99.9": 6.090015654194216E-9,
+        "99.99": 6.090015654194216E-9,
+        "99.999": 6.090015654194216E-9,
+        "99.9999": 6.090015654194216E-9,
+        "100.0": 6.090015654194216E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          6.033927834595009E-9,
+          6.090015654194216E-9,
+          5.9037763271394966E-9,
+          6.00168994646095E-9,
+          6.015702772098143E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  },
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark.benchmarkMethod",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "12"
+    },
+    "primaryMetric": {
+      "score": 7.584067624946166E-9,
+      "scoreError": 6.64752892766187E-10,
+      "scoreConfidence": [
+        6.9193147321799794E-9,
+        8.248820517712353E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 7.471753734382222E-9,
+        "50.0": 7.518018623096884E-9,
+        "90.0": 7.88820134224098E-9,
+        "95.0": 7.88820134224098E-9,
+        "99.0": 7.88820134224098E-9,
+        "99.9": 7.88820134224098E-9,
+        "99.99": 7.88820134224098E-9,
+        "99.999": 7.88820134224098E-9,
+        "99.9999": 7.88820134224098E-9,
+        "100.0": 7.88820134224098E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          7.88820134224098E-9,
+          7.490958544351531E-9,
+          7.518018623096884E-9,
+          7.551405880659207E-9,
+          7.471753734382222E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  },
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark.iterateBenchmark",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "8"
+    },
+    "primaryMetric": {
+      "score": 5.960267879430789E-9,
+      "scoreError": 3.209180115157048E-10,
+      "scoreConfidence": [
+        5.639349867915084E-9,
+        6.281185890946493E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 5.860966936398163E-9,
+        "50.0": 5.943283428264531E-9,
+        "90.0": 6.048348806425749E-9,
+        "95.0": 6.048348806425749E-9,
+        "99.0": 6.048348806425749E-9,
+        "99.9": 6.048348806425749E-9,
+        "99.99": 6.048348806425749E-9,
+        "99.999": 6.048348806425749E-9,
+        "99.9999": 6.048348806425749E-9,
+        "100.0": 6.048348806425749E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          5.905529704929556E-9,
+          6.043210521135944E-9,
+          5.943283428264531E-9,
+          6.048348806425749E-9,
+          5.860966936398163E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  },
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark.iterateBenchmark",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "12"
+    },
+    "primaryMetric": {
+      "score": 6.981822897505077E-9,
+      "scoreError": 1.988416762054901E-10,
+      "scoreConfidence": [
+        6.7829812212995865E-9,
+        7.180664573710567E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 6.923241712250846E-9,
+        "50.0": 7.001485285396177E-9,
+        "90.0": 7.042441167954407E-9,
+        "95.0": 7.042441167954407E-9,
+        "99.0": 7.042441167954407E-9,
+        "99.9": 7.042441167954407E-9,
+        "99.99": 7.042441167954407E-9,
+        "99.999": 7.042441167954407E-9,
+        "99.9999": 7.042441167954407E-9,
+        "100.0": 7.042441167954407E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          7.009299308118795E-9,
+          7.042441167954407E-9,
+          7.001485285396177E-9,
+          6.932647013805161E-9,
+          6.923241712250846E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  },
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark2.benchmarkMethod",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "8"
+    },
+    "primaryMetric": {
+      "score": 5.9748105847189596E-9,
+      "scoreError": 2.616255602220724E-10,
+      "scoreConfidence": [
+        5.7131850244968875E-9,
+        6.236436144941032E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 5.882490439915037E-9,
+        "50.0": 5.957280996040228E-9,
+        "90.0": 6.058789451063819E-9,
+        "95.0": 6.058789451063819E-9,
+        "99.0": 6.058789451063819E-9,
+        "99.9": 6.058789451063819E-9,
+        "99.99": 6.058789451063819E-9,
+        "99.999": 6.058789451063819E-9,
+        "99.9999": 6.058789451063819E-9,
+        "100.0": 6.058789451063819E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          5.882490439915037E-9,
+          6.021270534181185E-9,
+          5.954221502394523E-9,
+          5.957280996040228E-9,
+          6.058789451063819E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  },
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark2.benchmarkMethod",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "12"
+    },
+    "primaryMetric": {
+      "score": 7.504122226382955E-9,
+      "scoreError": 1.9295562754963372E-10,
+      "scoreConfidence": [
+        7.3111665988333216E-9,
+        7.697077853932589E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 7.466607497070188E-9,
+        "50.0": 7.488956216128675E-9,
+        "90.0": 7.59218632664768E-9,
+        "95.0": 7.59218632664768E-9,
+        "99.0": 7.59218632664768E-9,
+        "99.9": 7.59218632664768E-9,
+        "99.99": 7.59218632664768E-9,
+        "99.999": 7.59218632664768E-9,
+        "99.9999": 7.59218632664768E-9,
+        "100.0": 7.59218632664768E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          7.489993845781634E-9,
+          7.466607497070188E-9,
+          7.59218632664768E-9,
+          7.488956216128675E-9,
+          7.482867246286596E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  },
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark2.iterateBenchmark",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "8"
+    },
+    "primaryMetric": {
+      "score": 6.055120499809121E-9,
+      "scoreError": 7.332499742801896E-10,
+      "scoreConfidence": [
+        5.321870525528932E-9,
+        6.788370474089311E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 5.884317202733244E-9,
+        "50.0": 6.0001967601687304E-9,
+        "90.0": 6.348450833232923E-9,
+        "95.0": 6.348450833232923E-9,
+        "99.0": 6.348450833232923E-9,
+        "99.9": 6.348450833232923E-9,
+        "99.99": 6.348450833232923E-9,
+        "99.999": 6.348450833232923E-9,
+        "99.9999": 6.348450833232923E-9,
+        "100.0": 6.348450833232923E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          5.910582605575562E-9,
+          6.0001967601687304E-9,
+          6.348450833232923E-9,
+          6.132055097335142E-9,
+          5.884317202733244E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  },
+  {
+    "jmhVersion": "1.37",
+    "benchmark": "com.tezov.tuucho.benchmark.MyBenchmark2.iterateBenchmark",
+    "mode": "avgt",
+    "threads": 3,
+    "forks": 1,
+    "jvm": "/home/tezov/.gradle/jdks/jetbrains_s_r_o_-17-amd64-linux.2/bin/java",
+    "jvmArgs": [
+      "-Dfile.encoding=UTF-8",
+      "-Duser.country=US",
+      "-Duser.language=en",
+      "-Duser.variant"
+    ],
+    "jdkVersion": "17.0.14",
+    "vmName": "OpenJDK 64-Bit Server VM",
+    "vmVersion": "17.0.14+1-b1367.22",
+    "warmupIterations": 3,
+    "warmupTime": "100 ms",
+    "warmupBatchSize": 1,
+    "measurementIterations": 5,
+    "measurementTime": "1 s",
+    "measurementBatchSize": 1,
+    "params": {
+      "size": "12"
+    },
+    "primaryMetric": {
+      "score": 7.4005980228428735E-9,
+      "scoreError": 3.3282695659951073E-10,
+      "scoreConfidence": [
+        7.067771066243363E-9,
+        7.733424979442385E-9
+      ],
+      "scorePercentiles": {
+        "0.0": 7.286456460065038E-9,
+        "50.0": 7.457953651297576E-9,
+        "90.0": 7.469761404518052E-9,
+        "95.0": 7.469761404518052E-9,
+        "99.0": 7.469761404518052E-9,
+        "99.9": 7.469761404518052E-9,
+        "99.99": 7.469761404518052E-9,
+        "99.999": 7.469761404518052E-9,
+        "99.9999": 7.469761404518052E-9,
+        "100.0": 7.469761404518052E-9
+      },
+      "scoreUnit": "s/op",
+      "rawData": [
+        [
+          7.328434763591156E-9,
+          7.460383834742542E-9,
+          7.286456460065038E-9,
+          7.457953651297576E-9,
+          7.469761404518052E-9
+        ]
+      ]
+    },
+    "secondaryMetrics": {
+    }
+  }
+]
+
+

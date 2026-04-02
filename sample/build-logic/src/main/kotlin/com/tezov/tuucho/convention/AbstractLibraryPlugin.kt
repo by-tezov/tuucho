@@ -1,7 +1,7 @@
 package com.tezov.tuucho.convention
 
 import com.tezov.tuucho.convention._system.PluginId
-import com.tezov.tuucho.convention._system.androidLibrary
+import com.tezov.tuucho.convention._system.android
 import com.tezov.tuucho.convention._system.buildType
 import com.tezov.tuucho.convention._system.isMacOs
 import com.tezov.tuucho.convention._system.javaVersionInt
@@ -43,16 +43,16 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     ) {
         project.extra["hasAssets"] = hasAssets
         with(project) {
-            configureAndroidLibrary()
+            configureTarget()
             configureMultiplatform()
             configureSourceSets()
             configureProguard()
         }
     }
 
-    private fun Project.configureAndroidLibrary() {
+    private fun Project.configureTarget() {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            androidLibrary {
+            android {
                 namespace = namespace()
                 compileSdk = version("compileSdk").toInt()
                 minSdk = version("minSdk").toInt()
@@ -61,24 +61,17 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                     enableCoverage = true
                 }
             }
-        }
-    }
-
-    private fun Project.configureMultiplatform() {
-        extensions.configure(KotlinMultiplatformExtension::class.java) {
-            jvmToolchain(this@configureMultiplatform.javaVersionInt())
-            compilerOptions {
-                optIn.addAll(optIn())
-                freeCompilerArgs.addAll(compilerOption())
-//                allWarningsAsErrors.set(false)
-            }
+            // JVM
+            jvm()
             // iOS
             if (isMacOs) {
                 val iosTargets = listOf(iosArm64(), iosSimulatorArm64())
                 project.afterEvaluate {
                     val namespace = namespace()
                     val frameworkName = project.path.removePrefix(":").split(".")
-                        .joinToString("") { it.replaceFirstChar { c -> c.uppercaseChar() } } + "Framework"
+                        .joinToString(separator = "", postfix="Framework") {
+                            it.replaceFirstChar { c -> c.uppercaseChar() }
+                        }
                     iosTargets.forEach { iosTarget ->
                         iosTarget.binaries.framework {
                             isStatic = true
@@ -93,13 +86,34 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
+    private fun Project.configureMultiplatform() {
+        extensions.configure(KotlinMultiplatformExtension::class.java) {
+            jvmToolchain(this@configureMultiplatform.javaVersionInt())
+            compilerOptions {
+                optIn.addAll(optIn())
+                freeCompilerArgs.addAll(compilerOption())
+//                allWarningsAsErrors.set(false)
+            }
+        }
+    }
+
     private fun Project.configureSourceSets() {
         val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
+                commonMain {
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/commonMain/$buildType"
+                    )
+                }
                 androidMain {
                     kotlin.srcDirs(
                         "${project.projectDir.path}/src/androidMain/$buildType"
+                    )
+                }
+                jvmMain {
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/jvmMain/$buildType"
                     )
                 }
                 if (isMacOs) {
@@ -109,11 +123,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                         )
                     }
                 }
-                commonMain {
-                    kotlin.srcDirs(
-                        "${project.projectDir.path}/src/commonMain/$buildType"
-                    )
-                }
             }
         }
     }
@@ -121,7 +130,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     private fun Project.configureProguard() {
         @Suppress("UnstableApiUsage")
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            androidLibrary {
+            android {
                 optimization {
                     consumerKeepRules.apply {
                         publish = true

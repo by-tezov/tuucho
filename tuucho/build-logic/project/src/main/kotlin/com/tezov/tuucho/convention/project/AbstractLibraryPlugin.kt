@@ -1,7 +1,7 @@
 package com.tezov.tuucho.convention.project
 
 import com.tezov.tuucho.convention.project._system.PluginId
-import com.tezov.tuucho.convention.project._system.androidLibrary
+import com.tezov.tuucho.convention.project._system.android
 import com.tezov.tuucho.convention.project._system.buildType
 import com.tezov.tuucho.convention.project._system.compilerOption
 import com.tezov.tuucho.convention.project._system.isMacOs
@@ -42,7 +42,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
 
     protected open fun configure(project: Project) {
         with(project) {
-            configureAndroidLibrary()
+            configureTarget()
             configureMultiplatform()
             configureSourceSets()
             configureProguard()
@@ -52,9 +52,9 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.configureAndroidLibrary() {
+    private fun Project.configureTarget() {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            androidLibrary {
+            android {
                 namespace = namespace()
                 compileSdk = version("compileSdk").toInt()
                 minSdk = version("minSdk").toInt()
@@ -62,6 +62,15 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 withHostTestBuilder {}.configure {
                     enableCoverage = true
                 }
+            }
+            // JVM
+            jvm()
+            // iOS
+            if (isMacOs) {
+                iosArm64()
+                iosSimulatorArm64()
+            } else {
+                println("⚠️ mac os target disable")
             }
         }
     }
@@ -75,13 +84,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 //turn of warning error unique name when maven publication, TODO need to dig in to find what is wrong with KLib
                 allWarningsAsErrors.set(false)
             }
-            // iOS
-            if (isMacOs) {
-                iosArm64()
-                iosSimulatorArm64()
-            } else {
-                println("⚠️ mac os target disable")
-            }
             applyDefaultHierarchyTemplate()
         }
     }
@@ -90,9 +92,19 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         val buildType = buildType()
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             sourceSets {
+                commonMain {
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/commonMain/$buildType"
+                    )
+                }
                 androidMain {
                     kotlin.srcDirs(
                         "${project.projectDir.path}/src/androidMain/$buildType"
+                    )
+                }
+                jvmMain {
+                    kotlin.srcDirs(
+                        "${project.projectDir.path}/src/jvmMain/$buildType"
                     )
                 }
                 if (isMacOs) {
@@ -102,11 +114,6 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                         )
                     }
                 }
-                commonMain {
-                    kotlin.srcDirs(
-                        "${project.projectDir.path}/src/commonMain/$buildType"
-                    )
-                }
             }
         }
     }
@@ -114,16 +121,16 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     private fun Project.configureLint() {
 //        extensions.configure(CommonExtension::class.java) {
 //            lint {
-////                abortOnError = false
-////                checkDependencies = true
-////                checkReleaseBuilds = false
-////
-////                xmlReport = true
-////                htmlReport = true
-////
-////                xmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.xml")
-////                htmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.html")
-////                baseline = file("lint-baseline.xml")
+//                abortOnError = false
+//                checkDependencies = true
+//                checkReleaseBuilds = false
+//
+//                xmlReport = true
+//                htmlReport = true
+//
+//                xmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.xml")
+//                htmlOutput = file("${layout.buildDirectory.get().asFile}/reports/lint/lint-results.html")
+//                baseline = file("lint-baseline.xml")
 //                disable.addAll(lintDisabled())
 //            }
 //        }
@@ -148,6 +155,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
                 val sourceDirs = listOf(
                     "src/commonMain",
                     "src/androidMain",
+                    "src/jvmMain",
                     "src/iosMain",
                     "src/commonTest"
                 )
@@ -168,6 +176,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
         val sourceDirs = listOf(
             "src/commonMain",
             "src/androidMain",
+            "src/jvmMain",
             "src/iosMain",
             "src/commonTest"
         )
@@ -186,7 +195,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
     private fun Project.configureProguard() {
         @Suppress("UnstableApiUsage")
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            androidLibrary {
+            android {
                 optimization {
                     consumerKeepRules.apply {
                         publish = true

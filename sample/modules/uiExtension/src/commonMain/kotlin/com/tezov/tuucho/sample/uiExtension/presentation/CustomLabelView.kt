@@ -13,6 +13,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.presentation.ui._system.subset
+import com.tezov.tuucho.core.presentation.ui.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ActionProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ColorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
@@ -31,7 +32,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.content
 import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projector.message
 import com.tezov.tuucho.core.presentation.ui.render.projector.style
-import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.AbstractView
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol

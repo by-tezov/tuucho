@@ -4,6 +4,7 @@
 /maven.properties
 .gradle/
 .m2/
+.venv/
 /local.properties
 /build
 /.kotlin/

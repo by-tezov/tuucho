@@ -4,7 +4,8 @@ import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenFactoryProtocol
 
-internal class ScreenFactory : ScreenFactoryProtocol,
+internal class ScreenFactory :
+    ScreenFactoryProtocol,
     TuuchoKoinComponent {
     override suspend fun create(
         route: NavigationRoute.Url

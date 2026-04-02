@@ -14,6 +14,7 @@ object PluginId {
     // test
     const val allOpen = "all.open"
     const val mokkery = "mokkery"
+    const val kotlinBenchmark = "kotlin.benchmark"
 
     // convention
     const val conventionMaven = "convention.maven"

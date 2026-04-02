@@ -10,7 +10,7 @@ import com.tezov.tuucho.core.domain.tool.annotation.TuuchoInternalApi
 object DatabaseModuleAndroid {
     @OptIn(TuuchoInternalApi::class)
     internal fun invoke() = module(ModuleContextData.Main) {
-        factory<SqlDriver> {
+        single<SqlDriver> {
             AndroidSqliteDriver(
                 schema = Database.Schema,
                 context = get(

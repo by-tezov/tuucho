@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.all.open)
     implementation(libs.mokkery)
     implementation(libs.maven)
+    implementation(libs.kotlin.benchmark.gradle)
     implementation(libs.ktlint)
     implementation(libs.detekt)
 }
@@ -37,6 +38,10 @@ gradlePlugin {
         }
         register("LibraryUiPlugin") {
             id = "${packageName}.library-ui"
+            implementationClass = "${packageName}.${name}"
+        }
+        register("BenchmarkPlugin") {
+            id = "${packageName}.benchmark"
             implementationClass = "${packageName}.${name}"
         }
     }

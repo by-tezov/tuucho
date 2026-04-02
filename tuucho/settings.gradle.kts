@@ -1,10 +1,10 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
         maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
-        gradlePluginPortal()
     }
 }
 plugins {
@@ -37,6 +37,7 @@ listOf(
     "core-modules/presentation",
     "ui-component-modules/stable",
     "core-modules/umbrella",
+    "benchmark",
 ).forEach { basePath ->
     file(basePath).listFiles()
         ?.filter {

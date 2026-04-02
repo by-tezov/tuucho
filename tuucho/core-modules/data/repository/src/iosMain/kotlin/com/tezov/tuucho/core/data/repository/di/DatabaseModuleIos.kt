@@ -8,7 +8,7 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 
 internal object DatabaseModuleIos {
     fun invoke() = module(ModuleContextData.Main) {
-        factory<SqlDriver> {
+        single<SqlDriver> {
             NativeSqliteDriver(
                 schema = Database.Schema,
                 name = get<DatabaseModule.Config>(DATABASE_REPOSITORY_CONFIG).fileName

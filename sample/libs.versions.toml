@@ -61,6 +61,8 @@ compose-ui-tooling-preview = { group = "org.jetbrains.compose.components", name 
 tuucho-umbrella-android = { group = "com.tezov", name = "tuucho.core.umbrella-android", version.ref = "versionName" }
 #lib - android
 ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+#lib - jvm
+ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 #lib - ios
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 [plugins]

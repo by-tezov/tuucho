@@ -30,7 +30,6 @@ internal class Screen(
     override val route: NavigationRoute.Url
 ) : ScreenProtocol,
     TuuchoKoinComponent {
-
     private data class Updatable(
         val viewIndex: Int,
         val processors: MutableList<ContextualUpdaterProcessorProtocol>
@@ -91,12 +90,14 @@ internal class Screen(
             view.contextualUpdater.forEach { updater ->
                 updater.id?.let { id ->
                     val keyTypeId = keyTypeId(updater.type, id)
-                    updatables.getOrPut(keyTypeId) {
-                        Updatable(
-                            viewIndex = viewIndex,
-                            processors = mutableListOf()
-                        )
-                    }.processors.add(updater)
+                    updatables
+                        .getOrPut(keyTypeId) {
+                            Updatable(
+                                viewIndex = viewIndex,
+                                processors = mutableListOf()
+                            )
+                        }.processors
+                        .add(updater)
                 }
             }
         }

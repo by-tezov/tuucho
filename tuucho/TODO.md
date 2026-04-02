@@ -1,5 +1,8 @@
 ### Todo:
 
+// Context presentation
+// Jvm sample plugin + launch ?
+
 Then all on this in one shot release
 
 - error message with class name that throw.
