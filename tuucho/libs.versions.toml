@@ -13,35 +13,34 @@ detektRules = "1.23.8"
 
 #plugin
 android-plugin = "9.1.0"
-kotlin-plugin = "2.3.10"
-compose-plugin = "1.10.2"
-kotlin-serialization-plugin = "2.3.10"
+kotlin-plugin = "2.3.20"
+compose-plugin = "1.10.3"
 maven-plugin = "0.36.0"
-ktlint-plugin = "14.1.0"
+ktlint-plugin = "14.2.0"
 detekt-plugin = "1.23.8"
 
 #lib - platform
 kotlin-couroutine = "1.10.2"
 kotlin-serialization-json = "1.10.0"
 kotlin-collections-immutable = "0.4.0"
-sql-delight = "2.2.1"
+sql-delight = "2.3.2"
 sql-delight-dialect = "3-38"
-ktor = "3.4.1"
-koin = "4.2.0-RC1"
+ktor = "3.4.2"
+koin = "4.2.0"
 kotlin-datetime = "0.7.1"
-okio = "3.16.4"
+okio = "3.17.0"
 coil = "3.4.0"
-compose = "1.10.2"
+compose = "1.10.3"
 compose-material3 = "1.9.0"
 
 #lib - android
 compose-navigationevent = "1.0.1"
-compose-ui-tooling = "1.10.2"
+compose-ui-tooling = "1.10.3"
 datastore-preferences = "1.2.1"
 
 #test
 jacoco = "0.8.14"
-mokkery = "3.2.0"
+mokkery = "3.3.0"
 
 [libraries]
 #build-logic
@@ -97,7 +96,7 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-plugin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization-plugin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-plugin" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
 maven = { id = "maven-publish", version = "" }
 signing = { id = "signing", version = "" }
