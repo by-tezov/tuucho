@@ -12,24 +12,24 @@ compileSdk = "36"
 
 #plugin
 android-plugin = "9.1.0"
-kotlin-plugin = "2.3.10"
-koin-plugin = "0.3.0"
-compose-plugin = "1.10.2"
+kotlin-plugin = "2.3.20"
+koin-plugin = "0.4.1"
+compose-plugin = "1.10.3"
 build-konfig-plugin = "0.17.1"
 
 #lib - platform
 kermit = "2.1.0"
-ktor = "3.4.1"
-koin = "4.2.0-RC1"
+ktor = "3.4.2"
+koin = "4.2.0"
 kotlin-serialization-json = "1.10.0"
 kotlin-collections-immutable = "0.4.0"
 
 #lib - android
-compose = "1.10.2"
-compose-android = "1.10.5"
+compose = "1.10.3"
+compose-android = "1.10.6"
 compose-material3 = "1.9.0"
 compose-activity = "1.13.0"
-compose-ui-tooling = "1.10.2"
+compose-ui-tooling = "1.10.3"
 
 [libraries]
 #build-logic
