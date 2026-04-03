@@ -88,7 +88,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
 
     private fun Project.configureMultiplatform() {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            jvmToolchain(this@configureMultiplatform.javaVersionInt())
+            jvmToolchain(javaVersionInt())
             compilerOptions {
                 optIn.addAll(optIn())
                 freeCompilerArgs.addAll(compilerOption())

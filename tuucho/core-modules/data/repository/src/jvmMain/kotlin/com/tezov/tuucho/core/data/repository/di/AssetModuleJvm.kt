@@ -9,7 +9,6 @@ import org.koin.dsl.bind
 
 internal object AssetModuleJvm {
     fun invoke() = module(ModuleContextData.Main) {
-        @OptIn(TuuchoInternalApi::class)
         factoryOf(::AssetReaderJvm) bind AssetReaderProtocol::class
     }
 }

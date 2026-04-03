@@ -1,24 +1,21 @@
 package com.tezov.tuucho.core.data.repository.assets
 
-import android.content.Context
+import com.tezov.tuucho.core.data.repository._system.SystemPlatformFileAndroid
 import okio.source
 import okio.use
 import java.net.URLConnection
 
 internal class AssetReaderAndroid(
-    private val context: Context,
+    private val platform: SystemPlatformFileAndroid,
 ) : AssetReaderProtocol {
-    private fun assetPath(
-        path: String
-    ) = "files/$path"
 
     private fun openStream(
         path: String
-    ) = context.assets.open(assetPath(path))
+    ) = platform.context.assets.open(platform.assetPath(path))
 
     private fun openDescriptor(
         path: String
-    ) = context.assets.openFd(assetPath(path))
+    ) = platform.context.assets.openFd(platform.assetPath(path))
 
     override suspend fun isExist(
         path: String

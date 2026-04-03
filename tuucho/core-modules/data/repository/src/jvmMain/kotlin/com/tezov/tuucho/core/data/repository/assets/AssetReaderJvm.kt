@@ -1,23 +1,17 @@
 package com.tezov.tuucho.core.data.repository.assets
 
-import com.tezov.tuucho.core.data.repository._system.SystemPlatformFileProtocol
-import okio.Path
-import okio.Path.Companion.toPath
+import com.tezov.tuucho.core.data.repository._system.SystemPlatformFileJvm
+import okio.source
 import okio.use
 import java.net.URLConnection
 
 internal class AssetReaderJvm(
-    private val platform: SystemPlatformFileProtocol,
+    private val platform: SystemPlatformFileJvm,
 ) : AssetReaderProtocol {
-    private fun assetPath(
-        path: String
-    ): Path = "assets".toPath().resolve(path.toPath())
 
     override suspend fun isExist(
         path: String
-    ): Boolean = runCatching {
-        platform.fileSystem().exists(assetPath(path))
-    }.getOrElse { false }
+    ) = platform.classLoader().getResource(platform.assetPath(path)) != null
 
     override suspend fun <T> read(
         path: String,
@@ -34,9 +28,11 @@ internal class AssetReaderJvm(
         path: String,
         contentType: String?
     ): AssetContent {
-        val filePath = assetPath(path)
-        val source = platform.fileSystem().source(filePath)
-        val size = runCatching { platform.fileSystem().metadata(filePath).size }.getOrNull() ?: -1L
+        val resourcePath = platform.assetPath(path)
+        val inputStream = platform.classLoader().getResourceAsStream(resourcePath)
+            ?: throw IllegalArgumentException("Asset not found: $path")
+        val source = inputStream.source()
+        val size = runCatching { inputStream.available().toLong() }.getOrNull() ?: -1L
         return AssetContent(
             source = source,
             contentType = contentType ?: resolveContentType(path),

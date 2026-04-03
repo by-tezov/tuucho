@@ -7,11 +7,15 @@ import okio.FileSystem
 import okio.Path.Companion.toPath
 
 class SystemPlatformFileAndroid(
-    private val context: Context
+    val context: Context
 ) : SystemPlatformFileProtocol {
     override fun fileSystem() = FileSystem.SYSTEM
 
     override fun pathFromCacheFolder(
         relativePath: String
     ) = "${context.cacheDir.path}/$relativePath".toPath()
+
+    fun assetPath(
+        path: String
+    ) = "files/$path"
 }

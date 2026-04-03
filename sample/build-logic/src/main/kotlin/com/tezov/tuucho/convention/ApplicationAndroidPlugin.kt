@@ -6,6 +6,7 @@ import com.tezov.tuucho.convention._system.AssetHelper
 import com.tezov.tuucho.convention._system.PluginId
 import com.tezov.tuucho.convention._system.buildType
 import com.tezov.tuucho.convention._system.javaVersion
+import com.tezov.tuucho.convention._system.javaVersionInt
 import com.tezov.tuucho.convention._system.keystorePropertiesFilePath
 import com.tezov.tuucho.convention._system.namespace
 import com.tezov.tuucho.convention._system.plugin
@@ -15,6 +16,7 @@ import com.tezov.tuucho.convention._system.versionCode
 import com.tezov.tuucho.convention._system.versionName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import java.util.Properties
 
 class ApplicationAndroidPlugin : Plugin<Project> {
@@ -46,6 +48,9 @@ class ApplicationAndroidPlugin : Plugin<Project> {
     }
 
     private fun Project.configureApplication() {
+        extensions.configure(KotlinAndroidProjectExtension::class.java) {
+            jvmToolchain(javaVersionInt())
+        }
         extensions.configure(ApplicationExtension::class.java) {
             namespace = namespace()
             compileSdk = version("compileSdk").toInt()

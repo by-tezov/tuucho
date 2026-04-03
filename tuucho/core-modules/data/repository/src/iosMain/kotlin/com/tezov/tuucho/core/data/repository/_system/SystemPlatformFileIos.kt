@@ -24,4 +24,22 @@ class SystemPlatformFileIos : SystemPlatformFileProtocol {
         val fullPath = url.path + "/" + relativePath
         return fullPath.toPath()
     }
+
+    fun assetPath(
+        path: String
+    ): String? {
+        val (name, ext, subdir) = splitResourcePath("assets/files/$path")
+        return NSBundle.mainBundle.pathForResource(name, ext, subdir)
+    }
+
+    private fun splitResourcePath(
+        path: String
+    ): Triple<String, String, String?> {
+        val parts = path.split("/")
+        val filename = parts.last()
+        val name = filename.substringBeforeLast(".")
+        val ext = filename.substringAfterLast(".", "")
+        val subdir = parts.dropLast(1).joinToString("/").ifEmpty { null }
+        return Triple(name, ext, subdir)
+    }
 }

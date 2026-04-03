@@ -9,7 +9,7 @@ plugins {
 }
 
 buildkonfig {
-    packageName = kotlin.androidLibrary.namespace
+    packageName = kotlin.android.namespace
 
     val configPropertiesFile = project.file("../../config.properties")
     if (!configPropertiesFile.exists()) {
@@ -72,6 +72,7 @@ kotlin {
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.ktor.core)
+            implementation(libs.okio)
         }
         androidMain.dependencies {
             implementation(libs.ktor.okhttp)

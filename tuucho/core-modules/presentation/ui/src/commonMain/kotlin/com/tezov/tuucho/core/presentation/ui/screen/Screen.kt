@@ -11,7 +11,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
-import com.tezov.tuucho.core.domain.tool.async.ReentrantMutex
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
@@ -20,7 +19,6 @@ import com.tezov.tuucho.core.presentation.ui.protocol.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 import kotlin.reflect.KClass
@@ -42,7 +40,7 @@ internal class Screen(
     private var rootView: ViewProtocol? = null
     private val views = mutableListOf<ViewProtocol>()
     private val updatables = mutableMapOf<String, Updatable>()
-    private val mutex = ReentrantMutex()
+//    private val mutex = ReentrantMutex()
 
     private fun keyTypeId(
         type: String,
@@ -51,7 +49,9 @@ internal class Screen(
 
     suspend fun createViews() {
         coroutineScopes.default.withContext {
-            mutex.withReentrantLock { createViewsNoSync() }
+//            mutex.withReentrantLock {
+            createViewsNoSync()
+//            }
         }
     }
 
@@ -86,9 +86,9 @@ internal class Screen(
         view: ViewProtocol
     ) {
         coroutineScopes.default.withContext {
-            mutex.withReentrantLock {
+//            mutex.withReentrantLock {
                 addViewNoSync(view)
-            }
+//            }
         }
     }
 
@@ -116,7 +116,9 @@ internal class Screen(
     override suspend fun <V : DomainViewProtocol> views(
         klass: KClass<V>
     ) = coroutineScopes.default.withContext {
-        mutex.withLock { views.filter { klass.isInstance(it) } as List<V> }
+//        mutex.withLock {
+        views.filter { klass.isInstance(it) } as List<V>
+//        }
     }
 
     @Composable
@@ -130,12 +132,12 @@ internal class Screen(
 
     override suspend fun recreateViews() {
         coroutineScopes.default.withContext {
-            mutex.withLock {
+//            mutex.withLock {
                 updatables.clear()
                 views.clear()
                 rootView = null
                 createViewsNoSync()
-            }
+//            }
         }
     }
 
@@ -143,10 +145,10 @@ internal class Screen(
         jsonObject: JsonObject
     ) {
         coroutineScopes.default.withContext {
-            mutex.withLock {
+//            mutex.withLock {
                 val updatedIndexView = updateAndReturnViewIndex(jsonObject)
                 updatedIndexView?.let { views[it].updateIfNeeded() }
-            }
+//            }
         }
     }
 
@@ -154,7 +156,7 @@ internal class Screen(
         jsonObjects: Flow<JsonObject>
     ) {
         coroutineScopes.default.withContext {
-            mutex.withLock {
+//            mutex.withLock {
                 val updatedIndexViews = buildList {
                     jsonObjects.collect {
                         updateAndReturnViewIndex(it)?.let(::add)
@@ -163,7 +165,7 @@ internal class Screen(
                 updatedIndexViews.forEach {
                     views[it].updateIfNeeded()
                 }
-            }
+//            }
         }
     }
 

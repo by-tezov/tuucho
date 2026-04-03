@@ -1,7 +1,12 @@
 ### Todo:
 
+// ios fix
+// benchmark usefull ?
+
+// -> merge + story medium
+
+// fix mutext dans Screen
 // Context presentation
-// Jvm sample plugin + launch ?
 
 Then all on this in one shot release
 
