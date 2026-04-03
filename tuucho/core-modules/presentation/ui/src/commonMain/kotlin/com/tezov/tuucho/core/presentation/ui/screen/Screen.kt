@@ -11,6 +11,7 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.SubsetSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepositoryProtocol
+import com.tezov.tuucho.core.domain.tool.async.ReentrantMutex
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
@@ -19,7 +20,6 @@ import com.tezov.tuucho.core.presentation.ui.protocol.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
@@ -42,7 +42,7 @@ internal class Screen(
     private var rootView: ViewProtocol? = null
     private val views = mutableListOf<ViewProtocol>()
     private val updatables = mutableMapOf<String, Updatable>()
-    private val mutex = Mutex()
+    private val mutex = ReentrantMutex()
 
     private fun keyTypeId(
         type: String,
@@ -51,7 +51,7 @@ internal class Screen(
 
     suspend fun createViews() {
         coroutineScopes.default.withContext {
-            mutex.withLock { createViewsNoSync() }
+            mutex.withReentrantLock { createViewsNoSync() }
         }
     }
 
@@ -74,31 +74,40 @@ internal class Screen(
             route = route,
             addViewBlock = ::addView
         )
-        val rootView = factory.process(screenContext = screenContext)
-        screenContext.addView(rootView)
-        this@Screen.rootView = rootView
-            .apply { initialize(componentObject) }
+        val rootView = factory
+            .process(screenContext = screenContext)
+            .also { rootView = it }
+        rootView.initialize(componentObject)
+        addViewNoSync(rootView)
         redrawCounterTrigger.intValue += 1
     }
 
     private suspend fun addView(
         view: ViewProtocol
     ) {
-        mutex.withLock {
-            views.add(view)
-            val viewIndex = views.lastIndex
-            view.contextualUpdater.forEach { updater ->
-                updater.id?.let { id ->
-                    val keyTypeId = keyTypeId(updater.type, id)
-                    updatables
-                        .getOrPut(keyTypeId) {
-                            Updatable(
-                                viewIndex = viewIndex,
-                                processors = mutableListOf()
-                            )
-                        }.processors
-                        .add(updater)
-                }
+        coroutineScopes.default.withContext {
+            mutex.withReentrantLock {
+                addViewNoSync(view)
+            }
+        }
+    }
+
+    private fun addViewNoSync(
+        view: ViewProtocol
+    ) {
+        views.add(view)
+        val viewIndex = views.lastIndex
+        view.contextualUpdater.forEach { updater ->
+            updater.id?.let { id ->
+                val keyTypeId = keyTypeId(updater.type, id)
+                updatables
+                    .getOrPut(keyTypeId) {
+                        Updatable(
+                            viewIndex = viewIndex,
+                            processors = mutableListOf()
+                        )
+                    }.processors
+                    .add(updater)
             }
         }
     }
