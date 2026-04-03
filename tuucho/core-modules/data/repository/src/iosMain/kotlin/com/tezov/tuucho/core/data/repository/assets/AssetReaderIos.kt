@@ -4,7 +4,6 @@ import com.tezov.tuucho.core.data.repository._system.SystemPlatformFileIos
 import com.tezov.tuucho.core.data.repository.exception.DataException
 import okio.Path.Companion.toPath
 import okio.use
-import platform.Foundation.NSBundle
 import platform.Foundation.NSData
 import platform.Foundation.dataWithContentsOfFile
 import platform.UniformTypeIdentifiers.UTType
@@ -12,7 +11,6 @@ import platform.UniformTypeIdentifiers.UTType
 class AssetReaderIos(
     private val platform: SystemPlatformFileIos
 ) : AssetReaderProtocol {
-
     override suspend fun isExist(
         path: String
     ) = platform.assetPath(path) != null

@@ -8,7 +8,6 @@ import java.net.URLConnection
 internal class AssetReaderAndroid(
     private val platform: SystemPlatformFileAndroid,
 ) : AssetReaderProtocol {
-
     private fun openStream(
         path: String
     ) = platform.context.assets.open(platform.assetPath(path))

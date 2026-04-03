@@ -25,6 +25,7 @@ class SystemPlatformFileJvm : SystemPlatformFileProtocol {
 
     fun classLoader() = Thread.currentThread().contextClassLoader
 
-    fun assetPath(path: String): String = "files/$path"
-
+    fun assetPath(
+        path: String
+    ): String = "files/$path"
 }

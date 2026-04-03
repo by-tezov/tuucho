@@ -11,7 +11,6 @@ import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
-import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonArray
@@ -54,7 +53,7 @@ class ConvertImageJsonArrayToImageModelUseCaseTest {
             sut.invoke(ConvertImageJsonArrayToImageModelUseCase.Input(jsonArray))
         }
 
-        assertTrue(exception.message?.contains("expect JsonObject") == true)
+        assertEquals(exception.message?.contains("expect JsonObject"), true)
     }
 
     @Test
@@ -74,7 +73,7 @@ class ConvertImageJsonArrayToImageModelUseCaseTest {
             sut.invoke(ConvertImageJsonArrayToImageModelUseCase.Input(jsonArray))
         }
 
-        assertTrue(exception.message?.contains("should not be possible") == true)
+        assertEquals(exception.message?.contains("should not be possible"), true)
 
         verifySuspend(VerifyMode.exhaustiveOrder) {
             useCaseExecutor.await(

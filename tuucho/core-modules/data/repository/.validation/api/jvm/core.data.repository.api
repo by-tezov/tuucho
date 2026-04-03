@@ -1,5 +1,8 @@
 public final class com/tezov/tuucho/core/data/repository/_system/SystemPlatformFileJvm : com/tezov/tuucho/core/data/repository/_system/SystemPlatformFileProtocol {
 	public fun <init> ()V
+	public final fun appFolder ()Lokio/Path;
+	public final fun assetPath (Ljava/lang/String;)Ljava/lang/String;
+	public final fun classLoader ()Ljava/lang/ClassLoader;
 	public fun fileSystem ()Lokio/FileSystem;
 	public fun pathFromCacheFolder (Ljava/lang/String;)Lokio/Path;
 }

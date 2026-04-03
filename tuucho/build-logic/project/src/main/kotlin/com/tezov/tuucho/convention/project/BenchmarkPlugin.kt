@@ -4,7 +4,6 @@ import com.tezov.tuucho.convention.project._system.LibraryId
 import com.tezov.tuucho.convention.project._system.PluginId
 import com.tezov.tuucho.convention.project._system.buildType
 import com.tezov.tuucho.convention.project._system.compilerOption
-import com.tezov.tuucho.convention.project._system.isMacOs
 import com.tezov.tuucho.convention.project._system.javaVersionInt
 import com.tezov.tuucho.convention.project._system.library
 import com.tezov.tuucho.convention.project._system.optIn
@@ -43,11 +42,6 @@ open class BenchmarkPlugin : Plugin<Project> {
     private fun Project.configureTarget() {
         extensions.configure(KotlinMultiplatformExtension::class.java) {
             jvm()
-            if (isMacOs) {
-                macosArm64()
-            } else {
-                println("⚠️ mac os target disable")
-            }
         }
     }
 
@@ -82,9 +76,6 @@ open class BenchmarkPlugin : Plugin<Project> {
         extensions.configure(BenchmarksExtension::class.java) {
             targets {
                 register("jvm")
-                if (isMacOs) {
-                    register("macosArm64")
-                }
             }
         }
         extensions.configure(KotlinMultiplatformExtension::class.java) {

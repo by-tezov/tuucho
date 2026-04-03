@@ -87,7 +87,7 @@ internal class Screen(
     ) {
         coroutineScopes.default.withContext {
 //            mutex.withReentrantLock {
-                addViewNoSync(view)
+            addViewNoSync(view)
 //            }
         }
     }
@@ -133,10 +133,10 @@ internal class Screen(
     override suspend fun recreateViews() {
         coroutineScopes.default.withContext {
 //            mutex.withLock {
-                updatables.clear()
-                views.clear()
-                rootView = null
-                createViewsNoSync()
+            updatables.clear()
+            views.clear()
+            rootView = null
+            createViewsNoSync()
 //            }
         }
     }
@@ -146,8 +146,8 @@ internal class Screen(
     ) {
         coroutineScopes.default.withContext {
 //            mutex.withLock {
-                val updatedIndexView = updateAndReturnViewIndex(jsonObject)
-                updatedIndexView?.let { views[it].updateIfNeeded() }
+            val updatedIndexView = updateAndReturnViewIndex(jsonObject)
+            updatedIndexView?.let { views[it].updateIfNeeded() }
 //            }
         }
     }
@@ -157,14 +157,14 @@ internal class Screen(
     ) {
         coroutineScopes.default.withContext {
 //            mutex.withLock {
-                val updatedIndexViews = buildList {
-                    jsonObjects.collect {
-                        updateAndReturnViewIndex(it)?.let(::add)
-                    }
+            val updatedIndexViews = buildList {
+                jsonObjects.collect {
+                    updateAndReturnViewIndex(it)?.let(::add)
                 }
-                updatedIndexViews.forEach {
-                    views[it].updateIfNeeded()
-                }
+            }
+            updatedIndexViews.forEach {
+                views[it].updateIfNeeded()
+            }
 //            }
         }
     }

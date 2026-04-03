@@ -64,6 +64,45 @@ public final class com/tezov/tuucho/core/domain/tool/async/Notifier$Emitter {
 	public final fun tryEmit (Ljava/lang/Object;)Z
 }
 
+public final class com/tezov/tuucho/core/domain/tool/async/ReentrantMutex : kotlin/coroutines/CoroutineContext$Element, kotlin/coroutines/CoroutineContext$Key, kotlinx/coroutines/sync/Mutex {
+	public static final synthetic fun box-impl (Lkotlinx/coroutines/sync/Mutex;)Lcom/tezov/tuucho/core/domain/tool/async/ReentrantMutex;
+	public static fun constructor-impl (Lkotlinx/coroutines/sync/Mutex;)Lkotlinx/coroutines/sync/Mutex;
+	public static synthetic fun constructor-impl$default (Lkotlinx/coroutines/sync/Mutex;ILkotlin/jvm/internal/DefaultConstructorMarker;)Lkotlinx/coroutines/sync/Mutex;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Lkotlinx/coroutines/sync/Mutex;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Lkotlinx/coroutines/sync/Mutex;Lkotlinx/coroutines/sync/Mutex;)Z
+	public fun fold (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+	public static fun fold-impl (Lkotlinx/coroutines/sync/Mutex;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+	public fun get (Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext$Element;
+	public static fun get-impl (Lkotlinx/coroutines/sync/Mutex;Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext$Element;
+	public synthetic fun getKey ()Lkotlin/coroutines/CoroutineContext$Key;
+	public fun getKey-om7rHhU ()Lkotlinx/coroutines/sync/Mutex;
+	public static fun getKey-om7rHhU (Lkotlinx/coroutines/sync/Mutex;)Lkotlinx/coroutines/sync/Mutex;
+	public final fun getMutex ()Lkotlinx/coroutines/sync/Mutex;
+	public fun getOnLock ()Lkotlinx/coroutines/selects/SelectClause2;
+	public static fun getOnLock-impl (Lkotlinx/coroutines/sync/Mutex;)Lkotlinx/coroutines/selects/SelectClause2;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Lkotlinx/coroutines/sync/Mutex;)I
+	public fun holdsLock (Ljava/lang/Object;)Z
+	public static fun holdsLock-impl (Lkotlinx/coroutines/sync/Mutex;Ljava/lang/Object;)Z
+	public fun isLocked ()Z
+	public static fun isLocked-impl (Lkotlinx/coroutines/sync/Mutex;)Z
+	public fun lock (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun lock-impl (Lkotlinx/coroutines/sync/Mutex;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun minusKey (Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext;
+	public static fun minusKey-impl (Lkotlinx/coroutines/sync/Mutex;Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext;
+	public fun plus (Lkotlin/coroutines/CoroutineContext;)Lkotlin/coroutines/CoroutineContext;
+	public static fun plus-impl (Lkotlinx/coroutines/sync/Mutex;Lkotlin/coroutines/CoroutineContext;)Lkotlin/coroutines/CoroutineContext;
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Lkotlinx/coroutines/sync/Mutex;)Ljava/lang/String;
+	public fun tryLock (Ljava/lang/Object;)Z
+	public static fun tryLock-impl (Lkotlinx/coroutines/sync/Mutex;Ljava/lang/Object;)Z
+	public final synthetic fun unbox-impl ()Lkotlinx/coroutines/sync/Mutex;
+	public fun unlock (Ljava/lang/Object;)V
+	public static fun unlock-impl (Lkotlinx/coroutines/sync/Mutex;Ljava/lang/Object;)V
+	public static final fun withReentrantLock-impl (Lkotlinx/coroutines/sync/Mutex;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class com/tezov/tuucho/core/domain/tool/datetime/ExpirationDateTimeRectifier {
 	public fun <init> ()V
 	public final fun process (Ljava/lang/String;Lkotlin/time/Instant;)Ljava/lang/String;

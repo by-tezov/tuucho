@@ -8,7 +8,6 @@ import java.net.URLConnection
 internal class AssetReaderJvm(
     private val platform: SystemPlatformFileJvm,
 ) : AssetReaderProtocol {
-
     override suspend fun isExist(
         path: String
     ) = platform.classLoader().getResource(platform.assetPath(path)) != null

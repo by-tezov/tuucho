@@ -69,7 +69,7 @@ val generateProjectBuildConfigTask by tasks.registering {
             Regex("""^assemble(.+)$"""),
             Regex("""^root(.+)UnitTest$"""),
             Regex("""^root(.+)CoverageReport$"""),
-            Regex("""^root(.+)CoverageReport$"""),
+            Regex("""^root(.+)Benchmark$"""),
             Regex("""^rootPublish(.+)ToMavenLocal$"""),
             Regex("""^rootValidate(.+)Api"""),
             Regex("""^rootUpdate(.+)Api"""),
