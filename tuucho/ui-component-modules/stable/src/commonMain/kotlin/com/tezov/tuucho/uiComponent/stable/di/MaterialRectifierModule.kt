@@ -28,7 +28,7 @@ import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.layout
 import com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.spacer.StyleSpacerDimensionRectifierMatcher
 import org.koin.dsl.ScopeDSL
 
-internal object MaterialRectifierModule {
+object MaterialRectifierModule {
     fun invoke() = scope(ModuleContextData.Rectifier.ScopeContext.Material) {
         contentAssociation()
         textAssociation()
@@ -41,7 +41,6 @@ internal object MaterialRectifierModule {
     private fun ScopeDSL.contentAssociation() {
         associate<ContentRectifier.Association.Processor> {
             factoryOf(::ContentLayoutLinearItemsRectifier)
-//            factory<ContentLayoutLinearItemsRectifier>() // TODO koin Issue
             factoryOf(::ContentImageValuesRectifier)
             factoryOf(::ContentButtonLabelRectifier)
             factoryOf(::ContentFormFieldTextErrorRectifier)

@@ -7,7 +7,7 @@ import io.ktor.client.engine.darwin.Darwin
 
 internal object NetworkModuleIos {
     fun invoke() = module(ModuleContextData.Main) {
-        factory<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE) {
+        single<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE) {
             getOrNull() ?: Darwin
         }
     }

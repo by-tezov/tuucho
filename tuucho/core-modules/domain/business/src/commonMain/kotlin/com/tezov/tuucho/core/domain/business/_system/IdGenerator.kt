@@ -5,6 +5,6 @@ package com.tezov.tuucho.core.domain.business._system
 import com.tezov.tuucho.core.domain.business.protocol.IdGeneratorProtocol
 import kotlin.uuid.Uuid
 
-internal class IdGenerator : IdGeneratorProtocol<Unit, String> {
+class IdGenerator : IdGeneratorProtocol<Unit, String> {
     override fun generate() = Uuid.random().toHexString()
 }

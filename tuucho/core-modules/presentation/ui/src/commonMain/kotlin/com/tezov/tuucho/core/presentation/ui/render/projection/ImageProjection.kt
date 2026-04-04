@@ -13,11 +13,11 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepository
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
 import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ConvertImageJsonArrayToImageModelUseCase
 import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
+import com.tezov.tuucho.core.presentation.ui.protocol.IdProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ResolveStatusProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import coil3.Image as CoilImage

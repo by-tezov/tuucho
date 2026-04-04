@@ -1,0 +1,443 @@
+{
+  "setting": {
+    "time-to-live": {
+      "strategy": "single-use"
+    }
+  },
+  "root": {
+    "setting": {
+      "shadower": {
+        "navigate-forward": {
+          "wait-done-to-render": false,
+          "enable": true
+        },
+        "navigate-backward": {
+          "wait-done-to-render": false,
+          "enable": true
+        },
+        "contextual": {
+          "url": {
+            "component": "${url-origin}-contextual-components"
+          }
+        }
+      },
+      "navigation": {
+        "definitions": {
+          "option": {
+            "clear-stack": true,
+            "single": true,
+            "reuse": "last"
+          },
+          "transition": "fade"
+        }
+      }
+    },
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "background-color": "*background@gray-light",
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        {
+          "id": "top-bar-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@very-small",
+              "*image@language",
+              "*spacer@full",
+              "*button@help",
+              "*spacer@very-small",
+              "*button@logout",
+              "*spacer@very-small"
+            ]
+          }
+        },
+        {
+          "id": "top-bar-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@very-small",
+              "*label@home-title"
+            ]
+          }
+        },
+        "*spacer@big",
+        {
+          "id": "message",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@purple-light",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@very-small",
+              "*label@home-message"
+            ]
+          }
+        },
+        "*spacer@small",
+        {
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@very-small",
+              "*image@small-logo",
+              "*spacer@full",
+              "*custom@label-click",
+              "*spacer@full"
+            ]
+          }
+        },
+        "*spacer@full",
+        "*label@form-title",
+        "*spacer@very-small",
+        {
+          "id": "input-field-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@small",
+              {
+                "id": {
+                  "value": "input-field-email",
+                  "source": "*fields@input-email"
+                }
+              },
+              "*spacer@small"
+            ]
+          }
+        },
+        {
+          "id": "input-field-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@small",
+              {
+                "id": {
+                  "value": "input-field-age",
+                  "source": "*fields@input-age"
+                }
+              },
+              "*spacer@small"
+            ]
+          }
+        },
+        "*spacer@very-small",
+        {
+          "subset": "label",
+          "style": "*label@section",
+          "content": "*contextual@title-section"
+        },
+        "*spacer@very-small",
+        {
+          "id": "input-field-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@small",
+              "*contextual@input-hobbies",
+              "*spacer@small"
+            ]
+          }
+        },
+        "*spacer@full",
+        {
+          "id": "button-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@very-small",
+              "*button@send",
+              "*spacer@full",
+              "*button@next",
+              "*spacer@very-small"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "image": {
+      "small-logo": {
+        "id": "*image@small",
+        "subset": "image",
+        "content": {
+          "values": "*top-bar@small-logo",
+          "description": "small-Logo"
+        }
+      },
+      "language": {
+        "id": "*image@small",
+        "subset": "image",
+        "content": {
+          "values": [
+            "*flag-placeholder",
+            "*flag-logo"
+          ],
+          "action": "*language",
+          "description": "language-logo"
+        }
+      }
+    },
+    "label": {
+      "home-title": {
+        "id": "*label@title",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@title"
+        }
+      },
+      "home-message": {
+        "id": "*label@body",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@body"
+        }
+      },
+      "form-title": {
+        "id": "*label@section",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@form-title"
+        }
+      },
+      "send-form-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@send-form-button"
+        }
+      },
+      "help-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "style": "*label@button-info",
+        "content": {
+          "value": "*page-home@help-button"
+        }
+      },
+      "next-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "style": "*label@button-next",
+        "content": {
+          "value": "*next-button"
+        }
+      },
+      "logout-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-home@logout-button"
+        }
+      }
+    },
+    "button": {
+      "send": {
+        "subset": "button",
+        "content": {
+          "label": "*label@send-form-button",
+          "action": "*send"
+        }
+      },
+      "help": {
+        "subset": "button",
+        "content": {
+          "label": "*label@help-button",
+          "action": "*help"
+        }
+      },
+      "next": {
+        "subset": "button",
+        "content": {
+          "label": "*label@next-button",
+          "action": "*next"
+        }
+      },
+      "logout": {
+        "subset": "button",
+        "content": {
+          "label": "*label@logout-button",
+          "action": "*logout"
+        }
+      }
+    },
+    "fields": {
+      "input-email": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": [
+            {
+              "type": "string-email",
+              "message-error-id": "*validator-1"
+            },
+            {
+              "type": "string-not-null",
+              "message-error-id": "*validator-2"
+            }
+          ]
+        },
+        "content": {
+          "title": "*page-home@form-email",
+          "placeholder": "*page-home@form-email-placeholder",
+          "message-errors": [
+            {
+              "id": {
+                "value": "validator-1",
+                "source": "*page-home@form-email-invalid"
+              }
+            },
+            {
+              "id": {
+                "value": "validator-2",
+                "source": "*page-home@form-email-empty"
+              }
+            }
+          ]
+        }
+      },
+      "input-age": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": [
+            {
+              "type": "string-min-value",
+              "value": "18",
+              "message-error-id": "*validator-1"
+            },
+            {
+              "type": "string-max-value",
+              "value": "65",
+              "message-error-id": "*validator-2"
+            },
+            {
+              "type": "string-not-null",
+              "message-error-id": "*validator-3"
+            }
+          ]
+        },
+        "content": {
+          "title": "*page-home@form-age",
+          "placeholder": "*page-home@form-age-placeholder",
+          "message-errors": [
+            {
+              "id": {
+                "value": "validator-3",
+                "source": "*page-home@form-age-empty"
+              }
+            },
+            {
+              "id": {
+                "value": "validator-2",
+                "source": "*page-home@form-age-high-range"
+              }
+            },
+            {
+              "id": {
+                "value": "validator-1",
+                "source": "*page-home@form-age-low-range"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "custom": {
+      "label-click": {
+        "subset": "label-custom",
+        "style": {
+          "font-color-light": "#276CF5",
+          "font-color-dark": "#F54927",
+          "font-size": "24"
+        },
+        "content": {
+          "value": "My Custom Clickable Label",
+          "action": "echo-message-custom-action://"
+        }
+      }
+    },
+    "contextual": {
+      "input-hobbies": {
+        "subset": "form-field",
+        "id": "*input-field-on-demand"
+      }
+    }
+  },
+  "contents": {
+    "contextual": {
+      "title-section": {
+        "value": {
+          "id": {
+            "source": "*title-section",
+            "url-source": {
+              "contextual": "${url-origin}-contextual-texts"
+            }
+          }
+        }
+      }
+    }
+  },
+  "actions": {
+    "common": {
+      "send": {
+        "primaries": "form://send-url/auth/form-from-page-home",
+        "validated": "navigate://url/auth/page-confirmation"
+      },
+      "logout": [
+        "store://key-value/remove?login-authorization",
+        "navigate://url/lobby/page-login"
+      ],
+      "help": "navigate://url/auth/page-help",
+      "next": "navigate://url/auth/page-a",
+      "language": "navigate://url/lobby/page-language"
+    }
+  },
+  "images": {
+    "common": {
+      "flag-logo": "remote://lobby/flag-logo",
+      "flag-placeholder": {
+        "default": "local://img/flag-placeholder",
+        "tags": "placeholder"
+      }
+    }
+  }
+}

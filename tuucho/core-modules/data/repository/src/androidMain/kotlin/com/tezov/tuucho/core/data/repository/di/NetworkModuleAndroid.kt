@@ -7,7 +7,7 @@ import io.ktor.client.engine.okhttp.OkHttp
 
 internal object NetworkModuleAndroid {
     fun invoke() = module(ModuleContextData.Main) {
-        factory<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE) {
+        single<HttpClientEngineFactory<*>>(HTTP_CLIENT_ENGINE) {
             getOrNull<HttpClientEngineFactory<*>>() ?: OkHttp
         }
     }

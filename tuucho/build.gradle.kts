@@ -1,5 +1,9 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -11,11 +15,11 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.sql.delight) apply false
-
+    alias(libs.plugins.all.open) apply false
     alias(libs.plugins.mokkery) apply false
+    alias(libs.plugins.kotlin.benchmark) apply false
     alias(libs.plugins.ktlint) apply false
     alias(libs.plugins.detekt) apply false
-    alias(libs.plugins.all.open) apply false
 }
 
 // KtLint
@@ -373,7 +377,7 @@ tasks.register("rootUpdateReleaseApi") {
 tasks.register<TestReport>("rootDebugUnitTest") {
     group = "verification"
     description =
-        "Unit test and Aggregates Html unit test reports from all modules into root build folder"
+        "Unit test and Aggregates Html/Xml unit test reports from all modules into root build folder"
     val unitTestTasks = subprojects.flatMap { sub ->
         sub.tasks.withType<Test>().matching {
             it.name.contains("testAndroidHostTest")
@@ -387,6 +391,34 @@ tasks.register<TestReport>("rootDebugUnitTest") {
     dependsOn(unitTestTasks)
     destinationDirectory.set(layout.buildDirectory.dir("reports/unit-tests"))
     testResults.from(unitTestTasks.map { it.binaryResultsDirectory })
+
+    doLast {
+        val aggregatedFile =
+            layout.buildDirectory.file("reports/unit-tests/unitTestsRootReport.xml").get().asFile
+        aggregatedFile.parentFile.mkdirs()
+        aggregatedFile.bufferedWriter().use { writer ->
+            writer.appendLine("""<?xml version="1.0" encoding="UTF-8"?>""")
+            writer.appendLine("<testsuites>")
+            unitTestTasks.forEach { testTask ->
+                val xmlDir = testTask.reports.junitXml.outputLocation.get().asFile
+                if (!xmlDir.exists()) return@forEach
+                xmlDir.walkTopDown().filter {
+                    it.isFile && it.absolutePath.contains("test-results/testAndroidHostTest") && it.extension == "xml"
+                }.forEach { xmlFile ->
+                    val content = xmlFile.readText(Charsets.UTF_8)
+                        .replaceFirst("""<\?xml[^>]*\?>""".toRegex(), "")
+                        .replaceFirst("""<testsuites[^>]*>""".toRegex(), "")
+                        .replaceFirst("""</testsuites>""".toRegex(), "")
+                        .trim()
+                    if (content.isNotEmpty()) {
+                        writer.appendLine(content.prependIndent("  "))
+                    }
+                }
+            }
+            writer.appendLine("</testsuites>")
+        }
+        println("Aggregated XML test results into ${aggregatedFile.relativeTo(rootProject.projectDir)}")
+    }
 }
 tasks.register("allTests") {
     group = "verification"
@@ -528,6 +560,74 @@ tasks.register("allTestsCoverage") {
     dependsOn(tasks.named("rootDebugCoverageReport"))
 }
 
+// Benchmark
+tasks.register("cleanBenchmarkReports") {
+    group = "verification"
+    description = "Delete all previous benchmark reports in benchmark module"
+
+    doFirst {
+        val reportsDir = file("benchmark/build/reports/benchmarks")
+        if (reportsDir.exists()) {
+            reportsDir.listFiles()?.forEach { it.deleteRecursively() }
+            println("Deleted previous benchmark reports in $reportsDir")
+        }
+    }
+}
+tasks.register("rootReleaseBenchmark") {
+    group = "verification"
+    description = "Benchmark and Moves reports into root build folder"
+
+    val benchmarkTasks = subprojects.flatMap { sub ->
+        sub.tasks.matching {
+            it.name == "jvmBenchmark"
+        }
+    }
+
+    benchmarkTasks.forEach {
+        it.dependsOn(tasks.named("cleanBenchmarkReports"))
+        dependsOn(it)
+    }
+
+    doLast {
+        val versionName = subprojects
+            .first { it.name == "core" }
+            .extra["versionName"]
+            .run { (this as String) }
+            .replace(Regex("[^a-zA-Z0-9._]"), "_")
+
+        val reportsDir = file("benchmark/build/reports/benchmarks/main")
+        val dateFolder = reportsDir.listFiles()?.firstOrNull { it.isDirectory }
+            ?: throw GradleException("No benchmark date folder found in $reportsDir")
+
+        val jvmJson = File(dateFolder, "jvm.json")
+        if (!jvmJson.exists()) throw GradleException("jvm.json not found in $dateFolder")
+
+        val targetDir = file(".validation/benchmark")
+        if (!targetDir.exists()) targetDir.mkdirs()
+
+        val timestamp = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss").format(LocalDateTime.now())
+        val datedJson = File(targetDir, "$versionName-$timestamp.json")
+
+        Files.move(jvmJson.toPath(), datedJson.toPath(), StandardCopyOption.REPLACE_EXISTING)
+        println("Moved ${jvmJson.absolutePath} -> ${datedJson.absolutePath}")
+    }
+}
+tasks.register<Exec>("allBenchmarks") {
+    group = "verification"
+    dependsOn(tasks.named("rootReleaseBenchmark"))
+
+    commandLine(
+        "bash", "-c", """
+        if [ ! -d ".venv" ]; then
+            python3 -m venv .venv
+        fi
+        source .venv/bin/activate
+        pip install pandas matplotlib seaborn
+        python ./benchmark/panda.report.py
+    """.trimIndent()
+    )
+}
+
 // Maven Publication
 tasks.register<Delete>("cleanMavenLocalFolder") {
     group = "validation"
@@ -560,6 +660,7 @@ tasks.register("rootAdminUpdate") {
             "rootUpdateReleaseApi",
             "rootValidateReleaseApi",
             "rootDebugUnitTest",
+            "rootReleaseBenchmark",
             "rootDebugCoverageReport",
             "rootPublishReleaseToMavenLocal"
         )

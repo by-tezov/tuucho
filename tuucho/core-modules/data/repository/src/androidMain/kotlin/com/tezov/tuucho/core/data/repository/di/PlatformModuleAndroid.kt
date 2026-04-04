@@ -22,10 +22,10 @@ object PlatformModuleAndroid {
 
         factoryOf(::SystemPlatformInformationAndroid) bind SystemPlatformInformationProtocol::class
 
-        factory<SystemPlatformFileProtocol> {
+        factory {
             SystemPlatformFileAndroid(
                 context = get<Context>(Name.APPLICATION_CONTEXT)
             )
-        }
+        } bind SystemPlatformFileProtocol::class
     }
 }

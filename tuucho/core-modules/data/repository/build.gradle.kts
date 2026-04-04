@@ -24,22 +24,8 @@ sqldelight {
 
 kotlin {
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.ktor.okhttp)
-            implementation(libs.sql.delight.driver.android)
-            implementation(libs.datastore.preferences)
-        }
-        val isMacOs = isMacOs
-        if (isMacOs) {
-            iosMain.dependencies {
-                implementation(libs.kotlin.couroutine)
-                implementation(libs.ktor.darwin)
-                implementation(libs.sql.delight.driver.ios)
-            }
-        }
         commonMain.dependencies {
-            api(project(":core.domain.business"))
-
+            implementation(project(":core.domain.business"))
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.kotlin.datetime)
@@ -47,9 +33,25 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.coil.core)
             implementation(libs.ktor.core)
-            implementation(libs.ktor.cio)
+            implementation(libs.ktor.content.negotiation)
             implementation(libs.ktor.serialization)
             implementation(libs.sql.delight.runtime)
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.okhttp)
+            implementation(libs.sql.delight.driver.android)
+            implementation(libs.datastore.preferences)
+        }
+        jvmMain.dependencies {
+            implementation(libs.sql.delight.driver.jvm)
+            implementation(libs.ktor.cio)
+        }
+        val isMacOs = isMacOs
+        if (isMacOs) {
+            iosMain.dependencies {
+                implementation(libs.ktor.darwin)
+                implementation(libs.sql.delight.driver.ios)
+            }
         }
     }
 }

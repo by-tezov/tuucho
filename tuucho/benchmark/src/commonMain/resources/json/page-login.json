@@ -1,0 +1,243 @@
+{
+  "root": {
+    "setting": {
+      "navigation": {
+        "definitions": {
+          "option": {
+            "clear-stack": true,
+            "single": true
+          },
+          "transition": "fade"
+        }
+      }
+    },
+    "subset": "layout-linear",
+    "style": {
+      "orientation": "vertical",
+      "background-color": "*background@gray-light",
+      "fill-max-size": true
+    },
+    "content": {
+      "items": [
+        {
+          "id": "top-bar-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@very-small",
+              "*image@language",
+              "*spacer@half",
+              "*label@login-title",
+              "*spacer@full",
+              "*image@small-logo",
+              "*spacer@very-small"
+            ]
+          }
+        },
+        "*spacer@half",
+        {
+          "id": "main-logo-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@full",
+              "*image@main-logo",
+              "*spacer@full"
+            ]
+          }
+        },
+        "*spacer@big",
+        "*label@login-section",
+        "*spacer@small",
+        {
+          "id": "input-field-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@small",
+              {
+                "id": {
+                  "value": "input-field-login",
+                  "source": "*fields@input-login"
+                }
+              },
+              "*spacer@small"
+            ]
+          }
+        },
+        {
+          "id": "input-field-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@small",
+              {
+                "id": {
+                  "value": "input-field-password",
+                  "source": "*fields@input-password"
+                }
+              },
+              "*spacer@small"
+            ]
+          }
+        },
+        "*spacer@full",
+        {
+          "id": "button-layout",
+          "subset": "layout-linear",
+          "style": {
+            "orientation": "horizontal",
+            "background-color": "*background@blue-sky",
+            "fill-max-width": true
+          },
+          "content": {
+            "items": [
+              "*spacer@full",
+              "*button@login",
+              "*spacer@full"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "image": {
+      "small-logo": {
+        "id": "*image@small",
+        "subset": "image",
+        "content": {
+          "values": "*small-logo",
+          "description": "small-Logo"
+        }
+      },
+      "main-logo": {
+        "id": "*image@main",
+        "subset": "image",
+        "content": {
+          "values": [
+            "*main-logo",
+            "*main-logo-placeholder"
+          ],
+          "description": "main-logo"
+        }
+      },
+      "language": {
+        "id": "*image@small",
+        "subset": "image",
+        "content": {
+          "values": [
+            "*flag-placeholder",
+            "*flag-logo"
+          ],
+          "action": "*language",
+          "description": "language-logo"
+        }
+      }
+    },
+    "label": {
+      "login-title": {
+        "id": "*label@title",
+        "subset": "label",
+        "content": {
+          "value": "*page-login@title"
+        }
+      },
+      "login-section": {
+        "id": "*label@section",
+        "subset": "label",
+        "content": {
+          "value": "*page-login@credentials-request"
+        }
+      },
+      "login-button": {
+        "id": "*label@button",
+        "subset": "label",
+        "content": {
+          "value": "*page-login@login-button"
+        }
+      }
+    },
+    "button": {
+      "login": {
+        "subset": "button",
+        "content": {
+          "label": "*label@login-button",
+          "action": "*confirm"
+        }
+      }
+    },
+    "fields": {
+      "input-login": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": "string-not-null"
+        },
+        "content": {
+          "title": "*page-login@login",
+          "placeholder": "*page-login@login",
+          "message-errors": "can not be null"
+        }
+      },
+      "input-password": {
+        "subset": "form-field",
+        "option": {
+          "form-validators": "string-not-null"
+        },
+        "content": {
+          "title": "*page-login@password",
+          "placeholder": "*page-login@password",
+          "message-errors": "can not be null"
+        }
+      }
+    }
+  },
+  "actions": {
+    "common": {
+      "connection": {
+        "primaries": "form://send-url/form-from-page-login",
+        "validated": "navigate://url/auth/page-home"
+      },
+      "language": "navigate://url/lobby/page-language",
+      "confirm": {
+        "primaries": "form://send-url/form-from-page-login",
+        "validated": "navigate://url/auth/page-home"
+      }
+    }
+  },
+  "images": {
+    "common": {
+      "main-logo": {
+        "default": "remote://lobby/logo-compose-wrong-url",
+        "fr": "remote://lobby/logo-compose"
+      },
+      "main-logo-placeholder": {
+        "default": "local://img/logo-compose-placeholder",
+        "tags": "placeholder"
+      },
+      "small-logo": "local://img/logo-koin",
+      "flag-logo": "remote://lobby/flag-logo",
+      "flag-placeholder": {
+        "default": "local://img/flag-placeholder",
+        "tags": "placeholder"
+      }
+    }
+  }
+}

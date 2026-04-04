@@ -5,13 +5,13 @@ import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui._system.subsetOrNull
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasIdProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.MessageProcessorProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ContextualUpdaterProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.HasContextualUpdaterProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.HasIdProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ProjectionProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ReadyStatusInvalidateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ReadyStatusInvalidateProtocols
+import com.tezov.tuucho.core.presentation.ui.protocol.projector.MessageProcessorProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 

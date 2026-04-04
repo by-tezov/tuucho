@@ -1,7 +1,17 @@
-dependencyResolutionManagement {
+pluginManagement {
     repositories {
-        google()
         gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
+    }
+}
+
+dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
+    repositories {
+        gradlePluginPortal()
+        google()
         mavenCentral()
     }
     versionCatalogs {

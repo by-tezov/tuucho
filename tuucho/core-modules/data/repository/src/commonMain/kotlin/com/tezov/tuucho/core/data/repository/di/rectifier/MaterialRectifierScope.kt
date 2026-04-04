@@ -35,7 +35,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.ScopeDSL
 
-internal object MaterialRectifierScope {
+object MaterialRectifierScope {
     fun invoke() = scope(ScopeContext.Material) {
         factory<Scope> { this }
         rectifiers()

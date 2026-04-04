@@ -516,6 +516,12 @@ final class com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedConte
     final fun onClose() // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContextLifeCycle.onClose|onClose(){}[0]
 }
 
+final class com.tezov.tuucho.core.domain.business._system/IdGenerator : com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<kotlin/Unit, kotlin/String> { // com.tezov.tuucho.core.domain.business._system/IdGenerator|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.business._system/IdGenerator.<init>|<init>(){}[0]
+
+    final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business._system/IdGenerator.generate|generate(){}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
     constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol>){}[0]
 
@@ -3766,3 +3772,4 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/Navigatio
 
 final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope|onScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
 final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>, com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator? = ...): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope|withScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>;com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope.MapOperator?){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
+final fun com.tezov.tuucho.core.domain.business._system.koin/koinApplication(kotlin.collections/List<com.tezov.tuucho.core.domain.business._system.koin/KoinMass>, kotlin/Function1<org.koin.core/KoinApplication, kotlin/Unit>?): org.koin.core/KoinApplication // com.tezov.tuucho.core.domain.business._system.koin/koinApplication|koinApplication(kotlin.collections.List<com.tezov.tuucho.core.domain.business._system.koin.KoinMass>;kotlin.Function1<org.koin.core.KoinApplication,kotlin.Unit>?){}[0]

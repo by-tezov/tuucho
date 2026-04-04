@@ -7,7 +7,7 @@ import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
-internal class ConfigRectifier(
+class ConfigRectifier(
     private val coroutineScopes: CoroutineScopesProtocol
 ) {
     private val configMaterialResourceRectifier by lazy { ConfigMaterialResourceRectifier() }

@@ -29,7 +29,5 @@
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
     <ID>ThrowsCount:Screen.kt$Screen$private suspend fun createViewsNoSync()</ID>
     <ID>TooManyFunctions:Screen.kt$Screen : ScreenProtocolTuuchoKoinComponent</ID>
-    <ID>UnusedPrivateProperty:ScreenContext.kt$ScreenContext$private var _language: LanguageModelDomain? = null</ID>
-    <ID>UnusedPrivateProperty:ScreenFactory.kt$ScreenFactory$private val coroutineScopes: CoroutineScopesProtocol</ID>
   </CurrentIssues>
 </SmellBaseline>

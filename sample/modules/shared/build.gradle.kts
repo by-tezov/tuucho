@@ -8,8 +8,12 @@ plugins {
     alias(libs.plugins.build.konfig)
 }
 
+koinCompiler {
+    compileSafety = false
+}
+
 buildkonfig {
-    packageName = kotlin.androidLibrary.namespace
+    packageName = kotlin.android.namespace
 
     val configPropertiesFile = project.file("../../config.properties")
     if (!configPropertiesFile.exists()) {
@@ -27,6 +31,7 @@ buildkonfig {
     }
 
     defaultConfigs {
+        field("localDatastoreFileName", FieldSpec.Type.STRING)
         field("localDatabaseFileName", FieldSpec.Type.STRING)
         field("imageDiskCacheSizeMo", FieldSpec.Type.INT)
         field("imageDiskCacheDirectory", FieldSpec.Type.STRING)
@@ -41,13 +46,15 @@ buildkonfig {
 
     targetConfigs {
         create("android") {
-            field("localDatastoreFileName", FieldSpec.Type.STRING)
             field("headerPlatformAndroid", FieldSpec.Type.STRING, "headerPlatform")
             field("serverBaseUrlAndroid", FieldSpec.Type.STRING, "serverBaseUrl")
         }
+        create("jvm") {
+            field("headerPlatformJvm", FieldSpec.Type.STRING, "headerPlatform")
+            field("serverBaseUrlJvm", FieldSpec.Type.STRING, "serverBaseUrl")
+        }
 
         create("ios") {
-            field("localDatastoreFileName", FieldSpec.Type.STRING)
             field("headerPlatformIos", FieldSpec.Type.STRING, "headerPlatform")
             field("serverBaseUrlIos", FieldSpec.Type.STRING, "serverBaseUrl")
         }
@@ -56,14 +63,6 @@ buildkonfig {
 
 kotlin {
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.ktor.okhttp)
-        }
-        if (isMacOs) {
-            iosMain.dependencies {
-                implementation(libs.ktor.darwin)
-            }
-        }
         commonMain.dependencies {
             implementation(libs.kermit)
             implementation(libs.tuucho)
@@ -77,6 +76,19 @@ kotlin {
             implementation(libs.kotlin.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.ktor.core)
+            implementation(libs.okio)
         }
+        androidMain.dependencies {
+            implementation(libs.ktor.okhttp)
+        }
+        jvmMain.dependencies {
+            implementation(libs.ktor.cio)
+        }
+        if (isMacOs) {
+            iosMain.dependencies {
+                implementation(libs.ktor.darwin)
+            }
+        }
+
     }
 }

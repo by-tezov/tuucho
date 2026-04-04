@@ -55,15 +55,18 @@
     <ID>PackageNaming:RectifierProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.rectifier.material._system</ID>
     <ID>PackageNaming:ReferenceFactoryAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:ReferenceFactoryIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
+    <ID>PackageNaming:ReferenceFactoryJvm.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:ShadowerMatcherProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:ShadowerProtocol.kt$package com.tezov.tuucho.core.data.repository.parser.shadower._system</ID>
     <ID>PackageNaming:StrongReferenceAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:StrongReferenceIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:SystemPlatformFileAndroid.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatformFileIos.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformFileJvm.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatformFileProtocol.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatformInformationAndroid.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatformInformationIos.kt$package com.tezov.tuucho.core.data.repository._system</ID>
+    <ID>PackageNaming:SystemPlatformInformationJvm.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:SystemPlatformInformationProtocol.kt$package com.tezov.tuucho.core.data.repository._system</ID>
     <ID>PackageNaming:WeakReferenceAndroid.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
     <ID>PackageNaming:WeakReferenceIos.kt$package com.tezov.tuucho.core.data.repository._system.reference</ID>
@@ -138,6 +141,7 @@
     <ID>PackageNaming:KoinCoreTest.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:KoinIsolatedContext.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:KoinMass.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
+    <ID>PackageNaming:KoinMassApplication.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:KoinModuleExtension.kt$package com.tezov.tuucho.core.domain.business._system.koin</ID>
     <ID>PackageNaming:ListStringDelegate.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
     <ID>PackageNaming:SchemaScope.kt$package com.tezov.tuucho.core.domain.business.jsonSchema._system</ID>
@@ -204,8 +208,6 @@
     <ID>ReturnCount:MessageProjector.kt$MessageProjector$override suspend fun process( jsonElement: JsonElement? )</ID>
     <ID>ThrowsCount:Screen.kt$Screen$private suspend fun createViewsNoSync()</ID>
     <ID>TooManyFunctions:Screen.kt$Screen : ScreenProtocolTuuchoKoinComponent</ID>
-    <ID>UnusedPrivateProperty:ScreenContext.kt$ScreenContext$private var _language: LanguageModelDomain? = null</ID>
-    <ID>UnusedPrivateProperty:ScreenFactory.kt$ScreenFactory$private val coroutineScopes: CoroutineScopesProtocol</ID>
     <!-- ************ Project: :ui-component.stable ************ -->
     <ID>FunctionNaming:ButtonPreview.kt$@Composable fun ButtonPreviewComponent( onClick: ActionTypeAlias? = null, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>FunctionNaming:ButtonPreview.kt$@Preview( showSystemUi = false, showBackground = true, backgroundColor = 0xD9D9D9, ) @Composable private fun ButtonPreviewComponentFromSequence( @PreviewParameter(ButtonPreviewDataProvider::class) data: ButtonPreviewData )</ID>

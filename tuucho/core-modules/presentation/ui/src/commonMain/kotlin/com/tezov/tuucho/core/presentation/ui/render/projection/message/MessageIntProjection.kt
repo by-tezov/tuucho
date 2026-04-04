@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection.message
 
+import com.tezov.tuucho.core.presentation.ui.protocol.ResolveStatusProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projection.ExtractorProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.MutableStorageProjection
@@ -8,7 +9,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projection.ProjectionProtoco
 import com.tezov.tuucho.core.presentation.ui.render.projection.StorageProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.dimension.createIntProjection
 import com.tezov.tuucho.core.presentation.ui.render.projector.MessageProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 
 private typealias MessageIntTextTypeAlias = Int
