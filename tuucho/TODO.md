@@ -1,10 +1,6 @@
 ### Todo:
 
-// benchmark usefull ?
-
-// -> merge + story medium
-
-// fix mutext dans Screen
+// fix mutext dans Screen class
 // Context presentation
 
 Then all on this in one shot release
