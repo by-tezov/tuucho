@@ -6,7 +6,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core.umbrella"))
-
             implementation(libs.kotlin.serialization.json)
             implementation(libs.compose.ui)
             implementation(libs.compose.material3)

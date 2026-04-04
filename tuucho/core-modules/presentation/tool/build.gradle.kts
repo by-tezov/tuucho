@@ -5,8 +5,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":core.domain.tool"))
-
+            implementation(project(":core.domain.tool"))
             implementation(libs.kotlin.couroutine)
             implementation(libs.compose.ui)
             implementation(libs.compose.material3)

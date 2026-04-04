@@ -25,7 +25,7 @@ sqldelight {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":core.domain.business"))
+            implementation(project(":core.domain.business"))
             implementation(libs.kotlin.couroutine)
             implementation(libs.kotlin.serialization.json)
             implementation(libs.kotlin.datetime)
@@ -49,7 +49,6 @@ kotlin {
         val isMacOs = isMacOs
         if (isMacOs) {
             iosMain.dependencies {
-                implementation(libs.kotlin.couroutine)
                 implementation(libs.ktor.darwin)
                 implementation(libs.sql.delight.driver.ios)
             }

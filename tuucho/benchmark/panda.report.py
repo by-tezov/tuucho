@@ -1,15 +1,18 @@
-import os
-import json
-import pandas as pd
 import glob
+import json
 import matplotlib
+import os
+import pandas as pd
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from datetime import datetime
 import shutil
 from collections import defaultdict
 
+# ------------------------
 # Input/output paths
+# ------------------------
 input_dir = ".validation/benchmark"
 reports_dir = "build/reports/benchmark"
 graph_dir = os.path.join(reports_dir, "graph")
@@ -20,28 +23,43 @@ if os.path.exists(reports_dir):
 os.makedirs(graph_dir, exist_ok=True)
 
 
-# Helper: parse datetime from filename (YYYYMMDD-HHMMSS.json)
-def parse_datetime(file_name):
-    base = os.path.basename(file_name)
-    try:
-        dt_str = base.replace(".json", "")
-        return datetime.strptime(dt_str, "%Y%m%d-%H%M%S")
-    except Exception:
-        return datetime.now()
+# ------------------------
+# Helpers
+# ------------------------
+def parse_parts(file_name):
+    """
+    Extracts versionName and datetime from filename.
+    Example: "0.0.1_alpha30_2.3.10-20260404-205119.json"
+    Returns: ("0.0.1_alpha30_2.3.10", datetime(...))
+    """
+    base = os.path.basename(file_name).replace(".json", "")
+    # datetime suffix is always 15 chars: -YYYYMMDD-HHMMSS
+    if len(base) < 16 or base[-16] != "-":
+        return base, datetime.now()
+    version = base[:-16]  # everything before -YYYYMMDD-HHMMSS
+    dt_str = base[-15:]  # YYYYMMDD-HHMMSS
+    dt = datetime.strptime(dt_str, "%Y%m%d-%H%M%S")
+    return version, dt
 
 
-# Helper: format label for x-axis and table
-def format_label(file_name):
-    dt = parse_datetime(file_name)
-    return dt.strftime("%Y/%m/%d-%H%M%S")
+def format_label(row):
+    """Return version name only for X-axis labels."""
+    return row["version"]
 
 
-# Load all JSON files from input_dir in chronological order
-files = sorted(glob.glob(os.path.join(input_dir, "*.json")), key=parse_datetime)
+# ------------------------
+# Load JSON files
+# ------------------------
+files = sorted(
+    glob.glob(os.path.join(input_dir, "*.json")),
+    key=lambda f: parse_parts(f)[1],  # sort by datetime
+    reverse=False  # oldest first
+)
 
 all_data = []
 
 for f in files:
+    version, dt = parse_parts(f)
     with open(f) as jf:
         benchmarks = json.load(jf)
         for bench in benchmarks:
@@ -57,7 +75,8 @@ for f in files:
 
             all_data.append({
                 "file": os.path.basename(f),
-                "datetime": parse_datetime(f),
+                "datetime": dt,
+                "version": version,  # cleaned version only
                 "class": class_name,
                 "method": method_name,
                 "params": param_str,
@@ -72,10 +91,13 @@ df = pd.DataFrame(all_data)
 if df.empty:
     raise Exception(f"No benchmark data found in {input_dir}")
 
-df = df.sort_values("datetime")
+# Sort by datetime ascending (oldest → latest)
+df = df.sort_values("datetime", ascending=True)
 html_index = defaultdict(list)
 
+# ------------------------
 # Generate graphs
+# ------------------------
 for (class_name, method_name), group_df in df.groupby(["class", "method"]):
     class_dir = os.path.join(graph_dir, class_name)
     os.makedirs(class_dir, exist_ok=True)
@@ -84,15 +106,16 @@ for (class_name, method_name), group_df in df.groupby(["class", "method"]):
     plt.figure(figsize=(12, 6))
 
     for params, subset in group_df.groupby("params"):
-        subset = subset.sort_values("datetime")
-        x_labels = [format_label(f) for f in subset["file"]]
+        subset = subset.sort_values("datetime", ascending=True)
+        x_labels = [format_label(row) for _, row in subset.iterrows()]
+        x_positions = range(len(x_labels))
 
-        plt.plot(x_labels, subset["score"], marker="o", label=params)
-        plt.fill_between(x_labels, subset["low"], subset["high"], alpha=0.2)
+        plt.plot(x_positions, subset["score"], marker="o", label=params)
+        plt.fill_between(x_positions, subset["low"], subset["high"], alpha=0.2)
 
-    plt.xticks(rotation=45)
+    plt.xticks(range(len(x_labels)), x_labels, rotation=45)
     plt.ylabel(unit)
-    plt.xlabel("Benchmark run")
+    plt.xlabel("Version")
     plt.title(f"{class_name}.{method_name}")
     plt.legend(title="Params")
     plt.tight_layout()
@@ -105,7 +128,9 @@ for (class_name, method_name), group_df in df.groupby(["class", "method"]):
     html_index[class_name].append((method_name, filepath, group_df))
     print(f"✅ Saved: {filepath}")
 
+# ------------------------
 # Generate HTML report
+# ------------------------
 html_file = os.path.join(reports_dir, "index.html")
 
 with open(html_file, "w") as f:
@@ -141,11 +166,11 @@ with open(html_file, "w") as f:
             for params, subset in method_df.groupby("params"):
                 f.write(f"<details><summary>Show Data Table (Params: {params})</summary><table>")
                 f.write(
-                    "<tr><th>Run</th><th>Score</th><th>ScoreError</th><th>Low</th><th>High</th><th>Unit</th></tr>\n")
-                for _, row in subset.sort_values("datetime").iterrows():
-                    label = format_label(row["file"])
+                    "<tr><th>Run</th><th>Version</th><th>Score</th><th>ScoreError</th><th>Low</th><th>High</th><th>Unit</th></tr>\n")
+                for _, row in subset.sort_values("datetime", ascending=True).iterrows():
+                    label = format_label(row)
                     f.write(
-                        f"<tr><td>{label}</td><td>{row['score']:.12g}</td><td>{row['scoreError']:.12g}</td>"
+                        f"<tr><td>{row['file']}</td><td>{label}</td><td>{row['score']:.12g}</td><td>{row['scoreError']:.12g}</td>"
                         f"<td>{row['low']:.12g}</td><td>{row['high']:.12g}</td><td>{row['unit']}</td></tr>\n")
                 f.write("</table></details>")
 

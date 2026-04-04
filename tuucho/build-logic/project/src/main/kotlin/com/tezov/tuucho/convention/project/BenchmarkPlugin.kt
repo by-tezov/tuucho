@@ -86,20 +86,5 @@ class BenchmarkPlugin : Plugin<Project> {
                 }
             }
         }
-        extensions.configure(BenchmarksExtension::class.java) {
-            configurations {
-                register("smoke") {
-                    param("size", "4", "17")
-                    warmups = 3
-                    iterations = 5
-                    iterationTime = 10
-                    iterationTimeUnit = "ms"
-                }
-                named("main") {
-                    param("size", "8", "12")
-                    reportFormat = "json"
-                }
-            }
-        }
     }
 }

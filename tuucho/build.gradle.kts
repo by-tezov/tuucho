@@ -589,6 +589,12 @@ tasks.register("rootReleaseBenchmark") {
     }
 
     doLast {
+        val versionName = subprojects
+            .first { it.name == "core" }
+            .extra["versionName"]
+            .run { (this as String) }
+            .replace(Regex("[^a-zA-Z0-9._]"), "_")
+
         val reportsDir = file("benchmark/build/reports/benchmarks/main")
         val dateFolder = reportsDir.listFiles()?.firstOrNull { it.isDirectory }
             ?: throw GradleException("No benchmark date folder found in $reportsDir")
@@ -600,7 +606,7 @@ tasks.register("rootReleaseBenchmark") {
         if (!targetDir.exists()) targetDir.mkdirs()
 
         val timestamp = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss").format(LocalDateTime.now())
-        val datedJson = File(targetDir, "$timestamp.json")
+        val datedJson = File(targetDir, "$versionName-$timestamp.json")
 
         Files.move(jvmJson.toPath(), datedJson.toPath(), StandardCopyOption.REPLACE_EXISTING)
         println("Moved ${jvmJson.absolutePath} -> ${datedJson.absolutePath}")

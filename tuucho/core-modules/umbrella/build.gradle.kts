@@ -19,6 +19,7 @@ kotlin {
         if (isMacOs) {
             iosMain.dependencies {
                 api(project(":core.data.repository"))
+                api(project(":core.presentation.ui"))
             }
         }
     }

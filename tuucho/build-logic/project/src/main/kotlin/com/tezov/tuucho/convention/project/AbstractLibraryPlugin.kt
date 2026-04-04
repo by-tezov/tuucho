@@ -12,11 +12,13 @@ import com.tezov.tuucho.convention.project._system.namespace
 import com.tezov.tuucho.convention.project._system.optIn
 import com.tezov.tuucho.convention.project._system.plugin
 import com.tezov.tuucho.convention.project._system.version
+import com.tezov.tuucho.convention.project._system.versionName
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
@@ -42,6 +44,7 @@ abstract class AbstractLibraryPlugin : Plugin<Project> {
 
     protected open fun configure(project: Project) {
         with(project) {
+            project.extra["versionName"] = versionName()
             configureTarget()
             configureMultiplatform()
             configureSourceSets()
