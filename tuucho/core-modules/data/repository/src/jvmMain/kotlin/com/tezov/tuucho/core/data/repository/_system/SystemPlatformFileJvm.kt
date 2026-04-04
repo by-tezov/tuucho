@@ -23,9 +23,9 @@ class SystemPlatformFileJvm : SystemPlatformFileProtocol {
         return cacheDir.resolve(relativePath.toPath())
     }
 
-    fun classLoader() = Thread.currentThread().contextClassLoader
+    fun classLoader(): ClassLoader? = Thread.currentThread().contextClassLoader
 
     fun assetPath(
         path: String
-    ): String = "files/$path"
+    ): String = "assets/files/$path"
 }

@@ -15,14 +15,15 @@ import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-open class BenchmarkPlugin : Plugin<Project> {
+@Suppress("unused")
+class BenchmarkPlugin : Plugin<Project> {
 
-    final override fun apply(project: Project) {
+    override fun apply(project: Project) {
         applyPlugins(project)
         configure(project)
     }
 
-    protected open fun applyPlugins(project: Project) {
+    private fun applyPlugins(project: Project) {
         with(project) {
             pluginManager.apply(plugin(PluginId.koltinMultiplatform))
             pluginManager.apply(plugin(PluginId.allOpen))
@@ -30,7 +31,7 @@ open class BenchmarkPlugin : Plugin<Project> {
         }
     }
 
-    protected open fun configure(project: Project) {
+    private fun configure(project: Project) {
         with(project) {
             configureTarget()
             configureMultiplatform()

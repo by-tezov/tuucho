@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
+@Suppress("unused")
 class UiExtensionLibraryPlugin : AbstractLibraryPlugin() {
 
     override fun optIn() = listOf<String>(

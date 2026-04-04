@@ -3,6 +3,7 @@ package com.tezov.tuucho.convention
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
+@Suppress("unused")
 class SharedLibraryPlugin : AbstractLibraryPlugin() {
 
     override fun optIn() = listOf<String>(

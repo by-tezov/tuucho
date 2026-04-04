@@ -19,6 +19,7 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import java.util.Properties
 
+@Suppress("unused")
 class ApplicationAndroidPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {

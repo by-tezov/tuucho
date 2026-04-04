@@ -18,6 +18,7 @@ import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.signing.Sign
 import org.gradle.plugins.signing.SigningExtension
 
+@Suppress("unused")
 class MavenPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {

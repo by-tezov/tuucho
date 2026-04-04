@@ -10,6 +10,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
+@Suppress("unused")
 class LibraryUiPlugin : LibraryPlainPlugin() {
 
     private val Project.shouldConfigurePreview

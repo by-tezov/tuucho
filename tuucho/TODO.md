@@ -1,6 +1,5 @@
 ### Todo:
 
-// ios fix
 // benchmark usefull ?
 
 // -> merge + story medium
