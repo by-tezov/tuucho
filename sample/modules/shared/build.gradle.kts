@@ -8,6 +8,10 @@ plugins {
     alias(libs.plugins.build.konfig)
 }
 
+koinCompiler {
+    compileSafety = false
+}
+
 buildkonfig {
     packageName = kotlin.android.namespace
 
