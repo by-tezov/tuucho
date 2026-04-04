@@ -11,12 +11,12 @@ internal class AssetReaderAndroid(
 ) : AssetReaderProtocol {
     private fun openStream(
         path: String
-    ) = platform.context.assets.open(platform.assetPath(path))
+    ) = platform.context.assets.open(path)
 
     override suspend fun isExist(
         path: String
     ) = runCatching {
-        openStream(path).close()
+        openStream(platform.assetPath(path)).close()
         true
     }.getOrElse { false }
 
@@ -35,8 +35,7 @@ internal class AssetReaderAndroid(
         path: String,
         contentType: String?
     ): AssetContent {
-        val resourcePath = platform.assetPath(path)
-        val inputStream = openStream(resourcePath)
+        val inputStream = openStream(platform.assetPath(path))
         val source = inputStream.source()
         val size = runCatching { inputStream.available().toLong() }.getOrNull() ?: -1L
         return AssetContent(

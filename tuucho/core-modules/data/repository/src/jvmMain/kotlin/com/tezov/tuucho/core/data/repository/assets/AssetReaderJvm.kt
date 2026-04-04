@@ -28,8 +28,7 @@ internal class AssetReaderJvm(
         path: String,
         contentType: String?
     ): AssetContent {
-        val resourcePath = platform.assetPath(path)
-        val inputStream = platform.classLoader()?.getResourceAsStream(resourcePath)
+        val inputStream = platform.classLoader()?.getResourceAsStream(platform.assetPath(path))
             ?: throw DataException.Default("Asset not found: $path")
         val source = inputStream.source()
         val size = runCatching { inputStream.available().toLong() }.getOrNull() ?: -1L
