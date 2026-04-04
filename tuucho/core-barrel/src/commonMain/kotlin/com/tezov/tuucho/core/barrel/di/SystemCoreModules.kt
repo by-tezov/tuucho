@@ -14,7 +14,8 @@ internal expect fun SystemCoreModules.platformInvoke(): List<KoinMass>
 internal object SystemCoreModules {
     fun invoke(): List<KoinMass> = listOf(
         CoroutineScopeModules.invoke(),
-    ) + platformInvoke()
+    ) +
+        platformInvoke()
 
     @OptIn(TuuchoInternalApi::class)
     @Composable

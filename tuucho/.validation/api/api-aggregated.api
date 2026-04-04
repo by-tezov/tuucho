@@ -3,6 +3,16 @@ public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
 	public static final fun TuuchoEngineStart (Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class com/tezov/tuucho/core/barrel/_system/CoroutineScopes : com/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol {
+	public static final field $stable I
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol;)V
+	public fun cancel ()V
+	public fun getDefault ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public fun getIo ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public fun getMain ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public fun getUnconfined ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+}
+
 public abstract class com/tezov/tuucho/core/barrel/di/ModuleContextCore : com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext {
 	public static final field $stable I
 }
@@ -23,6 +33,21 @@ public final class com/tezov/tuucho/core/barrel/di/ModuleContextCore$Main : com/
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core>
+final class com.tezov.tuucho.core.barrel._system/CoroutineScopes : com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol { // com.tezov.tuucho.core.barrel._system/CoroutineScopes|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineExceptionMonitorProtocol?) // com.tezov.tuucho.core.barrel._system/CoroutineScopes.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol?){}[0]
+
+    final val default // com.tezov.tuucho.core.barrel._system/CoroutineScopes.default|{}default[0]
+        final fun <get-default>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.default.<get-default>|<get-default>(){}[0]
+    final val io // com.tezov.tuucho.core.barrel._system/CoroutineScopes.io|{}io[0]
+        final fun <get-io>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.io.<get-io>|<get-io>(){}[0]
+    final val main // com.tezov.tuucho.core.barrel._system/CoroutineScopes.main|{}main[0]
+        final fun <get-main>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.main.<get-main>|<get-main>(){}[0]
+    final val unconfined // com.tezov.tuucho.core.barrel._system/CoroutineScopes.unconfined|{}unconfined[0]
+        final fun <get-unconfined>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.unconfined.<get-unconfined>|<get-unconfined>(){}[0]
+
+    final fun cancel() // com.tezov.tuucho.core.barrel._system/CoroutineScopes.cancel|cancel(){}[0]
+}
+
 final class com.tezov.tuucho.core.barrel.di/KoinIos : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinComponent { // com.tezov.tuucho.core.barrel.di/KoinIos|null[0]
     constructor <init>() // com.tezov.tuucho.core.barrel.di/KoinIos.<init>|<init>(){}[0]
 
@@ -43,10 +68,12 @@ sealed class com.tezov.tuucho.core.barrel.di/ModuleContextCore : com.tezov.tuuch
     }
 }
 
+final val com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop // com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop|#static{}com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop[0]
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop|#static{}com_tezov_tuucho_core_barrel_di_KoinIos$stableprop[0]
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop[0]
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop[0]
 
+final fun com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop_getter|com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop_getter|com_tezov_tuucho_core_barrel_di_KoinIos$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(){}[0]
@@ -655,6 +682,11 @@ public final class com/tezov/tuucho/core/data/repository/di/assembler/ResponseAs
 	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;
 }
 
+public final class com/tezov/tuucho/core/data/repository/di/rectifier/MaterialRectifierScope {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/di/rectifier/MaterialRectifierScope;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;
+}
+
 public abstract class com/tezov/tuucho/core/data/repository/exception/DataException : java/lang/Exception {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1010,6 +1042,24 @@ public final class com/tezov/tuucho/core/data/repository/parser/assembler/respon
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/material/MaterialRectifier : com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
+	public fun closeScope ()V
+	public fun getKoin ()Lorg/koin/core/Koin;
+	public fun getLazyScope ()Lkotlin/Lazy;
+	public fun getScope ()Lorg/koin/core/scope/Scope;
+	public fun isScopeClosed ()Z
+	public fun isScopeInitialized ()Z
+	public final fun process (Lcom/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierProtocol$Context;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class com/tezov/tuucho/core/data/repository/parser/rectifier/material/MaterialRectifier$Association {
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/material/MaterialRectifier$Association$Processor : com/tezov/tuucho/core/data/repository/parser/rectifier/material/MaterialRectifier$Association {
+	public static final field INSTANCE Lcom/tezov/tuucho/core/data/repository/parser/rectifier/material/MaterialRectifier$Association$Processor;
+}
+
 public abstract class com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/AbstractRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierProtocol, com/tezov/tuucho/core/domain/business/_system/koin/TuuchoKoinScopeComponent {
 	public fun <init> ()V
 	public fun <init> (Lorg/koin/core/scope/Scope;)V
@@ -1137,6 +1187,11 @@ public final class com/tezov/tuucho/core/data/repository/parser/rectifier/materi
 	public synthetic fun afterAlterArray (Lcom/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierProtocol$Context;Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public synthetic fun beforeAlterObject (Lcom/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/RectifierProtocol$Context;Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public fun getKey ()Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/data/repository/parser/rectifier/material/config/ConfigRectifier {
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol;)V
+	public final fun process (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class com/tezov/tuucho/core/data/repository/parser/rectifier/material/content/ContentRectifier : com/tezov/tuucho/core/data/repository/parser/rectifier/material/_system/AbstractRectifier {
@@ -2282,6 +2337,12 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.comp
         final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.material.component/ComponentsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
+final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol) // com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol){}[0]
+
+    final suspend fun process(kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier.process|process(kotlinx.serialization.json.JsonObject){}[0]
+}
+
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.content/ContentRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.content/ContentRectifier|null[0]
     constructor <init>(org.koin.core.scope/Scope) // com.tezov.tuucho.core.data.repository.parser.rectifier.material.content/ContentRectifier.<init>|<init>(org.koin.core.scope.Scope){}[0]
 
@@ -2479,6 +2540,19 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.text
 
     final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.material.text/TextsRectifier.key|{}key[0]
         final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.material.text/TextsRectifier.key.<get-key>|<get-key>(){}[0]
+}
+
+final class com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinScopeComponent { // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol) // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol){}[0]
+
+    final val lazyScope // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.lazyScope|{}lazyScope[0]
+        final fun <get-lazyScope>(): kotlin/Lazy<org.koin.core.scope/Scope> // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.lazyScope.<get-lazyScope>|<get-lazyScope>(){}[0]
+
+    final suspend fun process(com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierProtocol.Context, kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.process|process(com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol.Context;kotlinx.serialization.json.JsonObject){}[0]
+
+    sealed class Association { // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.Association|null[0]
+        final object Processor : com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.Association // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.Association.Processor|null[0]
+    }
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.response.form/FormActionRectifierMatcher : com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.rectifier.response.form/FormActionRectifierMatcher|null[0]
@@ -2848,6 +2922,10 @@ final object com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemble
     }
 }
 
+final object com.tezov.tuucho.core.data.repository.di.rectifier/MaterialRectifierScope { // com.tezov.tuucho.core.data.repository.di.rectifier/MaterialRectifierScope|null[0]
+    final fun invoke(): com.tezov.tuucho.core.domain.business._system.koin/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.rectifier/MaterialRectifierScope.invoke|invoke(){}[0]
+}
+
 final object com.tezov.tuucho.core.data.repository.di/AssetModule // com.tezov.tuucho.core.data.repository.di/AssetModule|null[0]
 
 final object com.tezov.tuucho.core.data.repository.di/DatabaseModule { // com.tezov.tuucho.core.data.repository.di/DatabaseModule|null[0]
@@ -2940,6 +3018,14 @@ final fun (kotlinx.serialization.json/JsonElement?).com.tezov.tuucho.core.data.r
 
 
 ************ Project: :core.domain.business ************
+public final class com/tezov/tuucho/core/domain/business/_system/IdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
+	public fun <init> ()V
+	public synthetic fun generate ()Ljava/lang/Object;
+	public fun generate ()Ljava/lang/String;
+	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun generate (Lkotlin/Unit;)Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/domain/business/_system/coroutine/CoroutineScope : com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
 	public fun <init> (Ljava/lang/String;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol;)V
 	public fun async (Lkotlinx/coroutines/CoroutineStart;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
@@ -3040,6 +3126,10 @@ public abstract interface class com/tezov/tuucho/core/domain/business/_system/ko
 
 public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext$DefaultImpls {
 	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;)Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMassApplicationKt {
+	public static final fun koinApplication (Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lorg/koin/core/KoinApplication;
 }
 
 public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinModuleExtension {
@@ -6761,6 +6851,12 @@ final class com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedConte
     final fun onClose() // com.tezov.tuucho.core.domain.business._system.koin/KoinIsolatedContextLifeCycle.onClose|onClose(){}[0]
 }
 
+final class com.tezov.tuucho.core.domain.business._system/IdGenerator : com.tezov.tuucho.core.domain.business.protocol/IdGeneratorProtocol<kotlin/Unit, kotlin/String> { // com.tezov.tuucho.core.domain.business._system/IdGenerator|null[0]
+    constructor <init>() // com.tezov.tuucho.core.domain.business._system/IdGenerator.<init>|<init>(){}[0]
+
+    final fun generate(): kotlin/String // com.tezov.tuucho.core.domain.business._system/IdGenerator.generate|generate(){}[0]
+}
+
 final class com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry : com.tezov.tuucho.core.domain.business.protocol.repository/InteractionLockProtocol.Registry { // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry|null[0]
     constructor <init>(kotlin.collections/List<com.tezov.tuucho.core.domain.business.protocol/ActionDefinitionProtocol>) // com.tezov.tuucho.core.domain.business.interaction.lock/InteractionLockRegistry.<init>|<init>(kotlin.collections.List<com.tezov.tuucho.core.domain.business.protocol.ActionDefinitionProtocol>){}[0]
 
@@ -10011,6 +10107,7 @@ final object com.tezov.tuucho.core.domain.business.protocol.repository/Navigatio
 
 final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/onScope|onScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
 final fun <#A: com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope<#A>> (kotlinx.serialization.json/JsonElement).com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope(kotlin/Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system/SchemaScopeArgument, #A>, com.tezov.tuucho.core.domain.business.jsonSchema._system/OpenSchemaScope.MapOperator? = ...): #A // com.tezov.tuucho.core.domain.business.jsonSchema._system/withScope|withScope@kotlinx.serialization.json.JsonElement(kotlin.Function1<com.tezov.tuucho.core.domain.business.jsonSchema._system.SchemaScopeArgument,0:0>;com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope.MapOperator?){0§<com.tezov.tuucho.core.domain.business.jsonSchema._system.OpenSchemaScope<0:0>>}[0]
+final fun com.tezov.tuucho.core.domain.business._system.koin/koinApplication(kotlin.collections/List<com.tezov.tuucho.core.domain.business._system.koin/KoinMass>, kotlin/Function1<org.koin.core/KoinApplication, kotlin/Unit>?): org.koin.core/KoinApplication // com.tezov.tuucho.core.domain.business._system.koin/koinApplication|koinApplication(kotlin.collections.List<com.tezov.tuucho.core.domain.business._system.koin.KoinMass>;kotlin.Function1<org.koin.core.KoinApplication,kotlin.Unit>?){}[0]
 
 
 ************ Project: :core.domain.tool ************
@@ -11947,6 +12044,12 @@ public final class com/tezov/tuucho/uiComponent/stable/data/parser/shadower/layo
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
+public final class com/tezov/tuucho/uiComponent/stable/di/MaterialRectifierModule {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/di/MaterialRectifierModule;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;
+}
+
 public final class com/tezov/tuucho/uiComponent/stable/di/SystemUiModules {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/di/SystemUiModules;
@@ -12578,6 +12681,10 @@ final class com.tezov.tuucho.uiComponent.stable.presentation.view/SpacerViewFact
     }
 }
 
+final object com.tezov.tuucho.uiComponent.stable.di/MaterialRectifierModule { // com.tezov.tuucho.uiComponent.stable.di/MaterialRectifierModule|null[0]
+    final fun invoke(): com.tezov.tuucho.core.domain.business._system.koin/KoinMass.Scope // com.tezov.tuucho.uiComponent.stable.di/MaterialRectifierModule.invoke|invoke(){}[0]
+}
+
 final object com.tezov.tuucho.uiComponent.stable.di/SystemUiModules { // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules|null[0]
     final fun invoke(): kotlin.collections/List<com.tezov.tuucho.core.domain.business._system.koin/KoinMass> // com.tezov.tuucho.uiComponent.stable.di/SystemUiModules.invoke|invoke(){}[0]
 }
@@ -12799,6 +12906,7 @@ final val com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.lay
 final val com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_layout_linear_StyleLayoutLinearColorRectifierMatcher$stableprop // com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_layout_linear_StyleLayoutLinearColorRectifierMatcher$stableprop|#static{}com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_layout_linear_StyleLayoutLinearColorRectifierMatcher$stableprop[0]
 final val com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.spacer/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_spacer_StyleSpacerDimensionRectifierMatcher$stableprop // com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.spacer/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_spacer_StyleSpacerDimensionRectifierMatcher$stableprop|#static{}com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_spacer_StyleSpacerDimensionRectifierMatcher$stableprop[0]
 final val com.tezov.tuucho.uiComponent.stable.data.parser.shadower.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_shadower_layout_linear_ContentLayoutLinearItemsMatcher$stableprop // com.tezov.tuucho.uiComponent.stable.data.parser.shadower.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_shadower_layout_linear_ContentLayoutLinearItemsMatcher$stableprop|#static{}com_tezov_tuucho_uiComponent_stable_data_parser_shadower_layout_linear_ContentLayoutLinearItemsMatcher$stableprop[0]
+final val com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_MaterialRectifierModule$stableprop // com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_MaterialRectifierModule$stableprop|#static{}com_tezov_tuucho_uiComponent_stable_di_MaterialRectifierModule$stableprop[0]
 final val com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_SystemUiModules$stableprop // com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_SystemUiModules$stableprop|#static{}com_tezov_tuucho_uiComponent_stable_di_SystemUiModules$stableprop[0]
 final val com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema$stableprop // com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema$stableprop|#static{}com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema$stableprop[0]
 final val com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema_Component$stableprop // com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema_Component$stableprop|#static{}com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema_Component$stableprop[0]
@@ -12875,6 +12983,7 @@ final fun com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.lay
 final fun com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_layout_linear_StyleLayoutLinearColorRectifierMatcher$stableprop_getter(): kotlin/Int // com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_layout_linear_StyleLayoutLinearColorRectifierMatcher$stableprop_getter|com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_layout_linear_StyleLayoutLinearColorRectifierMatcher$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.spacer/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_spacer_StyleSpacerDimensionRectifierMatcher$stableprop_getter(): kotlin/Int // com.tezov.tuucho.uiComponent.stable.data.parser.rectifier.material.spacer/com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_spacer_StyleSpacerDimensionRectifierMatcher$stableprop_getter|com_tezov_tuucho_uiComponent_stable_data_parser_rectifier_material_spacer_StyleSpacerDimensionRectifierMatcher$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.uiComponent.stable.data.parser.shadower.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_shadower_layout_linear_ContentLayoutLinearItemsMatcher$stableprop_getter(): kotlin/Int // com.tezov.tuucho.uiComponent.stable.data.parser.shadower.layout.linear/com_tezov_tuucho_uiComponent_stable_data_parser_shadower_layout_linear_ContentLayoutLinearItemsMatcher$stableprop_getter|com_tezov_tuucho_uiComponent_stable_data_parser_shadower_layout_linear_ContentLayoutLinearItemsMatcher$stableprop_getter(){}[0]
+final fun com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_MaterialRectifierModule$stableprop_getter(): kotlin/Int // com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_MaterialRectifierModule$stableprop_getter|com_tezov_tuucho_uiComponent_stable_di_MaterialRectifierModule$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_SystemUiModules$stableprop_getter(): kotlin/Int // com.tezov.tuucho.uiComponent.stable.di/com_tezov_tuucho_uiComponent_stable_di_SystemUiModules$stableprop_getter|com_tezov_tuucho_uiComponent_stable_di_SystemUiModules$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema$stableprop_getter(): kotlin/Int // com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema$stableprop_getter|com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema_Component$stableprop_getter(): kotlin/Int // com.tezov.tuucho.uiComponent.stable.domain.jsonSchema.material.form/com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema_Component$stableprop_getter|com_tezov_tuucho_uiComponent_stable_domain_jsonSchema_material_form_FormFieldSchema_Component$stableprop_getter(){}[0]

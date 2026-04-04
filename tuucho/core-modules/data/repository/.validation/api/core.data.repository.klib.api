@@ -774,6 +774,12 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.comp
         final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.material.component/ComponentsRectifier.key.<get-key>|<get-key>(){}[0]
 }
 
+final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol) // com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol){}[0]
+
+    final suspend fun process(kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.parser.rectifier.material.config/ConfigRectifier.process|process(kotlinx.serialization.json.JsonObject){}[0]
+}
+
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.content/ContentRectifier : com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/AbstractRectifier { // com.tezov.tuucho.core.data.repository.parser.rectifier.material.content/ContentRectifier|null[0]
     constructor <init>(org.koin.core.scope/Scope) // com.tezov.tuucho.core.data.repository.parser.rectifier.material.content/ContentRectifier.<init>|<init>(org.koin.core.scope.Scope){}[0]
 
@@ -971,6 +977,19 @@ final class com.tezov.tuucho.core.data.repository.parser.rectifier.material.text
 
     final val key // com.tezov.tuucho.core.data.repository.parser.rectifier.material.text/TextsRectifier.key|{}key[0]
         final fun <get-key>(): kotlin/String // com.tezov.tuucho.core.data.repository.parser.rectifier.material.text/TextsRectifier.key.<get-key>|<get-key>(){}[0]
+}
+
+final class com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinScopeComponent { // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol) // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol){}[0]
+
+    final val lazyScope // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.lazyScope|{}lazyScope[0]
+        final fun <get-lazyScope>(): kotlin/Lazy<org.koin.core.scope/Scope> // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.lazyScope.<get-lazyScope>|<get-lazyScope>(){}[0]
+
+    final suspend fun process(com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierProtocol.Context, kotlinx.serialization.json/JsonObject): kotlinx.serialization.json/JsonObject // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.process|process(com.tezov.tuucho.core.data.repository.parser.rectifier.material._system.RectifierProtocol.Context;kotlinx.serialization.json.JsonObject){}[0]
+
+    sealed class Association { // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.Association|null[0]
+        final object Processor : com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.Association // com.tezov.tuucho.core.data.repository.parser.rectifier.material/MaterialRectifier.Association.Processor|null[0]
+    }
 }
 
 final class com.tezov.tuucho.core.data.repository.parser.rectifier.response.form/FormActionRectifierMatcher : com.tezov.tuucho.core.data.repository.parser.rectifier.material._system/RectifierMatcherProtocol { // com.tezov.tuucho.core.data.repository.parser.rectifier.response.form/FormActionRectifierMatcher|null[0]
@@ -1338,6 +1357,10 @@ final object com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemble
     final object Form { // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form|null[0]
         final fun invoke(): com.tezov.tuucho.core.domain.business._system.koin/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.assembler/ResponseAssemblerScope.Form.invoke|invoke(){}[0]
     }
+}
+
+final object com.tezov.tuucho.core.data.repository.di.rectifier/MaterialRectifierScope { // com.tezov.tuucho.core.data.repository.di.rectifier/MaterialRectifierScope|null[0]
+    final fun invoke(): com.tezov.tuucho.core.domain.business._system.koin/KoinMass.Scope // com.tezov.tuucho.core.data.repository.di.rectifier/MaterialRectifierScope.invoke|invoke(){}[0]
 }
 
 final object com.tezov.tuucho.core.data.repository.di/AssetModule // com.tezov.tuucho.core.data.repository.di/AssetModule|null[0]

@@ -155,6 +155,12 @@ public final class com/tezov/tuucho/uiComponent/stable/data/parser/shadower/layo
 	public fun accept (Lcom/tezov/tuucho/core/domain/tool/json/JsonElementPath;Lkotlinx/serialization/json/JsonElement;)Z
 }
 
+public final class com/tezov/tuucho/uiComponent/stable/di/MaterialRectifierModule {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/di/MaterialRectifierModule;
+	public final fun invoke ()Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$Scope;
+}
+
 public final class com/tezov/tuucho/uiComponent/stable/di/SystemUiModules {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/tezov/tuucho/uiComponent/stable/di/SystemUiModules;

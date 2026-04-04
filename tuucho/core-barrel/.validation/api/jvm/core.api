@@ -2,6 +2,16 @@ public final class com/tezov/tuucho/core/barrel/TuuchoEngineStartKt {
 	public static final fun TuuchoEngineStart (Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class com/tezov/tuucho/core/barrel/_system/CoroutineScopes : com/tezov/tuucho/core/domain/business/protocol/CoroutineScopesProtocol {
+	public static final field $stable I
+	public fun <init> (Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol;)V
+	public fun cancel ()V
+	public fun getDefault ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public fun getIo ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public fun getMain ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+	public fun getUnconfined ()Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol;
+}
+
 public abstract class com/tezov/tuucho/core/barrel/di/ModuleContextCore : com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ModuleContext {
 	public static final field $stable I
 }

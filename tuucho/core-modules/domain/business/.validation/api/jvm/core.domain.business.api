@@ -1,3 +1,11 @@
+public final class com/tezov/tuucho/core/domain/business/_system/IdGenerator : com/tezov/tuucho/core/domain/business/protocol/IdGeneratorProtocol {
+	public fun <init> ()V
+	public synthetic fun generate ()Ljava/lang/Object;
+	public fun generate ()Ljava/lang/String;
+	public synthetic fun generate (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun generate (Lkotlin/Unit;)Ljava/lang/String;
+}
+
 public final class com/tezov/tuucho/core/domain/business/_system/coroutine/CoroutineScope : com/tezov/tuucho/core/domain/business/protocol/CoroutineScopeProtocol {
 	public fun <init> (Ljava/lang/String;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/tezov/tuucho/core/domain/business/protocol/CoroutineExceptionMonitorProtocol;)V
 	public fun async (Lkotlinx/coroutines/CoroutineStart;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Deferred;
@@ -98,6 +106,10 @@ public abstract interface class com/tezov/tuucho/core/domain/business/_system/ko
 
 public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext$DefaultImpls {
 	public static fun getValue (Lcom/tezov/tuucho/core/domain/business/_system/koin/KoinMass$ScopeContext;)Ljava/lang/String;
+}
+
+public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinMassApplicationKt {
+	public static final fun koinApplication (Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lorg/koin/core/KoinApplication;
 }
 
 public final class com/tezov/tuucho/core/domain/business/_system/koin/KoinModuleExtension {
