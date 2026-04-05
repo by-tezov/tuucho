@@ -4,21 +4,23 @@ import com.tezov.tuucho.core.data.repository.database.MaterialDatabaseSource
 import com.tezov.tuucho.core.data.repository.database.entity.JsonObjectEntity.Table
 import com.tezov.tuucho.core.data.repository.database.type.JsonLifetime
 import com.tezov.tuucho.core.data.repository.database.type.JsonVisibility
+import com.tezov.tuucho.core.data.repository.exception.DataException
 import com.tezov.tuucho.core.data.repository.parser.assembler.material.MaterialAssembler
 import com.tezov.tuucho.core.data.repository.parser.assembler.material._system.AssemblerProtocol
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialCacheLocalSource
 import com.tezov.tuucho.core.data.repository.repository.source.MaterialRemoteSource
+import com.tezov.tuucho.core.data.repository.repository.source.shadower.ContextualShadowerMaterialSource.Context
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.IdSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Contextual
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower.Contextual.replaceUrlOriginToken
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.tool.json.stringOrNull
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
@@ -28,60 +30,76 @@ internal class ContextualShadowerMaterialSource(
     private val materialRemoteSource: MaterialRemoteSource,
     private val materialAssembler: MaterialAssembler,
     private val materialDatabaseSource: MaterialDatabaseSource,
-) : ShadowerMaterialSourceProtocol {
-    override val type = Shadower.Type.contextual
+) : ShadowerMaterialSourceProtocol<Context> {
+    data class Context(
+        val urlOrigin: String,
+        val urlContextualFallback: (type: String) -> String,
+        val map: MutableMap<String, MutableList<JsonObject>> = mutableMapOf()
+    ) : ShadowerMaterialSourceProtocol.Context
 
-    override val isCancelled = false
+    override val type = SettingComponentShadowerSchema.Key.contextual
 
-    private lateinit var urlOrigin: String
-    private lateinit var map: MutableMap<String, MutableList<JsonObject>>
-
-    override suspend fun onStart(
+    override fun accept(
         url: String,
-        materialElement: JsonObject
-    ) {
-        this.urlOrigin = url
-        map = mutableMapOf()
-    }
+        setting: JsonObject?,
+        componentObject: JsonObject
+    ) = true
 
-    override suspend fun onNext(
-        jsonObject: JsonObject,
-        settingObject: JsonObject?
-    ) {
-        val idScope = jsonObject.onScope(IdSchema::Scope)
-        idScope.source ?: return
-        val type = jsonObject.withScope(TypeSchema::Scope).self
-        val url = idScope.urlSource
-            ?.jsonObject
-            ?.get(this.type)
-            ?.stringOrNull
-            ?.replaceUrlOriginToken(urlOrigin)
-            ?: settingObject
+    override fun createContext(
+        url: String,
+        setting: JsonObject?,
+        componentObject: JsonObject
+    ) = Context(
+        urlOrigin = url,
+        urlContextualFallback = { type ->
+            setting
                 ?.withScope(SettingComponentShadowerSchema.Contextual::Scope)
                 ?.url
                 ?.get(type)
                 .stringOrNull
+                ?.replaceUrlOriginToken(url)
+                ?: Shadower.Contextual.defaultUrl(url)
+        }
+    )
+
+    override fun process(
+        context: Context,
+        jsonObject: JsonObject
+    ) {
+        with(context) {
+            val idScope = jsonObject.onScope(IdSchema::Scope)
+            idScope.source ?: return
+            val url = idScope.urlSource
+                ?.jsonObject
+                ?.get(type)
+                .stringOrNull
                 ?.replaceUrlOriginToken(urlOrigin)
-            ?: Contextual.defaultUrl(urlOrigin)
-        map[url] = (map[url] ?: mutableListOf()).apply { add(jsonObject) }
+                ?: urlContextualFallback(jsonObject.withScope(TypeSchema::Scope).self ?: throw DataException.Default("type is null"))
+            map.getOrPut(url) { mutableListOf() }.add(jsonObject)
+        }
     }
 
-    override suspend fun onDone() = map
-        .map { (url, jsonObjects) ->
-            coroutineScopes.default.async {
-                downloadAndCache(url)
-                jsonObjects.assembleAll(url).also {
-                    val lifetime = materialCacheLocalSource.getLifetime(url)
-                    if (lifetime is JsonLifetime.SingleUse) {
-                        materialCacheLocalSource.delete(url, Table.Common)
+    override suspend fun finalize(
+        context: Context
+    ) = channelFlow {
+        context.map
+            .map { (url, jsonObjects) ->
+                coroutineScopes.default.async {
+                    downloadAndCache(url, context.urlOrigin)
+                    jsonObjects.forEach { jsonObject ->
+                        jsonObject
+                            .assemble(
+                                url = url,
+                                urlOrigin = context.urlOrigin
+                            ).also { send(it) }
                     }
                 }
-            }
-        }.awaitAll()
-        .flatten()
+            }.awaitAll()
+    }
 
     private suspend fun downloadAndCache(
-        url: String
+        url: String,
+        urlOrigin: String
     ) {
         val lifetime = materialCacheLocalSource.getLifetime(url)
         if (materialCacheLocalSource.isCacheValid(url, lifetime?.validityKey)) {
@@ -104,22 +122,21 @@ internal class ContextualShadowerMaterialSource(
         )
     }
 
-    private suspend fun List<JsonObject>.assembleAll(
-        url: String
-    ) = mapNotNull { jsonObject ->
-        materialAssembler.process(
-            context = AssemblerProtocol.Context(
-                url = url,
-                findAllRefOrNullFetcher = { from, type ->
-                    materialDatabaseSource.getAllRefOrNull(
-                        from = from,
-                        url = url,
-                        type = type,
-                        visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
-                    )
-                }
-            ),
-            materialObject = jsonObject
-        )
-    }
+    private suspend fun JsonObject.assemble(
+        url: String,
+        urlOrigin: String
+    ) = materialAssembler.process(
+        context = AssemblerProtocol.Context(
+            url = url,
+            findAllRefOrNullFetcher = { from, type ->
+                materialDatabaseSource.getAllRefOrNull(
+                    from = from,
+                    url = url,
+                    type = type,
+                    visibility = JsonVisibility.Contextual(urlOrigin = urlOrigin)
+                )
+            }
+        ),
+        materialObject = this
+    )
 }

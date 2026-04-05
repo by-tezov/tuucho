@@ -4,7 +4,7 @@ import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRo
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.action.ActionSchema
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
-import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.InteractionLockable
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.ProcessActionUseCase.Input
@@ -15,7 +15,7 @@ import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
 class ProcessActionUseCase(
-    private val actionExecutor: ActionExecutorProtocol,
+    private val actionExecutor: ActionMiddlewareExecutorProtocol,
 ) : UseCaseProtocol.Async<Input, Unit> {
     data class Input(
         val route: NavigationRoute?,

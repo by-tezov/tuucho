@@ -1,5 +1,6 @@
 package com.tezov.tuucho.core.domain.business.usecase.withoutNetwork
 
+import com.tezov.tuucho.core.domain.business.interaction.lock.InteractionLockGenerator
 import com.tezov.tuucho.core.domain.business.interaction.middleware.UpdateViewMiddleware
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.mock.middleware.MockMiddlewareExecutor
@@ -9,10 +10,14 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
+import dev.mokkery.matcher.matches
 import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonObject
 import kotlin.test.AfterTest
@@ -59,12 +64,14 @@ class UpdateViewUseCaseTest {
         val screen = mock<ScreenProtocol>()
 
         everySuspend { navigationScreenStackRepository.getScreenOrNull(routeValue) } returns screen
-        everySuspend { screen.update(any<List<JsonObject>>()) } returns Unit
+        everySuspend { screen.update(any<Flow<JsonObject>>()) } returns Unit
 
         sut.invoke(input)
         verifySuspend(VerifyMode.exhaustiveOrder) {
             navigationScreenStackRepository.getScreenOrNull(routeValue)
-            screen.update(jsonObjects)
+            screen.update(matches<Flow<JsonObject>> {
+                runBlocking { it.toList() == jsonObjects }
+            })
         }
     }
 

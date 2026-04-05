@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import androidx.compose.runtime.mutableStateOf
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ProjectionProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

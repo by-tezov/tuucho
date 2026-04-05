@@ -4,6 +4,7 @@ object LibraryId {
     // test
     const val kotlinTest = "kotlin.test"
     const val kotlinCoroutineTest = "kotlinx.coroutines.test"
+    const val kotlinBenchmarkRuntime = "kotlin.benchmark.runtime"
 
     // Preview
     const val composeUiTooling = "compose.ui.tooling"

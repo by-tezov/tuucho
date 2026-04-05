@@ -46,6 +46,9 @@ class KoinIsolatedContextLifeCycle {
     fun init(
         koinApplication: KoinApplication
     ) {
+        require(KoinIsolatedContext.koinApplication == null) {
+            "KoinIsolatedContextLifeCycle already initialized"
+        }
         KoinIsolatedContext.koinApplication = koinApplication
     }
 

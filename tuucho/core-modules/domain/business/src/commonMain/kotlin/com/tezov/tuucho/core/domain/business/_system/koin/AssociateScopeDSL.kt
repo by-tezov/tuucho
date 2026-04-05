@@ -15,8 +15,6 @@ import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.named
 import org.koin.dsl.ScopeDSL
 import kotlin.reflect.KClass
-import org.koin.plugin.module.dsl.factory as factoryCompiler
-import org.koin.plugin.module.dsl.scoped as scopedCompiler
 
 class AssociateScopeDSL(
     val association: KClass<*>,
@@ -34,14 +32,6 @@ class AssociateScopeDSL(
     }
 
     // Single
-    @KoinDslMarker
-    fun <T> scope(): KoinDefinition<T> = with(scopeDSL) {
-        val koinDefinition = scopedCompiler<T>()
-        @Suppress("UNCHECKED_CAST")
-        (koinDefinition as KoinDefinition<Any>) associate association
-        koinDefinition
-    }
-
     inline fun <reified T> scoped(
         qualifier: Qualifier? = null,
         noinline definition: Definition<T>,
@@ -76,14 +66,6 @@ class AssociateScopeDSL(
     }
 
     // Factory
-    @KoinDslMarker
-    fun <T> factory(): KoinDefinition<T> = with(scopeDSL) {
-        val koinDefinition = factoryCompiler<T>()
-        @Suppress("UNCHECKED_CAST")
-        (koinDefinition as KoinDefinition<Any>) associate association
-        koinDefinition
-    }
-
     inline fun <reified T> factory(
         qualifier: Qualifier? = null,
         noinline definition: Definition<T>,

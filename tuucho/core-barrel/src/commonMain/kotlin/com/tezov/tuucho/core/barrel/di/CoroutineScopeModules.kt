@@ -5,11 +5,14 @@ import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.mod
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import org.koin.dsl.bind
 import org.koin.dsl.onClose
-import org.koin.plugin.module.dsl.single
 
 internal object CoroutineScopeModules {
     fun invoke() = module(ModuleContextCore.Main) {
-        single<CoroutineScopes>() bind CoroutineScopesProtocol::class onClose { coroutineScopes ->
+        single {
+            CoroutineScopes(
+                exceptionMonitor = getOrNull()
+            )
+        } bind CoroutineScopesProtocol::class onClose { coroutineScopes ->
             coroutineScopes?.cancel()
         }
     }

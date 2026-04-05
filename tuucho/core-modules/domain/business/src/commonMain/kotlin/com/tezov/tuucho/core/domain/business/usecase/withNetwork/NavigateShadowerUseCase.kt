@@ -4,7 +4,6 @@ import com.tezov.tuucho.core.domain.business._system.koin.TuuchoKoinComponent
 import com.tezov.tuucho.core.domain.business.interaction.exceptionHandler.ShadowerExceptionHandler
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.Shadower
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseProtocol
@@ -14,6 +13,8 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.ScreenProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.NavigateShadowerUseCase.Input
 import com.tezov.tuucho.core.domain.test._system.OpenForTest
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrue
+import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.JsonObject
 
 @OpenForTest
 class NavigateShadowerUseCase(
@@ -21,9 +22,19 @@ class NavigateShadowerUseCase(
     private val navigationStackScreenRepository: NavigationRepositoryProtocol.StackScreen,
     private val materialCacheRepository: NavigationRepositoryProtocol.MaterialCache,
     private val shadowerMaterialRepository: MaterialRepositoryProtocol.Shadower,
+    private val shadowerProcessors: List<Processor>,
     private val shadowerExceptionHandler: ShadowerExceptionHandler.Navigate?
 ) : UseCaseProtocol.Async<Input, Unit>,
     TuuchoKoinComponent {
+    interface Processor {
+        val type: String
+
+        suspend fun process(
+            screen: ScreenProtocol,
+            jsonObjects: Flow<JsonObject>
+        )
+    }
+
     data class Input(
         val route: NavigationRoute.Url,
         val direction: String
@@ -38,7 +49,7 @@ class NavigateShadowerUseCase(
         val settingShadowerScope = materialCacheRepository
             .getShadowerSettingObjectOrNull(
                 url = input.route.value,
-                direction = input.direction
+                key = input.direction
             )?.withScope(SettingComponentShadowerSchema.Navigate::Scope)
         if (settingShadowerScope?.enable.isTrue) {
             if (settingShadowerScope?.waitDoneToRender.isTrue) {
@@ -56,12 +67,15 @@ class NavigateShadowerUseCase(
         screen: ScreenProtocol
     ) {
         suspend fun process() {
-            val jsonObjects = shadowerMaterialRepository
+            shadowerMaterialRepository
                 .process(
                     route = screen.route,
-                    types = listOf(Shadower.Type.contextual)
-                ).map { it.jsonObject }
-            screen.update(jsonObjects)
+                    types = shadowerProcessors.map { it.type }
+                ).collect { output ->
+                    shadowerProcessors
+                        .firstOrNull { output.type == it.type }
+                        ?.process(screen, output.jsonObjects)
+                }
         }
         runCatching { process() }
             .onFailure { failure ->

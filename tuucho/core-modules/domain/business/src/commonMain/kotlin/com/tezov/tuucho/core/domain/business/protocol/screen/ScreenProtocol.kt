@@ -2,6 +2,7 @@ package com.tezov.tuucho.core.domain.business.protocol.screen
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.protocol.screen.view.ViewProtocol
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonObject
 import kotlin.reflect.KClass
 
@@ -15,7 +16,7 @@ interface ScreenProtocol {
     )
 
     suspend fun update(
-        jsonObjects: List<JsonObject>
+        jsonObjects: Flow<JsonObject>
     )
 
     suspend fun <V : ViewProtocol> views(

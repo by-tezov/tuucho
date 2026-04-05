@@ -14,12 +14,11 @@ import com.tezov.tuucho.core.domain.business.protocol.repository.NavigationRepos
 import com.tezov.tuucho.core.presentation.ui._system.idValue
 import com.tezov.tuucho.core.presentation.ui._system.type
 import com.tezov.tuucho.core.presentation.ui.exception.UiException
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ContextualUpdaterProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ScreenProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonObject
 import org.koin.core.component.inject
 import kotlin.reflect.KClass
@@ -31,19 +30,17 @@ internal class Screen(
     TuuchoKoinComponent {
     private data class Updatable(
         val viewIndex: Int,
-        val updaterProcessor: MutableList<ContextualUpdaterProcessorProtocol>
+        val processors: MutableList<ContextualUpdaterProcessorProtocol>
     )
 
     private val coroutineScopes by inject<CoroutineScopesProtocol>()
     private val materialCacheRepository by inject<NavigationRepositoryProtocol.MaterialCache>()
     private val viewFactories: List<ViewFactoryProtocol> by lazy { getKoin().getAll() }
-
     private val redrawCounterTrigger = mutableIntStateOf(0)
     private var rootView: ViewProtocol? = null
     private val views = mutableListOf<ViewProtocol>()
     private val updatables = mutableMapOf<String, Updatable>()
-
-    private val mutex = Mutex()
+//    private val mutex = ReentrantMutex()
 
     private fun keyTypeId(
         type: String,
@@ -52,7 +49,9 @@ internal class Screen(
 
     suspend fun createViews() {
         coroutineScopes.default.withContext {
-            mutex.withLock { createViewsNoSync() }
+//            mutex.withReentrantLock {
+            createViewsNoSync()
+//            }
         }
     }
 
@@ -77,13 +76,23 @@ internal class Screen(
         )
         val rootView = factory
             .process(screenContext = screenContext)
-            .apply { initialize(componentObject) }
-        screenContext.addView(rootView)
-        this@Screen.rootView = rootView
+            .also { rootView = it }
+        rootView.initialize(componentObject)
+        addViewNoSync(rootView)
         redrawCounterTrigger.intValue += 1
     }
 
-    private fun addView(
+    private suspend fun addView(
+        view: ViewProtocol
+    ) {
+        coroutineScopes.default.withContext {
+//            mutex.withReentrantLock {
+            addViewNoSync(view)
+//            }
+        }
+    }
+
+    private fun addViewNoSync(
         view: ViewProtocol
     ) {
         views.add(view)
@@ -91,15 +100,14 @@ internal class Screen(
         view.contextualUpdater.forEach { updater ->
             updater.id?.let { id ->
                 val keyTypeId = keyTypeId(updater.type, id)
-                updatables[keyTypeId]
-                    ?.updaterProcessor
-                    ?.add(updater)
-                    ?: run {
-                        updatables[keyTypeId] = Updatable(
+                updatables
+                    .getOrPut(keyTypeId) {
+                        Updatable(
                             viewIndex = viewIndex,
-                            updaterProcessor = mutableListOf(updater)
+                            processors = mutableListOf()
                         )
-                    }
+                    }.processors
+                    .add(updater)
             }
         }
     }
@@ -108,7 +116,9 @@ internal class Screen(
     override suspend fun <V : DomainViewProtocol> views(
         klass: KClass<V>
     ) = coroutineScopes.default.withContext {
-        mutex.withLock { views.filter { klass.isInstance(it) } as List<V> }
+//        mutex.withLock {
+        views.filter { klass.isInstance(it) } as List<V>
+//        }
     }
 
     @Composable
@@ -122,12 +132,12 @@ internal class Screen(
 
     override suspend fun recreateViews() {
         coroutineScopes.default.withContext {
-            mutex.withLock {
-                updatables.clear()
-                views.clear()
-                rootView = null
-                createViewsNoSync()
-            }
+//            mutex.withLock {
+            updatables.clear()
+            views.clear()
+            rootView = null
+            createViewsNoSync()
+//            }
         }
     }
 
@@ -135,27 +145,27 @@ internal class Screen(
         jsonObject: JsonObject
     ) {
         coroutineScopes.default.withContext {
-            mutex.withLock {
-                val updatedIndexView = updateAndReturnViewIndex(jsonObject)
-                updatedIndexView?.let { views[it].updateIfNeeded() }
-            }
+//            mutex.withLock {
+            val updatedIndexView = updateAndReturnViewIndex(jsonObject)
+            updatedIndexView?.let { views[it].updateIfNeeded() }
+//            }
         }
     }
 
     override suspend fun update(
-        jsonObjects: List<JsonObject>
+        jsonObjects: Flow<JsonObject>
     ) {
         coroutineScopes.default.withContext {
-            mutex.withLock {
-                val updatedIndexViews = buildList {
-                    jsonObjects.forEach {
-                        updateAndReturnViewIndex(it)?.let(::add)
-                    }
-                }
-                updatedIndexViews.forEach {
-                    views[it].updateIfNeeded()
+//            mutex.withLock {
+            val updatedIndexViews = buildList {
+                jsonObjects.collect {
+                    updateAndReturnViewIndex(it)?.let(::add)
                 }
             }
+            updatedIndexViews.forEach {
+                views[it].updateIfNeeded()
+            }
+//            }
         }
     }
 
@@ -165,7 +175,7 @@ internal class Screen(
         val id = jsonObject.idValue
         val type = jsonObject.type
         return updatables[keyTypeId(type, id)]?.let { updatable ->
-            updatable.updaterProcessor.forEach { it.process(jsonObject) }
+            updatable.processors.forEach { it.process(jsonObject) }
             updatable.viewIndex
         }
     }

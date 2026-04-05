@@ -6,6 +6,21 @@
 // - Show declarations: true
 
 // Library unique name: <com.tezov:core>
+final class com.tezov.tuucho.core.barrel._system/CoroutineScopes : com.tezov.tuucho.core.domain.business.protocol/CoroutineScopesProtocol { // com.tezov.tuucho.core.barrel._system/CoroutineScopes|null[0]
+    constructor <init>(com.tezov.tuucho.core.domain.business.protocol/CoroutineExceptionMonitorProtocol?) // com.tezov.tuucho.core.barrel._system/CoroutineScopes.<init>|<init>(com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorProtocol?){}[0]
+
+    final val default // com.tezov.tuucho.core.barrel._system/CoroutineScopes.default|{}default[0]
+        final fun <get-default>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.default.<get-default>|<get-default>(){}[0]
+    final val io // com.tezov.tuucho.core.barrel._system/CoroutineScopes.io|{}io[0]
+        final fun <get-io>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.io.<get-io>|<get-io>(){}[0]
+    final val main // com.tezov.tuucho.core.barrel._system/CoroutineScopes.main|{}main[0]
+        final fun <get-main>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.main.<get-main>|<get-main>(){}[0]
+    final val unconfined // com.tezov.tuucho.core.barrel._system/CoroutineScopes.unconfined|{}unconfined[0]
+        final fun <get-unconfined>(): com.tezov.tuucho.core.domain.business.protocol/CoroutineScopeProtocol // com.tezov.tuucho.core.barrel._system/CoroutineScopes.unconfined.<get-unconfined>|<get-unconfined>(){}[0]
+
+    final fun cancel() // com.tezov.tuucho.core.barrel._system/CoroutineScopes.cancel|cancel(){}[0]
+}
+
 final class com.tezov.tuucho.core.barrel.di/KoinIos : com.tezov.tuucho.core.domain.business._system.koin/TuuchoKoinComponent { // com.tezov.tuucho.core.barrel.di/KoinIos|null[0]
     constructor <init>() // com.tezov.tuucho.core.barrel.di/KoinIos.<init>|<init>(){}[0]
 
@@ -26,10 +41,12 @@ sealed class com.tezov.tuucho.core.barrel.di/ModuleContextCore : com.tezov.tuuch
     }
 }
 
+final val com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop // com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop|#static{}com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop[0]
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop|#static{}com_tezov_tuucho_core_barrel_di_KoinIos$stableprop[0]
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop[0]
 final val com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop|#static{}com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop[0]
 
+final fun com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel._system/com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop_getter|com_tezov_tuucho_core_barrel__system_CoroutineScopes$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_KoinIos$stableprop_getter|com_tezov_tuucho_core_barrel_di_KoinIos$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore$stableprop_getter(){}[0]
 final fun com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(): kotlin/Int // com.tezov.tuucho.core.barrel.di/com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter|com_tezov_tuucho_core_barrel_di_ModuleContextCore_Main$stableprop_getter(){}[0]

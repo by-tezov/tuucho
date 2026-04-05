@@ -15,6 +15,7 @@ import com.tezov.tuucho.core.domain.business.protocol.screen.view.FormStateProto
 import com.tezov.tuucho.core.domain.tool.extension.ExtensionBoolean.isTrueOrNull
 import com.tezov.tuucho.core.presentation.tool.modifier.then
 import com.tezov.tuucho.core.presentation.ui._system.subset
+import com.tezov.tuucho.core.presentation.ui.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.TextsProjectionProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projection.ValueStorageProjectionProtocol
@@ -34,7 +35,6 @@ import com.tezov.tuucho.core.presentation.ui.render.projector.contextual
 import com.tezov.tuucho.core.presentation.ui.render.projector.message
 import com.tezov.tuucho.core.presentation.ui.render.projector.option
 import com.tezov.tuucho.core.presentation.ui.render.projector.state
-import com.tezov.tuucho.core.presentation.ui.screen.protocol.ScreenContextProtocol
 import com.tezov.tuucho.core.presentation.ui.view.AbstractView
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewFactoryProtocol
 import com.tezov.tuucho.core.presentation.ui.view.protocol.ViewProtocol

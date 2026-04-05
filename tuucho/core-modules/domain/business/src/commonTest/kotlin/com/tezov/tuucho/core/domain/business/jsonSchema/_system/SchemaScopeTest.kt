@@ -147,7 +147,8 @@ class SchemaScopeTest {
 
     @Test
     fun `remove delegates to mapOperator`() {
-        every { mapOperator.remove("rm") } returns Unit
+        val expectResult = JsonPrimitive("value")
+        every { mapOperator.remove("rm") } returns expectResult
         val scope = TestScope(
             SchemaScopeArgument(
                 element = JsonObject(emptyMap()),
@@ -155,7 +156,10 @@ class SchemaScopeTest {
                 mapOperator = mapOperator
             )
         )
-        scope.remove("rm")
+        val result = scope.remove("rm")
+
+        assertEquals(expectResult, result)
+
         verify { mapOperator.remove("rm") }
     }
 

@@ -6,6 +6,12 @@ plugins {
 
 kotlin {
     sourceSets {
+        commonMain.dependencies {
+            api(project(":core.domain.business"))
+            api(project(":core.data.repository"))
+            api(project(":core.presentation.ui"))
+            implementation(libs.compose.runtime)
+        }
         androidMain.dependencies {
             api(project(":core.data.repository"))
             api(project(":core.presentation.ui"))
@@ -13,13 +19,8 @@ kotlin {
         if (isMacOs) {
             iosMain.dependencies {
                 api(project(":core.data.repository"))
+                api(project(":core.presentation.ui"))
             }
-        }
-        commonMain.dependencies {
-            api(project(":core.domain.business"))
-            api(project(":core.data.repository"))
-            api(project(":core.presentation.ui"))
-            implementation(libs.compose.runtime)
         }
     }
 }

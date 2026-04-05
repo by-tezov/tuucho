@@ -9,15 +9,15 @@ import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.Form
 import com.tezov.tuucho.core.data.repository.parser.assembler.response.form.FormFailureReasonTextAssemblerMatcher
 import com.tezov.tuucho.core.domain.business._system.koin.Associate.associate
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.scope
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.scopedOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.onClose
-import org.koin.plugin.module.dsl.factory
-import org.koin.plugin.module.dsl.scoped
 
 object ResponseAssemblerScope {
     fun invoke() = scope(ScopeContext.Response) {
         factory<Scope> { this }
-        scoped<FormAssembler>() onClose { assembler ->
+        scopedOf(::FormAssembler) onClose { assembler ->
             assembler?.closeScope()
         }
         associate<ResponseAssembler.Association.Processor> {
@@ -28,16 +28,16 @@ object ResponseAssemblerScope {
     object Form {
         fun invoke() = scope(ScopeContext.Response.Form) {
             factory<Scope> { this }
-            factory<TextAssembler>()
-            factory<ActionAssembler>()
+            factoryOf(::TextAssembler)
+            factoryOf(::ActionAssembler)
 
             associate<FormAssembler.Association.Processor> {
                 declaration<TextAssembler>()
                 declaration<ActionAssembler>()
             }
 
-            factory<FormFailureReasonTextAssemblerMatcher>() associate TextAssembler.Association.Matcher::class
-            factory<FormActionAssemblerMatcher>() associate ActionAssembler.Association.Matcher::class
+            factoryOf(::FormFailureReasonTextAssemblerMatcher) associate TextAssembler.Association.Matcher::class
+            factoryOf(::FormActionAssemblerMatcher) associate ActionAssembler.Association.Matcher::class
         }
     }
 }

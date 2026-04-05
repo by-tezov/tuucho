@@ -2,17 +2,17 @@ package com.tezov.tuucho.core.presentation.ui.render.projector
 
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.TypeSchema
 import com.tezov.tuucho.core.presentation.ui.annotation.TuuchoUiDsl
+import com.tezov.tuucho.core.presentation.ui.protocol.ContextualUpdaterProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.HasContextualUpdaterProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.IdProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ReadyStatusInvalidateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ReadyStatusInvalidateInvokerSetterProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ReadyStatusInvalidateProtocols
+import com.tezov.tuucho.core.presentation.ui.protocol.ResolveStatusProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.projector.ComponentProcessorProjectorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.projector.ProcessorProjectorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ContextualUpdaterProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasContextualUpdaterProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerSetterProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ComponentProcessorProjectorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.projector.ProcessorProjectorProtocol
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 

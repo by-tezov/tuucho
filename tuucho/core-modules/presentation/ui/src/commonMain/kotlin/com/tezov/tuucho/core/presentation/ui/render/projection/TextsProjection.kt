@@ -1,9 +1,9 @@
 package com.tezov.tuucho.core.presentation.ui.render.projection
 
 import com.tezov.tuucho.core.domain.tool.json.JsonElementPath.Companion.INDEX_SEPARATOR
+import com.tezov.tuucho.core.presentation.ui.protocol.HasResolveStatusProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ProjectionProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.HasResolveStatusProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ProjectionProcessorProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 

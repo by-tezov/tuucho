@@ -1,21 +1,24 @@
 ### Todo:
 
-- Update test 2e2
-  -> Close release
+// fix mutext dans Screen class
+// Context presentation
+
+Then all on this in one shot release
+
+- error message with class name that throw.
+
+- screen context better way to use it ?
+- projection input dataclass ?
+
+- Animation placeholder / final image ?
+- do a smart padding object - can do also for size?
 
 - Doc Http interceptor renamed to middleware exchange
 - Doc image action
 - Doc action language
 - Doc config avec url-white-list
+- Doc validator custom
   -> Close release
-
-Then all on this in one shot release
-- screen context better way to use it ?
-- projection input dataclass ?
-- Animation placeholder / final image ?
-- do a smart padding object - can do also for size?
-- shadower with flow ?
-- error message with class name that throw.
 
 ### Need to fix: 
 - redraw trigger is not convenient, maybe add a general purpose event state where view could register to it ?
@@ -23,16 +26,16 @@ Then all on this in one shot release
   - check message of contextual field, they never request update view after click
 - Shadower / Language Side effect
     - when update language, what about shadower if back shadower not enable, page won't be updated
-      with
-      correct language
+      with correct language
     - still set language, force to activate shadower back and it is done even if language hasn't
       been changed
-- Mokkery + Koin
 
 ### Improve
 - Shadower Failure -> On screen protocol, allow to replace skimmer with failure view
 - Add bottom/top screen not react to transition
+- Transition parameter
 - Find a solution for share mock test instead of duplicated code
 - Unit Test (Data + UI)
 - parameter + file properties
 - JsonElement home made efficient mutable
+- Fix Jacoco

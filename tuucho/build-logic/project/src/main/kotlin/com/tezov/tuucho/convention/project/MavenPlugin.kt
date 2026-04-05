@@ -17,8 +17,8 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.signing.Sign
 import org.gradle.plugins.signing.SigningExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
+@Suppress("unused")
 class MavenPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
@@ -117,8 +117,9 @@ class MavenPlugin : Plugin<Project> {
                         }
                     }
                     this.artifactId = when (name) {
-                        "android" -> "$artifactId-android"
                         "kotlinMultiplatform" -> artifactId
+                        "android" -> "$artifactId-android"
+                        "jvm" -> "$artifactId-jvm"
                         "iosArm64" -> "$artifactId-iosArm64"
                         "iosSimulatorArm64" -> "$artifactId-iosSimulatorArm64"
                         "iosX64" -> "$artifactId-iosX64"

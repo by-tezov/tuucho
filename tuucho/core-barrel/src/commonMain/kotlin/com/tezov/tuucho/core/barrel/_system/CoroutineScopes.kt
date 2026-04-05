@@ -7,27 +7,30 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineExceptionMonitorP
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopeProtocol
 import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.IO
 
-internal class CoroutineScopes(
+class CoroutineScopes(
     exceptionMonitor: CoroutineExceptionMonitorProtocol?,
 ) : CoroutineScopesProtocol {
     override val unconfined: CoroutineScopeProtocol =
         CoroutineScope(
             name = "Unconfined",
-            dispatcher = Dispatchers.Unconfined,
+            dispatcher = Unconfined,
             exceptionMonitor = exceptionMonitor,
         )
     override val default: CoroutineScopeProtocol =
         CoroutineScope(
             name = "Default",
-            dispatcher = Dispatchers.Default,
+            dispatcher = Default,
             exceptionMonitor = exceptionMonitor,
         )
     override val main: CoroutineScopeProtocol =
         CoroutineScope(
             name = "Main",
-            dispatcher = Dispatchers.Main,
+            dispatcher = Main,
             exceptionMonitor = exceptionMonitor,
         )
     override val io: CoroutineScopeProtocol =

@@ -21,6 +21,10 @@ gradlePlugin {
             id = "${packageName}.application-android"
             implementationClass = "${packageName}.${name}"
         }
+        register("ApplicationJvmPlugin") {
+            id = "${packageName}.application-jvm"
+            implementationClass = "${packageName}.${name}"
+        }
         register("ApplicationIosPlugin") {
             id = "${packageName}.application-ios"
             implementationClass = "${packageName}.${name}"

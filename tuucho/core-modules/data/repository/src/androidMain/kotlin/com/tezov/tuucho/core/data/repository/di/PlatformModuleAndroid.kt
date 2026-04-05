@@ -8,9 +8,9 @@ import com.tezov.tuucho.core.data.repository._system.SystemPlatformInformationPr
 import com.tezov.tuucho.core.data.repository._system.reference.ReferenceFactoryAndroid
 import com.tezov.tuucho.core.domain.business._system.koin.KoinMass.Companion.module
 import com.tezov.tuucho.core.domain.tool._system.ReferenceProtocol
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
-import org.koin.plugin.module.dsl.factory
 
 object PlatformModuleAndroid {
     object Name {
@@ -18,14 +18,14 @@ object PlatformModuleAndroid {
     }
 
     internal fun invoke() = module(ModuleContextData.Main) {
-        factory<ReferenceFactoryAndroid>() bind ReferenceProtocol.Factory::class
+        factoryOf(::ReferenceFactoryAndroid) bind ReferenceProtocol.Factory::class
 
-        factory<SystemPlatformInformationAndroid>() bind SystemPlatformInformationProtocol::class
+        factoryOf(::SystemPlatformInformationAndroid) bind SystemPlatformInformationProtocol::class
 
-        factory<SystemPlatformFileProtocol> {
+        factory {
             SystemPlatformFileAndroid(
                 context = get<Context>(Name.APPLICATION_CONTEXT)
             )
-        }
+        } bind SystemPlatformFileProtocol::class
     }
 }

@@ -60,6 +60,28 @@ final class com.tezov.tuucho.core.domain.tool.json/JsonElementPath : kotlin.coll
     }
 }
 
+final value class com.tezov.tuucho.core.domain.tool.async/ReentrantMutex : kotlin.coroutines/CoroutineContext.Element, kotlin.coroutines/CoroutineContext.Key<com.tezov.tuucho.core.domain.tool.async/ReentrantMutex>, kotlinx.coroutines.sync/Mutex { // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex|null[0]
+    constructor <init>(kotlinx.coroutines.sync/Mutex = ...) // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.<init>|<init>(kotlinx.coroutines.sync.Mutex){}[0]
+
+    final val isLocked // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.isLocked|{}isLocked[0]
+        final fun <get-isLocked>(): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.isLocked.<get-isLocked>|<get-isLocked>(){}[0]
+    final val key // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.key|{}key[0]
+        final fun <get-key>(): com.tezov.tuucho.core.domain.tool.async/ReentrantMutex // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.key.<get-key>|<get-key>(){}[0]
+    final val mutex // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.mutex|{}mutex[0]
+        final fun <get-mutex>(): kotlinx.coroutines.sync/Mutex // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.mutex.<get-mutex>|<get-mutex>(){}[0]
+    final val onLock // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.onLock|{}onLock[0]
+        final fun <get-onLock>(): kotlinx.coroutines.selects/SelectClause2<kotlin/Any?, kotlinx.coroutines.sync/Mutex> // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.onLock.<get-onLock>|<get-onLock>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.hashCode|hashCode(){}[0]
+    final fun holdsLock(kotlin/Any): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.holdsLock|holdsLock(kotlin.Any){}[0]
+    final fun toString(): kotlin/String // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.toString|toString(){}[0]
+    final fun tryLock(kotlin/Any?): kotlin/Boolean // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.tryLock|tryLock(kotlin.Any?){}[0]
+    final fun unlock(kotlin/Any?) // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.unlock|unlock(kotlin.Any?){}[0]
+    final suspend fun lock(kotlin/Any?) // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.lock|lock(kotlin.Any?){}[0]
+    final suspend inline fun <#A1: kotlin/Any?> withReentrantLock(crossinline kotlin.coroutines/SuspendFunction0<#A1>): #A1 // com.tezov.tuucho.core.domain.tool.async/ReentrantMutex.withReentrantLock|withReentrantLock(kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
+}
+
 final object com.tezov.tuucho.core.domain.tool.async/ExtensionFlow { // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow|null[0]
     final suspend fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<#A1>).collectForever(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow.collectForever|collectForever@kotlinx.coroutines.flow.Flow<0:0>(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<kotlin.Any>}[0]
     final suspend fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<#A1>).collectOnce(kotlin.coroutines/SuspendFunction1<#A1, kotlin/Unit>) // com.tezov.tuucho.core.domain.tool.async/ExtensionFlow.collectOnce|collectOnce@kotlinx.coroutines.flow.Flow<0:0>(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<kotlin.Any>}[0]

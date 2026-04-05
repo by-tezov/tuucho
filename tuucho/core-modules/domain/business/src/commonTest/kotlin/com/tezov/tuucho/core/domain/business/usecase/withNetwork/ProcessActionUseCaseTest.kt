@@ -2,7 +2,7 @@ package com.tezov.tuucho.core.domain.business.usecase.withNetwork
 
 import com.tezov.tuucho.core.domain.business.interaction.navigation.NavigationRoute
 import com.tezov.tuucho.core.domain.business.model.action.ActionModel
-import com.tezov.tuucho.core.domain.business.protocol.ActionExecutorProtocol
+import com.tezov.tuucho.core.domain.business.protocol.ActionMiddlewareExecutorProtocol
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -20,7 +20,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ProcessActionUseCaseTest {
-    private lateinit var actionExecutor: ActionExecutorProtocol
+    private lateinit var actionExecutor: ActionMiddlewareExecutorProtocol
     private lateinit var sut: ProcessActionUseCase
 
     @BeforeTest

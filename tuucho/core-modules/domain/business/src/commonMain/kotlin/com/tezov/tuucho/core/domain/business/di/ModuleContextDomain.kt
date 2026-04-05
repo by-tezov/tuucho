@@ -7,5 +7,7 @@ sealed class ModuleContextDomain : KoinMass.ModuleContext {
 
     object UseCase : ModuleContextDomain()
 
+    object Validator : ModuleContextDomain()
+
     object Middleware : ModuleContextDomain()
 }

@@ -1,8 +1,8 @@
 package com.tezov.tuucho.core.presentation.ui.render.misc
 
 import com.tezov.tuucho.core.presentation.ui._system.idSourceOrNull
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ReadyStatusInvalidateInvokerProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ReadyStatusInvalidateInvokerProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonElement
 
 class ResolveStatusProcessor : ResolveStatusProcessorProtocol {

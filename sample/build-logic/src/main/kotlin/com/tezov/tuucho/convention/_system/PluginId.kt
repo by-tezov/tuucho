@@ -5,6 +5,7 @@ object PluginId {
     const val koltinMultiplatform = "kotlin.multiplatform"
     const val koltinMultiplatformLibrary = "kotlin.multiplatform.library"
     const val koin = "koin"
+    const val kotlinJvm = "kotlin.jvm"
     const val compose = "compose"
     const val composeCompiler = "compose.compiler"
 }

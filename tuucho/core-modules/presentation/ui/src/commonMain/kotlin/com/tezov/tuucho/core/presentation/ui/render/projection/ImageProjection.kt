@@ -11,13 +11,13 @@ import com.tezov.tuucho.core.domain.business.protocol.CoroutineScopesProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
 import com.tezov.tuucho.core.domain.business.protocol.repository.ImageRepositoryProtocol
 import com.tezov.tuucho.core.domain.business.usecase.withNetwork.RetrieveImageUseCase
-import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.TransformImageJsonArrayToImageModelUseCase
+import com.tezov.tuucho.core.domain.business.usecase.withoutNetwork.ConvertImageJsonArrayToImageModelUseCase
 import com.tezov.tuucho.core.presentation.ui._system.LocalTuuchoKoin
+import com.tezov.tuucho.core.presentation.ui.protocol.IdProcessorProtocol
+import com.tezov.tuucho.core.presentation.ui.protocol.ResolveStatusProcessorProtocol
 import com.tezov.tuucho.core.presentation.ui.render.misc.IdProcessor
 import com.tezov.tuucho.core.presentation.ui.render.misc.ResolveStatusProcessor
 import com.tezov.tuucho.core.presentation.ui.render.projector.TypeProjectorProtocols
-import com.tezov.tuucho.core.presentation.ui.render.protocol.IdProcessorProtocol
-import com.tezov.tuucho.core.presentation.ui.render.protocol.ResolveStatusProcessorProtocol
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import coil3.Image as CoilImage
@@ -75,13 +75,13 @@ private class ImageProjection(
             val coroutineScopes = koin.get<CoroutineScopesProtocol>()
             val useCaseExecutor = koin.get<UseCaseExecutorProtocol>()
             val retrieveImage = koin.get<RetrieveImageUseCase<CoilImage>>()
-            val transformImageJsonArrayToImageModel = koin.get<TransformImageJsonArrayToImageModelUseCase>()
+            val transformImageJsonArrayToImageModel = koin.get<ConvertImageJsonArrayToImageModelUseCase>()
             imageLoaded = false
             coroutineScopes.default
                 .async {
                     val modelsResult = useCaseExecutor.await(
                         useCase = transformImageJsonArrayToImageModel,
-                        input = TransformImageJsonArrayToImageModelUseCase.Input(
+                        input = ConvertImageJsonArrayToImageModelUseCase.Input(
                             jsonArray = imageArray
                         )
                     )

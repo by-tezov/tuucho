@@ -7,7 +7,6 @@ import com.tezov.tuucho.core.domain.business.jsonSchema._system.onScope
 import com.tezov.tuucho.core.domain.business.jsonSchema._system.withScope
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.ComponentSettingSchema
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema
-import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.SettingComponentShadowerSchema.Key
 import com.tezov.tuucho.core.domain.business.jsonSchema.material.setting.component.navigationSchema.ComponentSettingNavigationSchema
 import com.tezov.tuucho.core.domain.business.protocol.NavigationDefinitionSelectorMatcherProtocol
 import com.tezov.tuucho.core.domain.business.protocol.UseCaseExecutorProtocol
@@ -157,16 +156,10 @@ internal class NavigationMaterialCacheRepository(
 
     override suspend fun getShadowerSettingObjectOrNull(
         url: String,
-        direction: String
+        key: String
     ) = mutex.withLock {
         (entriesCache[url.key(ComponentSettingSchema.Root.Key.shadower)] as? JsonObject)
             ?.withScope(SettingComponentShadowerSchema::Scope)
-            ?.let {
-                when (direction) {
-                    Key.navigateForward -> it.navigateForward
-                    Key.navigateBackward -> it.navigateBackward
-                    else -> throw DomainException.Default("invalid direction $direction")
-                }
-            }
+            ?.get(key) as? JsonObject
     }
 }

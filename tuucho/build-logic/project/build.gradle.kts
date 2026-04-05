@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.all.open)
     implementation(libs.mokkery)
     implementation(libs.maven)
+    implementation(libs.kotlin.benchmark.gradle)
     implementation(libs.ktlint)
     implementation(libs.detekt)
 }
@@ -39,6 +40,10 @@ gradlePlugin {
             id = "${packageName}.library-ui"
             implementationClass = "${packageName}.${name}"
         }
+        register("MicroBenchmarkPlugin") {
+            id = "${packageName}.microbenchmark"
+            implementationClass = "${packageName}.${name}"
+        }
     }
 }
 
@@ -64,7 +69,7 @@ val generateProjectBuildConfigTask by tasks.registering {
             Regex("""^assemble(.+)$"""),
             Regex("""^root(.+)UnitTest$"""),
             Regex("""^root(.+)CoverageReport$"""),
-            Regex("""^root(.+)CoverageReport$"""),
+            Regex("""^root(.+)Benchmark$"""),
             Regex("""^rootPublish(.+)ToMavenLocal$"""),
             Regex("""^rootValidate(.+)Api"""),
             Regex("""^rootUpdate(.+)Api"""),
