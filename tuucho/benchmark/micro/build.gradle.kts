@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.benchmark)
+    alias(libs.plugins.convention.microbenchmark)
 }
 
 kotlin {

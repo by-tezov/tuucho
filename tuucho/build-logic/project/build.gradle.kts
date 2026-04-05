@@ -40,8 +40,8 @@ gradlePlugin {
             id = "${packageName}.library-ui"
             implementationClass = "${packageName}.${name}"
         }
-        register("BenchmarkPlugin") {
-            id = "${packageName}.benchmark"
+        register("MicroBenchmarkPlugin") {
+            id = "${packageName}.microbenchmark"
             implementationClass = "${packageName}.${name}"
         }
     }

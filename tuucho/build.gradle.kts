@@ -561,41 +561,37 @@ tasks.register("allTestsCoverage") {
 }
 
 // Benchmark
-tasks.register("cleanBenchmarkReports") {
+tasks.register("cleanMicroBenchmarkReports") {
     group = "verification"
     description = "Delete all previous benchmark reports in benchmark module"
 
     doFirst {
-        val reportsDir = file("benchmark/build/reports/benchmarks")
+        val reportsDir = file("benchmark/micro/build/reports/benchmarks")
         if (reportsDir.exists()) {
             reportsDir.listFiles()?.forEach { it.deleteRecursively() }
             println("Deleted previous benchmark reports in $reportsDir")
         }
     }
 }
-tasks.register("rootReleaseBenchmark") {
+tasks.register("rootReleaseMicroBenchmark") {
     group = "verification"
     description = "Benchmark and Moves reports into root build folder"
 
-    val benchmarkTasks = subprojects.flatMap { sub ->
-        sub.tasks.matching {
-            it.name == "jvmBenchmark"
-        }
+    val benchmarkTasks = project(":benchmark.micro").tasks.matching {
+        it.name == "jvmBenchmark"
     }
-
     benchmarkTasks.forEach {
-        it.dependsOn(tasks.named("cleanBenchmarkReports"))
+        it.dependsOn(tasks.named("cleanMicroBenchmarkReports"))
         dependsOn(it)
     }
 
     doLast {
-        val versionName = subprojects
-            .first { it.name == "core" }
+        val versionName = project(":core")
             .extra["versionName"]
             .run { (this as String) }
             .replace(Regex("[^a-zA-Z0-9._]"), "_")
 
-        val reportsDir = file("benchmark/build/reports/benchmarks/main")
+        val reportsDir = file("benchmark/micro/build/reports/benchmarks/main")
         val dateFolder = reportsDir.listFiles()?.firstOrNull { it.isDirectory }
             ?: throw GradleException("No benchmark date folder found in $reportsDir")
 
@@ -612,9 +608,9 @@ tasks.register("rootReleaseBenchmark") {
         println("Moved ${jvmJson.absolutePath} -> ${datedJson.absolutePath}")
     }
 }
-tasks.register<Exec>("allBenchmarks") {
+tasks.register<Exec>("allMicroBenchmarks") {
     group = "verification"
-    dependsOn(tasks.named("rootReleaseBenchmark"))
+    dependsOn(tasks.named("rootReleaseMicroBenchmark"))
 
     commandLine(
         "bash", "-c", """
@@ -623,7 +619,7 @@ tasks.register<Exec>("allBenchmarks") {
         fi
         source .venv/bin/activate
         pip install pandas matplotlib seaborn
-        python ./benchmark/panda.report.py
+        python ./benchmark/micro/panda.report.py
     """.trimIndent()
     )
 }
