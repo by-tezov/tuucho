@@ -6,6 +6,7 @@ import com.tezov.tuucho.convention.project._system.buildType
 import com.tezov.tuucho.convention.project._system.compilerOption
 import com.tezov.tuucho.convention.project._system.javaVersionInt
 import com.tezov.tuucho.convention.project._system.library
+import com.tezov.tuucho.convention.project._system.namespaceBase
 import com.tezov.tuucho.convention.project._system.optIn
 import com.tezov.tuucho.convention.project._system.plugin
 import kotlinx.benchmark.gradle.BenchmarksExtension
@@ -72,7 +73,7 @@ class BenchmarkPlugin : Plugin<Project> {
 
     private fun Project.configureKotlinBenchmark() {
         extensions.configure(AllOpenExtension::class.java) {
-            annotation("org.openjdk.jmh.annotations.State")
+            annotation("${namespaceBase()}.benchmark.annotation.OpenForBenchmark")
         }
         extensions.configure(BenchmarksExtension::class.java) {
             targets {
