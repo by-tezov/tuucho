@@ -1,5 +1,6 @@
 package com.tezov.tuucho.benchmark
 
+import com.tezov.tuucho.benchmark.annotation.OpenForBenchmark
 import com.tezov.tuucho.core.barrel._system.CoroutineScopes
 import com.tezov.tuucho.core.data.repository.di.ModuleContextData
 import com.tezov.tuucho.core.data.repository.di.rectifier.MaterialRectifierScope
@@ -42,16 +43,9 @@ import java.util.concurrent.TimeUnit
 import kotlin.time.Instant
 import com.tezov.tuucho.uiComponent.stable.di.MaterialRectifierModule as UiStableMaterialRectifierModule
 
-@Threads(value = 1)
-@Fork(value = 1)
-@BenchmarkMode(Mode.AverageTime)
-@Timeout(time = 20, timeUnit = TimeUnit.SECONDS)
-@OutputTimeUnit(BenchmarkTimeUnit.SECONDS)
-@Warmup(iterations = 1, time = 5, timeUnit = BenchmarkTimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 2, timeUnit = BenchmarkTimeUnit.SECONDS)
+@OpenForBenchmark
 @State(Scope.Benchmark)
-@Suppress("unused")
-class RectifierBenchmark {
+class RectifierBenchmarkState {
 
     @Param(
         "page-login.json",
@@ -59,8 +53,8 @@ class RectifierBenchmark {
     )
     lateinit var url: String
 
-    private var koin: Koin? = null
-    private var materialObject: JsonObject? = null
+    var koin: Koin? = null
+    var materialObject: JsonObject? = null
 
     private fun getJsonObject(jsonResourceName: String): JsonObject {
         val jsonConverter = koin!!.get<Json>()
@@ -112,6 +106,7 @@ class RectifierBenchmark {
         materialObject = getJsonObject(url)
     }
 
+
     @TearDown
     fun teardown() {
         koin?.close()
@@ -119,14 +114,30 @@ class RectifierBenchmark {
         materialObject = null
     }
 
+}
+
+@OpenForBenchmark
+@Threads(value = 1)
+@Fork(value = 1)
+@BenchmarkMode(Mode.AverageTime)
+@Timeout(time = 20, timeUnit = TimeUnit.SECONDS)
+@OutputTimeUnit(BenchmarkTimeUnit.SECONDS)
+@Warmup(iterations = 1, time = 5, timeUnit = BenchmarkTimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 2, timeUnit = BenchmarkTimeUnit.SECONDS)
+@Suppress("unused")
+class RectifierBenchmark {
+
     @Benchmark
-    fun readPageLogin(blackhole: Blackhole) = runBlocking {
-        val materialRectifier = koin!!.get<MaterialRectifier>()
+    fun readPage(
+        state: RectifierBenchmarkState,
+        blackhole: Blackhole
+    ) = runBlocking {
+        val materialRectifier = state.koin!!.get<MaterialRectifier>()
         val result = materialRectifier.process(
             context = RectifierProtocol.Context(
-                url = url
+                url = state.url
             ),
-            materialObject = materialObject!!
+            materialObject = state.materialObject!!
         )
         blackhole.consume(result)
     }
