@@ -97,7 +97,7 @@ convention-maven = { id = "com.tezov.tuucho.convention.project.maven", version =
 convention-library-test = { id = "com.tezov.tuucho.convention.project.library-test", version = "" }
 convention-library-plain = { id = "com.tezov.tuucho.convention.project.library-plain", version = "" }
 convention-library-ui = { id = "com.tezov.tuucho.convention.project.library-ui", version = "" }
-convention-benchmark = { id = "com.tezov.tuucho.convention.project.benchmark", version = "" }
+convention-microbenchmark = { id = "com.tezov.tuucho.convention.project.microbenchmark", version = "" }
 #<-convention
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-plugin" }
 kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-plugin" }

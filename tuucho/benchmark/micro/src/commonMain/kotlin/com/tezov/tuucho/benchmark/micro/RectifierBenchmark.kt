@@ -1,6 +1,6 @@
-package com.tezov.tuucho.benchmark
+package com.tezov.tuucho.benchmark.micro
 
-import com.tezov.tuucho.benchmark.annotation.OpenForBenchmark
+import com.tezov.tuucho.benchmark.micro.annotation.OpenForBenchmark
 import com.tezov.tuucho.core.barrel._system.CoroutineScopes
 import com.tezov.tuucho.core.data.repository.di.ModuleContextData
 import com.tezov.tuucho.core.data.repository.di.rectifier.MaterialRectifierScope
@@ -120,8 +120,8 @@ class RectifierBenchmarkState {
 @Threads(value = 1)
 @Fork(value = 1)
 @BenchmarkMode(Mode.AverageTime)
-@Timeout(time = 20, timeUnit = TimeUnit.SECONDS)
-@OutputTimeUnit(BenchmarkTimeUnit.SECONDS)
+@Timeout(time = 30, timeUnit = TimeUnit.SECONDS)
+@OutputTimeUnit(BenchmarkTimeUnit.MICROSECONDS)
 @Warmup(iterations = 1, time = 5, timeUnit = BenchmarkTimeUnit.SECONDS)
 @Measurement(iterations = 10, time = 2, timeUnit = BenchmarkTimeUnit.SECONDS)
 @Suppress("unused")

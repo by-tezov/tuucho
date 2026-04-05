@@ -2,7 +2,6 @@ package com.tezov.tuucho.convention.project
 
 import com.tezov.tuucho.convention.project._system.LibraryId
 import com.tezov.tuucho.convention.project._system.PluginId
-import com.tezov.tuucho.convention.project._system.buildType
 import com.tezov.tuucho.convention.project._system.compilerOption
 import com.tezov.tuucho.convention.project._system.javaVersionInt
 import com.tezov.tuucho.convention.project._system.library
@@ -17,7 +16,7 @@ import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 @Suppress("unused")
-class BenchmarkPlugin : Plugin<Project> {
+class MicroBenchmarkPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         applyPlugins(project)
@@ -36,7 +35,6 @@ class BenchmarkPlugin : Plugin<Project> {
         with(project) {
             configureTarget()
             configureMultiplatform()
-            configureSourceSets()
             configureKotlinBenchmark()
         }
     }
@@ -58,22 +56,9 @@ class BenchmarkPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.configureSourceSets() {
-        val buildType = buildType()
-        extensions.configure(KotlinMultiplatformExtension::class.java) {
-            sourceSets {
-                commonMain {
-                    kotlin.srcDirs(
-                        "${project.projectDir.path}/src/commonMain/$buildType"
-                    )
-                }
-            }
-        }
-    }
-
     private fun Project.configureKotlinBenchmark() {
         extensions.configure(AllOpenExtension::class.java) {
-            annotation("${namespaceBase()}.benchmark.annotation.OpenForBenchmark")
+            annotation("${namespaceBase()}.benchmark.micro.annotation.OpenForBenchmark")
         }
         extensions.configure(BenchmarksExtension::class.java) {
             targets {
